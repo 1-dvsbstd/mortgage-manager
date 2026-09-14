@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>Mortgage Manager</title>
+  <link rel="stylesheet" href="src/styles.css" />
+</head>
+<body>
+  <main class="wrap">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Mortgage Manager</p>
+        <h1>Your mortgage, made visual.</h1>
+        <p class="muted">See how long is left, what overpayments change, and how your balance falls over time.</p>
+      </div>
+    </header>
+
+    <section class="grid two">
+      <article class="card hero-card">
+        <p class="muted">Projected time remaining</p>
+        <div id="yearsRemaining" class="hero">—</div>
+        <div id="balanceLine" class="subhero">—</div>
+
+        <div class="callout">
+          <p class="muted">Try a small overpayment</p>
+          <strong id="overpayHeadline">Overpay £50/month</strong>
+          <p id="overpayImpact">—</p>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><span class="muted">Mortgage balance</span><strong id="balanceStat">—</strong></div>
+          <div class="stat"><span class="muted">Home value</span><strong id="homeValueStat">—</strong></div>
+          <div class="stat"><span class="muted">Equity</span><strong id="equityStat">—</strong></div>
+          <div class="stat"><span class="muted">LTV</span><strong id="ltvStat">—</strong></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Mortgage details</h2>
+        <div class="inputs">
+          <label>Current balance (£)<input id="balance" type="number" min="0" step="100" value="180000" /></label>
+          <label>Interest rate (%)<input id="rate" type="number" min="0" max="20" step="0.01" value="4.25" /></label>
+          <label>Monthly payment (£)<input id="payment" type="number" min="0" step="10" value="1100" /></label>
+          <label>Home value (£)<input id="homeValue" type="number" min="0" step="1000" value="300000" /></label>
+        </div>
+
+        <div class="compare-block">
+          <p class="muted">Compare overpayments</p>
+          <div class="chips" id="overpayButtons">
+            <button type="button" data-extra="0">£0</button>
+            <button type="button" data-extra="50" class="active">£50</button>
+            <button type="button" data-extra="100">£100</button>
+            <button type="button" data-extra="250">£250</button>
+            <button type="button" data-extra="500">£500</button>
+          </div>
+        </div>
+
+        <p id="warning" class="footer"></p>
+      </article>
+    </section>
+
+    <section class="card">
+      <div class="section-heading">
+        <div>
+          <h2>Mortgage balance over time</h2>
+          <p class="muted">Current payment compared with the selected overpayment.</p>
+        </div>
+      </div>
+      <canvas id="chart" width="1000" height="360" aria-label="Mortgage balance over time"></canvas>
+      <div class="legend">
+        <span><i class="dot current"></i>Current payment</span>
+        <span><i class="dot overpay"></i>With overpayment</span>
+      </div>
+    </section>
+
+    <section class="card compact-card">
+      <h2>Current purpose</h2>
+      <p class="muted">V0.1 is testing whether this is more useful than opening a lender app just to see the remaining balance.</p>
+    </section>
+
+    <footer class="footer">Illustrative planning tool only. Projections assume the entered rate and payment remain unchanged.</footer>
+  </main>
+
+  <script src="src/mortgage.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
