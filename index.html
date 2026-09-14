@@ -50,8 +50,9 @@
         <div class="stats">
           <div class="stat"><span class="muted">Mortgage</span><strong id="balanceStat">—</strong></div>
           <div class="stat"><span class="muted">Home value</span><strong id="homeValueStat">—</strong></div>
-          <div class="stat"><span class="muted">Equity</span><strong id="equityStat">—</strong></div>
-          <div class="stat"><span class="muted">LTV</span><strong id="ltvStat">—</strong></div>
+          <div class="stat"><span class="muted">Your property share</span><strong id="ownedValueStat">—</strong></div>
+          <div class="stat"><span class="muted">Your equity</span><strong id="equityStat">—</strong></div>
+          <div class="stat"><span class="muted">Mortgage / home value</span><strong id="ltvStat">—</strong></div>
         </div>
       </article>
 
@@ -68,7 +69,9 @@
           <label>Interest rate (%)<input id="rate" inputmode="decimal" type="number" min="0" max="20" step="0.01" value="4.25" /></label>
           <label>Monthly payment (£)<input id="payment" inputmode="decimal" type="number" min="0" step="10" value="1100" /></label>
           <label>Home value (£)<input id="homeValue" inputmode="decimal" type="number" min="0" step="1000" value="300000" /></label>
+          <label>Property share owned (%)<input id="ownership" inputmode="decimal" type="number" min="0" max="100" step="1" value="100" /></label>
         </div>
+        <p class="field-note">Use 100% for a normally owned home. If a scheme or third party retains a share, enter the percentage of the property that belongs to you/your household.</p>
 
         <div class="compare-block">
           <div class="compare-heading">
@@ -127,7 +130,7 @@
       </div>
     </section>
 
-    <footer class="footer">Illustrative planning tool only. Projections assume the entered rate and payment remain unchanged.</footer>
+    <footer class="footer">Illustrative planning tool only. Property-share figures are simplified and may not match the legal or lender treatment of every ownership/equity scheme. Mortgage projections assume the entered rate and payment remain unchanged.</footer>
   </main>
 
   <script src="src/mortgage.js"></script>
