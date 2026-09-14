@@ -3,132 +3,150 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0b1020" />
+  <meta name="theme-color" content="#071713" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Mortgage" />
-  <meta name="description" content="A visual mortgage manager for tracking balance, payoff time and overpayment impact." />
+  <meta name="description" content="A visual mortgage manager for tracking balance, equity, payoff time and overpayment impact." />
   <title>Mortgage Manager</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="public/icon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="src/styles.css" />
 </head>
 <body>
-  <main class="wrap">
-    <header class="app-header">
+  <main class="app-shell">
+    <header class="topbar">
       <div>
-        <p class="eyebrow">Mortgage Manager <span class="version">V0.2</span></p>
-        <h1>Your mortgage, made visual.</h1>
-        <p class="muted intro">Open it for the balance. Stay for what the numbers actually mean.</p>
+        <p class="brand">Mortgage Manager <span>V0.3</span></p>
+        <p class="topline">A clearer view of your biggest debt — and your biggest asset.</p>
       </div>
       <div class="save-status" id="saveStatus">Saved on this device</div>
     </header>
 
-    <section class="grid two">
-      <article class="card hero-card">
-        <div class="hero-topline">
+    <section class="hero-panel">
+      <div class="hero-copy">
+        <p class="kicker">Mortgage-free in</p>
+        <h1 id="yearsRemaining">—</h1>
+        <p id="payoffDate" class="hero-date">—</p>
+
+        <div class="headline-metrics">
+          <div><span>Mortgage remaining</span><strong id="balanceLine">—</strong></div>
+          <div><span>Monthly payment</span><strong id="paymentStat">—</strong></div>
+          <div><span>Interest rate</span><strong id="rateStat">—</strong></div>
+        </div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-ring" id="progressRing">
+          <div class="progress-ring-inner">
+            <strong id="equityProgress">—</strong>
+            <span>of your share<br>mortgage-free</span>
+          </div>
+        </div>
+        <p id="progressCaption" class="progress-caption">—</p>
+      </div>
+    </section>
+
+    <section class="dashboard-grid">
+      <article class="panel overpay-panel">
+        <div class="panel-heading">
           <div>
-            <p class="muted label">Projected time remaining</p>
-            <div id="yearsRemaining" class="hero">—</div>
-            <div id="payoffDate" class="payoff-date">—</div>
+            <p class="eyebrow">What if?</p>
+            <h2>Make the mortgage move faster</h2>
           </div>
-          <div class="balance-pill">
-            <span>Balance</span>
-            <strong id="balanceLine">—</strong>
-          </div>
+          <strong id="overpayHeadline" class="scenario-amount">£50/month</strong>
         </div>
 
-        <div class="callout">
-          <p class="muted">If you overpay</p>
-          <div class="impact-row">
-            <strong id="overpayHeadline">£50/month</strong>
-            <span id="acceleratedPayoff" class="impact-date">—</span>
-          </div>
-          <p id="overpayImpact">—</p>
+        <div class="scenario-result">
+          <div><span>Interest saved</span><strong id="interestSaved">—</strong></div>
+          <div><span>Time saved</span><strong id="timeSaved">—</strong></div>
+          <div><span>New finish</span><strong id="acceleratedPayoff">—</strong></div>
         </div>
 
-        <div class="stats">
-          <div class="stat"><span class="muted">Mortgage</span><strong id="balanceStat">—</strong></div>
-          <div class="stat"><span class="muted">Home value</span><strong id="homeValueStat">—</strong></div>
-          <div class="stat"><span class="muted">Your property share</span><strong id="ownedValueStat">—</strong></div>
-          <div class="stat"><span class="muted">Your equity</span><strong id="equityStat">—</strong></div>
-          <div class="stat"><span class="muted">Mortgage / home value</span><strong id="ltvStat">—</strong></div>
+        <div class="scenario-chips" id="overpayButtons">
+          <button type="button" data-extra="0">£0</button>
+          <button type="button" data-extra="50" class="active">£50</button>
+          <button type="button" data-extra="100">£100</button>
+          <button type="button" data-extra="250">£250</button>
+          <button type="button" data-extra="500">£500</button>
+        </div>
+
+        <div class="custom-overpay">
+          <input id="extraSlider" class="range" type="range" min="0" max="1000" step="10" value="50" aria-label="Monthly overpayment" />
+          <label>Custom <span>£</span><input id="customExtra" inputmode="decimal" type="number" min="0" step="10" value="50" /></label>
         </div>
       </article>
 
-      <article class="card details-card">
-        <div class="section-heading">
+      <article class="panel home-panel">
+        <div class="panel-heading">
           <div>
-            <h2>Your mortgage</h2>
-            <p class="muted">Changes save automatically on this device.</p>
+            <p class="eyebrow">Your home</p>
+            <h2>What you own</h2>
           </div>
+          <span id="ownershipBadge" class="ownership-badge">100% share</span>
         </div>
 
+        <div class="home-value">
+          <span>Your equity</span>
+          <strong id="equityStat">—</strong>
+          <small id="equitySubtext">—</small>
+        </div>
+
+        <div class="home-stats">
+          <div><span>Property value</span><strong id="homeValueStat">—</strong></div>
+          <div><span>Your share value</span><strong id="ownedValueStat">—</strong></div>
+          <div><span>LTV</span><strong id="ltvStat">—</strong></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="dashboard-grid lower-grid">
+      <article class="panel chart-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Trajectory</p>
+            <h2>Your balance over time</h2>
+            <p class="subtle">Current path versus your selected overpayment.</p>
+          </div>
+        </div>
+        <div class="chart-wrap"><canvas id="chart" aria-label="Mortgage balance over time"></canvas></div>
+        <div class="legend">
+          <span><i class="dot current"></i>Current payment</span>
+          <span><i class="dot overpay"></i>With overpayment</span>
+        </div>
+      </article>
+
+      <article class="panel next-panel">
+        <p class="eyebrow">Next important thing</p>
+        <h2 id="nextEventTitle">Add your fixed-rate end date</h2>
+        <p id="nextEventText" class="next-event-text">We’ll keep the next mortgage milestone visible here.</p>
+        <div class="interest-box">
+          <span>Projected interest left</span>
+          <strong id="interestRemaining">—</strong>
+          <small id="interestWithExtraText">—</small>
+        </div>
+      </article>
+    </section>
+
+    <details class="panel edit-panel">
+      <summary>
+        <span><strong>Edit mortgage</strong><small>Update your balance, rate, home value or deal details</small></span>
+        <span class="summary-plus">＋</span>
+      </summary>
+
+      <div class="edit-content">
         <div class="inputs">
           <label>Current balance (£)<input id="balance" inputmode="decimal" type="number" min="0" step="100" value="180000" /></label>
-          <label>Interest rate (%)<input id="rate" inputmode="decimal" type="number" min="0" max="20" step="0.01" value="4.25" /></label>
           <label>Monthly payment (£)<input id="payment" inputmode="decimal" type="number" min="0" step="10" value="1100" /></label>
-          <label>Home value (£)<input id="homeValue" inputmode="decimal" type="number" min="0" step="1000" value="300000" /></label>
+          <label>Interest rate (%)<input id="rate" inputmode="decimal" type="number" min="0" max="20" step="0.01" value="4.25" /></label>
+          <label>Fixed rate ends<input id="fixedEnd" type="month" /></label>
+          <label>Property value (£)<input id="homeValue" inputmode="decimal" type="number" min="0" step="1000" value="300000" /></label>
           <label>Property share owned (%)<input id="ownership" inputmode="decimal" type="number" min="0" max="100" step="1" value="100" /></label>
         </div>
-        <p class="field-note">Use 100% for a normally owned home. If a scheme or third party retains a share, enter the percentage of the property that belongs to you/your household.</p>
-
-        <div class="compare-block">
-          <div class="compare-heading">
-            <div>
-              <p class="muted">Monthly overpayment</p>
-              <strong id="customExtraLabel">£50</strong>
-            </div>
-            <label class="custom-extra">Custom (£)
-              <input id="customExtra" inputmode="decimal" type="number" min="0" step="10" value="50" />
-            </label>
-          </div>
-
-          <input id="extraSlider" class="range" type="range" min="0" max="1000" step="10" value="50" aria-label="Monthly overpayment" />
-
-          <div class="chips" id="overpayButtons">
-            <button type="button" data-extra="0">£0</button>
-            <button type="button" data-extra="50" class="active">£50</button>
-            <button type="button" data-extra="100">£100</button>
-            <button type="button" data-extra="250">£250</button>
-            <button type="button" data-extra="500">£500</button>
-          </div>
-        </div>
-
+        <p class="field-note">Use 100% for a normally owned home. If a government scheme or third party retains a share, enter the percentage belonging to you or your household.</p>
         <p id="warning" class="warning"></p>
-      </article>
-    </section>
-
-    <section class="card chart-card">
-      <div class="section-heading">
-        <div>
-          <h2>Balance over time</h2>
-          <p class="muted">See the years disappear when you change the overpayment.</p>
-        </div>
       </div>
-      <div class="chart-wrap">
-        <canvas id="chart" aria-label="Mortgage balance over time"></canvas>
-      </div>
-      <div class="legend">
-        <span><i class="dot current"></i>Current payment</span>
-        <span><i class="dot overpay"></i>With overpayment</span>
-      </div>
-    </section>
-
-    <section class="card insight-card">
-      <div>
-        <p class="muted">Projected interest remaining</p>
-        <strong id="interestRemaining">—</strong>
-      </div>
-      <div>
-        <p class="muted">Interest with overpayment</p>
-        <strong id="interestWithExtra">—</strong>
-      </div>
-      <div>
-        <p class="muted">Interest saved</p>
-        <strong id="interestSaved">—</strong>
-      </div>
-    </section>
+    </details>
 
     <footer class="footer">Illustrative planning tool only. Property-share figures are simplified and may not match the legal or lender treatment of every ownership/equity scheme. Mortgage projections assume the entered rate and payment remain unchanged.</footer>
   </main>
