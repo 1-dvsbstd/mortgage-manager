@@ -2,52 +2,87 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0b1020" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Mortgage" />
+  <meta name="description" content="A visual mortgage manager for tracking balance, payoff time and overpayment impact." />
   <title>Mortgage Manager</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="public/icon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="src/styles.css" />
 </head>
 <body>
   <main class="wrap">
     <header class="app-header">
       <div>
-        <p class="eyebrow">Mortgage Manager</p>
+        <p class="eyebrow">Mortgage Manager <span class="version">V0.2</span></p>
         <h1>Your mortgage, made visual.</h1>
-        <p class="muted">See how long is left, what overpayments change, and how your balance falls over time.</p>
+        <p class="muted intro">Open it for the balance. Stay for what the numbers actually mean.</p>
       </div>
+      <div class="save-status" id="saveStatus">Saved on this device</div>
     </header>
 
     <section class="grid two">
       <article class="card hero-card">
-        <p class="muted">Projected time remaining</p>
-        <div id="yearsRemaining" class="hero">—</div>
-        <div id="balanceLine" class="subhero">—</div>
+        <div class="hero-topline">
+          <div>
+            <p class="muted label">Projected time remaining</p>
+            <div id="yearsRemaining" class="hero">—</div>
+            <div id="payoffDate" class="payoff-date">—</div>
+          </div>
+          <div class="balance-pill">
+            <span>Balance</span>
+            <strong id="balanceLine">—</strong>
+          </div>
+        </div>
 
         <div class="callout">
-          <p class="muted">Try a small overpayment</p>
-          <strong id="overpayHeadline">Overpay £50/month</strong>
+          <p class="muted">If you overpay</p>
+          <div class="impact-row">
+            <strong id="overpayHeadline">£50/month</strong>
+            <span id="acceleratedPayoff" class="impact-date">—</span>
+          </div>
           <p id="overpayImpact">—</p>
         </div>
 
         <div class="stats">
-          <div class="stat"><span class="muted">Mortgage balance</span><strong id="balanceStat">—</strong></div>
+          <div class="stat"><span class="muted">Mortgage</span><strong id="balanceStat">—</strong></div>
           <div class="stat"><span class="muted">Home value</span><strong id="homeValueStat">—</strong></div>
           <div class="stat"><span class="muted">Equity</span><strong id="equityStat">—</strong></div>
           <div class="stat"><span class="muted">LTV</span><strong id="ltvStat">—</strong></div>
         </div>
       </article>
 
-      <article class="card">
-        <h2>Mortgage details</h2>
+      <article class="card details-card">
+        <div class="section-heading">
+          <div>
+            <h2>Your mortgage</h2>
+            <p class="muted">Changes save automatically on this device.</p>
+          </div>
+        </div>
+
         <div class="inputs">
-          <label>Current balance (£)<input id="balance" type="number" min="0" step="100" value="180000" /></label>
-          <label>Interest rate (%)<input id="rate" type="number" min="0" max="20" step="0.01" value="4.25" /></label>
-          <label>Monthly payment (£)<input id="payment" type="number" min="0" step="10" value="1100" /></label>
-          <label>Home value (£)<input id="homeValue" type="number" min="0" step="1000" value="300000" /></label>
+          <label>Current balance (£)<input id="balance" inputmode="decimal" type="number" min="0" step="100" value="180000" /></label>
+          <label>Interest rate (%)<input id="rate" inputmode="decimal" type="number" min="0" max="20" step="0.01" value="4.25" /></label>
+          <label>Monthly payment (£)<input id="payment" inputmode="decimal" type="number" min="0" step="10" value="1100" /></label>
+          <label>Home value (£)<input id="homeValue" inputmode="decimal" type="number" min="0" step="1000" value="300000" /></label>
         </div>
 
         <div class="compare-block">
-          <p class="muted">Compare overpayments</p>
+          <div class="compare-heading">
+            <div>
+              <p class="muted">Monthly overpayment</p>
+              <strong id="customExtraLabel">£50</strong>
+            </div>
+            <label class="custom-extra">Custom (£)
+              <input id="customExtra" inputmode="decimal" type="number" min="0" step="10" value="50" />
+            </label>
+          </div>
+
+          <input id="extraSlider" class="range" type="range" min="0" max="1000" step="10" value="50" aria-label="Monthly overpayment" />
+
           <div class="chips" id="overpayButtons">
             <button type="button" data-extra="0">£0</button>
             <button type="button" data-extra="50" class="active">£50</button>
@@ -57,27 +92,39 @@
           </div>
         </div>
 
-        <p id="warning" class="footer"></p>
+        <p id="warning" class="warning"></p>
       </article>
     </section>
 
-    <section class="card">
+    <section class="card chart-card">
       <div class="section-heading">
         <div>
-          <h2>Mortgage balance over time</h2>
-          <p class="muted">Current payment compared with the selected overpayment.</p>
+          <h2>Balance over time</h2>
+          <p class="muted">See the years disappear when you change the overpayment.</p>
         </div>
       </div>
-      <canvas id="chart" width="1000" height="360" aria-label="Mortgage balance over time"></canvas>
+      <div class="chart-wrap">
+        <canvas id="chart" aria-label="Mortgage balance over time"></canvas>
+      </div>
       <div class="legend">
         <span><i class="dot current"></i>Current payment</span>
         <span><i class="dot overpay"></i>With overpayment</span>
       </div>
     </section>
 
-    <section class="card compact-card">
-      <h2>Current purpose</h2>
-      <p class="muted">V0.1 is testing whether this is more useful than opening a lender app just to see the remaining balance.</p>
+    <section class="card insight-card">
+      <div>
+        <p class="muted">Projected interest remaining</p>
+        <strong id="interestRemaining">—</strong>
+      </div>
+      <div>
+        <p class="muted">Interest with overpayment</p>
+        <strong id="interestWithExtra">—</strong>
+      </div>
+      <div>
+        <p class="muted">Interest saved</p>
+        <strong id="interestSaved">—</strong>
+      </div>
     </section>
 
     <footer class="footer">Illustrative planning tool only. Projections assume the entered rate and payment remain unchanged.</footer>
