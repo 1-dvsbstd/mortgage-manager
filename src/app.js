@@ -1,5 +1,5 @@
 (() => {
-  const STORAGE_KEY = 'mortgage-manager-v0.2';
+  const STORAGE_KEY = 'mortgage-manager-v0.3';
   const $ = (id) => document.getElementById(id);
   const money = (value) =>
     new Intl.NumberFormat('en-GB', {
@@ -23,7 +23,15 @@
     if (!Number.isFinite(months)) return '—';
     const date = new Date();
     date.setMonth(date.getMonth() + months);
-    return new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric' }).format(date);
+    return new Intl.DateTimeFormat('en-GB', { month: 'short', year: 'numeric' }).format(date);
+  };
+
+  const monthsUntil = (monthValue) => {
+    if (!monthValue) return null;
+    const [year, month] = monthValue.split('-').map(Number);
+    if (!year || !month) return null;
+    const now = new Date();
+    return (year - now.getFullYear()) * 12 + (month - 1 - now.getMonth());
   };
 
   let selectedExtra = 50;
@@ -36,6 +44,7 @@
       payment: +$('payment').value || 0,
       homeValue: +$('homeValue').value || 0,
       ownership: Math.min(100, Math.max(0, +$('ownership').value || 0)),
+      fixedEnd: $('fixedEnd').value || '',
       extra: Math.max(0, +$('customExtra').value || 0),
     };
   }
@@ -53,10 +62,12 @@
 
   function loadValues() {
     try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      const current = localStorage.getItem(STORAGE_KEY);
+      const legacy = localStorage.getItem('mortgage-manager-v0.2');
+      const saved = JSON.parse(current || legacy);
       if (!saved) return;
-      ['balance', 'rate', 'payment', 'homeValue', 'ownership'].forEach((key) => {
-        if (saved[key] !== undefined) $(key).value = saved[key];
+      ['balance', 'rate', 'payment', 'homeValue', 'ownership', 'fixedEnd'].forEach((key) => {
+        if (saved[key] !== undefined && $(key)) $(key).value = saved[key];
       });
       if (saved.extra !== undefined) {
         selectedExtra = Math.max(0, Number(saved.extra) || 0);
@@ -72,19 +83,40 @@
     selectedExtra = Math.max(0, Number(value) || 0);
     $('customExtra').value = selectedExtra;
     $('extraSlider').value = Math.min(1000, selectedExtra);
-    $('customExtraLabel').textContent = money(selectedExtra);
-
     document.querySelectorAll('button[data-extra]').forEach((button) => {
       button.classList.toggle('active', Number(button.dataset.extra) === selectedExtra);
     });
+  }
+
+  function updateNextEvent(fixedEnd) {
+    const months = monthsUntil(fixedEnd);
+    if (months === null) {
+      $('nextEventTitle').textContent = 'Add your fixed-rate end date';
+      $('nextEventText').textContent = 'We’ll keep the next mortgage milestone visible here.';
+      return;
+    }
+
+    const date = new Date(`${fixedEnd}-01T12:00:00`);
+    const formatted = new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric' }).format(date);
+
+    if (months < 0) {
+      $('nextEventTitle').textContent = 'Your saved fixed-rate date has passed';
+      $('nextEventText').textContent = `The date saved is ${formatted}. Update your mortgage details when your deal changes.`;
+    } else if (months === 0) {
+      $('nextEventTitle').textContent = 'Your fixed rate ends this month';
+      $('nextEventText').textContent = `${formatted} is your next key mortgage milestone.`;
+    } else {
+      $('nextEventTitle').textContent = `Fixed rate ends in ${humanMonths(months)}`;
+      $('nextEventText').textContent = `${formatted} is your next key mortgage milestone.`;
+    }
   }
 
   function drawChart(base, accelerated) {
     const canvas = $('chart');
     const container = canvas.parentElement;
     const dpr = window.devicePixelRatio || 1;
-    const cssWidth = Math.max(300, container.clientWidth);
-    const cssHeight = window.innerWidth < 620 ? 250 : 340;
+    const cssWidth = Math.max(280, container.clientWidth);
+    const cssHeight = window.innerWidth < 620 ? 250 : 320;
 
     canvas.style.width = `${cssWidth}px`;
     canvas.style.height = `${cssHeight}px`;
@@ -96,16 +128,16 @@
     ctx.clearRect(0, 0, cssWidth, cssHeight);
 
     const compact = cssWidth < 520;
-    const pad = { left: compact ? 50 : 72, right: 16, top: 20, bottom: 38 };
+    const pad = { left: compact ? 48 : 68, right: 16, top: 18, bottom: 36 };
     const width = cssWidth - pad.left - pad.right;
     const height = cssHeight - pad.top - pad.bottom;
     const maxBalance = Math.max(base.monthlyPoints[0] || 0, accelerated.monthlyPoints[0] || 0, 1);
     const maxMonths = Math.max(base.monthlyPoints.length, accelerated.monthlyPoints.length) - 1 || 1;
 
-    ctx.strokeStyle = '#27314c';
+    ctx.strokeStyle = 'rgba(255,255,255,.09)';
     ctx.lineWidth = 1;
     ctx.font = compact ? '10px system-ui' : '12px system-ui';
-    ctx.fillStyle = '#9ba6bf';
+    ctx.fillStyle = '#99aaa5';
 
     for (let i = 0; i <= 4; i += 1) {
       const y = pad.top + (height * i) / 4;
@@ -115,7 +147,7 @@
       ctx.stroke();
       const value = maxBalance * (1 - i / 4);
       const label = value >= 1000 ? `£${Math.round(value / 1000)}k` : money(value);
-      ctx.fillText(label, 4, y + 4);
+      ctx.fillText(label, 3, y + 4);
     }
 
     function drawLine(points, colour) {
@@ -133,14 +165,14 @@
       ctx.stroke();
     }
 
-    drawLine(base.monthlyPoints, '#7ea2ff');
-    drawLine(accelerated.monthlyPoints, '#66d39e');
+    drawLine(base.monthlyPoints, '#a8b4b0');
+    drawLine(accelerated.monthlyPoints, '#54e0b4');
 
     const maxYears = maxMonths / 12;
     [0, 0.5, 1].forEach((fraction) => {
       const x = pad.left + width * fraction;
       const year = Math.round(maxYears * fraction);
-      ctx.fillText(`${year}y`, x - 8, cssHeight - 12);
+      ctx.fillText(`${year}y`, x - 8, cssHeight - 10);
     });
   }
 
@@ -152,44 +184,53 @@
     const ownedPropertyValue = values.homeValue * (values.ownership / 100);
     const householdEquity = ownedPropertyValue - values.balance;
     const ltv = values.homeValue > 0 ? (values.balance / values.homeValue) * 100 : 0;
+    const mortgageFreeShare = ownedPropertyValue > 0
+      ? Math.min(100, Math.max(0, (householdEquity / ownedPropertyValue) * 100))
+      : 0;
 
-    $('balanceStat').textContent = money(values.balance);
-    $('homeValueStat').textContent = money(values.homeValue);
-    $('ownedValueStat').textContent = `${money(ownedPropertyValue)} (${values.ownership.toFixed(values.ownership % 1 ? 1 : 0)}%)`;
-    $('equityStat').textContent = householdEquity >= 0 ? money(householdEquity) : `-${money(Math.abs(householdEquity))}`;
-    $('ltvStat').textContent = values.homeValue > 0 ? `${ltv.toFixed(1)}%` : '—';
     $('balanceLine').textContent = money(values.balance);
+    $('paymentStat').textContent = money(values.payment);
+    $('rateStat').textContent = `${values.rate.toFixed(2)}%`;
+    $('homeValueStat').textContent = money(values.homeValue);
+    $('ownedValueStat').textContent = money(ownedPropertyValue);
+    $('equityStat').textContent = householdEquity >= 0 ? money(householdEquity) : `-${money(Math.abs(householdEquity))}`;
+    $('equitySubtext').textContent = `${mortgageFreeShare.toFixed(0)}% of your owned share is mortgage-free`;
+    $('ltvStat').textContent = values.homeValue > 0 ? `${ltv.toFixed(1)}%` : '—';
+    $('ownershipBadge').textContent = `${values.ownership.toFixed(values.ownership % 1 ? 1 : 0)}% share`;
+    $('equityProgress').textContent = `${mortgageFreeShare.toFixed(0)}%`;
+    $('progressCaption').textContent = `${money(householdEquity)} equity in your share of the home`;
+    $('progressRing').style.setProperty('--progress', mortgageFreeShare.toFixed(1));
     $('overpayHeadline').textContent = `${money(selectedExtra)}/month`;
-    $('customExtraLabel').textContent = money(selectedExtra);
+    updateNextEvent(values.fixedEnd);
 
     if (!Number.isFinite(result.base.months)) {
       $('yearsRemaining').textContent = 'Payment too low';
       $('payoffDate').textContent = 'The payment does not currently repay the mortgage.';
-      $('overpayImpact').textContent = 'Increase the payment or overpayment to create a repayment path.';
-      $('acceleratedPayoff').textContent = '';
-      $('warning').textContent = 'At this rate, the monthly payment does not cover enough principal to clear the mortgage.';
       $('interestRemaining').textContent = '—';
-      $('interestWithExtra').textContent = '—';
+      $('interestWithExtraText').textContent = '';
       $('interestSaved').textContent = '—';
+      $('timeSaved').textContent = '—';
+      $('acceleratedPayoff').textContent = '—';
+      $('warning').textContent = 'At this rate, the monthly payment does not cover enough principal to clear the mortgage.';
       drawChart(result.base, result.accelerated);
       return;
     }
 
     $('yearsRemaining').textContent = humanMonths(result.base.months);
     $('payoffDate').textContent = `Mortgage-free around ${payoffDate(result.base.months)}`;
-    $('warning').textContent = '';
     $('interestRemaining').textContent = money(result.base.interest);
+    $('warning').textContent = '';
 
     if (selectedExtra === 0 || !Number.isFinite(result.accelerated.months)) {
-      $('overpayImpact').textContent = 'Choose an amount to see how much time and interest you could save.';
-      $('acceleratedPayoff').textContent = '';
-      $('interestWithExtra').textContent = money(result.base.interest);
       $('interestSaved').textContent = money(0);
+      $('timeSaved').textContent = 'No change';
+      $('acceleratedPayoff').textContent = payoffDate(result.base.months);
+      $('interestWithExtraText').textContent = 'Choose an overpayment to preview the saving.';
     } else {
-      $('overpayImpact').innerHTML = `Save <strong>${money(result.interestSaved)}</strong> in interest and finish <strong>${humanMonths(result.monthsSaved)}</strong> earlier.`;
-      $('acceleratedPayoff').textContent = `Paid off ${payoffDate(result.accelerated.months)}`;
-      $('interestWithExtra').textContent = money(result.accelerated.interest);
       $('interestSaved').textContent = money(result.interestSaved);
+      $('timeSaved').textContent = humanMonths(result.monthsSaved);
+      $('acceleratedPayoff').textContent = payoffDate(result.accelerated.months);
+      $('interestWithExtraText').textContent = `${money(result.accelerated.interest)} interest with ${money(selectedExtra)}/month overpayment`;
     }
 
     drawChart(result.base, result.accelerated);
@@ -210,14 +251,14 @@
   $('extraSlider').addEventListener('input', (event) => applyExtra(event.target.value));
   $('customExtra').addEventListener('input', (event) => applyExtra(event.target.value));
 
-  ['balance', 'rate', 'payment', 'homeValue', 'ownership'].forEach((id) => {
+  ['balance', 'rate', 'payment', 'homeValue', 'ownership', 'fixedEnd'].forEach((id) => {
     $(id).addEventListener('input', () => {
       update();
       queueSave();
     });
   });
 
-  window.addEventListener('resize', () => update());
+  window.addEventListener('resize', update);
 
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
