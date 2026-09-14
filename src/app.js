@@ -35,6 +35,7 @@
       rate: +$('rate').value || 0,
       payment: +$('payment').value || 0,
       homeValue: +$('homeValue').value || 0,
+      ownership: Math.min(100, Math.max(0, +$('ownership').value || 0)),
       extra: Math.max(0, +$('customExtra').value || 0),
     };
   }
@@ -54,7 +55,7 @@
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
       if (!saved) return;
-      ['balance', 'rate', 'payment', 'homeValue'].forEach((key) => {
+      ['balance', 'rate', 'payment', 'homeValue', 'ownership'].forEach((key) => {
         if (saved[key] !== undefined) $(key).value = saved[key];
       });
       if (saved.extra !== undefined) {
@@ -148,12 +149,14 @@
     selectedExtra = values.extra;
     const result = MortgageMath.compare(values.balance, values.rate, values.payment, selectedExtra);
 
-    const equity = values.homeValue - values.balance;
+    const ownedPropertyValue = values.homeValue * (values.ownership / 100);
+    const householdEquity = ownedPropertyValue - values.balance;
     const ltv = values.homeValue > 0 ? (values.balance / values.homeValue) * 100 : 0;
 
     $('balanceStat').textContent = money(values.balance);
     $('homeValueStat').textContent = money(values.homeValue);
-    $('equityStat').textContent = money(Math.max(0, equity));
+    $('ownedValueStat').textContent = `${money(ownedPropertyValue)} (${values.ownership.toFixed(values.ownership % 1 ? 1 : 0)}%)`;
+    $('equityStat').textContent = householdEquity >= 0 ? money(householdEquity) : `-${money(Math.abs(householdEquity))}`;
     $('ltvStat').textContent = values.homeValue > 0 ? `${ltv.toFixed(1)}%` : '—';
     $('balanceLine').textContent = money(values.balance);
     $('overpayHeadline').textContent = `${money(selectedExtra)}/month`;
@@ -207,7 +210,7 @@
   $('extraSlider').addEventListener('input', (event) => applyExtra(event.target.value));
   $('customExtra').addEventListener('input', (event) => applyExtra(event.target.value));
 
-  ['balance', 'rate', 'payment', 'homeValue'].forEach((id) => {
+  ['balance', 'rate', 'payment', 'homeValue', 'ownership'].forEach((id) => {
     $(id).addEventListener('input', () => {
       update();
       queueSave();
