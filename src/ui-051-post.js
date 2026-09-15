@@ -25,15 +25,58 @@
       <small id="currentSavingsInterest">—</small>
     `;
     top.appendChild(block);
+  }
 
-    const prompt = document.createElement('div');
-    prompt.className = 'what-if-prompt';
-    prompt.innerHTML = '<strong>What if?</strong><span>Tap to compare other overpayment amounts</span>';
-    scenario.appendChild(prompt);
+  function ensureCompactWhatIf() {
+    if (!scenario || document.getElementById('compactWhatIf')) return;
+    const originalButtons = document.getElementById('overpayButtons');
+    if (!originalButtons) return;
+
+    const wrap = document.createElement('div');
+    wrap.id = 'compactWhatIf';
+    wrap.className = 'compact-what-if';
+    wrap.innerHTML = `
+      <div class="compact-what-if-head">
+        <div><span>What if?</span><strong>Try a little more</strong></div>
+        <small id="compactWhatIfSummary">Choose an amount to preview the impact.</small>
+      </div>
+      <div class="compact-what-if-buttons" aria-label="Try an extra monthly overpayment"></div>
+    `;
+
+    const buttonRow = wrap.querySelector('.compact-what-if-buttons');
+    originalButtons.querySelectorAll('button[data-extra]').forEach((source) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.compactExtra = source.dataset.extra;
+      button.textContent = source.textContent;
+      button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        source.click();
+        syncCompactWhatIf();
+      });
+      buttonRow.appendChild(button);
+    });
+
+    const detail = scenario.querySelector('.expand-detail');
+    if (detail) scenario.insertBefore(wrap, detail);
+    else scenario.appendChild(wrap);
+  }
+
+  function syncCompactWhatIf() {
+    const wrap = document.getElementById('compactWhatIf');
+    if (!wrap) return;
+    const selected = Math.max(0, Number(document.getElementById('customExtra')?.value) || 0);
+    wrap.querySelectorAll('button[data-compact-extra]').forEach((button) => {
+      button.classList.toggle('active', Number(button.dataset.compactExtra) === selected);
+    });
+    const sourceSummary = document.getElementById('scenarioSummary');
+    const summary = document.getElementById('compactWhatIfSummary');
+    if (summary && sourceSummary) summary.textContent = sourceSummary.textContent || 'Choose an amount to preview the impact.';
   }
 
   function updateCurrentSavings() {
     ensureCompactSavings();
+    ensureCompactWhatIf();
     if (!window.MortgageMath || !current) return;
     const balance = Math.max(0, Number(document.getElementById('balance')?.value) || 0);
     const rate = Math.max(0, Number(document.getElementById('rate')?.value) || 0);
@@ -69,6 +112,7 @@
       try { localStorage.setItem(key, String(value)); } catch (_) {}
       document.getElementById('customExtra')?.dispatchEvent(new Event('input', { bubbles:true }));
       updateCurrentSavings();
+      requestAnimationFrame(syncCompactWhatIf);
     };
     current.addEventListener('input', sync);
     sync();
@@ -77,6 +121,12 @@
   ['balance','rate','payment'].forEach((id) => {
     document.getElementById(id)?.addEventListener('input', () => requestAnimationFrame(updateCurrentSavings));
   });
+  document.getElementById('customExtra')?.addEventListener('input', () => requestAnimationFrame(syncCompactWhatIf));
+
+  const sourceSummary = document.getElementById('scenarioSummary');
+  if (sourceSummary) {
+    new MutationObserver(syncCompactWhatIf).observe(sourceSummary, { childList:true, characterData:true, subtree:true });
+  }
 
   const dealDetail = document.querySelector('.next-panel .expand-detail');
   if (dealDetail && !document.getElementById('dealMarketCompare')) {
@@ -102,4 +152,7 @@
   copyRates();
   const observer = new MutationObserver(copyRates);
   ['marketCurrentRate','marketLtvBand','market2yRate','market2yPayment','market5yRate','market5yPayment'].forEach((id)=>{ const el=document.getElementById(id); if(el) observer.observe(el,{childList:true,characterData:true,subtree:true}); });
+
+  ensureCompactWhatIf();
+  syncCompactWhatIf();
 })();
