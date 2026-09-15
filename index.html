@@ -9,15 +9,24 @@
   <meta name="apple-mobile-web-app-title" content="Mortgage" />
   <meta name="description" content="A visual mortgage manager for tracking balance, equity, payoff time and overpayment impact." />
   <title>Mortgage Manager</title>
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="icon" href="public/icon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="src/styles.css" />
+  <link rel="icon" href="public/icon.svg?v=041" type="image/svg+xml" />
+  <link rel="stylesheet" href="src/styles.css?v=041" />
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        registrations.forEach((registration) => registration.unregister());
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key))));
+    }
+  </script>
 </head>
 <body>
   <main class="app-shell">
     <header class="topbar">
       <div>
-        <p class="brand">Mortgage Manager <span>V0.4</span></p>
+        <p class="brand">Mortgage Manager <span>V0.4.1</span></p>
         <p class="topline">See what you owe, what you own, and how quickly you can change it.</p>
       </div>
       <div class="save-status" id="saveStatus">Saved on this device</div>
@@ -30,18 +39,9 @@
         <p id="payoffDate" class="hero-date">—</p>
 
         <div class="hero-balance-row">
-          <div>
-            <span>Mortgage remaining</span>
-            <strong id="balanceLine">—</strong>
-          </div>
-          <div>
-            <span>Monthly payment</span>
-            <strong id="paymentStat">—</strong>
-          </div>
-          <div>
-            <span>Rate</span>
-            <strong id="rateStat">—</strong>
-          </div>
+          <div><span>Mortgage remaining</span><strong id="balanceLine">—</strong></div>
+          <div><span>Monthly payment</span><strong id="paymentStat">—</strong></div>
+          <div><span>Rate</span><strong id="rateStat">—</strong></div>
         </div>
       </div>
 
@@ -58,15 +58,10 @@
 
     <section class="panel scenario-panel">
       <div class="scenario-top">
-        <div>
-          <p class="eyebrow">What if?</p>
-          <h2>Overpay <span id="overpayHeadline">£50/month</span></h2>
-        </div>
+        <div><p class="eyebrow">What if?</p><h2>Overpay <span id="overpayHeadline">£50/month</span></h2></div>
         <div class="scenario-summary" id="scenarioSummary">—</div>
       </div>
-
       <input id="extraSlider" class="range" type="range" min="0" max="1000" step="10" value="50" aria-label="Monthly overpayment" />
-
       <div class="scenario-chips" id="overpayButtons">
         <button type="button" data-extra="0">£0</button>
         <button type="button" data-extra="50" class="active">£50</button>
@@ -80,13 +75,9 @@
     <section class="dashboard-grid">
       <article class="panel home-panel">
         <div class="panel-heading">
-          <div>
-            <p class="eyebrow">Your home</p>
-            <h2>Where the property value sits</h2>
-          </div>
+          <div><p class="eyebrow">Your home</p><h2>Where the property value sits</h2></div>
           <span id="ownershipBadge" class="ownership-badge">100% share</span>
         </div>
-
         <div class="ownership-bar" aria-label="Property ownership breakdown">
           <div id="debtSegment" class="ownership-segment debt"></div>
           <div id="equitySegment" class="ownership-segment equity"></div>
@@ -97,13 +88,7 @@
           <span><i class="dot equity-dot"></i>Your equity <strong id="equityLegend">—</strong></span>
           <span id="schemeLegendWrap"><i class="dot scheme-dot"></i>Other share <strong id="schemeLegend">—</strong></span>
         </div>
-
-        <div class="home-value">
-          <span>Your equity</span>
-          <strong id="equityStat">—</strong>
-          <small id="equitySubtext">—</small>
-        </div>
-
+        <div class="home-value"><span>Your equity</span><strong id="equityStat">—</strong><small id="equitySubtext">—</small></div>
         <div class="home-stats">
           <div><span>Property value</span><strong id="homeValueStat">—</strong></div>
           <div><span>Your share value</span><strong id="ownedValueStat">—</strong></div>
@@ -117,36 +102,21 @@
         <p id="nextEventText" class="next-event-text">We’ll keep the next mortgage milestone visible here.</p>
         <div class="timeline-track"><div id="timelineFill" class="timeline-fill"></div></div>
         <div class="timeline-labels"><span>Now</span><span id="timelineEndLabel">Deal end</span></div>
-        <div class="interest-box">
-          <span>Projected interest left</span>
-          <strong id="interestRemaining">—</strong>
-          <small id="interestWithExtraText">—</small>
-        </div>
+        <div class="interest-box"><span>Projected interest left</span><strong id="interestRemaining">—</strong><small id="interestWithExtraText">—</small></div>
       </article>
     </section>
 
     <section class="panel chart-panel">
       <div class="panel-heading">
-        <div>
-          <p class="eyebrow">Trajectory</p>
-          <h2>Your balance over time</h2>
-          <p class="subtle">Current path versus your selected overpayment.</p>
-        </div>
+        <div><p class="eyebrow">Trajectory</p><h2>Your balance over time</h2><p class="subtle">Current path versus your selected overpayment.</p></div>
         <div class="chart-stat"><span>Time saved</span><strong id="timeSaved">—</strong></div>
       </div>
       <div class="chart-wrap"><canvas id="chart" aria-label="Mortgage balance over time"></canvas></div>
-      <div class="legend">
-        <span><i class="dot current"></i>Current payment</span>
-        <span><i class="dot overpay"></i>With overpayment</span>
-      </div>
+      <div class="legend"><span><i class="dot current"></i>Current payment</span><span><i class="dot overpay"></i>With overpayment</span></div>
     </section>
 
     <details class="panel edit-panel">
-      <summary>
-        <span><strong>Edit mortgage</strong><small>Update your balance, rate, home value or deal details</small></span>
-        <span class="summary-plus">＋</span>
-      </summary>
-
+      <summary><span><strong>Edit mortgage</strong><small>Update your balance, rate, home value or deal details</small></span><span class="summary-plus">＋</span></summary>
       <div class="edit-content">
         <div class="inputs">
           <label>Current balance (£)<input id="balance" inputmode="decimal" type="number" min="0" step="100" value="180000" /></label>
@@ -164,7 +134,7 @@
     <footer class="footer">Illustrative planning tool only. Property-share figures are simplified and may not match the legal or lender treatment of every ownership/equity scheme. Mortgage projections assume the entered rate and payment remain unchanged.</footer>
   </main>
 
-  <script src="src/mortgage.js"></script>
-  <script src="src/app.js"></script>
+  <script src="src/mortgage.js?v=041"></script>
+  <script src="src/app.js?v=041"></script>
 </body>
 </html>
