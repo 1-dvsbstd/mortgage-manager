@@ -9,8 +9,8 @@
   <meta name="apple-mobile-web-app-title" content="Mortgage" />
   <meta name="description" content="A visual mortgage manager for tracking balance, equity, payoff time and overpayment impact." />
   <title>Mortgage Manager</title>
-  <link rel="icon" href="public/icon.svg?v=041" type="image/svg+xml" />
-  <link rel="stylesheet" href="src/styles.css?v=041" />
+  <link rel="icon" href="public/icon.svg?v=042" type="image/svg+xml" />
+  <link rel="stylesheet" href="src/styles.css?v=042" />
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then((registrations) => {
@@ -26,7 +26,7 @@
   <main class="app-shell">
     <header class="topbar">
       <div>
-        <p class="brand">Mortgage Manager <span>V0.4.1</span></p>
+        <p class="brand">Mortgage Manager <span>V0.4.2</span></p>
         <p class="topline">See what you owe, what you own, and how quickly you can change it.</p>
       </div>
       <div class="save-status" id="saveStatus">Saved on this device</div>
@@ -39,9 +39,15 @@
         <p id="payoffDate" class="hero-date">—</p>
 
         <div class="hero-balance-row">
-          <div><span>Mortgage remaining</span><strong id="balanceLine">—</strong></div>
-          <div><span>Monthly payment</span><strong id="paymentStat">—</strong></div>
-          <div><span>Rate</span><strong id="rateStat">—</strong></div>
+          <div class="editable-metric" data-edit-target="balance" tabindex="0" role="button" aria-label="Edit mortgage balance">
+            <span>Mortgage remaining</span><strong id="balanceLine">—</strong>
+          </div>
+          <div class="editable-metric" data-edit-target="payment" tabindex="0" role="button" aria-label="Edit monthly payment">
+            <span>Monthly payment</span><strong id="paymentStat">—</strong>
+          </div>
+          <div class="editable-metric" data-edit-target="rate" tabindex="0" role="button" aria-label="Edit interest rate">
+            <span>Rate</span><strong id="rateStat">—</strong>
+          </div>
         </div>
       </div>
 
@@ -76,7 +82,7 @@
       <article class="panel home-panel">
         <div class="panel-heading">
           <div><p class="eyebrow">Your home</p><h2>Where the property value sits</h2></div>
-          <span id="ownershipBadge" class="ownership-badge">100% share</span>
+          <button type="button" id="ownershipBadge" class="ownership-badge inline-edit-trigger" data-edit-target="ownership" aria-label="Edit property ownership share">100% share</button>
         </div>
         <div class="ownership-bar" aria-label="Property ownership breakdown">
           <div id="debtSegment" class="ownership-segment debt"></div>
@@ -90,14 +96,19 @@
         </div>
         <div class="home-value"><span>Your equity</span><strong id="equityStat">—</strong><small id="equitySubtext">—</small></div>
         <div class="home-stats">
-          <div><span>Property value</span><strong id="homeValueStat">—</strong></div>
+          <div class="editable-metric" data-edit-target="homeValue" tabindex="0" role="button" aria-label="Edit property value">
+            <span>Property value</span><strong id="homeValueStat">—</strong>
+          </div>
           <div><span>Your share value</span><strong id="ownedValueStat">—</strong></div>
           <div><span>LTV</span><strong id="ltvStat">—</strong></div>
         </div>
       </article>
 
       <article class="panel next-panel">
-        <p class="eyebrow">Next important thing</p>
+        <div class="next-heading-row">
+          <p class="eyebrow">Next important thing</p>
+          <button type="button" class="mini-edit inline-edit-trigger" data-edit-target="fixedEnd">Edit</button>
+        </div>
         <h2 id="nextEventTitle">Add your fixed-rate end date</h2>
         <p id="nextEventText" class="next-event-text">We’ll keep the next mortgage milestone visible here.</p>
         <div class="timeline-track"><div id="timelineFill" class="timeline-fill"></div></div>
@@ -116,7 +127,7 @@
     </section>
 
     <details class="panel edit-panel">
-      <summary><span><strong>Edit mortgage</strong><small>Update your balance, rate, home value or deal details</small></span><span class="summary-plus">＋</span></summary>
+      <summary><span><strong>All mortgage details</strong><small>View or update everything in one place</small></span><span class="summary-plus">＋</span></summary>
       <div class="edit-content">
         <div class="inputs">
           <label>Current balance (£)<input id="balance" inputmode="decimal" type="number" min="0" step="100" value="180000" /></label>
@@ -134,7 +145,7 @@
     <footer class="footer">Illustrative planning tool only. Property-share figures are simplified and may not match the legal or lender treatment of every ownership/equity scheme. Mortgage projections assume the entered rate and payment remain unchanged.</footer>
   </main>
 
-  <script src="src/mortgage.js?v=041"></script>
-  <script src="src/app.js?v=041"></script>
+  <script src="src/mortgage.js?v=042"></script>
+  <script src="src/app.js?v=042"></script>
 </body>
 </html>
