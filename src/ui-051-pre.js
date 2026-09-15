@@ -13,10 +13,9 @@
     const slider = document.getElementById('extraSlider');
     const chips = document.getElementById('overpayButtons');
     const detail = scenario.querySelector('.expand-detail');
-    const headline = document.getElementById('overpayHeadline');
     if (top) {
       top.querySelector('.eyebrow').textContent = 'Current overpayment';
-      top.querySelector('h2').innerHTML = '<span id="currentOverpayDisplay">£0/month</span>';
+      top.querySelector('h2').innerHTML = '<span id="currentOverpayDisplay">£0/month</span><span id="overpayHeadline" hidden></span>';
       const summary = document.getElementById('scenarioSummary');
       if (summary) summary.insertAdjacentHTML('beforebegin', '<span class="what-if-label">What if?</span>');
     }
@@ -33,6 +32,5 @@
       detail.querySelector('.what-if-heading').insertAdjacentElement('afterend', slider);
       slider.insertAdjacentElement('afterend', chips);
     }
-    if (headline) headline.remove();
   }
 })();
