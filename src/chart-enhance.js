@@ -15,15 +15,20 @@
     return n >= 1000 ? `£${Math.round(n / 1000)}k` : money(n);
   };
 
-  function values() {
-    return {
-      balance: +document.getElementById('balance')?.value || 0,
-      rate: +document.getElementById('rate')?.value || 0,
-      payment: +document.getElementById('payment')?.value || 0,
-      homeValue: +document.getElementById('homeValue')?.value || 0,
-      extra: Math.max(0, +document.getElementById('customExtra')?.value || 0),
-      fixedEnd: document.getElementById('fixedEnd')?.value || '',
-    };
+  const values = () => ({
+    balance: +document.getElementById('balance')?.value || 0,
+    rate: +document.getElementById('rate')?.value || 0,
+    payment: +document.getElementById('payment')?.value || 0,
+    homeValue: +document.getElementById('homeValue')?.value || 0,
+    extra: Math.max(0, +document.getElementById('customExtra')?.value || 0),
+    fixedEnd: document.getElementById('fixedEnd')?.value || '',
+  });
+
+  function dateAt(months) {
+    const date = new Date();
+    date.setDate(1);
+    date.setMonth(date.getMonth() + months);
+    return date;
   }
 
   function monthsUntil(monthValue) {
@@ -32,13 +37,6 @@
     if (!year || !month) return null;
     const now = new Date();
     return (year - now.getFullYear()) * 12 + (month - 1 - now.getMonth());
-  }
-
-  function dateAt(months) {
-    const date = new Date();
-    date.setDate(1);
-    date.setMonth(date.getMonth() + months);
-    return date;
   }
 
   function formatPointDate(months) {
@@ -61,6 +59,28 @@
     return readout;
   }
 
+  function makeYearTicks(maxMonths, cssWidth) {
+    const totalYears = Math.max(1, maxMonths / 12);
+    const maxTicks = cssWidth < 420 ? 5 : cssWidth < 620 ? 6 : 8;
+    const intervalYears = Math.max(1, Math.ceil(totalYears / Math.max(1, maxTicks - 1)));
+    const intervalMonths = intervalYears * 12;
+    const ticks = [{ month: 0, label: `${dateAt(0).getFullYear()}` }];
+
+    for (let month = intervalMonths; month < maxMonths; month += intervalMonths) {
+      ticks.push({ month, label: `${dateAt(month).getFullYear()}` });
+    }
+
+    const finalYear = `${dateAt(maxMonths).getFullYear()}`;
+    const last = ticks[ticks.length - 1];
+    if (!last || maxMonths - last.month > Math.max(6, intervalMonths * 0.35)) {
+      ticks.push({ month: maxMonths, label: finalYear });
+    } else if (last) {
+      last.month = maxMonths;
+      last.label = finalYear;
+    }
+    return ticks;
+  }
+
   function render() {
     const v = values();
     const result = MortgageMath.compare(v.balance, v.rate, v.payment, v.extra);
@@ -69,12 +89,16 @@
     if (!base?.monthlyPoints?.length || !accelerated?.monthlyPoints?.length) return;
 
     const container = canvas.parentElement;
-    const dpr = window.devicePixelRatio || 1;
-    const cssWidth = Math.max(280, Math.floor(container.getBoundingClientRect().width));
+    const rectWidth = Math.floor(container?.getBoundingClientRect().width || 0);
+    if (rectWidth < 80) return;
+
+    const cssWidth = Math.max(280, rectWidth);
     const expanded = canvas.closest('.expandable-card')?.classList.contains('is-expanded');
+    const compact = cssWidth < 520;
     const cssHeight = expanded
-      ? Math.max(360, Math.min(500, Math.round(cssWidth * 0.46)))
-      : (window.innerWidth < 620 ? 250 : 315);
+      ? (compact ? 390 : Math.max(360, Math.min(500, Math.round(cssWidth * 0.46))))
+      : (cssWidth < 620 ? 250 : 315);
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
 
     canvas.style.width = '100%';
     canvas.style.height = `${cssHeight}px`;
@@ -82,22 +106,26 @@
     canvas.height = Math.floor(cssHeight * dpr);
 
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, cssWidth, cssHeight);
 
-    const compact = cssWidth < 520;
-    const pad = { left: compact ? 46 : 60, right: compact ? 14 : 24, top: 18, bottom: compact ? 44 : 48 };
-    const width = cssWidth - pad.left - pad.right;
-    const height = cssHeight - pad.top - pad.bottom;
+    const pad = {
+      left: compact ? 52 : 62,
+      right: compact ? 18 : 26,
+      top: compact ? 22 : 18,
+      bottom: compact ? 54 : 50,
+    };
+    const width = Math.max(1, cssWidth - pad.left - pad.right);
+    const height = Math.max(1, cssHeight - pad.top - pad.bottom);
     const maxBalance = Math.max(base.monthlyPoints[0] || 0, accelerated.monthlyPoints[0] || 0, 1);
     const maxMonths = Math.max(base.monthlyPoints.length, accelerated.monthlyPoints.length) - 1 || 1;
 
     const xFor = (month) => pad.left + width * (month / maxMonths);
     const yFor = (balance) => pad.top + height * (1 - Math.max(0, balance) / maxBalance);
 
-    ctx.font = compact ? '10px system-ui' : '11px system-ui';
+    ctx.font = compact ? '11px system-ui' : '11px system-ui';
     ctx.textBaseline = 'middle';
-
     for (let i = 0; i <= 4; i += 1) {
       const y = pad.top + (height * i) / 4;
       ctx.strokeStyle = 'rgba(255,255,255,.075)';
@@ -106,34 +134,26 @@
       ctx.moveTo(pad.left, y);
       ctx.lineTo(pad.left + width, y);
       ctx.stroke();
-      const amount = maxBalance * (1 - i / 4);
       ctx.fillStyle = '#8fa39c';
       ctx.textAlign = 'right';
-      ctx.fillText(compactMoney(amount), pad.left - 8, y);
+      ctx.fillText(compactMoney(maxBalance * (1 - i / 4)), pad.left - 10, y);
     }
 
-    const totalYears = maxMonths / 12;
-    const yearStep = totalYears <= 12 ? 1 : totalYears <= 24 ? 2 : 3;
-    const start = new Date();
-    const firstJanuaryMonths = (12 - start.getMonth()) % 12 || 12;
-    const yearTicks = [{ month: 0, label: `${start.getFullYear()}` }];
-    for (let month = firstJanuaryMonths; month <= maxMonths; month += 12 * yearStep) {
-      yearTicks.push({ month, label: `${dateAt(month).getFullYear()}` });
-    }
-    if (yearTicks[yearTicks.length - 1].month < maxMonths - 6) {
-      yearTicks.push({ month: maxMonths, label: `${dateAt(maxMonths).getFullYear()}` });
-    }
-
+    const yearTicks = makeYearTicks(maxMonths, cssWidth);
     ctx.textBaseline = 'alphabetic';
+    ctx.font = compact ? '10px system-ui' : '11px system-ui';
     yearTicks.forEach(({ month, label }, index) => {
       const x = xFor(month);
       if (index > 0 && index < yearTicks.length - 1) {
         ctx.strokeStyle = 'rgba(255,255,255,.035)';
-        ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, pad.top + height); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, pad.top);
+        ctx.lineTo(x, pad.top + height);
+        ctx.stroke();
       }
       ctx.fillStyle = '#8fa39c';
-      ctx.textAlign = month === 0 ? 'left' : month === maxMonths ? 'right' : 'center';
-      ctx.fillText(label, x, cssHeight - 14);
+      ctx.textAlign = index === 0 ? 'left' : index === yearTicks.length - 1 ? 'right' : 'center';
+      ctx.fillText(label, x, cssHeight - 17);
     });
 
     const drawLine = (points, colour, lineWidth) => {
@@ -151,7 +171,7 @@
     };
 
     drawLine(base.monthlyPoints, '#a8b4b0', compact ? 2.2 : 2.5);
-    drawLine(accelerated.monthlyPoints, '#54e0b4', compact ? 2.6 : 3);
+    drawLine(accelerated.monthlyPoints, '#54e0b4', compact ? 2.7 : 3);
 
     const fixedMonth = monthsUntil(v.fixedEnd);
     if (fixedMonth !== null && fixedMonth >= 0 && fixedMonth <= maxMonths) {
@@ -160,17 +180,20 @@
       ctx.setLineDash([4, 5]);
       ctx.strokeStyle = 'rgba(231,220,196,.55)';
       ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, pad.top + height); ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(x, pad.top);
+      ctx.lineTo(x, pad.top + height);
+      ctx.stroke();
       ctx.restore();
       ctx.fillStyle = '#d7cdb8';
       ctx.font = compact ? '9px system-ui' : '10px system-ui';
       ctx.textAlign = x > cssWidth * .72 ? 'right' : 'left';
-      ctx.fillText('Fix ends', x + (x > cssWidth * .72 ? -5 : 5), pad.top + 12);
+      ctx.fillText('Fix ends', x + (x > cssWidth * .72 ? -5 : 5), pad.top + 13);
     }
 
     const readout = ensureReadout();
     if (hoverMonth === null) {
-      readout.innerHTML = '<span>Hover or tap the chart to inspect a point in time.</span>';
+      readout.innerHTML = `<span>${compact ? 'Tap' : 'Hover or tap'} the chart to inspect a point in time.</span>`;
       return;
     }
 
@@ -178,19 +201,25 @@
     const x = xFor(month);
     const baseBalance = pointAt(base.monthlyPoints, month);
     const overBalance = pointAt(accelerated.monthlyPoints, month);
-    const baseY = yFor(baseBalance);
-    const overY = yFor(overBalance);
 
     ctx.strokeStyle = 'rgba(255,255,255,.28)';
     ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, pad.top + height); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, pad.top);
+    ctx.lineTo(x, pad.top + height);
+    ctx.stroke();
 
-    const dot = (y, colour) => {
-      ctx.fillStyle = colour; ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = '#071713'; ctx.lineWidth = 2; ctx.stroke();
+    const dot = (balance, colour) => {
+      ctx.fillStyle = colour;
+      ctx.beginPath();
+      ctx.arc(x, yFor(balance), 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#071713';
+      ctx.lineWidth = 2;
+      ctx.stroke();
     };
-    dot(baseY, '#a8b4b0');
-    dot(overY, '#54e0b4');
+    dot(baseBalance, '#a8b4b0');
+    dot(overBalance, '#54e0b4');
 
     const ltv = v.homeValue > 0 ? (baseBalance / v.homeValue) * 100 : null;
     const difference = Math.max(0, baseBalance - overBalance);
@@ -200,8 +229,8 @@
   function monthFromPointer(event) {
     const rect = canvas.getBoundingClientRect();
     const compact = rect.width < 520;
-    const left = compact ? 46 : 60;
-    const right = compact ? 14 : 24;
+    const left = compact ? 52 : 62;
+    const right = compact ? 18 : 26;
     const usable = Math.max(1, rect.width - left - right);
     const v = values();
     const result = MortgageMath.compare(v.balance, v.rate, v.payment, v.extra);
@@ -218,6 +247,14 @@
   canvas.addEventListener('pointerleave', () => {
     if (!pinned) { hoverMonth = null; render(); }
   });
+  canvas.addEventListener('pointerup', (event) => {
+    if (event.pointerType === 'touch' || event.pointerType === 'pen') {
+      event.stopPropagation();
+      hoverMonth = monthFromPointer(event);
+      pinned = true;
+      render();
+    }
+  });
   canvas.addEventListener('click', (event) => {
     event.stopPropagation();
     hoverMonth = monthFromPointer(event);
@@ -231,34 +268,34 @@
     render();
   });
 
+  const scheduleRender = () => {
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(() => requestAnimationFrame(render));
+  };
+
   document.addEventListener('input', (event) => {
-    if (event.target.matches('#balance,#rate,#payment,#homeValue,#ownership,#fixedEnd,#customExtra,#extraSlider')) requestAnimationFrame(render);
+    if (event.target.matches('#balance,#rate,#payment,#homeValue,#ownership,#fixedEnd,#customExtra,#extraSlider')) scheduleRender();
   });
   document.addEventListener('click', (event) => {
-    if (event.target.closest('#overpayButtons')) requestAnimationFrame(render);
-    if (event.target.closest('[data-expandable-card="trajectory"]') && !event.target.closest('canvas')) requestAnimationFrame(render);
+    if (event.target.closest('#overpayButtons,[data-expandable-card="trajectory"]')) scheduleRender();
   });
-  window.addEventListener('resize', () => {
-    cancelAnimationFrame(resizeFrame);
-    resizeFrame = requestAnimationFrame(render);
+  window.addEventListener('resize', scheduleRender);
+  window.addEventListener('orientationchange', () => setTimeout(render, 180));
+  window.addEventListener('pageshow', scheduleRender);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) setTimeout(render, 80);
   });
 
   const container = canvas.parentElement;
-  if ('ResizeObserver' in window && container) {
-    const observer = new ResizeObserver(() => {
-      cancelAnimationFrame(resizeFrame);
-      resizeFrame = requestAnimationFrame(render);
-    });
-    observer.observe(container);
-  }
+  if ('ResizeObserver' in window && container) new ResizeObserver(scheduleRender).observe(container);
 
   const card = canvas.closest('[data-expandable-card="trajectory"]');
   if (card) {
-    new MutationObserver(() => requestAnimationFrame(render)).observe(card, {
+    new MutationObserver(scheduleRender).observe(card, {
       attributes: true,
       attributeFilter: ['class', 'aria-expanded'],
     });
   }
 
-  requestAnimationFrame(render);
+  scheduleRender();
 })();
