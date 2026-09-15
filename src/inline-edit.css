@@ -95,16 +95,13 @@
   box-sizing: border-box;
 }
 
-/* Remove browser number steppers. */
-.inline-editor input[type="number"]::-webkit-inner-spin-button,
-.inline-editor input[type="number"]::-webkit-outer-spin-button,
-.personal-form input[type="number"]::-webkit-inner-spin-button,
-.personal-form input[type="number"]::-webkit-outer-spin-button {
+/* Remove browser number steppers everywhere in the app. */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-.inline-editor input[type="number"],
-.personal-form input[type="number"] {
+input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
