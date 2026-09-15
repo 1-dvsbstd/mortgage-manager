@@ -187,3 +187,17 @@
     renderCostComparison();
   });
 })();
+
+(() => {
+  if (!document.querySelector('link[href*="ui-057.css"]')) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'src/ui-057.css?v=057';
+    document.head.appendChild(link);
+  }
+  if (!document.querySelector('script[src*="ui-057.js"]')) {
+    const script = document.createElement('script');
+    script.src = 'src/ui-057.js?v=057';
+    document.body.appendChild(script);
+  }
+})();
