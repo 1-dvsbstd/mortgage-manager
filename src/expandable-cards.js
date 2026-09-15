@@ -5,8 +5,9 @@
   let activeCard = null;
   let backdrop = null;
   let previousFocus = null;
+  let touchStart = null;
 
-  const isInteractive = (target) => Boolean(target.closest('button, input, label, a, summary, [data-edit-target]'));
+  const isInteractive = (target) => Boolean(target.closest('button, input, label, a, summary, [data-edit-target], canvas, select, textarea'));
 
   function closeCard() {
     if (!activeCard) return;
@@ -19,6 +20,7 @@
     document.body.classList.remove('card-open');
     const focusTarget = previousFocus;
     activeCard = null;
+    touchStart = null;
     if (focusTarget && typeof focusTarget.focus === 'function') focusTarget.focus();
   }
 
@@ -65,6 +67,32 @@
         openCard(card);
       }
     });
+
+    card.addEventListener('touchstart', (event) => {
+      if (!card.classList.contains('is-expanded') || event.touches.length !== 1) return;
+      if (isInteractive(event.target)) return;
+      const touch = event.touches[0];
+      touchStart = {
+        x: touch.clientX,
+        y: touch.clientY,
+        scrollTop: card.scrollTop,
+        edgeSwipe: touch.clientX <= 28,
+      };
+    }, { passive: true });
+
+    card.addEventListener('touchend', (event) => {
+      if (!card.classList.contains('is-expanded') || !touchStart || event.changedTouches.length !== 1) {
+        touchStart = null;
+        return;
+      }
+      const touch = event.changedTouches[0];
+      const dx = touch.clientX - touchStart.x;
+      const dy = touch.clientY - touchStart.y;
+      const horizontalDismiss = touchStart.edgeSwipe && dx > 90 && Math.abs(dx) > Math.abs(dy) * 1.25;
+      const downwardDismiss = touchStart.scrollTop <= 4 && dy > 110 && Math.abs(dy) > Math.abs(dx) * 1.25;
+      touchStart = null;
+      if (horizontalDismiss || downwardDismiss) closeCard();
+    }, { passive: true });
 
     const expandButton = card.querySelector('[data-expand-card]');
     if (expandButton) {
