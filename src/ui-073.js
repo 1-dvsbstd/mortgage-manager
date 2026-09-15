@@ -27,27 +27,20 @@
     }
   }
 
-  const scheduleRefresh = () => setTimeout(refreshOptionalSections, 80);
+  let timer = null;
+  const scheduleRefresh = () => {
+    clearTimeout(timer);
+    timer = setTimeout(refreshOptionalSections, 80);
+  };
 
   document.addEventListener('click', (event) => {
-    if (event.target.closest('#recordSnapshot,[data-action="snapshot"],[data-action="save"],[data-action="reset-history"]')) scheduleRefresh();
+    if (event.target.closest('#recordSnapshot,[data-action="snapshot"],[data-action="save"],[data-action="reset-history"],[data-expand-card]')) scheduleRefresh();
   });
 
   document.addEventListener('input', (event) => {
     if (event.target.matches('#projectionPurchasePrice,#projectionImprovements')) scheduleRefresh();
   });
 
-  const app = document.querySelector('.app-shell');
-  if (app && 'MutationObserver' in window) {
-    new MutationObserver(refreshOptionalSections).observe(app, { childList:true, subtree:true });
-  }
-
   refreshOptionalSections();
-  setTimeout(refreshOptionalSections, 500);
-
-  if (!document.querySelector('script[src*="ui-076.js"]')) {
-    const script = document.createElement('script');
-    script.src = 'src/ui-076.js?v=076';
-    document.body.appendChild(script);
-  }
+  setTimeout(refreshOptionalSections, 300);
 })();
