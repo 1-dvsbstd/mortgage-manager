@@ -4,19 +4,14 @@
   const $ = (id) => document.getElementById(id);
   const money = (value) => new Intl.NumberFormat('en-GB', { style:'currency', currency:'GBP', maximumFractionDigits:0 }).format(Math.max(0, Number(value) || 0));
 
-  const defaultData = () => ({
-    purchaseDate: '',
-    purchasePrice: '',
-    originalMortgage: '',
-    ownership: '',
-    deals: [],
-    lumpSums: [],
-  });
+  const defaultData = () => ({ purchaseDate:'', purchasePrice:'', originalMortgage:'', ownership:'', deals:[], lumpSums:[] });
 
   function load() {
     try {
       const parsed = JSON.parse(localStorage.getItem(HISTORY_KEY) || 'null');
-      return parsed && typeof parsed === 'object' ? { ...defaultData(), ...parsed, deals:Array.isArray(parsed.deals)?parsed.deals:[], lumpSums:Array.isArray(parsed.lumpSums)?parsed.lumpSums:[] } : defaultData();
+      return parsed && typeof parsed === 'object'
+        ? { ...defaultData(), ...parsed, deals:Array.isArray(parsed.deals)?parsed.deals:[], lumpSums:Array.isArray(parsed.lumpSums)?parsed.lumpSums:[] }
+        : defaultData();
     } catch (_) { return defaultData(); }
   }
 
@@ -36,8 +31,11 @@
     if (idx === null) return null;
     return deals.find((deal) => {
       const start = monthIndex(deal.start);
-      const end = monthIndex(deal.end || currentMonthKey());
-      return start !== null && end !== null && idx >= start && idx <= end;
+      const end = monthIndex(deal.end);
+      if (start === null || idx < start) return false;
+      // Treat “To” as the month the next deal starts, so adjacent deals such
+      // as Jun 2019 → Jun 2021 and Jun 2021 → Jun 2023 do not overlap.
+      return end === null ? true : idx < end;
     }) || null;
   }
 
@@ -108,12 +106,15 @@
   function save(data) {
     localStorage.setItem(HISTORY_KEY, JSON.stringify(data));
     const estimate = estimateHistory(data);
+    const actualBalance = Math.max(0, Number($('balance')?.value) || 0);
     const summary = {
       purchasePrice: Math.max(0, Number(data.purchasePrice) || 0),
       originalMortgage: Math.max(0, Number(data.originalMortgage) || 0),
       purchaseDate: data.purchaseDate || '',
       ownership: Math.min(100, Math.max(0, Number(data.ownership) || 0)),
       ...estimate,
+      actualBalance,
+      balanceDifference: actualBalance ? estimate.estimatedBalance - actualBalance : 0,
       savedAt: new Date().toISOString(),
     };
     localStorage.setItem(SUMMARY_KEY, JSON.stringify(summary));
@@ -130,8 +131,8 @@
       <label>From<input type="month" data-history="start" value="${escape(deal.start)}"></label>
       <label>To<input type="month" data-history="end" value="${escape(deal.end)}"></label>
       <label>Rate (%)<input type="number" inputmode="decimal" step="0.01" data-history="rate" value="${escape(deal.rate)}"></label>
-      <label>Payment (£/mo)<input type="number" inputmode="decimal" step="1" data-history="payment" value="${escape(deal.payment)}"></label>
-      <label>Overpay (£/mo)<input type="number" inputmode="decimal" step="1" data-history="overpayment" value="${escape(deal.overpayment)}"></label>
+      <label>Payment (£/mo)<input type="number" inputmode="decimal" step="0.01" data-history="payment" value="${escape(deal.payment)}"></label>
+      <label>Overpay (£/mo)<input type="number" inputmode="decimal" step="0.01" data-history="overpayment" value="${escape(deal.overpayment)}"></label>
       <button type="button" class="history-remove" data-remove-history aria-label="Remove deal">Remove</button>
     </div>`;
   }
@@ -139,7 +140,7 @@
   function lumpRow(item = {}) {
     return `<div class="history-row history-lump-row" data-history-lump>
       <label>Date<input type="month" data-history="date" value="${escape((item.date || '').slice(0,7))}"></label>
-      <label>Amount (£)<input type="number" inputmode="decimal" step="1" data-history="amount" value="${escape(item.amount)}"></label>
+      <label>Amount (£)<input type="number" inputmode="decimal" step="0.01" data-history="amount" value="${escape(item.amount)}"></label>
       <label class="history-note-label">Note<input type="text" data-history="note" value="${escape(item.note)}" placeholder="Optional"></label>
       <button type="button" class="history-remove" data-remove-history aria-label="Remove lump sum">Remove</button>
     </div>`;
@@ -170,7 +171,15 @@
       return;
     }
     const coverage = estimate.totalMonths ? Math.round((estimate.coveredMonths / estimate.totalMonths) * 100) : 0;
-    target.innerHTML = `<div><span>Estimated past interest</span><strong>${money(estimate.historicalInterest)}</strong></div><div><span>Estimated payments made</span><strong>${money(estimate.historicalPayments)}</strong></div><div><span>History coverage</span><strong>${coverage}%</strong></div><small>${estimate.complete ? 'Historical estimate is substantially covered by entered deal periods.' : 'Partial estimate — add missing deal periods for a more complete lifetime calculation.'}</small>`;
+    const actualBalance = Math.max(0, Number($('balance')?.value) || 0);
+    const difference = actualBalance ? estimate.estimatedBalance - actualBalance : 0;
+    const diffText = !actualBalance ? 'Current balance unavailable' : Math.abs(difference) < 1 ? 'Matches current balance' : `${money(Math.abs(difference))} ${difference > 0 ? 'above' : 'below'} current balance`;
+    target.innerHTML = `
+      <div><span>Estimated past interest</span><strong>${money(estimate.historicalInterest)}</strong></div>
+      <div><span>Estimated payments made</span><strong>${money(estimate.historicalPayments)}</strong></div>
+      <div><span>History coverage</span><strong>${coverage}%</strong></div>
+      <div><span>Reconstructed balance</span><strong>${money(estimate.estimatedBalance)}</strong></div>
+      <small>${diffText}. ${estimate.complete ? 'The entered deal periods substantially cover the mortgage history.' : 'Add missing deal periods for a more complete estimate.'}</small>`;
   }
 
   function mount() {
@@ -182,7 +191,7 @@
     section.className = 'personal-section mortgage-history-section';
     section.innerHTML = `<summary><span><strong>Mortgage history</strong><small>Purchase, previous fixed deals and lump-sum overpayments</small></span><span class="history-summary-chevron">+</span></summary>
       <div class="mortgage-history-body">
-        <p class="history-intro">Use the actual completion price rather than the estate-agent listing price. Approximate old figures are fine — the app will show when the lifetime estimate is incomplete.</p>
+        <p class="history-intro">Use the actual completion price rather than the estate-agent listing price. For each deal, Payment is the lender's normal required payment and Overpay is the extra paid on top. “To” is treated as the month the next deal starts.</p>
         <div class="history-purchase-grid">
           <label>Purchase / completion date<input type="month" data-history-root="purchaseDate" value="${escape((data.purchaseDate || '').slice(0,7))}"></label>
           <label>Actual purchase price (£)<input type="number" inputmode="decimal" step="100" data-history-root="purchasePrice" value="${escape(data.purchasePrice)}"></label>
