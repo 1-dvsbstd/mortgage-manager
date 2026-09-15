@@ -1,8 +1,66 @@
 (() => {
   const current = document.getElementById('currentOverpayment');
   const display = document.getElementById('currentOverpayDisplay');
+  const scenario = document.querySelector('.scenario-panel');
   const money = (value) => new Intl.NumberFormat('en-GB', { style:'currency', currency:'GBP', maximumFractionDigits:0 }).format(Math.max(0, Number(value)||0));
   const key = 'mortgage-manager-current-overpayment-v1';
+
+  const compactMonths = (months) => {
+    if (!Number.isFinite(months) || months <= 0) return 'No time saved yet';
+    const years = Math.floor(months / 12);
+    const remainder = months % 12;
+    return years && remainder ? `${years}y ${remainder}m sooner` : years ? `${years}y sooner` : `${remainder}m sooner`;
+  };
+
+  function ensureCompactSavings() {
+    if (!scenario || document.getElementById('currentSavingsSummary')) return;
+    const top = scenario.querySelector('.scenario-top');
+    if (!top) return;
+    const block = document.createElement('div');
+    block.id = 'currentSavingsSummary';
+    block.className = 'current-savings-summary';
+    block.innerHTML = `
+      <span>Current savings</span>
+      <strong id="currentSavingsMain">—</strong>
+      <small id="currentSavingsInterest">—</small>
+    `;
+    top.appendChild(block);
+
+    const prompt = document.createElement('div');
+    prompt.className = 'what-if-prompt';
+    prompt.innerHTML = '<strong>What if?</strong><span>Tap to compare other overpayment amounts</span>';
+    scenario.appendChild(prompt);
+  }
+
+  function updateCurrentSavings() {
+    ensureCompactSavings();
+    if (!window.MortgageMath || !current) return;
+    const balance = Math.max(0, Number(document.getElementById('balance')?.value) || 0);
+    const rate = Math.max(0, Number(document.getElementById('rate')?.value) || 0);
+    const payment = Math.max(0, Number(document.getElementById('payment')?.value) || 0);
+    const currentExtra = Math.max(0, Number(current.value) || 0);
+    const base = MortgageMath.amortize(balance, rate, payment);
+    const withCurrent = MortgageMath.amortize(balance, rate, payment + currentExtra);
+    const main = document.getElementById('currentSavingsMain');
+    const interest = document.getElementById('currentSavingsInterest');
+    if (!main || !interest) return;
+
+    if (!currentExtra) {
+      main.textContent = 'No regular overpayment';
+      interest.textContent = 'Add one in the detailed view to see the impact.';
+      return;
+    }
+    if (!Number.isFinite(base.months) || !Number.isFinite(withCurrent.months)) {
+      main.textContent = 'Saving unavailable';
+      interest.textContent = 'Check that the scheduled payment repays the mortgage.';
+      return;
+    }
+    const monthsSaved = Math.max(0, base.months - withCurrent.months);
+    const interestSaved = Math.max(0, base.interest - withCurrent.interest);
+    main.textContent = compactMonths(monthsSaved);
+    interest.textContent = `${money(interestSaved)} interest saved over the mortgage`;
+  }
+
   if (current) {
     try { const saved = localStorage.getItem(key); if (saved !== null) current.value = saved; } catch (_) {}
     const sync = () => {
@@ -10,10 +68,15 @@
       if (display) display.textContent = `${money(value)}/month`;
       try { localStorage.setItem(key, String(value)); } catch (_) {}
       document.getElementById('customExtra')?.dispatchEvent(new Event('input', { bubbles:true }));
+      updateCurrentSavings();
     };
     current.addEventListener('input', sync);
     sync();
   }
+
+  ['balance','rate','payment'].forEach((id) => {
+    document.getElementById(id)?.addEventListener('input', () => requestAnimationFrame(updateCurrentSavings));
+  });
 
   const dealDetail = document.querySelector('.next-panel .expand-detail');
   if (dealDetail && !document.getElementById('dealMarketCompare')) {
