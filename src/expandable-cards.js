@@ -25,6 +25,10 @@
     dragDistance = 0;
   }
 
+  function removeCloseBar(card) {
+    card?.querySelector('.card-close-bar')?.remove();
+  }
+
   function closeCard(options = {}) {
     if (!activeCard) return;
     const card = activeCard;
@@ -33,8 +37,7 @@
     const finish = () => {
       card.classList.remove('is-expanded');
       card.setAttribute('aria-expanded', 'false');
-      const closeButton = card.querySelector('.card-close-button');
-      if (closeButton) closeButton.remove();
+      removeCloseBar(card);
       if (backdrop) backdrop.remove();
       backdrop = null;
       document.body.classList.remove('card-open');
@@ -90,6 +93,10 @@
     backdrop.addEventListener('click', closeCard);
     document.body.appendChild(backdrop);
 
+    const closeBar = document.createElement('div');
+    closeBar.className = 'card-close-bar';
+    closeBar.setAttribute('aria-hidden', 'false');
+
     const closeButton = document.createElement('button');
     closeButton.type = 'button';
     closeButton.className = 'card-close-button';
@@ -99,7 +106,9 @@
       event.stopPropagation();
       closeCard();
     });
-    card.insertBefore(closeButton, card.firstChild);
+
+    closeBar.appendChild(closeButton);
+    card.insertBefore(closeBar, card.firstChild);
     closeButton.focus();
   }
 
