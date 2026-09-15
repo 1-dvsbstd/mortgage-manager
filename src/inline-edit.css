@@ -1,7 +1,5 @@
 .editable-metric,
-.inline-edit-trigger {
-  position: relative;
-}
+.inline-edit-trigger { position: relative; }
 
 .editable-metric {
   cursor: pointer;
@@ -26,9 +24,7 @@
   outline: none;
 }
 
-.editable-metric:active {
-  transform: scale(.99);
-}
+.editable-metric:active { transform: scale(.99); }
 
 .ownership-badge.inline-edit-trigger {
   cursor: pointer;
@@ -58,35 +54,78 @@
   border-color: rgba(84,224,180,.2);
 }
 
+/* Editing is a compact sheet, not a form squeezed into the metric tile. */
 .inline-editor {
-  width: 100%;
-  margin-top: 9px;
-  padding-top: 9px;
-  border-top: 1px solid var(--border);
+  position: fixed;
+  z-index: 2600;
+  top: max(72px, calc(env(safe-area-inset-top) + 56px));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(460px, calc(100vw - 28px));
+  margin: 0;
+  padding: 16px;
+  border: 1px solid rgba(104,222,185,.20);
+  border-radius: 18px;
+  background: linear-gradient(180deg,#0b211b,#071713);
+  box-shadow: 0 24px 80px rgba(0,0,0,.55);
 }
 
-.inline-editor-row {
-  display: flex;
-  gap: 7px;
-  align-items: center;
+.inline-editor-title {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 800;
+  margin-bottom: 10px;
 }
+
+.inline-editor-row { display: block; }
 
 .inline-editor input {
-  flex: 1;
-  min-width: 0;
+  display: block;
   width: 100%;
+  min-width: 0;
+  min-height: 52px;
   margin: 0 !important;
-  padding: 9px 10px !important;
-  border-radius: 10px !important;
-  border: 1px solid rgba(84,224,180,.3) !important;
-  background: rgba(3,16,13,.85) !important;
+  padding: 12px 14px !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(84,224,180,.32) !important;
+  background: #04130f !important;
   color: var(--text) !important;
-  font-size: 16px !important;
+  font-size: 18px !important;
+  line-height: 1.2 !important;
+  box-sizing: border-box;
+}
+
+/* Remove browser number steppers. */
+.inline-editor input[type="number"]::-webkit-inner-spin-button,
+.inline-editor input[type="number"]::-webkit-outer-spin-button,
+.personal-form input[type="number"]::-webkit-inner-spin-button,
+.personal-form input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.inline-editor input[type="number"],
+.personal-form input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.inline-editor-note {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.inline-editor-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 14px;
 }
 
 .inline-editor button {
-  min-height: 38px;
-  padding: 8px 11px;
+  min-height: 40px;
+  padding: 9px 14px;
   font-size: 12px;
 }
 
@@ -95,24 +134,15 @@
   color: #062018;
   border-color: transparent;
 }
-
-.inline-editor .cancel-inline {
-  background: rgba(255,255,255,.04);
-}
-
-.inline-editor-note {
-  margin: 6px 0 0;
-  color: var(--muted);
-  font-size: 11px;
-}
+.inline-editor .cancel-inline { background: rgba(255,255,255,.04); }
 
 @media (max-width:650px) {
-  .editable-metric::after {
-    top: 7px;
-    right: 8px;
+  .editable-metric::after { top: 7px; right: 8px; }
+  .inline-editor {
+    top: max(68px, calc(env(safe-area-inset-top) + 50px));
+    width: calc(100vw - 20px);
+    padding: 15px;
+    border-radius: 16px;
   }
-
-  .inline-editor-row {
-    gap: 6px;
-  }
+  .inline-editor input { font-size: 20px !important; }
 }
