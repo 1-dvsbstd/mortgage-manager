@@ -15,11 +15,20 @@
     return n >= 1000 ? `£${Math.round(n / 1000)}k` : money(n);
   };
 
+  const homeTrend = () => {
+    try {
+      const settings = JSON.parse(localStorage.getItem('mortgage-manager-home-projection-v4') || '{}');
+      const n = Number(settings.trend);
+      return Number.isFinite(n) ? n : 2.5;
+    } catch (_) { return 2.5; }
+  };
+
   const values = () => ({
     balance: +document.getElementById('balance')?.value || 0,
     rate: +document.getElementById('rate')?.value || 0,
     payment: +document.getElementById('payment')?.value || 0,
     homeValue: +document.getElementById('homeValue')?.value || 0,
+    ownership: Math.min(100, Math.max(0, +document.getElementById('ownership')?.value || 0)),
     extra: Math.max(0, +document.getElementById('customExtra')?.value || 0),
     fixedEnd: document.getElementById('fixedEnd')?.value || '',
   });
@@ -46,6 +55,20 @@
   function pointAt(points, month) {
     if (!points?.length) return 0;
     return points[Math.min(Math.max(0, month), points.length - 1)] ?? 0;
+  }
+
+  function makeEquityPoints(v, mortgagePoints, maxMonths) {
+    if (!v.homeValue || !v.ownership) return [];
+    const trend = homeTrend();
+    const ownedFraction = v.ownership / 100;
+    const points = [];
+    for (let month = 0; month <= maxMonths; month += 1) {
+      const projectedHome = v.homeValue * Math.pow(1 + trend / 100, month / 12);
+      const shareValue = projectedHome * ownedFraction;
+      const mortgage = pointAt(mortgagePoints, month);
+      points.push(Math.max(0, shareValue - mortgage));
+    }
+    return points;
   }
 
   function ensureReadout() {
@@ -79,10 +102,6 @@
       last.label = finalYear;
     }
 
-    // Always protect the payoff label. On narrow canvases the final scheduled
-    // interval can land only a couple of years before payoff, which visually
-    // merges the two four-digit labels. Drop the penultimate tick when the
-    // actual pixel gap is too small rather than shrinking the type.
     if (ticks.length > 2) {
       const plotWidth = Math.max(1, cssWidth - (cssWidth < 520 ? 70 : 88));
       const minLabelGap = cssWidth < 520 ? 62 : 52;
@@ -132,13 +151,15 @@
     };
     const width = Math.max(1, cssWidth - pad.left - pad.right);
     const height = Math.max(1, cssHeight - pad.top - pad.bottom);
-    const maxBalance = Math.max(base.monthlyPoints[0] || 0, accelerated.monthlyPoints[0] || 0, 1);
     const maxMonths = Math.max(base.monthlyPoints.length, accelerated.monthlyPoints.length) - 1 || 1;
+    const equityPoints = makeEquityPoints(v, base.monthlyPoints, maxMonths);
+    const maxEquity = equityPoints.length ? Math.max(...equityPoints) : 0;
+    const maxValue = Math.max(base.monthlyPoints[0] || 0, accelerated.monthlyPoints[0] || 0, maxEquity, 1);
 
     const xFor = (month) => pad.left + width * (month / maxMonths);
-    const yFor = (balance) => pad.top + height * (1 - Math.max(0, balance) / maxBalance);
+    const yFor = (value) => pad.top + height * (1 - Math.max(0, value) / maxValue);
 
-    ctx.font = compact ? '11px system-ui' : '11px system-ui';
+    ctx.font = '11px system-ui';
     ctx.textBaseline = 'middle';
     for (let i = 0; i <= 4; i += 1) {
       const y = pad.top + (height * i) / 4;
@@ -150,7 +171,7 @@
       ctx.stroke();
       ctx.fillStyle = '#8fa39c';
       ctx.textAlign = 'right';
-      ctx.fillText(compactMoney(maxBalance * (1 - i / 4)), pad.left - 10, y);
+      ctx.fillText(compactMoney(maxValue * (1 - i / 4)), pad.left - 10, y);
     }
 
     const yearTicks = makeYearTicks(maxMonths, cssWidth);
@@ -170,29 +191,34 @@
       ctx.fillText(label, x, cssHeight - 17);
     });
 
-    const drawLine = (points, colour, lineWidth) => {
+    const drawLine = (points, colour, lineWidth, dash = []) => {
+      if (!points?.length) return;
+      ctx.save();
       ctx.strokeStyle = colour;
       ctx.lineWidth = lineWidth;
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
+      ctx.setLineDash(dash);
       ctx.beginPath();
-      points.forEach((balance, month) => {
+      points.forEach((value, month) => {
         const x = xFor(Math.min(month, maxMonths));
-        const y = yFor(balance);
+        const y = yFor(value);
         if (month === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
       });
       ctx.stroke();
+      ctx.restore();
     };
 
     drawLine(base.monthlyPoints, '#a8b4b0', compact ? 2.2 : 2.5);
     drawLine(accelerated.monthlyPoints, '#54e0b4', compact ? 2.7 : 3);
+    drawLine(equityPoints, '#e7dcc4', compact ? 2.2 : 2.5, [6, 5]);
 
     const fixedMonth = monthsUntil(v.fixedEnd);
     if (fixedMonth !== null && fixedMonth >= 0 && fixedMonth <= maxMonths) {
       const x = xFor(fixedMonth);
       ctx.save();
       ctx.setLineDash([4, 5]);
-      ctx.strokeStyle = 'rgba(231,220,196,.55)';
+      ctx.strokeStyle = 'rgba(231,220,196,.42)';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(x, pad.top);
@@ -207,7 +233,7 @@
 
     const readout = ensureReadout();
     if (hoverMonth === null) {
-      readout.innerHTML = `<span>${compact ? 'Tap' : 'Hover or tap'} the chart to inspect a point in time.</span>`;
+      readout.innerHTML = `<span>${compact ? 'Tap' : 'Hover or tap'} the chart to inspect mortgage and equity over time.</span>`;
       return;
     }
 
@@ -215,6 +241,7 @@
     const x = xFor(month);
     const baseBalance = pointAt(base.monthlyPoints, month);
     const overBalance = pointAt(accelerated.monthlyPoints, month);
+    const equity = pointAt(equityPoints, month);
 
     ctx.strokeStyle = 'rgba(255,255,255,.28)';
     ctx.lineWidth = 1;
@@ -223,10 +250,10 @@
     ctx.lineTo(x, pad.top + height);
     ctx.stroke();
 
-    const dot = (balance, colour) => {
+    const dot = (value, colour) => {
       ctx.fillStyle = colour;
       ctx.beginPath();
-      ctx.arc(x, yFor(balance), 4, 0, Math.PI * 2);
+      ctx.arc(x, yFor(value), 4, 0, Math.PI * 2);
       ctx.fill();
       ctx.strokeStyle = '#071713';
       ctx.lineWidth = 2;
@@ -234,10 +261,12 @@
     };
     dot(baseBalance, '#a8b4b0');
     dot(overBalance, '#54e0b4');
+    if (equityPoints.length) dot(equity, '#e7dcc4');
 
-    const ltv = v.homeValue > 0 ? (baseBalance / v.homeValue) * 100 : null;
+    const projectedHome = v.homeValue > 0 ? v.homeValue * Math.pow(1 + homeTrend()/100, month/12) : 0;
+    const ltv = projectedHome > 0 ? (baseBalance / projectedHome) * 100 : null;
     const difference = Math.max(0, baseBalance - overBalance);
-    readout.innerHTML = `<strong>${formatPointDate(month)}</strong><span>Current path ${money(baseBalance)}</span><span>With overpayment ${money(overBalance)}</span><span>${difference ? `${money(difference)} less owed` : 'Same balance'}${ltv === null ? '' : ` · ${ltv.toFixed(1)}% LTV`}</span>`;
+    readout.innerHTML = `<strong>${formatPointDate(month)}</strong><span>Mortgage ${money(baseBalance)}</span><span>Projected equity ${equityPoints.length ? money(equity) : '—'}</span><span>With selected overpayment ${money(overBalance)}</span><span>${difference ? `${money(difference)} less owed` : 'Same balance'}${ltv === null ? '' : ` · ${ltv.toFixed(1)}% projected LTV`}</span>`;
   }
 
   function monthFromPointer(event) {
@@ -288,7 +317,7 @@
   };
 
   document.addEventListener('input', (event) => {
-    if (event.target.matches('#balance,#rate,#payment,#homeValue,#ownership,#fixedEnd,#customExtra,#extraSlider')) scheduleRender();
+    if (event.target.matches('#balance,#rate,#payment,#homeValue,#ownership,#fixedEnd,#customExtra,#extraSlider,#projectionTrendRate')) scheduleRender();
   });
   document.addEventListener('click', (event) => {
     if (event.target.closest('#overpayButtons,[data-expandable-card="trajectory"]')) scheduleRender();
