@@ -1,6 +1,7 @@
 (() => {
-  const STORAGE_KEY = 'mortgage-manager-v0.3';
+  const STORAGE_KEY = 'mortgage-manager-v0.4';
   const $ = (id) => document.getElementById(id);
+
   const money = (value) =>
     new Intl.NumberFormat('en-GB', {
       style: 'currency',
@@ -17,6 +18,15 @@
       years ? `${years} year${years === 1 ? '' : 's'}` : '',
       remainder ? `${remainder} month${remainder === 1 ? '' : 's'}` : '',
     ].filter(Boolean).join(' ');
+  };
+
+  const compactMonths = (months) => {
+    if (!Number.isFinite(months) || months <= 0) return '0m';
+    const years = Math.floor(months / 12);
+    const remainder = months % 12;
+    if (years && remainder) return `${years}y ${remainder}m`;
+    if (years) return `${years}y`;
+    return `${remainder}m`;
   };
 
   const payoffDate = (months) => {
@@ -62,9 +72,15 @@
 
   function loadValues() {
     try {
-      const current = localStorage.getItem(STORAGE_KEY);
-      const legacy = localStorage.getItem('mortgage-manager-v0.2');
-      const saved = JSON.parse(current || legacy);
+      const keys = [STORAGE_KEY, 'mortgage-manager-v0.3', 'mortgage-manager-v0.2'];
+      let saved = null;
+      for (const key of keys) {
+        const raw = localStorage.getItem(key);
+        if (raw) {
+          saved = JSON.parse(raw);
+          break;
+        }
+      }
       if (!saved) return;
       ['balance', 'rate', 'payment', 'homeValue', 'ownership', 'fixedEnd'].forEach((key) => {
         if (saved[key] !== undefined && $(key)) $(key).value = saved[key];
@@ -90,25 +106,63 @@
 
   function updateNextEvent(fixedEnd) {
     const months = monthsUntil(fixedEnd);
+    const timelineFill = $('timelineFill');
+    const timelineEndLabel = $('timelineEndLabel');
+
     if (months === null) {
       $('nextEventTitle').textContent = 'Add your fixed-rate end date';
-      $('nextEventText').textContent = 'We’ll keep the next mortgage milestone visible here.';
+      $('nextEventText').textContent = 'We’ll keep your next mortgage milestone visible here.';
+      timelineFill.style.width = '0%';
+      timelineEndLabel.textContent = 'Deal end';
       return;
     }
 
     const date = new Date(`${fixedEnd}-01T12:00:00`);
-    const formatted = new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric' }).format(date);
+    const formatted = new Intl.DateTimeFormat('en-GB', { month: 'short', year: 'numeric' }).format(date);
+    timelineEndLabel.textContent = formatted;
 
     if (months < 0) {
-      $('nextEventTitle').textContent = 'Your saved fixed-rate date has passed';
-      $('nextEventText').textContent = `The date saved is ${formatted}. Update your mortgage details when your deal changes.`;
+      $('nextEventTitle').textContent = 'Fixed-rate date passed';
+      $('nextEventText').textContent = `${formatted} has passed. Update the mortgage after your new deal starts.`;
+      timelineFill.style.width = '100%';
     } else if (months === 0) {
-      $('nextEventTitle').textContent = 'Your fixed rate ends this month';
-      $('nextEventText').textContent = `${formatted} is your next key mortgage milestone.`;
+      $('nextEventTitle').textContent = 'Fixed rate ends this month';
+      $('nextEventText').textContent = 'Your deal is at its next major milestone.';
+      timelineFill.style.width = '100%';
     } else {
       $('nextEventTitle').textContent = `Fixed rate ends in ${humanMonths(months)}`;
-      $('nextEventText').textContent = `${formatted} is your next key mortgage milestone.`;
+      $('nextEventText').textContent = months <= 6
+        ? `${formatted} — worth reviewing remortgage options now.`
+        : `${formatted} is your next key mortgage milestone.`;
+      const progress = Math.max(8, 100 - (Math.min(months, 60) / 60) * 100);
+      timelineFill.style.width = `${progress}%`;
     }
+  }
+
+  function updateOwnershipVisual(values, ownedPropertyValue, householdEquity) {
+    if (values.homeValue <= 0) {
+      $('debtSegment').style.width = '0%';
+      $('equitySegment').style.width = '0%';
+      $('schemeSegment').style.width = '0%';
+      $('debtLegend').textContent = '—';
+      $('equityLegend').textContent = '—';
+      $('schemeLegend').textContent = '—';
+      return;
+    }
+
+    const ownershipPct = values.ownership;
+    const schemePct = Math.max(0, 100 - ownershipPct);
+    const debtPct = Math.min(ownershipPct, Math.max(0, (values.balance / values.homeValue) * 100));
+    const equityPct = Math.max(0, ownershipPct - debtPct);
+    const schemeValue = values.homeValue - ownedPropertyValue;
+
+    $('debtSegment').style.width = `${debtPct}%`;
+    $('equitySegment').style.width = `${equityPct}%`;
+    $('schemeSegment').style.width = `${schemePct}%`;
+    $('debtLegend').textContent = money(values.balance);
+    $('equityLegend').textContent = householdEquity >= 0 ? money(householdEquity) : `-${money(Math.abs(householdEquity))}`;
+    $('schemeLegend').textContent = money(Math.max(0, schemeValue));
+    $('schemeLegendWrap').style.display = schemePct > 0.01 ? 'inline' : 'none';
   }
 
   function drawChart(base, accelerated) {
@@ -116,7 +170,7 @@
     const container = canvas.parentElement;
     const dpr = window.devicePixelRatio || 1;
     const cssWidth = Math.max(280, container.clientWidth);
-    const cssHeight = window.innerWidth < 620 ? 250 : 320;
+    const cssHeight = window.innerWidth < 620 ? 245 : 310;
 
     canvas.style.width = `${cssWidth}px`;
     canvas.style.height = `${cssHeight}px`;
@@ -146,8 +200,7 @@
       ctx.lineTo(pad.left + width, y);
       ctx.stroke();
       const value = maxBalance * (1 - i / 4);
-      const label = value >= 1000 ? `£${Math.round(value / 1000)}k` : money(value);
-      ctx.fillText(label, 3, y + 4);
+      ctx.fillText(value >= 1000 ? `£${Math.round(value / 1000)}k` : money(value), 3, y + 4);
     }
 
     function drawLine(points, colour) {
@@ -198,9 +251,11 @@
     $('ltvStat').textContent = values.homeValue > 0 ? `${ltv.toFixed(1)}%` : '—';
     $('ownershipBadge').textContent = `${values.ownership.toFixed(values.ownership % 1 ? 1 : 0)}% share`;
     $('equityProgress').textContent = `${mortgageFreeShare.toFixed(0)}%`;
-    $('progressCaption').textContent = `${money(householdEquity)} equity in your share of the home`;
-    $('progressRing').style.setProperty('--progress', mortgageFreeShare.toFixed(1));
+    $('progressCaption').textContent = `${money(Math.max(0, householdEquity))} equity in your share`;
+    $('progressFill').style.width = `${mortgageFreeShare.toFixed(1)}%`;
     $('overpayHeadline').textContent = `${money(selectedExtra)}/month`;
+
+    updateOwnershipVisual(values, ownedPropertyValue, householdEquity);
     updateNextEvent(values.fixedEnd);
 
     if (!Number.isFinite(result.base.months)) {
@@ -208,9 +263,9 @@
       $('payoffDate').textContent = 'The payment does not currently repay the mortgage.';
       $('interestRemaining').textContent = '—';
       $('interestWithExtraText').textContent = '';
-      $('interestSaved').textContent = '—';
       $('timeSaved').textContent = '—';
-      $('acceleratedPayoff').textContent = '—';
+      $('scenarioSummary').textContent = 'Increase the monthly payment to create a repayment path.';
+      $('heroScenario').textContent = 'Your current payment needs adjusting before we can model overpayments.';
       $('warning').textContent = 'At this rate, the monthly payment does not cover enough principal to clear the mortgage.';
       drawChart(result.base, result.accelerated);
       return;
@@ -222,14 +277,15 @@
     $('warning').textContent = '';
 
     if (selectedExtra === 0 || !Number.isFinite(result.accelerated.months)) {
-      $('interestSaved').textContent = money(0);
       $('timeSaved').textContent = 'No change';
-      $('acceleratedPayoff').textContent = payoffDate(result.base.months);
+      $('scenarioSummary').textContent = `Current finish: ${payoffDate(result.base.months)}`;
+      $('heroScenario').textContent = 'Choose an overpayment to see how much sooner you could finish.';
       $('interestWithExtraText').textContent = 'Choose an overpayment to preview the saving.';
     } else {
-      $('interestSaved').textContent = money(result.interestSaved);
-      $('timeSaved').textContent = humanMonths(result.monthsSaved);
-      $('acceleratedPayoff').textContent = payoffDate(result.accelerated.months);
+      const finish = payoffDate(result.accelerated.months);
+      $('timeSaved').textContent = compactMonths(result.monthsSaved);
+      $('scenarioSummary').textContent = `${compactMonths(result.monthsSaved)} sooner · ${money(result.interestSaved)} saved · finish ${finish}`;
+      $('heroScenario').textContent = `${money(selectedExtra)}/month gets you mortgage-free ${compactMonths(result.monthsSaved)} sooner and saves ${money(result.interestSaved)} in interest.`;
       $('interestWithExtraText').textContent = `${money(result.accelerated.interest)} interest with ${money(selectedExtra)}/month overpayment`;
     }
 
@@ -262,7 +318,7 @@
 
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js').catch((error) => {
+      navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).catch((error) => {
         console.warn('Service worker registration failed.', error);
       });
     });
