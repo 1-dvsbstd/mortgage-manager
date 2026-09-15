@@ -70,11 +70,13 @@
 
     const container = canvas.parentElement;
     const dpr = window.devicePixelRatio || 1;
-    const cssWidth = Math.max(280, container.clientWidth);
+    const cssWidth = Math.max(280, Math.floor(container.getBoundingClientRect().width));
     const expanded = canvas.closest('.expandable-card')?.classList.contains('is-expanded');
-    const cssHeight = expanded ? (window.innerWidth < 620 ? 330 : 390) : (window.innerWidth < 620 ? 250 : 315);
+    const cssHeight = expanded
+      ? Math.max(360, Math.min(500, Math.round(cssWidth * 0.46)))
+      : (window.innerWidth < 620 ? 250 : 315);
 
-    canvas.style.width = `${cssWidth}px`;
+    canvas.style.width = '100%';
     canvas.style.height = `${cssHeight}px`;
     canvas.width = Math.floor(cssWidth * dpr);
     canvas.height = Math.floor(cssHeight * dpr);
@@ -96,7 +98,6 @@
     ctx.font = compact ? '10px system-ui' : '11px system-ui';
     ctx.textBaseline = 'middle';
 
-    // Horizontal money grid.
     for (let i = 0; i <= 4; i += 1) {
       const y = pad.top + (height * i) / 4;
       ctx.strokeStyle = 'rgba(255,255,255,.075)';
@@ -111,7 +112,6 @@
       ctx.fillText(compactMoney(amount), pad.left - 8, y);
     }
 
-    // Calendar-year ticks. Every year for shorter terms, every 2/3 years for longer terms.
     const totalYears = maxMonths / 12;
     const yearStep = totalYears <= 12 ? 1 : totalYears <= 24 ? 2 : 3;
     const start = new Date();
@@ -153,7 +153,6 @@
     drawLine(base.monthlyPoints, '#a8b4b0', compact ? 2.2 : 2.5);
     drawLine(accelerated.monthlyPoints, '#54e0b4', compact ? 2.6 : 3);
 
-    // Fixed-rate end marker.
     const fixedMonth = monthsUntil(v.fixedEnd);
     if (fixedMonth !== null && fixedMonth >= 0 && fixedMonth <= maxMonths) {
       const x = xFor(fixedMonth);
@@ -237,12 +236,29 @@
   });
   document.addEventListener('click', (event) => {
     if (event.target.closest('#overpayButtons')) requestAnimationFrame(render);
-    if (event.target.closest('[data-expandable-card="trajectory"]') && !event.target.closest('canvas')) requestAnimationFrame(() => requestAnimationFrame(render));
+    if (event.target.closest('[data-expandable-card="trajectory"]') && !event.target.closest('canvas')) requestAnimationFrame(render);
   });
   window.addEventListener('resize', () => {
     cancelAnimationFrame(resizeFrame);
     resizeFrame = requestAnimationFrame(render);
   });
+
+  const container = canvas.parentElement;
+  if ('ResizeObserver' in window && container) {
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(render);
+    });
+    observer.observe(container);
+  }
+
+  const card = canvas.closest('[data-expandable-card="trajectory"]');
+  if (card) {
+    new MutationObserver(() => requestAnimationFrame(render)).observe(card, {
+      attributes: true,
+      attributeFilter: ['class', 'aria-expanded'],
+    });
+  }
 
   requestAnimationFrame(render);
 })();
