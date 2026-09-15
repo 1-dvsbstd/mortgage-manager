@@ -27,14 +27,20 @@
     const targetId = trigger.dataset.editTarget;
     const sourceInput = $(targetId);
     if (!sourceInput) return;
-
     if (activeEditor?.trigger === trigger) return;
     closeEditor();
 
     const config = configs[targetId] || { label: 'Edit', prefix: '', suffix: '' };
     const wrapper = document.createElement('div');
     wrapper.className = 'inline-editor';
+    wrapper.setAttribute('role', 'dialog');
+    wrapper.setAttribute('aria-modal', 'true');
+    wrapper.setAttribute('aria-label', config.label);
     wrapper.addEventListener('click', (event) => event.stopPropagation());
+
+    const title = document.createElement('div');
+    title.className = 'inline-editor-title';
+    title.textContent = config.label;
 
     const row = document.createElement('div');
     row.className = 'inline-editor-row';
@@ -47,6 +53,9 @@
     if (sourceInput.max) input.max = sourceInput.max;
     if (sourceInput.step) input.step = sourceInput.step;
     input.setAttribute('aria-label', config.label);
+
+    const actions = document.createElement('div');
+    actions.className = 'inline-editor-actions';
 
     const save = document.createElement('button');
     save.type = 'button';
@@ -65,7 +74,6 @@
       : config.label;
 
     const originalValue = sourceInput.value;
-
     const liveUpdate = () => {
       sourceInput.value = input.value;
       sourceInput.dispatchEvent(new Event('input', { bubbles: true }));
@@ -81,21 +89,19 @@
       }
     });
 
-    save.addEventListener('click', () => {
-      liveUpdate();
-      closeEditor();
-    });
-
+    save.addEventListener('click', () => { liveUpdate(); closeEditor(); });
     cancel.addEventListener('click', () => closeEditor({ restore: true }));
 
-    row.append(input, save, cancel);
-    wrapper.append(row, note);
-    trigger.appendChild(wrapper);
+    row.append(input);
+    actions.append(save, cancel);
+    wrapper.append(title, row, note, actions);
+    document.body.appendChild(wrapper);
 
     activeEditor = { trigger, wrapper, sourceInput, originalValue };
     requestAnimationFrame(() => {
-      input.focus();
-      if (input.select && input.type !== 'month') input.select();
+      input.focus({ preventScroll: true });
+      try { input.setSelectionRange(input.value.length, input.value.length); } catch (_) {}
+      wrapper.scrollIntoView({ block: 'start', behavior: 'smooth' });
     });
   }
 
