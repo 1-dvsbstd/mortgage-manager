@@ -78,6 +78,20 @@
       last.month = maxMonths;
       last.label = finalYear;
     }
+
+    // Always protect the payoff label. On narrow canvases the final scheduled
+    // interval can land only a couple of years before payoff, which visually
+    // merges the two four-digit labels. Drop the penultimate tick when the
+    // actual pixel gap is too small rather than shrinking the type.
+    if (ticks.length > 2) {
+      const plotWidth = Math.max(1, cssWidth - (cssWidth < 520 ? 70 : 88));
+      const minLabelGap = cssWidth < 520 ? 62 : 52;
+      const finalTick = ticks[ticks.length - 1];
+      const previousTick = ticks[ticks.length - 2];
+      const pixelGap = plotWidth * ((finalTick.month - previousTick.month) / Math.max(1, maxMonths));
+      if (pixelGap < minLabelGap) ticks.splice(ticks.length - 2, 1);
+    }
+
     return ticks;
   }
 
