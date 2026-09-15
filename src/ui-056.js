@@ -84,14 +84,22 @@
     if (assumption) assumption.textContent = `${trend.toFixed(1)}%/yr home-value trend`;
   }
 
-  function ensureEquitySectionVisible() {
-    const detail = document.querySelector('.home-panel .expand-detail');
-    if (!detail) return;
+  function placeEquityWithTrajectory() {
     const equity = $('equityGrowth');
-    const homeStats = detail.querySelector('.home-stats');
-    if (equity && homeStats && equity.previousElementSibling !== homeStats) {
-      homeStats.insertAdjacentElement('afterend', equity);
+    const trajectory = document.querySelector('.chart-panel .trajectory-details');
+    const milestones = $('trajectoryMilestones');
+    if (!equity || !trajectory) return;
+
+    const heading = equity.querySelector('.deep-heading');
+    if (heading) {
+      const eyebrow = heading.querySelector('.eyebrow');
+      const title = heading.querySelector('h2');
+      if (eyebrow) eyebrow.textContent = 'Equity progress';
+      if (title) title.textContent = 'How your ownership builds alongside the mortgage';
     }
+
+    if (milestones) milestones.insertAdjacentElement('afterend', equity);
+    else trajectory.appendChild(equity);
   }
 
   function ensureCostComparison() {
@@ -105,7 +113,7 @@
       <div class="property-cost-grid">
         <div class="property-cost-card"><span>Estimated value when mortgage-free</span><strong id="costFutureValue">—</strong><small id="costFutureValueNote">Uses the Home trend assumption.</small></div>
         <div class="property-cost-card"><span>Remaining mortgage payments</span><strong id="costRemainingPayments">—</strong><small>Projected from today, including future interest and your regular overpayment.</small></div>
-        <div class="property-cost-card"><span>Known cost basis</span><strong id="costKnownBasis">—</strong><small id="costKnownBasisNote">Add purchase details for this comparison.</small></div>
+        <div class="property-cost-card"><span>Known lifetime cost floor</span><strong id="costKnownBasis">—</strong><small id="costKnownBasisNote">Add purchase details for this comparison.</small></div>
       </div>
       <p class="deep-note" id="costComparisonNote">The app can project future mortgage cost accurately from today, but cannot know mortgage interest or fees you already paid in previous years without historical mortgage data.</p>`;
     projection.insertAdjacentElement('afterend', section);
@@ -144,7 +152,7 @@
     if (knownBasis) {
       $('costKnownBasis').textContent = money(knownBasis);
       $('costKnownBasisNote').textContent = `${money(purchasePrice)} purchase price${improvements ? ` + ${money(improvements)} improvements` : ''} + projected future interest.`;
-      $('costComparisonNote').textContent = 'Known cost basis is not a full lifetime-cost figure: it excludes mortgage interest, fees, maintenance and other costs already paid before today.';
+      $('costComparisonNote').textContent = 'This is a floor rather than a full lifetime-cost figure: it excludes mortgage interest, fees, maintenance and other costs already paid before today.';
     } else {
       $('costKnownBasis').textContent = 'Add purchase price';
       $('costKnownBasisNote').textContent = 'Purchase price and improvements are set under Home value estimate settings.';
@@ -155,13 +163,13 @@
     new MutationObserver(syncMortgageEditors).observe(hero, { attributes:true, attributeFilter:['class','aria-expanded'] });
   }
 
-  const equityObserver = new MutationObserver(() => requestAnimationFrame(() => {
-    ensureEquitySectionVisible();
+  const detailObserver = new MutationObserver(() => requestAnimationFrame(() => {
+    placeEquityWithTrajectory();
     renderEquityProgress();
     renderCostComparison();
   }));
-  const homeDetail = document.querySelector('.home-panel .expand-detail');
-  if (homeDetail) equityObserver.observe(homeDetail, { childList:true, subtree:false });
+  const app = document.querySelector('.app-shell');
+  if (app) detailObserver.observe(app, { childList:true, subtree:true });
 
   document.addEventListener('input', (event) => {
     if (event.target.matches('#balance,#rate,#payment,#currentOverpayment,#homeValue,#ownership,#projectionTrendRate,#projectionPurchasePrice,#projectionImprovements')) {
@@ -174,7 +182,7 @@
 
   syncMortgageEditors();
   requestAnimationFrame(() => {
-    ensureEquitySectionVisible();
+    placeEquityWithTrajectory();
     renderEquityProgress();
     renderCostComparison();
   });
