@@ -1,0 +1,17 @@
+/* V0.7.1 trajectory polish */
+.chart-panel.is-expanded .chart-wrap{
+  margin-top:42px!important;
+}
+.chart-panel.is-expanded .chart-wrap canvas{
+  display:block;
+  width:100%!important;
+  max-width:none!important;
+}
+@media(max-width:650px){
+  .chart-panel.is-expanded .chart-wrap{
+    margin-top:38px!important;
+  }
+  .chart-panel.is-expanded .chart-readout{
+    margin-top:14px!important;
+  }
+}
