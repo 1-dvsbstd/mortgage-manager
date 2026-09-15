@@ -9,9 +9,10 @@
   <meta name="apple-mobile-web-app-title" content="Mortgage" />
   <meta name="description" content="A visual mortgage manager for tracking balance, equity, payoff time and overpayment impact." />
   <title>Mortgage Manager</title>
-  <link rel="icon" href="public/icon.svg?v=044" type="image/svg+xml" />
-  <link rel="stylesheet" href="src/styles.css?v=044" />
-  <link rel="stylesheet" href="src/inline-edit.css?v=044" />
+  <link rel="icon" href="public/icon.svg?v=045" type="image/svg+xml" />
+  <link rel="stylesheet" href="src/styles.css?v=045" />
+  <link rel="stylesheet" href="src/inline-edit.css?v=045" />
+  <link rel="stylesheet" href="src/expandable-cards.css?v=045" />
   <script>
     if ('serviceWorker' in navigator) navigator.serviceWorker.getRegistrations().then((registrations) => registrations.forEach((registration) => registration.unregister()));
     if ('caches' in window) caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key))));
@@ -20,7 +21,7 @@
 <body>
   <main class="app-shell">
     <header class="topbar">
-      <div><p class="brand">Mortgage Manager <span>V0.4.4</span></p><p class="topline">See what you owe, what you own, and how quickly you can change it.</p></div>
+      <div><p class="brand">Mortgage Manager <span>V0.4.5</span></p><p class="topline">See what you owe, what you own, and how quickly you can change it.</p></div>
       <div class="save-status" id="saveStatus">Saved on this device</div>
     </header>
 
@@ -50,19 +51,26 @@
     </section>
 
     <section class="dashboard-grid">
-      <article class="panel home-panel">
-        <div class="panel-heading"><div><p class="eyebrow">Your home</p><h2>Where the property value sits</h2></div><button type="button" id="ownershipBadge" class="ownership-badge inline-edit-trigger" data-edit-target="ownership" aria-label="Edit property ownership share">100% share</button></div>
+      <article class="panel home-panel expandable-card" data-expandable-card="home" tabindex="0" aria-expanded="false">
+        <div class="panel-heading">
+          <div><p class="eyebrow">Your home</p><h2>Where the property value sits</h2></div>
+          <div class="card-actions"><button type="button" id="ownershipBadge" class="ownership-badge inline-edit-trigger" data-edit-target="ownership" aria-label="Edit property ownership share">100% share</button><button type="button" class="expand-card-button" data-expand-card>View details</button></div>
+        </div>
         <div class="ownership-bar" aria-label="Property ownership breakdown"><div id="debtSegment" class="ownership-segment debt"></div><div id="equitySegment" class="ownership-segment equity"></div><div id="schemeSegment" class="ownership-segment scheme"></div></div>
-        <div class="ownership-legend"><span><i class="dot debt-dot"></i>Mortgage debt <strong id="debtLegend">—</strong></span><span><i class="dot equity-dot"></i>Your equity <strong id="equityLegend">—</strong></span><span id="schemeLegendWrap"><i class="dot scheme-dot"></i>Other share <strong id="schemeLegend">—</strong></span></div>
         <div class="home-value"><span>Your equity</span><strong id="equityStat">—</strong><small id="equitySubtext">—</small></div>
-        <div class="home-stats"><div class="editable-metric" data-edit-target="homeValue" tabindex="0" role="button" aria-label="Edit property value"><span>Property value</span><strong id="homeValueStat">—</strong></div><div><span>Your share value</span><strong id="ownedValueStat">—</strong></div><div><span>LTV</span><strong id="ltvStat">—</strong></div></div>
+        <div class="expand-detail">
+          <div class="ownership-legend"><span><i class="dot debt-dot"></i>Mortgage debt <strong id="debtLegend">—</strong></span><span><i class="dot equity-dot"></i>Your equity <strong id="equityLegend">—</strong></span><span id="schemeLegendWrap"><i class="dot scheme-dot"></i>Other share <strong id="schemeLegend">—</strong></span></div>
+          <div class="home-stats"><div class="editable-metric" data-edit-target="homeValue" tabindex="0" role="button" aria-label="Edit property value"><span>Property value</span><strong id="homeValueStat">—</strong></div><div><span>Your share value</span><strong id="ownedValueStat">—</strong></div><div><span>LTV</span><strong id="ltvStat">—</strong></div></div>
+        </div>
+        <p class="expand-hint">Tap to see the full ownership breakdown</p>
       </article>
 
-      <article class="panel next-panel">
-        <div class="next-heading-row"><p class="eyebrow">Next important thing</p><button type="button" class="mini-edit inline-edit-trigger" data-edit-target="fixedEnd">Edit</button></div>
+      <article class="panel next-panel expandable-card" data-expandable-card="deal" tabindex="0" aria-expanded="false">
+        <div class="next-heading-row"><p class="eyebrow">Next important thing</p><div class="card-actions"><button type="button" class="mini-edit inline-edit-trigger" data-edit-target="fixedEnd">Edit</button><button type="button" class="expand-card-button" data-expand-card>View details</button></div></div>
         <h2 id="nextEventTitle">Add your fixed-rate end date</h2><p id="nextEventText" class="next-event-text">We’ll keep the next mortgage milestone visible here.</p>
         <div class="timeline-track"><div id="timelineFill" class="timeline-fill"></div></div><div class="timeline-labels"><span>Now</span><span id="timelineEndLabel">Deal end</span></div>
-        <div class="interest-box"><span>Projected interest left</span><strong id="interestRemaining">—</strong><small id="interestWithExtraText">—</small></div>
+        <div class="expand-detail"><div class="interest-box"><span>Projected interest left</span><strong id="interestRemaining">—</strong><small id="interestWithExtraText">—</small></div></div>
+        <p class="expand-hint">Tap for deal-end balance, LTV and next-rate scenarios</p>
       </article>
     </section>
 
@@ -81,6 +89,6 @@
     <footer class="footer">Illustrative planning tool only. Property-share figures are simplified and may not match the legal or lender treatment of every ownership/equity scheme. Mortgage projections assume the entered rate and payment remain unchanged.</footer>
   </main>
 
-  <script src="src/mortgage.js?v=044"></script><script src="src/app.js?v=044"></script><script src="src/inline-edit.js?v=044"></script>
+  <script src="src/mortgage.js?v=045"></script><script src="src/app.js?v=045"></script><script src="src/inline-edit.js?v=045"></script><script src="src/expandable-cards.js?v=045"></script>
 </body>
 </html>
