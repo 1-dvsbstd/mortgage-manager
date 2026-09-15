@@ -7,6 +7,14 @@
     el.classList.remove('inline-edit-trigger', 'editable-metric');
   });
 
+  const heroRow = document.querySelector('.hero-balance-row');
+  if (heroRow && !document.getElementById('currentOverpayDisplay')) {
+    const overpay = document.createElement('div');
+    overpay.className = 'hero-overpay-summary';
+    overpay.innerHTML = '<span>Overpayment</span><strong id="currentOverpayDisplay"><span class="current-overpay-amount">£0</span><span class="current-overpay-suffix">/month</span></strong>';
+    heroRow.appendChild(overpay);
+  }
+
   const scenario = document.querySelector('.scenario-panel');
   if (scenario) {
     const top = scenario.querySelector('.scenario-top');
@@ -14,8 +22,8 @@
     const chips = document.getElementById('overpayButtons');
     const detail = scenario.querySelector('.expand-detail');
     if (top) {
-      top.querySelector('.eyebrow').textContent = 'Current overpayment';
-      top.querySelector('h2').innerHTML = '<span id="currentOverpayDisplay">£0/month</span><span id="overpayHeadline" hidden></span>';
+      const first = top.querySelector('div:first-child');
+      if (first) first.innerHTML = '<span id="overpayHeadline" hidden></span>';
       const summary = document.getElementById('scenarioSummary');
       if (summary) summary.insertAdjacentHTML('beforebegin', '<span class="what-if-label">What if?</span>');
     }
