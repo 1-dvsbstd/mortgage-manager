@@ -316,14 +316,6 @@
 
   window.addEventListener('resize', update);
 
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).catch((error) => {
-        console.warn('Service worker registration failed.', error);
-      });
-    });
-  }
-
   loadValues();
   syncExtraControls(selectedExtra);
   update();
