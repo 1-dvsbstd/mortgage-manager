@@ -1,0 +1,71 @@
+/* V0.6.1 focused visual refinements */
+
+/* Give current savings a cleaner hierarchy */
+.current-savings-summary{
+  padding-top:2px!important;
+}
+.current-savings-summary>span{
+  margin-bottom:10px!important;
+  color:#8f9f99!important;
+}
+.current-savings-summary>strong{
+  display:block!important;
+  margin-top:0!important;
+  font-size:24px!important;
+  line-height:1.08!important;
+  letter-spacing:-.025em!important;
+}
+.current-savings-summary>small{
+  display:block!important;
+  margin-top:8px!important;
+  color:#c9b995!important;
+  line-height:1.45!important;
+}
+
+/* Keep every expanded-card Close control visually identical */
+.expandable-card.is-expanded>.card-close-button{
+  position:sticky!important;
+  top:12px!important;
+  z-index:60!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  float:none!important;
+  width:58px!important;
+  height:32px!important;
+  min-width:58px!important;
+  min-height:32px!important;
+  max-width:58px!important;
+  max-height:32px!important;
+  margin:0 0 -32px auto!important;
+  padding:0!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  border-radius:9px!important;
+  background:rgba(7,22,18,.94)!important;
+  color:#9aa9a3!important;
+  font-size:11px!important;
+  font-weight:750!important;
+  line-height:1!important;
+  letter-spacing:.02em!important;
+  box-shadow:0 4px 14px rgba(0,0,0,.16)!important;
+}
+.expandable-card.is-expanded>.card-close-button:hover,
+.expandable-card.is-expanded>.card-close-button:focus-visible{
+  color:#f4f1e8!important;
+  background:rgba(18,42,34,.98)!important;
+  border-color:rgba(104,222,185,.18)!important;
+}
+
+@media(max-width:650px){
+  .expandable-card.is-expanded>.card-close-button{
+    top:10px!important;
+    width:54px!important;
+    min-width:54px!important;
+    max-width:54px!important;
+    height:30px!important;
+    min-height:30px!important;
+    max-height:30px!important;
+    margin-bottom:-30px!important;
+    font-size:10px!important;
+  }
+}
