@@ -44,4 +44,10 @@
 
   refreshOptionalSections();
   setTimeout(refreshOptionalSections, 500);
+
+  if (!document.querySelector('script[src*="ui-076.js"]')) {
+    const script = document.createElement('script');
+    script.src = 'src/ui-076.js?v=076';
+    document.body.appendChild(script);
+  }
 })();
