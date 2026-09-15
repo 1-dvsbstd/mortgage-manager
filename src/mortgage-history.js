@@ -33,8 +33,6 @@
       const start = monthIndex(deal.start);
       const end = monthIndex(deal.end);
       if (start === null || idx < start) return false;
-      // Treat “To” as the month the next deal starts, so adjacent deals such
-      // as Jun 2019 → Jun 2021 and Jun 2021 → Jun 2023 do not overlap.
       return end === null ? true : idx < end;
     }) || null;
   }
@@ -122,6 +120,17 @@
     return summary;
   }
 
+  function syncPurchaseToHome(summary) {
+    if (!summary.purchasePrice) return;
+    try {
+      const key = 'mortgage-manager-home-projection-v4';
+      const settings = JSON.parse(localStorage.getItem(key) || '{}');
+      if (!Number(settings.purchasePrice)) settings.purchasePrice = summary.purchasePrice;
+      if (!settings.purchaseMonth && summary.purchaseDate) settings.purchaseMonth = summary.purchaseDate;
+      localStorage.setItem(key, JSON.stringify(settings));
+    } catch (_) {}
+  }
+
   function escape(value) {
     return String(value ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
@@ -182,6 +191,21 @@
       <small>${diffText}. ${estimate.complete ? 'The entered deal periods substantially cover the mortgage history.' : 'Add missing deal periods for a more complete estimate.'}</small>`;
   }
 
+  function persistSection(section, flash = false) {
+    if (!section?.isConnected) return null;
+    const data = readFromSection(section);
+    const summary = save(data);
+    syncPurchaseToHome(summary);
+    renderSummary(section, data);
+    const state = section.querySelector('[data-history-save-state]');
+    if (state) {
+      state.textContent = flash ? 'Saved' : 'Saved automatically';
+      clearTimeout(state._clearTimer);
+      state._clearTimer = setTimeout(() => { if (state.isConnected) state.textContent = 'Saved automatically'; }, 1200);
+    }
+    return summary;
+  }
+
   function mount() {
     const modal = document.querySelector('.personal-modal');
     if (!modal || modal.querySelector('#mortgageHistorySection')) return;
@@ -201,40 +225,51 @@
         <div class="history-subsection"><div class="history-subhead"><div><strong>Mortgage deals</strong><small>Add each fixed/variable period you can reconstruct.</small></div><button type="button" class="personal-button" data-add-deal>Add deal</button></div><div data-deal-list>${data.deals.map(dealRow).join('') || dealRow()}</div></div>
         <div class="history-subsection"><div class="history-subhead"><div><strong>One-off overpayments</strong><small>Optional — regular monthly overpayments belong on the relevant deal.</small></div><button type="button" class="personal-button" data-add-lump>Add lump sum</button></div><div data-lump-list>${data.lumpSums.map(lumpRow).join('')}</div></div>
         <div class="history-calculation" data-history-summary></div>
-        <div class="history-actions"><button type="button" class="personal-button primary" data-save-history>Save mortgage history</button></div>
+        <div class="history-actions"><span data-history-save-state>Saved automatically</span><button type="button" class="personal-button primary" data-save-history>Save mortgage history</button></div>
       </div>`;
 
     const monthlySection = [...modal.querySelectorAll('.personal-section')].find((node) => node.querySelector('h3')?.textContent.trim() === 'Monthly history');
     if (monthlySection) monthlySection.insertAdjacentElement('beforebegin', section); else modal.querySelector('.personal-footer-actions')?.insertAdjacentElement('beforebegin', section);
 
+    let autosaveTimer = null;
+    const scheduleAutosave = () => {
+      clearTimeout(autosaveTimer);
+      autosaveTimer = setTimeout(() => persistSection(section, false), 250);
+    };
+
     section.addEventListener('click', (event) => {
       event.stopPropagation();
-      if (event.target.closest('[data-add-deal]')) section.querySelector('[data-deal-list]')?.insertAdjacentHTML('beforeend', dealRow());
-      if (event.target.closest('[data-add-lump]')) section.querySelector('[data-lump-list]')?.insertAdjacentHTML('beforeend', lumpRow());
-      const remove = event.target.closest('[data-remove-history]');
-      if (remove) remove.closest('.history-row')?.remove();
-      if (event.target.closest('[data-save-history]')) {
-        const saved = readFromSection(section);
-        const summary = save(saved);
-        renderSummary(section, saved);
-        const button = event.target.closest('[data-save-history]');
-        const old = button.textContent;
-        button.textContent = 'Saved';
-        setTimeout(() => { if (button.isConnected) button.textContent = old; }, 1200);
-        if (summary.purchasePrice) {
-          try {
-            const key = 'mortgage-manager-home-projection-v4';
-            const settings = JSON.parse(localStorage.getItem(key) || '{}');
-            if (!Number(settings.purchasePrice)) {
-              settings.purchasePrice = summary.purchasePrice;
-              if (summary.purchaseDate) settings.purchaseMonth = summary.purchaseDate;
-              localStorage.setItem(key, JSON.stringify(settings));
-            }
-          } catch (_) {}
-        }
+      if (event.target.closest('[data-add-deal]')) {
+        section.querySelector('[data-deal-list]')?.insertAdjacentHTML('beforeend', dealRow());
+        scheduleAutosave();
       }
+      if (event.target.closest('[data-add-lump]')) {
+        section.querySelector('[data-lump-list]')?.insertAdjacentHTML('beforeend', lumpRow());
+        scheduleAutosave();
+      }
+      const remove = event.target.closest('[data-remove-history]');
+      if (remove) {
+        remove.closest('.history-row')?.remove();
+        scheduleAutosave();
+      }
+      if (event.target.closest('[data-save-history]')) persistSection(section, true);
     });
-    section.addEventListener('input', () => renderSummary(section, readFromSection(section)));
+
+    section.addEventListener('input', () => {
+      const current = readFromSection(section);
+      renderSummary(section, current);
+      const state = section.querySelector('[data-history-save-state]');
+      if (state) state.textContent = 'Saving…';
+      scheduleAutosave();
+    });
+    section.addEventListener('change', () => persistSection(section, false));
+
+    // The main Setup & data “Save changes” button must save the history too.
+    // Capture phase runs before personal-070 removes the modal.
+    modal.addEventListener('click', (event) => {
+      if (event.target.closest('[data-action="save"]')) persistSection(section, true);
+    }, true);
+
     renderSummary(section, data);
   }
 
