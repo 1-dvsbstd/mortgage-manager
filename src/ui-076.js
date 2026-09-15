@@ -43,8 +43,7 @@
     const seen = new Set();
     const points = candidates.filter(({m}) => !seen.has(m) && seen.add(m));
 
-    grid.className = 'equity-visual-chart';
-    grid.innerHTML = points.map(({m,label}) => {
+    const html = points.map(({m,label}) => {
       const futureHome = home * Math.pow(1 + trend/100, m/12);
       const shareValue = futureHome * ownership/100;
       const mortgage = balanceAt(path.monthlyPoints, m);
@@ -58,8 +57,14 @@
       </div>`;
     }).join('');
 
+    grid.className = 'equity-visual-chart';
+    if (grid.dataset.chartMarkup !== html) {
+      grid.innerHTML = html;
+      grid.dataset.chartMarkup = html;
+    }
+
     const heading = document.querySelector('#equityGrowth .deep-heading h2');
-    if (heading) heading.textContent = 'How your mortgage-free share grows';
+    if (heading && heading.textContent !== 'How your mortgage-free share grows') heading.textContent = 'How your mortgage-free share grows';
   }
 
   function collapseCostComparison() {
@@ -71,7 +76,6 @@
     details.className = section.className;
     details.innerHTML = `<summary><span>Additional information<span class="property-cost-subtitle">Costs & long-term value</span></span></summary><div class="property-cost-body"></div>`;
     const body = details.querySelector('.property-cost-body');
-
     const heading = section.querySelector('.deep-heading');
     if (heading) heading.remove();
     while (section.firstChild) body.appendChild(section.firstChild);
@@ -79,14 +83,23 @@
   }
 
   function refresh() {
-    renderEquityChart();
     collapseCostComparison();
+    renderEquityChart();
   }
 
-  const observer = new MutationObserver(() => requestAnimationFrame(refresh));
-  observer.observe(document.body, { childList:true, subtree:true });
+  let frame = null;
+  const scheduleRefresh = () => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(refresh);
+  };
+
   document.addEventListener('input', (event) => {
-    if (event.target.matches('#balance,#rate,#payment,#currentOverpayment,#homeValue,#ownership,#projectionTrendRate,#projectionPurchasePrice,#projectionImprovements')) requestAnimationFrame(refresh);
+    if (event.target.matches('#balance,#rate,#payment,#currentOverpayment,#homeValue,#ownership,#projectionTrendRate,#projectionPurchasePrice,#projectionImprovements')) scheduleRefresh();
   });
-  requestAnimationFrame(refresh);
+  document.addEventListener('click', (event) => {
+    if (event.target.closest('[data-expand-card],#overpayButtons')) setTimeout(scheduleRefresh, 30);
+  });
+
+  scheduleRefresh();
+  setTimeout(refresh, 250);
 })();
