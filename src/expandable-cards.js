@@ -42,7 +42,7 @@
     closeButton.type = 'button';
     closeButton.className = 'card-close-button';
     closeButton.setAttribute('aria-label', 'Close details');
-    closeButton.textContent = '×';
+    closeButton.textContent = 'Close';
     closeButton.addEventListener('click', (event) => {
       event.stopPropagation();
       closeCard();
