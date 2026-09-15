@@ -146,7 +146,7 @@
       const base = balanceAt(result.base.monthlyPoints, month);
       const over = balanceAt(result.accelerated.monthlyPoints, month);
       const ltv = v.homeValue > 0 ? (base / v.homeValue) * 100 : null;
-      const label = month === result.base.months ? 'Mortgage-free' : month % 12 === 0 ? `Year ${month / 12}` : compactMonths(month);
+      const label = month === result.base.months ? `${compactMonths(result.base.months)} · Mortgage-free` : month % 12 === 0 ? `Year ${month / 12}` : compactMonths(month);
       return `<tr><td><strong>${label}</strong></td><td>${money(base)}</td><td>${money(over)}</td><td>${ltv === null ? '—' : pct(ltv)}</td></tr>`;
     }).join('');
   }
