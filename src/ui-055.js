@@ -59,8 +59,8 @@
     const status = $('balanceAnchorStatus');
     if (!status) return;
     status.innerHTML = elapsed > 0
-      ? `<span>Balance last updated</span><strong>${money(anchor.balance)} · ${monthLabel(anchor.month)}</strong><small>Dashboard balance is automatically projected forward ${elapsed} month${elapsed===1?'':'s'} to ${monthLabel(monthKey())}. Update the balance whenever you have a fresh lender figure.</small>`
-      : `<span>Balance last updated</span><strong>${money(anchor.balance)} · ${monthLabel(anchor.month)}</strong><small>This is the current anchor. From next month, the dashboard will project it forward automatically until you enter a fresh lender balance.</small>`;
+      ? `<span>Balance last updated</span><strong>${money(anchor.balance)} · ${monthLabel(anchor.month)}</strong><small>Dashboard balance is projected forward ${elapsed} month${elapsed===1?'':'s'} to ${monthLabel(monthKey())} using your saved rate, payment and regular overpayment. Enter a fresh lender balance whenever you want to reset it.</small>`
+      : `<span>Balance last updated</span><strong>${money(anchor.balance)} · ${monthLabel(anchor.month)}</strong><small>From next month, this balance will move forward automatically using your saved rate, payment and regular overpayment.</small>`;
   }
 
   function applyMonthlyBalance() {
@@ -77,15 +77,25 @@
   }
 
   function simplifySections() {
-    // Rate comparison belongs with the deal/fixed-rate card only.
+    // Market-rate comparison belongs inside Next important thing, not as its own dashboard block.
     $('dashboardRateStrip')?.remove();
+    const deal = document.querySelector('.next-panel');
+    const compare = $('dealMarketCompare');
+    const dealDetail = deal?.querySelector('.expand-detail');
+    if (deal && compare && dealDetail && compare.parentElement === dealDetail) {
+      compare.classList.add('next-rate-check');
+      deal.insertBefore(compare, dealDetail);
+    }
+
+    // Mortgage detail is only about the present position.
     document.querySelector('.mortgage-deep-dive .market-block')?.classList.add('current-only-hidden');
     const yearCard = document.querySelector('.mortgage-deep-dive .deep-grid .deep-stat:nth-child(3)');
     yearCard?.classList.add('current-only-hidden');
     const mortgageTitle = document.querySelector('.mortgage-deep-dive > h2');
     if (mortgageTitle) mortgageTitle.textContent = 'Your mortgage right now';
+    document.querySelector('.hero-scenario')?.classList.add('current-only-hidden');
 
-    // Equity belongs in Home; the deal card should stay about remortgaging.
+    // Equity belongs in Home; Next important thing stays about the deal/remortgage.
     $('dealEndEquity')?.classList.add('deal-equity-hidden');
   }
 
@@ -131,11 +141,7 @@
     const trend = getTrendRate();
     $('equityGrowthAssumption').textContent = `${trend.toFixed(1)}%/yr home-value trend`;
     const candidates = [
-      {m:0,label:'Now'},
-      {m:12,label:'1 year'},
-      {m:60,label:'5 years'},
-      {m:120,label:'10 years'},
-      {m:path.months,label:'Mortgage-free'}
+      {m:0,label:'Now'}, {m:12,label:'1 year'}, {m:60,label:'5 years'}, {m:120,label:'10 years'}, {m:path.months,label:'Mortgage-free'}
     ];
     const seen = new Set();
     const points = candidates.filter(({m}) => m <= path.months && !seen.has(m) && seen.add(m));
@@ -148,7 +154,6 @@
     }).join('');
   }
 
-  // Keep the overpayment suffix visually subordinate and on one line.
   function normalizeOverpaymentSummary() {
     const display = $('currentOverpayDisplay');
     if (display) display.classList.add('summary-overpayment-value');
