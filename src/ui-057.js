@@ -1,6 +1,18 @@
 (() => {
   const $ = (id) => document.getElementById(id);
   const money = (value) => new Intl.NumberFormat('en-GB', { style:'currency', currency:'GBP', maximumFractionDigits:0 }).format(Math.max(0, Number(value)||0));
+  const hero = document.querySelector('.hero-panel');
+
+  function stripHeroInlineEditors() {
+    document.querySelectorAll('.hero-balance-row [data-edit-target], .hero-balance-row .detail-editable, .hero-balance-row .editable-metric').forEach((el) => {
+      el.removeAttribute('data-edit-target');
+      el.removeAttribute('role');
+      el.removeAttribute('tabindex');
+      el.removeAttribute('aria-label');
+      el.classList.remove('detail-editable','editable-metric');
+      el.querySelector('.inline-editor')?.remove();
+    });
+  }
 
   function consolidateMortgageEditor() {
     const deep = document.querySelector('.mortgage-deep-dive');
@@ -37,14 +49,7 @@
 
     deep.appendChild(section);
     oldDetails.remove();
-
-    document.querySelectorAll('.hero-balance-row [data-edit-target]').forEach((el) => {
-      el.removeAttribute('data-edit-target');
-      el.removeAttribute('role');
-      el.removeAttribute('tabindex');
-      el.removeAttribute('aria-label');
-      el.classList.remove('detail-editable','editable-metric');
-    });
+    stripHeroInlineEditors();
   }
 
   function getTrendRate() {
@@ -106,7 +111,12 @@
     if (heading) heading.textContent = 'How much of your share could be mortgage-free';
   }
 
+  if (hero) {
+    new MutationObserver(() => requestAnimationFrame(stripHeroInlineEditors)).observe(hero, {attributes:true, attributeFilter:['class','aria-expanded']});
+  }
+
   consolidateMortgageEditor();
+  stripHeroInlineEditors();
   renderEquityRows();
 
   document.addEventListener('input', (event) => {
@@ -117,6 +127,7 @@
 
   requestAnimationFrame(() => {
     consolidateMortgageEditor();
+    stripHeroInlineEditors();
     renderEquityRows();
   });
 })();
