@@ -1,0 +1,35 @@
+/* V0.6.2 mobile interaction and de-duplication fixes */
+
+/* Legacy standalone rate strip is no longer part of the dashboard. */
+#dashboardRateStrip{display:none!important}
+
+/* Remove browser-style blue tap/selection feedback from app chrome. */
+html,body,.app-shell,.panel,.hero-panel,.expandable-card,button,[role="button"],canvas{
+  -webkit-tap-highlight-color:transparent;
+}
+.panel,.hero-panel,.expandable-card,button,[role="button"],.eyebrow,.kicker,.legend,.expand-hint{
+  -webkit-user-select:none;
+  user-select:none;
+}
+input,textarea,select,[contenteditable="true"]{
+  -webkit-user-select:text;
+  user-select:text;
+}
+button,[role="button"],.expandable-card{touch-action:manipulation}
+
+/* Keep chart responsive and touch-friendly in the installed/mobile app. */
+.chart-wrap{width:100%;min-width:0;overflow:hidden}
+.chart-panel canvas{
+  display:block;
+  width:100%!important;
+  max-width:100%;
+  touch-action:pan-y;
+  -webkit-user-select:none;
+  user-select:none;
+}
+.chart-panel.is-expanded canvas{touch-action:pan-y}
+
+@media(max-width:650px){
+  .chart-panel.is-expanded .chart-wrap{margin-inline:0}
+  .chart-panel.is-expanded canvas{min-height:300px}
+}
