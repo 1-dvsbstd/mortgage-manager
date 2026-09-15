@@ -9,8 +9,9 @@
   <meta name="apple-mobile-web-app-title" content="Mortgage" />
   <meta name="description" content="A visual mortgage manager for tracking balance, equity, payoff time and overpayment impact." />
   <title>Mortgage Manager</title>
-  <link rel="icon" href="public/icon.svg?v=042" type="image/svg+xml" />
-  <link rel="stylesheet" href="src/styles.css?v=042" />
+  <link rel="icon" href="public/icon.svg?v=043" type="image/svg+xml" />
+  <link rel="stylesheet" href="src/styles.css?v=043" />
+  <link rel="stylesheet" href="src/inline-edit.css?v=043" />
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then((registrations) => {
@@ -26,7 +27,7 @@
   <main class="app-shell">
     <header class="topbar">
       <div>
-        <p class="brand">Mortgage Manager <span>V0.4.2</span></p>
+        <p class="brand">Mortgage Manager <span>V0.4.3</span></p>
         <p class="topline">See what you owe, what you own, and how quickly you can change it.</p>
       </div>
       <div class="save-status" id="saveStatus">Saved on this device</div>
@@ -145,7 +146,8 @@
     <footer class="footer">Illustrative planning tool only. Property-share figures are simplified and may not match the legal or lender treatment of every ownership/equity scheme. Mortgage projections assume the entered rate and payment remain unchanged.</footer>
   </main>
 
-  <script src="src/mortgage.js?v=042"></script>
-  <script src="src/app.js?v=042"></script>
+  <script src="src/mortgage.js?v=043"></script>
+  <script src="src/app.js?v=043"></script>
+  <script src="src/inline-edit.js?v=043"></script>
 </body>
 </html>
