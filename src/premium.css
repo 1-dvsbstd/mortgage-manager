@@ -152,6 +152,7 @@ h2{font-size:18px;letter-spacing:-.025em;font-weight:760}
   linear-gradient(180deg,rgba(16,34,29,.92),rgba(9,25,21,.92));
 }
 .next-event-text{color:#9aa9a3}
+.next-panel .mini-edit{display:none!important}
 
 .chart-panel canvas{
   border-radius:20px;
@@ -202,7 +203,15 @@ h2{font-size:18px;letter-spacing:-.025em;font-weight:760}
   box-shadow:0 36px 120px rgba(0,0,0,.48),0 0 0 1px rgba(104,222,185,.025) inset!important;
 }
 .card-backdrop{background:rgba(2,8,7,.74)!important;backdrop-filter:blur(8px)!important}
-.card-close-button{background:rgba(255,255,255,.055)!important;border-color:rgba(255,255,255,.09)!important}
+.card-close-button{
+  background:transparent!important;
+  border-color:transparent!important;
+  color:var(--muted)!important;
+}
+.card-close-button:hover,.card-close-button:focus-visible{
+  background:rgba(255,255,255,.04)!important;
+  color:var(--text)!important;
+}
 
 @media(max-width:900px){
   .app-shell{width:min(100% - 24px,1200px)}
