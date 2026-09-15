@@ -64,7 +64,18 @@
   animation: backdrop-in .18s ease-out;
 }
 
-/* Close occupies normal document flow so it can never cover content while scrolling. */
+/* Dedicated controls row: separate from the card's own content. */
+.card-close-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  min-height: 36px;
+  margin: 0 0 14px;
+  padding: 0;
+  flex: 0 0 auto;
+}
+
 .card-close-button {
   position: static !important;
   z-index: auto !important;
@@ -78,7 +89,7 @@
   min-height: 32px !important;
   max-width: 58px !important;
   max-height: 32px !important;
-  margin: 0 0 16px auto !important;
+  margin: 0 !important;
   padding: 0 !important;
   border: 1px solid rgba(255,255,255,.08) !important;
   border-radius: 9px !important;
@@ -99,6 +110,9 @@
   border-color: rgba(104,222,185,.18) !important;
   outline: none;
 }
+
+/* Ownership percentage is already communicated by the ownership visual and detail values. */
+#ownershipBadge { display: none !important; }
 
 body.card-open { overflow: hidden; }
 
@@ -129,6 +143,10 @@ body.card-open { overflow: hidden; }
     max-height: calc(100% - 16px);
     border-radius: 22px;
   }
+  .card-close-bar {
+    min-height: 32px;
+    margin-bottom: 12px;
+  }
   .card-close-button {
     width: 54px !important;
     min-width: 54px !important;
@@ -136,7 +154,6 @@ body.card-open { overflow: hidden; }
     height: 30px !important;
     min-height: 30px !important;
     max-height: 30px !important;
-    margin-bottom: 14px !important;
     font-size: 10px !important;
   }
 }
