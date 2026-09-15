@@ -1,0 +1,118 @@
+.editable-metric,
+.inline-edit-trigger {
+  position: relative;
+}
+
+.editable-metric {
+  cursor: pointer;
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+
+.editable-metric::after {
+  content: "Edit";
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 800;
+  opacity: .75;
+}
+
+.editable-metric:hover,
+.editable-metric:focus-visible {
+  border-color: rgba(84,224,180,.38);
+  background: rgba(84,224,180,.055);
+  outline: none;
+}
+
+.editable-metric:active {
+  transform: scale(.99);
+}
+
+.ownership-badge.inline-edit-trigger {
+  cursor: pointer;
+  min-height: 0;
+  background: rgba(255,255,255,.035);
+}
+
+.ownership-badge.inline-edit-trigger::after {
+  content: " · Edit";
+  color: var(--accent);
+}
+
+.next-heading-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.mini-edit {
+  min-height: 0;
+  padding: 5px 9px;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--accent);
+  background: rgba(84,224,180,.06);
+  border-color: rgba(84,224,180,.2);
+}
+
+.inline-editor {
+  width: 100%;
+  margin-top: 9px;
+  padding-top: 9px;
+  border-top: 1px solid var(--border);
+}
+
+.inline-editor-row {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+
+.inline-editor input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  margin: 0 !important;
+  padding: 9px 10px !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(84,224,180,.3) !important;
+  background: rgba(3,16,13,.85) !important;
+  color: var(--text) !important;
+  font-size: 16px !important;
+}
+
+.inline-editor button {
+  min-height: 38px;
+  padding: 8px 11px;
+  font-size: 12px;
+}
+
+.inline-editor .save-inline {
+  background: var(--accent);
+  color: #062018;
+  border-color: transparent;
+}
+
+.inline-editor .cancel-inline {
+  background: rgba(255,255,255,.04);
+}
+
+.inline-editor-note {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+@media (max-width:650px) {
+  .editable-metric::after {
+    top: 7px;
+    right: 8px;
+  }
+
+  .inline-editor-row {
+    gap: 6px;
+  }
+}
