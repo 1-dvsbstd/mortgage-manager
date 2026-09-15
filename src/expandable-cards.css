@@ -64,11 +64,10 @@
   animation: backdrop-in .18s ease-out;
 }
 
-/* The close control owns its own row. It must never sit on top of card content. */
+/* Close occupies normal document flow so it can never cover content while scrolling. */
 .card-close-button {
-  position: sticky !important;
-  top: 10px !important;
-  z-index: 50 !important;
+  position: static !important;
+  z-index: auto !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -89,9 +88,8 @@
   font-weight: 750 !important;
   line-height: 1 !important;
   letter-spacing: .02em !important;
-  box-shadow: 0 4px 14px rgba(0,0,0,.16) !important;
+  box-shadow: none !important;
   flex: 0 0 auto !important;
-  backdrop-filter: blur(12px);
 }
 
 .card-close-button:hover,
@@ -132,7 +130,6 @@ body.card-open { overflow: hidden; }
     border-radius: 22px;
   }
   .card-close-button {
-    top: 8px !important;
     width: 54px !important;
     min-width: 54px !important;
     max-width: 54px !important;
