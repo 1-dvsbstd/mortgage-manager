@@ -6,6 +6,7 @@
     balance: { label: 'Mortgage balance', suffix: '', prefix: '£' },
     payment: { label: 'Monthly payment', suffix: '', prefix: '£' },
     rate: { label: 'Interest rate', suffix: '%', prefix: '' },
+    currentOverpayment: { label: 'Regular monthly overpayment', suffix: '', prefix: '£' },
     homeValue: { label: 'Property value', suffix: '', prefix: '£' },
     ownership: { label: 'Property share owned', suffix: '%', prefix: '' },
     fixedEnd: { label: 'Fixed rate end', suffix: '', prefix: '' },
