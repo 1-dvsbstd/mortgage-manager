@@ -112,7 +112,7 @@
     const save=()=>{source.value=input.value;source.dispatchEvent(new Event('input',{bubbles:true}));source.dispatchEvent(new Event('change',{bubbles:true}));if(target==='balance')saveBalanceAnchor(input.value);syncTileValues();closeQuickEditor();};
     backdrop.addEventListener('click',closeQuickEditor); sheet.querySelector('.summary-quick-close').addEventListener('click',closeQuickEditor); sheet.querySelector('.summary-quick-cancel').addEventListener('click',closeQuickEditor); sheet.querySelector('.summary-quick-save').addEventListener('click',save);
     input.addEventListener('keydown',e=>{if(e.key==='Enter')save();if(e.key==='Escape')closeQuickEditor();});
-    requestAnimationFrame(()=>{input.focus();input.select?.();});
+    requestAnimationFrame(()=>{input.focus({preventScroll:true});});
   }
 
   function ensurePayoffDateVisible(){
