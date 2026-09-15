@@ -125,7 +125,7 @@
 
   const sourceSummary = document.getElementById('scenarioSummary');
   if (sourceSummary) {
-    new MutationObserver(syncCompactWhatIf).observe(sourceSummary, { childList:true, characterData:true, subtree:true });
+    new MutationObserver(syncCompactWhatIf).observe(sourceSummary, { childList:true, characterData:true,subtree:true });
   }
 
   const dealDetail = document.querySelector('.next-panel .expand-detail');
@@ -143,15 +143,69 @@
     dealDetail.insertAdjacentElement('afterbegin', block);
   }
 
+  function ensureDashboardRateStrip() {
+    if (document.getElementById('dashboardRateStrip')) return;
+    const hero = document.querySelector('.hero-panel');
+    if (!hero) return;
+
+    const style = document.createElement('style');
+    style.textContent = `
+      .dashboard-rate-strip{margin:14px 0 18px;padding:16px;border:1px solid var(--border);border-radius:18px;background:var(--panel)}
+      .dashboard-rate-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-end}
+      .dashboard-rate-head h2{margin:2px 0 0;font-size:18px}
+      .dashboard-rate-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+      .dashboard-rate-card{padding:14px;border:1px solid var(--border);border-radius:14px;background:var(--panel-soft)}
+      .dashboard-rate-card.current{border-color:rgba(84,224,180,.34)}
+      .dashboard-rate-card span,.dashboard-rate-card small{display:block;color:var(--muted);font-size:11px}
+      .dashboard-rate-card strong{display:block;margin-top:4px;font-size:22px}
+      .dashboard-rate-card small{margin-top:5px;line-height:1.35}
+      @media(max-width:700px){.dashboard-rate-head{align-items:flex-start}.dashboard-rate-grid{grid-template-columns:1fr}.dashboard-rate-card{display:grid;grid-template-columns:1fr auto;column-gap:12px;align-items:center}.dashboard-rate-card strong{grid-column:2;grid-row:1/3;margin:0}.dashboard-rate-card small{grid-column:1}.dashboard-rate-head .source-date{margin-top:2px}}
+    `;
+    document.head.appendChild(style);
+
+    const strip = document.createElement('section');
+    strip.id = 'dashboardRateStrip';
+    strip.className = 'dashboard-rate-strip';
+    strip.innerHTML = `
+      <div class="dashboard-rate-head">
+        <div><p class="eyebrow">Rate check</p><h2>Your rate vs the market</h2></div>
+        <span class="source-date">Moneyfacts · 1 Sep 2026</span>
+      </div>
+      <div class="dashboard-rate-grid">
+        <div class="dashboard-rate-card current"><span>Your rate</span><strong id="dashYourRate">—</strong><small id="dashLtvBand">—</small></div>
+        <div class="dashboard-rate-card"><span>Avg 2-year fix</span><strong id="dash2yRate">—</strong><small id="dash2yPayment">—</small></div>
+        <div class="dashboard-rate-card"><span>Avg 5-year fix</span><strong id="dash5yRate">—</strong><small id="dash5yPayment">—</small></div>
+      </div>
+    `;
+    hero.insertAdjacentElement('afterend', strip);
+  }
+
+  const rateMappings = [
+    ['marketCurrentRate','dealYourRate','dashYourRate'],
+    ['marketLtvBand','dealLtvBand','dashLtvBand'],
+    ['market2yRate','deal2yRate','dash2yRate'],
+    ['market2yPayment','deal2yPayment','dash2yPayment'],
+    ['market5yRate','deal5yRate','dash5yRate'],
+    ['market5yPayment','deal5yPayment','dash5yPayment']
+  ];
+
   const copyRates = () => {
-    const map = [
-      ['marketCurrentRate','dealYourRate'],['marketLtvBand','dealLtvBand'],['market2yRate','deal2yRate'],['market2yPayment','deal2yPayment'],['market5yRate','deal5yRate'],['market5yPayment','deal5yPayment']
-    ];
-    map.forEach(([from,to]) => { const a=document.getElementById(from), b=document.getElementById(to); if(a&&b) b.textContent=a.textContent; });
+    ensureDashboardRateStrip();
+    rateMappings.forEach(([from,...targets]) => {
+      const source = document.getElementById(from);
+      targets.forEach((targetId) => {
+        const target = document.getElementById(targetId);
+        if (source && target) target.textContent = source.textContent;
+      });
+    });
   };
+
   copyRates();
   const observer = new MutationObserver(copyRates);
-  ['marketCurrentRate','marketLtvBand','market2yRate','market2yPayment','market5yRate','market5yPayment'].forEach((id)=>{ const el=document.getElementById(id); if(el) observer.observe(el,{childList:true,characterData:true,subtree:true}); });
+  rateMappings.forEach(([from]) => {
+    const el = document.getElementById(from);
+    if (el) observer.observe(el,{childList:true,characterData:true,subtree:true});
+  });
 
   ensureCompactWhatIf();
   syncCompactWhatIf();
