@@ -9,12 +9,12 @@
   <meta name="apple-mobile-web-app-title" content="Mortgage" />
   <meta name="description" content="A visual mortgage manager for tracking balance, equity, payoff time and overpayment impact." />
   <title>Mortgage Manager</title>
-  <link rel="icon" href="public/icon.svg?v=048" type="image/svg+xml" />
-  <link rel="stylesheet" href="src/styles.css?v=048" />
-  <link rel="stylesheet" href="src/inline-edit.css?v=048" />
-  <link rel="stylesheet" href="src/expandable-cards.css?v=048" />
-  <link rel="stylesheet" href="src/deep-dive.css?v=048" />
-  <link rel="stylesheet" href="src/chart-enhance.css?v=048" />
+  <link rel="icon" href="public/icon.svg?v=049" type="image/svg+xml" />
+  <link rel="stylesheet" href="src/styles.css?v=049" />
+  <link rel="stylesheet" href="src/inline-edit.css?v=049" />
+  <link rel="stylesheet" href="src/expandable-cards.css?v=049" />
+  <link rel="stylesheet" href="src/deep-dive.css?v=049" />
+  <link rel="stylesheet" href="src/chart-enhance.css?v=049" />
   <script>
     if ('serviceWorker' in navigator) navigator.serviceWorker.getRegistrations().then((registrations) => registrations.forEach((registration) => registration.unregister()));
     if ('caches' in window) caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key))));
@@ -23,7 +23,7 @@
 <body>
   <main class="app-shell">
     <header class="topbar">
-      <div><p class="brand">Mortgage Manager <span>V0.4.8</span></p><p class="topline">See what you owe, what you own, and how quickly you can change it.</p></div>
+      <div><p class="brand">Mortgage Manager <span>V0.4.9</span></p><p class="topline">See what you owe, what you own, and how quickly you can change it.</p></div>
       <div class="save-status" id="saveStatus">Saved on this device</div>
     </header>
 
@@ -122,6 +122,6 @@
     <footer class="footer">Illustrative planning tool only. Market rates are dated indicative averages, not mortgage offers. Home-value projections are scenarios rather than valuations. Property-share figures are simplified and may not match the legal or lender treatment of every ownership/equity scheme. Mortgage projections assume the entered rate and payment remain unchanged.</footer>
   </main>
 
-  <script src="src/mortgage.js?v=048"></script><script src="src/app.js?v=048"></script><script src="src/inline-edit.js?v=048"></script><script src="src/deep-dive.js?v=048"></script><script src="src/home-projection.js?v=048"></script><script src="src/expandable-cards.js?v=048"></script><script src="src/chart-enhance.js?v=048"></script>
+  <script src="src/mortgage.js?v=049"></script><script src="src/app.js?v=049"></script><script src="src/inline-edit.js?v=049"></script><script src="src/deep-dive.js?v=049"></script><script src="src/home-projection.js?v=049"></script><script src="src/expandable-cards.js?v=049"></script><script src="src/chart-enhance.js?v=049"></script>
 </body>
 </html>
