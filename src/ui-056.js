@@ -7,6 +7,11 @@
     catch (_) { return {}; }
   }
 
+  function getHistorySummary() {
+    try { return JSON.parse(localStorage.getItem('mortgage-manager-mortgage-history-summary-v1') || '{}') || {}; }
+    catch (_) { return {}; }
+  }
+
   function getTrendRate() {
     const settings = getHomeSettings();
     const trend = Number(settings.trend);
@@ -24,9 +29,9 @@
       <div class="property-cost-grid">
         <div class="property-cost-card"><span>Estimated value when mortgage-free</span><strong id="costFutureValue">—</strong><small id="costFutureValueNote">Uses the Home trend assumption.</small></div>
         <div class="property-cost-card"><span>Remaining mortgage payments</span><strong id="costRemainingPayments">—</strong><small>Projected from today, including future interest and your regular overpayment.</small></div>
-        <div class="property-cost-card"><span>Known lifetime cost floor</span><strong id="costKnownBasis">—</strong><small id="costKnownBasisNote">Add purchase details for this comparison.</small></div>
+        <div class="property-cost-card"><span>Estimated lifetime cost floor</span><strong id="costKnownBasis">—</strong><small id="costKnownBasisNote">Add purchase details for this comparison.</small></div>
       </div>
-      <p class="deep-note" id="costComparisonNote">The app can project future mortgage cost accurately from today, but cannot know mortgage interest or fees you already paid in previous years without historical mortgage data.</p>`;
+      <p class="deep-note" id="costComparisonNote">Add mortgage history to include estimated interest already paid.</p>`;
     projection.insertAdjacentElement('afterend', section);
   }
 
@@ -42,16 +47,19 @@
     const ownership = Math.min(100, Math.max(0, Number($('ownership')?.value)||0));
     const path = MortgageMath.amortize(balance, rate, payment + currentOverpay);
     const settings = getHomeSettings();
+    const history = getHistorySummary();
     const trend = getTrendRate();
-    const purchasePrice = Math.max(0, Number(settings.purchasePrice)||0);
+    const purchasePrice = Math.max(0, Number(history.purchasePrice) || Number(settings.purchasePrice) || 0);
     const improvements = Math.max(0, Number(settings.improvements)||0);
+    const historicalInterest = Math.max(0, Number(history.historicalInterest) || 0);
     if (!Number.isFinite(path.months)) return;
 
     const years = path.months / 12;
     const futureWholeValue = home * Math.pow(1 + trend/100, years);
     const futureShareValue = futureWholeValue * ownership/100;
-    const remainingPayments = balance + Math.max(0, Number(path.interest)||0);
-    const knownBasis = purchasePrice ? purchasePrice + improvements + Math.max(0, Number(path.interest)||0) : 0;
+    const futureInterest = Math.max(0, Number(path.interest)||0);
+    const remainingPayments = balance + futureInterest;
+    const knownBasis = purchasePrice ? purchasePrice + improvements + historicalInterest + futureInterest : 0;
 
     $('costFutureValue').textContent = money(futureShareValue || futureWholeValue);
     $('costFutureValueNote').textContent = ownership < 100
@@ -61,11 +69,19 @@
 
     if (knownBasis) {
       $('costKnownBasis').textContent = money(knownBasis);
-      $('costKnownBasisNote').textContent = `${money(purchasePrice)} purchase price${improvements ? ` + ${money(improvements)} improvements` : ''} + projected future interest.`;
-      $('costComparisonNote').textContent = 'This is a floor rather than a full lifetime-cost figure: it excludes mortgage interest, fees, maintenance and other costs already paid before today.';
+      const historyText = historicalInterest > 0 ? ` + ${money(historicalInterest)} estimated past interest` : '';
+      $('costKnownBasisNote').textContent = `${money(purchasePrice)} purchase price${improvements ? ` + ${money(improvements)} improvements` : ''}${historyText} + ${money(futureInterest)} projected future interest.`;
+      if (historicalInterest > 0 && history.complete) {
+        $('costComparisonNote').textContent = 'Uses your entered mortgage history for estimated past interest and the current mortgage path for future interest. Fees, maintenance, insurance and other ownership costs are still excluded.';
+      } else if (historicalInterest > 0) {
+        $('costComparisonNote').textContent = 'Historical interest is partially reconstructed from the deal periods entered. Add any missing mortgage periods to improve the lifetime estimate.';
+      } else {
+        $('costComparisonNote').textContent = 'Purchase details are included, but past mortgage interest is not yet reconstructed. Add your previous mortgage deals under Setup & data → Mortgage history.';
+      }
     } else {
       $('costKnownBasis').textContent = 'Add purchase price';
-      $('costKnownBasisNote').textContent = 'Purchase price and improvements are set under Home value estimate settings.';
+      $('costKnownBasisNote').textContent = 'Purchase price and mortgage history are set under Setup & data.';
+      $('costComparisonNote').textContent = 'Add mortgage history to turn this into a more complete lifetime-cost estimate.';
     }
   }
 
@@ -76,6 +92,7 @@
   document.addEventListener('change', (event) => {
     if (event.target.matches('#projectionPurchasePrice,#projectionImprovements')) schedule();
   });
+  document.addEventListener('mortgage-history-updated', schedule);
 
   schedule();
   setTimeout(renderCostComparison, 250);
