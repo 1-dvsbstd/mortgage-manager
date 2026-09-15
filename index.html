@@ -9,11 +9,11 @@
   <meta name="apple-mobile-web-app-title" content="Mortgage" />
   <meta name="description" content="A visual mortgage manager for tracking balance, equity, payoff time and overpayment impact." />
   <title>Mortgage Manager</title>
-  <link rel="icon" href="public/icon.svg?v=046" type="image/svg+xml" />
-  <link rel="stylesheet" href="src/styles.css?v=046" />
-  <link rel="stylesheet" href="src/inline-edit.css?v=046" />
-  <link rel="stylesheet" href="src/expandable-cards.css?v=046" />
-  <link rel="stylesheet" href="src/deep-dive.css?v=046" />
+  <link rel="icon" href="public/icon.svg?v=047" type="image/svg+xml" />
+  <link rel="stylesheet" href="src/styles.css?v=047" />
+  <link rel="stylesheet" href="src/inline-edit.css?v=047" />
+  <link rel="stylesheet" href="src/expandable-cards.css?v=047" />
+  <link rel="stylesheet" href="src/deep-dive.css?v=047" />
   <script>
     if ('serviceWorker' in navigator) navigator.serviceWorker.getRegistrations().then((registrations) => registrations.forEach((registration) => registration.unregister()));
     if ('caches' in window) caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key))));
@@ -22,7 +22,7 @@
 <body>
   <main class="app-shell">
     <header class="topbar">
-      <div><p class="brand">Mortgage Manager <span>V0.4.6</span></p><p class="topline">See what you owe, what you own, and how quickly you can change it.</p></div>
+      <div><p class="brand">Mortgage Manager <span>V0.4.7</span></p><p class="topline">See what you owe, what you own, and how quickly you can change it.</p></div>
       <div class="save-status" id="saveStatus">Saved on this device</div>
     </header>
 
@@ -88,7 +88,7 @@
           <div class="ownership-legend"><span><i class="dot debt-dot"></i>Mortgage debt <strong id="debtLegend">—</strong></span><span><i class="dot equity-dot"></i>Your equity <strong id="equityLegend">—</strong></span><span id="schemeLegendWrap"><i class="dot scheme-dot"></i>Other share <strong id="schemeLegend">—</strong></span></div>
           <div class="home-stats"><div class="editable-metric" data-edit-target="homeValue" tabindex="0" role="button" aria-label="Edit property value"><span>Property value</span><strong id="homeValueStat">—</strong></div><div><span>Your share value</span><strong id="ownedValueStat">—</strong></div><div><span>LTV</span><strong id="ltvStat">—</strong></div></div>
         </div>
-        <p class="expand-hint">Tap to see the full ownership breakdown</p>
+        <p class="expand-hint">Tap for ownership breakdown and future home-value projections</p>
       </article>
 
       <article class="panel next-panel expandable-card" data-expandable-card="deal" tabindex="0" aria-expanded="false">
@@ -118,9 +118,9 @@
       </div><p class="field-note">Use 100% for a normally owned home. If a government scheme or third party retains a share, enter the percentage belonging to you or your household.</p><p id="warning" class="warning"></p></div>
     </details>
 
-    <footer class="footer">Illustrative planning tool only. Market rates are dated indicative averages, not mortgage offers. Property-share figures are simplified and may not match the legal or lender treatment of every ownership/equity scheme. Mortgage projections assume the entered rate and payment remain unchanged.</footer>
+    <footer class="footer">Illustrative planning tool only. Market rates are dated indicative averages, not mortgage offers. Home-value projections are scenarios rather than valuations. Property-share figures are simplified and may not match the legal or lender treatment of every ownership/equity scheme. Mortgage projections assume the entered rate and payment remain unchanged.</footer>
   </main>
 
-  <script src="src/mortgage.js?v=046"></script><script src="src/app.js?v=046"></script><script src="src/inline-edit.js?v=046"></script><script src="src/deep-dive.js?v=046"></script><script src="src/expandable-cards.js?v=046"></script>
+  <script src="src/mortgage.js?v=047"></script><script src="src/app.js?v=047"></script><script src="src/inline-edit.js?v=047"></script><script src="src/deep-dive.js?v=047"></script><script src="src/home-projection.js?v=047"></script><script src="src/expandable-cards.js?v=047"></script>
 </body>
 </html>
