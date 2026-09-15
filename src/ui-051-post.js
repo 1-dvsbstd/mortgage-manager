@@ -108,7 +108,7 @@
     try { const saved = localStorage.getItem(key); if (saved !== null) current.value = saved; } catch (_) {}
     const sync = () => {
       const value = Math.max(0, Number(current.value)||0);
-      if (display) display.textContent = `${money(value)}/month`;
+      if (display) display.innerHTML = `<span class="current-overpay-amount">${money(value)}</span><span class="current-overpay-suffix">/month</span>`;
       try { localStorage.setItem(key, String(value)); } catch (_) {}
       document.getElementById('customExtra')?.dispatchEvent(new Event('input', { bubbles:true }));
       updateCurrentSavings();
@@ -125,7 +125,7 @@
 
   const sourceSummary = document.getElementById('scenarioSummary');
   if (sourceSummary) {
-    new MutationObserver(syncCompactWhatIf).observe(sourceSummary, { childList:true, characterData:true,subtree:true });
+    new MutationObserver(syncCompactWhatIf).observe(sourceSummary, { childList:true, characterData:true, subtree:true });
   }
 
   const dealDetail = document.querySelector('.next-panel .expand-detail');
