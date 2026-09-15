@@ -9,19 +9,20 @@
   <meta name="apple-mobile-web-app-title" content="Mortgage" />
   <meta name="description" content="A visual mortgage manager for tracking balance, equity, payoff time and overpayment impact." />
   <title>Mortgage Manager</title>
-  <link rel="icon" href="public/icon.svg?v=064" type="image/svg+xml" />
-  <link rel="stylesheet" href="src/styles.css?v=064" />
-  <link rel="stylesheet" href="src/inline-edit.css?v=064" />
-  <link rel="stylesheet" href="src/expandable-cards.css?v=064" />
-  <link rel="stylesheet" href="src/deep-dive.css?v=064" />
-  <link rel="stylesheet" href="src/chart-enhance.css?v=064" />
-  <link rel="stylesheet" href="src/ui-051.css?v=064" />
-  <link rel="stylesheet" href="src/ui-055.css?v=064" />
-  <link rel="stylesheet" href="src/ui-056.css?v=064" />
-  <link rel="stylesheet" href="src/ui-057.css?v=064" />
-  <link rel="stylesheet" href="src/premium.css?v=064" />
-  <link rel="stylesheet" href="src/ui-061.css?v=064" />
-  <link rel="stylesheet" href="src/ui-062.css?v=064" />
+  <link rel="icon" href="public/icon.svg?v=070" type="image/svg+xml" />
+  <link rel="stylesheet" href="src/styles.css?v=070" />
+  <link rel="stylesheet" href="src/inline-edit.css?v=070" />
+  <link rel="stylesheet" href="src/expandable-cards.css?v=070" />
+  <link rel="stylesheet" href="src/deep-dive.css?v=070" />
+  <link rel="stylesheet" href="src/chart-enhance.css?v=070" />
+  <link rel="stylesheet" href="src/ui-051.css?v=070" />
+  <link rel="stylesheet" href="src/ui-055.css?v=070" />
+  <link rel="stylesheet" href="src/ui-056.css?v=070" />
+  <link rel="stylesheet" href="src/ui-057.css?v=070" />
+  <link rel="stylesheet" href="src/premium.css?v=070" />
+  <link rel="stylesheet" href="src/ui-061.css?v=070" />
+  <link rel="stylesheet" href="src/ui-062.css?v=070" />
+  <link rel="stylesheet" href="src/personal-070.css?v=070" />
   <script>
     if ('serviceWorker' in navigator) navigator.serviceWorker.getRegistrations().then((registrations) => registrations.forEach((registration) => registration.unregister()));
     if ('caches' in window) caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key))));
@@ -30,7 +31,7 @@
 <body>
   <main class="app-shell">
     <header class="topbar">
-      <div><p class="brand">Mortgage Manager <span>V0.6.4</span></p><p class="topline">See what you owe, what you own, and how quickly you can change it.</p></div>
+      <div><p class="brand">Mortgage Manager <span>V0.7.0</span></p><p class="topline">See what you owe, what you own, and how quickly you can change it.</p></div>
       <div class="save-status" id="saveStatus">Saved on this device</div>
     </header>
 
@@ -66,7 +67,7 @@
         <div class="progress-track" aria-hidden="true"><div id="progressFill" class="progress-fill"></div></div>
         <div class="hero-scenario" id="heroScenario">—</div>
       </div>
-      <p class="expand-hint">Tap for repayment breakdown and market-rate comparison</p>
+      <p class="expand-hint">Tap for repayment breakdown</p>
     </section>
 
     <section class="panel scenario-panel expandable-card" data-expandable-card="overpayment" tabindex="0" aria-expanded="false">
@@ -129,19 +130,20 @@
     <footer class="footer">Illustrative planning tool only. Market rates are dated indicative averages, not mortgage offers. Home-value projections are scenarios rather than valuations. Property-share figures are simplified and may not match the legal or lender treatment of every ownership/equity scheme. Mortgage projections assume the entered rate and payment remain unchanged.</footer>
   </main>
 
-  <script src="src/ui-051-pre.js?v=064"></script>
-  <script src="src/mortgage.js?v=064"></script>
-  <script src="src/current-overpay.js?v=064"></script>
-  <script src="src/app.js?v=064"></script>
-  <script src="src/inline-edit.js?v=064"></script>
-  <script src="src/deep-dive.js?v=064"></script>
-  <script src="src/home-projection.js?v=064"></script>
-  <script src="src/expandable-cards.js?v=064"></script>
-  <script src="src/chart-enhance.js?v=064"></script>
-  <script src="src/ui-051-post.js?v=064"></script>
-  <script src="src/ui-055.js?v=064"></script>
-  <script src="src/ui-056.js?v=064"></script>
-  <script src="src/ui-057.js?v=064"></script>
-  <script src="src/ui-062.js?v=064"></script>
+  <script src="src/ui-051-pre.js?v=070"></script>
+  <script src="src/mortgage.js?v=070"></script>
+  <script src="src/current-overpay.js?v=070"></script>
+  <script src="src/app.js?v=070"></script>
+  <script src="src/inline-edit.js?v=070"></script>
+  <script src="src/deep-dive.js?v=070"></script>
+  <script src="src/home-projection.js?v=070"></script>
+  <script src="src/expandable-cards.js?v=070"></script>
+  <script src="src/chart-enhance.js?v=070"></script>
+  <script src="src/ui-051-post.js?v=070"></script>
+  <script src="src/ui-055.js?v=070"></script>
+  <script src="src/ui-056.js?v=070"></script>
+  <script src="src/ui-057.js?v=070"></script>
+  <script src="src/ui-062.js?v=070"></script>
+  <script src="src/personal-070.js?v=070"></script>
 </body>
 </html>
