@@ -70,8 +70,33 @@
     if(detail) detail.classList.add('home-glance-source');
   }
 
+  function mergeScenarioIntoTrajectory(){
+    const scenario=$('.scenario-panel'), chart=$('.chart-panel');
+    if(!scenario||!chart||chart.dataset.whatIfMerged==='true') return;
+    chart.dataset.whatIfMerged='true';
+    chart.classList.add('trajectory-with-what-if');
+
+    scenario.classList.remove('panel','expandable-card');
+    scenario.classList.add('trajectory-what-if');
+    scenario.removeAttribute('tabindex');
+    scenario.removeAttribute('aria-expanded');
+    scenario.querySelector('[data-expand-card]')?.remove();
+    scenario.querySelector('.expand-hint')?.remove();
+
+    const scenarioDetail=$('.expand-detail',scenario);
+    const trajectoryDetail=$('.trajectory-details',chart);
+    if(scenarioDetail && trajectoryDetail){
+      scenarioDetail.classList.add('trajectory-scenario-detail');
+      trajectoryDetail.appendChild(scenarioDetail);
+    }
+
+    const chartWrap=$('.chart-wrap',chart);
+    if(chartWrap) chart.insertBefore(scenario,chartWrap);
+    else chart.appendChild(scenario);
+  }
+
   function refineExpandableCues(){
-    const labels={ mortgage:'More · repayment breakdown', overpayment:'More · compare overpayment levels', trajectory:'More · yearly balances and milestones' };
+    const labels={ mortgage:'More · repayment breakdown', trajectory:'More · yearly balances and scenario comparison' };
     document.querySelectorAll('[data-expandable-card]').forEach((card)=>{
       card.querySelector('[data-expand-card]')?.classList.add('legacy-expand-cta');
       const hint=card.querySelector('.expand-hint'); const key=card.dataset.expandableCard;
@@ -83,8 +108,9 @@
     const current=$('.app-view-current .app-view-content'); if(!current)return;
     ensureCurrentOverpaymentPanel(); makeHomeGlance();
     const scenario=$('.scenario-panel'), chart=$('.chart-panel'), progress=document.getElementById('personalProgress');
-    if(scenario&&scenario.parentElement!==current) current.appendChild(scenario);
     if(chart&&chart.parentElement!==current) current.appendChild(chart);
+    if(scenario&&scenario.parentElement!==current&&scenario.parentElement!==chart) current.appendChild(scenario);
+    mergeScenarioIntoTrajectory();
     if(progress&&progress.parentElement!==current) current.appendChild(progress);
   }
 
@@ -110,22 +136,22 @@
     next.querySelector('[data-expand-card]')?.remove(); next.querySelector('.expand-hint')?.remove();
     document.getElementById('dealForecast')?.setAttribute('hidden','');
 
-    const timeline=makeUpcomingSection('upcoming-timeline','Deal timeline','Your current fix');
+    const timeline=makeUpcomingSection('upcoming-timeline','1 · Deal timeline','Your current fix');
     const timelineBody=$('.upcoming-section-body',timeline);
     const eventTitle=document.getElementById('nextEventTitle'), eventText=document.getElementById('nextEventText'), track=$('.timeline-track',next), labels=$('.timeline-labels',next);
     [eventTitle,eventText,track,labels].forEach((node)=>{ if(node) timelineBody.appendChild(node); });
 
-    const position=makeUpcomingSection('upcoming-position','At deal end','Projected position');
+    const position=makeUpcomingSection('upcoming-position','2 · At deal end','Projected position');
     const positionBody=$('.upcoming-section-body',position);
     const plannerHeading=$('.deal-planner-heading',next), plannerMissing=document.getElementById('dealPlannerMissing');
     if(plannerHeading) positionBody.appendChild(plannerHeading);
     if(plannerMissing) positionBody.appendChild(plannerMissing);
     positionBody.appendChild(summary);
 
-    const action=makeUpcomingSection('upcoming-action','Next milestone','What could improve your position');
+    const action=makeUpcomingSection('upcoming-action','3 · Next milestone','What could improve your position');
     $('.upcoming-section-body',action).appendChild(milestone);
 
-    const rateSection=makeUpcomingSection('upcoming-rates','Rate scenarios','What your next payment could look like');
+    const rateSection=makeUpcomingSection('upcoming-rates','4 · Rate scenarios','What your next payment could look like');
     const rateBody=$('.upcoming-section-body',rateSection);
     const rateSubhead=$('.deal-planner-subhead',rates); if(rateSubhead) rateSubhead.remove();
     const rateGrid=document.getElementById('dealPlannerRateGrid'); if(rateGrid) rateBody.appendChild(rateGrid);
@@ -166,13 +192,20 @@
     const history=document.getElementById('homeValueHistory'); if(history?.tagName==='DETAILS') history.open=true;
   }
 
+  function labelFutureStages(){
+    const home=document.getElementById('homeProjection'), planner=document.getElementById('nextHomePlanner');
+    if(home&&!home.querySelector('.future-stage-label')) home.insertAdjacentHTML('afterbegin','<div class="future-stage-label"><span>1</span><strong>Home outlook</strong></div>');
+    const body=$('.next-home-body',planner);
+    if(body&&!body.querySelector('.future-stage-label')) body.insertAdjacentHTML('afterbegin','<div class="future-stage-label"><span>2</span><strong>Next-home planning</strong></div>');
+  }
+
   function relocateFutureFeatures(){
     const future=$('.app-view-future .app-view-content'); if(!future)return; ensureFutureAssumption();
     const home=document.getElementById('homeProjection'), planner=document.getElementById('nextHomePlanner'), cost=document.getElementById('propertyCostComparison');
     if(home){ cardifyFeature(home,'home-projection'); if(home.parentElement!==future) future.appendChild(home); }
     if(planner){ cardifyFeature(planner,'next-home'); planner.open=true; if(planner.parentElement!==future) future.appendChild(planner); }
     if(cost && !planner){ cardifyFeature(cost,'cost-comparison'); if(cost.parentElement!==future) future.appendChild(cost); }
-    mergeFuturePlanning();
+    mergeFuturePlanning(); labelFutureStages();
   }
 
   function restoreProfileSettings(profileSettings,originParent,originNext){ if(!profileSettings||!originParent||originParent.contains(profileSettings))return; if(originNext&&originNext.parentElement===originParent) originParent.insertBefore(profileSettings,originNext); else originParent.appendChild(profileSettings); }
