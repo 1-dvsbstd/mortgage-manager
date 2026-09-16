@@ -1,9 +1,50 @@
 (() => {
   const $ = (id) => document.getElementById(id);
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const DONUT_RADIUS = 72;
+  const DONUT_CIRCUMFERENCE = 2 * Math.PI * DONUT_RADIUS;
 
   function moneyNumber(text) {
     const n = Number(String(text || '').replace(/[^0-9.-]/g, ''));
     return Number.isFinite(n) ? Math.max(0, n) : 0;
+  }
+
+  function ensureOwnershipDonut(bar) {
+    let svg = bar.querySelector('.ownership-donut');
+    if (svg) return svg;
+
+    svg = document.createElementNS(SVG_NS, 'svg');
+    svg.classList.add('ownership-donut');
+    svg.setAttribute('viewBox', '0 0 200 200');
+    svg.setAttribute('focusable', 'false');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.innerHTML = `
+      <circle class="ownership-donut-track" cx="100" cy="100" r="${DONUT_RADIUS}"></circle>
+      <circle class="ownership-donut-arc ownership-donut-debt" cx="100" cy="100" r="${DONUT_RADIUS}"></circle>
+      <circle class="ownership-donut-arc ownership-donut-equity" cx="100" cy="100" r="${DONUT_RADIUS}"></circle>
+      <circle class="ownership-donut-arc ownership-donut-other" cx="100" cy="100" r="${DONUT_RADIUS}"></circle>
+      <circle class="ownership-donut-centre" cx="100" cy="100" r="54"></circle>
+      <text class="ownership-donut-percent" x="100" y="95" text-anchor="middle">0%</text>
+      <text class="ownership-donut-free" x="100" y="121" text-anchor="middle">free</text>`;
+    bar.appendChild(svg);
+    return svg;
+  }
+
+  function setArc(circle, startPct, sizePct, gapPct) {
+    if (!circle) return;
+    if (sizePct <= 0.01) {
+      circle.style.display = 'none';
+      return;
+    }
+
+    circle.style.display = '';
+    const effectiveGap = Math.min(gapPct, Math.max(0, sizePct * 0.22));
+    const visiblePct = Math.max(0, sizePct - effectiveGap);
+    const startWithGap = startPct + effectiveGap / 2;
+    const dash = DONUT_CIRCUMFERENCE * visiblePct / 100;
+    const offset = -DONUT_CIRCUMFERENCE * startWithGap / 100;
+    circle.setAttribute('stroke-dasharray', `${dash.toFixed(3)} ${(DONUT_CIRCUMFERENCE - dash).toFixed(3)}`);
+    circle.setAttribute('stroke-dashoffset', offset.toFixed(3));
   }
 
   function renderOwnershipDonut() {
@@ -21,20 +62,15 @@
     const householdEquity = Math.max(0, ownedValue - balance);
     const mortgageFreeShare = ownedValue > 0 ? Math.min(100, Math.max(0, householdEquity / ownedValue * 100)) : 0;
 
-    const debtEnd = debtPct;
-    const equityEnd = debtPct + equityPctWhole;
-    bar.style.setProperty('--debt-end', `${debtEnd.toFixed(2)}%`);
-    bar.style.setProperty('--equity-end', `${equityEnd.toFixed(2)}%`);
+    const svg = ensureOwnershipDonut(bar);
+    const nonZeroSegments = [debtPct, equityPctWhole, schemePct].filter((value) => value > 0.05).length;
+    const gapPct = nonZeroSegments > 1 ? 0.72 : 0;
 
-    let emphasis = bar.querySelector('.ownership-equity-emphasis');
-    if (!emphasis) {
-      emphasis = document.createElement('span');
-      emphasis.className = 'ownership-equity-emphasis';
-      emphasis.setAttribute('aria-hidden', 'true');
-      bar.appendChild(emphasis);
-    }
+    setArc(svg.querySelector('.ownership-donut-debt'), 0, debtPct, gapPct);
+    setArc(svg.querySelector('.ownership-donut-equity'), debtPct, equityPctWhole, gapPct);
+    setArc(svg.querySelector('.ownership-donut-other'), debtPct + equityPctWhole, schemePct, gapPct);
 
-    bar.dataset.equityLabel = `${mortgageFreeShare.toFixed(0)}%\nfree`;
+    svg.querySelector('.ownership-donut-percent').textContent = `${mortgageFreeShare.toFixed(0)}%`;
     bar.setAttribute('aria-label', `${debtPct.toFixed(1)}% mortgage debt, ${equityPctWhole.toFixed(1)}% your equity, ${schemePct.toFixed(1)}% other share`);
   }
 
