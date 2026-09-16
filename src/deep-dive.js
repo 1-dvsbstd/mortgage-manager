@@ -40,6 +40,7 @@
       balance: s.balance,
       rate: s.rate,
       payment: s.payment,
+      currentOverpayment: s.currentOverpayment,
       homeValue: s.homeValue,
       ownership: s.ownership,
       extra: s.scenarioExtra,
@@ -49,6 +50,7 @@
       balance: +$('balance')?.value || 0,
       rate: +$('rate')?.value || 0,
       payment: +$('payment')?.value || 0,
+      currentOverpayment: +$('currentOverpayment')?.value || 0,
       homeValue: +$('homeValue')?.value || 0,
       ownership: Math.min(100, Math.max(0, +$('ownership')?.value || 0)),
       extra: Math.max(0, +$('customExtra')?.value || 0),
@@ -84,11 +86,12 @@
     if (!$('monthInterest')) return;
     const monthlyInterest = v.balance * (v.rate / 100 / 12);
     const scheduledCapital = Math.max(0, v.payment - monthlyInterest);
-    const nextYear = simulatePeriod(v.balance, v.rate, v.payment + v.extra, 12);
+    const regularOverpayment = Math.max(0, Number(v.currentOverpayment) || 0);
+    const nextYear = simulatePeriod(v.balance, v.rate, v.payment + regularOverpayment, 12);
     $('monthInterest').textContent = money(monthlyInterest);
     $('monthCapital').textContent = money(scheduledCapital);
     $('yearCapital').textContent = `${money(nextYear.capitalTotal)} capital`;
-    $('yearInterest').textContent = `${money(nextYear.interestTotal)} interest${v.extra ? ` with ${money(v.extra)}/mo overpayment` : ''}`;
+    $('yearInterest').textContent = `${money(nextYear.interestTotal)} interest${regularOverpayment ? ` with ${money(regularOverpayment)}/mo regular overpayment` : ''}`;
     const ltv = v.homeValue > 0 ? (v.balance / v.homeValue) * 100 : 100;
     const band = marketRates.find((item) => ltv <= item.maxLtv) || marketRates[marketRates.length - 1];
     const term = Number.isFinite(result.base.months) ? result.base.months : 300;
@@ -104,12 +107,12 @@
     const body = $('scenarioCompareBody'); if (!body) return;
     const extras = [0, 50, 100, 250, 500];
     body.innerHTML = extras.map((extra) => {
-      const comparison = MortgageMath.compare(v.balance, v.rate, v.payment, extra);
+      const comparison = MortgageMath.compare(v.balance, v.rate, v.payment, extra, v.currentOverpayment);
       const selected = Math.round(extra) === Math.round(v.extra) ? ' class="is-selected"' : '';
       const finish = Number.isFinite(comparison.accelerated.months) ? payoffDate(comparison.accelerated.months) : '—';
       return `<tr${selected}><td><strong>${money(extra)}/mo</strong></td><td>${finish}</td><td>${extra ? compactMonths(comparison.monthsSaved) : '—'}</td><td>${extra ? money(comparison.interestSaved) : '—'}</td></tr>`;
     }).join('');
-    const useful = [50, 100, 250, 500].map((extra) => ({ extra, c: MortgageMath.compare(v.balance, v.rate, v.payment, extra) })).find(({ c }) => c.monthsSaved >= 12);
+    const useful = [50, 100, 250, 500].map((extra) => ({ extra, c: MortgageMath.compare(v.balance, v.rate, v.payment, extra, v.currentOverpayment) })).find(({ c }) => c.monthsSaved >= 12);
     $('overpayTargetInsight').textContent = useful ? `${money(useful.extra)}/month is the first preset that saves at least a year (${compactMonths(useful.c.monthsSaved)}).` : 'Even small overpayments reduce interest; use the slider to find a level that fits comfortably.';
   }
 
@@ -144,7 +147,7 @@
   function render() {
     if (!window.MortgageMath) return;
     const v = values();
-    const result = MortgageMath.compare(v.balance, v.rate, v.payment, v.extra);
+    const result = MortgageMath.compare(v.balance, v.rate, v.payment, v.extra, v.currentOverpayment);
     renderMortgageDeepDive(v, result); renderScenarioComparison(v, result); renderTrajectory(v, result);
   }
 
