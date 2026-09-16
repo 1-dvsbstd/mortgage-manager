@@ -14,8 +14,8 @@
   }
 
   function homeSettings() {
-    try { return JSON.parse(localStorage.getItem(HOME_KEY) || '{}') || {}; }
-    catch (_) { return {}; }
+    try { return JSON.parse(localStorage.getItem(HOME_KEY) || '{}') || {};
+    } catch (_) { return {}; }
   }
 
   function refreshOptionalSections() {
@@ -29,19 +29,6 @@
       const improvements = Math.max(0, Number(settings.improvements) || 0);
       cost.hidden = !(purchasePrice > 0 || improvements > 0);
     }
-  }
-
-  function collapseCostComparison() {
-    const section = $('propertyCostComparison');
-    if (!section || section.tagName === 'DETAILS') return;
-    const details = document.createElement('details');
-    details.id = section.id;
-    details.className = section.className;
-    details.innerHTML = '<summary><span>Additional information<span class="property-cost-subtitle">Costs & long-term value</span></span></summary><div class="property-cost-body"></div>';
-    const body = details.querySelector('.property-cost-body');
-    section.querySelector('.deep-heading')?.remove();
-    while (section.firstChild) body.appendChild(section.firstChild);
-    section.replaceWith(details);
   }
 
   function removeStandaloneEquityProgress() {
@@ -148,14 +135,21 @@
     button.setAttribute('aria-label', 'Close setup and data');
   }
 
+  function keepFutureSectionsOpen() {
+    ['homeValueHistory','nextHomePlanner','nextHomeSettings'].forEach((id) => {
+      const el = $(id);
+      if (el?.tagName === 'DETAILS') el.open = true;
+    });
+  }
+
   function refresh() {
-    collapseCostComparison();
     removeStandaloneEquityProgress();
     refreshOptionalSections();
     renderOwnershipDonut();
     ensureCostBars();
     ensureEquityLegend();
     standardiseSetupClose();
+    keepFutureSectionsOpen();
   }
 
   let frame = null;
