@@ -1,13 +1,13 @@
 (() => {
   if (!window.MortgageStore) return;
 
-  const tracked = new Set(['balance','rate','payment','currentOverpayment','fixedEnd','homeValue','ownership','customExtra']);
+  const tracked = new Set(['balance','rate','payment','currentOverpayment','fixedEnd','homeValue','ownership','customExtra','extraSlider']);
   let applyingStore = false;
   let saveTimer = null;
 
   function patchFromElement(element) {
     if (!element?.id || !tracked.has(element.id)) return;
-    const key = element.id === 'customExtra' ? 'scenarioExtra' : element.id;
+    const key = ['customExtra','extraSlider'].includes(element.id) ? 'scenarioExtra' : element.id;
     const value = key === 'fixedEnd' ? element.value : Number(element.value);
     window.MortgageStore.set({ [key]: value });
   }
