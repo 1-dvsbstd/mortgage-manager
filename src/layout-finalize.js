@@ -1,6 +1,10 @@
 (() => {
   const $=(selector,root=document)=>root.querySelector(selector);
 
+  function money(value){
+    return new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP',maximumFractionDigits:0}).format(Math.max(0,Number(value)||0));
+  }
+
   function finalizeCurrent(){
     const hero=$('.app-view-current .hero-panel');
     if(hero) hero.classList.add('current-hero-condensed');
@@ -31,9 +35,11 @@
 
     const state=window.MortgageStore?.get?.();
     const value=$('.whatif-regular-value',scenario);
-    if(value&&state){
-      const amount=Math.max(0,Number(state.currentOverpayment)||0);
-      value.textContent=new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP',maximumFractionDigits:0}).format(amount)+'/month';
+    if(value&&state) value.textContent=`${money(state.currentOverpayment)}/month`;
+
+    const legend=$('.chart-panel .legend');
+    if(legend){
+      legend.innerHTML='<span><i class="dot scheduled-line"></i>Scheduled only</span><span><i class="dot regular-line"></i>Current overpayment</span><span><i class="dot selected-line"></i>Selected What-if</span><span><i class="dot equity-line"></i>Projected equity</span>';
     }
   }
 
@@ -47,9 +53,22 @@
     if(anchor&&wait.previousElementSibling!==anchor) anchor.insertAdjacentElement('afterend',wait);
   }
 
+  function disableDeadExpansion(){
+    document.querySelectorAll('.app-view [data-expandable-card]').forEach((card)=>{
+      card.classList.remove('expandable-card','is-expanded');
+      card.removeAttribute('data-expandable-card');
+      card.removeAttribute('tabindex');
+      card.removeAttribute('aria-expanded');
+      card.querySelectorAll('[data-expand-card],.expand-hint,.card-close-bar').forEach((el)=>el.remove());
+    });
+    document.body.classList.remove('card-open');
+    document.querySelector('.card-backdrop')?.remove();
+  }
+
   function run(){
     finalizeCurrent();
     finalizeFuture();
+    disableDeadExpansion();
   }
 
   document.addEventListener('click',(event)=>{
