@@ -15,6 +15,16 @@
     } catch (_) { return defaultData(); }
   }
 
+  function currentState() {
+    return window.MortgageStore?.get?.() || {
+      balance: Math.max(0, Number($('balance')?.value) || 0),
+      rate: Math.max(0, Number($('rate')?.value) || 0),
+      payment: Math.max(0, Number($('payment')?.value) || 0),
+      currentOverpayment: Math.max(0, Number($('currentOverpayment')?.value) || 0),
+      fixedEnd: $('fixedEnd')?.value || '',
+    };
+  }
+
   function monthIndex(value) {
     if (!value || !/^\d{4}-\d{2}$/.test(value)) return null;
     const [y,m] = value.split('-').map(Number);
@@ -35,6 +45,38 @@
       if (start === null || idx < start) return false;
       return end === null ? true : idx < end;
     }) || null;
+  }
+
+  function activeDealIndex(deals, month = currentMonthKey()) {
+    const deal = activeDeal(deals, month);
+    return deal ? deals.indexOf(deal) : -1;
+  }
+
+  function applyStoreToActiveDeal(data) {
+    if (!window.MortgageStore) return data;
+    const index = activeDealIndex(data.deals);
+    if (index < 0) return data;
+    const state = currentState();
+    data.deals[index] = {
+      ...data.deals[index],
+      rate: String(state.rate),
+      payment: String(state.payment),
+      overpayment: String(state.currentOverpayment),
+      end: state.fixedEnd || data.deals[index].end || '',
+    };
+    return data;
+  }
+
+  function applyActiveDealToStore(data) {
+    if (!window.MortgageStore) return;
+    const deal = activeDeal(data.deals, currentMonthKey());
+    if (!deal) return;
+    const patch = {};
+    if (deal.rate !== '' && deal.rate !== undefined) patch.rate = Number(deal.rate);
+    if (deal.payment !== '' && deal.payment !== undefined) patch.payment = Number(deal.payment);
+    patch.currentOverpayment = Math.max(0, Number(deal.overpayment) || 0);
+    if (deal.end) patch.fixedEnd = deal.end;
+    window.MortgageStore.set(patch);
   }
 
   function addMonths(month, amount) {
@@ -101,21 +143,24 @@
     };
   }
 
-  function save(data) {
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(data));
-    const estimate = estimateHistory(data);
-    const actualBalance = Math.max(0, Number($('balance')?.value) || 0);
+  function save(data, options = {}) {
+    const next = { ...defaultData(), ...data, deals:[...(data.deals || [])], lumpSums:[...(data.lumpSums || [])] };
+    if (options.storeToHistory) applyStoreToActiveDeal(next);
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(next));
+    const estimate = estimateHistory(next);
+    const actualBalance = Math.max(0, Number(currentState().balance) || 0);
     const summary = {
-      purchasePrice: Math.max(0, Number(data.purchasePrice) || 0),
-      originalMortgage: Math.max(0, Number(data.originalMortgage) || 0),
-      purchaseDate: data.purchaseDate || '',
-      ownership: Math.min(100, Math.max(0, Number(data.ownership) || 0)),
+      purchasePrice: Math.max(0, Number(next.purchasePrice) || 0),
+      originalMortgage: Math.max(0, Number(next.originalMortgage) || 0),
+      purchaseDate: next.purchaseDate || '',
+      ownership: Math.min(100, Math.max(0, Number(next.ownership) || 0)),
       ...estimate,
       actualBalance,
       balanceDifference: actualBalance ? estimate.estimatedBalance - actualBalance : 0,
       savedAt: new Date().toISOString(),
     };
     localStorage.setItem(SUMMARY_KEY, JSON.stringify(summary));
+    if (options.historyToStore) applyActiveDealToStore(next);
     document.dispatchEvent(new CustomEvent('mortgage-history-updated', { detail: summary }));
     return summary;
   }
@@ -180,7 +225,7 @@
       return;
     }
     const coverage = estimate.totalMonths ? Math.round((estimate.coveredMonths / estimate.totalMonths) * 100) : 0;
-    const actualBalance = Math.max(0, Number($('balance')?.value) || 0);
+    const actualBalance = Math.max(0, Number(currentState().balance) || 0);
     const difference = actualBalance ? estimate.estimatedBalance - actualBalance : 0;
     const diffText = !actualBalance ? 'Current balance unavailable' : Math.abs(difference) < 1 ? 'Matches current balance' : `${money(Math.abs(difference))} ${difference > 0 ? 'above' : 'below'} current balance`;
     target.innerHTML = `
@@ -194,7 +239,7 @@
   function persistSection(section, flash = false) {
     if (!section?.isConnected) return null;
     const data = readFromSection(section);
-    const summary = save(data);
+    const summary = save(data, { historyToStore:true });
     syncPurchaseToHome(summary);
     renderSummary(section, data);
     const state = section.querySelector('[data-history-save-state]');
@@ -206,10 +251,30 @@
     return summary;
   }
 
+  function refreshMountedActiveDeal(section) {
+    if (!section?.isConnected) return;
+    const data = load();
+    const index = activeDealIndex(data.deals);
+    if (index < 0) return;
+    const rows = [...section.querySelectorAll('[data-history-deal]')];
+    const row = rows[index];
+    if (!row) return;
+    const state = currentState();
+    const values = { rate:state.rate, payment:state.payment, overpayment:state.currentOverpayment, end:state.fixedEnd };
+    Object.entries(values).forEach(([key,value]) => {
+      const field = row.querySelector(`[data-history="${key}"]`);
+      if (field && document.activeElement !== field) field.value = value ?? '';
+    });
+    const synced = readFromSection(section);
+    save(synced, { storeToHistory:true });
+    renderSummary(section, synced);
+  }
+
   function mount() {
     const modal = document.querySelector('.personal-modal');
     if (!modal || modal.querySelector('#mortgageHistorySection')) return;
-    const data = load();
+    const data = applyStoreToActiveDeal(load());
+    save(data, { storeToHistory:true });
     const section = document.createElement('details');
     section.id = 'mortgageHistorySection';
     section.className = 'personal-section mortgage-history-section';
@@ -264,8 +329,6 @@
     });
     section.addEventListener('change', () => persistSection(section, false));
 
-    // The main Setup & data “Save changes” button must save the history too.
-    // Capture phase runs before personal-070 removes the modal.
     modal.addEventListener('click', (event) => {
       if (event.target.closest('[data-action="save"]')) persistSection(section, true);
     }, true);
@@ -278,5 +341,15 @@
   });
   setTimeout(mount, 550);
 
-  window.MortgageHistory = { load, save, estimateHistory };
+  if (window.MortgageStore?.subscribe) {
+    window.MortgageStore.subscribe((next, previous) => {
+      if (!['balance','rate','payment','currentOverpayment','fixedEnd'].some((key) => next[key] !== previous[key])) return;
+      const data = applyStoreToActiveDeal(load());
+      save(data, { storeToHistory:true });
+      const section = document.querySelector('#mortgageHistorySection');
+      if (section) refreshMountedActiveDeal(section);
+    });
+  }
+
+  window.MortgageHistory = { load, save, estimateHistory, activeDeal };
 })();
