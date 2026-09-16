@@ -25,6 +25,7 @@
       rate:+$('rate')?.value||0,
       payment:+$('payment')?.value||0,
       currentOverpayment:+$('currentOverpayment')?.value||0,
+      scenarioExtra:+$('customExtra')?.value||0,
       homeValue:+$('homeValue')?.value||0,
       ownership:Math.min(100,Math.max(0,+$('ownership')?.value||0)),
     };
@@ -40,7 +41,7 @@
       <div class="deep-heading"><div><p class="eyebrow">Cost vs value</p><h2>What you may pay versus what the home may be worth</h2></div></div>
       <div class="property-cost-grid">
         <div class="property-cost-card"><span>Estimated value when mortgage-free</span><strong id="costFutureValue">—</strong><small id="costFutureValueNote">Uses the Home trend assumption.</small></div>
-        <div class="property-cost-card"><span>Remaining mortgage payments</span><strong id="costRemainingPayments">—</strong><small>Projected from today, including future interest and your regular overpayment.</small></div>
+        <div class="property-cost-card"><span>Remaining mortgage payments</span><strong id="costRemainingPayments">—</strong><small id="costRemainingPaymentsNote">Projected from today.</small></div>
         <div class="property-cost-card"><span>Estimated lifetime cost floor</span><strong id="costKnownBasis">—</strong><small id="costKnownBasisNote">Add purchase details for this comparison.</small></div>
       </div>
       <p class="deep-note" id="costComparisonNote">Add mortgage history to include estimated interest already paid.</p>`;
@@ -56,9 +57,10 @@
     const rate = Math.max(0,Number(mortgage.rate)||0);
     const payment = Math.max(0,Number(mortgage.payment)||0);
     const currentOverpay = Math.max(0,Number(mortgage.currentOverpayment)||0);
+    const scenarioExtra = Math.max(0,Number(mortgage.scenarioExtra)||0);
     const home = Math.max(0,Number(mortgage.homeValue)||0);
     const ownership = Math.min(100,Math.max(0,Number(mortgage.ownership)||0));
-    const path = MortgageMath.amortize(balance, rate, payment + currentOverpay);
+    const path = MortgageMath.amortize(balance, rate, payment + currentOverpay + scenarioExtra);
     if (!Number.isFinite(path.months)) return;
 
     const settings = getHomeSettings();
@@ -79,13 +81,16 @@
       ? `${ownership.toFixed(ownership%1?1:0)}% share of the projected property value.`
       : `Projected property value using ${trend.toFixed(1)}% annual growth.`;
     $('costRemainingPayments').textContent = money(remainingPayments);
+    $('costRemainingPaymentsNote').textContent = scenarioExtra > 0
+      ? `Projected using your regular overpayment plus ${money(scenarioExtra)}/month extra.`
+      : 'Projected using your current payment and regular overpayment.';
 
     if (knownBasis) {
       $('costKnownBasis').textContent = money(knownBasis);
       const historyText = historicalInterest > 0 ? ` + ${money(historicalInterest)} estimated past interest` : '';
       $('costKnownBasisNote').textContent = `${money(purchasePrice)} purchase price${improvements ? ` + ${money(improvements)} improvements` : ''}${historyText} + ${money(futureInterest)} projected future interest.`;
       if (historicalInterest > 0 && history.complete) {
-        $('costComparisonNote').textContent = 'Uses your entered mortgage history for estimated past interest and the current mortgage path for future interest. Fees, maintenance, insurance and other ownership costs are still excluded.';
+        $('costComparisonNote').textContent = 'Uses your entered mortgage history for estimated past interest and the selected repayment path for future interest. Fees, maintenance, insurance and other ownership costs are still excluded.';
       } else if (historicalInterest > 0) {
         $('costComparisonNote').textContent = 'Historical interest is partially reconstructed from the deal periods entered. Add any missing mortgage periods to improve the lifetime estimate.';
       } else {
