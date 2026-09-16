@@ -2,7 +2,8 @@
   if (!window.MortgageMath) return;
   const originalAmortize = window.MortgageMath.amortize;
   window.MortgageMath.compare = (balance, annualRate, monthlyPayment, hypotheticalExtra) => {
-    const currentExtra = Math.max(0, Number(document.getElementById('currentOverpayment')?.value) || 0);
+    const state = window.MortgageStore?.get?.();
+    const currentExtra = Math.max(0, Number(state?.currentOverpayment ?? document.getElementById('currentOverpayment')?.value) || 0);
     const whatIfExtra = Math.max(0, Number(hypotheticalExtra) || 0);
     const basePayment = Math.max(0, Number(monthlyPayment) || 0) + currentExtra;
     const base = originalAmortize(balance, annualRate, basePayment);
