@@ -172,7 +172,7 @@
     const first=rows[0], latest=rows[rows.length-1];
     const change=latest.value-first.value;
     summary.textContent=`${rows.length} monthly checkpoint${rows.length===1?'':'s'} · latest ${money(latest.value)}`;
-    list.innerHTML=rows.slice(-6).reverse().map((row,index)=>{
+    list.innerHTML=rows.slice(-6).reverse().map((row)=>{
       const previousIndex=rows.findIndex((item)=>item.month===row.month)-1;
       const previous=previousIndex>=0?rows[previousIndex]:null;
       const delta=previous?row.value-previous.value:null;
@@ -186,8 +186,8 @@
     const mortgage=currentMortgage();
     const savedHomeValue=Math.max(0,Number(mortgage.homeValue)||0);
     const ownership=Math.min(100,Math.max(0,Number(mortgage.ownership)||0));
-    const balance=Math.max(0,Number(mortgage.balance)||0), rate=Math.max(0,Number(mortgage.rate)||0), payment=Math.max(0,Number(mortgage.payment)||0), regular=Math.max(0,Number(mortgage.currentOverpayment)||0);
-    const path=MortgageMath.amortize(balance,rate,payment+regular);
+    const balance=Math.max(0,Number(mortgage.balance)||0), rate=Math.max(0,Number(mortgage.rate)||0), payment=Math.max(0,Number(mortgage.payment)||0), regular=Math.max(0,Number(mortgage.currentOverpayment)||0), scenarioExtra=Math.max(0,Number(mortgage.scenarioExtra)||0);
+    const path=MortgageMath.amortize(balance,rate,payment+regular+scenarioExtra);
     const months=path.months;
     const yearsToPayoff=Number.isFinite(months)?months/12:0;
     const purchasePrice=Math.max(0,Number(settings.purchasePrice)||0), purchaseMonth=settings.purchaseMonth||'', improvements=Math.max(0,Number(settings.improvements)||0), recentValue=Math.max(0,Number(settings.recentValue)||0);
@@ -231,7 +231,7 @@
     if(!Number.isFinite(months)){ $('projectionFutureValue').textContent='—'; $('projectionFutureNote').textContent='A valid repayment path is needed.'; renderValueHistory(); return; }
 
     const trendFuture=projectedValue(estimatedToday,settings.trend,yearsToPayoff), lowFuture=projectedValue(estimatedToday,settings.low,yearsToPayoff), highFuture=projectedValue(estimatedToday,settings.high,yearsToPayoff), shareFuture=trendFuture*ownership/100, year=projectionYear(months);
-    $('projectionFutureValue').textContent=money(trendFuture); $('projectionFutureNote').textContent=`Centre estimate for ${year}; rough range ${money(lowFuture)}–${money(highFuture)}.`;
+    $('projectionFutureValue').textContent=money(trendFuture); $('projectionFutureNote').textContent=`Centre estimate for ${year}; rough range ${money(lowFuture)}–${money(highFuture)}${scenarioExtra>0?` using ${money(scenarioExtra)}/month extra`:''}.`;
     $('projectionShareValue').textContent=money(shareFuture); $('projectionShareNote').textContent=`${ownership.toFixed(ownership%1?1:0)}% of the centre estimate.`;
     $('projectionPlainNote').textContent=recentValue?`Using your ${money(recentValue)} recent estimate today → about ${money(trendFuture)} by ${year}.`:validPurchase?`${money(purchasePrice)} at purchase → about ${money(estimatedToday)} today → about ${money(trendFuture)} by ${year}.`:`Using the saved ${money(savedHomeValue)} property estimate → about ${money(trendFuture)} by ${year}.`;
     renderValueHistory();
