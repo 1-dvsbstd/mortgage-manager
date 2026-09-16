@@ -1,6 +1,6 @@
 (() => {
-  const OVERPAY_KEY = 'mortgage-manager-current-overpayment-v1';
-  const $ = (id) => document.getElementById(id);
+  if (!window.MortgageStore) return;
+
   let syncing = false;
   let saveTimer = null;
 
@@ -26,90 +26,70 @@
     }) || null;
   }
 
-  function setLiveValue(id, value) {
-    const input = $(id);
-    if (!input || value === undefined || value === null || value === '') return false;
-    const next = String(value);
-    if (String(input.value) === next) return false;
-    input.value = next;
-    input.dispatchEvent(new Event('input', { bubbles: true }));
-    input.dispatchEvent(new Event('change', { bubbles: true }));
-    return true;
-  }
-
-  function persistOverpayment(value) {
-    try { localStorage.setItem(OVERPAY_KEY, String(Math.max(0, Number(value) || 0))); } catch (_) {}
-  }
-
-  function syncHistoryToLive() {
+  function syncHistoryToStore() {
     if (syncing || !window.MortgageHistory) return;
-    const data = window.MortgageHistory.load();
-    const deal = findCurrentDeal(data);
-    syncing = true;
-    try {
-      if (deal) {
-        setLiveValue('rate', deal.rate);
-        setLiveValue('payment', deal.payment);
-        setLiveValue('currentOverpayment', deal.overpayment || 0);
-        if (deal.end) setLiveValue('fixedEnd', deal.end);
-        persistOverpayment(deal.overpayment || 0);
-      } else {
-        const saved = localStorage.getItem(OVERPAY_KEY);
-        if (saved !== null) setLiveValue('currentOverpayment', saved);
-      }
-
-      // app.js listens to payment changes to run the main dashboard update.
-      // Trigger one refresh even when only regular overpayment changed.
-      const payment = $('payment');
-      if (payment) payment.dispatchEvent(new Event('input', { bubbles: true }));
-    } finally {
-      syncing = false;
-    }
-  }
-
-  function syncLiveToHistory() {
-    if (syncing || !window.MortgageHistory) return;
-    const overpay = Math.max(0, Number($('currentOverpayment')?.value) || 0);
-    persistOverpayment(overpay);
-
     const data = window.MortgageHistory.load();
     const deal = findCurrentDeal(data);
     if (!deal) return;
 
-    deal.rate = $('rate')?.value || deal.rate || '';
-    deal.payment = $('payment')?.value || deal.payment || '';
-    deal.overpayment = String(overpay);
-    deal.end = $('fixedEnd')?.value || deal.end || '';
+    const patch = {};
+    if (deal.rate !== undefined && deal.rate !== '') patch.rate = Number(deal.rate);
+    if (deal.payment !== undefined && deal.payment !== '') patch.payment = Number(deal.payment);
+    patch.currentOverpayment = Math.max(0, Number(deal.overpayment) || 0);
+    if (deal.end) patch.fixedEnd = deal.end;
+
+    syncing = true;
+    try { window.MortgageStore.set(patch); }
+    finally { syncing = false; }
+  }
+
+  function syncStoreToHistory() {
+    if (syncing || !window.MortgageHistory) return;
+    const state = window.MortgageStore.get();
+    const data = window.MortgageHistory.load();
+    const deal = findCurrentDeal(data);
+    if (!deal) return;
+
+    const nextRate = String(state.rate);
+    const nextPayment = String(state.payment);
+    const nextOverpayment = String(state.currentOverpayment);
+    const nextEnd = state.fixedEnd || '';
+
+    if (
+      String(deal.rate || '') === nextRate &&
+      String(deal.payment || '') === nextPayment &&
+      String(deal.overpayment || '0') === nextOverpayment &&
+      String(deal.end || '') === nextEnd
+    ) return;
+
+    deal.rate = nextRate;
+    deal.payment = nextPayment;
+    deal.overpayment = nextOverpayment;
+    deal.end = nextEnd;
 
     syncing = true;
     try { window.MortgageHistory.save(data); }
     finally { syncing = false; }
   }
 
-  function scheduleLiveToHistory() {
+  function scheduleStoreToHistory() {
     clearTimeout(saveTimer);
-    saveTimer = setTimeout(syncLiveToHistory, 120);
+    saveTimer = setTimeout(syncStoreToHistory, 120);
   }
 
   document.addEventListener('mortgage-history-updated', () => {
-    if (!syncing) requestAnimationFrame(syncHistoryToLive);
+    if (!syncing) requestAnimationFrame(syncHistoryToStore);
   });
 
-  document.addEventListener('change', (event) => {
-    if (event.target?.matches?.('#rate,#payment,#currentOverpayment,#fixedEnd')) scheduleLiveToHistory();
+  window.MortgageStore.subscribe((next, previous) => {
+    if (syncing) return;
+    const changed = ['rate','payment','currentOverpayment','fixedEnd']
+      .some((key) => next[key] !== previous[key]);
+    if (changed) scheduleStoreToHistory();
   });
 
-  document.addEventListener('input', (event) => {
-    if (event.target?.id === 'currentOverpayment') {
-      persistOverpayment(event.target.value);
-      // currentOverpayment was historically missing from app.js' refresh list.
-      // Re-fire payment input so every dashboard projection recalculates now.
-      if (!syncing && $('payment')) $('payment').dispatchEvent(new Event('input', { bubbles: true }));
-    }
-  });
-
-  // Mortgage history loads after the base app. Apply the linked current deal once
-  // all dynamic source fields have been created and loaded.
-  requestAnimationFrame(() => requestAnimationFrame(syncHistoryToLive));
-  setTimeout(syncHistoryToLive, 350);
+  // Mortgage history mounts after the base app. Reconcile the active deal once
+  // startup has finished, then again after the history UI has had time to mount.
+  requestAnimationFrame(() => requestAnimationFrame(syncHistoryToStore));
+  setTimeout(syncHistoryToStore, 350);
 })();
