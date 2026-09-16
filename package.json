@@ -1,0 +1,7 @@
+{
+  "name": "mortgage-manager",
+  "private": true,
+  "scripts": {
+    "test": "node tests/mortgage-math.test.js"
+  }
+}
