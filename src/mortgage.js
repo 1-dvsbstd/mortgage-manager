@@ -63,10 +63,23 @@ window.MortgageMath = (() => {
     return { months, interest: interestPaid, totalPaid, monthlyPoints, annualPoints };
   }
 
-  function compare(balance, annualRate, monthlyPayment, monthlyOverpayment) {
-    const extra = Math.max(0, Number(monthlyOverpayment) || 0);
-    const base = amortize(balance, annualRate, monthlyPayment);
-    const accelerated = amortize(balance, annualRate, Number(monthlyPayment) + extra);
+  function storedRegularOverpayment() {
+    try {
+      return Math.max(0, Number(window.MortgageStore?.get?.().currentOverpayment) || 0);
+    } catch (_) {
+      return 0;
+    }
+  }
+
+  function compare(balance, annualRate, scheduledPayment, hypotheticalExtra, regularOverpayment) {
+    const regular = regularOverpayment === undefined
+      ? storedRegularOverpayment()
+      : Math.max(0, Number(regularOverpayment) || 0);
+    const extra = Math.max(0, Number(hypotheticalExtra) || 0);
+    const basePayment = Math.max(0, Number(scheduledPayment) || 0) + regular;
+
+    const base = amortize(balance, annualRate, basePayment);
+    const accelerated = amortize(balance, annualRate, basePayment + extra);
 
     return {
       base,
