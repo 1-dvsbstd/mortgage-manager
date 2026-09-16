@@ -5,19 +5,19 @@
       label: 'Current',
       eyebrow: 'Today',
       title: 'Your position now',
-      subtitle: 'What you owe, what you own, and how the mortgage is moving today.',
+      subtitle: 'What you owe, what you own, what you already overpay, and the progress you have made.',
     },
     upcoming: {
       label: 'Upcoming',
       eyebrow: 'Next',
       title: 'What needs attention next',
-      subtitle: 'Your fixed-deal timeline, projected position and the decisions approaching.',
+      subtitle: 'Your fixed-deal timeline, projected position and the next mortgage decision approaching.',
     },
     future: {
       label: 'Future',
       eyebrow: 'Later',
       title: 'Where your choices could lead',
-      subtitle: 'Explore overpayments, long-term equity, home value and your next-home position.',
+      subtitle: 'Explore hypothetical overpayments, long-term equity, future home value and your next-home position.',
     },
   };
 
@@ -69,6 +69,53 @@
     element.removeAttribute('open');
   }
 
+  function ensureCurrentOverpaymentPanel() {
+    const current = $('.app-view-current .app-view-content');
+    if (!current) return;
+    let panel = document.getElementById('currentOverpaymentPanel');
+    if (!panel) {
+      panel = document.createElement('section');
+      panel.id = 'currentOverpaymentPanel';
+      panel.className = 'panel current-overpayment-panel';
+      panel.innerHTML = `
+        <div class="current-overpayment-heading">
+          <div><p class="eyebrow">Overpayments</p><h2>Your regular overpayment</h2><p>This is part of your current mortgage, not a hypothetical scenario.</p></div>
+        </div>
+        <div class="current-overpayment-body"></div>`;
+      const home = $('.home-panel', current);
+      if (home) home.insertAdjacentElement('afterend', panel); else current.appendChild(panel);
+    }
+
+    const body = $('.current-overpayment-body', panel);
+    const savings = document.getElementById('currentSavingsSummary');
+    const control = document.querySelector('.current-overpay-control');
+    if (savings && savings.parentElement !== body) body.appendChild(savings);
+    if (control) {
+      control.classList.remove('source-fields-only');
+      if (control.parentElement !== body) body.appendChild(control);
+    }
+  }
+
+  function relocateCurrentFeatures() {
+    const current = $('.app-view-current .app-view-content');
+    if (!current) return;
+    ensureCurrentOverpaymentPanel();
+    const progress = document.getElementById('personalProgress');
+    if (progress && progress.parentElement !== current) current.appendChild(progress);
+  }
+
+  function relocateUpcomingFeatures() {
+    const upcoming = $('.app-view-upcoming .app-view-content');
+    if (!upcoming) return;
+    const next = $('.next-panel');
+    if (next && next.parentElement !== upcoming) upcoming.appendChild(next);
+
+    // The mortgage deep-dive market block remains as the data source for the
+    // copied rate figures, but Current should not present remortgage content.
+    const sourceMarket = $('.hero-panel .market-block');
+    if (sourceMarket) sourceMarket.classList.add('market-source-only');
+  }
+
   function relocateFutureFeatures() {
     const future = $('.app-view-future .app-view-content');
     if (!future) return;
@@ -83,6 +130,54 @@
       cardifyFeature(element, kind);
       future.appendChild(element);
     });
+  }
+
+  function restoreProfileSettings(profileSettings, originParent, originNext) {
+    if (!profileSettings || !originParent || originParent.contains(profileSettings)) return;
+    if (originNext && originNext.parentElement === originParent) originParent.insertBefore(profileSettings, originNext);
+    else originParent.appendChild(profileSettings);
+  }
+
+  function mountProfileSettingsInSetup() {
+    const backdrop = $('.personal-backdrop');
+    const modal = $('.personal-modal', backdrop || document);
+    const profileSettings = $('.projection-assumptions');
+    if (!backdrop || !modal || !profileSettings || modal.contains(profileSettings)) return;
+
+    const originParent = profileSettings.parentElement;
+    const originNext = profileSettings.nextElementSibling;
+    const section = document.createElement('div');
+    section.className = 'personal-section personal-home-profile-section';
+    section.innerHTML = '<h3>Home profile</h3><p>Purchase details, improvements and valuation assumptions used by the Future projections.</p><div class="personal-home-profile-host"></div>';
+
+    const mortgageForm = $('.personal-form', modal);
+    if (mortgageForm) mortgageForm.insertAdjacentElement('afterend', section);
+    else modal.appendChild(section);
+
+    $('.personal-home-profile-host', section).appendChild(profileSettings);
+    profileSettings.open = true;
+
+    const restoreSoon = () => requestAnimationFrame(() => {
+      if (!document.body.contains(backdrop)) restoreProfileSettings(profileSettings, originParent, originNext);
+    });
+    backdrop.addEventListener('click', restoreSoon, true);
+  }
+
+  function wireSetupProfileSettings() {
+    const button = document.getElementById('personalDataButton');
+    if (button && !button.dataset.profileSettingsWired) {
+      button.dataset.profileSettingsWired = 'true';
+      button.addEventListener('click', () => requestAnimationFrame(mountProfileSettingsInSetup));
+    }
+    // Also covers the automatic first-run setup modal.
+    setTimeout(mountProfileSettingsInSetup, 520);
+  }
+
+  function organiseViews() {
+    relocateCurrentFeatures();
+    relocateUpcomingFeatures();
+    relocateFutureFeatures();
+    wireSetupProfileSettings();
   }
 
   function buildShell() {
@@ -114,12 +209,11 @@
     if (hero) current.appendChild(hero);
     if (home) current.appendChild(home);
     if (edit) current.appendChild(edit);
-
     if (next) upcoming.appendChild(next);
-
     if (scenario) future.appendChild(scenario);
     if (chart) future.appendChild(chart);
-    relocateFutureFeatures();
+
+    organiseViews();
 
     if (dashboardGrid && !dashboardGrid.children.length) dashboardGrid.remove();
 
@@ -131,7 +225,8 @@
     });
 
     activateView(savedView(), false);
-    setTimeout(relocateFutureFeatures, 320);
+    setTimeout(organiseViews, 320);
+    setTimeout(organiseViews, 720);
   }
 
   function closeExpandedCards() {
@@ -146,7 +241,7 @@
   function activateView(key, userInitiated) {
     if (!views[key]) key = 'current';
     closeExpandedCards();
-    relocateFutureFeatures();
+    organiseViews();
 
     document.querySelectorAll('.app-view').forEach((view) => {
       const active = view.dataset.view === key;
