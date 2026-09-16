@@ -24,7 +24,7 @@
     return section;
   }
 
-  function cardifyFeature(element,kind){ if(!element)return; element.classList.add('panel','temporal-feature-card',`temporal-feature-${kind}`); element.removeAttribute('open'); }
+  function cardifyFeature(element,kind){ if(!element)return; element.classList.add('panel','temporal-feature-card',`temporal-feature-${kind}`); }
 
   function ensureFutureAssumption(){
     const future=$('.app-view-future .app-view-content'); if(!future)return;
@@ -71,11 +71,10 @@
   }
 
   function refineExpandableCues(){
-    const labels={ mortgage:'More · repayment breakdown', overpayment:'More · compare overpayment levels', deal:'More · LTV milestones and rate scenarios', trajectory:'More · yearly balances and milestones' };
+    const labels={ mortgage:'More · repayment breakdown', overpayment:'More · compare overpayment levels', trajectory:'More · yearly balances and milestones' };
     document.querySelectorAll('[data-expandable-card]').forEach((card)=>{
       card.querySelector('[data-expand-card]')?.classList.add('legacy-expand-cta');
-      const hint=card.querySelector('.expand-hint');
-      const key=card.dataset.expandableCard;
+      const hint=card.querySelector('.expand-hint'); const key=card.dataset.expandableCard;
       if(hint&&labels[key]) hint.textContent=labels[key];
     });
   }
@@ -89,15 +88,91 @@
     if(progress&&progress.parentElement!==current) current.appendChild(progress);
   }
 
+  function makeUpcomingSection(className, eyebrow, title){
+    const section=document.createElement('section');
+    section.className=`panel upcoming-section ${className}`;
+    section.innerHTML=`<div class="upcoming-section-heading"><p class="eyebrow">${eyebrow}</p><h2>${title}</h2></div><div class="upcoming-section-body"></div>`;
+    return section;
+  }
+
+  function refineUpcomingLayout(){
+    const upcoming=$('.app-view-upcoming .app-view-content'), next=$('.next-panel');
+    if(!upcoming||!next||next.dataset.sectionsReady==='true') return;
+    const summary=document.getElementById('dealPlannerSummary');
+    const milestone=document.getElementById('dealPlannerMilestone');
+    const rates=$('.deal-planner-rates',next);
+    if(!summary||!milestone||!rates) return;
+
+    next.dataset.sectionsReady='true';
+    next.classList.remove('panel','expandable-card');
+    next.classList.add('upcoming-workspace');
+    next.removeAttribute('tabindex'); next.removeAttribute('aria-expanded');
+    next.querySelector('[data-expand-card]')?.remove(); next.querySelector('.expand-hint')?.remove();
+    document.getElementById('dealForecast')?.setAttribute('hidden','');
+
+    const timeline=makeUpcomingSection('upcoming-timeline','Deal timeline','Your current fix');
+    const timelineBody=$('.upcoming-section-body',timeline);
+    const eventTitle=document.getElementById('nextEventTitle'), eventText=document.getElementById('nextEventText'), track=$('.timeline-track',next), labels=$('.timeline-labels',next);
+    [eventTitle,eventText,track,labels].forEach((node)=>{ if(node) timelineBody.appendChild(node); });
+
+    const position=makeUpcomingSection('upcoming-position','At deal end','Projected position');
+    const positionBody=$('.upcoming-section-body',position);
+    const plannerHeading=$('.deal-planner-heading',next), plannerMissing=document.getElementById('dealPlannerMissing');
+    if(plannerHeading) positionBody.appendChild(plannerHeading);
+    if(plannerMissing) positionBody.appendChild(plannerMissing);
+    positionBody.appendChild(summary);
+
+    const action=makeUpcomingSection('upcoming-action','Next milestone','What could improve your position');
+    $('.upcoming-section-body',action).appendChild(milestone);
+
+    const rateSection=makeUpcomingSection('upcoming-rates','Rate scenarios','What your next payment could look like');
+    const rateBody=$('.upcoming-section-body',rateSection);
+    const rateSubhead=$('.deal-planner-subhead',rates); if(rateSubhead) rateSubhead.remove();
+    const rateGrid=document.getElementById('dealPlannerRateGrid'); if(rateGrid) rateBody.appendChild(rateGrid);
+    const note=$('.deal-planner-note',next); if(note) rateBody.appendChild(note);
+
+    const interestBox=$('.interest-box',next);
+    const interest=makeUpcomingSection('upcoming-interest','Supporting context','Interest remaining');
+    if(interestBox) $('.upcoming-section-body',interest).appendChild(interestBox);
+
+    const shell=document.createElement('div'); shell.className='upcoming-sections';
+    [timeline,position,action,rateSection,interest].forEach((section)=>shell.appendChild(section));
+    next.appendChild(shell);
+
+    const oldDetail=$('.expand-detail',next), oldPlanner=document.getElementById('dealEndPlanner');
+    if(oldDetail) oldDetail.hidden=true;
+    if(oldPlanner) oldPlanner.hidden=true;
+  }
+
   function relocateUpcomingFeatures(){
     const upcoming=$('.app-view-upcoming .app-view-content'); if(!upcoming)return;
     const next=$('.next-panel'); if(next&&next.parentElement!==upcoming) upcoming.appendChild(next);
     const sourceMarket=$('.hero-panel .market-block'); if(sourceMarket) sourceMarket.classList.add('market-source-only');
+    refineUpcomingLayout();
+  }
+
+  function mergeFuturePlanning(){
+    const planner=document.getElementById('nextHomePlanner'), cost=document.getElementById('propertyCostComparison');
+    if(!planner||!cost) return;
+    if(planner.tagName==='DETAILS') planner.open=true;
+    const body=$('.next-home-body',planner);
+    if(body && cost.parentElement!==body){
+      cost.classList.remove('panel','temporal-feature-card','temporal-feature-cost-comparison');
+      cost.classList.add('future-cost-inline');
+      const timeline=$('.next-home-timeline',body);
+      if(timeline) timeline.insertAdjacentElement('afterend',cost); else body.appendChild(cost);
+    }
+    const settings=$('.next-home-settings',planner); if(settings?.tagName==='DETAILS') settings.open=true;
+    const history=document.getElementById('homeValueHistory'); if(history?.tagName==='DETAILS') history.open=true;
   }
 
   function relocateFutureFeatures(){
     const future=$('.app-view-future .app-view-content'); if(!future)return; ensureFutureAssumption();
-    [['homeProjection','home-projection'],['nextHomePlanner','next-home'],['propertyCostComparison','cost-comparison']].forEach(([id,kind])=>{ const element=document.getElementById(id); if(!element)return; cardifyFeature(element,kind); future.appendChild(element); });
+    const home=document.getElementById('homeProjection'), planner=document.getElementById('nextHomePlanner'), cost=document.getElementById('propertyCostComparison');
+    if(home){ cardifyFeature(home,'home-projection'); if(home.parentElement!==future) future.appendChild(home); }
+    if(planner){ cardifyFeature(planner,'next-home'); planner.open=true; if(planner.parentElement!==future) future.appendChild(planner); }
+    if(cost && !planner){ cardifyFeature(cost,'cost-comparison'); if(cost.parentElement!==future) future.appendChild(cost); }
+    mergeFuturePlanning();
   }
 
   function restoreProfileSettings(profileSettings,originParent,originNext){ if(!profileSettings||!originParent||originParent.contains(profileSettings))return; if(originNext&&originNext.parentElement===originParent) originParent.insertBefore(profileSettings,originNext); else originParent.appendChild(profileSettings); }
