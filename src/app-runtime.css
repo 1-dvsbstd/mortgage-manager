@@ -1,0 +1,81 @@
+/* Consolidated V0.9 runtime UI refinements */
+
+.current-savings-summary{padding-top:2px!important}
+.current-savings-summary>span{margin-bottom:10px!important;color:#8f9f99!important}
+.current-savings-summary>strong{display:block!important;margin-top:0!important;font-size:24px!important;line-height:1.08!important;letter-spacing:-.025em!important}
+.current-savings-summary>small{display:block!important;margin-top:8px!important;color:#c9b995!important;line-height:1.45!important}
+
+#dashboardRateStrip{display:none!important}
+html,body,.app-shell,.panel,.hero-panel,.expandable-card,button,[role="button"],canvas{-webkit-tap-highlight-color:transparent}
+.panel,.hero-panel,.expandable-card,button,[role="button"],.eyebrow,.kicker,.legend,.expand-hint{-webkit-user-select:none;user-select:none}
+input,textarea,select,[contenteditable="true"]{-webkit-user-select:text;user-select:text}
+button,[role="button"],.expandable-card{touch-action:manipulation}
+
+.chart-wrap{width:100%;min-width:0;overflow:hidden}
+.chart-panel canvas{display:block;width:100%!important;max-width:100%;touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.chart-panel.is-expanded canvas{touch-action:pan-y}
+.chart-panel.is-expanded .chart-wrap{margin-top:42px!important}
+.chart-panel.is-expanded .chart-wrap canvas{display:block;width:100%!important;max-width:none!important}
+
+.home-panel .ownership-bar{position:relative;display:grid;place-items:center;width:164px;height:164px;margin:24px auto 10px;overflow:visible;border-radius:50%;background:transparent!important;border:0!important;box-shadow:none!important}
+.home-panel .ownership-bar::before,.home-panel .ownership-bar::after,.home-panel .ownership-equity-emphasis{display:none!important}
+.home-panel .ownership-segment{display:none!important}
+.ownership-donut{display:block;width:100%;height:100%;overflow:visible}
+.ownership-donut-track,.ownership-donut-arc{fill:none;transform:rotate(-90deg);transform-origin:100px 100px;vector-effect:non-scaling-stroke}
+.ownership-donut-track{stroke:#10251f;stroke-width:24}
+.ownership-donut-arc{stroke-linecap:butt;transition:stroke-dasharray .22s ease,stroke-dashoffset .22s ease}
+.ownership-donut-debt{stroke:#7d908b;stroke-width:23}
+.ownership-donut-equity{stroke:#7ce8cf;stroke-width:30;filter:drop-shadow(0 0 3px rgba(124,232,207,.08))}
+.ownership-donut-other{stroke:#41544f;stroke-width:23}
+.ownership-donut-centre{fill:#081a17;stroke:rgba(255,255,255,.055);stroke-width:1}
+.ownership-donut-percent,.ownership-donut-free{fill:var(--text);font-family:Georgia,'Times New Roman',serif;pointer-events:none}
+.ownership-donut-percent{font-size:31px;font-weight:600;letter-spacing:-.8px}
+.ownership-donut-free{font-size:20px;font-weight:500}
+.home-panel .home-value{margin-top:16px;text-align:center}
+.home-panel .home-value>span{display:block;margin-bottom:5px}
+.home-panel .home-value>strong{display:block;line-height:1}
+.home-panel .ownership-legend{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:10px 18px;margin-top:8px}
+.home-panel .ownership-legend>span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.home-panel .ownership-legend strong{margin-left:2px}
+.home-panel .home-stats{margin-top:18px}
+
+#equityGrowth{display:none!important}
+.dot.equity-line{background:#e7dcc4}
+
+.property-cost-comparison{margin-top:20px;padding-top:16px}
+.property-cost-comparison>summary{padding:12px 2px;font-size:14px}
+.property-cost-subtitle{margin-top:4px;font-size:11px}
+.property-cost-body{padding:14px 0 4px}
+.property-cost-grid{display:grid!important;grid-template-columns:1fr!important;gap:12px!important;margin-top:0!important}
+.property-cost-card{position:relative;min-height:112px;padding:18px 20px 20px!important;border-radius:16px!important;overflow:hidden;background:rgba(255,255,255,.025)!important}
+.property-cost-card>span{font-size:11px!important}
+.property-cost-card>strong{margin-top:7px!important;font-size:26px!important;line-height:1.05}
+.property-cost-card>small{max-width:680px;margin-top:8px!important;padding-right:10px;font-size:11px!important;line-height:1.5!important}
+.cost-scale{height:8px;margin-top:14px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.055)}
+.cost-scale>i{display:block;height:100%;width:var(--cost-width,0%);min-width:4px;border-radius:inherit;background:linear-gradient(90deg,rgba(84,224,180,.48),rgba(84,224,180,.95));transition:width .22s ease}
+.property-cost-comparison .deep-note{max-width:760px;margin:14px 2px 0!important;font-size:10px!important;line-height:1.55!important}
+
+.personal-modal .personal-close{position:static!important;display:flex!important;align-items:center!important;justify-content:center!important;width:58px!important;height:32px!important;min-width:58px!important;min-height:32px!important;max-width:58px!important;max-height:32px!important;margin:0!important;padding:0!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:9px!important;background:rgba(7,22,18,.94)!important;color:var(--muted)!important;font-size:11px!important;font-weight:750!important;line-height:1!important;letter-spacing:.02em!important;box-shadow:none!important;flex:0 0 auto!important}
+.personal-modal .personal-close:hover,.personal-modal .personal-close:focus-visible{color:var(--text)!important;background:rgba(18,42,34,.96)!important;border-color:rgba(104,222,185,.18)!important;outline:none}
+
+@media(min-width:700px){
+  .property-cost-card{display:grid;grid-template-columns:minmax(190px,.7fr) minmax(130px,.38fr) minmax(260px,1.1fr);grid-template-rows:auto auto;column-gap:24px;align-items:center}
+  .property-cost-card>span{grid-column:1;grid-row:1/span 2}
+  .property-cost-card>strong{grid-column:2;grid-row:1/span 2;margin-top:0!important}
+  .property-cost-card>small{grid-column:3;grid-row:1;margin-top:0!important}
+  .property-cost-card>.cost-scale{grid-column:3;grid-row:2;width:100%;margin-top:10px}
+}
+
+@media(max-width:650px){
+  .chart-panel.is-expanded .chart-wrap{margin-top:38px!important;margin-inline:0}
+  .chart-panel.is-expanded canvas{min-height:300px}
+  .chart-panel.is-expanded .chart-readout{margin-top:14px!important}
+  .home-panel .ownership-bar{width:148px;height:148px;margin-top:20px}
+  .ownership-donut-percent{font-size:29px}
+  .ownership-donut-free{font-size:19px}
+  .home-panel .ownership-legend{gap:8px 13px}
+  .home-panel .ownership-legend>span{white-space:normal}
+  .property-cost-card{min-height:0;padding:16px!important}
+  .property-cost-card>strong{font-size:24px!important}
+  .personal-modal .personal-close{width:54px!important;min-width:54px!important;max-width:54px!important;height:30px!important;min-height:30px!important;max-height:30px!important;font-size:10px!important}
+}
