@@ -1,0 +1,42 @@
+.personal-modal .personal-close{
+  position:static!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:58px!important;
+  height:32px!important;
+  min-width:58px!important;
+  min-height:32px!important;
+  max-width:58px!important;
+  max-height:32px!important;
+  margin:0!important;
+  padding:0!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  border-radius:9px!important;
+  background:rgba(7,22,18,.94)!important;
+  color:var(--muted)!important;
+  font-size:11px!important;
+  font-weight:750!important;
+  line-height:1!important;
+  letter-spacing:.02em!important;
+  box-shadow:none!important;
+  flex:0 0 auto!important;
+}
+.personal-modal .personal-close:hover,
+.personal-modal .personal-close:focus-visible{
+  color:var(--text)!important;
+  background:rgba(18,42,34,.96)!important;
+  border-color:rgba(104,222,185,.18)!important;
+  outline:none;
+}
+@media(max-width:650px){
+  .personal-modal .personal-close{
+    width:54px!important;
+    min-width:54px!important;
+    max-width:54px!important;
+    height:30px!important;
+    min-height:30px!important;
+    max-height:30px!important;
+    font-size:10px!important;
+  }
+}
