@@ -1,22 +1,6 @@
-.app-view-upcoming{padding:20px;border:1px solid rgba(126,185,164,.08);border-radius:28px;background:#081411}
-.app-view-upcoming .upcoming-workspace{width:min(940px,100%)}
-.app-view-upcoming .upcoming-sections{gap:18px}
-.app-view-upcoming .upcoming-section{padding:24px 26px;border:1px solid rgba(143,198,179,.13);border-radius:22px;background:#13261f;box-shadow:0 16px 42px rgba(0,0,0,.18)}
-.app-view-upcoming .upcoming-section::before{display:none}
-.app-view-upcoming .upcoming-section-heading{margin:0 0 18px;padding:0}
-.app-view-upcoming .upcoming-section-heading .eyebrow{display:none}
-.app-view-upcoming .upcoming-section-heading h2{margin:0;color:#f1f1e8;font-size:18px;letter-spacing:-.015em}
-.app-view-upcoming .upcoming-timeline,.app-view-upcoming .upcoming-position,.app-view-upcoming .upcoming-action,.app-view-upcoming .upcoming-rates,.app-view-upcoming .upcoming-interest{background:#13261f;border-color:rgba(143,198,179,.13)}
-.app-view-upcoming .upcoming-timeline{background:#152a22}
-.app-view-upcoming .upcoming-action{background:#162920}
-.app-view-upcoming .upcoming-interest{background:#102019;box-shadow:none}
-.app-view-upcoming .timeline-track{background:#0b1814;border-color:rgba(143,198,179,.1)}
-.app-view-upcoming .upcoming-position .deal-planner-summary>div,.app-view-upcoming .upcoming-rates .deal-planner-rate,.app-view-upcoming .upcoming-action .deal-planner-milestone-copy{background:#1b342a;border-color:rgba(156,210,190,.14);box-shadow:none}
-.app-view-upcoming .upcoming-position .deal-planner-summary>div:hover,.app-view-upcoming .upcoming-rates .deal-planner-rate:hover{border-color:rgba(104,222,185,.24)}
-.app-view-upcoming .upcoming-rates .deal-planner-rate span{color:var(--accent)}
-.app-view-upcoming .upcoming-rates .deal-planner-rate strong,.app-view-upcoming .upcoming-position strong,.app-view-upcoming .upcoming-action strong{color:#f2f1e9}
-.app-view-upcoming .upcoming-rates .deal-planner-rate em,.app-view-upcoming .upcoming-position small,.app-view-upcoming .upcoming-action small{color:#a9bab4}
-.app-view-upcoming .deal-planner-note{padding-top:15px;border-top:1px solid rgba(143,198,179,.1);color:#98aaa4;line-height:1.55}
-.app-view-upcoming .upcoming-interest .interest-box{color:#ecebe3}
-.app-view-upcoming .upcoming-section+.upcoming-section{margin-top:0!important}
-@media(max-width:700px){.app-view-upcoming{padding:10px;border-radius:22px}.app-view-upcoming .upcoming-sections{gap:12px}.app-view-upcoming .upcoming-section{padding:18px;border-radius:18px}.app-view-upcoming .upcoming-section-heading{margin-bottom:14px}.app-view-upcoming .upcoming-rates .deal-planner-rate-grid{gap:8px}}
+/* Upcoming uses the shared design system from layout-finalize.css.
+   Keep this file intentionally free of page-specific colours, borders,
+   radii, shadows and tile backgrounds. */
+.app-view-upcoming{padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+.app-view-upcoming .upcoming-workspace{width:100%;max-width:none;margin:0}
+.app-view-upcoming .upcoming-sections{display:grid;grid-template-columns:1fr}
