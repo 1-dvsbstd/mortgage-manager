@@ -90,6 +90,14 @@
     ensureTrajectoryControls();
   }
 
+  function finalizeUpcoming(){
+    const upcoming=$('.app-view-upcoming');
+    if(!upcoming) return;
+    upcoming.querySelectorAll('.market-block,.market-comparison').forEach((node)=>node.classList.add('design-source-only'));
+    const workspace=$('.upcoming-workspace',upcoming);
+    if(workspace) workspace.classList.add('design-workspace-full');
+  }
+
   function finalizeFuture(){
     const future=$('.app-view-future .app-view-content');
     const wait=$('#futureWaitPlanner');
@@ -114,6 +122,7 @@
 
   function run(){
     finalizeCurrent();
+    finalizeUpcoming();
     finalizeFuture();
     disableDeadExpansion();
   }
