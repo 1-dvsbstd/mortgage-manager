@@ -12,25 +12,41 @@
     fixedEnd: { label: 'Fixed rate end', suffix: '', prefix: '' },
   };
 
+  const stateValue = (target) => {
+    const state = window.MortgageStore?.get?.();
+    if (state && Object.prototype.hasOwnProperty.call(state, target)) return state[target];
+    return $(target)?.value ?? '';
+  };
+
+  function commit(target, value) {
+    if (window.MortgageStore) {
+      window.MortgageStore.set({ [target]: target === 'fixedEnd' ? value : Number(value) });
+      window.MortgageStore.applyToDom([target], { dispatch: true });
+      return;
+    }
+    const source = $(target);
+    if (!source) return;
+    source.value = value;
+    source.dispatchEvent(new Event('input', { bubbles: true }));
+    source.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
   function closeEditor({ restore = false } = {}) {
     if (!activeEditor) return;
-    const { wrapper, sourceInput, originalValue } = activeEditor;
-    if (restore) {
-      sourceInput.value = originalValue;
-      sourceInput.dispatchEvent(new Event('input', { bubbles: true }));
-    }
+    const { wrapper, target, originalValue } = activeEditor;
+    if (restore) commit(target, originalValue);
     wrapper.remove();
     activeEditor = null;
   }
 
   function openEditor(trigger) {
-    const targetId = trigger.dataset.editTarget;
-    const sourceInput = $(targetId);
+    const target = trigger.dataset.editTarget;
+    const sourceInput = $(target);
     if (!sourceInput) return;
     if (activeEditor?.trigger === trigger) return;
     closeEditor();
 
-    const config = configs[targetId] || { label: 'Edit', prefix: '', suffix: '' };
+    const config = configs[target] || { label: 'Edit', prefix: '', suffix: '' };
     const wrapper = document.createElement('div');
     wrapper.className = 'inline-editor';
     wrapper.setAttribute('role', 'dialog');
@@ -46,8 +62,8 @@
     row.className = 'inline-editor-row';
 
     const input = document.createElement('input');
-    input.type = sourceInput.type || 'number';
-    input.value = sourceInput.value;
+    input.type = sourceInput.type || (target === 'fixedEnd' ? 'month' : 'number');
+    input.value = stateValue(target);
     input.inputMode = sourceInput.inputMode || 'decimal';
     if (sourceInput.min) input.min = sourceInput.min;
     if (sourceInput.max) input.max = sourceInput.max;
@@ -73,11 +89,8 @@
       ? `${config.prefix}${config.label}${config.suffix ? ` (${config.suffix})` : ''}`
       : config.label;
 
-    const originalValue = sourceInput.value;
-    const liveUpdate = () => {
-      sourceInput.value = input.value;
-      sourceInput.dispatchEvent(new Event('input', { bubbles: true }));
-    };
+    const originalValue = stateValue(target);
+    const liveUpdate = () => commit(target, input.value);
 
     input.addEventListener('input', liveUpdate);
     input.addEventListener('keydown', (event) => {
@@ -97,7 +110,7 @@
     wrapper.append(title, row, note, actions);
     document.body.appendChild(wrapper);
 
-    activeEditor = { trigger, wrapper, sourceInput, originalValue };
+    activeEditor = { trigger, wrapper, target, originalValue };
     requestAnimationFrame(() => {
       input.focus({ preventScroll: true });
       try { input.setSelectionRange(input.value.length, input.value.length); } catch (_) {}
