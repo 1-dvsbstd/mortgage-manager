@@ -8,9 +8,10 @@
 
   function renderOwnershipDonut() {
     const bar = document.querySelector('.home-panel .ownership-bar');
-    const balance = Math.max(0, Number($('balance')?.value) || 0);
-    const homeValue = Math.max(0, Number($('homeValue')?.value) || 0);
-    const ownership = Math.min(100, Math.max(0, Number($('ownership')?.value) || 0));
+    const state = window.MortgageStore?.get?.();
+    const balance = Math.max(0, Number(state?.balance ?? $('balance')?.value) || 0);
+    const homeValue = Math.max(0, Number(state?.homeValue ?? $('homeValue')?.value) || 0);
+    const ownership = Math.min(100, Math.max(0, Number(state?.ownership ?? $('ownership')?.value) || 0));
     if (!bar || !homeValue) return;
 
     const schemePct = Math.max(0, 100 - ownership);
@@ -22,7 +23,17 @@
 
     const debtEnd = debtPct;
     const equityEnd = debtPct + equityPctWhole;
-    bar.style.background = `conic-gradient(var(--debt) 0 ${debtEnd.toFixed(2)}%, var(--accent) ${debtEnd.toFixed(2)}% ${equityEnd.toFixed(2)}%, var(--scheme) ${equityEnd.toFixed(2)}% 100%)`;
+    bar.style.setProperty('--debt-end', `${debtEnd.toFixed(2)}%`);
+    bar.style.setProperty('--equity-end', `${equityEnd.toFixed(2)}%`);
+
+    let emphasis = bar.querySelector('.ownership-equity-emphasis');
+    if (!emphasis) {
+      emphasis = document.createElement('span');
+      emphasis.className = 'ownership-equity-emphasis';
+      emphasis.setAttribute('aria-hidden', 'true');
+      bar.appendChild(emphasis);
+    }
+
     bar.dataset.equityLabel = `${mortgageFreeShare.toFixed(0)}%\nfree`;
     bar.setAttribute('aria-label', `${debtPct.toFixed(1)}% mortgage debt, ${equityPctWhole.toFixed(1)}% your equity, ${schemePct.toFixed(1)}% other share`);
   }
@@ -68,13 +79,19 @@
     frame = requestAnimationFrame(refresh);
   };
 
+  if (window.MortgageStore?.subscribe) {
+    window.MortgageStore.subscribe((next, previous) => {
+      if (['balance','homeValue','ownership'].some((key) => next[key] !== previous[key])) schedule();
+    });
+  }
+
   document.addEventListener('input', (event) => {
-    if (event.target.matches('#balance,#homeValue,#ownership,#rate,#payment,#currentOverpayment,#projectionTrendRate,#projectionPurchasePrice,#projectionImprovements')) {
+    if (event.target.matches('#projectionTrendRate,#projectionPurchasePrice,#projectionImprovements')) {
       setTimeout(schedule, 20);
     }
   });
   document.addEventListener('click', (event) => {
-    if (event.target.closest('[data-expand-card],#overpayButtons,#propertyCostComparison')) setTimeout(schedule, 40);
+    if (event.target.closest('[data-expand-card],#propertyCostComparison')) setTimeout(schedule, 40);
   });
 
   schedule();
