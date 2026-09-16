@@ -5,7 +5,7 @@
       label: 'Current',
       eyebrow: 'Today',
       title: 'Your position now',
-      subtitle: 'What you owe, what you own, what you already overpay, and the progress you have made.',
+      subtitle: 'What you owe, what you own, and how changes to your mortgage affect the path from here.',
     },
     upcoming: {
       label: 'Upcoming',
@@ -16,12 +16,15 @@
     future: {
       label: 'Future',
       eyebrow: 'Later',
-      title: 'Where your choices could lead',
-      subtitle: 'Explore hypothetical overpayments, long-term equity, future home value and your next-home position.',
+      title: 'Where your current plan could lead',
+      subtitle: 'Build on your selected overpayment assumption to explore future home value and your next-home position.',
     },
   };
 
   const $ = (selector, root = document) => root.querySelector(selector);
+  const money = (value) => new Intl.NumberFormat('en-GB', {
+    style:'currency', currency:'GBP', maximumFractionDigits:0,
+  }).format(Math.max(0, Number(value) || 0));
 
   function savedView() {
     try {
@@ -69,6 +72,54 @@
     element.removeAttribute('open');
   }
 
+  function ensureFutureAssumption() {
+    const future = $('.app-view-future .app-view-content');
+    if (!future) return;
+    let panel = document.getElementById('futureOverpaymentAssumption');
+    if (!panel) {
+      panel = document.createElement('section');
+      panel.id = 'futureOverpaymentAssumption';
+      panel.className = 'panel future-overpayment-assumption';
+      panel.innerHTML = `
+        <div class="future-assumption-copy">
+          <div><p class="eyebrow">Planning assumption</p><h2>Extra overpayment</h2><p>Future projections use the same What-if amount selected on Current.</p></div>
+          <strong id="futureExtraSummary">£0/month</strong>
+        </div>
+        <div class="future-assumption-controls">
+          <button type="button" data-future-extra="0">£0</button>
+          <button type="button" data-future-extra="50">£50</button>
+          <button type="button" data-future-extra="100">£100</button>
+          <button type="button" data-future-extra="250">£250</button>
+          <button type="button" data-future-extra="500">£500</button>
+          <label>Custom £<input id="futureExtraInput" type="number" min="0" step="10" inputmode="decimal"></label>
+        </div>`;
+      future.insertAdjacentElement('afterbegin', panel);
+      panel.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-future-extra]');
+        if (!button || !window.MortgageStore) return;
+        MortgageStore.set({ scenarioExtra: Math.max(0, Number(button.dataset.futureExtra) || 0) });
+      });
+      $('#futureExtraInput', panel)?.addEventListener('input', (event) => {
+        if (!window.MortgageStore) return;
+        MortgageStore.set({ scenarioExtra: Math.max(0, Number(event.target.value) || 0) });
+      });
+    }
+    renderFutureAssumption();
+  }
+
+  function renderFutureAssumption() {
+    const panel = document.getElementById('futureOverpaymentAssumption');
+    if (!panel) return;
+    const extra = Math.max(0, Number(window.MortgageStore?.get?.().scenarioExtra) || 0);
+    const summary = document.getElementById('futureExtraSummary');
+    const input = document.getElementById('futureExtraInput');
+    if (summary) summary.textContent = `${money(extra)}/month`;
+    if (input && document.activeElement !== input) input.value = String(extra);
+    panel.querySelectorAll('[data-future-extra]').forEach((button) => {
+      button.classList.toggle('active', Number(button.dataset.futureExtra) === extra);
+    });
+  }
+
   function ensureCurrentOverpaymentPanel() {
     const current = $('.app-view-current .app-view-content');
     if (!current) return;
@@ -79,7 +130,7 @@
       panel.className = 'panel current-overpayment-panel';
       panel.innerHTML = `
         <div class="current-overpayment-heading">
-          <div><p class="eyebrow">Overpayments</p><h2>Your regular overpayment</h2><p>This is part of your current mortgage, not a hypothetical scenario.</p></div>
+          <div><p class="eyebrow">Overpayments</p><h2>Your regular overpayment</h2><p>This is what you already pay above the scheduled monthly payment.</p></div>
         </div>
         <div class="current-overpayment-body"></div>`;
       const home = $('.home-panel', current);
@@ -100,7 +151,12 @@
     const current = $('.app-view-current .app-view-content');
     if (!current) return;
     ensureCurrentOverpaymentPanel();
+
+    const scenario = $('.scenario-panel');
+    const chart = $('.chart-panel');
     const progress = document.getElementById('personalProgress');
+    if (scenario && scenario.parentElement !== current) current.appendChild(scenario);
+    if (chart && chart.parentElement !== current) current.appendChild(chart);
     if (progress && progress.parentElement !== current) current.appendChild(progress);
   }
 
@@ -109,9 +165,6 @@
     if (!upcoming) return;
     const next = $('.next-panel');
     if (next && next.parentElement !== upcoming) upcoming.appendChild(next);
-
-    // The mortgage deep-dive market block remains as the data source for the
-    // copied rate figures, but Current should not present remortgage content.
     const sourceMarket = $('.hero-panel .market-block');
     if (sourceMarket) sourceMarket.classList.add('market-source-only');
   }
@@ -119,6 +172,7 @@
   function relocateFutureFeatures() {
     const future = $('.app-view-future .app-view-content');
     if (!future) return;
+    ensureFutureAssumption();
     const candidates = [
       ['homeProjection', 'home-projection'],
       ['propertyCostComparison', 'cost-comparison'],
@@ -169,7 +223,6 @@
       button.dataset.profileSettingsWired = 'true';
       button.addEventListener('click', () => requestAnimationFrame(mountProfileSettingsInSetup));
     }
-    // Also covers the automatic first-run setup modal.
     setTimeout(mountProfileSettingsInSetup, 520);
   }
 
@@ -196,13 +249,10 @@
 
     const current = $('.app-view-current .app-view-content', shell);
     const upcoming = $('.app-view-upcoming .app-view-content', shell);
-    const future = $('.app-view-future .app-view-content', shell);
 
     const hero = $('.hero-panel', main);
     const home = $('.home-panel', main);
     const next = $('.next-panel', main);
-    const scenario = $('.scenario-panel', main);
-    const chart = $('.chart-panel', main);
     const edit = $('.edit-panel', main);
     const dashboardGrid = $('.dashboard-grid', main);
 
@@ -210,8 +260,6 @@
     if (home) current.appendChild(home);
     if (edit) current.appendChild(edit);
     if (next) upcoming.appendChild(next);
-    if (scenario) future.appendChild(scenario);
-    if (chart) future.appendChild(chart);
 
     organiseViews();
 
@@ -263,6 +311,12 @@
     }
 
     requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
+  }
+
+  if (window.MortgageStore?.subscribe) {
+    MortgageStore.subscribe((next, previous) => {
+      if (next.scenarioExtra !== previous.scenarioExtra) requestAnimationFrame(renderFutureAssumption);
+    });
   }
 
   if (document.readyState === 'loading') {
