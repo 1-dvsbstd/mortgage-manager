@@ -35,6 +35,16 @@
   };
 
   function values() {
+    const s = window.MortgageStore?.get?.();
+    if (s) return {
+      balance: s.balance,
+      rate: s.rate,
+      payment: s.payment,
+      homeValue: s.homeValue,
+      ownership: s.ownership,
+      extra: s.scenarioExtra,
+      fixedEnd: s.fixedEnd,
+    };
     return {
       balance: +$('balance')?.value || 0,
       rate: +$('rate')?.value || 0,
@@ -75,12 +85,10 @@
     const monthlyInterest = v.balance * (v.rate / 100 / 12);
     const scheduledCapital = Math.max(0, v.payment - monthlyInterest);
     const nextYear = simulatePeriod(v.balance, v.rate, v.payment + v.extra, 12);
-
     $('monthInterest').textContent = money(monthlyInterest);
     $('monthCapital').textContent = money(scheduledCapital);
     $('yearCapital').textContent = `${money(nextYear.capitalTotal)} capital`;
     $('yearInterest').textContent = `${money(nextYear.interestTotal)} interest${v.extra ? ` with ${money(v.extra)}/mo overpayment` : ''}`;
-
     const ltv = v.homeValue > 0 ? (v.balance / v.homeValue) * 100 : 100;
     const band = marketRates.find((item) => ltv <= item.maxLtv) || marketRates[marketRates.length - 1];
     const term = Number.isFinite(result.base.months) ? result.base.months : 300;
@@ -92,9 +100,8 @@
     $('market5yPayment').textContent = `${money(paymentFor(v.balance, band.five, term))}/mo over current remaining term`;
   }
 
-  function renderScenarioComparison(v, result) {
-    const body = $('scenarioCompareBody');
-    if (!body) return;
+  function renderScenarioComparison(v) {
+    const body = $('scenarioCompareBody'); if (!body) return;
     const extras = [0, 50, 100, 250, 500];
     body.innerHTML = extras.map((extra) => {
       const comparison = MortgageMath.compare(v.balance, v.rate, v.payment, extra);
@@ -102,49 +109,32 @@
       const finish = Number.isFinite(comparison.accelerated.months) ? payoffDate(comparison.accelerated.months) : '—';
       return `<tr${selected}><td><strong>${money(extra)}/mo</strong></td><td>${finish}</td><td>${extra ? compactMonths(comparison.monthsSaved) : '—'}</td><td>${extra ? money(comparison.interestSaved) : '—'}</td></tr>`;
     }).join('');
-
     const useful = [50, 100, 250, 500].map((extra) => ({ extra, c: MortgageMath.compare(v.balance, v.rate, v.payment, extra) })).find(({ c }) => c.monthsSaved >= 12);
-    $('overpayTargetInsight').textContent = useful
-      ? `${money(useful.extra)}/month is the first preset that saves at least a year (${compactMonths(useful.c.monthsSaved)}).`
-      : 'Even small overpayments reduce interest; use the slider to find a level that fits comfortably.';
+    $('overpayTargetInsight').textContent = useful ? `${money(useful.extra)}/month is the first preset that saves at least a year (${compactMonths(useful.c.monthsSaved)}).` : 'Even small overpayments reduce interest; use the slider to find a level that fits comfortably.';
   }
 
-  function balanceAt(points, month) {
-    if (!points?.length) return 0;
-    return points[Math.min(Math.max(0, month), points.length - 1)] ?? 0;
-  }
-
-  function findLtvMonth(points, homeValue, target) {
-    if (!homeValue) return -1;
-    return points.findIndex((balance) => (balance / homeValue) * 100 <= target);
-  }
+  function balanceAt(points, month) { if (!points?.length) return 0; return points[Math.min(Math.max(0, month), points.length - 1)] ?? 0; }
+  function findLtvMonth(points, homeValue, target) { if (!homeValue) return -1; return points.findIndex((balance) => (balance / homeValue) * 100 <= target); }
 
   function renderTrajectory(v, result) {
-    const milestones = $('trajectoryMilestones');
-    const rows = $('yearlyBalanceBody');
+    const milestones = $('trajectoryMilestones'); const rows = $('yearlyBalanceBody');
     if (!milestones || !rows || !Number.isFinite(result.base.months)) return;
-
     const currentLtv = v.homeValue > 0 ? (v.balance / v.homeValue) * 100 : null;
     const ltvTargets = [90, 85, 80, 75, 70, 65, 60, 50, 40, 30, 20, 10];
     const nextTarget = currentLtv === null ? null : ltvTargets.find((target) => currentLtv > target);
     const nextTargetMonth = nextTarget === null ? -1 : findLtvMonth(result.base.monthlyPoints, v.homeValue, nextTarget);
     const fixedMonths = monthsUntil(v.fixedEnd);
     const fixedBalance = fixedMonths !== null && fixedMonths >= 0 ? balanceAt(result.base.monthlyPoints, fixedMonths) : null;
-
     const cards = [
       `<div class="deep-stat"><span>Mortgage-free</span><strong>${payoffDate(result.base.months)}</strong><small>${compactMonths(result.base.months)} on the current path</small></div>`,
       `<div class="deep-stat"><span>With selected overpayment</span><strong>${payoffDate(result.accelerated.months)}</strong><small>${compactMonths(result.monthsSaved)} sooner</small></div>`,
-      nextTarget && nextTargetMonth >= 0
-        ? `<div class="deep-stat"><span>Next LTV milestone</span><strong>${nextTarget}%</strong><small>Around ${payoffDate(nextTargetMonth)}</small></div>`
-        : `<div class="deep-stat"><span>Deal-end balance</span><strong>${fixedBalance === null ? '—' : money(fixedBalance)}</strong><small>${v.fixedEnd ? 'At your saved fixed-rate end date' : 'Add a fixed-rate end date to calculate this'}</small></div>`,
+      nextTarget && nextTargetMonth >= 0 ? `<div class="deep-stat"><span>Next LTV milestone</span><strong>${nextTarget}%</strong><small>Around ${payoffDate(nextTargetMonth)}</small></div>` : `<div class="deep-stat"><span>Deal-end balance</span><strong>${fixedBalance === null ? '—' : money(fixedBalance)}</strong><small>${v.fixedEnd ? 'At your saved fixed-rate end date' : 'Add a fixed-rate end date to calculate this'}</small></div>`,
     ];
     milestones.innerHTML = cards.join('');
-
     const candidateMonths = [12, 36, 60, 120, result.base.months];
     const uniqueMonths = [...new Set(candidateMonths.filter((m) => m > 0 && m <= result.base.months))];
     rows.innerHTML = uniqueMonths.map((month) => {
-      const base = balanceAt(result.base.monthlyPoints, month);
-      const over = balanceAt(result.accelerated.monthlyPoints, month);
+      const base = balanceAt(result.base.monthlyPoints, month); const over = balanceAt(result.accelerated.monthlyPoints, month);
       const ltv = v.homeValue > 0 ? (base / v.homeValue) * 100 : null;
       const label = month === result.base.months ? `${compactMonths(result.base.months)} · Mortgage-free` : month % 12 === 0 ? `Year ${month / 12}` : compactMonths(month);
       return `<tr><td><strong>${label}</strong></td><td>${money(base)}</td><td>${money(over)}</td><td>${ltv === null ? '—' : pct(ltv)}</td></tr>`;
@@ -152,20 +142,13 @@
   }
 
   function render() {
-    if (!window.MortgageMath || !$('balance')) return;
+    if (!window.MortgageMath) return;
     const v = values();
     const result = MortgageMath.compare(v.balance, v.rate, v.payment, v.extra);
-    renderMortgageDeepDive(v, result);
-    renderScenarioComparison(v, result);
-    renderTrajectory(v, result);
+    renderMortgageDeepDive(v, result); renderScenarioComparison(v, result); renderTrajectory(v, result);
   }
 
-  document.addEventListener('input', (event) => {
-    if (event.target.matches('#balance,#rate,#payment,#homeValue,#ownership,#fixedEnd,#customExtra,#extraSlider')) requestAnimationFrame(render);
-  });
-  document.addEventListener('click', (event) => {
-    if (event.target.closest('#overpayButtons')) requestAnimationFrame(render);
-  });
+  if (window.MortgageStore?.subscribe) window.MortgageStore.subscribe(render);
   window.addEventListener('resize', () => requestAnimationFrame(render));
   render();
 })();
