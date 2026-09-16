@@ -55,24 +55,8 @@
     });
   }
 
-  function mirrorLegacy(next) {
-    try {
-      localStorage.setItem('mortgage-manager-v0.4', JSON.stringify({
-        balance: next.balance,
-        rate: next.rate,
-        payment: next.payment,
-        homeValue: next.homeValue,
-        ownership: next.ownership,
-        fixedEnd: next.fixedEnd,
-        extra: next.scenarioExtra,
-      }));
-      localStorage.setItem(LEGACY_OVERPAY_KEY, String(next.currentOverpayment));
-    } catch (_) {}
-  }
-
   function persist() {
     try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (_) {}
-    mirrorLegacy(state);
   }
 
   function initialise() {
