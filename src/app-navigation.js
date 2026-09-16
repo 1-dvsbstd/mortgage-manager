@@ -69,6 +69,22 @@
     element.removeAttribute('open');
   }
 
+  function relocateFutureFeatures() {
+    const future = $('.app-view-future .app-view-content');
+    if (!future) return;
+    const candidates = [
+      ['homeProjection', 'home-projection'],
+      ['propertyCostComparison', 'cost-comparison'],
+      ['nextHomePlanner', 'next-home'],
+    ];
+    candidates.forEach(([id, kind]) => {
+      const element = document.getElementById(id);
+      if (!element) return;
+      cardifyFeature(element, kind);
+      future.appendChild(element);
+    });
+  }
+
   function buildShell() {
     const main = $('.app-shell');
     const topbar = $('.topbar', main);
@@ -103,17 +119,7 @@
 
     if (scenario) future.appendChild(scenario);
     if (chart) future.appendChild(chart);
-
-    const homeProjection = document.getElementById('homeProjection');
-    const nextHome = document.getElementById('nextHomePlanner');
-    if (homeProjection) {
-      cardifyFeature(homeProjection, 'home-projection');
-      future.appendChild(homeProjection);
-    }
-    if (nextHome) {
-      cardifyFeature(nextHome, 'next-home');
-      future.appendChild(nextHome);
-    }
+    relocateFutureFeatures();
 
     if (dashboardGrid && !dashboardGrid.children.length) dashboardGrid.remove();
 
@@ -125,6 +131,7 @@
     });
 
     activateView(savedView(), false);
+    setTimeout(relocateFutureFeatures, 320);
   }
 
   function closeExpandedCards() {
@@ -132,13 +139,14 @@
       card.classList.remove('is-expanded');
       card.setAttribute('aria-expanded', 'false');
     });
-    document.body.classList.remove('card-expanded');
+    document.body.classList.remove('card-open');
     document.querySelector('.card-backdrop')?.remove();
   }
 
   function activateView(key, userInitiated) {
     if (!views[key]) key = 'current';
     closeExpandedCards();
+    relocateFutureFeatures();
 
     document.querySelectorAll('.app-view').forEach((view) => {
       const active = view.dataset.view === key;
@@ -149,7 +157,8 @@
     document.querySelectorAll('[data-app-view]').forEach((button) => {
       const active = button.dataset.appView === key;
       button.classList.toggle('is-active', active);
-      button.setAttribute('aria-current', active ? 'page' : 'false');
+      if (active) button.setAttribute('aria-current', 'page');
+      else button.removeAttribute('aria-current');
     });
 
     document.body.dataset.appView = key;
