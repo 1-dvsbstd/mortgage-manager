@@ -2,7 +2,6 @@
   const $ = (selector, root = document) => root.querySelector(selector);
   const money = (value) => new Intl.NumberFormat('en-GB', { style:'currency', currency:'GBP', maximumFractionDigits:0 }).format(Math.max(0, Number(value)||0));
   const WHATIF_MIGRATION_KEY = 'mortgage-manager-whatif-total-v1';
-  let lastRegular = null;
 
   function paymentFor(principal, annualRate, months){
     const balance=Math.max(0,Number(principal)||0), term=Math.max(1,Math.round(Number(months)||1));
@@ -27,6 +26,12 @@
     return new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(new Date(year,month-1,1));
   }
 
+  function parseRateText(id){
+    const text=document.getElementById(id)?.textContent || '';
+    const value=Number(String(text).replace(/[^0-9.\-]/g,''));
+    return Number.isFinite(value) && value>0 ? value : null;
+  }
+
   function mergeHomeIntoMortgage(){
     const hero=$('.app-view-current .hero-panel'), home=$('.app-view-current .home-panel');
     if(!hero||!home||hero.contains(home)) return;
@@ -37,8 +42,9 @@
   }
 
   function totalCandidates(regular){
-    let candidates=[regular,100,250,500].filter((value)=>value>=regular-.01);
-    if(candidates.length<3) candidates=[regular,regular+100,regular+250,regular+500];
+    const rounded=Math.round(regular*100)/100;
+    const presets=[rounded,100,250,500].filter((value)=>value>=rounded-.01);
+    const candidates=presets.length>=3?presets:[rounded,rounded+100,rounded+250,rounded+500];
     return [...new Set(candidates.map((value)=>Math.round(value*100)/100))];
   }
 
@@ -52,14 +58,13 @@
     const headline=$('#overpayHeadline',scenario);
     if(headline) headline.textContent=`${money(total)}/month total`;
 
+    const value=$('.whatif-regular-value',scenario);
+    if(value) value.textContent=`${money(regular)}/month`;
+
     const buttons=$('#totalOverpayButtons',scenario);
     if(buttons){
-      buttons.innerHTML=totalCandidates(regular).map((value)=>`<button type="button" data-total-overpay="${value}" class="${Math.abs(value-total)<.5?'active':''}">${Math.abs(value-regular)<.5?'Current ':''}${money(value)}</button>`).join('') + `<label class="custom-chip total-custom-chip">Custom £<input id="totalOverpayCustom" type="number" min="${regular}" step="10" inputmode="decimal" value="${Math.round(total*100)/100}"></label>`;
+      buttons.innerHTML=totalCandidates(regular).map((amount)=>`<button type="button" data-total-overpay="${amount}" class="${Math.abs(amount-total)<.5?'active':''}">${Math.abs(amount-regular)<.5?'Current ':''}${money(amount)}</button>`).join('') + `<label class="custom-chip total-custom-chip">Custom £<input id="totalOverpayCustom" type="number" min="${regular}" step="10" inputmode="decimal" value="${Math.round(total*100)/100}"></label>`;
     }
-
-    const baseline=$('.whatif-current-baseline',scenario);
-    const label=$('.whatif-baseline-value',baseline||scenario);
-    if(label) label.textContent=`${money(regular)}/month`;
   }
 
   function applyTotalOverpayment(total){
@@ -76,19 +81,24 @@
     const regularControl=$('.current-overpay-control');
     const savings=$('#currentSavingsSummary');
     const oldPanel=$('#currentOverpaymentPanel');
+    $('#compactWhatIf')?.remove();
+    $('.whatif-current-baseline',scenario)?.remove();
 
-    let baseline=$('.whatif-current-baseline',scenario);
-    if(!baseline){
-      baseline=document.createElement('div');
-      baseline.className='whatif-current-baseline';
-      baseline.innerHTML='<div class="whatif-baseline-copy"><span>Current regular overpayment</span><strong class="whatif-baseline-value">—</strong><small>This is the starting point for the scenarios below.</small></div><div class="whatif-baseline-controls"></div>';
+    let inline=$('.whatif-regular-inline',scenario);
+    if(!inline){
+      inline=document.createElement('div');
+      inline.className='whatif-regular-inline';
+      inline.innerHTML='<div class="whatif-regular-label"><span>Current regular overpayment</span><strong class="whatif-regular-value">—</strong></div><div class="whatif-regular-live"></div>';
       const range=$('#extraSlider',scenario);
-      if(range) range.insertAdjacentElement('beforebegin',baseline); else scenario.appendChild(baseline);
+      if(range) range.insertAdjacentElement('beforebegin',inline); else scenario.appendChild(inline);
     }
-    const host=$('.whatif-baseline-controls',baseline);
+    const host=$('.whatif-regular-live',inline);
     if(savings&&savings.parentElement!==host) host.appendChild(savings);
-    if(regularControl&&regularControl.parentElement!==host) host.appendChild(regularControl);
-    if(oldPanel && !oldPanel.contains(savings) && !oldPanel.contains(regularControl)) oldPanel.remove();
+    if(regularControl&&regularControl.parentElement!==host){
+      regularControl.classList.remove('source-fields-only');
+      host.appendChild(regularControl);
+    }
+    if(oldPanel) oldPanel.remove();
 
     const oldRange=$('#extraSlider',scenario), oldButtons=$('#overpayButtons',scenario);
     if(oldRange) oldRange.classList.add('whatif-source-only');
@@ -151,23 +161,44 @@
     return {months,balance,remainingMonths,totalPayment};
   }
 
+  function paymentScenarioRates(state){
+    const current=Math.max(.1,Number(state.rate)||0);
+    const twoYear=parseRateText('market2yRate') || parseRateText('deal2yRate');
+    const fiveYear=parseRateText('market5yRate') || parseRateText('deal5yRate');
+    const known=[current,twoYear,fiveYear].filter(Number.isFinite);
+    const low=Math.max(.1,Math.min(...known)-.5);
+    const high=Math.max(...known)+.5;
+    const raw=[
+      {rate:low,label:'Lower test'},
+      {rate:current,label:'Current rate'},
+      ...(twoYear?[{rate:twoYear,label:'Avg 2-year'}]:[]),
+      ...(fiveYear?[{rate:fiveYear,label:'Avg 5-year'}]:[]),
+      {rate:high,label:'Higher test'},
+    ];
+    const seen=new Set();
+    return raw.filter((item)=>{
+      const key=(Math.round(item.rate*100)/100).toFixed(2);
+      if(seen.has(key)) return false;
+      seen.add(key); item.rate=Number(key); return true;
+    }).sort((a,b)=>a.rate-b.rate);
+  }
+
   function renderUpcomingRates(){
     const state=window.MortgageStore?.get?.();
     const grid=$('#dealPlannerRateGrid');
     if(!state||!grid) return;
     const position=projectedDealPosition(state);
     if(!position) return;
-    const currentRate=Math.max(.1,Number(state.rate)||0);
-    const rates=[currentRate-1,currentRate-.5,currentRate,currentRate+.5,currentRate+1].map((r)=>Math.max(.1,Math.round(r*100)/100));
-    grid.innerHTML=rates.map((scenarioRate)=>{
-      const scenarioPayment=paymentFor(position.balance,scenarioRate,position.remainingMonths);
+    const rates=paymentScenarioRates(state);
+    grid.innerHTML=rates.map(({rate,label})=>{
+      const scenarioPayment=paymentFor(position.balance,rate,position.remainingMonths);
       const diff=scenarioPayment-position.totalPayment;
       const note=Math.abs(diff)<1?'About the same as you pay now':`${money(Math.abs(diff))}/mo ${diff>0?'more':'less'} than now`;
-      const current=Math.abs(scenarioRate-currentRate)<.01;
-      return `<div class="deal-planner-rate ${current?'is-current-rate':''}"><span>${scenarioRate.toFixed(2)}%${current?' · your rate':''}</span><strong>${money(scenarioPayment)}<small>/mo</small></strong><em>${note}</em></div>`;
+      const current=label==='Current rate';
+      return `<div class="deal-planner-rate ${current?'is-current-rate':''}"><span>${rate.toFixed(2)}% · ${label}</span><strong>${money(scenarioPayment)}<small>/mo</small></strong><em>${note}</em></div>`;
     }).join('');
     const note=$('.deal-planner-note');
-    if(note) note.textContent=`Uses your projected balance at deal end and the remaining term needed to keep the same projected mortgage-free date. Examples sit either side of your saved ${currentRate.toFixed(2)}% rate; they are stress tests, not forecasts or mortgage offers.`;
+    if(note) note.textContent='Uses your projected balance at deal end and the remaining term needed to keep the same projected mortgage-free date. The centre values use your current rate and the calculated 2-year / 5-year market estimates; outer values are simple stress tests.';
   }
 
   function refineUpcoming(){
@@ -189,7 +220,8 @@
     const state=window.MortgageStore?.get?.();
     if(state){
       const total=Math.max(0,Number(state.payment)||0)+Math.max(0,Number(state.currentOverpayment)||0);
-      fixStats.innerHTML=`<div><span>Current rate</span><strong>${Number(state.rate||0).toFixed(2)}%</strong></div><div><span>Total monthly payment</span><strong>${money(total)}</strong></div><div><span>Fix ends</span><strong>${formatMonth(state.fixedEnd)}</strong></div>`;
+      const two=parseRateText('market2yRate'), five=parseRateText('market5yRate');
+      fixStats.innerHTML=`<div><span>Current rate</span><strong>${Number(state.rate||0).toFixed(2)}%</strong></div><div><span>Avg 2-year</span><strong>${two?two.toFixed(2)+'%':'—'}</strong></div><div><span>Avg 5-year</span><strong>${five?five.toFixed(2)+'%':'—'}</strong></div><div><span>Total monthly payment</span><strong>${money(total)}</strong></div><div><span>Fix ends</span><strong>${formatMonth(state.fixedEnd)}</strong></div>`;
     }
 
     if(action){
@@ -204,6 +236,29 @@
     }
     shell.append(timeline,rates,position);
     renderUpcomingRates();
+  }
+
+  function splitNextHomePlanner(){
+    const future=$('.app-view-future .app-view-content'), planner=$('#nextHomePlanner');
+    if(!future||!planner) return;
+    const body=$('.next-home-body',planner), timeline=$('.next-home-timeline',planner);
+    if(!body||!timeline) return;
+
+    const heading=$('.next-home-heading',body);
+    if(heading){
+      const eyebrow=$('.eyebrow',heading); if(eyebrow) eyebrow.textContent='Next-home position';
+      const title=$('h2',heading); if(title) title.textContent='What your current equity could mean today';
+    }
+
+    let wait=$('#futureWaitPlanner');
+    if(!wait){
+      wait=document.createElement('section');
+      wait.id='futureWaitPlanner'; wait.className='panel future-wait-planner';
+      wait.innerHTML='<div class="future-wait-heading"><p class="eyebrow">If you wait</p><h2>How your next-home position could change</h2></div><div class="future-wait-host"></div>';
+      planner.insertAdjacentElement('afterend',wait);
+    }
+    const host=$('.future-wait-host',wait);
+    if(timeline.parentElement!==host) host.appendChild(timeline);
   }
 
   function refineFuture(){
@@ -231,6 +286,7 @@
       const host=$('.future-model-range-host',rangePanel);
       if(host && range.parentElement!==host) host.appendChild(range);
     }
+    splitNextHomePlanner();
   }
 
   function run(){
@@ -243,10 +299,7 @@
 
   if(window.MortgageStore?.subscribe){
     MortgageStore.subscribe((next,previous)=>{
-      if(next.currentOverpayment!==previous.currentOverpayment){
-        lastRegular=next.currentOverpayment;
-        if(next.scenarioExtra!==0) MortgageStore.set({scenarioExtra:0});
-      }
+      if(next.currentOverpayment!==previous.currentOverpayment && next.scenarioExtra!==0) MortgageStore.set({scenarioExtra:0});
       requestAnimationFrame(()=>{ renderWhatIfControls(); refineFutureAssumption(); refineUpcoming(); renderUpcomingRates(); });
     });
   }
