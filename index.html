@@ -9,18 +9,19 @@
   <meta name="apple-mobile-web-app-title" content="Mortgage" />
   <meta name="description" content="A visual mortgage manager for tracking balance, equity, payoff time and overpayment impact." />
   <title>Mortgage Manager</title>
-  <link rel="icon" href="public/icon.svg?v=0100" type="image/svg+xml" />
-  <link rel="stylesheet" href="src/styles.css?v=0100" />
-  <link rel="stylesheet" href="src/inline-edit.css?v=0100" />
-  <link rel="stylesheet" href="src/expandable-cards.css?v=0100" />
-  <link rel="stylesheet" href="src/deep-dive.css?v=0100" />
-  <link rel="stylesheet" href="src/chart-enhance.css?v=0100" />
-  <link rel="stylesheet" href="src/mortgage-ui.css?v=0100" />
-  <link rel="stylesheet" href="src/deal-end-planner.css?v=0100" />
-  <link rel="stylesheet" href="src/premium.css?v=0100" />
-  <link rel="stylesheet" href="src/setup-data.css?v=0100" />
-  <link rel="stylesheet" href="src/mortgage-history.css?v=0100" />
-  <link rel="stylesheet" href="src/app-runtime.css?v=0100" />
+  <link rel="icon" href="public/icon.svg?v=0110" type="image/svg+xml" />
+  <link rel="stylesheet" href="src/styles.css?v=0110" />
+  <link rel="stylesheet" href="src/inline-edit.css?v=0110" />
+  <link rel="stylesheet" href="src/expandable-cards.css?v=0110" />
+  <link rel="stylesheet" href="src/deep-dive.css?v=0110" />
+  <link rel="stylesheet" href="src/chart-enhance.css?v=0110" />
+  <link rel="stylesheet" href="src/mortgage-ui.css?v=0110" />
+  <link rel="stylesheet" href="src/deal-end-planner.css?v=0110" />
+  <link rel="stylesheet" href="src/home-profile.css?v=0110" />
+  <link rel="stylesheet" href="src/premium.css?v=0110" />
+  <link rel="stylesheet" href="src/setup-data.css?v=0110" />
+  <link rel="stylesheet" href="src/mortgage-history.css?v=0110" />
+  <link rel="stylesheet" href="src/app-runtime.css?v=0110" />
   <script>
     if ('serviceWorker' in navigator) navigator.serviceWorker.getRegistrations().then((registrations) => registrations.forEach((registration) => registration.unregister()));
     if ('caches' in window) caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key))));
@@ -29,7 +30,7 @@
 <body>
   <main class="app-shell">
     <header class="topbar">
-      <div><p class="brand">Mortgage Manager <span>V0.10.0</span></p><p class="topline">See what you owe, what you own, and how quickly you can change it.</p></div>
+      <div><p class="brand">Mortgage Manager <span>V0.11.0</span></p><p class="topline">See what you owe, what you own, and how quickly you can change it.</p></div>
       <div class="save-status" id="saveStatus">Saved on this device</div>
     </header>
 
@@ -128,21 +129,21 @@
     <footer class="footer">Illustrative planning tool only. Market rates are dated indicative averages, not mortgage offers. Home-value projections are scenarios rather than valuations. Property-share figures are simplified and may not match the legal or lender treatment of every ownership/equity scheme. Mortgage projections assume the entered rate and payment remain unchanged.</footer>
   </main>
 
-  <script src="src/mortgage-layout.js?v=0100"></script>
-  <script src="src/mortgage-store.js?v=0100"></script>
-  <script src="src/mortgage.js?v=0100"></script>
-  <script src="src/app.js?v=0100"></script>
-  <script src="src/inline-edit.js?v=0100"></script>
-  <script src="src/deep-dive.js?v=0100"></script>
-  <script src="src/home-projection.js?v=0100"></script>
-  <script src="src/expandable-cards.js?v=0100"></script>
-  <script src="src/chart-enhance.js?v=0100"></script>
-  <script src="src/mortgage-detail-ui.js?v=0100"></script>
-  <script src="src/deal-end-planner.js?v=0100"></script>
-  <script src="src/balance-projection.js?v=0100"></script>
-  <script src="src/home-costs.js?v=0100"></script>
-  <script src="src/setup-data.js?v=0100"></script>
-  <script src="src/mortgage-history.js?v=0100"></script>
-  <script src="src/app-runtime.js?v=0100"></script>
+  <script src="src/mortgage-layout.js?v=0110"></script>
+  <script src="src/mortgage-store.js?v=0110"></script>
+  <script src="src/mortgage.js?v=0110"></script>
+  <script src="src/app.js?v=0110"></script>
+  <script src="src/inline-edit.js?v=0110"></script>
+  <script src="src/deep-dive.js?v=0110"></script>
+  <script src="src/home-projection.js?v=0110"></script>
+  <script src="src/expandable-cards.js?v=0110"></script>
+  <script src="src/chart-enhance.js?v=0110"></script>
+  <script src="src/mortgage-detail-ui.js?v=0110"></script>
+  <script src="src/deal-end-planner.js?v=0110"></script>
+  <script src="src/balance-projection.js?v=0110"></script>
+  <script src="src/home-costs.js?v=0110"></script>
+  <script src="src/setup-data.js?v=0110"></script>
+  <script src="src/mortgage-history.js?v=0110"></script>
+  <script src="src/app-runtime.js?v=0110"></script>
 </body>
 </html>
