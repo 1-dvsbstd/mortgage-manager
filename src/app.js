@@ -1,9 +1,8 @@
 (() => {
-  const STORAGE_KEY = 'mortgage-manager-v0.4';
   const $ = (id) => document.getElementById(id);
   let selectedExtra = 50;
   let simulatedRate = 4;
-  let saveTimer;
+  let updateFrame = null;
 
   const money = (value) => new Intl.NumberFormat('en-GB', {
     style: 'currency', currency: 'GBP', maximumFractionDigits: 0,
@@ -48,6 +47,18 @@
   };
 
   function currentValues() {
+    if (window.MortgageStore) {
+      const state = window.MortgageStore.get();
+      return {
+        balance: state.balance,
+        rate: state.rate,
+        payment: state.payment,
+        homeValue: state.homeValue,
+        ownership: state.ownership,
+        fixedEnd: state.fixedEnd,
+        extra: state.scenarioExtra,
+      };
+    }
     return {
       balance: +$('balance').value || 0,
       rate: +$('rate').value || 0,
@@ -59,35 +70,23 @@
     };
   }
 
-  function saveValues() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(currentValues()));
-    $('saveStatus').textContent = 'Saved on this device';
+  function setSavedStatus() {
+    const status = $('saveStatus');
+    if (status) status.textContent = 'Saved on this device';
   }
 
-  function queueSave() {
-    $('saveStatus').textContent = 'Saving…';
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(saveValues, 250);
+  function setStorePatch(patch) {
+    if (window.MortgageStore) window.MortgageStore.set(patch);
+    setSavedStatus();
   }
 
   function loadValues() {
-    try {
-      const keys = [STORAGE_KEY, 'mortgage-manager-v0.3', 'mortgage-manager-v0.2'];
-      let saved = null;
-      for (const key of keys) {
-        const raw = localStorage.getItem(key);
-        if (raw) { saved = JSON.parse(raw); break; }
-      }
-      if (!saved) return;
-      ['balance','rate','payment','homeValue','ownership','fixedEnd'].forEach((key) => {
-        if (saved[key] !== undefined && $(key)) $(key).value = saved[key];
-      });
-      if (saved.extra !== undefined) {
-        selectedExtra = Math.max(0, Number(saved.extra) || 0);
-        $('customExtra').value = selectedExtra;
-        $('extraSlider').value = Math.min(1000, selectedExtra);
-      }
-    } catch (error) { console.warn('Could not load saved mortgage data.', error); }
+    if (window.MortgageStore) {
+      window.MortgageStore.applyToDom(null, { dispatch:false });
+      const state = window.MortgageStore.get();
+      selectedExtra = state.scenarioExtra;
+      return;
+    }
   }
 
   function syncExtraControls(value) {
@@ -261,11 +260,45 @@
     drawChart(result.base,result.accelerated);
   }
 
-  const applyExtra=(value,shouldSave=true)=>{syncExtraControls(value);update();if(shouldSave)queueSave();};
+  function scheduleUpdate() {
+    if (updateFrame) cancelAnimationFrame(updateFrame);
+    updateFrame = requestAnimationFrame(() => {
+      updateFrame = null;
+      const state = window.MortgageStore?.get();
+      if (state) syncExtraControls(state.scenarioExtra);
+      update();
+    });
+  }
+
+  const applyExtra=(value)=>{
+    const next=Math.max(0,Number(value)||0);
+    syncExtraControls(next);
+    setStorePatch({ scenarioExtra: next });
+  };
+
   $('overpayButtons').addEventListener('click',(event)=>{const button=event.target.closest('button[data-extra]');if(button)applyExtra(button.dataset.extra);});
-  $('extraSlider').addEventListener('input',(event)=>applyExtra(event.target.value)); $('customExtra').addEventListener('input',(event)=>applyExtra(event.target.value));
-  ['balance','rate','payment','homeValue','ownership','fixedEnd'].forEach((id)=>$(id).addEventListener('input',()=>{update();queueSave();}));
+  $('extraSlider').addEventListener('input',(event)=>applyExtra(event.target.value));
+  $('customExtra').addEventListener('input',(event)=>applyExtra(event.target.value));
+
+  const fieldMap = {
+    balance:'balance', rate:'rate', payment:'payment', homeValue:'homeValue', ownership:'ownership', fixedEnd:'fixedEnd', currentOverpayment:'currentOverpayment'
+  };
+  Object.entries(fieldMap).forEach(([id,key])=>{
+    const element=$(id);
+    if(!element) return;
+    element.addEventListener('input',()=>{
+      const value=key==='fixedEnd'?element.value:Number(element.value);
+      setStorePatch({[key]:value});
+    });
+  });
+
+  if (window.MortgageStore) {
+    window.MortgageStore.subscribe(() => scheduleUpdate());
+  }
   window.addEventListener('resize',update);
 
-  loadValues(); syncExtraControls(selectedExtra); ensureForecastUI(); update();
+  loadValues();
+  syncExtraControls(currentValues().extra);
+  ensureForecastUI();
+  update();
 })();
