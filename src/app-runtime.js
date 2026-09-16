@@ -180,6 +180,7 @@
   document.addEventListener('input', (event) => {
     if (event.target.matches('#projectionTrendRate,#projectionPurchasePrice,#projectionImprovements')) schedule(20);
   });
+  document.addEventListener('mortgage-history-updated', () => schedule(35));
   document.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
     const button = document.querySelector('.personal-modal .personal-close');
