@@ -13,9 +13,34 @@
     } catch(_) { return { ...defaults }; }
   }
 
+  function bridgeInputs(settings){
+    const map = {
+      projectionPurchasePrice:'purchasePrice', projectionPurchaseMonth:'purchaseMonth',
+      projectionImprovements:'improvements', projectionRecentValue:'recentValue',
+      projectionLowRate:'low', projectionTrendRate:'trend', projectionHighRate:'high',
+    };
+    Object.entries(map).forEach(([id,key]) => {
+      const input = document.getElementById(id);
+      if(input) input.value = settings[key] ?? '';
+    });
+    const trigger = document.getElementById('projectionTrendRate') || document.getElementById('projectionPurchasePrice');
+    if(trigger) trigger.dispatchEvent(new Event('input', { bubbles:true }));
+  }
+
   function saveSettings(settings){
     try { localStorage.setItem(HOME_KEY, JSON.stringify(settings)); } catch(_) {}
+    bridgeInputs(settings);
     document.dispatchEvent(new CustomEvent('home-profile-settings-updated', { detail:{ ...settings } }));
+  }
+
+  function isolateLegacyControls(){
+    const legacy = document.querySelector('.projection-assumptions');
+    if(!legacy || legacy.dataset.setupIsolated === 'true') return;
+    legacy.dataset.setupIsolated = 'true';
+    legacy.classList.remove('projection-assumptions');
+    legacy.classList.add('projection-assumptions-internal');
+    legacy.hidden = true;
+    legacy.style.display = 'none';
   }
 
   function field(id,label,type='number',step='1',note=''){
@@ -23,6 +48,7 @@
   }
 
   function mount(){
+    isolateLegacyControls();
     const modal = document.querySelector('.personal-modal');
     const mortgageForm = modal?.querySelector('.personal-form');
     if(!modal || !mortgageForm || modal.querySelector('.personal-home-profile-section')) return;
@@ -70,6 +96,10 @@
 
     modal.querySelector('[data-action="save"]')?.addEventListener('click', persist);
   }
+
+  isolateLegacyControls();
+  setTimeout(isolateLegacyControls, 250);
+  setTimeout(isolateLegacyControls, 700);
 
   const button = document.getElementById('personalDataButton');
   if(button) button.addEventListener('click', () => requestAnimationFrame(mount));
