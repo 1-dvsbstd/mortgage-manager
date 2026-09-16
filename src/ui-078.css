@@ -1,72 +1,113 @@
-/* V0.7.8 — consolidate ownership/equity visuals */
+/* V0.9.4 — refined ownership/equity visuals */
 
-/* Replace the long ownership strip with a compact property-composition donut. */
+/* Proper SVG ownership donut: clean geometry, exact gaps, stronger equity emphasis. */
 .home-panel .ownership-bar {
-  --donut-debt:#748883;
-  --donut-equity:#7cead2;
-  --donut-other:#40534e;
-  --donut-gap:#0a1f19;
-  --debt-end:48%;
-  --equity-end:80%;
   position: relative;
   display: grid;
   place-items: center;
-  width: 148px;
-  height: 148px;
-  margin: 22px auto 8px;
+  width: 164px;
+  height: 164px;
+  margin: 24px auto 10px;
   overflow: visible;
   border-radius: 50%;
-  border: 1px solid rgba(255,255,255,.08);
-  background: conic-gradient(
-    var(--donut-debt) 0 calc(var(--debt-end) - .35%),
-    var(--donut-gap) calc(var(--debt-end) - .35%) calc(var(--debt-end) + .35%),
-    var(--donut-equity) calc(var(--debt-end) + .35%) calc(var(--equity-end) - .35%),
-    var(--donut-gap) calc(var(--equity-end) - .35%) calc(var(--equity-end) + .35%),
-    var(--donut-other) calc(var(--equity-end) + .35%) 100%
-  );
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.025);
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
 }
-.home-panel .ownership-bar::before {
-  content: '';
-  position: absolute;
-  inset: 24px;
-  z-index: 2;
-  border-radius: 50%;
-  background: #081a17;
-  border: 1px solid rgba(255,255,255,.06);
-}
-.home-panel .ownership-bar::after {
-  content: attr(data-equity-label);
-  position: relative;
-  z-index: 3;
-  width: 82px;
-  color: var(--text);
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 25px;
-  line-height: 1.02;
-  text-align: center;
-  white-space: pre-line;
-}
-.home-panel .ownership-equity-emphasis {
-  position:absolute;
-  inset:-5px;
-  z-index:1;
-  pointer-events:none;
-  border-radius:50%;
-  background:conic-gradient(
-    transparent 0 calc(var(--debt-end) + .5%),
-    var(--donut-equity) calc(var(--debt-end) + .5%) calc(var(--equity-end) - .5%),
-    transparent calc(var(--equity-end) - .5%) 100%
-  );
-  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 15px),#000 calc(100% - 14px));
-  mask:radial-gradient(farthest-side,transparent calc(100% - 15px),#000 calc(100% - 14px));
-  filter:drop-shadow(0 0 5px rgba(124,234,210,.12));
-}
+.home-panel .ownership-bar::before,
+.home-panel .ownership-bar::after,
+.home-panel .ownership-equity-emphasis { display:none !important; }
 .home-panel .ownership-segment { display:none !important; }
-.home-panel .home-value { margin-top: 14px; text-align:center; }
-.home-panel .ownership-legend { justify-content:center; }
 
-/* Equity is now represented on the main lifetime chart. */
+.ownership-donut {
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:visible;
+}
+.ownership-donut-track,
+.ownership-donut-arc {
+  fill:none;
+  transform:rotate(-90deg);
+  transform-origin:100px 100px;
+  vector-effect:non-scaling-stroke;
+}
+.ownership-donut-track {
+  stroke:#10251f;
+  stroke-width:24;
+}
+.ownership-donut-arc {
+  stroke-linecap:butt;
+  transition:stroke-dasharray .22s ease, stroke-dashoffset .22s ease;
+}
+.ownership-donut-debt {
+  stroke:#7d908b;
+  stroke-width:23;
+}
+.ownership-donut-equity {
+  stroke:#7ce8cf;
+  stroke-width:30;
+  filter:drop-shadow(0 0 3px rgba(124,232,207,.08));
+}
+.ownership-donut-other {
+  stroke:#41544f;
+  stroke-width:23;
+}
+.ownership-donut-centre {
+  fill:#081a17;
+  stroke:rgba(255,255,255,.055);
+  stroke-width:1;
+}
+.ownership-donut-percent,
+.ownership-donut-free {
+  fill:var(--text);
+  font-family:Georgia,'Times New Roman',serif;
+  pointer-events:none;
+}
+.ownership-donut-percent {
+  font-size:31px;
+  font-weight:600;
+  letter-spacing:-.8px;
+}
+.ownership-donut-free {
+  font-size:20px;
+  font-weight:500;
+}
+
+.home-panel .home-value {
+  margin-top:16px;
+  text-align:center;
+}
+.home-panel .home-value>span {
+  display:block;
+  margin-bottom:5px;
+}
+.home-panel .home-value>strong {
+  display:block;
+  line-height:1;
+}
+.home-panel .ownership-legend {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px 18px;
+  margin-top:8px;
+}
+.home-panel .ownership-legend>span {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  white-space:nowrap;
+}
+.home-panel .ownership-legend strong {
+  margin-left:2px;
+}
+.home-panel .home-stats {
+  margin-top:18px;
+}
+
+/* Equity is represented on the main lifetime chart. */
 #equityGrowth { display:none !important; }
 .dot.equity-line { background:#e7dcc4; }
 
@@ -143,10 +184,11 @@
 }
 
 @media (max-width:650px) {
-  .home-panel .ownership-bar { width:132px; height:132px; }
-  .home-panel .ownership-bar::before { inset:21px; }
-  .home-panel .ownership-bar::after { font-size:22px; }
-  .home-panel .ownership-equity-emphasis { inset:-4px; }
+  .home-panel .ownership-bar { width:148px; height:148px; margin-top:20px; }
+  .ownership-donut-percent { font-size:29px; }
+  .ownership-donut-free { font-size:19px; }
+  .home-panel .ownership-legend { gap:8px 13px; }
+  .home-panel .ownership-legend>span { white-space:normal; }
   .property-cost-card { min-height:0; padding:16px !important; }
   .property-cost-card>strong { font-size:24px !important; }
 }
