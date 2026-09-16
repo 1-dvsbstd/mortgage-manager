@@ -82,7 +82,8 @@
 
     empty.hidden=true; content.hidden=false; if(summary)summary.hidden=false;
     const balance=Math.max(0,Number(state.balance)||0),rate=Math.max(0,Number(state.rate)||0),payment=Math.max(0,Number(state.payment)||0),regular=Math.max(0,Number(state.currentOverpayment)||0),homeValue=Math.max(0,Number(state.homeValue)||0);
-    const path=MortgageMath.amortize(balance,rate,payment+regular),projectedBalance=balanceAt(path.monthlyPoints,fixedMonths),projectedLtv=homeValue>0?projectedBalance/homeValue*100:null;
+    const currentTotal=payment+regular;
+    const path=MortgageMath.amortize(balance,rate,currentTotal),projectedBalance=balanceAt(path.monthlyPoints,fixedMonths),projectedLtv=homeValue>0?projectedBalance/homeValue*100:null;
     $('dealPlannerBalance').textContent=money(projectedBalance);
     $('dealPlannerBalanceNote').textContent=regular>0?`Includes your ${money(regular)}/month regular overpayment.`:'Based on your scheduled payment.';
     $('dealPlannerLtv').textContent=projectedLtv===null?'—':pct(projectedLtv);
@@ -99,9 +100,14 @@
 
     const remainingTerm=Number.isFinite(path.months)?Math.max(1,path.months-fixedMonths):300;
     $('dealPlannerRateGrid').innerHTML=RATE_SCENARIOS.map((scenarioRate)=>{
-      const scenarioPayment=paymentFor(projectedBalance,scenarioRate,remainingTerm),diff=scenarioPayment-payment,change=Math.abs(diff)<1?'About your current scheduled payment':`${money(Math.abs(diff))}/mo ${diff>0?'more':'less'} than scheduled today`;
-      return `<div class="deal-planner-rate"><span>${scenarioRate.toFixed(1)}%</span><strong>${money(scenarioPayment)}<small>/mo</small></strong><em>${change}</em></div>`;
+      const scenarioPayment=paymentFor(projectedBalance,scenarioRate,remainingTerm),diff=scenarioPayment-currentTotal;
+      const change=Math.abs(diff)<1
+        ? `About the same as your current ${money(currentTotal)}/mo total`
+        : `${money(Math.abs(diff))}/mo ${diff>0?'more':'less'} than your current ${money(currentTotal)}/mo total`;
+      return `<div class="deal-planner-rate"><span>${scenarioRate.toFixed(1)}%</span><strong>${money(scenarioPayment)}<small>/mo total</small></strong><em>${change}</em></div>`;
     }).join('');
+    const note=$('.deal-planner-note');
+    if(note) note.textContent=`Each rate card shows the total monthly mortgage amount needed from deal end to keep your current projected mortgage-free date. Your current total is ${money(currentTotal)}/month (${money(payment)} scheduled${regular>0?` + ${money(regular)} regular overpayment`:''}). Figures exclude fees and are not mortgage offers.`;
   }
 
   if(window.MortgageStore?.subscribe) MortgageStore.subscribe((next,previous)=>{ if(['balance','rate','payment','currentOverpayment','homeValue','fixedEnd'].some((key)=>next[key]!==previous[key]))requestAnimationFrame(render); });
