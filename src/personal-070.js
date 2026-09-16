@@ -1,19 +1,12 @@
 (() => {
   const SNAPSHOT_KEY = 'mortgage-manager-history-v1';
   const SETUP_KEY = 'mortgage-manager-personal-setup-v1';
-  const APP_KEY = 'mortgage-manager-v0.4';
   const $ = (id) => document.getElementById(id);
   const money = (value) => new Intl.NumberFormat('en-GB', { style:'currency', currency:'GBP', maximumFractionDigits:0 }).format(Number(value) || 0);
   const monthKey = (date = new Date()) => `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}`;
   const monthLabel = (key) => {
     const [year, month] = key.split('-').map(Number);
     return new Intl.DateTimeFormat('en-GB', { month:'short', year:'numeric' }).format(new Date(year, month-1, 1));
-  };
-  const readNum = (id) => Math.max(0, Number($(id)?.value) || 0);
-  const dispatch = (el) => {
-    if (!el) return;
-    el.dispatchEvent(new Event('input', { bubbles:true }));
-    el.dispatchEvent(new Event('change', { bubbles:true }));
   };
   const toast = (text) => {
     document.querySelector('.personal-toast')?.remove();
@@ -24,13 +17,27 @@
     setTimeout(() => el.remove(), 2200);
   };
 
+  function currentState() {
+    if (window.MortgageStore) return window.MortgageStore.get();
+    const readNum = (id) => Math.max(0, Number($(id)?.value) || 0);
+    return {
+      balance: readNum('balance'),
+      homeValue: readNum('homeValue'),
+      ownership: Math.min(100, readNum('ownership')),
+      rate: readNum('rate'),
+      payment: readNum('payment'),
+      currentOverpayment: readNum('currentOverpayment'),
+      fixedEnd: $('fixedEnd')?.value || '',
+    };
+  }
+
   function currentSnapshot() {
-    const balance = readNum('balance');
-    const homeValue = readNum('homeValue');
-    const ownership = Math.min(100, readNum('ownership'));
+    const state = currentState();
+    const balance = Math.max(0, Number(state.balance) || 0);
+    const homeValue = Math.max(0, Number(state.homeValue) || 0);
+    const ownership = Math.min(100, Math.max(0, Number(state.ownership) || 0));
     const shareValue = homeValue * (ownership / 100);
     const equity = shareValue - balance;
-    const currentOverpayment = readNum('currentOverpayment');
     return {
       month: monthKey(),
       savedAt: new Date().toISOString(),
@@ -38,10 +45,10 @@
       homeValue,
       ownership,
       equity,
-      rate: readNum('rate'),
-      payment: readNum('payment'),
-      currentOverpayment,
-      fixedEnd: $('fixedEnd')?.value || '',
+      rate: Math.max(0, Number(state.rate) || 0),
+      payment: Math.max(0, Number(state.payment) || 0),
+      currentOverpayment: Math.max(0, Number(state.currentOverpayment) || 0),
+      fixedEnd: state.fixedEnd || '',
       payoffText: $('payoffDate')?.textContent || '',
       remainingText: $('yearsRemaining')?.textContent || '',
     };
@@ -156,7 +163,7 @@
     ensureDealGuidance();
     const box = $('dealActionHint');
     if (!box) return;
-    const months = monthsUntil($('fixedEnd')?.value || '');
+    const months = monthsUntil(currentState().fixedEnd || '');
     let title = 'Add your fixed-rate end date';
     let detail = 'Once it is set, this card will tell you when action is actually useful.';
     if (months !== null) {
@@ -186,8 +193,9 @@
   }
 
   function inputMarkup(id, label, type='number', step='1') {
-    const source = $(id);
-    const value = source?.value ?? '';
+    const state = currentState();
+    const key = id;
+    const value = state[key] ?? '';
     return `<label>${label}<input data-personal-field="${id}" type="${type}" ${type==='number' ? `step="${step}" inputmode="decimal"` : ''} value="${String(value).replace(/"/g,'&quot;')}" /></label>`;
   }
 
@@ -217,12 +225,21 @@
     backdrop.querySelector('.personal-close')?.addEventListener('click', close);
     backdrop.querySelector('[data-action="cancel"]')?.addEventListener('click', close);
     backdrop.querySelector('[data-action="save"]')?.addEventListener('click', () => {
+      const patch = {};
       backdrop.querySelectorAll('[data-personal-field]').forEach((field) => {
-        const source = $(field.dataset.personalField);
-        if (!source) return;
-        source.value = field.value;
-        dispatch(source);
+        const key = field.dataset.personalField;
+        patch[key] = key === 'fixedEnd' ? field.value : Number(field.value);
       });
+      if (window.MortgageStore) window.MortgageStore.set(patch);
+      else {
+        Object.entries(patch).forEach(([key, value]) => {
+          const source = $(key);
+          if (!source) return;
+          source.value = value;
+          source.dispatchEvent(new Event('input', { bubbles:true }));
+          source.dispatchEvent(new Event('change', { bubbles:true }));
+        });
+      }
       localStorage.setItem(SETUP_KEY, '1');
       setTimeout(() => { recordSnapshot(false); renderDealGuidance(); }, 80);
       close(); toast('Mortgage details saved');
@@ -245,7 +262,7 @@
       const key = localStorage.key(i);
       if (key?.startsWith('mortgage-manager')) data[key] = localStorage.getItem(key);
     }
-    const blob = new Blob([JSON.stringify({ exportedAt:new Date().toISOString(), version:'0.7.0', data }, null, 2)], { type:'application/json' });
+    const blob = new Blob([JSON.stringify({ exportedAt:new Date().toISOString(), version:'0.9.2', data }, null, 2)], { type:'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url; a.download = `mortgage-manager-backup-${monthKey()}.json`;
@@ -270,8 +287,9 @@
   }
 
   function maybeFirstRun() {
-    const hasSavedMortgage = Boolean(localStorage.getItem(APP_KEY) || localStorage.getItem('mortgage-manager-v0.3') || localStorage.getItem('mortgage-manager-v0.2'));
-    if (!hasSavedMortgage && !localStorage.getItem(SETUP_KEY)) setTimeout(openSetup, 450);
+    const hasSetup = Boolean(localStorage.getItem(SETUP_KEY));
+    const hasLegacyMortgage = Boolean(localStorage.getItem('mortgage-manager-v0.4') || localStorage.getItem('mortgage-manager-v0.3') || localStorage.getItem('mortgage-manager-v0.2'));
+    if (!hasSetup && !hasLegacyMortgage) setTimeout(openSetup, 450);
   }
 
   setupButton();
@@ -281,12 +299,23 @@
   renderProgress();
   maybeFirstRun();
 
-  ['balance','homeValue','ownership','rate','payment','fixedEnd','currentOverpayment'].forEach((id) => {
-    $(id)?.addEventListener('input', () => {
-      clearTimeout(window.__personalRenderTimer);
-      window.__personalRenderTimer = setTimeout(() => { renderProgress(); renderDealGuidance(); }, 120);
+  let renderTimer = null;
+  function scheduleRender() {
+    clearTimeout(renderTimer);
+    renderTimer = setTimeout(() => { renderProgress(); renderDealGuidance(); }, 120);
+  }
+
+  if (window.MortgageStore) {
+    window.MortgageStore.subscribe((next, previous) => {
+      const changed = ['balance','homeValue','ownership','rate','payment','fixedEnd','currentOverpayment']
+        .some((key) => next[key] !== previous[key]);
+      if (changed) scheduleRender();
     });
-  });
+  } else {
+    ['balance','homeValue','ownership','rate','payment','fixedEnd','currentOverpayment'].forEach((id) => {
+      $(id)?.addEventListener('input', scheduleRender);
+    });
+  }
 
   // Keep the current month's saved snapshot in sync only if that month has already been explicitly recorded.
   setTimeout(() => {
