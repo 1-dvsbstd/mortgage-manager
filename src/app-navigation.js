@@ -5,19 +5,19 @@
       label: 'Current',
       eyebrow: 'Today',
       title: 'Your position now',
-      subtitle: 'What you owe, what you own, and how changes to your mortgage affect the path from here.',
+      subtitle: 'Your mortgage, equity, overpayments and progress from today.',
     },
     upcoming: {
       label: 'Upcoming',
       eyebrow: 'Next',
-      title: 'What needs attention next',
-      subtitle: 'Your fixed-deal timeline, projected position and the next mortgage decision approaching.',
+      title: 'Deal planning',
+      subtitle: 'Your fixed-deal timeline, projected position and next mortgage decision.',
     },
     future: {
       label: 'Future',
       eyebrow: 'Later',
-      title: 'Where your current plan could lead',
-      subtitle: 'Build on your selected overpayment assumption to explore future home value and your next-home position.',
+      title: 'Long-term planning',
+      subtitle: 'What your selected overpayment could mean for your home and next move.',
     },
   };
 
@@ -58,8 +58,7 @@
     section.setAttribute('aria-labelledby', `view-${key}-title`);
     section.innerHTML = `
       <header class="app-view-heading">
-        <p class="eyebrow">${meta.eyebrow}</p>
-        <h1 id="view-${key}-title">${meta.title}</h1>
+        <div><p class="eyebrow">${meta.eyebrow}</p><h1 id="view-${key}-title">${meta.title}</h1></div>
         <p>${meta.subtitle}</p>
       </header>
       <div class="app-view-content"></div>`;
@@ -79,13 +78,13 @@
     if (!panel) {
       panel = document.createElement('section');
       panel.id = 'futureOverpaymentAssumption';
-      panel.className = 'panel future-overpayment-assumption';
+      panel.className = 'future-overpayment-assumption';
       panel.innerHTML = `
         <div class="future-assumption-copy">
-          <div><p class="eyebrow">Planning assumption</p><h2>Extra overpayment</h2><p>Future projections use the same What-if amount selected on Current.</p></div>
-          <strong id="futureExtraSummary">£0/month</strong>
+          <div><span class="future-assumption-label">Planning with</span><strong id="futureExtraSummary">£0/month extra</strong></div>
+          <p>Future projections follow the What-if amount from Current.</p>
         </div>
-        <div class="future-assumption-controls">
+        <div class="future-assumption-controls" aria-label="Future extra overpayment assumption">
           <button type="button" data-future-extra="0">£0</button>
           <button type="button" data-future-extra="50">£50</button>
           <button type="button" data-future-extra="100">£100</button>
@@ -113,7 +112,7 @@
     const extra = Math.max(0, Number(window.MortgageStore?.get?.().scenarioExtra) || 0);
     const summary = document.getElementById('futureExtraSummary');
     const input = document.getElementById('futureExtraInput');
-    if (summary) summary.textContent = `${money(extra)}/month`;
+    if (summary) summary.textContent = `${money(extra)}/month extra`;
     if (input && document.activeElement !== input) input.value = String(extra);
     panel.querySelectorAll('[data-future-extra]').forEach((button) => {
       button.classList.toggle('active', Number(button.dataset.futureExtra) === extra);
@@ -130,7 +129,7 @@
       panel.className = 'panel current-overpayment-panel';
       panel.innerHTML = `
         <div class="current-overpayment-heading">
-          <div><p class="eyebrow">Overpayments</p><h2>Your regular overpayment</h2><p>This is what you already pay above the scheduled monthly payment.</p></div>
+          <div><p class="eyebrow">Regular overpayment</p><h2>What you already pay extra</h2><p>Your saved monthly overpayment and the benefit it is already creating.</p></div>
         </div>
         <div class="current-overpayment-body"></div>`;
       const home = $('.home-panel', current);
@@ -175,8 +174,8 @@
     ensureFutureAssumption();
     const candidates = [
       ['homeProjection', 'home-projection'],
-      ['propertyCostComparison', 'cost-comparison'],
       ['nextHomePlanner', 'next-home'],
+      ['propertyCostComparison', 'cost-comparison'],
     ];
     candidates.forEach(([id, kind]) => {
       const element = document.getElementById(id);
@@ -240,7 +239,10 @@
     if (!main || !topbar || !footer || $('.app-view-shell', main)) return;
 
     const topNav = makeNav('app-section-nav app-section-nav-top');
-    topbar.insertAdjacentElement('afterend', topNav);
+    topbar.classList.add('topbar-with-nav');
+    const actions = $('.topbar-actions', topbar) || $('.save-status', topbar);
+    if (actions) topbar.insertBefore(topNav, actions);
+    else topbar.appendChild(topNav);
 
     const shell = document.createElement('div');
     shell.className = 'app-view-shell';
