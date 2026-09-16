@@ -11,6 +11,7 @@
   let dragStartTime = 0;
 
   const isInteractive = (target) => Boolean(target.closest('button, input, label, a, summary, [data-edit-target], canvas, select, textarea'));
+  const expansionDisabled = (card) => card?.dataset.expandableDisabled === 'true';
 
   function resetDragStyles(card = activeCard) {
     if (!card) return;
@@ -78,7 +79,7 @@
   }
 
   function openCard(card) {
-    if (activeCard === card) return;
+    if (!card || expansionDisabled(card) || activeCard === card) return;
     if (activeCard) closeCard();
 
     previousFocus = document.activeElement;
@@ -114,13 +115,13 @@
 
   cards.forEach((card) => {
     card.addEventListener('click', (event) => {
-      if (card.classList.contains('is-expanded')) return;
+      if (expansionDisabled(card) || card.classList.contains('is-expanded')) return;
       if (isInteractive(event.target) && !event.target.closest('[data-expand-card]')) return;
       openCard(card);
     });
 
     card.addEventListener('keydown', (event) => {
-      if (card.classList.contains('is-expanded')) return;
+      if (expansionDisabled(card) || card.classList.contains('is-expanded')) return;
       if ((event.key === 'Enter' || event.key === ' ') && !isInteractive(event.target)) {
         event.preventDefault();
         openCard(card);
@@ -128,7 +129,7 @@
     });
 
     card.addEventListener('touchstart', (event) => {
-      if (!card.classList.contains('is-expanded') || event.touches.length !== 1) return;
+      if (expansionDisabled(card) || !card.classList.contains('is-expanded') || event.touches.length !== 1) return;
       if (isInteractive(event.target)) return;
       const touch = event.touches[0];
       touchStart = {
@@ -145,7 +146,7 @@
     }, { passive: true });
 
     card.addEventListener('touchmove', (event) => {
-      if (!card.classList.contains('is-expanded') || !touchStart || event.touches.length !== 1) return;
+      if (expansionDisabled(card) || !card.classList.contains('is-expanded') || !touchStart || event.touches.length !== 1) return;
       const touch = event.touches[0];
       const dx = touch.clientX - touchStart.x;
       const dy = touch.clientY - touchStart.y;
@@ -172,7 +173,7 @@
     }, { passive: false });
 
     card.addEventListener('touchend', (event) => {
-      if (!card.classList.contains('is-expanded') || !touchStart || event.changedTouches.length !== 1) {
+      if (expansionDisabled(card) || !card.classList.contains('is-expanded') || !touchStart || event.changedTouches.length !== 1) {
         touchStart = null;
         return;
       }
@@ -199,7 +200,7 @@
     if (expandButton) {
       expandButton.addEventListener('click', (event) => {
         event.stopPropagation();
-        openCard(card);
+        if (!expansionDisabled(card)) openCard(card);
       });
     }
   });
