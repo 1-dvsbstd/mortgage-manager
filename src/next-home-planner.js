@@ -55,9 +55,9 @@
     section.id='nextHomePlanner';
     section.className='next-home-planner';
     section.innerHTML=`
-      <summary><span><strong>Next-home planner</strong><small>What your current position could mean if you moved</small></span></summary>
+      <summary><span><strong>Next-home planner</strong><small>What your current plan could mean if you moved</small></span></summary>
       <div class="next-home-body">
-        <div class="next-home-heading"><div><p class="eyebrow">What could we do next?</p><h2>Turn your equity into a rough next-home budget</h2></div><span class="source-date">Planning estimate</span></div>
+        <div class="next-home-heading"><div><p class="eyebrow">What could we do next?</p><h2>Turn your future equity into a rough next-home budget</h2></div><span class="source-date">Planning estimate</span></div>
 
         <div class="next-home-results">
           <div><span>Usable home equity</span><strong id="nextHomeEquity">—</strong><small id="nextHomeEquityNote">—</small></div>
@@ -104,8 +104,9 @@
     const rate=Math.max(0,Number(mortgage.rate)||0);
     const payment=Math.max(0,Number(mortgage.payment)||0);
     const regular=Math.max(0,Number(mortgage.currentOverpayment)||0);
+    const scenarioExtra=Math.max(0,Number(mortgage.scenarioExtra)||0);
     const trend=trendRate();
-    const path=window.MortgageMath?.amortize(balance,rate,payment+regular);
+    const path=window.MortgageMath?.amortize(balance,rate,payment+regular+scenarioExtra);
     const futureHome=projectedHomeValue(home,trend,years);
     const futureMortgage=path?balanceAt(path.monthlyPoints,Math.round(years*12)):balance;
     const shareValue=futureHome*ownership/100;
@@ -119,7 +120,7 @@
     const multiple=Math.max(0,Number(settings.borrowingMultiple)||0);
     const borrowing=income*multiple;
     const budget=availableCash+borrowing;
-    return {futureHome,futureMortgage,shareValue,usableEquity,availableCash,borrowing,budget,trend};
+    return {futureHome,futureMortgage,shareValue,usableEquity,availableCash,borrowing,budget,trend,scenarioExtra};
   }
 
   function render(){
@@ -157,7 +158,7 @@
       const label=row.years===0?'Today':row.years===1?'In 1 year':'In 3 years';
       return `<div class="next-home-timeline-row"><span>${label}</span><strong>${income||row.availableCash>0?money(row.budget):'—'}</strong><small>${money(row.usableEquity)} usable equity · ${money(row.futureMortgage)} mortgage</small></div>`;
     }).join('');
-    $('nextHomeTrendNote').textContent=`Uses ${now.trend.toFixed(1)}%/yr home-value trend and your current repayment path.`;
+    $('nextHomeTrendNote').textContent=`Uses ${now.trend.toFixed(1)}%/yr home-value trend and your current repayment path${now.scenarioExtra>0?` plus ${money(now.scenarioExtra)}/month extra`:''}.`;
 
     const ownership=Math.min(100,Math.max(0,Number(mortgage.ownership)||0));
     $('nextHomeNote').textContent=ownership<100
