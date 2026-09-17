@@ -1,0 +1,128 @@
+/* V0.15.10 — compact Future next-home progression */
+
+body[data-app-view="future"] #futureWaitPlanner{
+  padding:26px!important;
+}
+
+body[data-app-view="future"] #futureWaitPlanner .future-wait-heading{
+  margin-bottom:18px!important;
+}
+
+body[data-app-view="future"] #futureWaitPlanner .future-wait-heading h2{
+  margin-top:4px!important;
+}
+
+body[data-app-view="future"] #futureWaitPlanner .next-home-timeline{
+  margin:0!important;
+  padding:0!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:18px!important;
+  overflow:hidden!important;
+  background:#f7f2eb!important;
+}
+
+body[data-app-view="future"] #futureWaitPlanner .next-home-subhead{
+  display:flex!important;
+  align-items:end!important;
+  justify-content:space-between!important;
+  gap:16px!important;
+  padding:18px 20px 14px!important;
+  border-bottom:1px solid var(--border-soft)!important;
+  background:#fbf7f1!important;
+}
+
+body[data-app-view="future"] #futureWaitPlanner .next-home-subhead span{
+  display:block!important;
+  color:var(--accent-strong)!important;
+  font-size:10px!important;
+  font-weight:800!important;
+  letter-spacing:.08em!important;
+  text-transform:uppercase!important;
+}
+
+body[data-app-view="future"] #futureWaitPlanner .next-home-subhead strong{
+  display:block!important;
+  margin-top:4px!important;
+  color:var(--text)!important;
+  font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
+  font-size:19px!important;
+  font-weight:600!important;
+}
+
+body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-rows{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:0!important;
+}
+
+body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-row{
+  position:relative!important;
+  display:flex!important;
+  min-height:132px!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  gap:3px!important;
+  padding:22px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  text-align:left!important;
+}
+
+body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-row+ .next-home-timeline-row{
+  border-left:1px solid var(--border-soft)!important;
+}
+
+body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-row>span{
+  color:var(--muted)!important;
+  font-size:10px!important;
+  font-weight:650!important;
+}
+
+body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-row>strong{
+  margin:4px 0 8px!important;
+  color:var(--text)!important;
+  font-size:25px!important;
+  line-height:1!important;
+  letter-spacing:-.02em!important;
+}
+
+body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-row>small{
+  display:block!important;
+  color:var(--muted)!important;
+  font-size:10px!important;
+  line-height:1.45!important;
+}
+
+body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-row>small b{
+  color:var(--text)!important;
+  font-weight:750!important;
+}
+
+body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-row:nth-child(3){
+  background:rgba(200,142,92,.055)!important;
+}
+
+body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-row:nth-child(3)>strong{
+  color:var(--accent-strong)!important;
+}
+
+body[data-app-view="future"] #futureWaitPlanner .next-home-trend-note{
+  display:block!important;
+  padding:12px 20px 14px!important;
+  border-top:1px solid var(--border-soft)!important;
+  color:var(--muted)!important;
+  background:#fbf7f1!important;
+  font-size:9.5px!important;
+  line-height:1.45!important;
+}
+
+@media(max-width:760px){
+  body[data-app-view="future"] #futureWaitPlanner{padding:20px!important}
+  body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-rows{grid-template-columns:1fr!important}
+  body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-row{min-height:0!important;padding:18px 20px!important}
+  body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-row+ .next-home-timeline-row{border-left:0!important;border-top:1px solid var(--border-soft)!important}
+  body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-row>strong{font-size:22px!important}
+}
