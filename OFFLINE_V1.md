@@ -51,6 +51,8 @@ The goal of Offline V1 is a polished one-off purchase that works fully without a
 - [x] Cache-busting query strings fall back to cached assets offline
 - [x] Old development code that unregistered service workers / deleted caches removed
 - [x] Automated Offline V1 service-worker guard included in `npm test`
+- [x] Zero-install Windows localhost launcher added
+- [x] Release ZIP packager added
 - [ ] Browser no-network reload verified manually
 
 ## Visual and functional QA
@@ -70,10 +72,11 @@ The goal of Offline V1 is a polished one-off purchase that works fully without a
 ## Sales package
 - [ ] Choose the public release name / version
 - [ ] Final one-off price
-- [ ] Product / landing-page copy
+- [x] Draft product / landing-page copy in `SALES_PACKAGE_DRAFT.md`
 - [ ] Sales screenshots
-- [ ] Download / installation instructions
-- [ ] FAQ and privacy note
+- [x] Buyer download / installation instructions in `BUYER_README.md`
+- [x] Draft FAQ and privacy note in `SALES_PACKAGE_DRAFT.md`
+- [x] Clean release ZIP can be built with `package-release.ps1`
 - [ ] Decide distribution channel for first test launch
 
 ## Ship blockers
@@ -84,4 +87,4 @@ Before Offline V1 is offered for sale, all of these must be complete:
 - [x] Methodology and core disclaimer copy present in-product
 - [ ] Final legal/commercial wording review complete
 - [x] Market data source / redistribution wording reviewed and moved to an OGL-reusable source
-- [ ] Sales package and install instructions complete
+- [ ] Final sales screenshots, release identity/price and distribution channel complete
