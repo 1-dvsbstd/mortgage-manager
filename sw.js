@@ -1,9 +1,10 @@
-const CACHE_NAME = 'mortgage-manager-offline-v1-1';
+const CACHE_NAME = 'mortgage-manager-offline-v1-2';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.webmanifest',
   './public/icon.svg',
+  './public/home-editorial.svg',
   './public/market-rates.json',
   './src/styles.css',
   './src/inline-edit.css',
@@ -34,6 +35,7 @@ const APP_SHELL = [
   './src/v15.11.css',
   './src/v15.12.css',
   './src/v15.14.css',
+  './src/offline-v1-final.css',
   './src/mortgage-layout.js',
   './src/mortgage-store.js',
   './src/mortgage.js',
@@ -61,7 +63,8 @@ const APP_SHELL = [
   './src/v15.5.js',
   './src/v15.11.js',
   './src/v15.14.js',
-  './src/v15.15.js'
+  './src/v15.15.js',
+  './src/offline-v1-final.js'
 ];
 
 self.addEventListener('install', (event) => {
