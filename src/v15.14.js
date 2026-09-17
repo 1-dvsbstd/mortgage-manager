@@ -1,5 +1,6 @@
 (() => {
-  const BUILD='01517';
+  const BUILD='01518';
+  const MIN_SETTLE_MS=850;
 
   function ensureFinalStyle(){
     let link=document.getElementById('offlineV1FinalStyle');
@@ -13,11 +14,13 @@
   }
 
   function ensureFinalScript(){
-    if(document.getElementById('offlineV1FinalScript')) return;
-    const script=document.createElement('script');
+    let script=document.getElementById('offlineV1FinalScript');
+    if(script) return script;
+    script=document.createElement('script');
     script.id='offlineV1FinalScript';
     script.src=`src/offline-v1-final.js?v=${BUILD}`;
     document.body.appendChild(script);
+    return script;
   }
 
   function refreshServiceWorker(){
@@ -41,15 +44,36 @@
   };
 
   const ready=()=>{
+    const started=performance.now();
     const style=ensureFinalStyle();
-    ensureFinalScript();
+    const script=ensureFinalScript();
     refreshServiceWorker();
-    if(style.sheet){ reveal(); return; }
+
+    let styleReady=Boolean(style.sheet);
+    let scriptReady=Boolean(script.dataset.loaded==='true');
     let finished=false;
-    const finish=()=>{ if(finished) return; finished=true; reveal(); };
-    style.addEventListener('load',finish,{once:true});
-    style.addEventListener('error',finish,{once:true});
-    window.setTimeout(finish,700);
+
+    const maybeReveal=()=>{
+      if(finished||!styleReady||!scriptReady) return;
+      finished=true;
+      const elapsed=performance.now()-started;
+      window.setTimeout(reveal,Math.max(0,MIN_SETTLE_MS-elapsed));
+    };
+
+    if(!styleReady){
+      style.addEventListener('load',()=>{styleReady=true;maybeReveal();},{once:true});
+      style.addEventListener('error',()=>{styleReady=true;maybeReveal();},{once:true});
+    }
+    if(!scriptReady){
+      script.addEventListener('load',()=>{script.dataset.loaded='true';scriptReady=true;maybeReveal();},{once:true});
+      script.addEventListener('error',()=>{scriptReady=true;maybeReveal();},{once:true});
+    }
+    maybeReveal();
+    window.setTimeout(()=>{
+      if(finished) return;
+      finished=true;
+      reveal();
+    },1500);
   };
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',ready,{once:true});
