@@ -66,8 +66,9 @@
         </div>
 
         <div class="next-home-timeline">
-          <div class="next-home-subhead"><div><span>If you wait</span><strong>How the position could change</strong></div><small id="nextHomeTrendNote">—</small></div>
+          <div class="next-home-subhead"><div><span>Looking ahead</span><strong>How your budget could change</strong></div></div>
           <div id="nextHomeTimelineRows" class="next-home-timeline-rows"></div>
+          <small id="nextHomeTrendNote" class="next-home-trend-note">—</small>
         </div>
 
         <details class="next-home-settings"><summary>Budget assumptions</summary><div class="next-home-controls">
@@ -156,9 +157,9 @@
     const rows=horizons.map((years)=>({years,...calculateAt(years)}));
     $('nextHomeTimelineRows').innerHTML=rows.map((row)=>{
       const label=row.years===0?'Today':row.years===1?'In 1 year':'In 3 years';
-      return `<div class="next-home-timeline-row"><span>${label}</span><strong>${income||row.availableCash>0?money(row.budget):'—'}</strong><small>${money(row.usableEquity)} usable equity · ${money(row.futureMortgage)} mortgage</small></div>`;
+      return `<div class="next-home-timeline-row"><span>${label}</span><strong>${income||row.availableCash>0?money(row.budget):'—'}</strong><small><b>${money(row.usableEquity)}</b> usable equity</small><small><b>${money(row.futureMortgage)}</b> mortgage remaining</small></div>`;
     }).join('');
-    $('nextHomeTrendNote').textContent=`Uses ${now.trend.toFixed(1)}%/yr home-value trend and your current repayment path${now.scenarioExtra>0?` plus ${money(now.scenarioExtra)}/month extra`:''}.`;
+    $('nextHomeTrendNote').textContent=`Illustrative projection using ${now.trend.toFixed(1)}%/yr home-value growth and your current repayment path${now.scenarioExtra>0?` plus ${money(now.scenarioExtra)}/month extra`:''}.`;
 
     const ownership=Math.min(100,Math.max(0,Number(mortgage.ownership)||0));
     $('nextHomeNote').textContent=ownership<100
