@@ -30,8 +30,10 @@ The goal of Offline V1 is a polished one-off purchase that works fully without a
 - [x] Selectable deal-end planning benchmark
 - [x] Graceful cached fallback if fresh data cannot be reached
 - [x] Connectivity copy distinguishes fresh online data from saved fallback data
-- [ ] Final source/licensing wording review before sale
-- [ ] Set a simple update cadence for `public/market-rates.json`
+- [x] Commercial benchmark source moved to Bank of England Database data under the UK Open Government Licence
+- [x] Legacy Moneyfacts preview cache is discarded automatically
+- [x] Source/licensing and attribution approach documented in `MARKET_DATA.md`
+- [x] Monthly market-data update cadence documented in `MARKET_DATA.md`
 
 ## Onboarding and trust
 - [x] Clear first-run setup copy
@@ -54,6 +56,7 @@ The goal of Offline V1 is a polished one-off purchase that works fully without a
 ## Visual and functional QA
 - [x] Automated mortgage regression tests passing on the Offline V1 branch
 - [x] Automated Offline V1 caching/service-worker checks passing on the Offline V1 branch
+- [x] Automated commercial market-source guard included in `npm test`
 - [x] Live market cards moved into the visible Upcoming → Rate scenarios section
 - [x] Mobile top-bar controls compacted
 - [x] Browser QA procedure documented in `RELEASE_QA.md`
@@ -80,5 +83,5 @@ Before Offline V1 is offered for sale, all of these must be complete:
 - [ ] Offline / failed-rate-feed behaviour verified in a browser
 - [x] Methodology and core disclaimer copy present in-product
 - [ ] Final legal/commercial wording review complete
-- [ ] Market data source / redistribution wording reviewed
+- [x] Market data source / redistribution wording reviewed and moved to an OGL-reusable source
 - [ ] Sales package and install instructions complete
