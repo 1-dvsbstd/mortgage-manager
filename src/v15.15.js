@@ -174,17 +174,26 @@
     ensureMethodologySection(modal);
   }
 
+  function refineMarketSourceCopy(){
+    const source=document.querySelector('.market-block .source-date');
+    if(!source) return;
+    const text=source.textContent||'';
+    if(/Moneyfacts/i.test(text)) setText(source,text.replace(/Moneyfacts/ig,'UK benchmark'));
+  }
+
   function refineConnectivityCopy(){
     const control=document.getElementById('connectivityMode');
     if(!control) return;
     const online=control.querySelector('[data-connectivity-switch]')?.getAttribute('aria-checked')==='true';
     setText(control.querySelector('[data-connectivity-title]'),online?'Online':'Offline');
-    setText(control.querySelector('[data-connectivity-subtitle]'),online?'Refresh market benchmarks':'Private on this device');
+    const subtitle=!online?'Private on this device':(!navigator.onLine?'No connection · using saved data':'Refresh market benchmarks');
+    setText(control.querySelector('[data-connectivity-subtitle]'),subtitle);
   }
 
   function refreshPolish(){
     decorateMarketChoices();
     polishSetupModal();
+    refineMarketSourceCopy();
     refineConnectivityCopy();
   }
 
@@ -201,6 +210,8 @@
       if(!card||(event.key!=='Enter'&&event.key!==' ')) return;
       event.preventDefault(); applyMarketChoice(card,true);
     });
+    window.addEventListener('online',refreshPolish);
+    window.addEventListener('offline',refreshPolish);
     const observer=new MutationObserver(()=>window.requestAnimationFrame(refreshPolish));
     observer.observe(document.body,{childList:true,subtree:true});
     window.MortgageStore?.subscribe?.(()=>window.setTimeout(decorateMarketChoices,20));
