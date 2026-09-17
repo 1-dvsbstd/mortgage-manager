@@ -1,0 +1,244 @@
+/* V0.15.11 — glance-first interaction model + setup/data polish */
+
+/* Main app: cards are glance-first, not tap-to-open. */
+.app-view-current [data-expandable-card],
+.app-view-upcoming [data-expandable-card],
+.app-view-future [data-expandable-card]{
+  cursor:default!important;
+}
+.app-view-current .expand-hint,
+.app-view-upcoming .expand-hint,
+.app-view-future .expand-hint,
+.app-view-current [data-expand-card],
+.app-view-upcoming [data-expand-card],
+.app-view-future [data-expand-card]{
+  display:none!important;
+}
+
+/* Keep the useful home/mortgage edit row visible without opening a modal card. */
+.app-view-current #mortgageExtraTiles{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:18px!important;
+  margin-top:18px!important;
+  padding-top:16px!important;
+  border-top:1px solid var(--border-soft)!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile{
+  min-width:0!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile span{
+  display:block!important;
+  color:var(--muted)!important;
+  font-size:11px!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile strong{
+  display:block!important;
+  margin-top:6px!important;
+  color:var(--text)!important;
+  font-size:18px!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable::after{
+  content:'Edit'!important;
+  position:absolute!important;
+  top:0!important;
+  right:0!important;
+  color:var(--accent-strong)!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  letter-spacing:.08em!important;
+  text-transform:uppercase!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable{
+  position:relative!important;
+  cursor:pointer!important;
+}
+
+/* A consistent, premium hover lift across the product. */
+@media (hover:hover) and (pointer:fine){
+  .app-view-current .hero-panel,
+  .app-view-current .panel,
+  .app-view-current .v15-current-stats,
+  .app-view-current .v15-current-journey,
+  .app-view-upcoming .upcoming-section,
+  .app-view-upcoming .deal-planner,
+  .app-view-future #homeProjection,
+  .app-view-future .future-model-range-panel,
+  .app-view-future #futureWaitPlanner,
+  .app-view-future #nextHomePlanner,
+  .app-view-future #propertyCostComparison,
+  .personal-modal .personal-section,
+  .personal-modal .setup-history-row,
+  .personal-modal .setup-history-total{
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease!important;
+  }
+  .app-view-current .hero-panel:hover,
+  .app-view-current .panel:hover,
+  .app-view-current .v15-current-stats:hover,
+  .app-view-current .v15-current-journey:hover,
+  .app-view-upcoming .upcoming-section:hover,
+  .app-view-upcoming .deal-planner:hover,
+  .app-view-future #homeProjection:hover,
+  .app-view-future .future-model-range-panel:hover,
+  .app-view-future #futureWaitPlanner:hover,
+  .app-view-future #nextHomePlanner:hover,
+  .app-view-future #propertyCostComparison:hover,
+  .personal-modal .personal-section:hover,
+  .personal-modal .setup-history-row:hover,
+  .personal-modal .setup-history-total:hover{
+    transform:translateY(-2px)!important;
+    box-shadow:0 20px 50px rgba(61,48,36,.10)!important;
+    border-color:#d3b99f!important;
+  }
+}
+
+/* Setup & data — warm light controls, not the old dark setup theme. */
+.personal-backdrop{
+  background:rgba(32,40,51,.34)!important;
+  backdrop-filter:blur(10px)!important;
+}
+.personal-modal{
+  background:#f8f4ee!important;
+  color:#202833!important;
+  border:1px solid #d9d0c5!important;
+  box-shadow:0 32px 90px rgba(38,31,24,.22)!important;
+}
+.personal-modal-head h2,
+.personal-modal h3,
+.personal-modal strong{color:#202833!important}
+.personal-modal-head p,
+.personal-modal p,
+.personal-modal small,
+.personal-modal label{color:#6d7278!important}
+.personal-modal .eyebrow{color:#9d6639!important}
+
+.personal-close{
+  width:auto!important;
+  min-width:64px!important;
+  height:36px!important;
+  padding:0 14px!important;
+  border:1px solid #d6c8b8!important;
+  border-radius:11px!important;
+  background:#fffaf4!important;
+  color:#202833!important;
+  font-size:11px!important;
+  font-weight:780!important;
+  box-shadow:0 3px 10px rgba(61,48,36,.05)!important;
+}
+.personal-close:hover,
+.personal-close:focus-visible{
+  background:#f2e7da!important;
+  border-color:#c9986e!important;
+  color:#202833!important;
+  box-shadow:0 10px 24px rgba(61,48,36,.12)!important;
+  outline:none!important;
+}
+
+/* Setup tabs: selected tab must stay visible. */
+.personal-modal .setup-tab-nav{
+  background:#eee7de!important;
+  border-color:#ddd2c6!important;
+}
+.personal-modal .setup-tab-nav button{
+  color:#6d7278!important;
+  border:1px solid transparent!important;
+}
+.personal-modal .setup-tab-nav button.active,
+.personal-modal .setup-tab-nav button[aria-selected="true"]{
+  background:#252d36!important;
+  color:#fffaf3!important;
+  border-color:#252d36!important;
+  box-shadow:0 6px 16px rgba(37,45,54,.15)!important;
+}
+.personal-modal .setup-tab-nav button:hover:not(.active){
+  background:#fffaf4!important;
+  color:#202833!important;
+}
+
+/* Setup inputs and buttons stay aligned and on-theme. */
+.personal-modal .personal-form label,
+.personal-modal .setup-future-grid label{
+  background:transparent!important;
+  border:0!important;
+  padding:0!important;
+}
+.personal-modal input,
+.personal-modal select,
+.personal-modal textarea{
+  min-height:46px!important;
+  border:1px solid #ddd2c6!important;
+  border-radius:12px!important;
+  background:#fffaf4!important;
+  color:#202833!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.75)!important;
+}
+.personal-modal input:focus,
+.personal-modal select:focus,
+.personal-modal textarea:focus{
+  border-color:#c9986e!important;
+  outline:2px solid rgba(200,142,92,.14)!important;
+  outline-offset:1px!important;
+}
+.personal-modal .personal-button,
+.personal-modal .progress-action{
+  min-height:38px!important;
+  border:1px solid #d6c8b8!important;
+  background:#fffaf4!important;
+  color:#202833!important;
+  box-shadow:0 3px 10px rgba(61,48,36,.04)!important;
+}
+.personal-modal .personal-button:hover,
+.personal-modal .progress-action:hover{
+  background:#f2e7da!important;
+  border-color:#c9986e!important;
+  box-shadow:0 10px 24px rgba(61,48,36,.10)!important;
+}
+.personal-modal .personal-button.primary{
+  background:#252d36!important;
+  color:#fffaf3!important;
+  border-color:#252d36!important;
+}
+
+/* Reserve the helper-text row so paired Future assumption fields finish level. */
+.personal-modal .setup-future-grid label{
+  display:grid!important;
+  grid-template-rows:auto 46px 16px!important;
+  align-content:start!important;
+  gap:7px!important;
+}
+.personal-modal .setup-future-grid label>span{
+  min-height:16px!important;
+  align-self:start!important;
+}
+
+/* Warm scrollbars for the page and Setup modal. */
+html,
+body,
+.personal-modal{
+  scrollbar-color:#b9875f #ebe3d9;
+  scrollbar-width:thin;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.personal-modal::-webkit-scrollbar{width:11px;height:11px}
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+.personal-modal::-webkit-scrollbar-track{background:#ebe3d9}
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+.personal-modal::-webkit-scrollbar-thumb{
+  background:#b9875f;
+  border:3px solid #ebe3d9;
+  border-radius:999px;
+}
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+.personal-modal::-webkit-scrollbar-thumb:hover{background:#9d6639}
+
+@media(max-width:760px){
+  .app-view-current #mortgageExtraTiles{grid-template-columns:1fr!important;gap:12px!important}
+}
