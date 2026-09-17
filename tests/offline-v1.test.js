@@ -8,6 +8,8 @@ const polish = fs.readFileSync('src/v15.15.js', 'utf8');
 const finalPolish = fs.readFileSync('src/offline-v1-final.js', 'utf8');
 const finalStyle = fs.readFileSync('src/offline-v1-final.css', 'utf8');
 const loader = fs.readFileSync('src/v15.14.js', 'utf8');
+const expandable = fs.readFileSync('src/expandable-cards.js', 'utf8');
+const launcher = fs.readFileSync('launch.ps1', 'utf8');
 
 assert.match(index, /navigator\.serviceWorker\.register\('\.\/sw\.js'\)/, 'Offline V1 should register its service worker');
 assert.doesNotMatch(index, /serviceWorker\.getRegistrations\(\).*unregister/s, 'The app must not unregister service workers on load');
@@ -27,10 +29,16 @@ assert.doesNotMatch(index, /caches\.keys\(\).*caches\.delete/s, 'The app must no
 });
 
 assert.match(sw, /ignoreSearch:\s*true/, 'Offline fallback should tolerate cache-busting query strings');
+assert.match(sw, /cache:'no-store'/, 'Service worker should bypass ordinary browser cache while online');
 assert.match(loader, /offline-v1-final\.css/, 'Final UI stylesheet should be loaded after legacy layers');
 assert.match(loader, /offline-v1-final\.js/, 'Final UI script should be loaded after legacy layers');
+assert.match(loader, /controllerchange/, 'Loader should self-refresh when a newer service worker takes control');
+assert.match(finalPolish, /V0\.15\.17/, 'Final UI should expose the current visible build marker');
 assert.match(finalPolish, /undefined\|nan/i, 'Final UI layer should guard invalid LTV milestones');
 assert.match(finalStyle, /grid-template-columns:repeat\(4/, 'Current summary should use a compact four-column desktop grid');
+assert.doesNotMatch(expandable, /openCard\(/, 'Legacy expandable-card runtime must remain inert');
+assert.match(launcher, /Cache-Control: no-store, no-cache/, 'Windows launcher should prevent stale browser shell caching');
+assert.match(launcher, /Serving from:/, 'Windows launcher should show which folder is actually being served');
 
 assert.equal(market.schema, 2, 'Commercial market feed should use the current schema');
 assert.equal(market.source, 'Bank of England Database', 'Bundled benchmarks should use the Bank of England source');
@@ -39,4 +47,4 @@ assert.ok(Array.isArray(market.bands) && market.bands.length >= 2, 'Market feed 
 assert.doesNotMatch(JSON.stringify(market), /Moneyfacts/i, 'Bundled commercial market data must not contain Moneyfacts data or branding');
 assert.match(polish, /migrateLegacyMarketCache/, 'Old preview market caches should be migrated away');
 
-console.log('Offline V1 service-worker, final-polish and market-source checks passed');
+console.log('Offline V1 service-worker, final-polish, stale-shell and market-source checks passed');
