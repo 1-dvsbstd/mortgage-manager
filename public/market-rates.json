@@ -1,6 +1,7 @@
 {
   "schema": 1,
-  "updated": "2026-09-17",
+  "sourceAsOf": "2026-08-01",
+  "publishedForApp": "2026-09-17",
   "source": "Moneyfacts Treasury Reports / Moneyfacts Group public market analysis",
   "sourceNote": "Indicative UK market averages. Not personalised mortgage offers. Product fees, eligibility and property criteria are not included.",
   "bands": [
