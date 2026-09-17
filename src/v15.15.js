@@ -29,7 +29,8 @@
       .live-rate-card{cursor:pointer;position:relative;transition:border-color .16s ease,background .16s ease,transform .16s ease}.live-rate-card::after{content:"Select";position:absolute;right:10px;top:9px;color:var(--muted-2);font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}.live-rate-card:hover{border-color:rgba(84,224,180,.22);background:rgba(84,224,180,.05)}.live-rate-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.live-rate-card.is-selected{border-color:rgba(84,224,180,.34);background:rgba(84,224,180,.09)}.live-rate-card.is-selected::after{content:"Selected";color:var(--accent)}
       .live-rate-delta{margin-top:5px!important;color:var(--text)!important;font-weight:700}.live-rate-delta.is-higher{color:var(--warm)!important}.live-rate-delta.is-lower{color:var(--accent)!important}.live-rate-selection-note{margin:9px 0 0;color:var(--muted-2);font-size:10px;line-height:1.4}.live-rate-selected-summary{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:11px;padding-top:11px;border-top:1px solid rgba(255,255,255,.07)}.live-rate-selected-summary span{color:var(--muted);font-size:10px}.live-rate-selected-summary strong{color:var(--text);font-size:12px;text-align:right}
       .setup-first-run-note{margin:12px 0 0;padding:12px 14px;border:1px solid rgba(84,224,180,.14);border-radius:13px;background:rgba(84,224,180,.045);color:var(--muted);font-size:11px;line-height:1.45}.setup-first-run-note strong{display:block;margin-bottom:3px;color:var(--text);font-size:12px}.clear-local-data{margin-left:auto}.clear-local-data.danger{border-color:rgba(232,124,124,.24);color:#e9b3b3}
-      @media(max-width:700px){.live-rate-card{min-height:86px}.clear-local-data{margin-left:0}.topbar-with-nav>.topbar-actions{display:grid!important;grid-template-columns:auto auto;align-items:center!important;justify-content:end;gap:6px!important;margin-left:auto}.topbar-actions .connectivity-mode{grid-column:1/-1;justify-content:flex-end}.topbar-actions .save-status{display:none}.topbar-actions .personal-data-button{justify-self:end}.connectivity-copy small{display:block!important;max-width:150px;white-space:normal;line-height:1.2}.live-rate-selected-summary{display:grid;gap:3px}.live-rate-selected-summary strong{text-align:left}}
+      .methodology-body{display:grid;gap:12px}.methodology-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.methodology-item{padding:12px 13px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(255,255,255,.018)}.methodology-item strong{display:block;margin-bottom:4px;color:var(--text);font-size:11px}.methodology-item p{margin:0;color:var(--muted);font-size:10px;line-height:1.45}.methodology-disclaimer{margin:0;padding:12px 13px;border:1px solid rgba(232,217,188,.12);border-radius:12px;background:rgba(232,217,188,.035);color:var(--muted);font-size:10px;line-height:1.5}.methodology-disclaimer strong{color:var(--warm)}
+      @media(max-width:700px){.live-rate-card{min-height:86px}.clear-local-data{margin-left:0}.topbar-with-nav>.topbar-actions{display:grid!important;grid-template-columns:auto auto;align-items:center!important;justify-content:end;gap:6px!important;margin-left:auto}.topbar-actions .connectivity-mode{grid-column:1/-1;justify-content:flex-end}.topbar-actions .save-status{display:none}.topbar-actions .personal-data-button{justify-self:end}.connectivity-copy small{display:block!important;max-width:150px;white-space:normal;line-height:1.2}.live-rate-selected-summary{display:grid;gap:3px}.live-rate-selected-summary strong{text-align:left}.methodology-grid{grid-template-columns:1fr}}
       @media(max-width:420px){.connectivity-copy small{display:none!important}.connectivity-mode{gap:6px}.personal-data-button{padding-inline:9px}}
     `;
     document.head.appendChild(style);
@@ -129,6 +130,17 @@
     window.location.reload();
   }
 
+  function ensureMethodologySection(modal){
+    if(!modal||modal.querySelector('#methodologySection')) return;
+    const section=document.createElement('details');
+    section.id='methodologySection';
+    section.className='personal-section methodology-section';
+    section.innerHTML=`<summary><span><strong>How calculations work</strong><small>Assumptions behind your projections</small></span><span class="history-summary-chevron">+</span></summary><div class="mortgage-history-body methodology-body"><div class="methodology-grid"><div class="methodology-item"><strong>Mortgage projection</strong><p>Repayment projections use your current balance, interest rate, monthly payment and any selected regular overpayment. Interest is modelled monthly and results are illustrative rather than a lender statement.</p></div><div class="methodology-item"><strong>Overpayments</strong><p>Interest saved and term reduction compare the selected overpayment scenario with the same mortgage continuing without that extra payment. One-off overpayments are applied from their recorded date where the history model supports it.</p></div><div class="methodology-item"><strong>Home value & equity</strong><p>Equity and LTV use the home value you enter plus any growth assumption you choose. Future property values are estimates, not valuations, and actual sale or lender valuations may differ materially.</p></div><div class="methodology-item"><strong>Market-rate projections</strong><p>When Online mode is enabled, Mortgage Manager fetches dated UK benchmark rates. Your mortgage data stays on this device; the benchmark is combined locally with your projected balance and LTV to estimate a future payment.</p></div></div><p class="methodology-disclaimer"><strong>Planning tool, not financial advice.</strong> Mortgage Manager provides estimates to help you explore scenarios. It does not assess eligibility, affordability, fees, early-repayment charges, lender criteria, taxes or whether a particular mortgage is suitable for you. Check important decisions against your lender, broker or other appropriate professional information.</p></div>`;
+    const backup=[...modal.querySelectorAll('.personal-section')].find((item)=>['Backup','Backup & restore'].includes(item.querySelector('h3,strong')?.textContent?.trim()));
+    if(backup) backup.insertAdjacentElement('beforebegin',section);
+    else modal.appendChild(section);
+  }
+
   function polishSetupModal(){
     ensureOfflineV1Style();
     document.getElementById('dataBackupSection')?.remove();
@@ -159,6 +171,7 @@
         clear.addEventListener('click',clearAllMortgageData); actions.appendChild(clear);
       }
     }
+    ensureMethodologySection(modal);
   }
 
   function refineConnectivityCopy(){
