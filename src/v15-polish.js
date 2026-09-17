@@ -70,7 +70,8 @@
 
   function ensureCurrentJourney() {
     const current = $('.app-view-current .app-view-content');
-    if (!current) return null;
+    const hero = $('.app-view-current .hero-panel');
+    if (!current || !hero) return null;
     let card = $('#v15CurrentJourney', current);
     if (!card) {
       card = document.createElement('section');
@@ -82,14 +83,9 @@
       card.innerHTML = `
         <div class="v15-current-journey-head">
           <div><span>Mortgage journey</span><strong>Your current fix and what comes next</strong></div>
-          <span class="v15-current-journey-link">View upcoming rates →</span>
+          <span class="v15-current-journey-link">Rates →</span>
         </div>
         <div class="v15-current-journey-track"></div>`;
-      const action = $('.v15-action-card', current);
-      const chart = $('.chart-panel', current);
-      if (action) action.insertAdjacentElement('afterend', card);
-      else if (chart) chart.insertAdjacentElement('beforebegin', card);
-      else current.appendChild(card);
       card.addEventListener('click', goToUpcomingRates);
       card.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' || event.key === ' ') {
@@ -98,6 +94,7 @@
         }
       });
     }
+    if (card.parentElement !== hero) hero.insertAdjacentElement('afterbegin', card);
     return card;
   }
 
@@ -119,9 +116,7 @@
       </div>`).join('');
   }
 
-  function run() {
-    renderCurrentJourney();
-  }
+  function run() { renderCurrentJourney(); }
 
   document.addEventListener('click', (event) => {
     if (event.target.closest('[data-app-view="current"]')) setTimeout(run, 80);
