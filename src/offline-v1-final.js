@@ -18,7 +18,6 @@
     const [y,m]=String(value).split('-').map(Number); return y&&m?new Date(y,m-1,1):null;
   }
   function monthValue(date){return date?`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}`:'';}
-  function formatMonth(value){const d=monthDate(value);return d?new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(d):'—';}
   function compactDuration(months){
     const n=Math.max(0,Math.round(Number(months)||0)),y=Math.floor(n/12),m=n%12;
     return y&&m?`${y}y ${m}m`:y?`${y}y`:`${m}m`;
@@ -101,11 +100,11 @@
     const payoffDate=Number.isFinite(path?.months)?(()=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()+path.months);return d;})():null;
 
     const raw=[
-      {icon:'⌂',title:'Home purchased',value:purchase,date:monthDate(purchase)},
-      {icon:'%',title:'Current deal',value:dealStart,date:monthDate(dealStart)},
-      {icon:'↔',title:'Remortgage window',value:remortgage,date:monthDate(remortgage)},
-      {icon:'▣',title:'Fixed rate ends',value:fixedEnd,date:fixedDate},
-      {icon:'⚑',title:'Mortgage free',value:payoffDate?monthValue(payoffDate):'',date:payoffDate},
+      {icon:'⌂',title:'Home purchased',date:monthDate(purchase)},
+      {icon:'%',title:'Current deal',date:monthDate(dealStart)},
+      {icon:'↔',title:'Remortgage window',date:monthDate(remortgage)},
+      {icon:'▣',title:'Fixed rate ends',date:fixedDate},
+      {icon:'⚑',title:'Mortgage free',date:payoffDate},
     ];
     const withDates=raw.filter((step)=>step.date).sort((a,b)=>a.date-b.date);
     const withoutDates=raw.filter((step)=>!step.date);
@@ -117,15 +116,17 @@
     steps.forEach((step,index)=>{if(step.date&&step.date<=now) lastComplete=index;});
     const progress=steps.length>1&&lastComplete>=0?Math.max(0,Math.min(100,lastComplete/(steps.length-1)*100)):0;
     strip.style.setProperty('--journey-progress',`${progress}%`);
-    strip.innerHTML=steps.map((step,index)=>{
+    const html=steps.map((step,index)=>{
       const status=step.date&&step.date<=now?'is-complete':index===nextIndex?'is-current':'';
       const date=step.date?new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(step.date):'—';
       return `<div class="v15-journey-step ${status}"><div class="v15-journey-icon">${step.icon}</div><strong>${step.title}</strong><span>${date}</span></div>`;
     }).join('');
+    if(strip.innerHTML!==html) strip.innerHTML=html;
     const callout=$('.v15-journey-callout');
     if(callout&&fixedDate){
       const months=(fixedDate.getFullYear()-now.getFullYear())*12+(fixedDate.getMonth()-now.getMonth());
-      callout.textContent=months<=0?'Your fixed-rate end needs attention':`${compactDuration(months)} to fixed-rate end`;
+      const text=months<=0?'Your fixed-rate end needs attention':`${compactDuration(months)} to fixed-rate end`;
+      if(callout.textContent!==text) callout.textContent=text;
     }
   }
 
@@ -167,12 +168,11 @@
     }
   },true);
 
-  const observer=new MutationObserver(()=>requestAnimationFrame(run));
   const start=()=>{
-    observer.observe(document.body,{childList:true,subtree:true,characterData:true});
     run();
     [120,450,1000,1800].forEach((delay)=>setTimeout(run,delay));
     window.MortgageStore?.subscribe?.(()=>requestAnimationFrame(run));
+    window.addEventListener('pageshow',run);
   };
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start,{once:true}); else start();
 })();
