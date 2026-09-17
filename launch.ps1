@@ -4,7 +4,8 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $Root = Split-Path -Parent $MyInvocation.MyCommand.Path
-$Prefix = "http://localhost:$Port/"
+$Address = [System.Net.IPAddress]::Loopback
+$Url = "http://localhost:$Port/"
 
 function Get-ContentType([string]$Path) {
   switch ([System.IO.Path]::GetExtension($Path).ToLowerInvariant()) {
@@ -23,61 +24,75 @@ function Get-ContentType([string]$Path) {
   }
 }
 
-$listener = [System.Net.HttpListener]::new()
-$listener.Prefixes.Add($Prefix)
+$server = [System.Net.Sockets.TcpListener]::new($Address, $Port)
 
 try {
-  $listener.Start()
+  $server.Start()
 } catch {
   Write-Host "Mortgage Manager could not start on port $Port." -ForegroundColor Red
-  Write-Host "Close another copy if it is already running, then try again."
+  Write-Host 'Close another copy if it is already running, then try again.'
   Read-Host 'Press Enter to close'
   exit 1
 }
 
 Write-Host ''
 Write-Host 'Mortgage Manager is running locally.' -ForegroundColor Green
-Write-Host $Prefix
+Write-Host $Url
 Write-Host 'Your mortgage data stays in this browser on this device.'
 Write-Host 'Keep this window open while using the app. Press Ctrl+C to stop.'
 Write-Host ''
 
-Start-Process $Prefix
+Start-Process $Url
 
 try {
-  while ($listener.IsListening) {
-    $context = $listener.GetContext()
-    $requestPath = [Uri]::UnescapeDataString($context.Request.Url.AbsolutePath.TrimStart('/'))
-    if ([string]::IsNullOrWhiteSpace($requestPath)) { $requestPath = 'index.html' }
-
-    $candidate = [System.IO.Path]::GetFullPath((Join-Path $Root $requestPath))
-    $rootFull = [System.IO.Path]::GetFullPath($Root + [System.IO.Path]::DirectorySeparatorChar)
-
-    if (-not $candidate.StartsWith($rootFull, [System.StringComparison]::OrdinalIgnoreCase)) {
-      $context.Response.StatusCode = 403
-      $context.Response.Close()
-      continue
-    }
-
-    if (-not (Test-Path -LiteralPath $candidate -PathType Leaf)) {
-      $candidate = Join-Path $Root 'index.html'
-    }
-
+  while ($true) {
+    $client = $server.AcceptTcpClient()
     try {
-      $bytes = [System.IO.File]::ReadAllBytes($candidate)
-      $context.Response.StatusCode = 200
-      $context.Response.ContentType = Get-ContentType $candidate
-      $context.Response.Headers['Cache-Control'] = 'no-cache'
-      $context.Response.ContentLength64 = $bytes.Length
-      $context.Response.OutputStream.Write($bytes, 0, $bytes.Length)
+      $stream = $client.GetStream()
+      $reader = [System.IO.StreamReader]::new($stream, [System.Text.Encoding]::ASCII, $false, 4096, $true)
+      $requestLine = $reader.ReadLine()
+      if ([string]::IsNullOrWhiteSpace($requestLine)) { continue }
+
+      while ($true) {
+        $headerLine = $reader.ReadLine()
+        if ([string]::IsNullOrEmpty($headerLine)) { break }
+      }
+
+      $parts = $requestLine.Split(' ')
+      $rawTarget = if ($parts.Length -ge 2) { $parts[1] } else { '/' }
+      $pathOnly = $rawTarget.Split('?')[0].TrimStart('/')
+      $requestPath = [Uri]::UnescapeDataString($pathOnly)
+      if ([string]::IsNullOrWhiteSpace($requestPath)) { $requestPath = 'index.html' }
+
+      $candidate = [System.IO.Path]::GetFullPath((Join-Path $Root $requestPath))
+      $rootFull = [System.IO.Path]::GetFullPath($Root + [System.IO.Path]::DirectorySeparatorChar)
+      $status = '200 OK'
+
+      if (-not $candidate.StartsWith($rootFull, [System.StringComparison]::OrdinalIgnoreCase)) {
+        $status = '403 Forbidden'
+        $body = [System.Text.Encoding]::UTF8.GetBytes('Forbidden')
+        $contentType = 'text/plain; charset=utf-8'
+      } else {
+        if (-not (Test-Path -LiteralPath $candidate -PathType Leaf)) {
+          $candidate = Join-Path $Root 'index.html'
+        }
+        $body = [System.IO.File]::ReadAllBytes($candidate)
+        $contentType = Get-ContentType $candidate
+      }
+
+      $headers = "HTTP/1.1 $status`r`nContent-Type: $contentType`r`nContent-Length: $($body.Length)`r`nCache-Control: no-cache`r`nConnection: close`r`n`r`n"
+      $headerBytes = [System.Text.Encoding]::ASCII.GetBytes($headers)
+      $stream.Write($headerBytes, 0, $headerBytes.Length)
+      $stream.Write($body, 0, $body.Length)
+      $stream.Flush()
     } catch {
-      $context.Response.StatusCode = 500
+      # Keep the local server alive if an individual browser request fails.
     } finally {
-      $context.Response.OutputStream.Close()
-      $context.Response.Close()
+      if ($reader) { $reader.Dispose() }
+      if ($stream) { $stream.Dispose() }
+      $client.Dispose()
     }
   }
 } finally {
-  if ($listener.IsListening) { $listener.Stop() }
-  $listener.Close()
+  $server.Stop()
 }
