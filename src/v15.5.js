@@ -1,17 +1,8 @@
 (() => {
   const $ = (selector, root = document) => root?.querySelector?.(selector) || null;
 
-  function mergeActionIntoTrajectory(){
-    const current = $('.app-view-current .app-view-content');
-    const action = $('.v15-action-card', current);
-    const chart = $('.chart-panel.trajectory-with-what-if', current);
-    if(!action || !chart || chart.contains(action)) return;
-    const controls = $('.trajectory-scenario-controls', chart);
-    if(controls) controls.insertAdjacentElement('afterend', action);
-    else {
-      const wrap = $('.chart-wrap', chart);
-      if(wrap) chart.insertBefore(action, wrap); else chart.appendChild(action);
-    }
+  function removeDuplicateAction(){
+    $('.app-view-current .v15-action-card')?.remove();
   }
 
   function integrateFutureAssumption(){
@@ -23,9 +14,19 @@
     if(assumption.parentElement !== heading) heading.appendChild(assumption);
   }
 
+  function refineFutureWaitCopy(){
+    const wait = document.getElementById('futureWaitPlanner');
+    if(!wait) return;
+    const eyebrow = $('.future-wait-heading .eyebrow', wait);
+    const title = $('.future-wait-heading h2', wait);
+    if(eyebrow) eyebrow.textContent = 'Looking ahead';
+    if(title) title.textContent = 'How your next-home budget could grow over time';
+  }
+
   function run(){
-    mergeActionIntoTrajectory();
+    removeDuplicateAction();
     integrateFutureAssumption();
+    refineFutureWaitCopy();
   }
 
   if(window.MortgageStore?.subscribe) MortgageStore.subscribe(() => requestAnimationFrame(run));
