@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "updated": "2026-09-17",
+  "source": "Moneyfacts Treasury Reports / Moneyfacts Group public market analysis",
+  "sourceNote": "Indicative UK market averages. Not personalised mortgage offers. Product fees, eligibility and property criteria are not included.",
+  "bands": [
+    { "ltv": 60, "twoYear": 5.17, "fiveYear": 5.46 },
+    { "ltv": 90, "twoYear": 5.84, "fiveYear": 5.75 },
+    { "ltv": 95, "twoYear": 6.20, "fiveYear": 6.08 }
+  ],
+  "overall": { "twoYear": 5.63, "fiveYear": 5.66, "svr": 7.13 }
+}
