@@ -331,12 +331,30 @@
     setTimeout(() => URL.revokeObjectURL(url), 500);
   }
 
+  function mortgageManagerKeys() {
+    const keys = [];
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const key = localStorage.key(i);
+      if (key?.startsWith('mortgage-manager-')) keys.push(key);
+    }
+    return keys;
+  }
+
   async function importBackup(file, status) {
     const text = await file.text();
     const parsed = JSON.parse(text);
     if (!parsed || parsed.product !== 'Mortgage Manager' || !parsed.data || typeof parsed.data !== 'object') throw new Error('This is not a Mortgage Manager backup.');
+    const version = Number(parsed.backupVersion || 0);
+    if (!Number.isFinite(version) || version < 1) throw new Error('This backup is missing a supported version.');
+    if (version > BACKUP_VERSION) throw new Error('This backup was created by a newer version of Mortgage Manager. Update the app before restoring it.');
     const entries = Object.entries(parsed.data).filter(([key,value]) => key.startsWith('mortgage-manager-') && typeof value === 'string');
     if (!entries.length) throw new Error('No Mortgage Manager data was found in this backup.');
+    const confirmed = window.confirm(`Restore this backup from ${parsed.exportedAt ? new Date(parsed.exportedAt).toLocaleString('en-GB') : 'an earlier session'}? This replaces the Mortgage Manager data currently saved on this device.`);
+    if (!confirmed) {
+      if (status) status.textContent = 'Restore cancelled. Your current data was not changed.';
+      return;
+    }
+    mortgageManagerKeys().forEach((key) => localStorage.removeItem(key));
     entries.forEach(([key,value]) => localStorage.setItem(key, value));
     if (status) status.textContent = `Restored ${entries.length} saved items. Reloading…`;
     setTimeout(() => location.reload(), 350);
