@@ -7,8 +7,8 @@
 
   function markBuild(){
     const version=$('.brand span');
-    if(version) version.textContent='V0.15.17';
-    document.documentElement.dataset.mortgageManagerBuild='01517';
+    if(version) version.textContent='V0.15.18';
+    document.documentElement.dataset.mortgageManagerBuild='01518';
   }
 
   function history(){
@@ -172,7 +172,7 @@
       event.stopImmediatePropagation();
       return;
     }
-    if(event.target.closest('[data-app-view],#personalDataButton,[data-action="save"]')) setTimeout(run,40);
+    if(event.target.closest('[data-app-view],#personalDataButton,[data-action="save"]')) requestAnimationFrame(run);
   },true);
   document.addEventListener('keydown',(event)=>{
     if(event.target.closest?.('.live-rate-card')){
@@ -183,7 +183,6 @@
 
   const start=()=>{
     run();
-    [120,450,1000,1800].forEach((delay)=>setTimeout(run,delay));
     window.MortgageStore?.subscribe?.(()=>requestAnimationFrame(run));
     window.addEventListener('pageshow',run);
   };
