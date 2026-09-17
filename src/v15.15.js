@@ -1,5 +1,6 @@
 (() => {
   const MARKET_CHOICE_KEY='mortgage-manager-market-choice-v1';
+  const SETUP_KEY='mortgage-manager-personal-setup-v1';
 
   function setText(node,text){
     if(node&&node.textContent!==text) node.textContent=text;
@@ -30,7 +31,7 @@
     const style=document.createElement('style');
     style.id='marketChoiceStyle';
     style.textContent=`
-      .live-rate-card{cursor:pointer;position:relative;transition:border-color .16s ease,background .16s ease,transform .16s ease}.live-rate-card::after{content:"Select";position:absolute;right:10px;top:9px;color:var(--muted-2);font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}.live-rate-card:hover{border-color:rgba(84,224,180,.22);background:rgba(84,224,180,.05)}.live-rate-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.live-rate-card.is-selected{border-color:rgba(84,224,180,.34);background:rgba(84,224,180,.09)}.live-rate-card.is-selected::after{content:"Selected";color:var(--accent)}.live-rate-delta{margin-top:5px!important;color:var(--text)!important;font-weight:700}.live-rate-delta.is-higher{color:var(--warm)!important}.live-rate-delta.is-lower{color:var(--accent)!important}.live-rate-selection-note{margin:9px 0 0;color:var(--muted-2);font-size:10px;line-height:1.4}.rate-buttons.has-market-choice{opacity:.45}.rate-buttons.has-market-choice button.active{background:rgba(255,255,255,.06);color:var(--text)}@media(max-width:700px){.live-rate-card{min-height:86px}}
+      .live-rate-card{cursor:pointer;position:relative;transition:border-color .16s ease,background .16s ease,transform .16s ease}.live-rate-card::after{content:"Select";position:absolute;right:10px;top:9px;color:var(--muted-2);font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}.live-rate-card:hover{border-color:rgba(84,224,180,.22);background:rgba(84,224,180,.05)}.live-rate-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.live-rate-card.is-selected{border-color:rgba(84,224,180,.34);background:rgba(84,224,180,.09)}.live-rate-card.is-selected::after{content:"Selected";color:var(--accent)}.live-rate-delta{margin-top:5px!important;color:var(--text)!important;font-weight:700}.live-rate-delta.is-higher{color:var(--warm)!important}.live-rate-delta.is-lower{color:var(--accent)!important}.live-rate-selection-note{margin:9px 0 0;color:var(--muted-2);font-size:10px;line-height:1.4}.rate-buttons.has-market-choice{opacity:.45}.rate-buttons.has-market-choice button.active{background:rgba(255,255,255,.06);color:var(--text)}.setup-first-run-note{margin:12px 0 0;padding:12px 14px;border:1px solid rgba(84,224,180,.14);border-radius:13px;background:rgba(84,224,180,.045);color:var(--muted);font-size:11px;line-height:1.45}.setup-first-run-note strong{display:block;margin-bottom:3px;color:var(--text);font-size:12px}.clear-local-data{margin-left:auto}.clear-local-data.danger{border-color:rgba(232,124,124,.24);color:#e9b3b3}@media(max-width:700px){.live-rate-card{min-height:86px}.clear-local-data{margin-left:0}}
     `;
     document.head.appendChild(style);
   }
@@ -108,11 +109,68 @@
     setText(document.querySelector('#liveRateChoices .live-rate-selection-note'),'Selected benchmark is mirrored in the next-rate estimate above. These are planning figures, not personalised offers.');
   }
 
+  function clearAllMortgageData(){
+    const confirmed=window.confirm('Clear all Mortgage Manager data saved on this device? Export a backup first if you may want it later.');
+    if(!confirmed) return;
+    const keys=[];
+    for(let i=0;i<localStorage.length;i+=1){
+      const key=localStorage.key(i);
+      if(key?.startsWith('mortgage-manager')) keys.push(key);
+    }
+    keys.forEach((key)=>localStorage.removeItem(key));
+    window.location.reload();
+  }
+
+  function polishSetupModal(){
+    ensureMarketChoiceStyle();
+    document.getElementById('dataBackupSection')?.remove();
+    const modal=document.querySelector('.personal-modal');
+    if(!modal) return;
+    const firstRun=!localStorage.getItem(SETUP_KEY);
+    const title=modal.querySelector('#personalModalTitle');
+    const intro=modal.querySelector('.personal-modal-head p:last-of-type');
+    if(firstRun){
+      setText(title,'Set up your mortgage');
+      setText(intro,'Enter the figures from your latest mortgage statement. Everything is saved only on this device.');
+      if(!modal.querySelector('.setup-first-run-note')){
+        const note=document.createElement('div');
+        note.className='setup-first-run-note';
+        note.innerHTML='<strong>About two minutes to set up</strong>Start with your current balance, payment and rate. Add your fixed-rate end and home value if you have them; you can change anything later.';
+        modal.querySelector('.personal-modal-head')?.insertAdjacentElement('afterend',note);
+      }
+    }
+    const sections=[...modal.querySelectorAll('.personal-section')];
+    const backupSection=sections.find((section)=>section.querySelector('h3')?.textContent.trim()==='Backup');
+    if(backupSection){
+      setText(backupSection.querySelector('h3'),'Backup & restore');
+      setText(backupSection.querySelector('p'),'Export a portable copy of everything saved by Mortgage Manager before changing device, clearing browser data or resetting the app.');
+      const actions=backupSection.querySelector('.personal-actions');
+      if(actions&&!actions.querySelector('.clear-local-data')){
+        const clear=document.createElement('button');
+        clear.type='button';
+        clear.className='personal-button danger clear-local-data';
+        clear.textContent='Clear all local data';
+        clear.addEventListener('click',clearAllMortgageData);
+        actions.appendChild(clear);
+      }
+    }
+  }
+
+  function refineConnectivityCopy(){
+    const control=document.getElementById('connectivityMode');
+    if(!control) return;
+    const online=control.querySelector('[data-connectivity-switch]')?.getAttribute('aria-checked')==='true';
+    setText(control.querySelector('[data-connectivity-title]'),online?'Online':'Offline');
+    setText(control.querySelector('[data-connectivity-subtitle]'),online?'Refresh market benchmarks':'Private on this device');
+  }
+
   function wireMarketChoices(){
     ensureMarketChoiceStyle();
     document.addEventListener('click',(event)=>{
       const card=event.target.closest?.('.live-rate-card');
       if(card) applyMarketChoice(card,true);
+      if(event.target.closest?.('#personalDataButton')) window.setTimeout(polishSetupModal,0);
+      if(event.target.closest?.('[data-connectivity-switch]')) window.setTimeout(refineConnectivityCopy,0);
     });
     document.addEventListener('keydown',(event)=>{
       const card=event.target.closest?.('.live-rate-card');
@@ -120,9 +178,15 @@
       event.preventDefault();
       applyMarketChoice(card,true);
     });
-    const observer=new MutationObserver(()=>decorateMarketChoices());
+    const observer=new MutationObserver(()=>{
+      decorateMarketChoices();
+      polishSetupModal();
+      refineConnectivityCopy();
+    });
     observer.observe(document.body,{childList:true,subtree:true});
     decorateMarketChoices();
+    polishSetupModal();
+    refineConnectivityCopy();
     window.MortgageStore?.subscribe?.(()=>window.setTimeout(decorateMarketChoices,20));
   }
 
