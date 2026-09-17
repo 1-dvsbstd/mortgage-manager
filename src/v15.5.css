@@ -1,0 +1,133 @@
+/* V0.15.5 — integrated planning controls and warm-neutral status surfaces */
+
+/* Current: the overpayment recommendation belongs to Trajectory. */
+.app-view-current .trajectory-with-what-if .v15-action-card{
+  margin:0 26px!important;
+  padding:14px 0 16px!important;
+  border:0!important;
+  border-bottom:1px solid var(--border-soft)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.app-view-current .trajectory-with-what-if .v15-action-icon{
+  width:34px!important;height:34px!important;flex-basis:34px!important;border-radius:10px!important;
+}
+.app-view-current .trajectory-with-what-if .v15-action-copy strong{font-size:16px!important}
+.app-view-current .trajectory-with-what-if .v15-action-card button{font-size:11px!important}
+
+/* Custom amount is a chip, not a form block. */
+.app-view-current .trajectory-custom-overpay,
+.app-view-current .total-custom-chip,
+.app-view-future .future-assumption-controls label{
+  box-sizing:border-box!important;
+  min-height:40px!important;
+  height:40px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  padding:8px 14px!important;
+  border:1px solid var(--border)!important;
+  border-radius:12px!important;
+  background:#fffaf4!important;
+  color:var(--text)!important;
+  box-shadow:0 2px 8px rgba(64,50,38,.03)!important;
+  font-size:12px!important;
+  font-weight:750!important;
+  line-height:1!important;
+}
+.app-view-current .trajectory-custom-overpay input,
+.app-view-current .total-custom-chip input,
+.app-view-future .future-assumption-controls label input{
+  width:66px!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  outline:0!important;
+  background:transparent!important;
+  color:var(--text)!important;
+  font:inherit!important;
+  font-weight:750!important;
+  line-height:1!important;
+}
+
+/* Future: make the planning assumption part of the page heading, not a separate banner. */
+.app-view-future .app-view-heading.future-heading-integrated{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  grid-template-areas:"title subtitle" "assumption assumption"!important;
+  gap:7px 22px!important;
+  align-items:end!important;
+  margin-bottom:16px!important;
+  padding:0 2px 12px!important;
+  border-bottom:1px solid var(--border-soft)!important;
+}
+.app-view-future .app-view-heading.future-heading-integrated>div:first-child{grid-area:title}
+.app-view-future .app-view-heading.future-heading-integrated>p{grid-area:subtitle;margin:0!important;text-align:right!important}
+.app-view-future .app-view-heading.future-heading-integrated>#futureOverpaymentAssumption{
+  grid-area:assumption;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:18px!important;
+  margin:7px 0 0!important;
+  padding:10px 0 0!important;
+  border:0!important;
+  border-top:1px solid var(--border-soft)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.app-view-future #futureOverpaymentAssumption .future-assumption-copy{gap:10px!important}
+.app-view-future #futureOverpaymentAssumption .future-assumption-copy p{font-size:10px!important}
+.app-view-future #futureOverpaymentAssumption .future-assumption-controls{gap:7px!important}
+.app-view-future #futureOverpaymentAssumption .future-assumption-controls button{
+  min-height:40px!important;
+  height:40px!important;
+  padding:8px 13px!important;
+  border:1px solid var(--border)!important;
+  border-radius:12px!important;
+  background:#fffaf4!important;
+  color:var(--text)!important;
+  box-shadow:0 2px 8px rgba(64,50,38,.03)!important;
+}
+.app-view-future #futureOverpaymentAssumption .future-assumption-controls button.active{
+  background:#252d36!important;
+  color:#fffaf3!important;
+  border-color:#252d36!important;
+}
+
+/* Upcoming status/action: neutral warm surface, not pale green. */
+.app-view-upcoming .upcoming-action,
+.app-view-upcoming .upcoming-action:hover,
+.app-view-upcoming .upcoming-action:focus-within{
+  background:var(--surface)!important;
+  background-image:none!important;
+  border-color:var(--border)!important;
+  box-shadow:0 16px 44px rgba(62,49,38,.055)!important;
+}
+.app-view-upcoming .upcoming-action .upcoming-section-body,
+.app-view-upcoming .upcoming-action .deal-planner-milestone,
+.app-view-upcoming .upcoming-action .deal-planner-milestone-copy{
+  background:#f2ece3!important;
+  background-image:none!important;
+  border-color:var(--border-soft)!important;
+  color:var(--text)!important;
+  box-shadow:none!important;
+}
+.app-view-upcoming .upcoming-action .eyebrow,
+.app-view-upcoming .upcoming-action [class*="label"]{color:var(--accent-strong)!important}
+.app-view-upcoming .upcoming-action p,
+.app-view-upcoming .upcoming-action small,
+.app-view-upcoming .upcoming-action span{color:var(--muted)!important}
+.app-view-upcoming .upcoming-action strong,
+.app-view-upcoming .upcoming-action h2,
+.app-view-upcoming .upcoming-action h3{color:var(--text)!important}
+
+@media(max-width:700px){
+  .app-view-current .trajectory-with-what-if .v15-action-card{margin:0 18px!important;align-items:flex-start!important}
+  .app-view-future .app-view-heading.future-heading-integrated{display:block!important;padding-bottom:10px!important}
+  .app-view-future .app-view-heading.future-heading-integrated>p{text-align:left!important;margin-top:4px!important}
+  .app-view-future .app-view-heading.future-heading-integrated>#futureOverpaymentAssumption{display:grid!important;gap:10px!important;margin-top:10px!important}
+}
