@@ -1,20 +1,7 @@
-/* V0.15.5 — integrated planning controls and warm-neutral status surfaces */
+/* V0.15.6 — integrated planning controls, no duplicate CTA, finished Future wait styling */
 
-/* Current: the overpayment recommendation belongs to Trajectory. */
-.app-view-current .trajectory-with-what-if .v15-action-card{
-  margin:0 26px!important;
-  padding:14px 0 16px!important;
-  border:0!important;
-  border-bottom:1px solid var(--border-soft)!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-.app-view-current .trajectory-with-what-if .v15-action-icon{
-  width:34px!important;height:34px!important;flex-basis:34px!important;border-radius:10px!important;
-}
-.app-view-current .trajectory-with-what-if .v15-action-copy strong{font-size:16px!important}
-.app-view-current .trajectory-with-what-if .v15-action-card button{font-size:11px!important}
+/* The What-if controls already do this job; remove the duplicate recommendation row. */
+.app-view-current .v15-action-card{display:none!important}
 
 /* Custom amount is a chip, not a form block. */
 .app-view-current .trajectory-custom-overpay,
@@ -98,6 +85,22 @@
   border-color:#252d36!important;
 }
 
+/* Future wait section: use the same finished warm-light typography and surfaces. */
+#futureWaitPlanner .future-wait-heading h2{
+  color:var(--text)!important;
+  opacity:1!important;
+}
+#futureWaitPlanner .future-wait-heading .eyebrow{color:var(--accent-strong)!important}
+#futureWaitPlanner .next-home-timeline,
+#futureWaitPlanner .next-home-timeline-row{color:var(--text)!important}
+#futureWaitPlanner .next-home-timeline-row{
+  background:#f2ece3!important;
+  border-color:var(--border-soft)!important;
+}
+#futureWaitPlanner .next-home-timeline-row span,
+#futureWaitPlanner .next-home-timeline-row small{color:var(--muted)!important}
+#futureWaitPlanner .next-home-timeline-row strong{color:var(--text)!important}
+
 /* Upcoming status/action: neutral warm surface, not pale green. */
 .app-view-upcoming .upcoming-action,
 .app-view-upcoming .upcoming-action:hover,
@@ -126,7 +129,6 @@
 .app-view-upcoming .upcoming-action h3{color:var(--text)!important}
 
 @media(max-width:700px){
-  .app-view-current .trajectory-with-what-if .v15-action-card{margin:0 18px!important;align-items:flex-start!important}
   .app-view-future .app-view-heading.future-heading-integrated{display:block!important;padding-bottom:10px!important}
   .app-view-future .app-view-heading.future-heading-integrated>p{text-align:left!important;margin-top:4px!important}
   .app-view-future .app-view-heading.future-heading-integrated>#futureOverpaymentAssumption{display:grid!important;gap:10px!important;margin-top:10px!important}
