@@ -1,13 +1,15 @@
 {
-  "schema": 1,
-  "sourceAsOf": "2026-08-01",
+  "schema": 2,
+  "sourceAsOf": "2026-08-31",
   "publishedForApp": "2026-09-17",
-  "source": "Moneyfacts Treasury Reports / Moneyfacts Group public market analysis",
-  "sourceNote": "Indicative UK market averages. Not personalised mortgage offers. Product fees, eligibility and property criteria are not included.",
+  "source": "Bank of England Database",
+  "sourceShort": "Bank of England",
+  "licence": "UK Open Government Licence",
+  "sourceNote": "Quoted household mortgage-rate benchmarks from the Bank of England Database. These are market reference rates, not personalised mortgage offers. Product fees, eligibility and lender criteria are not included.",
   "bands": [
-    { "ltv": 60, "twoYear": 5.17, "fiveYear": 5.46 },
-    { "ltv": 90, "twoYear": 5.84, "fiveYear": 5.75 },
-    { "ltv": 95, "twoYear": 6.20, "fiveYear": 6.08 }
+    { "ltv": 75, "twoYear": 4.77, "fiveYear": 4.78, "series": { "twoYear": "IUMBV34", "fiveYear": "IUMBV42" } },
+    { "ltv": 95, "twoYear": 5.52, "fiveYear": 5.36, "series": { "twoYear": "IUM2WTL", "fiveYear": "IUM5WTL" } }
   ],
-  "overall": { "twoYear": 5.63, "fiveYear": 5.66, "svr": 7.13 }
+  "overall": { "twoYear": 4.77, "fiveYear": 4.78 },
+  "bandNote": "75% LTV benchmark is used at or below 75% LTV. Above 75%, the 95% LTV benchmark is used as a conservative planning proxy because the Bank of England publishes a directly comparable five-year quoted series at 75% and 95% LTV."
 }
