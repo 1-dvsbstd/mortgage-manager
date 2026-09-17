@@ -24,8 +24,8 @@
   }
 
   function homeSettings() {
-    try { return JSON.parse(localStorage.getItem(HOME_KEY) || '{}') || {}';
-    } catch (_) { return {}; }
+    try { return JSON.parse(localStorage.getItem(HOME_KEY) || '{}') || {}; }
+    catch (_) { return {}; }
   }
 
   function refreshOptionalSections() {
