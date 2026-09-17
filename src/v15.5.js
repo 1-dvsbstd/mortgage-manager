@@ -23,10 +23,50 @@
     if(title) title.textContent = 'How your next-home budget could grow over time';
   }
 
+  function refineModelRange(){
+    const panel = $('#futureModelRange');
+    const range = $('#homeProfileRange');
+    if(!panel || !range) return;
+
+    const eyebrow = $('.future-model-heading .eyebrow', panel);
+    const title = $('.future-model-heading h2', panel);
+    if(eyebrow) eyebrow.textContent = 'Estimate range';
+    if(title) title.textContent = 'A sensible range for today’s home value';
+
+    if(range.dataset.rangeRefined !== 'true'){
+      const low = $('#homeRangeLow', range)?.textContent || '—';
+      const centre = $('#homeRangeTrend', range)?.textContent || '—';
+      const high = $('#homeRangeHigh', range)?.textContent || '—';
+      const note = $('#homeProfileRangeNote', range)?.textContent || 'Based on your purchase details and growth assumptions.';
+
+      range.dataset.rangeRefined = 'true';
+      range.innerHTML = `
+        <div class="v157-range-copy">
+          <span>Planning range today</span>
+          <strong><span id="homeRangeLow">${low}</span> <i>to</i> <span id="homeRangeHigh">${high}</span></strong>
+          <small id="homeProfileRangeNote">${note}</small>
+        </div>
+        <div class="v157-range-scale" aria-label="Lower, centre and higher home value estimates">
+          <div class="v157-range-line"><i class="v157-centre-marker"></i></div>
+          <div class="v157-range-labels">
+            <div><span>Lower growth</span><strong data-range-low>${low}</strong></div>
+            <div class="is-centre"><span>Centre estimate</span><strong id="homeRangeTrend">${centre}</strong></div>
+            <div><span>Higher growth</span><strong data-range-high>${high}</strong></div>
+          </div>
+        </div>`;
+    }
+
+    const lowMirror = $('[data-range-low]', range);
+    const highMirror = $('[data-range-high]', range);
+    if(lowMirror) lowMirror.textContent = $('#homeRangeLow', range)?.textContent || '—';
+    if(highMirror) highMirror.textContent = $('#homeRangeHigh', range)?.textContent || '—';
+  }
+
   function run(){
     removeDuplicateAction();
     integrateFutureAssumption();
     refineFutureWaitCopy();
+    refineModelRange();
   }
 
   if(window.MortgageStore?.subscribe) MortgageStore.subscribe(() => requestAnimationFrame(run));
@@ -35,8 +75,8 @@
   });
 
   if(document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => [250,700,1300].forEach((delay) => setTimeout(run, delay)), { once:true });
+    document.addEventListener('DOMContentLoaded', () => [250,700,1300,2100].forEach((delay) => setTimeout(run, delay)), { once:true });
   } else {
-    [0,350,900].forEach((delay) => setTimeout(run, delay));
+    [0,350,900,1700].forEach((delay) => setTimeout(run, delay));
   }
 })();
