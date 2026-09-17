@@ -1,4 +1,4 @@
-/* V0.15.7 — integrated planning controls, no duplicate CTA, clearer Future planning */
+/* V0.15.8 — integrated planning controls, no duplicate CTA, clearer Future planning */
 
 /* The What-if controls already do this job; remove the duplicate recommendation row. */
 .app-view-current .v15-action-card{display:none!important}
@@ -147,6 +147,45 @@
 .app-view-future .v157-range-labels span{display:block;color:var(--muted)!important;font-size:9px}
 .app-view-future .v157-range-labels strong{display:block;margin-top:3px;color:var(--text)!important;font-size:15px}
 .app-view-future .v157-range-labels .is-centre strong{color:var(--accent-strong)!important;font-size:17px}
+
+/* Authoritative Future typography — prevent washed-out legacy light text. */
+body[data-app-view="future"] #homeProjection .projection-heading h2,
+body[data-app-view="future"] #futureModelRange .future-model-heading h2{
+  color:#202833!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#202833!important;
+}
+body[data-app-view="future"] #homeProjection .projection-heading .eyebrow,
+body[data-app-view="future"] #futureModelRange .future-model-heading .eyebrow{
+  color:#9d6639!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#9d6639!important;
+}
+body[data-app-view="future"] #homeProjection .projection-heading .source-date{
+  color:#6d7278!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#6d7278!important;
+}
+body[data-app-view="future"] #futureModelRange .v157-range-copy>strong,
+body[data-app-view="future"] #futureModelRange .v157-range-labels strong,
+body[data-app-view="future"] #homeProjection .projection-core-card>strong{
+  color:#202833!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#202833!important;
+}
+body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre strong{
+  color:#9d6639!important;
+  -webkit-text-fill-color:#9d6639!important;
+}
+body[data-app-view="future"] #futureModelRange .v157-range-copy>strong i,
+body[data-app-view="future"] #futureModelRange .v157-range-copy>small,
+body[data-app-view="future"] #futureModelRange .v157-range-labels span,
+body[data-app-view="future"] #homeProjection .projection-core-card>span,
+body[data-app-view="future"] #homeProjection .projection-core-card>small{
+  color:#6d7278!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#6d7278!important;
+}
 
 /* Upcoming status/action: neutral warm surface, not pale green. */
 .app-view-upcoming .upcoming-action,
