@@ -1,0 +1,236 @@
+/* V0.15.1 — palette/contrast polish and trajectory cohesion */
+
+/* Light theme should win over every legacy dark-theme selector. */
+.app-view,
+.app-view-current,
+.app-view-upcoming,
+.app-view-future,
+.app-view-content,
+.upcoming-workspace,
+.upcoming-sections{
+  color:var(--text)!important;
+  background:transparent!important;
+}
+
+.app-view h1,
+.app-view h2,
+.app-view h3,
+.app-view h4,
+.app-view strong,
+.upcoming-section-heading h2,
+.deal-planner-heading h2,
+.deal-planner-subhead strong,
+.home-profile-heading h2,
+.next-home-heading h2,
+.cost-heading h2{
+  color:var(--text)!important;
+}
+
+.app-view p,
+.app-view small,
+.app-view span,
+.upcoming-section-heading p,
+.deal-planner-note{
+  border-color:var(--border-soft);
+}
+
+/* CURRENT — keep the dark inset chart, but make the whole component one unit. */
+.app-view-current .chart-panel.trajectory-with-what-if{
+  background:var(--surface)!important;
+  border:1px solid var(--border)!important;
+  box-shadow:0 18px 52px rgba(64,50,38,.09)!important;
+  overflow:hidden!important;
+}
+
+.app-view-current .trajectory-with-what-if>.panel-heading{
+  padding:26px 26px 16px!important;
+  margin:0!important;
+  border-bottom:1px solid var(--border-soft)!important;
+}
+
+.app-view-current .trajectory-with-what-if>.panel-heading h2{
+  color:var(--text)!important;
+}
+
+.app-view-current .trajectory-scenario-controls{
+  margin:0 26px!important;
+  padding:18px 0 20px!important;
+  border:0!important;
+  border-bottom:1px solid var(--border-soft)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+.app-view-current .trajectory-scenario-copy{
+  padding:0 0 13px!important;
+  margin:0 0 13px!important;
+  border-bottom:0!important;
+}
+
+.app-view-current .trajectory-scenario-copy h3{
+  color:var(--text)!important;
+  font-size:17px!important;
+}
+
+.app-view-current .trajectory-current-saving>strong{
+  color:var(--text)!important;
+}
+
+.app-view-current .trajectory-overpay-row button,
+.app-view-current .trajectory-custom-overpay{
+  background:#fffaf4!important;
+  border:1px solid var(--border)!important;
+  color:var(--text)!important;
+  box-shadow:0 2px 8px rgba(64,50,38,.035)!important;
+}
+
+.app-view-current .trajectory-overpay-row button.active{
+  background:#252d36!important;
+  border-color:#252d36!important;
+  color:#fffaf3!important;
+}
+
+.app-view-current .trajectory-with-what-if>.chart-wrap{
+  margin:20px 26px 0!important;
+  width:calc(100% - 52px)!important;
+  border-radius:18px!important;
+  background:#172129!important;
+}
+
+.app-view-current .trajectory-with-what-if>.legend{
+  margin:10px 26px 0!important;
+  padding:0 0 24px!important;
+}
+
+/* UPCOMING — remove inherited forest-green blocks. */
+.app-view-upcoming .upcoming-workspace,
+.app-view-upcoming .design-workspace-full,
+.app-view-upcoming .upcoming-sections{
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+.app-view-upcoming .upcoming-section,
+.app-view-upcoming .upcoming-timeline,
+.app-view-upcoming .upcoming-position,
+.app-view-upcoming .upcoming-rates,
+.app-view-upcoming .upcoming-action,
+.app-view-upcoming .upcoming-interest{
+  background:var(--surface)!important;
+  border:1px solid var(--border)!important;
+  color:var(--text)!important;
+  box-shadow:0 16px 44px rgba(62,49,38,.07)!important;
+}
+
+.app-view-upcoming .upcoming-action{
+  background:linear-gradient(90deg,#fff8ef,#f2e6d8)!important;
+  border-color:rgba(200,142,92,.22)!important;
+}
+
+.app-view-upcoming .upcoming-action h2,
+.app-view-upcoming .upcoming-action strong{
+  color:var(--text)!important;
+}
+
+.app-view-upcoming .current-fix-stats>div,
+.app-view-upcoming .deal-planner-summary>div,
+.app-view-upcoming .deal-planner-rate,
+.app-view-upcoming .deal-planner-milestone{
+  background:#f4ede4!important;
+  border-color:var(--border-soft)!important;
+  color:var(--text)!important;
+}
+
+.app-view-upcoming .deal-planner-rate.is-current-rate{
+  background:#fff8ef!important;
+  border-color:rgba(200,142,92,.42)!important;
+  box-shadow:inset 0 0 0 1px rgba(200,142,92,.08)!important;
+}
+
+.app-view-upcoming .deal-planner-rate span,
+.app-view-upcoming .deal-planner-rate em,
+.app-view-upcoming .deal-planner-summary span,
+.app-view-upcoming .deal-planner-summary small,
+.app-view-upcoming .current-fix-stats span,
+.app-view-upcoming .current-fix-stats small{
+  color:var(--muted)!important;
+}
+
+.app-view-upcoming .deal-planner-rate strong,
+.app-view-upcoming .deal-planner-summary strong,
+.app-view-upcoming .current-fix-stats strong{
+  color:var(--text)!important;
+}
+
+.app-view-upcoming .deal-planner-rate.is-current-rate span,
+.app-view-upcoming .deal-planner-milestone span{
+  color:var(--accent-strong)!important;
+}
+
+/* FUTURE — fix inherited pale-on-pale headings and make nested cards quieter. */
+.app-view-future .future-overpayment-assumption,
+.app-view-future .future-model-range-panel,
+.app-view-future .future-wait-planner,
+.app-view-future .temporal-feature-home-projection,
+.app-view-future .temporal-feature-next-home,
+.app-view-future .temporal-feature-cost-comparison{
+  background:var(--surface)!important;
+  border-color:var(--border)!important;
+  color:var(--text)!important;
+  box-shadow:0 16px 44px rgba(62,49,38,.07)!important;
+}
+
+.app-view-future .future-overpayment-assumption{
+  background:#efe4d7!important;
+  box-shadow:none!important;
+}
+
+.app-view-future h2,
+.app-view-future h3,
+.app-view-future .home-profile-heading h2,
+.app-view-future .future-model-range-panel h2,
+.app-view-future .next-home-heading h2,
+.app-view-future .cost-heading h2{
+  color:var(--text)!important;
+}
+
+.app-view-future .home-profile-range>div,
+.app-view-future .next-home-summary-card,
+.app-view-future .next-home-timeline-row,
+.app-view-future .property-cost-card,
+.app-view-future .future-model-range-panel .model-range-summary,
+.app-view-future .future-wait-host{
+  background:#f4ede4!important;
+  border-color:var(--border-soft)!important;
+  color:var(--text)!important;
+}
+
+.app-view-future .home-profile-range strong,
+.app-view-future .next-home-summary-card strong,
+.app-view-future .next-home-timeline-row strong,
+.app-view-future .property-cost-card strong{
+  color:var(--text)!important;
+}
+
+/* Use green only semantically, not as chrome. */
+.v15-stat.is-positive strong,
+.v15-stat.is-positive small,
+.app-view-future .is-positive strong{
+  color:#477e70!important;
+}
+
+/* General light form/control cleanup. */
+.app-view button:not(.is-active),
+.app-view input,
+.app-view select,
+.app-view textarea{
+  color:var(--text);
+}
+
+@media(max-width:700px){
+  .app-view-current .trajectory-with-what-if>.panel-heading{padding:20px 18px 14px!important}
+  .app-view-current .trajectory-scenario-controls{margin:0 18px!important;padding:15px 0 17px!important}
+  .app-view-current .trajectory-with-what-if>.chart-wrap{margin:16px 18px 0!important;width:calc(100% - 36px)!important}
+  .app-view-current .trajectory-with-what-if>.legend{margin:10px 18px 0!important;padding-bottom:18px!important}
+}
