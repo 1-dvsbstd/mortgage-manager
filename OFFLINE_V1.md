@@ -29,6 +29,7 @@ The goal of Offline V1 is a polished one-off purchase that works fully without a
 - [x] LTV-aware 2-year and 5-year indicative benchmark projections
 - [x] Selectable deal-end planning benchmark
 - [x] Graceful cached fallback if fresh data cannot be reached
+- [x] Connectivity copy distinguishes fresh online data from saved fallback data
 - [ ] Final source/licensing wording review before sale
 - [ ] Set a simple update cadence for `public/market-rates.json`
 
@@ -41,10 +42,21 @@ The goal of Offline V1 is a polished one-off purchase that works fully without a
 - [ ] Final legal/commercial wording review before sale
 - [ ] Review empty states for missing optional inputs
 
+## Offline/PWA architecture
+- [x] Service worker registered by the app
+- [x] Full current app shell pre-cached
+- [x] Market snapshot included in cache
+- [x] Cache-busting query strings fall back to cached assets offline
+- [x] Old development code that unregistered service workers / deleted caches removed
+- [x] Automated Offline V1 service-worker guard included in `npm test`
+- [ ] Browser no-network reload verified manually
+
 ## Visual and functional QA
 - [x] Automated mortgage regression tests passing on the Offline V1 branch
+- [x] Automated Offline V1 caching/service-worker checks passing on the Offline V1 branch
 - [x] Live market cards moved into the visible Upcoming → Rate scenarios section
 - [x] Mobile top-bar controls compacted
+- [x] Browser QA procedure documented in `RELEASE_QA.md`
 - [ ] Desktop Chrome / Edge interaction pass
 - [ ] Mobile Safari / Chrome interaction pass
 - [ ] Keyboard and focus pass
@@ -65,7 +77,7 @@ The goal of Offline V1 is a polished one-off purchase that works fully without a
 Before Offline V1 is offered for sale, all of these must be complete:
 - [ ] Backup round-trip verified in a browser
 - [ ] Desktop and mobile smoke tests complete
-- [ ] Offline / failed-rate-feed behaviour verified
+- [ ] Offline / failed-rate-feed behaviour verified in a browser
 - [x] Methodology and core disclaimer copy present in-product
 - [ ] Final legal/commercial wording review complete
 - [ ] Market data source / redistribution wording reviewed
