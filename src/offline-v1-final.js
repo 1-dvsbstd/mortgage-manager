@@ -5,6 +5,12 @@
   const HISTORY_KEY='mortgage-manager-mortgage-history-v1';
   const HOME_KEY='mortgage-manager-home-projection-v4';
 
+  function markBuild(){
+    const version=$('.brand span');
+    if(version) version.textContent='V0.15.17';
+    document.documentElement.dataset.mortgageManagerBuild='01517';
+  }
+
   function history(){
     try{return JSON.parse(localStorage.getItem(HISTORY_KEY)||'{}')||{};}
     catch(_){return {};}
@@ -149,6 +155,7 @@
   }
 
   function run(){
+    markBuild();
     stripLegacyExpansion();
     makeMarketBenchmarksReadOnly();
     fixDealEndMilestone();
