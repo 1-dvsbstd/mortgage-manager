@@ -4,13 +4,13 @@
       const link=document.createElement('link');
       link.id='offlineV1FinalStyle';
       link.rel='stylesheet';
-      link.href='src/offline-v1-final.css?v=01515';
+      link.href='src/offline-v1-final.css?v=01516';
       document.head.appendChild(link);
     }
     if(!document.getElementById('offlineV1FinalScript')){
       const script=document.createElement('script');
       script.id='offlineV1FinalScript';
-      script.src='src/offline-v1-final.js?v=01515';
+      script.src='src/offline-v1-final.js?v=01516';
       script.defer=true;
       document.body.appendChild(script);
     }
