@@ -7,7 +7,6 @@ $Root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Address = [System.Net.IPAddress]::Loopback
 $Build = '01519'
 $LaunchNonce = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
-$Url = "http://localhost:$Port/?build=$Build&launch=$LaunchNonce"
 
 function Get-ContentType([string]$Path) {
   switch ([System.IO.Path]::GetExtension($Path).ToLowerInvariant()) {
@@ -26,24 +25,38 @@ function Get-ContentType([string]$Path) {
   }
 }
 
-$server = [System.Net.Sockets.TcpListener]::new($Address, $Port)
+$server = $null
+$selectedPort = $null
+for ($candidatePort = $Port; $candidatePort -lt ($Port + 20); $candidatePort++) {
+  $candidateServer = [System.Net.Sockets.TcpListener]::new($Address, $candidatePort)
+  try {
+    $candidateServer.Start()
+    $server = $candidateServer
+    $selectedPort = $candidatePort
+    break
+  } catch {
+    try { $candidateServer.Stop() } catch {}
+  }
+}
 
-try {
-  $server.Start()
-} catch {
-  Write-Host "Mortgage Manager could not start on port $Port." -ForegroundColor Red
-  Write-Host 'Another copy may already be running. Close the older Mortgage Manager PowerShell window first, then try again.'
+if (-not $server -or -not $selectedPort) {
+  Write-Host "Mortgage Manager could not find a free local port starting at $Port." -ForegroundColor Red
   Write-Host "This copy would serve from: $Root"
   Write-Host "Expected UI build: V0.15.19"
   Read-Host 'Press Enter to close'
   exit 1
 }
 
+$Url = "http://localhost:$selectedPort/?build=$Build&launch=$LaunchNonce"
+
 Write-Host ''
 Write-Host 'Mortgage Manager is running locally.' -ForegroundColor Green
 Write-Host $Url
 Write-Host "Serving from: $Root" -ForegroundColor Cyan
 Write-Host "Expected UI build: V0.15.19" -ForegroundColor Yellow
+if ($selectedPort -ne $Port) {
+  Write-Host "Port $Port was already in use, so this copy is using port $selectedPort instead." -ForegroundColor Yellow
+}
 Write-Host 'Your mortgage data stays in this browser on this device.'
 Write-Host 'Keep this window open while using the app. Press Ctrl+C to stop.'
 Write-Host ''
