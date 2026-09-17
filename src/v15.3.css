@@ -1,0 +1,115 @@
+/* V0.15.3 — warm ivory / ink / copper consolidation */
+
+:root{
+  --bg:#f4f1eb;
+  --surface:#fbf8f3;
+  --surface-soft:#f2ece3;
+  --surface-muted:#ebe2d6;
+  --text:#202833;
+  --muted:#70767c;
+  --muted-2:#92969a;
+  --border:rgba(64,54,45,.14);
+  --border-soft:rgba(64,54,45,.09);
+  --accent:#c58a56;
+  --accent-strong:#9b663b;
+  --equity:#78978e;
+  --debt:#8a949c;
+}
+
+/* Journey is part of the hero, not another card. */
+.app-view-current .hero-panel.current-hero-condensed{grid-template-rows:auto 1fr!important}
+.app-view-current .hero-panel>.v15-current-journey{
+  grid-column:1/-1;
+  grid-row:1;
+  margin:0;
+  padding:13px 22px 12px;
+  border:0!important;
+  border-bottom:1px solid var(--border-soft)!important;
+  border-radius:0!important;
+  background:rgba(246,240,232,.92)!important;
+  box-shadow:none!important;
+}
+.app-view-current .hero-panel>.v15-current-journey+.hero-main{grid-column:1;grid-row:2}
+.app-view-current .hero-panel>.v15-current-journey~.v15-home-visual{grid-column:2;grid-row:2}
+.v15-current-journey-head{margin-bottom:9px!important;align-items:center!important}
+.v15-current-journey-head>div>strong{font-size:13px!important}
+.v15-current-journey-link{font-size:10px!important}
+.v15-current-journey-track::before{background:#d8d1c8!important}
+.v15-current-journey-step.is-complete .v15-current-journey-icon{background:#f7f3ed!important;border-color:#9ca9a4!important;color:#55625e!important}
+.v15-current-journey-step.is-current .v15-current-journey-icon{background:#fff3e7!important;border-color:var(--accent)!important;color:var(--accent-strong)!important}
+
+/* Trajectory should follow the light product palette. */
+.app-view-current .trajectory-with-what-if>.chart-wrap{
+  background:#f3ede5!important;
+  border:1px solid var(--border)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45)!important;
+}
+.chart-readout{background:#ebe3d9!important;border-color:var(--border-soft)!important;color:var(--text)!important}
+.chart-readout span,.chart-readout strong{color:var(--text)!important}
+.dot.scheduled-line{background:#8a949c!important}
+.dot.regular-line{background:#c39b72!important}
+.dot.selected-line{background:#9b663b!important}
+.dot.equity-line{background:#b8aa99!important}
+
+/* Upcoming: remove all green slabs and hover-only correction. */
+.app-view-upcoming .deal-planner-rate,
+.app-view-upcoming .deal-planner-summary>div,
+.app-view-upcoming .current-fix-stats>div{
+  background:#f2ece3!important;
+  border-color:var(--border-soft)!important;
+}
+.app-view-upcoming .deal-planner-rate:hover,
+.app-view-upcoming .deal-planner-summary>div:hover,
+.app-view-upcoming .current-fix-stats>div:hover{background:#eee6dc!important}
+.app-view-upcoming .deal-planner-rate.is-current-rate{background:#fff6eb!important;border-color:rgba(197,138,86,.36)!important}
+.app-view-upcoming .deal-planner-rate>strong,
+.app-view-upcoming .deal-planner-summary strong,
+.app-view-upcoming .current-fix-stats strong{color:var(--text)!important}
+.app-view-upcoming .deal-planner-rate>span,
+.app-view-upcoming .deal-planner-rate>em,
+.app-view-upcoming .deal-planner-summary span,
+.app-view-upcoming .deal-planner-summary small,
+.app-view-upcoming .current-fix-stats span,
+.app-view-upcoming .current-fix-stats small{color:var(--muted)!important}
+.app-view-upcoming .deal-planner-milestone{background:#f1e8dd!important}
+.app-view-upcoming .upcoming-action{background:#f8efe4!important;border-color:rgba(197,138,86,.18)!important}
+
+/* Future: no pale blue/green selected cards or mint bars. */
+.app-view-future .home-profile-range-values .centre,
+.app-view-future .next-home-summary-card:last-child,
+.app-view-future .is-highlighted,
+.app-view-future .is-current{
+  background:#f4ede4!important;
+  border-color:rgba(197,138,86,.22)!important;
+}
+.app-view-future .home-profile-range,
+.app-view-future .home-profile-range-values>div,
+.app-view-future .next-home-summary-card,
+.app-view-future .next-home-timeline-row,
+.app-view-future .property-cost-card,
+.app-view-future .future-wait-host{
+  background:#f2ece3!important;
+  border-color:var(--border-soft)!important;
+}
+.app-view-future .cost-scale{background:#ddd4c9!important}
+.app-view-future .cost-scale>i{background:linear-gradient(90deg,#d3b18e,#b77f4e)!important}
+.app-view-future .projection-use-button,
+.app-view-future button.active{border-color:rgba(197,138,86,.35)!important}
+
+/* Global legacy mint progress bars: warm neutral/copper unless semantically equity. */
+.app-view-upcoming .progress-fill,
+.app-view-upcoming .timeline-fill{background:linear-gradient(90deg,#d6b18c,#b77f4e)!important}
+.app-view-future .progress-fill,
+.app-view-future .timeline-fill,
+.app-view-future .equity-progress-track i{background:linear-gradient(90deg,#d3b18e,#b77f4e)!important}
+
+@media(max-width:1050px){
+  .app-view-current .hero-panel>.v15-current-journey~.v15-home-visual{grid-column:1;grid-row:2}
+  .app-view-current .hero-panel>.v15-current-journey+.hero-main{grid-column:1;grid-row:3}
+  .app-view-current .hero-panel.current-hero-condensed{grid-template-rows:auto auto auto!important}
+}
+
+@media(max-width:700px){
+  .app-view-current .hero-panel>.v15-current-journey{padding:12px 14px 10px}
+  .v15-current-journey-head>div>strong{font-size:12px!important}
+}
