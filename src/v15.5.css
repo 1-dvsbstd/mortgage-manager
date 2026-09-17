@@ -150,13 +150,15 @@
 
 /* Authoritative Future typography — prevent washed-out legacy light text. */
 body[data-app-view="future"] #homeProjection .projection-heading h2,
-body[data-app-view="future"] #futureModelRange .future-model-heading h2{
+body[data-app-view="future"] #futureModelRange .future-model-heading h2,
+body[data-app-view="future"] #propertyCostComparison .deep-heading h2{
   color:#202833!important;
   opacity:1!important;
   -webkit-text-fill-color:#202833!important;
 }
 body[data-app-view="future"] #homeProjection .projection-heading .eyebrow,
-body[data-app-view="future"] #futureModelRange .future-model-heading .eyebrow{
+body[data-app-view="future"] #futureModelRange .future-model-heading .eyebrow,
+body[data-app-view="future"] #propertyCostComparison .deep-heading .eyebrow{
   color:#9d6639!important;
   opacity:1!important;
   -webkit-text-fill-color:#9d6639!important;
@@ -168,7 +170,8 @@ body[data-app-view="future"] #homeProjection .projection-heading .source-date{
 }
 body[data-app-view="future"] #futureModelRange .v157-range-copy>strong,
 body[data-app-view="future"] #futureModelRange .v157-range-labels strong,
-body[data-app-view="future"] #homeProjection .projection-core-card>strong{
+body[data-app-view="future"] #homeProjection .projection-core-card>strong,
+body[data-app-view="future"] #propertyCostComparison .property-cost-card>strong{
   color:#202833!important;
   opacity:1!important;
   -webkit-text-fill-color:#202833!important;
@@ -181,7 +184,10 @@ body[data-app-view="future"] #futureModelRange .v157-range-copy>strong i,
 body[data-app-view="future"] #futureModelRange .v157-range-copy>small,
 body[data-app-view="future"] #futureModelRange .v157-range-labels span,
 body[data-app-view="future"] #homeProjection .projection-core-card>span,
-body[data-app-view="future"] #homeProjection .projection-core-card>small{
+body[data-app-view="future"] #homeProjection .projection-core-card>small,
+body[data-app-view="future"] #propertyCostComparison .property-cost-card>span,
+body[data-app-view="future"] #propertyCostComparison .property-cost-card>small,
+body[data-app-view="future"] #propertyCostComparison .deep-note{
   color:#6d7278!important;
   opacity:1!important;
   -webkit-text-fill-color:#6d7278!important;
