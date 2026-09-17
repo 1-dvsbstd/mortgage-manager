@@ -30,7 +30,8 @@ try {
   $server.Start()
 } catch {
   Write-Host "Mortgage Manager could not start on port $Port." -ForegroundColor Red
-  Write-Host 'Close another copy if it is already running, then try again.'
+  Write-Host 'Another copy may already be running. Close the older Mortgage Manager PowerShell window first, then try again.'
+  Write-Host "This copy would serve from: $Root"
   Read-Host 'Press Enter to close'
   exit 1
 }
@@ -38,6 +39,7 @@ try {
 Write-Host ''
 Write-Host 'Mortgage Manager is running locally.' -ForegroundColor Green
 Write-Host $Url
+Write-Host "Serving from: $Root" -ForegroundColor Cyan
 Write-Host 'Your mortgage data stays in this browser on this device.'
 Write-Host 'Keep this window open while using the app. Press Ctrl+C to stop.'
 Write-Host ''
@@ -80,7 +82,7 @@ try {
         $contentType = Get-ContentType $candidate
       }
 
-      $headers = "HTTP/1.1 $status`r`nContent-Type: $contentType`r`nContent-Length: $($body.Length)`r`nCache-Control: no-cache`r`nConnection: close`r`n`r`n"
+      $headers = "HTTP/1.1 $status`r`nContent-Type: $contentType`r`nContent-Length: $($body.Length)`r`nCache-Control: no-store, no-cache, must-revalidate, max-age=0`r`nPragma: no-cache`r`nExpires: 0`r`nConnection: close`r`n`r`n"
       $headerBytes = [System.Text.Encoding]::ASCII.GetBytes($headers)
       $stream.Write($headerBytes, 0, $headerBytes.Length)
       $stream.Write($body, 0, $body.Length)
