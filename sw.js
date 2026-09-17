@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-offline-v1-3';
+const CACHE_NAME = 'mortgage-manager-offline-v1-4';
 const APP_SHELL = [
   './',
   './index.html',
@@ -86,7 +86,7 @@ self.addEventListener('fetch', (event) => {
 
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request)
+      fetch(event.request, { cache:'no-store' })
         .then((response) => {
           if (response && response.ok) {
             const copy = response.clone();
@@ -100,7 +100,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   event.respondWith(
-    fetch(event.request)
+    fetch(event.request, { cache:'no-store' })
       .then((response) => {
         if (response && response.ok && new URL(event.request.url).origin === self.location.origin) {
           const copy = response.clone();
