@@ -66,7 +66,7 @@ body .personal-modal .personal-section>summary::after{
   color:#7e5837!important;
   font-size:18px!important;
   line-height:1!important;
-  transition:transform .16s ease!important;
+  transition:transform .12s ease!important;
 }
 body .personal-modal details.personal-section[open]>summary::after,
 body .personal-modal .personal-section[open]>summary::after{transform:translateY(-50%) rotate(90deg)!important}
@@ -78,6 +78,31 @@ body .personal-modal input[type='month']::-webkit-calendar-picker-indicator{
   opacity:.9!important;
   cursor:pointer!important;
   filter:contrast(1.25)!important;
+}
+
+/* Variable-height disclosure panels must not lift/animate while opening. */
+body details,
+body details[open],
+body .personal-modal details.personal-section,
+body .app-view details,
+body #nextHomePlanner,
+body #homeValueHistory,
+body .next-home-settings,
+body .edit-panel{
+  transition:none!important;
+  animation:none!important;
+  transform:none!important;
+  overflow-anchor:none!important;
+}
+@media(hover:hover) and (pointer:fine){
+  body .personal-modal details.personal-section:hover,
+  body .app-view details:hover,
+  body #nextHomePlanner:hover,
+  body #homeValueHistory:hover,
+  body .next-home-settings:hover,
+  body .edit-panel:hover{
+    transform:none!important;
+  }
 }
 
 /* Ownership wording is clarified in JS; make history grid less cramped. */
