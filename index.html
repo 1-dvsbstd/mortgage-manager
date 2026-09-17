@@ -42,8 +42,9 @@
   <link rel="stylesheet" href="src/v15.12.css?v=01515" />
   <link rel="stylesheet" href="src/v15.14.css?v=01515" />
   <script>
-    if ('serviceWorker' in navigator) navigator.serviceWorker.getRegistrations().then((registrations) => registrations.forEach((registration) => registration.unregister()));
-    if ('caches' in window) caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key))));
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+    }
   </script>
 </head>
 <body>
@@ -70,13 +71,13 @@
             <div class="deep-stat"><span>Next 12 months</span><strong id="yearCapital">—</strong><small id="yearInterest">—</small></div>
           </div>
           <div class="market-block">
-            <div class="deep-heading"><div><p class="eyebrow">Market snapshot</p><h2>Your rate vs indicative UK averages</h2></div><span class="source-date">Moneyfacts · 1 Sep 2026</span></div>
+            <div class="deep-heading"><div><p class="eyebrow">Market snapshot</p><h2>Your rate vs indicative UK averages</h2></div><span class="source-date">Market benchmark · dated snapshot</span></div>
             <div class="market-comparison">
               <div class="market-current"><span>Your rate</span><strong id="marketCurrentRate">—</strong><small id="marketLtvBand">—</small></div>
               <div><span>Avg 2-year fix</span><strong id="market2yRate">—</strong><small id="market2yPayment">—</small></div>
               <div><span>Avg 5-year fix</span><strong id="market5yRate">—</strong><small id="market5yPayment">—</small></div>
             </div>
-            <p class="deep-note">Indicative market averages, not personalised mortgage offers. Product fees, eligibility and property criteria can materially change the best deal.</p>
+            <p class="deep-note">Indicative UK market benchmarks for planning only, not personalised mortgage offers. Fees, eligibility, lender criteria and property details are not included.</p>
           </div>
         </div>
       </div>
