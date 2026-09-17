@@ -1,0 +1,125 @@
+/* V0.15.7 — clearer home-value estimate range */
+
+.app-view-future .future-model-range-panel{
+  padding:24px!important;
+}
+.app-view-future .future-model-heading{
+  margin-bottom:16px!important;
+}
+.app-view-future .future-model-heading h2{
+  color:var(--text)!important;
+}
+
+.app-view-future #homeProfileRange{
+  display:grid!important;
+  grid-template-columns:minmax(240px,.78fr) minmax(0,1.22fr)!important;
+  gap:28px!important;
+  align-items:center!important;
+  margin:0!important;
+  padding:22px 24px!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:18px!important;
+  background:#f2ece3!important;
+  box-shadow:none!important;
+}
+
+.app-view-future .v157-range-copy>span{
+  display:block;
+  color:var(--accent-strong)!important;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.app-view-future .v157-range-copy>strong{
+  display:block;
+  margin-top:5px;
+  color:var(--text)!important;
+  font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+  font-size:25px;
+  font-weight:600;
+  letter-spacing:-.025em;
+}
+.app-view-future .v157-range-copy>strong i{
+  margin:0 5px;
+  color:var(--muted)!important;
+  font-family:inherit;
+  font-size:13px;
+  font-style:normal;
+  font-weight:500;
+}
+.app-view-future .v157-range-copy>small{
+  display:block;
+  margin-top:8px;
+  max-width:420px;
+  color:var(--muted)!important;
+  font-size:10px;
+  line-height:1.5;
+}
+
+.app-view-future .v157-range-line{
+  position:relative;
+  height:6px;
+  margin:12px 8px 11px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#d8c7b5 0%,#c88e5c 50%,#d8c7b5 100%);
+}
+.app-view-future .v157-range-line::before,
+.app-view-future .v157-range-line::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#fffaf4;
+  border:2px solid #bca58e;
+  transform:translateY(-50%);
+}
+.app-view-future .v157-range-line::before{left:-2px}
+.app-view-future .v157-range-line::after{right:-2px}
+.app-view-future .v157-centre-marker{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#252d36;
+  border:3px solid #fffaf4;
+  box-shadow:0 0 0 2px rgba(200,142,92,.34);
+  transform:translate(-50%,-50%);
+}
+
+.app-view-future .v157-range-labels{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:16px;
+  align-items:start;
+}
+.app-view-future .v157-range-labels>div:nth-child(2){text-align:center}
+.app-view-future .v157-range-labels>div:nth-child(3){text-align:right}
+.app-view-future .v157-range-labels span{
+  display:block;
+  color:var(--muted)!important;
+  font-size:9px;
+}
+.app-view-future .v157-range-labels strong{
+  display:block;
+  margin-top:3px;
+  color:var(--text)!important;
+  font-size:15px;
+}
+.app-view-future .v157-range-labels .is-centre strong{
+  color:var(--accent-strong)!important;
+  font-size:17px;
+}
+
+@media(max-width:760px){
+  .app-view-future #homeProfileRange{
+    grid-template-columns:1fr!important;
+    gap:18px!important;
+    padding:18px!important;
+  }
+  .app-view-future .v157-range-copy>strong{font-size:22px}
+}
