@@ -16,6 +16,8 @@ The goal of Offline V1 is a polished one-off purchase that works fully without a
 - [x] First-run setup
 - [x] Export backup
 - [x] Import / restore backup
+- [x] Restore replaces the app dataset cleanly rather than leaving stale Mortgage Manager keys behind
+- [x] Reject unsupported/newer backup versions before changing local data
 - [x] Clear all local data
 - [ ] Complete a backup → clear → restore round-trip on a clean browser profile
 
@@ -34,8 +36,9 @@ The goal of Offline V1 is a polished one-off purchase that works fully without a
 - [x] Clear first-run setup copy
 - [x] On-device privacy messaging
 - [x] Indicative-rate / not-an-offer wording in the product
-- [ ] Add a short Methodology / How calculations work section
-- [ ] Final planning-tool disclaimer review
+- [x] Add a short Methodology / How calculations work section
+- [x] Add clear planning-tool / not-financial-advice wording alongside the methodology
+- [ ] Final legal/commercial wording review before sale
 - [ ] Review empty states for missing optional inputs
 
 ## Visual and functional QA
@@ -60,9 +63,10 @@ The goal of Offline V1 is a polished one-off purchase that works fully without a
 
 ## Ship blockers
 Before Offline V1 is offered for sale, all of these must be complete:
-- [ ] Backup round-trip verified
+- [ ] Backup round-trip verified in a browser
 - [ ] Desktop and mobile smoke tests complete
 - [ ] Offline / failed-rate-feed behaviour verified
-- [ ] Methodology and disclaimer copy complete
+- [x] Methodology and core disclaimer copy present in-product
+- [ ] Final legal/commercial wording review complete
 - [ ] Market data source / redistribution wording reviewed
 - [ ] Sales package and install instructions complete
