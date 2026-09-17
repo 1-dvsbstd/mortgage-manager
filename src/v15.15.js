@@ -1,6 +1,10 @@
 (() => {
   const MARKET_CHOICE_KEY='mortgage-manager-market-choice-v1';
 
+  function setText(node,text){
+    if(node&&node.textContent!==text) node.textContent=text;
+  }
+
   function isolateEnhancedChart(){
     const canvas=document.getElementById('chart');
     if(!canvas||canvas.dataset.enhancedIsolated==='true') return;
@@ -65,7 +69,7 @@
       const difference=payment-currentPayment;
       delta.classList.toggle('is-higher',difference>0.5);
       delta.classList.toggle('is-lower',difference<-0.5);
-      delta.textContent=Math.abs(difference)<0.5?'About the same as your current payment':`${difference>0?'+':'−'}£${Math.round(Math.abs(difference))}/month vs current payment`;
+      setText(delta,Math.abs(difference)<0.5?'About the same as your current payment':`${difference>0?'+':'−'}£${Math.round(Math.abs(difference))}/month vs current payment`);
     });
     let note=box.querySelector('.live-rate-selection-note');
     if(!note){
@@ -73,7 +77,7 @@
       note.className='live-rate-selection-note';
       box.appendChild(note);
     }
-    note.textContent=saved?'Selected benchmark is mirrored in the next-rate estimate above. These are planning figures, not personalised offers.':'Select a benchmark to mirror it in the next-rate estimate above.';
+    setText(note,saved?'Selected benchmark is mirrored in the next-rate estimate above. These are planning figures, not personalised offers.':'Select a benchmark to mirror it in the next-rate estimate above.');
     document.getElementById('rateButtons')?.classList.toggle('has-market-choice',Boolean(saved));
     if(saved){
       const selected=cards.find((card)=>card.dataset.marketChoice===saved);
@@ -96,13 +100,12 @@
     const paymentTarget=document.getElementById('nextRatePayment');
     const labelTarget=document.getElementById('nextRateLabel');
     const noteTarget=document.getElementById('rateNote');
-    if(paymentTarget) paymentTarget.textContent=new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP',maximumFractionDigits:0}).format(payment);
-    if(labelTarget) labelTarget.textContent=`${type==='five-year'?'5-year':'2-year'} benchmark · ${rate.toFixed(2)}%`;
-    if(noteTarget) noteTarget.textContent='Indicative payment at your projected deal-end balance, using the selected market benchmark. Fees, eligibility and lender criteria are not included.';
+    setText(paymentTarget,new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP',maximumFractionDigits:0}).format(payment));
+    setText(labelTarget,`${type==='five-year'?'5-year':'2-year'} benchmark · ${rate.toFixed(2)}%`);
+    setText(noteTarget,'Indicative payment at your projected deal-end balance, using the selected market benchmark. Fees, eligibility and lender criteria are not included.');
     document.querySelectorAll('#rateButtons button').forEach((button)=>button.classList.remove('active'));
     document.getElementById('rateButtons')?.classList.add('has-market-choice');
-    const selectionNote=document.querySelector('#liveRateChoices .live-rate-selection-note');
-    if(selectionNote) selectionNote.textContent='Selected benchmark is mirrored in the next-rate estimate above. These are planning figures, not personalised offers.';
+    setText(document.querySelector('#liveRateChoices .live-rate-selection-note'),'Selected benchmark is mirrored in the next-rate estimate above. These are planning figures, not personalised offers.');
   }
 
   function wireMarketChoices(){
@@ -118,7 +121,7 @@
       applyMarketChoice(card,true);
     });
     const observer=new MutationObserver(()=>decorateMarketChoices());
-    observer.observe(document.body,{childList:true,subtree:true,characterData:true});
+    observer.observe(document.body,{childList:true,subtree:true});
     decorateMarketChoices();
     window.MortgageStore?.subscribe?.(()=>window.setTimeout(decorateMarketChoices,20));
   }
