@@ -129,9 +129,9 @@ body{
 .app-view-current .trajectory-overpay-row button.active{background:#252d36!important;color:#fffaf3!important;border-color:#252d36!important}
 .trajectory-custom-overpay{display:flex;align-items:center;gap:5px;padding:8px 12px;color:var(--muted)!important}
 .trajectory-custom-overpay input{width:74px;border:0;outline:0;background:transparent!important;color:var(--text)!important;font:inherit;font-weight:750}
-.app-view-current .trajectory-with-what-if>.chart-wrap{margin:20px 26px 0!important;width:calc(100% - 52px)!important;padding:16px!important;border:1px solid rgba(28,36,48,.08)!important;border-radius:18px!important;background:#172129!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)!important}
-.chart-panel canvas{background:transparent!important;border:0!important}
-.chart-readout{color:#d8ddd9!important}
+.app-view-current .trajectory-with-what-if>.chart-wrap{margin:18px 24px 0!important;width:calc(100% - 48px)!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.chart-panel canvas{background:transparent!important;border:0!important;box-shadow:none!important}
+.chart-readout{color:var(--muted)!important}
 .app-view-current .trajectory-with-what-if>.legend{margin:10px 26px 0!important;padding:0 0 24px!important;gap:10px 18px!important;color:var(--muted)!important}
 .dot.scheduled-line{background:#8996a0!important}.dot.regular-line{background:#d0a06f!important}.dot.selected-line{background:#78b4a2!important}.dot.equity-line{background:#f0e5d7!important}
 
