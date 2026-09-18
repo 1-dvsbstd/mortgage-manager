@@ -769,3 +769,33 @@ body [hidden]{display:none!important}
 
 /* Legacy ownership badge remains hidden without expandable-cards.css. */
 body #ownershipBadge{display:none!important}
+
+
+/* V0.15.27 — remove redundant wrapper surfaces. */
+body .app-view-future #futureWaitPlanner .future-wait-host{
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body .personal-modal .setup-pane{
+  padding:12px 0 0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body .personal-modal .setup-tab-nav{
+  border:0!important;
+  background:transparent!important;
+  padding:0!important;
+  gap:6px!important;
+}
+body .personal-modal .setup-tab-nav button{
+  border:1px solid transparent!important;
+}
+body .personal-modal .setup-tab-nav button.active{
+  border-color:#d8cdbf!important;
+  box-shadow:0 4px 12px rgba(61,48,36,.045)!important;
+}
