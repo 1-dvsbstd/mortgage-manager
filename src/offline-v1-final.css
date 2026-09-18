@@ -706,3 +706,19 @@ body .v15-journey-strip::before{
   height:2px!important;
   transform:translateY(-50%)!important;
 }
+
+
+/* V0.15.24 — deterministic Mortgage Journey geometry */
+body .v15-journey-strip{
+  box-sizing:border-box!important;
+  width:min(1120px,100%)!important;
+  padding-left:0!important;
+  padding-right:0!important;
+}
+body .v15-journey-strip::before{
+  left:10%!important;
+  right:10%!important;
+  top:31px!important;
+  height:2px!important;
+  transform:translateY(-50%)!important;
+}
