@@ -1,4 +1,4 @@
-.home-profile-range{margin-top:12px;padding:14px 15px;border:1px solid rgba(104,222,185,.12);border-radius:14px;background:rgba(104,222,185,.03)}
+.home-profile-range{margin-top:14px;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
 .home-profile-range-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-end}
 .home-profile-range-head span{display:block;color:var(--accent);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
 .home-profile-range-head strong{display:block;margin-top:4px;font-size:14px}
