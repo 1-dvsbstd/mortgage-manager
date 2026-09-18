@@ -62,7 +62,6 @@
 @media (hover:hover) and (pointer:fine){
   .app-view-current .hero-panel,
   .app-view-current .panel,
-  .app-view-current .v15-current-stats,
   .app-view-current .v15-current-journey,
   .app-view-upcoming .upcoming-section,
   .app-view-upcoming .deal-planner,
@@ -78,7 +77,6 @@
   }
   .app-view-current .hero-panel:hover,
   .app-view-current .panel:hover,
-  .app-view-current .v15-current-stats:hover,
   .app-view-upcoming .upcoming-section:hover,
   .app-view-upcoming .deal-planner:hover,
   .app-view-future #homeProjection:hover,
