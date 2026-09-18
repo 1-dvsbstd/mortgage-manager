@@ -26,16 +26,6 @@ body .connectivity-switch.is-online::after{transform:translateX(23px)!important}
 
 /* Setup & data — rounded sections with breathing room */
 body .personal-modal .setup-pane{padding:16px 6px 6px!important}
-body .personal-modal .personal-section{
-  margin-top:16px!important;
-  padding:18px!important;
-  border:1px solid #ddd2c6!important;
-  border-radius:18px!important;
-  background:rgba(255,250,244,.72)!important;
-  box-shadow:0 8px 24px rgba(61,48,36,.035)!important;
-}
-body .personal-modal .personal-section + .personal-section{margin-top:14px!important}
-body .personal-modal .personal-section h3{margin-top:0!important}
 body .personal-modal details.personal-section>summary,
 body .personal-modal .personal-section>summary{
   position:relative!important;
@@ -403,15 +393,6 @@ body .app-view-future .next-home-body{
   border-top:0!important;
 }
 
-/* Estimate range: flatten the redundant middle container. */
-body .app-view-future .home-profile-range{
-  margin-top:14px!important;
-  padding:0!important;
-  border:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-body .app-view-future .home-profile-range-values{gap:12px!important}
 
 /* Remove remaining legacy mint callouts. */
 body .deal-planner-empty,
@@ -774,13 +755,6 @@ body #ownershipBadge{display:none!important}
 /* V0.15.27 — remove redundant wrapper surfaces. */
 body .app-view-future #futureWaitPlanner .future-wait-host{
   padding:0!important;
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-body .personal-modal .setup-pane{
-  padding:12px 0 0!important;
   border:0!important;
   border-radius:0!important;
   background:transparent!important;
