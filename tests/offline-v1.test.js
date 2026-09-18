@@ -11,8 +11,9 @@ const expandable = fs.readFileSync('src/expandable-cards.js', 'utf8');
 const launcher = fs.readFileSync('launch.ps1', 'utf8');
 
 assert.match(index, /navigator\.serviceWorker\.register\('\.\/sw\.js'\)/, 'Offline V1 should register its service worker');
-assert.doesNotMatch(index, /serviceWorker\.getRegistrations\(\).*unregister/s, 'The app must not unregister service workers on load');
-assert.doesNotMatch(index, /caches\.keys\(\).*caches\.delete/s, 'The app must not clear all caches on load');
+assert.match(index, /isHostedPreview/, 'Hosted preview should explicitly bypass the offline cache');
+assert.match(index, /serviceWorker\.getRegistrations\(\)/, 'Hosted preview should unregister stale preview workers');
+assert.match(index, /caches\.keys\(\)/, 'Hosted preview should clear stale preview caches');
 
 [
   './index.html',
@@ -31,7 +32,7 @@ assert.match(sw, /ignoreSearch:\s*true/, 'Offline fallback should tolerate cache
 assert.match(sw, /cache:'no-store'/, 'Service worker should bypass ordinary browser cache while online');
 assert.match(index, /offline-v1-final\.css\?v=01524/, 'Final UI stylesheet should be loaded directly after legacy layers');
 assert.match(index, /offline-v1-final\.js\?v=01524/, 'Final UI script should be loaded directly after legacy layers');
-assert.match(finalPolish, /V0\.15\.21/, 'Final UI should expose the current visible build marker');
+assert.match(finalPolish, /V0\.15\.24/, 'Final UI should expose the current visible build marker');
 assert.match(finalPolish, /wireMonthPicker/, 'Final UI should provide the custom month/year picker');
 assert.match(finalPolish, /undefined\|nan/i, 'Final UI layer should guard invalid LTV milestones');
 assert.match(finalStyle, /grid-template-columns:repeat\(4/, 'Current summary should use a compact four-column desktop grid');
