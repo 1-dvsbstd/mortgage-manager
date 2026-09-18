@@ -7,8 +7,8 @@
 
   function markBuild(){
     const version=$('.brand span');
-    if(version) version.textContent='V0.15.23';
-    document.documentElement.dataset.mortgageManagerBuild='01523';
+    if(version) version.textContent='V0.15.24';
+    document.documentElement.dataset.mortgageManagerBuild='01524';
   }
 
   function history(){
@@ -180,7 +180,6 @@
   }
 
   function markSharedBanners(){
-    $('.v15-journey-shell')?.classList.add('v1-page-banner');
     $('.deal-action-hint')?.classList.add('v1-page-banner');
     $('#futureOverpaymentAssumption')?.classList.add('v1-page-banner');
   }
