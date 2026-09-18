@@ -156,6 +156,10 @@
     const rateSubhead=$('.deal-planner-subhead',rates); if(rateSubhead) rateSubhead.remove();
     const rateGrid=document.getElementById('dealPlannerRateGrid'); if(rateGrid) rateBody.appendChild(rateGrid);
     const note=$('.deal-planner-note',next); if(note) rateBody.appendChild(note);
+    /* The legacy rates wrapper has a top border of its own. Once its useful
+       children have moved into the Upcoming card it must not remain as an
+       empty separator between cards. */
+    if (rates && rates.parentElement) rates.remove();
 
     const interestBox=$('.interest-box',next);
     const interest=makeUpcomingSection('upcoming-interest','Supporting context','Interest remaining');
