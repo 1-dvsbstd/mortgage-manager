@@ -66,9 +66,15 @@
     const ownedSharePct = shareValue > 0 ? Math.min(100, equity / shareValue * 100) : 0;
     const ltv = homeValue > 0 ? balance / homeValue * 100 : 0;
     const base = window.MortgageMath?.amortize?.(balance, rate, payment + regular);
+    const scheduledOnly = window.MortgageMath?.amortize?.(balance, rate, payment);
+    const combinedPath = window.MortgageMath?.amortize?.(balance, rate, payment + regular + extra);
+    const combinedInterestSaved =
+      Number.isFinite(scheduledOnly?.interest) && Number.isFinite(combinedPath?.interest)
+        ? Math.max(0, scheduledOnly.interest - combinedPath.interest)
+        : 0;
     const scenario = window.MortgageMath?.compare?.(balance, rate, payment, extra, regular);
     const plus100 = window.MortgageMath?.compare?.(balance, rate, payment, 100, regular);
-    return { balance, rate, payment, regular, extra, homeValue, ownership, shareValue, equity, ownedSharePct, ltv, base, scenario, plus100 };
+    return { balance, rate, payment, regular, extra, homeValue, ownership, shareValue, equity, ownedSharePct, ltv, base, scheduledOnly, combinedPath, combinedInterestSaved, scenario, plus100 };
   }
 
   function ensureHero() {
@@ -163,8 +169,14 @@
     $('[data-v15="rate"]', grid).textContent = pct(c.rate,2);
     $('[data-v15="fix"]', grid).textContent = state.fixedEnd ? `Fixed until ${monthLabel(state.fixedEnd)}` : 'Current mortgage deal';
     $('[data-v15="interest"]', grid).textContent = Number.isFinite(c.base?.interest) ? money(c.base.interest) : '—';
-    $('[data-v15="saved"]', grid).textContent = money(c.scenario?.interestSaved || 0);
-    $('[data-v15="saved-note"]', grid).textContent = c.extra > 0 ? `With ${money(c.extra)}/month What-if` : 'Choose a What-if below';
+    $('[data-v15="saved"]', grid).textContent = money(c.combinedInterestSaved || 0);
+    const savedNote = $('[data-v15="saved-note"]', grid);
+    if (savedNote) {
+      if (c.regular > 0 && c.extra > 0) savedNote.textContent = `With ${money(c.regular)}/month regular + ${money(c.extra)}/month What-if`;
+      else if (c.regular > 0) savedNote.textContent = `With ${money(c.regular)}/month regular overpayment`;
+      else if (c.extra > 0) savedNote.textContent = `With ${money(c.extra)}/month What-if`;
+      else savedNote.textContent = 'No overpayment selected';
+    }
     $('[data-v15="home"]', grid).textContent = money(c.homeValue);
     $('[data-v15="ownership"]', grid).textContent = pct(c.ownership);
     $('[data-v15="equity"]', grid).textContent = money(c.equity);
