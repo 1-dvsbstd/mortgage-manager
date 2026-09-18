@@ -2,6 +2,6 @@
   "name": "mortgage-manager",
   "private": true,
   "scripts": {
-    "test": "node tests/mortgage-math.test.js"
+    "test": "node tests/mortgage-math.test.js && node tests/offline-v1.test.js && node tests/release-package.test.js"
   }
 }

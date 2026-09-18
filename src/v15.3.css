@@ -18,19 +18,15 @@
 
 /* Journey is part of the hero, not another card. */
 .app-view-current .hero-panel.current-hero-condensed{grid-template-rows:auto 1fr!important}
-.app-view-current .hero-panel>.v15-current-journey{
-  grid-column:1/-1;
-  grid-row:1;
+.app-view-current .v15-current-journey{
   margin:0;
-  padding:13px 22px 12px;
-  border:0!important;
-  border-bottom:1px solid var(--border-soft)!important;
-  border-radius:0!important;
-  background:rgba(246,240,232,.92)!important;
-  box-shadow:none!important;
+  padding:15px 20px 16px;
+  border:1px solid var(--border)!important;
+  border-radius:20px!important;
+  background:var(--surface)!important;
+  box-shadow:0 12px 34px rgba(64,50,38,.05)!important;
 }
-.app-view-current .hero-panel>.v15-current-journey+.hero-main{grid-column:1;grid-row:2}
-.app-view-current .hero-panel>.v15-current-journey~.v15-home-visual{grid-column:2;grid-row:2}
+
 .v15-current-journey-head{margin-bottom:9px!important;align-items:center!important}
 .v15-current-journey-head>div>strong{font-size:13px!important}
 .v15-current-journey-link{font-size:10px!important}
@@ -145,11 +141,11 @@ body[data-app-view="upcoming"] .current-fix-stats > div:hover{
 
 @media(max-width:1050px){
   .app-view-current .hero-panel>.v15-current-journey~.v15-home-visual{grid-column:1;grid-row:2}
-  .app-view-current .hero-panel>.v15-current-journey+.hero-main{grid-column:1;grid-row:3}
-  .app-view-current .hero-panel.current-hero-condensed{grid-template-rows:auto auto auto!important}
+
 }
 
 @media(max-width:700px){
-  .app-view-current .hero-panel>.v15-current-journey{padding:12px 14px 10px}
+  .app-view-current .v15-current-journey{padding:12px 14px 10px}
   .v15-current-journey-head>div>strong{font-size:12px!important}
 }
+

@@ -1,0 +1,15 @@
+{
+  "schema": 2,
+  "sourceAsOf": "2026-08-31",
+  "publishedForApp": "2026-09-17",
+  "source": "Bank of England Database",
+  "sourceShort": "Bank of England",
+  "licence": "UK Open Government Licence",
+  "sourceNote": "Quoted household mortgage-rate benchmarks from the Bank of England Database. These are market reference rates, not personalised mortgage offers. Product fees, eligibility and lender criteria are not included.",
+  "bands": [
+    { "ltv": 75, "twoYear": 4.77, "fiveYear": 4.78, "series": { "twoYear": "IUMBV34", "fiveYear": "IUMBV42" } },
+    { "ltv": 95, "twoYear": 5.52, "fiveYear": 5.36, "series": { "twoYear": "IUM2WTL", "fiveYear": "IUM5WTL" } }
+  ],
+  "overall": { "twoYear": 4.77, "fiveYear": 4.78 },
+  "bandNote": "75% LTV benchmark is used at or below 75% LTV. Above 75%, the 95% LTV benchmark is used as a conservative planning proxy because the Bank of England publishes a directly comparable five-year quoted series at 75% and 95% LTV."
+}

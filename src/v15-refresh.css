@@ -87,7 +87,7 @@ body{
 .v15-hero-progress-foot{display:flex;justify-content:space-between;gap:14px;margin-top:8px;color:var(--muted)!important;font-size:10px}
 
 /* Compact glance-first metric strip */
-.v15-current-stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;margin-top:24px;border:1px solid var(--border);border-radius:22px;background:rgba(251,248,243,.94);overflow:hidden;box-shadow:0 16px 44px rgba(62,49,38,.055)}
+.v15-current-stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;margin-top:0;border:1px solid var(--border);border-radius:22px;background:rgba(251,248,243,.94);overflow:hidden;box-shadow:0 16px 44px rgba(62,49,38,.055)}
 .v15-stat{min-width:0;padding:18px 18px 16px;border-right:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);background:rgba(255,255,255,.26)}
 .v15-stat:nth-child(6n){border-right:0}.v15-stat:nth-last-child(-n+2){border-bottom:0}
 .v15-stat span{display:block;color:var(--muted)!important;font-size:10px;line-height:1.35}
@@ -115,7 +115,7 @@ body{
 .trajectory-with-what-if .trajectory-what-if{display:none!important}
 .app-view-current .trajectory-with-what-if>.panel-heading{padding:26px 26px 16px!important;margin:0!important;border-bottom:1px solid var(--border-soft)!important}
 .app-view-current .trajectory-with-what-if>.panel-heading h2{color:var(--text)!important}
-.app-view-current .trajectory-scenario-controls{margin:0 26px!important;padding:18px 0 20px!important;border:0!important;border-bottom:1px solid var(--border-soft)!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.app-view-current .trajectory-scenario-controls{margin:0 26px!important;padding:18px 0 20px!important;border:0!important;border-bottom:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
 .app-view-current .trajectory-scenario-copy{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:0 0 13px!important;margin:0 0 13px!important;border:0!important}
 .app-view-current .trajectory-scenario-copy h3{margin:0;font-size:17px;letter-spacing:-.02em;color:var(--text)!important}
 .trajectory-current-saving{min-width:220px;text-align:right}
@@ -129,9 +129,9 @@ body{
 .app-view-current .trajectory-overpay-row button.active{background:#252d36!important;color:#fffaf3!important;border-color:#252d36!important}
 .trajectory-custom-overpay{display:flex;align-items:center;gap:5px;padding:8px 12px;color:var(--muted)!important}
 .trajectory-custom-overpay input{width:74px;border:0;outline:0;background:transparent!important;color:var(--text)!important;font:inherit;font-weight:750}
-.app-view-current .trajectory-with-what-if>.chart-wrap{margin:20px 26px 0!important;width:calc(100% - 52px)!important;padding:16px!important;border:1px solid rgba(28,36,48,.08)!important;border-radius:18px!important;background:#172129!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)!important}
-.chart-panel canvas{background:transparent!important;border:0!important}
-.chart-readout{color:#d8ddd9!important}
+.app-view-current .trajectory-with-what-if>.chart-wrap{margin:18px 24px 0!important;width:calc(100% - 48px)!important;padding:0!important;border:0!important;border-radius:14px!important;background:transparent!important;box-shadow:none!important;overflow:hidden!important}
+.chart-panel canvas{background:transparent!important;border:0!important;box-shadow:none!important}
+.chart-readout{color:var(--muted)!important}
 .app-view-current .trajectory-with-what-if>.legend{margin:10px 26px 0!important;padding:0 0 24px!important;gap:10px 18px!important;color:var(--muted)!important}
 .dot.scheduled-line{background:#8996a0!important}.dot.regular-line{background:#d0a06f!important}.dot.selected-line{background:#78b4a2!important}.dot.equity-line{background:#f0e5d7!important}
 

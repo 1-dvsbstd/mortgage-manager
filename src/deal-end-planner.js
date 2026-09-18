@@ -91,7 +91,12 @@
     $('dealPlannerCountdownNote').textContent=fixedMonths===0?'Deal end is this month.':`Until ${formatMonth(state.fixedEnd)}.`;
 
     const target=projectedLtv===null?null:LTV_MILESTONES.find((value)=>projectedLtv>value+.01),milestone=$('dealPlannerMilestone');
-    if(target===null){ milestone.hidden=true; }
+    if(target==null||!Number.isFinite(target)){
+      milestone.hidden=true;
+      $('dealPlannerTarget').textContent='—';
+      $('dealPlannerGap').textContent='—';
+      $('dealPlannerGapNote').textContent='';
+    }
     else{
       milestone.hidden=false; const targetBalance=homeValue*target/100,gap=Math.max(0,projectedBalance-targetBalance),extraMonthly=monthlyExtraForTarget(state,fixedMonths,targetBalance);
       $('dealPlannerTarget').textContent=`${target}% LTV`; $('dealPlannerGap').textContent=gap>0?`${money(gap)} away`:'Already on track';

@@ -134,9 +134,10 @@ body{
 .trajectory-scenario-copy{padding-bottom:11px!important;margin-bottom:11px!important;border-bottom-color:var(--lux-line)!important}
 .trajectory-with-what-if>.chart-wrap{margin:10px 24px 0!important;width:calc(100% - 48px)!important}
 .trajectory-with-what-if>.chart-wrap canvas{
-  background:linear-gradient(180deg,rgba(3,15,13,.82),rgba(4,13,11,.68))!important;
-  border-color:rgba(242,235,218,.07)!important;
-  box-shadow:0 18px 46px rgba(0,0,0,.16) inset!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:14px!important;
+  box-shadow:none!important;
 }
 .trajectory-with-what-if>.legend{margin:10px 24px 0!important;padding-bottom:20px!important}
 .chart-stat{

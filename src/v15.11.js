@@ -36,15 +36,18 @@
     exposeMortgageSummary();
   }
 
-  document.addEventListener('click', (event) => {
-    if (event.target.closest('[data-app-view]')) setTimeout(run,80);
-    if (event.target.closest('#personalDataButton')) setTimeout(run,120);
-  });
-  if (window.MortgageStore?.subscribe) MortgageStore.subscribe(() => requestAnimationFrame(run));
+  // Initialise once. Do not rerun layout code for ordinary clicks: the whole
+  // Current view sits inside [data-app-view], so the old delegated handler
+  // caused an 80ms post-click reflow on every mouse-up.
+  if (window.MortgageStore?.subscribe) {
+    MortgageStore.subscribe((next, previous) => {
+      if (next !== previous) requestAnimationFrame(run);
+    });
+  }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => [0,250,700,1300].forEach((delay) => setTimeout(run,delay)), { once:true });
+    document.addEventListener('DOMContentLoaded', run, { once:true });
   } else {
-    [0,250,700].forEach((delay) => setTimeout(run,delay));
+    run();
   }
 })();
