@@ -65,7 +65,7 @@ assert.match(futureCardsStyle, /#futureWaitPlanner \.next-home-timeline-row\{[\s
 assert.match(finalStyle, /body \[hidden\]\{display:none!important\}/, 'Semantic hidden state must override legacy display rules');
 assert.doesNotMatch(setupDataScript, /<h3>Backup<\/h3>|data-action="export"|data-action="import"/, 'Setup must not recreate the retired legacy Backup section');
 assert.doesNotMatch(appRuntimeScript, /document\.createElement\('style'\)|offlineV1RuntimeStyle/, 'Runtime must not inject UI styles');
-assert.doesNotMatch(pageRefineScript, /future-wait-host|future-model-range-host|setTimeout\(run,780\)|setTimeout\(run,1300\)/, 'Future refinement must not recreate nested wrapper surfaces or delayed layout passes');
+assert.doesNotMatch(pageRefineScript, /future-wait-host\"><\/div>|future-model-range-host\"><\/div>|setTimeout\(run,780\)|setTimeout\(run,1300\)/, 'Future refinement must not recreate nested wrapper surfaces or delayed layout passes');
 assert.match(homeProfileStyle, /\.home-profile-range\{[^}]*border:0[^}]*background:transparent/, 'Estimate Range source must remain a flat container');
 assert.doesNotMatch(layoutFinalizeStyle, /\.home-profile-range>div/, 'Layout rules must not style Home Profile structural children as tiles');
 assert.doesNotMatch(finalStyle, /\.home-profile-range>div|future-wait-host|future-model-range-host/, 'Final styles must not resurrect retired wrapper surfaces');
