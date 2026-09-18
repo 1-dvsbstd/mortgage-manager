@@ -765,3 +765,7 @@ body .methodology-disclaimer strong{color:var(--accent-strong)!important}
 
 /* Semantic hidden state must always beat legacy layout display rules. */
 body [hidden]{display:none!important}
+
+
+/* Legacy ownership badge remains hidden without expandable-cards.css. */
+body #ownershipBadge{display:none!important}
