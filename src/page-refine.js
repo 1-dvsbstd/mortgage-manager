@@ -152,13 +152,16 @@
   function projectedDealPosition(state){
     const months=monthsUntil(state.fixedEnd);
     if(months===null||months<0||!window.MortgageMath) return null;
-    const totalPayment=Math.max(0,Number(state.payment)||0)+Math.max(0,Number(state.currentOverpayment)||0);
-    const path=MortgageMath.amortize(state.balance,state.rate,totalPayment);
+    /* Payment scenarios intentionally exclude overpayments. Use the scheduled
+       payment path for both the projected deal-end balance and remaining term
+       so the current-rate scenario reconciles with today's scheduled payment. */
+    const scheduledPayment=Math.max(0,Number(state.payment)||0);
+    const path=MortgageMath.amortize(state.balance,state.rate,scheduledPayment);
     const points=path.monthlyPoints||[];
     const index=Math.min(Math.max(0,months),Math.max(0,points.length-1));
     const balance=points[index]??Math.max(0,Number(state.balance)||0);
     const remainingMonths=Number.isFinite(path.months)?Math.max(1,path.months-months):300;
-    return {months,balance,remainingMonths,totalPayment};
+    return {months,balance,remainingMonths,scheduledPayment};
   }
 
   function paymentScenarioRates(state){
@@ -192,13 +195,13 @@
     const rates=paymentScenarioRates(state);
     grid.innerHTML=rates.map(({rate,label})=>{
       const scenarioPayment=paymentFor(position.balance,rate,position.remainingMonths);
-      const diff=scenarioPayment-position.totalPayment;
-      const note=Math.abs(diff)<1?'About the same as you pay now':`${money(Math.abs(diff))}/mo ${diff>0?'more':'less'} than now`;
+      const diff=scenarioPayment-position.scheduledPayment;
+      const note=Math.abs(diff)<1?'About the same as your scheduled payment':`${money(Math.abs(diff))}/mo ${diff>0?'more':'less'} than your scheduled payment`;
       const current=label==='Current rate';
-      return `<div class="deal-planner-rate ${current?'is-current-rate':''}"><span>${rate.toFixed(2)}% · ${label}</span><strong>${money(scenarioPayment)}<small>/mo</small></strong><em>${note}</em></div>`;
+      return `<div class="deal-planner-rate ${current?'is-current-rate':''}"><span>${rate.toFixed(2)}% · ${label}</span><strong>${money(scenarioPayment)}<small>/mo</small></strong><em>${note} · without overpayment</em></div>`;
     }).join('');
     const note=$('.deal-planner-note');
-    if(note) note.textContent='Uses your projected balance at deal end and the remaining term needed to keep the same projected mortgage-free date. The centre values use your current rate and the calculated 2-year / 5-year market estimates; outer values are simple stress tests.';
+    if(note) note.textContent='Payments shown exclude overpayments. They use the projected balance and remaining term on your scheduled-payment path. The centre values use your current rate and the calculated 2-year / 5-year market estimates; outer values are simple stress tests.';
   }
 
   function refineUpcoming(){
