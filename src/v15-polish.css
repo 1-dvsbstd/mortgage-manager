@@ -59,7 +59,7 @@ html,body{background:var(--bg)!important;color:var(--text)!important}
 /* Trajectory + What-if should read as one component. */
 .app-view-current .chart-panel.trajectory-with-what-if{padding:0!important;overflow:hidden!important;background:var(--surface)!important;border:1px solid var(--border)!important}
 .app-view-current .trajectory-with-what-if>.panel-heading{padding:22px 24px 14px!important;margin:0!important;border-bottom:1px solid var(--border-soft)!important}
-.app-view-current .trajectory-scenario-controls{margin:0 24px!important;padding:15px 0 17px!important;border:0!important;border-bottom:1px solid var(--border-soft)!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.app-view-current .trajectory-scenario-controls{margin:0 24px!important;padding:15px 0 17px!important;border:0!important;border-bottom:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
 .app-view-current .trajectory-scenario-copy{padding:0!important;margin:0 0 11px!important;border:0!important}
 .app-view-current .trajectory-scenario-copy h3{font-size:16px!important;color:var(--text)!important}
 .app-view-current .trajectory-current-saving>strong{color:var(--text)!important}
