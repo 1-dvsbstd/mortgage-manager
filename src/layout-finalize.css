@@ -125,7 +125,7 @@ body{background:linear-gradient(180deg,#09110f 0%,#0d1713 46%,#09120f 100%)!impo
 .future-overpayment-assumption{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 18px!important}
 .future-assumption-copy{display:flex;align-items:baseline;gap:14px;min-width:0}.future-assumption-copy>div{display:flex;align-items:baseline;gap:8px}.future-assumption-copy strong{color:var(--warm);font-size:18px;white-space:nowrap}.future-assumption-copy p{margin:0;color:var(--muted)!important;font-size:11px}
 .future-assumption-controls{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}.future-assumption-controls button{min-width:52px;padding:7px 10px;cursor:pointer}.future-assumption-controls label{display:flex;align-items:center;gap:4px;padding:7px 10px;color:var(--muted)!important}.future-assumption-controls input{width:68px;border:0;background:transparent;color:var(--text);font:inherit;font-weight:750;outline:none}
-.future-model-range-panel .home-profile-range,.next-home-summary-card,.future-wait-host,.future-cost-inline{background:transparent!important}
+.future-model-range-panel .home-profile-range,.next-home-summary-card,.future-cost-inline{background:transparent!important}
 .future-wait-planner{margin-top:0!important}
 
 /* Remove dead expansion behaviour visually */
