@@ -8,7 +8,6 @@ const APP_SHELL = [
   './public/market-rates.json',
   './src/styles.css',
   './src/inline-edit.css',
-  './src/expandable-cards.css',
   './src/deep-dive.css',
   './src/chart-enhance.css',
   './src/mortgage-ui.css',
