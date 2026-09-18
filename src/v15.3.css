@@ -24,9 +24,9 @@
   margin:0;
   padding:13px 22px 12px;
   border:0!important;
-  border-bottom:1px solid var(--border-soft)!important;
+  border-bottom:0!important;
   border-radius:0!important;
-  background:rgba(246,240,232,.92)!important;
+  background:transparent!important;
   box-shadow:none!important;
 }
 .app-view-current .hero-panel>.v15-current-journey+.hero-main{grid-column:1;grid-row:2}
