@@ -44,7 +44,6 @@ const APP_SHELL = [
   './src/deep-dive.js',
   './src/home-projection.js',
   './src/next-home-planner.js',
-  './src/expandable-cards.js',
   './src/chart-enhance.js',
   './src/mortgage-detail-ui.js',
   './src/deal-end-planner.js',
@@ -62,7 +61,6 @@ const APP_SHELL = [
   './src/v15-polish.js',
   './src/v15.5.js',
   './src/v15.11.js',
-  './src/v15.14.js',
   './src/v15.15.js',
   './src/offline-v1-final.js'
 ];
