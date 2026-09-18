@@ -29,8 +29,8 @@ assert.doesNotMatch(index, /caches\.keys\(\).*caches\.delete/s, 'The app must no
 
 assert.match(sw, /ignoreSearch:\s*true/, 'Offline fallback should tolerate cache-busting query strings');
 assert.match(sw, /cache:'no-store'/, 'Service worker should bypass ordinary browser cache while online');
-assert.match(index, /offline-v1-final\.css\?v=01521/, 'Final UI stylesheet should be loaded directly after legacy layers');
-assert.match(index, /offline-v1-final\.js\?v=01521/, 'Final UI script should be loaded directly after legacy layers');
+assert.match(index, /offline-v1-final\.css\?v=01522/, 'Final UI stylesheet should be loaded directly after legacy layers');
+assert.match(index, /offline-v1-final\.js\?v=01522/, 'Final UI script should be loaded directly after legacy layers');
 assert.match(finalPolish, /V0\.15\.21/, 'Final UI should expose the current visible build marker');
 assert.match(finalPolish, /wireMonthPicker/, 'Final UI should provide the custom month/year picker');
 assert.match(finalPolish, /undefined\|nan/i, 'Final UI layer should guard invalid LTV milestones');
