@@ -115,7 +115,7 @@ body{
 .trajectory-with-what-if .trajectory-what-if{display:none!important}
 .app-view-current .trajectory-with-what-if>.panel-heading{padding:26px 26px 16px!important;margin:0!important;border-bottom:1px solid var(--border-soft)!important}
 .app-view-current .trajectory-with-what-if>.panel-heading h2{color:var(--text)!important}
-.app-view-current .trajectory-scenario-controls{margin:0 26px!important;padding:18px 0 20px!important;border:0!important;border-bottom:1px solid var(--border-soft)!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.app-view-current .trajectory-scenario-controls{margin:0 26px!important;padding:18px 0 20px!important;border:0!important;border-bottom:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
 .app-view-current .trajectory-scenario-copy{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:0 0 13px!important;margin:0 0 13px!important;border:0!important}
 .app-view-current .trajectory-scenario-copy h3{margin:0;font-size:17px;letter-spacing:-.02em;color:var(--text)!important}
 .trajectory-current-saving{min-width:220px;text-align:right}
