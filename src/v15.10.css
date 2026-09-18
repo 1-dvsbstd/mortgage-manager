@@ -126,3 +126,45 @@ body[data-app-view="future"] #futureWaitPlanner .next-home-trend-note{
   body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-row+ .next-home-timeline-row{border-left:0!important;border-top:1px solid var(--border-soft)!important}
   body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-row>strong{font-size:22px!important}
 }
+
+/* V0.15.27 — align Looking ahead with the Next-home position card. */
+body[data-app-view="future"] #futureWaitPlanner{
+  padding:22px 24px!important;
+}
+body[data-app-view="future"] #futureWaitPlanner .future-wait-heading{
+  margin:0 0 14px!important;
+}
+body[data-app-view="future"] #futureWaitPlanner .future-wait-host{
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body[data-app-view="future"] #futureWaitPlanner .next-home-timeline{
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-rows{
+  gap:10px!important;
+}
+body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-row{
+  min-height:92px!important;
+  padding:15px!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:15px!important;
+  background:#fffaf4!important;
+  box-shadow:none!important;
+}
+body[data-app-view="future"] #futureWaitPlanner .next-home-timeline-row:nth-child(3){
+  background:#f8f1e7!important;
+}
+body[data-app-view="future"] #futureWaitPlanner .next-home-trend-note{
+  padding:10px 0 0!important;
+  border:0!important;
+  background:transparent!important;
+}
