@@ -745,3 +745,19 @@ body .app-view-upcoming .upcoming-position .deal-position-interest small{
   margin-top:7px!important;
   line-height:1.4!important;
 }
+
+
+/* Styles formerly injected at runtime now live here. */
+body .clear-local-data{margin-left:auto!important}
+body .clear-local-data.danger{border-color:rgba(166,79,79,.28)!important;color:#8b4a4a!important}
+body .methodology-body{display:grid!important;gap:12px!important}
+body .methodology-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+body .methodology-item{padding:12px 13px!important;border:1px solid rgba(68,58,48,.10)!important;border-radius:12px!important;background:#fffaf4!important}
+body .methodology-item strong{display:block!important;margin-bottom:4px!important;color:var(--text)!important;font-size:11px!important}
+body .methodology-item p{margin:0!important;color:var(--muted)!important;font-size:10px!important;line-height:1.45!important}
+body .methodology-disclaimer{margin:0!important;padding:12px 13px!important;border:1px solid rgba(157,102,57,.14)!important;border-radius:12px!important;background:#f7efe5!important;color:var(--muted)!important;font-size:10px!important;line-height:1.5!important}
+body .methodology-disclaimer strong{color:var(--accent-strong)!important}
+@media(max-width:700px){
+  body .clear-local-data{margin-left:0!important}
+  body .methodology-grid{grid-template-columns:1fr!important}
+}
