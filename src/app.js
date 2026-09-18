@@ -136,7 +136,17 @@
     });
   }
 
+
+  function historyFixedEnd(){
+    try{
+      const history=JSON.parse(localStorage.getItem('mortgage-manager-mortgage-history-v1')||'{}')||{};
+      const deals=Array.isArray(history.deals)?history.deals:[];
+      return deals.length ? String(deals[deals.length-1]?.end||'') : '';
+    }catch(_){ return ''; }
+  }
+
   function updateNextEvent(fixedEnd) {
+    fixedEnd = fixedEnd || historyFixedEnd();
     const months = monthsUntil(fixedEnd);
     const timelineFill = $('timelineFill');
     const timelineEndLabel = $('timelineEndLabel');
