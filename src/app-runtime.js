@@ -163,13 +163,6 @@
     const topbar = document.querySelector('.topbar');
     const save = $('saveStatus');
     if (!topbar || !save || $('connectivityMode')) return;
-    if (!$('offlineV1RuntimeStyle')) {
-      const style = document.createElement('style');
-      style.id = 'offlineV1RuntimeStyle';
-      style.textContent = `
-        .connectivity-mode{display:flex;align-items:center;gap:8px;justify-self:end;white-space:nowrap}.connectivity-copy{display:grid;gap:1px;text-align:right}.connectivity-copy strong{font-size:11px;color:var(--text)}.connectivity-copy small{font-size:9px;color:var(--muted-2)}.connectivity-switch{position:relative;width:62px;height:32px;border:1px solid rgba(255,255,255,.09);border-radius:999px;background:rgba(255,255,255,.04);padding:3px;cursor:pointer;transition:.18s ease}.connectivity-switch::after{content:"";display:block;width:24px;height:24px;border-radius:50%;background:var(--warm);transition:transform .18s ease,background .18s ease}.connectivity-switch.is-online{background:rgba(84,224,180,.13);border-color:rgba(84,224,180,.25)}.connectivity-switch.is-online::after{transform:translateX(30px);background:var(--accent)}.connectivity-switch:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.live-rate-choices{margin-top:12px;padding:12px;border:1px solid rgba(84,224,180,.12);border-radius:14px;background:rgba(84,224,180,.035)}.live-rate-head{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:8px}.live-rate-head strong{font-size:12px}.live-rate-head small{color:var(--muted-2);font-size:10px}.live-rate-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.live-rate-card{padding:10px 11px;border:1px solid rgba(255,255,255,.07);border-radius:11px;background:rgba(255,255,255,.025)}.live-rate-card span,.live-rate-card small{display:block;color:var(--muted);font-size:10px}.live-rate-card strong{display:block;margin:3px 0;font-size:17px;color:var(--warm)}.backup-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.backup-status{margin:9px 0 0;color:var(--muted);font-size:11px}.backup-file{display:none}.personal-section.data-backup-section .mortgage-history-body{display:grid;gap:8px}@media(max-width:700px){.connectivity-copy small{display:none}.connectivity-mode{margin-left:auto}.connectivity-switch{width:58px}.connectivity-switch.is-online::after{transform:translateX(26px)}.live-rate-grid{grid-template-columns:1fr}}`;
-      document.head.appendChild(style);
-    }
     const control = document.createElement('div');
     control.id = 'connectivityMode';
     control.className = 'connectivity-mode';
