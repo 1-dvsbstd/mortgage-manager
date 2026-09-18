@@ -761,3 +761,7 @@ body .methodology-disclaimer strong{color:var(--accent-strong)!important}
   body .clear-local-data{margin-left:0!important}
   body .methodology-grid{grid-template-columns:1fr!important}
 }
+
+
+/* Semantic hidden state must always beat legacy layout display rules. */
+body [hidden]{display:none!important}
