@@ -179,7 +179,125 @@
     }
   },true);
 
+
+
+  function formatMonthLabel(value){
+    const date=monthDate(value);
+    return date?new Intl.DateTimeFormat('en-GB',{month:'long',year:'numeric'}).format(date):'Select month';
+  }
+
+  function closeMonthPicker(){
+    $('.month-picker-popover')?.remove();
+  }
+
+  function openMonthPicker(input,button){
+    closeMonthPicker();
+    const current=monthDate(input.value)||new Date();
+    let year=current.getFullYear();
+    const selected=input.value||'';
+    const pop=document.createElement('div');
+    pop.className='month-picker-popover';
+    pop.setAttribute('role','dialog');
+    pop.setAttribute('aria-label','Choose month and year');
+
+    const render=()=>{
+      const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      pop.innerHTML=`<div class="month-picker-head"><button type="button" class="month-picker-nav" data-year="-1" aria-label="Previous year">‹</button><strong>${year}</strong><button type="button" class="month-picker-nav" data-year="1" aria-label="Next year">›</button></div><div class="month-picker-grid">${months.map((label,index)=>{const value=`${year}-${String(index+1).padStart(2,'0')}`;return `<button type="button" data-month-value="${value}" class="${value===selected?'is-selected':''}">${label}</button>`;}).join('')}</div><div class="month-picker-footer"><button type="button" class="month-picker-action" data-clear-month>Clear</button><button type="button" class="month-picker-action" data-this-month>This month</button></div>`;
+    };
+    render();
+    document.body.appendChild(pop);
+    const rect=button.getBoundingClientRect();
+    const popWidth=Math.min(320,window.innerWidth-24);
+    const left=Math.max(12,Math.min(window.innerWidth-popWidth-12,rect.left));
+    const preferredTop=rect.bottom+8;
+    const estimatedHeight=260;
+    const top=preferredTop+estimatedHeight>window.innerHeight?Math.max(12,rect.top-estimatedHeight-8):preferredTop;
+    pop.style.left=`${left}px`;
+    pop.style.top=`${top}px`;
+
+    pop.addEventListener('click',(event)=>{
+      const nav=event.target.closest('[data-year]');
+      if(nav){year+=Number(nav.dataset.year)||0;render();return;}
+      const choice=event.target.closest('[data-month-value]');
+      if(choice){
+        input.value=choice.dataset.monthValue;
+        button.textContent=formatMonthLabel(input.value);
+        button.classList.remove('is-empty');
+        input.dispatchEvent(new Event('input',{bubbles:true}));
+        input.dispatchEvent(new Event('change',{bubbles:true}));
+        closeMonthPicker();
+        button.focus();
+        return;
+      }
+      if(event.target.closest('[data-clear-month]')){
+        input.value='';
+        button.textContent='Select month';
+        button.classList.add('is-empty');
+        input.dispatchEvent(new Event('input',{bubbles:true}));
+        input.dispatchEvent(new Event('change',{bubbles:true}));
+        closeMonthPicker();
+        button.focus();
+        return;
+      }
+      if(event.target.closest('[data-this-month]')){
+        const now=new Date();
+        input.value=monthValue(now);
+        button.textContent=formatMonthLabel(input.value);
+        button.classList.remove('is-empty');
+        input.dispatchEvent(new Event('input',{bubbles:true}));
+        input.dispatchEvent(new Event('change',{bubbles:true}));
+        closeMonthPicker();
+        button.focus();
+      }
+    });
+  }
+
+  function decorateMonthPickers(root=document){
+    $("input[type='month']",root).forEach((input)=>{
+      if(input.dataset.customMonthPicker==='true') return;
+      input.dataset.customMonthPicker='true';
+      const wrap=document.createElement('span');
+      wrap.className='month-picker-control';
+      input.parentNode.insertBefore(wrap,input);
+      wrap.appendChild(input);
+      const button=document.createElement('button');
+      button.type='button';
+      button.className='month-picker-button';
+      button.classList.toggle('is-empty',!input.value);
+      button.textContent=formatMonthLabel(input.value);
+      button.setAttribute('aria-label','Choose month and year');
+      wrap.appendChild(button);
+      button.addEventListener('click',(event)=>{
+        event.preventDefault();
+        event.stopPropagation();
+        openMonthPicker(input,button);
+      });
+      input.addEventListener('change',()=>{
+        button.textContent=formatMonthLabel(input.value);
+        button.classList.toggle('is-empty',!input.value);
+      });
+    });
+  }
+
+  function wireMonthPicker(){
+    decorateMonthPickers();
+    document.addEventListener('click',(event)=>{
+      if(!event.target.closest('.month-picker-popover,.month-picker-button')) closeMonthPicker();
+    },true);
+    window.addEventListener('resize',closeMonthPicker);
+    window.addEventListener('scroll',closeMonthPicker,true);
+    const observer=new MutationObserver((mutations)=>{
+      for(const mutation of mutations){
+        mutation.addedNodes.forEach((node)=>{
+          if(node.nodeType===1) decorateMonthPickers(node);
+        });
+      }
+    });
+    observer.observe(document.body,{childList:true,subtree:true});
+  }
+
   const start=()=>{
+    wireMonthPicker();
     run();
     window.MortgageStore?.subscribe?.(()=>requestAnimationFrame(run));
     window.addEventListener('pageshow',run);
