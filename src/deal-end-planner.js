@@ -17,6 +17,18 @@
     const [year,month]=String(monthValue).split('-').map(Number); if(!year||!month)return '—';
     return new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(new Date(year,month-1,1));
   }
+
+  function savedHistoryFixedEnd(){
+    try{
+      const history=JSON.parse(localStorage.getItem('mortgage-manager-mortgage-history-v1')||'{}')||{};
+      const deals=Array.isArray(history.deals)?history.deals:[];
+      return deals.length ? String(deals[deals.length-1]?.end||'') : '';
+    }catch(_){ return ''; }
+  }
+  function effectiveFixedEnd(state){
+    return String(state?.fixedEnd||savedHistoryFixedEnd()||'');
+  }
+
   function paymentFor(principal,annualRate,months){
     const balance=Math.max(0,Number(principal)||0),term=Math.max(1,Math.round(Number(months)||1)),r=Math.max(0,Number(annualRate)||0)/100/12;
     if(!balance)return 0; if(!r)return balance/term; return balance*r/(1-Math.pow(1+r,-term));
@@ -68,8 +80,8 @@
   function render(){
     ensurePlanner();
     const section=$('dealEndPlanner'); if(!section||!window.MortgageMath||!window.MortgageStore)return;
-    const state=MortgageStore.get(),fixedMonths=monthsUntil(state.fixedEnd),empty=$('dealPlannerMissing'),content=$('dealPlannerContent'),summary=$('dealPlannerSummary');
-    $('dealPlannerDate').textContent=formatMonth(state.fixedEnd);
+    const state=MortgageStore.get(),fixedEnd=effectiveFixedEnd(state),fixedMonths=monthsUntil(fixedEnd),empty=$('dealPlannerMissing'),content=$('dealPlannerContent'),summary=$('dealPlannerSummary');
+    $('dealPlannerDate').textContent=formatMonth(fixedEnd);
 
     if(fixedMonths===null){
       empty.hidden=false; content.hidden=true; if(summary)summary.hidden=true;
@@ -77,7 +89,7 @@
     }
     if(fixedMonths<0){
       empty.hidden=false; content.hidden=true; if(summary)summary.hidden=true;
-      empty.innerHTML='<strong>Your saved deal end has passed</strong><span>Update the fixed-rate end date in Setup & data so the planner can use your current mortgage deal.</span>'; return;
+      empty.innerHTML=`<strong>Your saved deal end was ${formatMonth(fixedEnd)}</strong><span>That date has passed. Update your current mortgage deal in Setup & data to restore deal-end projections.</span>`; return;
     }
 
     empty.hidden=true; content.hidden=false; if(summary)summary.hidden=false;
@@ -88,7 +100,7 @@
     $('dealPlannerBalanceNote').textContent=regular>0?`Includes your ${money(regular)}/month regular overpayment.`:'Based on your scheduled payment.';
     $('dealPlannerLtv').textContent=projectedLtv===null?'—':pct(projectedLtv);
     $('dealPlannerCountdown').textContent=compactMonths(fixedMonths);
-    $('dealPlannerCountdownNote').textContent=fixedMonths===0?'Deal end is this month.':`Until ${formatMonth(state.fixedEnd)}.`;
+    $('dealPlannerCountdownNote').textContent=fixedMonths===0?'Deal end is this month.':`Until ${formatMonth(fixedEnd)}.`;
 
     const target=projectedLtv===null?null:LTV_MILESTONES.find((value)=>projectedLtv>value+.01),milestone=$('dealPlannerMilestone');
     if(target==null||!Number.isFinite(target)){
