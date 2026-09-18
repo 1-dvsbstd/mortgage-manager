@@ -104,7 +104,7 @@ html,body{background:var(--bg)!important;color:var(--text)!important}
 .app-view-future .home-profile-heading,.app-view-future .next-home-heading,.app-view-future .cost-heading{margin-bottom:14px!important}
 .app-view-future .home-profile-heading h2,.app-view-future .next-home-heading h2,.app-view-future .cost-heading h2,.app-view-future .future-model-range-panel h2{color:var(--text)!important;font-size:19px!important}
 .app-view-future .home-profile-range,.app-view-future .next-home-summary,.app-view-future .next-home-timeline{gap:10px!important}
-.app-view-future .home-profile-range-values>div,.app-view-future .next-home-summary-card,.app-view-future .next-home-timeline-row,.app-view-future .property-cost-card,.app-view-future .future-wait-host{
+.app-view-future .home-profile-range-values>div,.app-view-future .next-home-summary-card,.app-view-future .next-home-timeline-row,.app-view-future .property-cost-card{
   background:var(--surface-soft)!important;
   border:1px solid var(--border-soft)!important;
   color:var(--text)!important;
