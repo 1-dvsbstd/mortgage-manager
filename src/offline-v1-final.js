@@ -96,6 +96,37 @@
     }
   }
 
+
+
+  function effectiveFixedEnd(){
+    const state=window.MortgageStore?.get?.()||{};
+    if(state.fixedEnd) return String(state.fixedEnd);
+    const h=history(),deals=Array.isArray(h.deals)?h.deals:[];
+    return deals.length?String(deals[deals.length-1]?.end||''):'';
+  }
+
+  function syncDealEndCopy(){
+    const fixedEnd=effectiveFixedEnd();
+    if(!fixedEnd) return;
+    const fixedDate=monthDate(fixedEnd);
+    if(!fixedDate) return;
+    const now=new Date(); now.setDate(1); now.setHours(0,0,0,0);
+    const months=(fixedDate.getFullYear()-now.getFullYear())*12+(fixedDate.getMonth()-now.getMonth());
+    const title=$('#nextEventTitle'), text=$('#nextEventText');
+    if(!title||!text) return;
+    const formatted=new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(fixedDate);
+    if(months<0){
+      title.textContent=`Saved fixed-rate end was ${formatted}`;
+      text.textContent='That date has passed. Update your current mortgage deal in Setup & data.';
+    }else if(months===0){
+      title.textContent='Fixed rate ends this month';
+      text.textContent='Your deal is at its next major milestone.';
+    }else{
+      title.textContent=`Fixed rate ends in ${compactDuration(months)}`;
+      text.textContent=months<=6?`${formatted} — worth reviewing remortgage options now.`:`${formatted} is your next key mortgage milestone.`;
+    }
+  }
+
   function renderJourney(){
     const strip=$('.v15-journey-strip');
     const state=window.MortgageStore?.get?.();
@@ -162,6 +193,7 @@
     renameOwnershipLabels();
     updateEquityCopy();
     renderJourney();
+    syncDealEndCopy();
     dedupeFuture();
     markSharedBanners();
   }
