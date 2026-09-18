@@ -127,52 +127,6 @@
     }
   }
 
-  function renderJourney(){
-    const strip=$('.v15-journey-strip');
-    const state=window.MortgageStore?.get?.();
-    if(!strip||!state) return;
-    const h=history(),deals=Array.isArray(h.deals)?h.deals:[],currentDeal=deals.length?deals[deals.length-1]:null;
-    const purchase=h.purchaseDate||'';
-    const dealStart=currentDeal?.start||'';
-    const fixedEnd=state.fixedEnd||currentDeal?.end||'';
-    let remortgage='';
-    const fixedDate=monthDate(fixedEnd);
-    if(fixedDate){const d=new Date(fixedDate);d.setMonth(d.getMonth()-3);remortgage=monthValue(d);}
-    const totalPayment=Math.max(0,Number(state.payment)||0)+Math.max(0,Number(state.currentOverpayment)||0);
-    const path=window.MortgageMath?.amortize?.(state.balance,state.rate,totalPayment);
-    const payoffDate=Number.isFinite(path?.months)?(()=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()+path.months);return d;})():null;
-
-    const raw=[
-      {icon:'⌂',title:'Home purchased',date:monthDate(purchase)},
-      {icon:'%',title:'Current deal',date:monthDate(dealStart)},
-      {icon:'↔',title:'Remortgage window',date:monthDate(remortgage)},
-      {icon:'▣',title:'Fixed rate ends',date:fixedDate},
-      {icon:'⚑',title:'Mortgage free',date:payoffDate},
-    ];
-    const withDates=raw.filter((step)=>step.date).sort((a,b)=>a.date-b.date);
-    const withoutDates=raw.filter((step)=>!step.date);
-    const steps=[...withDates,...withoutDates];
-    const now=new Date(); now.setDate(1); now.setHours(0,0,0,0);
-    let nextIndex=steps.findIndex((step)=>step.date&&step.date>now);
-    if(nextIndex<0) nextIndex=steps.length-1;
-    let lastComplete=-1;
-    steps.forEach((step,index)=>{if(step.date&&step.date<=now) lastComplete=index;});
-    const progress=steps.length>1&&lastComplete>=0?Math.max(0,Math.min(100,lastComplete/(steps.length-1)*100)):0;
-    strip.style.setProperty('--journey-progress',`${progress}%`);
-    const html=steps.map((step,index)=>{
-      const status=step.date&&step.date<=now?'is-complete':index===nextIndex?'is-current':'';
-      const date=step.date?new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(step.date):'—';
-      return `<div class="v15-journey-step ${status}"><div class="v15-journey-icon">${step.icon}</div><strong>${step.title}</strong><span>${date}</span></div>`;
-    }).join('');
-    if(strip.innerHTML!==html) strip.innerHTML=html;
-    const callout=$('.v15-journey-callout');
-    if(callout&&fixedDate){
-      const months=(fixedDate.getFullYear()-now.getFullYear())*12+(fixedDate.getMonth()-now.getMonth());
-      const text=months<=0?'Your fixed-rate end needs attention':`${compactDuration(months)} to fixed-rate end`;
-      if(callout.textContent!==text) callout.textContent=text;
-    }
-  }
-
   function dedupeFuture(){
     const subhead=$('.app-view-future .next-home-subhead');
     const eyebrow=$('span',subhead);
@@ -191,7 +145,6 @@
     fixDealEndMilestone();
     renameOwnershipLabels();
     updateEquityCopy();
-    renderJourney();
     syncDealEndCopy();
     dedupeFuture();
     markSharedBanners();
