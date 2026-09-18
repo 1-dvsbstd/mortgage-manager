@@ -235,6 +235,14 @@
       interest.remove();
     }
     shell.append(timeline,rates,position);
+
+    /* Remove any emptied legacy rate wrapper left behind by the original
+       deal-planner markup. Its border-top otherwise renders as a stray
+       horizontal rule between the Action and payment cards. */
+    shell.closest('.upcoming-workspace')?.querySelectorAll('.deal-planner-rates').forEach((legacy) => {
+      if (!legacy.querySelector('#dealPlannerRateGrid') && !legacy.querySelector('.deal-planner-note')) legacy.remove();
+    });
+
     renderUpcomingRates();
   }
 
