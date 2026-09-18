@@ -29,3 +29,13 @@
 .deal-planner-note{margin:12px 1px 0;color:var(--muted);font-size:10px;line-height:1.5}
 @media(max-width:760px){.deal-planner-summary{grid-template-columns:1fr}.deal-planner-milestone{grid-template-columns:1fr;gap:8px}.deal-planner-rate-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.deal-planner-heading,.deal-planner-subhead{align-items:flex-start}.deal-planner-subhead{display:grid;gap:5px}.deal-planner-subhead>small{text-align:left}}
 @media(max-width:420px){.deal-planner-rate-grid{grid-template-columns:1fr 1fr}.deal-planner-rate{padding:11px}.deal-planner-rate>strong{font-size:18px}}
+
+
+/* The redesigned Upcoming view moves the useful rate content into its own card.
+   Never let the emptied legacy rate shell remain as a horizontal separator. */
+.app-view-upcoming .deal-planner-rates:empty{
+  display:none!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+}
