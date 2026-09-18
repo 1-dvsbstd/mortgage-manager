@@ -7,8 +7,8 @@
 
   function markBuild(){
     const version=$('.brand span');
-    if(version) version.textContent='V0.15.24';
-    document.documentElement.dataset.mortgageManagerBuild='01524';
+    if(version) version.textContent='V0.15.25';
+    document.documentElement.dataset.mortgageManagerBuild='01525';
   }
 
   function history(){
