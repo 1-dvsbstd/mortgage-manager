@@ -7,7 +7,6 @@ const market = JSON.parse(fs.readFileSync('public/market-rates.json', 'utf8'));
 const polish = fs.readFileSync('src/v15.15.js', 'utf8');
 const finalPolish = fs.readFileSync('src/offline-v1-final.js', 'utf8');
 const finalStyle = fs.readFileSync('src/offline-v1-final.css', 'utf8');
-const loader = fs.readFileSync('src/v15.14.js', 'utf8');
 const expandable = fs.readFileSync('src/expandable-cards.js', 'utf8');
 const launcher = fs.readFileSync('launch.ps1', 'utf8');
 
@@ -30,10 +29,10 @@ assert.doesNotMatch(index, /caches\.keys\(\).*caches\.delete/s, 'The app must no
 
 assert.match(sw, /ignoreSearch:\s*true/, 'Offline fallback should tolerate cache-busting query strings');
 assert.match(sw, /cache:'no-store'/, 'Service worker should bypass ordinary browser cache while online');
-assert.match(loader, /offline-v1-final\.css/, 'Final UI stylesheet should be loaded after legacy layers');
-assert.match(loader, /offline-v1-final\.js/, 'Final UI script should be loaded after legacy layers');
-assert.match(loader, /controllerchange/, 'Loader should self-refresh when a newer service worker takes control');
-assert.match(finalPolish, /V0\.15\.17/, 'Final UI should expose the current visible build marker');
+assert.match(index, /offline-v1-final\.css\?v=01520/, 'Final UI stylesheet should be loaded directly after legacy layers');
+assert.match(index, /offline-v1-final\.js\?v=01520/, 'Final UI script should be loaded directly after legacy layers');
+assert.match(finalPolish, /V0\.15\.20/, 'Final UI should expose the current visible build marker');
+assert.match(finalPolish, /wireMonthPicker/, 'Final UI should provide the custom month/year picker');
 assert.match(finalPolish, /undefined\|nan/i, 'Final UI layer should guard invalid LTV milestones');
 assert.match(finalStyle, /grid-template-columns:repeat\(4/, 'Current summary should use a compact four-column desktop grid');
 assert.doesNotMatch(expandable, /openCard\(/, 'Legacy expandable-card runtime must remain inert');
