@@ -174,64 +174,8 @@
     $('[data-v15="plus100"]', action).textContent = saved > 0 ? `+£100/month = ${compactDuration(saved)} sooner` : '+£100/month changes your payoff path';
   }
 
-  function journeyDates(state) {
-    const h = history();
-    const deals = Array.isArray(h.deals) ? h.deals : [];
-    const currentDeal = deals.length ? deals[deals.length - 1] : null;
-    const purchase = h.purchaseDate || '';
-    const dealStart = currentDeal?.start || '';
-    const fixedEnd = state.fixedEnd || currentDeal?.end || '';
-    let remortgage = '';
-    if (fixedEnd) {
-      const [y,m] = fixedEnd.split('-').map(Number);
-      if (y && m) {
-        const d = new Date(y,m - 1,1); d.setMonth(d.getMonth() - 3);
-        remortgage = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-      }
-    }
-    const c = calculations(state);
-    const payoffDate = Number.isFinite(c.base?.months) ? monthDate(c.base.months) : null;
-    return { purchase, dealStart, fixedEnd, remortgage, payoffDate };
-  }
-
-  function ensureJourney() {
-    const body = $('.app-view-upcoming .upcoming-timeline .upcoming-section-body');
-    if (!body) return null;
-    let strip = $('.v15-journey-shell', body);
-    if (!strip) {
-      strip = document.createElement('div');
-      strip.className = 'v15-journey-shell';
-      strip.innerHTML = '<div class="v15-journey-strip"></div><div class="v15-journey-callout"></div>';
-      body.insertAdjacentElement('afterbegin', strip);
-    }
-    return strip;
-  }
-
-  function renderJourney() {
-    const state = window.MortgageStore?.get?.();
-    if (!state) return;
-    const shell = ensureJourney();
-    if (!shell) return;
-    const dates = journeyDates(state);
-    const now = new Date();
-    const payoff = dates.payoffDate ? new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(dates.payoffDate) : '—';
-    const steps = [
-      ['⌂','Home purchased',dateLabel(dates.purchase),dates.purchase ? 'complete' : ''],
-      ['%','Current deal started',dateLabel(dates.dealStart),dates.dealStart ? 'complete' : ''],
-      ['▣','Fixed rate ends',monthLabel(dates.fixedEnd),'current'],
-      ['↔','Remortgage window',dates.remortgage ? `from ${monthLabel(dates.remortgage)}` : '—',''],
-      ['⚑','Mortgage free',payoff,''],
-    ];
-    $('.v15-journey-strip', shell).innerHTML = steps.map(([icon,title,date,status]) => `
-      <div class="v15-journey-step ${status ? `is-${status}` : ''}"><div class="v15-journey-icon">${icon}</div><strong>${title}</strong><span>${date}</span></div>`).join('');
-    const left = monthsUntil(dates.fixedEnd);
-    const callout = $('.v15-journey-callout', shell);
-    if (callout) callout.textContent = left === null ? 'Add your fixed-rate end date to complete the journey' : left <= 0 ? 'Your fixed-rate end needs attention' : `${compactDuration(left)} to fixed-rate end`;
-  }
-
   function render() {
     renderCurrent();
-    renderJourney();
   }
 
   function start() {
