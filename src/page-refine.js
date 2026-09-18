@@ -259,6 +259,7 @@
     }
     const host=$('.future-wait-host',wait);
     if(timeline.parentElement!==host) host.appendChild(timeline);
+    $('.next-home-subhead', timeline)?.remove();
   }
 
   function refineFuture(){
