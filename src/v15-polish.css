@@ -45,7 +45,8 @@ html,body{background:var(--bg)!important;color:var(--text)!important}
 .v15-current-journey-head>div>strong{display:block;margin-top:3px;font-size:16px;letter-spacing:-.015em}
 .v15-current-journey-link{color:var(--accent-strong);font-size:11px;font-weight:800;white-space:nowrap}
 .v15-current-journey-track{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:relative;gap:0}
-.v15-current-journey-track::before{content:"";position:absolute;left:24px;right:calc(20% - 24px);top:16px;height:2px;background:#d7d7d2}
+.v15-current-journey-track::before{display:none}
+.v15-current-journey-line{position:absolute;z-index:0;left:24px;right:calc(20% - 24px);top:15px;height:2px;border-radius:999px;background:#c9c3ba;pointer-events:none}
 .v15-current-journey-step{position:relative;z-index:1;display:grid;grid-template-columns:32px 1fr;align-items:center;gap:8px;min-width:0;padding:0 8px}
 .v15-current-journey-icon{box-sizing:border-box;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#faf7f1;border:2px solid #bcc5c1;color:#45515a;font-size:12px}
 .v15-current-journey-step.is-complete .v15-current-journey-icon{background:#eaf3ef;border-color:var(--equity);color:#467f70}
@@ -123,7 +124,7 @@ html,body{background:var(--bg)!important;color:var(--text)!important}
 @media(max-width:900px){
   .v15-current-journey-track{grid-template-columns:repeat(5,150px);overflow-x:auto;padding-bottom:5px;scroll-snap-type:x proximity}
   .v15-current-journey-step{scroll-snap-align:start}
-  .v15-current-journey-track::before{left:16px;right:16px}
+  .v15-current-journey-line{left:16px;right:16px}
 }
 
 @media(max-width:700px){
