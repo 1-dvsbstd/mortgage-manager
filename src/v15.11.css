@@ -58,44 +58,6 @@
   cursor:pointer!important;
 }
 
-/* A consistent, premium hover lift across the product. */
-@media (hover:hover) and (pointer:fine){
-  .app-view-current .hero-panel,
-  .app-view-current .panel,
-  .app-view-current .v15-current-stats,
-  .app-view-current .v15-current-journey,
-  .app-view-upcoming .upcoming-section,
-  .app-view-upcoming .deal-planner,
-  .app-view-future #homeProjection,
-  .app-view-future .future-model-range-panel,
-  .app-view-future #futureWaitPlanner,
-  .app-view-future #nextHomePlanner,
-  .app-view-future #propertyCostComparison,
-  .personal-modal .personal-section,
-  .personal-modal .setup-history-row,
-  .personal-modal .setup-history-total{
-    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease!important;
-  }
-  .app-view-current .hero-panel:hover,
-  .app-view-current .panel:hover,
-  .app-view-current .v15-current-stats:hover,
-  .app-view-current .v15-current-journey:hover,
-  .app-view-upcoming .upcoming-section:hover,
-  .app-view-upcoming .deal-planner:hover,
-  .app-view-future #homeProjection:hover,
-  .app-view-future .future-model-range-panel:hover,
-  .app-view-future #futureWaitPlanner:hover,
-  .app-view-future #nextHomePlanner:hover,
-  .app-view-future #propertyCostComparison:hover,
-  .personal-modal .personal-section:hover,
-  .personal-modal .setup-history-row:hover,
-  .personal-modal .setup-history-total:hover{
-    transform:translateY(-2px)!important;
-    box-shadow:0 20px 50px rgba(61,48,36,.10)!important;
-    border-color:#d3b99f!important;
-  }
-}
-
 /* Setup & data — warm light controls, not the old dark setup theme. */
 .personal-backdrop{
   background:rgba(32,40,51,.34)!important;
