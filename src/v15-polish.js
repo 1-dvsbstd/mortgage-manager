@@ -109,7 +109,7 @@
       ['↔','Remortgage',data.remortgage ? monthLabel(data.remortgage) : '—',''],
       ['⚑','Mortgage free',data.payoff,''],
     ];
-    $('.v15-current-journey-track', card).innerHTML = steps.map(([icon,title,date,status]) => `
+    $('.v15-current-journey-track', card).innerHTML = '<span class="v15-current-journey-line" aria-hidden="true"></span>' + steps.map(([icon,title,date,status]) => `
       <div class="v15-current-journey-step ${status ? `is-${status}` : ''}">
         <div class="v15-current-journey-icon">${icon}</div>
         <div><strong>${title}</strong><span>${date}</span></div>
