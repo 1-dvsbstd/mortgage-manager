@@ -134,13 +134,6 @@ body[data-app-view="future"] #futureWaitPlanner{
 body[data-app-view="future"] #futureWaitPlanner .future-wait-heading{
   margin:0 0 14px!important;
 }
-body[data-app-view="future"] #futureWaitPlanner .future-wait-host{
-  padding:0!important;
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
 body[data-app-view="future"] #futureWaitPlanner .next-home-timeline{
   margin:0!important;
   padding:0!important;
