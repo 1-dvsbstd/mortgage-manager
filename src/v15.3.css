@@ -21,13 +21,12 @@
 .app-view-current .hero-panel>.v15-current-journey{
   grid-column:1/-1;
   grid-row:1;
-  margin:0;
-  padding:13px 22px 12px;
-  border:0!important;
-  border-bottom:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
+  margin:14px 16px 0;
+  padding:14px 18px 15px;
+  border:1px solid var(--border)!important;
+  border-radius:16px!important;
+  background:rgba(255,250,244,.78)!important;
+  box-shadow:0 6px 18px rgba(61,48,36,.035)!important;
 }
 .app-view-current .hero-panel>.v15-current-journey+.hero-main{grid-column:1;grid-row:2}
 .app-view-current .hero-panel>.v15-current-journey~.v15-home-visual{grid-column:2;grid-row:2}
