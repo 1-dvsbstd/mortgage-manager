@@ -136,6 +136,7 @@ body{
 .trajectory-with-what-if>.chart-wrap canvas{
   background:transparent!important;
   border:0!important;
+  border-radius:14px!important;
   box-shadow:none!important;
 }
 .trajectory-with-what-if>.legend{margin:10px 24px 0!important;padding-bottom:20px!important}
