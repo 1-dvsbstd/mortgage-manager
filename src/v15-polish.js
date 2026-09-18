@@ -98,23 +98,6 @@
     return card;
   }
 
-  function positionCurrentJourneyLine(card) {
-    const track = $('.v15-current-journey-track', card);
-    const line = $('.v15-current-journey-line', card);
-    const icons = [...card.querySelectorAll('.v15-current-journey-icon')];
-    if (!track || !line || icons.length < 2) return;
-    const trackRect = track.getBoundingClientRect();
-    const first = icons[0].getBoundingClientRect();
-    const last = icons[icons.length - 1].getBoundingClientRect();
-    const left = first.left + first.width / 2 - trackRect.left;
-    const right = last.left + last.width / 2 - trackRect.left;
-    const top = first.top + first.height / 2 - trackRect.top;
-    line.style.left = `${left}px`;
-    line.style.width = `${Math.max(0,right-left)}px`;
-    line.style.right = 'auto';
-    line.style.top = `${top}px`;
-  }
-
   function renderCurrentJourney() {
     const card = ensureCurrentJourney();
     const data = journeyData();
@@ -131,14 +114,9 @@
         <div class="v15-current-journey-icon">${icon}</div>
         <div><strong>${title}</strong><span>${date}</span></div>
       </div>`).join('');
-    requestAnimationFrame(() => positionCurrentJourneyLine(card));
   }
 
   function run() { renderCurrentJourney(); }
-  window.addEventListener('resize', () => {
-    const card = $('#v15CurrentJourney');
-    if (card) requestAnimationFrame(() => positionCurrentJourneyLine(card));
-  });
 
   if (window.MortgageStore?.subscribe) MortgageStore.subscribe(() => requestAnimationFrame(run));
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run, { once:true });
