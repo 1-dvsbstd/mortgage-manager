@@ -87,7 +87,7 @@ body{
 .v15-hero-progress-foot{display:flex;justify-content:space-between;gap:14px;margin-top:8px;color:var(--muted)!important;font-size:10px}
 
 /* Compact glance-first metric strip */
-.v15-current-stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;margin-top:24px;border:1px solid var(--border);border-radius:22px;background:rgba(251,248,243,.94);overflow:hidden;box-shadow:0 16px 44px rgba(62,49,38,.055)}
+.v15-current-stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;margin-top:0;border:1px solid var(--border);border-radius:22px;background:rgba(251,248,243,.94);overflow:hidden;box-shadow:0 16px 44px rgba(62,49,38,.055)}
 .v15-stat{min-width:0;padding:18px 18px 16px;border-right:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);background:rgba(255,255,255,.26)}
 .v15-stat:nth-child(6n){border-right:0}.v15-stat:nth-last-child(-n+2){border-bottom:0}
 .v15-stat span{display:block;color:var(--muted)!important;font-size:10px;line-height:1.35}
