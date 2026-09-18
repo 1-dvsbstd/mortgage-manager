@@ -11,6 +11,8 @@ const journeyStyle = fs.readFileSync('src/v15-polish.css', 'utf8');
 const journeyScript = fs.readFileSync('src/v15-polish.js', 'utf8');
 const legacyHoverStyle = fs.readFileSync('src/v15.11.css', 'utf8');
 const refreshScript = fs.readFileSync('src/v15-refresh.js', 'utf8');
+const pageRefine = fs.readFileSync('src/page-refine.js', 'utf8');
+const futureCardsStyle = fs.readFileSync('src/v15.10.css', 'utf8');
 const expandable = fs.readFileSync('src/expandable-cards.js', 'utf8');
 const launcher = fs.readFileSync('launch.ps1', 'utf8');
 
@@ -36,7 +38,7 @@ assert.match(sw, /ignoreSearch:\s*true/, 'Offline fallback should tolerate cache
 assert.match(sw, /cache:'no-store'/, 'Service worker should bypass ordinary browser cache while online');
 assert.match(index, /offline-v1-final\.css\?v=01526/, 'Final UI stylesheet should be loaded directly after legacy layers');
 assert.match(index, /offline-v1-final\.js\?v=01526/, 'Final UI script should be loaded directly after legacy layers');
-assert.match(finalPolish, /V0\.15\.25/, 'Final UI should expose the current visible build marker');
+assert.match(finalPolish, /V0\.15\.26/, 'Final UI should expose the current visible build marker');
 assert.match(finalPolish, /wireMonthPicker/, 'Final UI should provide the custom month/year picker');
 assert.match(finalPolish, /undefined\|nan/i, 'Final UI layer should guard invalid LTV milestones');
 assert.match(finalStyle, /grid-template-columns:repeat\(4/, 'Current summary should use a compact four-column desktop grid');
@@ -48,9 +50,13 @@ assert.doesNotMatch(polish, /document\.createElement\('style'\)/, 'v15.15 must n
 assert.doesNotMatch(polish, /applyMarketChoice|MARKET_CHOICE_KEY/, 'Market benchmarks must stay read-only');
 assert.doesNotMatch(legacyHoverStyle, /premium hover lift across the product|v15-current-journey:hover/, 'Legacy blanket hover lift must stay retired');
 assert.match(journeyStyle, /\.v15-current-journey\{[\s\S]*box-shadow:none/, 'Visible Current journey should be flat inside its parent card');
-assert.match(journeyStyle, /right:calc\(20% - 24px\)/, 'Current journey track should end at the final milestone centre');
+assert.match(journeyScript, /v15-current-journey-line/, 'Current journey should render an explicit connecting track');
+assert.match(journeyStyle, /\.v15-current-journey-line\{[^}]*right:calc\(20% - 24px\)/, 'Current journey track should end at the final milestone centre');
 assert.doesNotMatch(journeyScript, /\[250,700,1200\]|setTimeout\(run, 80\)/, 'Current journey should not use delayed rerender loops');
 assert.doesNotMatch(refreshScript, /function renderJourney\(/, 'Hidden duplicate Upcoming journey renderer must stay removed');
+assert.match(pageRefine, /next-home-subhead[^\n]*remove\(\)/, 'Future split layout should remove the duplicate inner heading');
+assert.match(futureCardsStyle, /#futureWaitPlanner \.next-home-timeline-rows\{[\s\S]*gap:12px!important/, 'Future timeline should use gaps between separate cards');
+assert.match(futureCardsStyle, /#futureWaitPlanner \.next-home-timeline-row\{[\s\S]*border-radius:17px!important[\s\S]*box-shadow:0 10px 28px/, 'Future timeline rows should remain individual raised cards');
 assert.match(finalStyle, /body \[hidden\]\{display:none!important\}/, 'Semantic hidden state must override legacy display rules');
 assert.doesNotMatch(expandable, /openCard\(/, 'Legacy expandable-card runtime must remain inert');
 assert.match(launcher, /Cache-Control: no-store, no-cache/, 'Windows launcher should prevent stale browser shell caching');
