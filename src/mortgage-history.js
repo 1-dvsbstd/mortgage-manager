@@ -180,15 +180,48 @@
     return String(value ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
+  function inferredTerm(deal = {}) {
+    const start = monthIndex(deal.start || '');
+    const end = monthIndex(deal.end || '');
+    const months = start !== null && end !== null ? end - start : 0;
+    return [12,24,36,60].includes(months) ? String(months) : String(deal.term || '');
+  }
+
   function dealRow(deal = {}) {
+    const term = inferredTerm(deal);
     return `<div class="history-row history-deal-row" data-history-deal>
-      <label>From<input type="month" data-history="start" value="${escape(deal.start)}"></label>
-      <label>To<input type="month" data-history="end" value="${escape(deal.end)}"></label>
+      <label>Started<input type="month" data-history="start" value="${escape(deal.start)}"></label>
+      <label>Fixed term<select data-history="term">
+        <option value="" ${term===''?'selected':''}>Custom</option>
+        <option value="12" ${term==='12'?'selected':''}>1 year</option>
+        <option value="24" ${term==='24'?'selected':''}>2 years</option>
+        <option value="36" ${term==='36'?'selected':''}>3 years</option>
+        <option value="60" ${term==='60'?'selected':''}>5 years</option>
+      </select></label>
+      <label>Ends<input type="month" data-history="end" value="${escape(deal.end)}"></label>
       <label>Rate (%)<input type="number" inputmode="decimal" step="0.01" data-history="rate" value="${escape(deal.rate)}"></label>
       <label>Payment (£/mo)<input type="number" inputmode="decimal" step="0.01" data-history="payment" value="${escape(deal.payment)}"></label>
       <label>Overpay (£/mo)<input type="number" inputmode="decimal" step="0.01" data-history="overpayment" value="${escape(deal.overpayment)}"></label>
       <button type="button" class="history-remove" data-remove-history aria-label="Remove deal">Remove</button>
     </div>`;
+  }
+
+  function syncDealDates(section, row, sourceField = null) {
+    if (!section || !row) return;
+    const start = row.querySelector('[data-history="start"]');
+    const term = row.querySelector('[data-history="term"]');
+    const end = row.querySelector('[data-history="end"]');
+    const months = Math.max(0, Number(term?.value) || 0);
+    if (start?.value && months > 0 && sourceField !== end) {
+      end.value = addMonths(start.value, months);
+    }
+    const rows = [...section.querySelectorAll('[data-history-deal]')];
+    const index = rows.indexOf(row);
+    const next = rows[index + 1];
+    const nextStart = next?.querySelector('[data-history="start"]');
+    if (end?.value && nextStart && (!nextStart.value || sourceField === end || sourceField === term || sourceField === start)) {
+      nextStart.value = end.value;
+    }
   }
 
   function lumpRow(item = {}) {
@@ -280,7 +313,7 @@
     section.className = 'personal-section mortgage-history-section';
     section.innerHTML = `<summary><span><strong>Mortgage history</strong><small>Purchase, previous fixed deals and lump-sum overpayments</small></span><span class="history-summary-chevron">+</span></summary>
       <div class="mortgage-history-body">
-        <p class="history-intro">Use the actual completion price rather than the estate-agent listing price. For each deal, Payment is the lender's normal required payment and Overpay is the extra paid on top. “To” is treated as the month the next deal starts.</p>
+        <p class="history-intro">Use the actual completion price rather than the estate-agent listing price. Choose a fixed term where you know it and Mortgage Manager will calculate the end month; the next deal then starts automatically from that month. Payment is the lender's normal required payment and Overpay is the extra paid on top.</p>
         <div class="history-purchase-grid">
           <label>Purchase / completion date<input type="month" data-history-root="purchaseDate" value="${escape((data.purchaseDate || '').slice(0,7))}"></label>
           <label>Actual purchase price (£)<input type="number" inputmode="decimal" step="100" data-history-root="purchasePrice" value="${escape(data.purchasePrice)}"></label>
@@ -305,7 +338,10 @@
     section.addEventListener('click', (event) => {
       event.stopPropagation();
       if (event.target.closest('[data-add-deal]')) {
-        section.querySelector('[data-deal-list]')?.insertAdjacentHTML('beforeend', dealRow());
+        const list = section.querySelector('[data-deal-list]');
+        const rows = [...section.querySelectorAll('[data-history-deal]')];
+        const previousEnd = rows.at(-1)?.querySelector('[data-history="end"]')?.value || '';
+        list?.insertAdjacentHTML('beforeend', dealRow({ start:previousEnd }));
         scheduleAutosave();
       }
       if (event.target.closest('[data-add-lump]')) {
@@ -320,14 +356,20 @@
       if (event.target.closest('[data-save-history]')) persistSection(section, true);
     });
 
-    section.addEventListener('input', () => {
+    section.addEventListener('input', (event) => {
+      const row = event.target.closest?.('[data-history-deal]');
+      if (row && ['start','term','end'].includes(event.target.dataset.history || '')) syncDealDates(section, row, event.target);
       const current = readFromSection(section);
       renderSummary(section, current);
       const state = section.querySelector('[data-history-save-state]');
       if (state) state.textContent = 'Saving…';
       scheduleAutosave();
     });
-    section.addEventListener('change', () => persistSection(section, false));
+    section.addEventListener('change', (event) => {
+      const row = event.target.closest?.('[data-history-deal]');
+      if (row && ['start','term','end'].includes(event.target.dataset.history || '')) syncDealDates(section, row, event.target);
+      persistSection(section, false);
+    });
 
     modal.addEventListener('click', (event) => {
       if (event.target.closest('[data-action="save"]')) persistSection(section, true);
