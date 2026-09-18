@@ -5,7 +5,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $Root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Address = [System.Net.IPAddress]::Loopback
-$Build = '01527'
+$Build = '01528'
 $LaunchNonce = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
 
 function Get-ContentType([string]$Path) {
@@ -42,7 +42,7 @@ for ($candidatePort = $Port; $candidatePort -lt ($Port + 20); $candidatePort++) 
 if (-not $server -or -not $selectedPort) {
   Write-Host "Mortgage Manager could not find a free local port starting at $Port." -ForegroundColor Red
   Write-Host "This copy would serve from: $Root"
-  Write-Host "Expected UI build: V0.15.27"
+  Write-Host "Expected UI build: V0.15.28"
   Read-Host 'Press Enter to close'
   exit 1
 }
@@ -53,7 +53,7 @@ Write-Host ''
 Write-Host 'Mortgage Manager is running locally.' -ForegroundColor Green
 Write-Host $Url
 Write-Host "Serving from: $Root" -ForegroundColor Cyan
-Write-Host "Expected UI build: V0.15.27" -ForegroundColor Yellow
+Write-Host "Expected UI build: V0.15.28" -ForegroundColor Yellow
 if ($selectedPort -ne $Port) {
   Write-Host "Port $Port was already in use, so this copy is using port $selectedPort instead." -ForegroundColor Yellow
 }
