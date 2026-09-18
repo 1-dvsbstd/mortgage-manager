@@ -722,3 +722,26 @@ body .v15-journey-strip::before{
   height:2px!important;
   transform:translateY(-50%)!important;
 }
+
+
+/* Release cleanup — deal-end cards use one consistent card model */
+body .app-view-upcoming .upcoming-position .deal-planner-empty{
+  margin:0 0 14px!important;
+  padding:16px 18px!important;
+}
+body .app-view-upcoming .upcoming-position .deal-planner-summary{
+  margin:0!important;
+  gap:12px!important;
+}
+body .app-view-upcoming .upcoming-position .deal-position-interest{
+  margin:16px 0 0!important;
+  padding:16px 18px 18px!important;
+  border:1px solid rgba(68,58,48,.11)!important;
+  background:#fffaf4!important;
+  box-shadow:0 8px 22px rgba(61,48,36,.045)!important;
+}
+body .app-view-upcoming .upcoming-position .deal-position-interest small{
+  display:block!important;
+  margin-top:7px!important;
+  line-height:1.4!important;
+}
