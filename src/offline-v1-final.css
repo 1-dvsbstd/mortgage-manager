@@ -651,3 +651,32 @@ body .app-view-upcoming .deal-planner-rates,
 body .app-view-upcoming .deal-planner-note{
   border-top:0!important;
 }
+
+
+/* V0.15.22 — journey integration correction */
+
+/* The Mortgage Journey is content inside the Upcoming card, not a second shaded card. */
+body .app-view-upcoming .v15-journey-shell,
+body .app-view-upcoming .v15-journey-shell:hover,
+body .app-view-upcoming .v15-journey-shell:focus,
+body .app-view-upcoming .v15-journey-shell:focus-within{
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+
+/* Make the timeline geometry deterministic: 34px border-box marker, track through exact centre. */
+body .app-view-upcoming .v15-journey-icon{
+  box-sizing:border-box!important;
+  width:34px!important;
+  height:34px!important;
+  margin:14px auto 8px!important;
+}
+body .app-view-upcoming .v15-journey-strip::before{
+  top:31px!important;
+  height:2px!important;
+  transform:translateY(-50%)!important;
+}
