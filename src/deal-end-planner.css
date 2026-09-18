@@ -39,3 +39,18 @@
   padding:0!important;
   border:0!important;
 }
+
+
+/* Redesigned Upcoming owns the rate content in .upcoming-rates.
+   Retire the original rates shell completely so its legacy top border
+   cannot survive as a separator between cards. */
+.app-view-upcoming .upcoming-workspace > .deal-planner-rates,
+.app-view-upcoming .upcoming-workspace .deal-planner-rates{
+  display:none!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  min-height:0!important;
+  height:0!important;
+  overflow:hidden!important;
+}
