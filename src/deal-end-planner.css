@@ -54,3 +54,17 @@
   height:0!important;
   overflow:hidden!important;
 }
+
+
+/* The redesigned Upcoming view extracts the live planner fields into its own
+   cards but keeps #dealEndPlanner in the DOM so deal-end-planner.js can keep
+   updating them. The legacy shell itself must never render its old top rule. */
+.app-view-upcoming .upcoming-workspace #dealEndPlanner{
+  display:none!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  min-height:0!important;
+  height:0!important;
+  overflow:hidden!important;
+}
