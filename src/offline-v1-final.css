@@ -231,7 +231,6 @@ body .upcoming-rates .live-rate-selection-note{display:none!important}
 
 /* Future — restore distinct rounded tiles and depth. */
 body .app-view-future .next-home-timeline,
-body .app-view-future .future-wait-host,
 body .app-view-future .future-cost-inline,
 body .app-view-future .property-cost-grid{
   border-radius:18px!important;
@@ -244,7 +243,7 @@ body .app-view-future .next-home-timeline-rows{
 body .app-view-future .next-home-timeline-row,
 body .app-view-future .property-cost-card,
 body .app-view-future .next-home-summary-card,
-body .app-view-future .home-profile-range>div{
+body .app-view-future .home-profile-range-values>div{
   border:1px solid rgba(68,58,48,.11)!important;
   border-radius:17px!important;
   background:#fffaf4!important;
@@ -752,14 +751,6 @@ body [hidden]{display:none!important}
 body #ownershipBadge{display:none!important}
 
 
-/* V0.15.27 — remove redundant wrapper surfaces. */
-body .app-view-future #futureWaitPlanner .future-wait-host{
-  padding:0!important;
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
 body .personal-modal .setup-tab-nav{
   border:0!important;
   background:transparent!important;
