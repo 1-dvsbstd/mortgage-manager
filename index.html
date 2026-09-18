@@ -44,7 +44,19 @@
   <link id="offlineV1FinalStyle" rel="stylesheet" href="src/offline-v1-final.css?v=01523" />
   <script>
     if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+      const isHostedPreview = /(^|\\.)netlify\\.app$/i.test(location.hostname);
+      window.addEventListener('load', async () => {
+        if (isHostedPreview) {
+          const regs = await navigator.serviceWorker.getRegistrations().catch(() => []);
+          await Promise.all(regs.map((reg) => reg.unregister().catch(() => false)));
+          if ('caches' in window) {
+            const keys = await caches.keys().catch(() => []);
+            await Promise.all(keys.map((key) => caches.delete(key).catch(() => false)));
+          }
+          return;
+        }
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
     }
   </script>
 </head>
