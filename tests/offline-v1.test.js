@@ -43,7 +43,7 @@ assert.match(sw, /ignoreSearch:\s*true/, 'Offline fallback should tolerate cache
 assert.match(sw, /cache:'no-store'/, 'Service worker should bypass ordinary browser cache while online');
 assert.match(index, /offline-v1-final\.css\?v=01528/, 'Final UI stylesheet should be loaded directly after legacy layers');
 assert.match(index, /offline-v1-final\.js\?v=01528/, 'Final UI script should be loaded directly after legacy layers');
-assert.match(finalPolish, /V0\.15\.27/, 'Final UI should expose the current visible build marker');
+assert.match(finalPolish, /V0\.15\.28/, 'Final UI should expose the current visible build marker');
 assert.match(finalPolish, /wireMonthPicker/, 'Final UI should provide the custom month/year picker');
 assert.match(finalPolish, /undefined\|nan/i, 'Final UI layer should guard invalid LTV milestones');
 assert.match(finalStyle, /grid-template-columns:repeat\(4/, 'Current summary should use a compact four-column desktop grid');
