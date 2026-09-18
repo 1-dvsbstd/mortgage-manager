@@ -169,6 +169,15 @@
     [timeline,position,action,rateSection,interest].forEach((section)=>shell.appendChild(section));
     next.appendChild(shell);
 
+    /* The new Upcoming layout owns the visible UI. Keep old direct children
+       only as hidden data sources so legacy borders/dividers cannot leak into
+       the rebuilt page. */
+    [...next.children].forEach((child)=>{
+      if(child===shell || child.id==='dealActionHint') return;
+      child.hidden=true;
+      child.classList.add('upcoming-legacy-source');
+    });
+
     const oldDetail=$('.expand-detail',next), oldPlanner=document.getElementById('dealEndPlanner');
     if(oldDetail) oldDetail.hidden=true;
     if(oldPlanner) oldPlanner.hidden=true;
