@@ -152,3 +152,19 @@ body[data-app-view="upcoming"] .current-fix-stats > div:hover{
   .app-view-current .hero-panel>.v15-current-journey{padding:12px 14px 10px}
   .v15-current-journey-head>div>strong{font-size:12px!important}
 }
+
+/* Separate the journey card from the hero content without making it float. */
+.app-view-current .hero-panel>.v15-current-journey{
+  position:relative;
+}
+.app-view-current .hero-panel>.v15-current-journey::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-15px;
+  height:1px;
+  background:var(--border-soft);
+  opacity:.9;
+  pointer-events:none;
+}
