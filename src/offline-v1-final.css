@@ -527,3 +527,127 @@ body .personal-modal .history-deal-row{
   body .personal-modal .history-deal-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}
   body .personal-modal .history-deal-row .history-remove{grid-column:1/-1}
 }
+
+
+/* V0.15.21 mini review — remove residual nested surfaces and align controls */
+
+/* Disclosure chevrons: use a geometrically centred icon instead of a rotated text glyph. */
+body .personal-modal details.personal-section>summary::after,
+body .personal-modal .personal-section>summary::after{
+  content:''!important;
+  display:block!important;
+  width:26px!important;
+  height:26px!important;
+  min-width:26px!important;
+  min-height:26px!important;
+  padding:0!important;
+  border-radius:999px!important;
+  background-color:#f1e6da!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3.25 4.75 6 7.5l2.75-2.75' fill='none' stroke='%237e5837' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")!important;
+  background-repeat:no-repeat!important;
+  background-position:50% 50%!important;
+  background-size:12px 12px!important;
+  transform:translateY(-50%)!important;
+}
+body .personal-modal details.personal-section[open]>summary::after,
+body .personal-modal .personal-section[open]>summary::after{
+  transform:translateY(-50%) rotate(180deg)!important;
+}
+
+/* Online mode: unmistakable horizontal switch, unaffected by global button sizing. */
+body .connectivity-switch,
+body button.connectivity-switch{
+  box-sizing:border-box!important;
+  display:block!important;
+  flex:0 0 48px!important;
+  width:48px!important;
+  min-width:48px!important;
+  max-width:48px!important;
+  height:26px!important;
+  min-height:26px!important;
+  max-height:26px!important;
+  padding:3px!important;
+  border:1px solid #8f867d!important;
+  border-radius:999px!important;
+  background:#eee8df!important;
+  box-shadow:inset 0 1px 2px rgba(60,50,42,.06)!important;
+  line-height:1!important;
+}
+body .connectivity-switch::after{
+  box-sizing:border-box!important;
+  display:block!important;
+  width:18px!important;
+  height:18px!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:50%!important;
+  background:#9a9188!important;
+  box-shadow:0 1px 3px rgba(45,37,30,.18)!important;
+  transform:translateX(0)!important;
+}
+body .connectivity-switch.is-online{
+  border-color:#8f867d!important;
+  background:#eee8df!important;
+}
+body .connectivity-switch.is-online::after{
+  transform:translateX(22px)!important;
+  background:#c88e5c!important;
+}
+
+/* Mortgage Journey: anchor the track to the actual vertical centre of the 34px markers. */
+body .v15-journey-strip{
+  --journey-icon-top:14px;
+  --journey-icon-size:34px;
+}
+body .v15-journey-strip::before{
+  top:calc(var(--journey-icon-top) + (var(--journey-icon-size) / 2))!important;
+  transform:translateY(-50%)!important;
+}
+
+/* The eight Current metrics are eight cards only — the layout wrapper has no visual/hover presence. */
+body .app-view-current .v15-current-stats,
+body .app-view-current .v15-current-stats:hover,
+body .app-view-current .v15-current-stats:focus,
+body .app-view-current .v15-current-stats:focus-within{
+  margin-top:24px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  outline:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+}
+
+/* Trajectory graph belongs to its parent card: no second rounded box and no grey inset panel. */
+body .app-view-current .trajectory-with-what-if>.chart-wrap,
+body .app-view-current .chart-panel .chart-wrap,
+body .app-view-current .trajectory-with-what-if>.chart-wrap:hover,
+body .app-view-current .chart-panel .chart-wrap:hover{
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+body .app-view-current .trajectory-with-what-if>.chart-wrap canvas,
+body .app-view-current .chart-panel .chart-wrap canvas{
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+/* Upcoming sections are separated by breathing room, not stray rules. */
+body .app-view-upcoming .upcoming-section-heading{
+  border-bottom:0!important;
+}
+body .app-view-upcoming .deal-end-planner,
+body .app-view-upcoming .upcoming-position .deal-planner-milestone,
+body .app-view-upcoming .upcoming-position .deal-position-interest,
+body .app-view-upcoming .deal-planner-rates,
+body .app-view-upcoming .deal-planner-note{
+  border-top:0!important;
+}
