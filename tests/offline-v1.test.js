@@ -13,6 +13,11 @@ const legacyHoverStyle = fs.readFileSync('src/v15.11.css', 'utf8');
 const refreshScript = fs.readFileSync('src/v15-refresh.js', 'utf8');
 const pageRefine = fs.readFileSync('src/page-refine.js', 'utf8');
 const futureCardsStyle = fs.readFileSync('src/v15.10.css', 'utf8');
+const setupDataScript = fs.readFileSync('src/setup-data.js', 'utf8');
+const appRuntimeScript = fs.readFileSync('src/app-runtime.js', 'utf8');
+const pageRefineScript = fs.readFileSync('src/page-refine.js', 'utf8');
+const homeProfileStyle = fs.readFileSync('src/home-profile.css', 'utf8');
+const layoutFinalizeStyle = fs.readFileSync('src/layout-finalize.css', 'utf8');
 const expandable = fs.readFileSync('src/expandable-cards.js', 'utf8');
 const launcher = fs.readFileSync('launch.ps1', 'utf8');
 
@@ -58,6 +63,12 @@ assert.match(pageRefine, /next-home-subhead[^\n]*remove\(\)/, 'Future split layo
 assert.match(futureCardsStyle, /#futureWaitPlanner \.next-home-timeline-rows\{[\s\S]*gap:12px!important/, 'Future timeline should use gaps between separate cards');
 assert.match(futureCardsStyle, /#futureWaitPlanner \.next-home-timeline-row\{[\s\S]*border-radius:17px!important[\s\S]*box-shadow:0 10px 28px/, 'Future timeline rows should remain individual raised cards');
 assert.match(finalStyle, /body \[hidden\]\{display:none!important\}/, 'Semantic hidden state must override legacy display rules');
+assert.doesNotMatch(setupDataScript, /<h3>Backup<\/h3>|data-action="export"|data-action="import"/, 'Setup must not recreate the retired legacy Backup section');
+assert.doesNotMatch(appRuntimeScript, /document\.createElement\('style'\)|offlineV1RuntimeStyle/, 'Runtime must not inject UI styles');
+assert.doesNotMatch(pageRefineScript, /future-wait-host|future-model-range-host|setTimeout\(run,780\)|setTimeout\(run,1300\)/, 'Future refinement must not recreate nested wrapper surfaces or delayed layout passes');
+assert.match(homeProfileStyle, /\.home-profile-range\{[^}]*border:0[^}]*background:transparent/, 'Estimate Range source must remain a flat container');
+assert.doesNotMatch(layoutFinalizeStyle, /\.home-profile-range>div/, 'Layout rules must not style Home Profile structural children as tiles');
+assert.doesNotMatch(finalStyle, /\.home-profile-range>div|future-wait-host|future-model-range-host/, 'Final styles must not resurrect retired wrapper surfaces');
 assert.doesNotMatch(expandable, /openCard\(/, 'Legacy expandable-card runtime must remain inert');
 assert.match(launcher, /Cache-Control: no-store, no-cache/, 'Windows launcher should prevent stale browser shell caching');
 assert.match(launcher, /Serving from:/, 'Windows launcher should show which folder is actually being served');
