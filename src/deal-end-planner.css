@@ -68,3 +68,17 @@
   height:0!important;
   overflow:hidden!important;
 }
+
+
+/* Final Upcoming retirement rule for the historical planner shell.
+   Its live fields are moved into redesigned cards; only the old shell's
+   margin/padding/top-border would otherwise remain visible. */
+.app-view-upcoming .deal-end-planner{
+  display:none!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  min-height:0!important;
+  height:0!important;
+  overflow:hidden!important;
+}
