@@ -39,7 +39,7 @@ body{background:linear-gradient(180deg,#09110f 0%,#0d1713 46%,#09120f 100%)!impo
 .app-view-heading>p{font-size:11px!important}
 
 /* Unified inner tiles */
-.hero-balance-row>div,.home-stats>div,.interest-box,.chart-stat,.current-fix-stats>div,.deal-planner-rate,.deal-planner-summary>div,.next-home-summary-card,.next-home-timeline-row,.property-cost-card,.home-profile-range>div{
+.hero-balance-row>div,.home-stats>div,.interest-box,.chart-stat,.current-fix-stats>div,.deal-planner-rate,.deal-planner-summary>div,.next-home-summary-card,.next-home-timeline-row,.property-cost-card,.home-profile-range-values>div{
   background:var(--surface-soft)!important;
   border:1px solid var(--border-soft)!important;
   border-radius:var(--radius-tile)!important;
