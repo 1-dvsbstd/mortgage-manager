@@ -215,7 +215,6 @@
           ${inputMarkup('ownership','Property share owned (%)','number','1')}
         </div>
         <div class="personal-section"><h3>Monthly history</h3><p>The app stores one snapshot per month on this device. Saving again in the same month updates that month rather than creating duplicates.</p><div class="personal-actions"><button type="button" class="personal-button" data-action="snapshot">Save this month</button><button type="button" class="personal-button danger" data-action="reset-history">Reset history</button></div></div>
-        <div class="personal-section"><h3>Backup</h3><p>Export everything stored by Mortgage Manager before changing phones or clearing browser/app data.</p><div class="personal-actions"><button type="button" class="personal-button" data-action="export">Export backup</button><button type="button" class="personal-button" data-action="import">Import backup</button><input class="personal-import-input" type="file" accept="application/json,.json" /></div></div>
         <div class="personal-footer-actions"><button type="button" class="personal-button" data-action="cancel">Cancel</button><button type="button" class="personal-button primary" data-action="save">Save changes</button></div>
       </section>`;
     document.body.appendChild(backdrop);
@@ -252,55 +251,6 @@
         toast('History reset');
       }
     });
-    backdrop.querySelector('[data-action="export"]')?.addEventListener('click', exportBackup);
-    const fileInput = backdrop.querySelector('.personal-import-input');
-    backdrop.querySelector('[data-action="import"]')?.addEventListener('click', () => fileInput?.click());
-    fileInput?.addEventListener('change', (event) => importBackup(event.target.files?.[0]));
-  }
-
-  function exportBackup() {
-    const data = {};
-    for (let i = 0; i < localStorage.length; i += 1) {
-      const key = localStorage.key(i);
-      if (key?.startsWith(STORAGE_PREFIX)) data[key] = localStorage.getItem(key);
-    }
-    const blob = new Blob([JSON.stringify({ exportedAt:new Date().toISOString(), version:BACKUP_VERSION, data }, null, 2)], { type:'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `mortgage-manager-backup-${monthKey()}.json`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 500);
-    toast('Backup exported');
-  }
-
-  function importBackup(file) {
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        const payload = JSON.parse(reader.result);
-        if (!payload?.data || typeof payload.data !== 'object' || Array.isArray(payload.data)) throw new Error('Invalid backup');
-        const incoming = Object.entries(payload.data).filter(([key]) => key.startsWith(STORAGE_PREFIX));
-        if (!incoming.length) throw new Error('No Mortgage Manager data');
-
-        const existingKeys = [];
-        for (let i = 0; i < localStorage.length; i += 1) {
-          const key = localStorage.key(i);
-          if (key?.startsWith(STORAGE_PREFIX)) existingKeys.push(key);
-        }
-        existingKeys.forEach((key) => localStorage.removeItem(key));
-        incoming.forEach(([key,value]) => localStorage.setItem(key, String(value)));
-
-        toast('Backup restored · reloading');
-        setTimeout(() => location.reload(), 600);
-      } catch (_) {
-        toast('Could not import that backup');
-      }
-    };
-    reader.readAsText(file);
   }
 
   function maybeFirstRun() {
