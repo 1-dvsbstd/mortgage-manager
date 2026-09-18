@@ -11,6 +11,7 @@ body #futureOverpaymentAssumption{
 }
 body .deal-action-hint,
 body #futureOverpaymentAssumption{padding:16px 18px!important}
+body .app-view-upcoming .deal-action-hint{margin:12px 0 16px!important}
 
 /* Topbar online/offline toggle — smaller and quieter */
 body .connectivity-switch{
