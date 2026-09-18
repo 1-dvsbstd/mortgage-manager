@@ -254,11 +254,16 @@
     if(!wait){
       wait=document.createElement('section');
       wait.id='futureWaitPlanner'; wait.className='panel future-wait-planner';
-      wait.innerHTML='<div class="future-wait-heading"><p class="eyebrow">If you wait</p><h2>How your next-home position could change</h2></div><div class="future-wait-host"></div>';
+      wait.innerHTML='<div class="future-wait-heading"><p class="eyebrow">If you wait</p><h2>How your next-home position could change</h2></div>';
       planner.insertAdjacentElement('afterend',wait);
     }
-    const host=$('.future-wait-host',wait);
-    if(timeline.parentElement!==host) host.appendChild(timeline);
+    const legacyHost=$('.future-wait-host',wait);
+    if(legacyHost){
+      if(timeline.parentElement===legacyHost) wait.appendChild(timeline);
+      legacyHost.remove();
+    } else if(timeline.parentElement!==wait) {
+      wait.appendChild(timeline);
+    }
     $('.next-home-subhead', timeline)?.remove();
   }
 
@@ -281,11 +286,16 @@
       if(!rangePanel){
         rangePanel=document.createElement('section');
         rangePanel.id='futureModelRange'; rangePanel.className='panel future-model-range-panel';
-        rangePanel.innerHTML='<div class="future-model-heading"><p class="eyebrow">Model range</p><h2>How different growth assumptions change today’s estimate</h2></div><div class="future-model-range-host"></div>';
+        rangePanel.innerHTML='<div class="future-model-heading"><p class="eyebrow">Model range</p><h2>How different growth assumptions change today’s estimate</h2></div>';
         home.insertAdjacentElement('afterend',rangePanel);
       }
-      const host=$('.future-model-range-host',rangePanel);
-      if(host && range.parentElement!==host) host.appendChild(range);
+      const legacyHost=$('.future-model-range-host',rangePanel);
+      if(legacyHost){
+        if(range.parentElement===legacyHost) rangePanel.appendChild(range);
+        legacyHost.remove();
+      } else if(range.parentElement!==rangePanel) {
+        rangePanel.appendChild(range);
+      }
     }
     splitNextHomePlanner();
   }
@@ -305,6 +315,6 @@
     });
   }
 
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>{setTimeout(run,780);setTimeout(run,1300);},{once:true});
-  else {setTimeout(run,780);setTimeout(run,1300);}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run,{once:true});
+  else run();
 })();
