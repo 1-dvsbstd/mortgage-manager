@@ -282,7 +282,6 @@ body .app-view-future #homeProjection:hover{
 }
 @media(max-width:620px){
   body .personal-modal .setup-pane{padding-inline:0!important}
-  body .personal-modal .personal-section{padding:15px!important;border-radius:16px!important}
   body .v15-current-stats{grid-template-columns:1fr!important;gap:10px!important}
   body .v15-journey-strip{grid-template-columns:1fr!important;padding:0!important;gap:10px!important}
   body .v15-journey-strip::before{display:none!important}
