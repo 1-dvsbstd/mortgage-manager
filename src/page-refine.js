@@ -217,10 +217,13 @@
     if(positionTitle){
       positionTitle.textContent='Your position at deal end';
       if(state?.fixedEnd){
+        const separator=document.createElement('span');
+        separator.className='deal-end-title-separator';
+        separator.textContent='·';
         const date=document.createElement('span');
         date.className='deal-end-title-date';
-        date.textContent=` · ${formatMonth(state.fixedEnd)}`;
-        positionTitle.appendChild(date);
+        date.textContent=formatMonth(state.fixedEnd);
+        positionTitle.append(separator,date);
       }
     }
     const legacyPlannerHeading=$('.deal-planner-heading',position);
