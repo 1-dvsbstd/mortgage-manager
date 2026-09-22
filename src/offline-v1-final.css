@@ -418,3 +418,65 @@ body .app-view-upcoming .deal-planner-heading .source-date::before{
   color:var(--muted-2)!important;
   font-weight:500!important;
 }
+
+
+/* V0.15.24 — final deal-end title and interest alignment */
+/* page-refine.js moves this box into .upcoming-position, so target its final class. */
+body .app-view-upcoming .upcoming-position .deal-position-interest{
+  margin:18px 0 0!important;
+  padding:18px 24px 20px!important;
+  border:0!important;
+  border-radius:16px!important;
+  background:#fffaf4!important;
+  box-shadow:0 8px 22px rgba(61,48,36,.045)!important;
+  display:grid!important;
+  gap:7px!important;
+  min-height:0!important;
+  height:auto!important;
+  overflow:visible!important;
+}
+body .app-view-upcoming .upcoming-position .deal-position-interest > span{
+  margin:0!important;
+  font-size:12px!important;
+  line-height:1.3!important;
+  color:var(--muted)!important;
+}
+body .app-view-upcoming .upcoming-position .deal-position-interest #interestRemaining{
+  display:block!important;
+  margin:0!important;
+  font-size:30px!important;
+  line-height:1.05!important;
+}
+body .app-view-upcoming .upcoming-position .deal-position-interest #interestWithExtraText{
+  display:block!important;
+  margin:0!important;
+  font-size:12px!important;
+  line-height:1.35!important;
+  color:var(--muted)!important;
+  overflow-wrap:anywhere!important;
+}
+
+/* Date now sits inside the heading instead of floating underneath it. */
+body .app-view-upcoming .upcoming-position .upcoming-section-heading h2{
+  display:block!important;
+}
+body .app-view-upcoming .deal-end-title-date{
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:var(--muted)!important;
+  font-family:inherit!important;
+  font-size:.72em!important;
+  font-weight:500!important;
+  line-height:inherit!important;
+  letter-spacing:0!important;
+  white-space:nowrap!important;
+}
+body .app-view-upcoming .deal-end-title-date::before{
+  content:none!important;
+}
+body .app-view-upcoming .deal-planner-heading:has(.deal-end-title-date){
+  display:none!important;
+}
