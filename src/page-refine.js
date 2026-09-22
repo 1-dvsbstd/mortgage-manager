@@ -212,7 +212,16 @@
 
     $('.upcoming-section-heading h2',timeline).textContent='Your current fix';
     $('.upcoming-section-heading h2',rates).textContent='What your payment could look like';
-    $('.upcoming-section-heading h2',position).textContent='Your position at deal end';
+    const positionTitle=$('.upcoming-section-heading h2',position);
+    if(positionTitle){
+      positionTitle.textContent='Your position at deal end';
+      const dealDate=document.getElementById('dealPlannerDate');
+      if(dealDate){
+        dealDate.classList.add('deal-end-title-date');
+        positionTitle.appendChild(document.createTextNode(' · '));
+        positionTitle.appendChild(dealDate);
+      }
+    }
     shell.querySelectorAll('.upcoming-section-heading .eyebrow').forEach((el)=>el.remove());
 
     let fixStats=$('.current-fix-stats',timeline);
