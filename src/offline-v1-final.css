@@ -353,3 +353,34 @@ body .app-view-upcoming .upcoming-interest .interest-box small{
   line-height:1.35!important;
   overflow-wrap:anywhere!important;
 }
+
+
+/* V0.15.21 — harden Upcoming interest card sizing */
+body .app-view-upcoming .upcoming-interest{
+  padding-bottom:30px!important;
+}
+body .app-view-upcoming .upcoming-interest .interest-box{
+  display:grid!important;
+  align-content:start!important;
+  gap:7px!important;
+}
+body .app-view-upcoming #interestRemaining{
+  display:block!important;
+  margin:0!important;
+  font-size:30px!important;
+  line-height:1.05!important;
+}
+body .app-view-upcoming #interestWithExtraText{
+  display:block!important;
+  margin:0!important;
+  font-size:12px!important;
+  line-height:1.3!important;
+  color:var(--muted)!important;
+  overflow-wrap:anywhere!important;
+}
+body .app-view-upcoming .upcoming-interest .interest-box > span{
+  margin:0!important;
+  font-size:12px!important;
+  line-height:1.3!important;
+  color:var(--muted)!important;
+}
