@@ -302,3 +302,53 @@ body .app-view-future #homeProjection:hover{
   body .v15-journey-icon{grid-row:1/3!important;margin:0!important}
   body .v15-journey-step strong,body .v15-journey-step span{align-self:center!important}
 }
+
+
+/* V0.15.25 — Upcoming empty-state colour cleanup + interest-card overflow fix */
+/* Empty planner prompts are informational, not success states: keep them in the warm ivory/copper system. */
+body .app-view-upcoming .deal-planner-empty{
+  margin:12px 0 0!important;
+  padding:16px 18px!important;
+  border:1px solid rgba(157,102,57,.16)!important;
+  border-radius:16px!important;
+  background:linear-gradient(135deg,#fffaf4,#f3e8dc)!important;
+  box-shadow:0 8px 22px rgba(61,48,36,.04)!important;
+}
+body .app-view-upcoming .deal-planner-empty strong{
+  color:var(--text)!important;
+}
+body .app-view-upcoming .deal-planner-empty span{
+  color:var(--muted)!important;
+}
+
+/* Remove the remaining pale-mint fill from completed journey markers.
+   Completion can stay legible through the icon/border without introducing another surface colour. */
+body .v15-current-journey-step.is-complete .v15-current-journey-icon,
+body .v15-journey-step.is-complete .v15-journey-icon{
+  background:#f2e8dc!important;
+  border-color:#b99a7c!important;
+  color:#76583f!important;
+}
+
+/* Let the supporting-interest card size itself to its copy at every viewport width. */
+body .app-view-upcoming .upcoming-interest{
+  min-height:0!important;
+  height:auto!important;
+  padding-bottom:24px!important;
+  overflow:visible!important;
+}
+body .app-view-upcoming .upcoming-interest .upcoming-section-body,
+body .app-view-upcoming .upcoming-interest .interest-box{
+  min-height:0!important;
+  height:auto!important;
+  overflow:visible!important;
+}
+body .app-view-upcoming .upcoming-interest .interest-box{
+  margin:0!important;
+  padding:0 0 2px!important;
+}
+body .app-view-upcoming .upcoming-interest .interest-box small{
+  margin-top:8px!important;
+  line-height:1.45!important;
+  overflow-wrap:anywhere!important;
+}
