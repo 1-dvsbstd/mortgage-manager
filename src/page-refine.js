@@ -213,15 +213,18 @@
     $('.upcoming-section-heading h2',timeline).textContent='Your current fix';
     $('.upcoming-section-heading h2',rates).textContent='What your payment could look like';
     const positionTitle=$('.upcoming-section-heading h2',position);
+    const state=window.MortgageStore?.get?.();
     if(positionTitle){
       positionTitle.textContent='Your position at deal end';
-      const dealDate=document.getElementById('dealPlannerDate');
-      if(dealDate){
-        dealDate.classList.add('deal-end-title-date');
-        positionTitle.appendChild(document.createTextNode(' · '));
-        positionTitle.appendChild(dealDate);
+      if(state?.fixedEnd){
+        const date=document.createElement('span');
+        date.className='deal-end-title-date';
+        date.textContent=` · ${formatMonth(state.fixedEnd)}`;
+        positionTitle.appendChild(date);
       }
     }
+    const legacyPlannerHeading=$('.deal-planner-heading',position);
+    if(legacyPlannerHeading) legacyPlannerHeading.remove();
     shell.querySelectorAll('.upcoming-section-heading .eyebrow').forEach((el)=>el.remove());
 
     let fixStats=$('.current-fix-stats',timeline);
@@ -229,7 +232,6 @@
       fixStats=document.createElement('div'); fixStats.className='current-fix-stats';
       $('.upcoming-section-body',timeline)?.appendChild(fixStats);
     }
-    const state=window.MortgageStore?.get?.();
     if(state){
       const total=Math.max(0,Number(state.payment)||0)+Math.max(0,Number(state.currentOverpayment)||0);
       const two=parseRateText('market2yRate'), five=parseRateText('market5yRate');
@@ -238,7 +240,10 @@
 
     if(action){
       const milestone=$('#dealPlannerMilestone',action);
-      if(milestone && milestone.parentElement!==$('.upcoming-section-body',position)) $('.upcoming-section-body',position)?.appendChild(milestone);
+      if(milestone){
+        milestone.classList.add('deal-position-milestone');
+        if(milestone.parentElement!==$('.upcoming-section-body',position)) $('.upcoming-section-body',position)?.appendChild(milestone);
+      }
       action.remove();
     }
     if(interest){
