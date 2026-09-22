@@ -391,3 +391,30 @@ body .app-view-upcoming .upcoming-interest .interest-box{
   padding-left:24px!important;
   padding-right:24px!important;
 }
+
+
+/* V0.15.23 — align deal-end supporting content and simplify date */
+/* Match the interest copy to the text column inside the summary tiles above. */
+body .app-view-upcoming .upcoming-interest .interest-box{
+  padding-left:46px!important;
+  padding-right:46px!important;
+  padding-bottom:10px!important;
+}
+
+/* The deal-end date is context, not a status badge. */
+body .app-view-upcoming .deal-planner-heading .source-date{
+  margin:0 0 2px 24px!important;
+  padding:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:var(--muted)!important;
+  font-size:12px!important;
+  font-weight:600!important;
+  line-height:1.4!important;
+  letter-spacing:.01em!important;
+}
+body .app-view-upcoming .deal-planner-heading .source-date::before{
+  content:"Deal ends · "!important;
+  color:var(--muted-2)!important;
+  font-weight:500!important;
+}
