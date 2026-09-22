@@ -384,3 +384,10 @@ body .app-view-upcoming .upcoming-interest .interest-box > span{
   line-height:1.3!important;
   color:var(--muted)!important;
 }
+
+
+/* V0.15.22 — align Upcoming interest content with cards above */
+body .app-view-upcoming .upcoming-interest .interest-box{
+  padding-left:24px!important;
+  padding-right:24px!important;
+}
