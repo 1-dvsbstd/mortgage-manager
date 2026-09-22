@@ -115,7 +115,6 @@ body{background:linear-gradient(180deg,#09110f 0%,#0d1713 46%,#09120f 100%)!impo
 .upcoming-position .deal-planner-summary>div:nth-child(3){display:none!important}
 .upcoming-position .deal-planner-summary strong{font-size:25px}
 .upcoming-position .deal-planner-milestone{margin:18px 0 0!important;padding:18px 0 0!important;border:0!important;background:transparent!important}
-.upcoming-position .deal-position-interest{margin-top:18px!important;padding:18px 0 0!important;border:0!important;background:transparent!important}
 
 /* Future remains the reference */
 .app-view-future .app-view-content{gap:var(--space-page)!important}
