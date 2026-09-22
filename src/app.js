@@ -255,7 +255,7 @@
     if(selectedExtra===0||!Number.isFinite(result.accelerated.months)){
       $('timeSaved').textContent='No change'; $('scenarioSummary').textContent=`Current finish: ${payoffDate(result.base.months)}`; $('heroScenario').textContent='Choose an overpayment to see how much sooner you could finish.'; $('interestWithExtraText').textContent='Choose an overpayment to preview the saving.';
     }else{
-      const finish=payoffDate(result.accelerated.months); $('timeSaved').textContent=compactMonths(result.monthsSaved); $('scenarioSummary').textContent=`${compactMonths(result.monthsSaved)} sooner · ${money(result.interestSaved)} saved · finish ${finish}`; $('heroScenario').textContent=`${money(selectedExtra)}/month gets you mortgage-free ${compactMonths(result.monthsSaved)} sooner and saves ${money(result.interestSaved)} in interest.`; $('interestWithExtraText').textContent=`${money(result.accelerated.interest)} interest with ${money(selectedExtra)}/month overpayment`;
+      const finish=payoffDate(result.accelerated.months); $('timeSaved').textContent=compactMonths(result.monthsSaved); $('scenarioSummary').textContent=`${compactMonths(result.monthsSaved)} sooner · ${money(result.interestSaved)} saved · finish ${finish}`; $('heroScenario').textContent=`${money(selectedExtra)}/month gets you mortgage-free ${compactMonths(result.monthsSaved)} sooner and saves ${money(result.interestSaved)} in interest.`; $('interestWithExtraText').textContent=`${money(result.accelerated.interest)} with your ${money(selectedExtra)}/month overpayment`;
     }
     drawChart(result.base,result.accelerated);
   }
