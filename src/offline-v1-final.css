@@ -348,7 +348,8 @@ body .app-view-upcoming .upcoming-interest .interest-box{
   padding:0 0 2px!important;
 }
 body .app-view-upcoming .upcoming-interest .interest-box small{
-  margin-top:8px!important;
-  line-height:1.45!important;
+  margin-top:7px!important;
+  font-size:12px!important;
+  line-height:1.35!important;
   overflow-wrap:anywhere!important;
 }
