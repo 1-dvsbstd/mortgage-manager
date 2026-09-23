@@ -30,10 +30,17 @@ assert.doesNotMatch(index, /caches\.keys\(\).*caches\.delete/s, 'The app must no
 
 assert.match(sw, /ignoreSearch:\s*true/, 'Offline fallback should tolerate cache-busting query strings');
 assert.match(sw, /cache:'no-store'/, 'Service worker should bypass ordinary browser cache while online');
-assert.match(loader, /offline-v1-final\.css/, 'Final UI stylesheet should be loaded after legacy layers');
-assert.match(loader, /offline-v1-final\.js/, 'Final UI script should be loaded after legacy layers');
-assert.match(loader, /controllerchange/, 'Loader should self-refresh when a newer service worker takes control');
-assert.match(finalPolish, /V0\.15\.17/, 'Final UI should expose the current visible build marker');
+const legacyStyleIndex = index.indexOf('src/v15.14.css');
+const finalStyleIndex = index.indexOf('src/offline-v1-final.css');
+const pageRefineStyleIndex = index.indexOf('src/page-refine.css');
+assert.ok(legacyStyleIndex >= 0 && finalStyleIndex > legacyStyleIndex, 'Final UI stylesheet should be loaded after legacy style layers');
+assert.ok(pageRefineStyleIndex > finalStyleIndex, 'Page refinement stylesheet should load after the general final UI layer');
+
+const legacyScriptIndex = index.indexOf('src/v15.15.js');
+const finalScriptIndex = index.indexOf('src/offline-v1-final.js');
+assert.ok(legacyScriptIndex >= 0 && finalScriptIndex > legacyScriptIndex, 'Final UI script should be loaded after legacy script layers');
+assert.match(loader, /legacy dynamic loader retired/i, 'Legacy dynamic loader should remain retired');
+assert.match(finalPolish, /V0\.15\.20/, 'Final UI should expose the current visible build marker');
 assert.match(finalPolish, /undefined\|nan/i, 'Final UI layer should guard invalid LTV milestones');
 assert.match(finalStyle, /grid-template-columns:repeat\(4/, 'Current summary should use a compact four-column desktop grid');
 assert.doesNotMatch(expandable, /openCard\(/, 'Legacy expandable-card runtime must remain inert');
