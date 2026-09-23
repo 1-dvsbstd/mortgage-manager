@@ -77,7 +77,7 @@
   padding:18px 24px 19px;
   border:1px solid var(--border-soft);
   border-radius:16px;
-  background:var(--surface-soft);
+  background:#f2ece3;
   box-shadow:none;
 }
 .app-view-upcoming .deal-position-interest>span,
