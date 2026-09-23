@@ -282,10 +282,11 @@
     if(!wait){
       wait=document.createElement('section');
       wait.id='futureWaitPlanner'; wait.className='panel future-wait-planner';
-      wait.innerHTML='<div class="future-wait-heading"><p class="eyebrow">If you wait</p><h2>How your next-home position could change</h2></div><div class="future-wait-host"></div>';
+      wait.innerHTML='<div class="future-wait-heading"><p class="eyebrow">Looking ahead</p><h2>How your next-home budget could grow over time</h2></div><div class="future-wait-host"></div>';
       planner.insertAdjacentElement('afterend',wait);
     }
     const host=$('.future-wait-host',wait);
+    $('.next-home-subhead',timeline)?.remove();
     if(timeline.parentElement!==host) host.appendChild(timeline);
   }
 
