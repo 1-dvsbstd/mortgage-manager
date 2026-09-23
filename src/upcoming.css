@@ -27,15 +27,11 @@
   transform:none!important;
 }
 
-/* The milestone and interest rows are flat supporting content, not alternate tiles. */
-.app-view-upcoming .deal-planner-milestone,
-.app-view-upcoming .deal-planner-milestone-copy,
-.app-view-upcoming .deal-position-interest,
-.app-view-upcoming .interest-box{
+/* Milestone and interest presentation is owned by the final Upcoming layout.
+   Keep only the nested milestone copy unboxed. */
+.app-view-upcoming .deal-planner-milestone-copy{
   background:transparent!important;
   box-shadow:none!important;
-}
-.app-view-upcoming .deal-planner-milestone-copy{
   border:0!important;
   border-radius:0!important;
 }
