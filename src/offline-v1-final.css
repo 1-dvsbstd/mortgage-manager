@@ -13,18 +13,6 @@ body .deal-action-hint,
 body #futureOverpaymentAssumption{padding:16px 18px!important}
 body .app-view-upcoming .deal-action-hint{margin:12px 0 16px!important}
 
-/* Topbar online/offline toggle — smaller and quieter */
-body .connectivity-switch{
-  width:50px!important;
-  height:27px!important;
-  padding:4px!important;
-}
-body .connectivity-switch::after{
-  width:17px!important;
-  height:17px!important;
-}
-body .connectivity-switch.is-online::after{transform:translateX(23px)!important}
-
 /* Setup & data — rounded sections with breathing room */
 body .personal-modal .setup-pane{padding:16px 6px 6px!important}
 body .personal-modal .personal-section{
