@@ -69,7 +69,6 @@
   .app-view-future .future-model-range-panel,
   .app-view-future #futureWaitPlanner,
   .app-view-future #nextHomePlanner,
-  .app-view-future #propertyCostComparison,
   .personal-modal .personal-section,
   .personal-modal .setup-history-row,
   .personal-modal .setup-history-total{
@@ -83,7 +82,6 @@
   .app-view-future .future-model-range-panel:hover,
   .app-view-future #futureWaitPlanner:hover,
   .app-view-future #nextHomePlanner:hover,
-  .app-view-future #propertyCostComparison:hover,
   .personal-modal .personal-section:hover,
   .personal-modal .setup-history-row:hover,
   .personal-modal .setup-history-total:hover{
