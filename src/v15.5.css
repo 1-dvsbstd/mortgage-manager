@@ -85,22 +85,6 @@
   border-color:#252d36!important;
 }
 
-/* Future wait section: use the same finished warm-light typography and surfaces. */
-#futureWaitPlanner .future-wait-heading h2{
-  color:var(--text)!important;
-  opacity:1!important;
-}
-#futureWaitPlanner .future-wait-heading .eyebrow{color:var(--accent-strong)!important}
-#futureWaitPlanner .next-home-timeline,
-#futureWaitPlanner .next-home-timeline-row{color:var(--text)!important}
-#futureWaitPlanner .next-home-timeline-row{
-  background:#f2ece3!important;
-  border-color:var(--border-soft)!important;
-}
-#futureWaitPlanner .next-home-timeline-row span,
-#futureWaitPlanner .next-home-timeline-row small{color:var(--muted)!important}
-#futureWaitPlanner .next-home-timeline-row strong{color:var(--text)!important}
-
 /* Home-value model range: one readable range, not a badge plus three stacked boxes. */
 .app-view-future .future-model-range-panel{padding:24px!important}
 .app-view-future .future-model-heading{margin-bottom:16px!important}
