@@ -224,18 +224,10 @@ body .upcoming-rates .live-rate-selected-summary,
 body .upcoming-rates .live-rate-selection-note{display:none!important}
 
 /* Future — restore distinct rounded tiles and depth. */
-body .app-view-future .next-home-timeline,
-body .app-view-future .future-wait-host,
 body .app-view-future .future-cost-inline,
 body .app-view-future .property-cost-grid{
   border-radius:18px!important;
 }
-body .app-view-future .next-home-timeline-rows{
-  display:grid!important;
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  gap:12px!important;
-}
-body .app-view-future .next-home-timeline-row,
 body .app-view-future .property-cost-card,
 body .app-view-future .next-home-summary-card,
 body .app-view-future .home-profile-range>div{
@@ -248,12 +240,10 @@ body .app-view-future .next-home-subhead>div>span{display:none!important}
 body .app-view-future .next-home-subhead{margin-bottom:12px!important}
 @media(hover:hover) and (pointer:fine){
   body .app-view-future .property-cost-card,
-  body .app-view-future .next-home-timeline-row,
   body .app-view-future .next-home-summary-card{
     transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease!important;
   }
   body .app-view-future .property-cost-card:hover,
-  body .app-view-future .next-home-timeline-row:hover,
   body .app-view-future .next-home-summary-card:hover{
     transform:translateY(-3px)!important;
     border-radius:17px!important;
@@ -273,7 +263,6 @@ body .app-view-future #homeProjection:hover{
 
 @media(max-width:900px){
   body .v15-current-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  body .app-view-future .next-home-timeline-rows{grid-template-columns:1fr!important}
 }
 @media(max-width:620px){
   body .personal-modal .setup-pane{padding-inline:0!important}
