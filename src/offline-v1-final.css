@@ -228,7 +228,6 @@ body .app-view-future .future-cost-inline,
 body .app-view-future .property-cost-grid{
   border-radius:18px!important;
 }
-body .app-view-future .property-cost-card,
 body .app-view-future .next-home-summary-card,
 body .app-view-future .home-profile-range>div{
   border:1px solid rgba(68,58,48,.11)!important;
@@ -239,11 +238,9 @@ body .app-view-future .home-profile-range>div{
 body .app-view-future .next-home-subhead>div>span{display:none!important}
 body .app-view-future .next-home-subhead{margin-bottom:12px!important}
 @media(hover:hover) and (pointer:fine){
-  body .app-view-future .property-cost-card,
   body .app-view-future .next-home-summary-card{
     transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease!important;
   }
-  body .app-view-future .property-cost-card:hover,
   body .app-view-future .next-home-summary-card:hover{
     transform:translateY(-3px)!important;
     border-radius:17px!important;
