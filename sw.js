@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-offline-v1-55';
+const CACHE_NAME = 'mortgage-manager-offline-v1-56';
 const APP_SHELL = [
   './',
   './index.html',
