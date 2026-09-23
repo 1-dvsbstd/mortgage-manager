@@ -251,7 +251,6 @@ body .app-view-future .next-home-subhead{margin-bottom:12px!important}
 }
 
 /* Prevent flat square hover layers from older CSS. */
-body .app-view-future #propertyCostComparison:hover,
 body .app-view-future .future-wait-planner:hover,
 body .app-view-future #nextHomePlanner:hover,
 body .app-view-future #homeProjection:hover{
