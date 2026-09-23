@@ -75,10 +75,10 @@
   gap:6px;
   margin-top:16px;
   padding:18px 24px 19px;
-  border:1px solid rgba(68,58,48,.10);
+  border:1px solid var(--border-soft);
   border-radius:16px;
-  background:#fffaf4;
-  box-shadow:0 8px 22px rgba(61,48,36,.045);
+  background:var(--surface-soft);
+  box-shadow:none;
 }
 .app-view-upcoming .deal-position-interest>span,
 .app-view-upcoming .deal-position-interest #interestWithExtraText{
