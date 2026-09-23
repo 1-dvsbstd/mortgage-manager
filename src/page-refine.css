@@ -226,3 +226,9 @@
     font-size:22px!important;
   }
 }
+
+
+/* Next-home planner has no visible summary row, so its body needs no top divider. */
+.app-view-future #nextHomePlanner .next-home-body{
+  border-top:0!important;
+}
