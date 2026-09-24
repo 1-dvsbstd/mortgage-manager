@@ -145,29 +145,6 @@
     else modal.appendChild(section);
   }
 
-  function normaliseCurrentSetupSections(modal){
-    const currentPane=modal?.querySelector('[data-setup-pane="current"]');
-    if(!currentPane) return;
-
-    const sections=[...modal.querySelectorAll('.personal-section')];
-    const mortgageHistory=sections.find((section)=>section.classList.contains('mortgage-history-section'));
-    const monthly=sections.find((section)=>section.querySelector('h3')?.textContent?.trim()==='Monthly history');
-    const methodology=modal.querySelector('#methodologySection');
-    const backup=sections.find((section)=>['Backup','Backup & restore'].includes(section.querySelector('h3')?.textContent?.trim()));
-
-    const desired=[mortgageHistory,monthly,methodology,backup].filter(Boolean);
-    if(!desired.length) return;
-
-    const currentDesired=[...currentPane.children].filter((node)=>desired.includes(node));
-    const alreadyCorrect=
-      desired.every((node)=>node.parentElement===currentPane) &&
-      currentDesired.length===desired.length &&
-      desired.every((node,index)=>currentDesired[index]===node);
-
-    if(alreadyCorrect) return;
-    desired.forEach((node)=>currentPane.appendChild(node));
-  }
-
   function polishSetupModal(){
     ensureOfflineV1Style();
     document.getElementById('dataBackupSection')?.remove();
@@ -199,7 +176,6 @@
       }
     }
     ensureMethodologySection(modal);
-    normaliseCurrentSetupSections(modal);
   }
 
   function readMarketSnapshot(){
