@@ -44,13 +44,13 @@
     const settings=loadNextHome();
     const section=document.createElement('section');
     section.className='personal-section setup-budget-section';
-    section.innerHTML=`<h3>Next-home budget assumptions</h3><p>Used by the Future page when estimating what a move could look like.</p><div class="setup-future-grid">
+    section.innerHTML=`<h3>Next-home budget assumptions</h3><p>Used for move-budget estimates.</p><div class="setup-future-grid">
       <label>Household income (£/year)<input data-budget-field="householdIncome" type="number" min="0" step="1000" inputmode="decimal"></label>
       <label>Savings available (£)<input data-budget-field="savings" type="number" min="0" step="1000" inputmode="decimal"></label>
       <label>Cash buffer to keep (£)<input data-budget-field="cashBuffer" type="number" min="0" step="1000" inputmode="decimal"></label>
       <label>Estimated selling costs (£)<input data-budget-field="saleCosts" type="number" min="0" step="500" inputmode="decimal"></label>
       <label>Estimated purchase costs (£)<input data-budget-field="purchaseCosts" type="number" min="0" step="500" inputmode="decimal"></label>
-      <label>Borrowing multiple<input data-budget-field="borrowingMultiple" type="number" min="0" max="10" step="0.1" inputmode="decimal"><span>Planning assumption only.</span></label>
+      <label>Borrowing multiple<input data-budget-field="borrowingMultiple" type="number" min="0" max="10" step="0.1" inputmode="decimal"><span>Planning only.</span></label>
     </div>`;
     futurePane.appendChild(section);
     section.querySelectorAll('[data-budget-field]').forEach((input)=>{input.value=settings[input.dataset.budgetField]??'';});
