@@ -2,6 +2,7 @@
   const $ = (id) => document.getElementById(id);
   const STORAGE_KEY = 'mortgage-manager-next-home-v1';
   const HOME_KEY = 'mortgage-manager-home-projection-v4';
+  const HPI_KEY = 'mortgage-manager-local-hpi-v1';
   const defaults = {
     householdIncome: '',
     savings: '',
@@ -27,12 +28,38 @@
     try { localStorage.setItem(STORAGE_KEY,JSON.stringify(settings)); } catch(_) {}
   }
 
+  function homeSettings(){
+    try { return JSON.parse(localStorage.getItem(HOME_KEY)||'{}') || {}; }
+    catch(_) { return {}; }
+  }
+
   function trendRate(){
-    try {
-      const home=JSON.parse(localStorage.getItem(HOME_KEY)||'{}');
-      const n=Number(home.trend);
-      return Number.isFinite(n)?n:2.5;
-    } catch(_) { return 2.5; }
+    const home=homeSettings();
+    const n=Number(home.trend);
+    return Number.isFinite(n)?n:2.5;
+  }
+
+  function regionSlug(value){
+    return String(value||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/&/g,' and ').replace(/['’]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  }
+
+  function currentEstimatedHomeValue(fallback){
+    const home=homeSettings();
+    const recent=Math.max(0,Number(home.recentValue)||0);
+    if(recent) return recent;
+    const purchasePrice=Math.max(0,Number(home.purchasePrice)||0);
+    const purchaseMonth=String(home.purchaseMonth||'').slice(0,7);
+    const slug=regionSlug(home.localAuthority||'');
+    if(purchasePrice&&purchaseMonth&&slug&&home.propertyType){
+      try{
+        const cache=JSON.parse(localStorage.getItem(HPI_KEY)||'{}') || {};
+        const model=cache[`${slug}|${home.propertyType}|${purchaseMonth}`];
+        if(model?.multiplier>0){
+          return purchasePrice*Number(model.multiplier)+Math.max(0,Number(home.improvements)||0);
+        }
+      }catch(_){}
+    }
+    return Math.max(0,Number(fallback)||0);
   }
 
   function projectedHomeValue(value, annualRate, years){
@@ -99,7 +126,7 @@
 
   function calculateAt(years){
     const mortgage=state();
-    const home=Math.max(0,Number(mortgage.homeValue)||0);
+    const home=currentEstimatedHomeValue(mortgage.homeValue);
     const ownership=Math.min(100,Math.max(0,Number(mortgage.ownership)||0));
     const balance=Math.max(0,Number(mortgage.balance)||0);
     const rate=Math.max(0,Number(mortgage.rate)||0);
@@ -153,13 +180,13 @@
       $('nextHomeBudgetNote').textContent='Enter income and any savings/cost assumptions to build a next-home budget.';
     }
 
-    const horizons=[0,1,3];
+    const horizons=[0,3,5];
     const rows=horizons.map((years)=>({years,...calculateAt(years)}));
     $('nextHomeTimelineRows').innerHTML=rows.map((row)=>{
-      const label=row.years===0?'Today':row.years===1?'In 1 year':'In 3 years';
+      const label=row.years===0?'Today':row.years===3?'In 3 years':'In 5 years';
       return `<div class="next-home-timeline-row"><span>${label}</span><strong>${income||row.availableCash>0?money(row.budget):'—'}</strong><small><b>${money(row.usableEquity)}</b> usable equity</small><small><b>${money(row.futureMortgage)}</b> mortgage remaining</small></div>`;
     }).join('');
-    $('nextHomeTrendNote').textContent=`Illustrative projection using ${now.trend.toFixed(1)}%/yr home-value growth and your current repayment path${now.scenarioExtra>0?` plus ${money(now.scenarioExtra)}/month extra`:''}.`;
+    $('nextHomeTrendNote').textContent=`Starts from your current property estimate, then uses ${now.trend.toFixed(1)}%/yr forward growth and your current repayment path${now.scenarioExtra>0?` plus ${money(now.scenarioExtra)}/month extra`:''}.`;
 
     const ownership=Math.min(100,Math.max(0,Number(mortgage.ownership)||0));
     $('nextHomeNote').textContent=ownership<100
