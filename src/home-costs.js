@@ -62,7 +62,7 @@
     section.id = 'propertyCostComparison';
     section.className = 'property-cost-comparison';
     section.innerHTML = `
-      <div class="deep-heading"><div><p class="eyebrow">Cost vs value</p><h2>What you may pay versus what the home may be worth</h2></div></div>
+      <div class="deep-heading"><div><p class="eyebrow">Cost vs value</p><h2>Lifetime cost vs value when mortgage-free</h2></div></div>
       <div class="property-cost-grid property-cost-grid-two">
         <div class="property-cost-card"><span>Estimated value when mortgage-free</span><strong id="costFutureValue">—</strong><small id="costFutureValueNote">Projected from your current property estimate.</small></div>
         <div class="property-cost-card"><span>Estimated lifetime cost floor</span><strong id="costKnownBasis">—</strong><small id="costKnownBasisNote">Add purchase details for this comparison.</small></div>
