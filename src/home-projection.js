@@ -409,8 +409,8 @@
     const typeText=benchmark.propertyTypeLabel ? benchmark.propertyTypeLabel.toLowerCase() : 'matching';
     const bedText=benchmark.bedrooms ? ` · ${benchmark.bedrooms==='6'?'6+':benchmark.bedrooms} bed profile saved` : '';
     const latest=benchmark.latestSale ? ` · latest ${formatSaleMonth(benchmark.latestSale)}` : '';
-    if(note) note.textContent=`Estimate anchored to your home; range shaped by ${benchmark.count} ${typeText} sale${benchmark.count===1?'':'s'} in ${benchmark.areaLabel}${latest}${bedText}.`;
-    if(source) source.textContent=`Comparable median ${money(benchmark.centre)}. Bedrooms are not recorded in Land Registry Price Paid Data. Contains HM Land Registry data © Crown copyright and database right 2026. Licensed under OGL v3.0.`;
+    if(note) note.textContent=`Local sales · ${benchmark.count} match${benchmark.count===1?'':'es'}`;
+    if(source) source.textContent=`HMLR median ${money(benchmark.centre)}.`;
     return true;
   }
 
@@ -533,13 +533,13 @@
       $('homeRangeTrend').textContent=money(centre);
       $('homeRangeHigh').textContent=money(highToday);
       $('homeProfileRangeNote').textContent=settings.postcode&&settings.propertyType
-        ? hpiAnchoredToday?'HPI estimate centred here while local comparable sales refresh.':'Saved purchase-model range shown while local market data refreshes.'
-        : 'Add postcode and property type in Setup & data to use local sold-price benchmarks.';
+        ? hpiAnchoredToday?'Local HPI range':'Local range loading'
+        : 'Add postcode + property type';
       if($('homeProfileRangeSource')) $('homeProfileRangeSource').textContent=hpiAnchoredToday&&hasLocalBands
-        ? `Provisional range uses historical ${hpiModel.authority} ${hmlrPropertyTypeLabel(settings.propertyType).toLowerCase()} HPI growth bands (${hpiModel.lowerAnnual.toFixed(1)}%–${hpiModel.upperAnnual.toFixed(1)}% annual).`
+        ? `${hpiModel.authority} HPI · ${hpiModel.lowerAnnual.toFixed(1)}%–${hpiModel.upperAnnual.toFixed(1)}%`
         : hpiAnchoredToday
-          ? 'Centre matches today’s HPI estimate. Range width is provisional until local comparable sales are available.'
-          : 'Fallback range uses your saved low / centre / high growth assumptions.';
+          ? 'Centre = local HPI estimate'
+          : 'Fallback model';
     } else if(!hasBenchmark) {
       range.hidden=true;
     }
