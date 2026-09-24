@@ -110,7 +110,7 @@
       </div>
 
       <div id="homeProfileRange" class="home-profile-range home-forecast" data-range-refined="true" hidden>
-        <div class="home-profile-range-head"><div><span>Property forecast</span><strong>1 · 3 · 5 years</strong></div><small id="homeProfileRangeNote">Local HPI outlook</small></div>
+        <small id="homeProfileRangeNote" class="home-forecast-note">Based on local HPI history</small>
         <div class="home-forecast-grid">
           <div class="home-forecast-card"><span>In 1 year</span><strong id="homeForecast1">—</strong><small id="homeForecast1Range">—</small></div>
           <div class="home-forecast-card"><span>In 3 years</span><strong id="homeForecast3">—</strong><small id="homeForecast3Range">—</small></div>
@@ -502,7 +502,7 @@
         if(rangeEl) rangeEl.textContent=`${money(lowValue)}–${money(highValue)}`;
       });
       range.hidden=false;
-      $('homeProfileRangeNote').textContent=hasLocalBands?'Local HPI history':'Fallback growth model';
+      $('homeProfileRangeNote').textContent=hasLocalBands?'Based on local HPI history':'Based on fallback growth model';
       if($('homeProfileRangeSource')) $('homeProfileRangeSource').textContent=hasLocalBands
         ? `${hpiModel.authority} · ${hmlrPropertyTypeLabel(settings.propertyType)}`
         : '';
