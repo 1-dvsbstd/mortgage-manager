@@ -4,9 +4,12 @@
   const VALUE_HISTORY_KEY = 'mortgage-manager-home-value-history-v1';
   const MORTGAGE_HISTORY_KEY = 'mortgage-manager-mortgage-history-v1';
   const LOCAL_BENCHMARK_KEY = 'mortgage-manager-local-benchmark-v1';
+  const LOCAL_HPI_KEY = 'mortgage-manager-local-hpi-v1';
   const ONLINE_MODE_KEY = 'mortgage-manager-online-mode-v1';
   let benchmarkRequestKey='';
   let benchmarkRequest=null;
+  let hpiRequestKey='';
+  let hpiRequest=null;
   const defaults = { low: 1, trend: 2.5, high: 4, purchasePrice: '', purchaseMonth: '', postcode: '', localAuthority: '', localAuthorityCode: '', propertyType: '', bedrooms: '', improvements: '', recentValue: '' };
   let settings = { ...defaults };
 
@@ -176,12 +179,16 @@
     return compact.slice(0,-3)+' '+compact.slice(-3);
   }
 
-  function outwardPostcode(value){
-    return normalisePostcode(value).split(' ')[0]||'';
+  function regionSlug(value){
+    return String(value||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/&/g,' and ').replace(/['’]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
   }
 
   function hmlrPropertyTypeLabel(value){
     return ({detached:'Detached','semi-detached':'Semi-Detached',terraced:'Terraced',flat:'Flat/Maisonette'})[value]||'';
+  }
+
+  function hpiIndexField(value){
+    return ({detached:'housePriceIndexDetached','semi-detached':'housePriceIndexSemiDetached',terraced:'housePriceIndexTerraced',flat:'housePriceIndexFlatMaisonette'})[value]||'';
   }
 
   function readBenchmarkCache(){
@@ -193,6 +200,17 @@
 
   function writeBenchmarkCache(cache){
     try{ localStorage.setItem(LOCAL_BENCHMARK_KEY,JSON.stringify(cache)); }catch(_){}
+  }
+
+  function readHpiCache(){
+    try{
+      const parsed=JSON.parse(localStorage.getItem(LOCAL_HPI_KEY)||'{}');
+      return parsed && typeof parsed==='object' ? parsed : {};
+    }catch(_){ return {}; }
+  }
+
+  function writeHpiCache(cache){
+    try{ localStorage.setItem(LOCAL_HPI_KEY,JSON.stringify(cache)); }catch(_){}
   }
 
   function quantile(sorted,q){
@@ -230,6 +248,19 @@
     return extractHmlrItems(data).map(extractSale).filter(Boolean);
   }
 
+  async function fetchHmlrDistrictSales(district,propertyType){
+    const params=new URLSearchParams();
+    params.set('propertyAddress.district',district);
+    if(propertyType) params.set('propertyType.label',propertyType);
+    params.set('_pageSize','100');
+    params.set('_sort','-transactionDate');
+    const url='https://landregistry.data.gov.uk/data/ppi/transaction-record.json?'+params.toString();
+    const response=await fetch(url,{cache:'no-store',headers:{Accept:'application/json'}});
+    if(!response.ok) throw new Error('Land Registry district lookup failed');
+    const data=await response.json();
+    return extractHmlrItems(data).map(extractSale).filter(Boolean);
+  }
+
   function benchmarkFromSales(sales,areaLabel,propertyTypeLabel,bedrooms){
     const cutoff=new Date();
     cutoff.setFullYear(cutoff.getFullYear()-5);
@@ -255,6 +286,84 @@
     };
   }
 
+  function hpiValue(item,field){
+    const raw=item?.[field];
+    return Number(raw?._value ?? raw ?? 0);
+  }
+
+  function monthDistance(a,b){
+    const [ay,am]=String(a||'').slice(0,7).split('-').map(Number);
+    const [by,bm]=String(b||'').slice(0,7).split('-').map(Number);
+    if(!ay||!am||!by||!bm) return Infinity;
+    return Math.abs((ay-by)*12+(am-bm));
+  }
+
+  async function fetchLocalHpiModel(){
+    const authority=settings.localAuthority||'';
+    const slug=regionSlug(authority);
+    const field=hpiIndexField(settings.propertyType);
+    const purchaseMonth=String(settings.purchaseMonth||'').slice(0,7);
+    if(!slug||!field||!purchaseMonth) return null;
+    const key=`${slug}|${settings.propertyType}|${purchaseMonth}`;
+    const cache=readHpiCache();
+    const cached=cache[key];
+
+    const online=(()=>{ try{return localStorage.getItem(ONLINE_MODE_KEY)==='online';}catch(_){return false;} })();
+    if(!online) return cached||null;
+    if(hpiRequestKey===key && hpiRequest) return hpiRequest;
+
+    hpiRequestKey=key;
+    hpiRequest=(async()=>{
+      try{
+        const purchaseDate=`${purchaseMonth}-01`;
+        const params=new URLSearchParams();
+        params.set('_pageSize','200');
+        params.set('_sort','refPeriodStart');
+        params.set('min-refPeriodStart',purchaseDate);
+        params.set('_properties',`refMonth,${field}`);
+        const url=`https://landregistry.data.gov.uk/data/ukhpi/region/${slug}.json?${params.toString()}`;
+        const response=await fetch(url,{cache:'no-store',headers:{Accept:'application/json'}});
+        if(!response.ok) throw new Error('UK HPI lookup failed');
+        const data=await response.json();
+        const items=extractHmlrItems(data).map((item)=>({
+          month:String(item?.refMonth?._value ?? item?.refMonth ?? '').slice(0,7),
+          index:hpiValue(item,field)
+        })).filter((item)=>item.month&&Number.isFinite(item.index)&&item.index>0);
+        if(!items.length) return cached||null;
+        items.sort((a,b)=>a.month.localeCompare(b.month));
+        const purchasePoint=items.reduce((best,item)=>monthDistance(item.month,purchaseMonth)<monthDistance(best?.month,purchaseMonth)?item:best,null);
+        const latestPoint=items[items.length-1];
+        if(!purchasePoint||!latestPoint||monthDistance(purchasePoint.month,purchaseMonth)>3) return cached||null;
+        const result={
+          authority,
+          propertyType:settings.propertyType,
+          purchaseMonth:purchasePoint.month,
+          purchaseIndex:purchasePoint.index,
+          latestMonth:latestPoint.month,
+          latestIndex:latestPoint.index,
+          multiplier:latestPoint.index/purchasePoint.index,
+          fetchedAt:new Date().toISOString()
+        };
+        cache[key]=result;
+        writeHpiCache(cache);
+        requestAnimationFrame(render);
+        return result;
+      }catch(_){
+        return cached||null;
+      }finally{
+        hpiRequest=null;
+      }
+    })();
+    return hpiRequest;
+  }
+
+  function cachedLocalHpiModel(){
+    const slug=regionSlug(settings.localAuthority||'');
+    const purchaseMonth=String(settings.purchaseMonth||'').slice(0,7);
+    if(!slug||!settings.propertyType||!purchaseMonth) return null;
+    return readHpiCache()[`${slug}|${settings.propertyType}|${purchaseMonth}`]||null;
+  }
+
   function formatSaleMonth(value){
     if(!value) return '';
     const d=new Date(value);
@@ -262,20 +371,27 @@
     return new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(d);
   }
 
-  function applyLocalBenchmark(benchmark){
+  function applyLocalBenchmark(benchmark,estimate=0){
     const range=$('homeProfileRange');
     const note=$('homeProfileRangeNote');
     const source=$('homeProfileRangeSource');
     if(!range||!benchmark) return false;
+    const centreEstimate=Math.max(0,Number(estimate)||0);
+    const rawCentre=Math.max(1,Number(benchmark.centre)||1);
+    const lowRatio=Math.max(.65,Math.min(1,Number(benchmark.low||rawCentre)/rawCentre));
+    const highRatio=Math.min(1.45,Math.max(1,Number(benchmark.high||rawCentre)/rawCentre));
+    const low=centreEstimate?centreEstimate*lowRatio:benchmark.low;
+    const centre=centreEstimate||benchmark.centre;
+    const high=centreEstimate?centreEstimate*highRatio:benchmark.high;
     range.hidden=false;
-    $('homeRangeLow').textContent=money(benchmark.low);
-    $('homeRangeTrend').textContent=money(benchmark.centre);
-    $('homeRangeHigh').textContent=money(benchmark.high);
+    $('homeRangeLow').textContent=money(low);
+    $('homeRangeTrend').textContent=money(centre);
+    $('homeRangeHigh').textContent=money(high);
     const typeText=benchmark.propertyTypeLabel ? benchmark.propertyTypeLabel.toLowerCase() : 'matching';
     const bedText=benchmark.bedrooms ? ` · ${benchmark.bedrooms==='6'?'6+':benchmark.bedrooms} bed profile saved` : '';
     const latest=benchmark.latestSale ? ` · latest ${formatSaleMonth(benchmark.latestSale)}` : '';
-    if(note) note.textContent=`${benchmark.count} ${typeText} sale${benchmark.count===1?'':'s'} in ${benchmark.areaLabel}${latest}${bedText}.`;
-    if(source) source.textContent='Bedrooms are not recorded in Land Registry Price Paid Data. Contains HM Land Registry data © Crown copyright and database right 2026. Licensed under OGL v3.0.';
+    if(note) note.textContent=`Estimate anchored to your home; range shaped by ${benchmark.count} ${typeText} sale${benchmark.count===1?'':'s'} in ${benchmark.areaLabel}${latest}${bedText}.`;
+    if(source) source.textContent=`Comparable median ${money(benchmark.centre)}. Bedrooms are not recorded in Land Registry Price Paid Data. Contains HM Land Registry data © Crown copyright and database right 2026. Licensed under OGL v3.0.`;
     return true;
   }
 
@@ -297,16 +413,15 @@
       try{
         let sales=await fetchHmlrSales(postcode,propertyTypeLabel);
         let areaLabel=postcode;
-        if(sales.length<5){
-          const outward=outwardPostcode(postcode);
-          const wider=outward && outward!==postcode ? await fetchHmlrSales(outward,propertyTypeLabel) : [];
-          if(wider.length>sales.length){ sales=wider; areaLabel=outward; }
+        if(sales.length<5 && settings.localAuthority){
+          const wider=await fetchHmlrDistrictSales(settings.localAuthority,propertyTypeLabel);
+          if(wider.length>sales.length){ sales=wider; areaLabel=settings.localAuthority; }
         }
         const benchmark=benchmarkFromSales(sales,areaLabel,propertyTypeLabel,settings.bedrooms);
         if(!benchmark) return cached||null;
         cache[key]=benchmark;
         writeBenchmarkCache(cache);
-        applyLocalBenchmark(benchmark);
+        requestAnimationFrame(render);
         return benchmark;
       }catch(_){
         return cached||null;
@@ -351,9 +466,13 @@
     const purchasePrice=Math.max(0,Number(settings.purchasePrice)||0), purchaseMonth=settings.purchaseMonth||'', improvements=Math.max(0,Number(settings.improvements)||0), recentValue=Math.max(0,Number(settings.recentValue)||0);
     const validPurchase=purchasePrice>0 && purchaseMonth;
     const yearsOwned=validPurchase?yearsSince(purchaseMonth):0;
-    let modelledToday=0;
-    if(validPurchase) modelledToday=projectedValue(purchasePrice,settings.trend,yearsOwned)+improvements;
-    const estimatedToday=recentValue || modelledToday || savedHomeValue;
+    const hpiModel=cachedLocalHpiModel();
+    let hpiAnchoredToday=0;
+    if(validPurchase&&hpiModel?.multiplier>0) hpiAnchoredToday=purchasePrice*hpiModel.multiplier+improvements;
+    let fallbackModelToday=0;
+    if(validPurchase) fallbackModelToday=projectedValue(purchasePrice,settings.trend,yearsOwned)+improvements;
+    const estimatedToday=recentValue || hpiAnchoredToday || fallbackModelToday || savedHomeValue;
+    fetchLocalHpiModel();
 
     if($('projectionPurchasePrice') && !$('projectionPurchasePrice').value && settings.purchasePrice) $('projectionPurchasePrice').value=settings.purchasePrice;
     if($('projectionPurchaseMonth') && !$('projectionPurchaseMonth').value && settings.purchaseMonth) $('projectionPurchaseMonth').value=settings.purchaseMonth;
@@ -367,7 +486,7 @@
     const range=$('homeProfileRange');
     const benchmarkKey=`${normalisePostcode(settings.postcode)}|${settings.propertyType||''}`;
     const cachedBenchmark=readBenchmarkCache()[benchmarkKey];
-    const hasBenchmark=applyLocalBenchmark(cachedBenchmark);
+    const hasBenchmark=applyLocalBenchmark(cachedBenchmark,estimatedToday);
     if(!hasBenchmark && validPurchase){
       const lowToday=projectedValue(purchasePrice,settings.low,yearsOwned)+improvements;
       const trendToday=projectedValue(purchasePrice,settings.trend,yearsOwned)+improvements;
@@ -377,9 +496,9 @@
       $('homeRangeTrend').textContent=money(trendToday);
       $('homeRangeHigh').textContent=money(highToday);
       $('homeProfileRangeNote').textContent=settings.postcode&&settings.propertyType
-        ? 'Saved purchase-model range shown while local sold-price data refreshes.'
+        ? hpiAnchoredToday?'HPI-anchored estimate shown while local comparable sales refresh.':'Saved purchase-model range shown while local market data refreshes.'
         : 'Add postcode and property type in Setup & data to use local sold-price benchmarks.';
-      if($('homeProfileRangeSource')) $('homeProfileRangeSource').textContent='Fallback range uses your saved low / centre / high growth assumptions.';
+      if($('homeProfileRangeSource')) $('homeProfileRangeSource').textContent=hpiAnchoredToday?`Centre uses ${hpiModel.authority} ${hmlrPropertyTypeLabel(settings.propertyType)} UK HPI movement from ${hpiModel.purchaseMonth} to ${hpiModel.latestMonth}.`:'Fallback range uses your saved low / centre / high growth assumptions.';
     } else if(!hasBenchmark) {
       range.hidden=true;
     }
@@ -392,7 +511,13 @@
     }
 
     $('projectionCurrentEstimate').textContent=money(estimatedToday); $('useCurrentEstimate').dataset.value=String(estimatedToday); $('useCurrentEstimate').style.display='inline-flex';
-    $('projectionCurrentNote').textContent=recentValue?'Using your recent valuation / estimate.':validPurchase?`Modelled from purchase price at ${settings.trend.toFixed(1)}% annual growth${improvements?` plus ${money(improvements)} improvements`:''}.`:'Using the property value saved in the dashboard.';
+    $('projectionCurrentNote').textContent=recentValue
+      ? 'Using your recent valuation / estimate.'
+      : hpiAnchoredToday
+        ? `Your purchase price adjusted by ${hmlrPropertyTypeLabel(settings.propertyType)} UK HPI movement in ${hpiModel.authority} from ${hpiModel.purchaseMonth} to ${hpiModel.latestMonth}${improvements?`, plus ${money(improvements)} improvements`:''}.`
+        : validPurchase
+          ? `Local HPI unavailable; using the fallback ${settings.trend.toFixed(1)}% annual-growth model${improvements?` plus ${money(improvements)} improvements`:''}.`
+          : 'Using the property value saved in the dashboard.';
 
     const ownedValueToday=estimatedToday*ownership/100;
     const equityToday=Math.max(0,ownedValueToday-balance);
@@ -422,6 +547,7 @@
     settings={...settings,...detail};
     saveSettings();
     benchmarkRequestKey=''; benchmarkRequest=null;
+    hpiRequestKey=''; hpiRequest=null;
     requestAnimationFrame(render);
   });
   render();
