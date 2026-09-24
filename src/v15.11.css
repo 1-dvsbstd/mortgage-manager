@@ -69,9 +69,7 @@
   .app-view-future .future-model-range-panel,
   .app-view-future #futureWaitPlanner,
   .app-view-future #nextHomePlanner,
-  .personal-modal .personal-section,
-  .personal-modal .setup-history-row,
-  .personal-modal .setup-history-total{
+  .personal-modal .personal-section{
     transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease!important;
   }
   .app-view-current .hero-panel:hover,
@@ -82,9 +80,7 @@
   .app-view-future .future-model-range-panel:hover,
   .app-view-future #futureWaitPlanner:hover,
   .app-view-future #nextHomePlanner:hover,
-  .personal-modal .personal-section:hover,
-  .personal-modal .setup-history-row:hover,
-  .personal-modal .setup-history-total:hover{
+  .personal-modal .personal-section:hover{
     transform:translateY(-2px)!important;
     box-shadow:0 20px 50px rgba(61,48,36,.10)!important;
     border-color:#d3b99f!important;
