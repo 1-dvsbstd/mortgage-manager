@@ -87,7 +87,7 @@
         <div class="next-home-heading"><div><p class="eyebrow">What could we do next?</p><h2>Turn your future equity into a rough next-home budget</h2></div><span class="source-date">Planning estimate</span></div>
 
         <div class="next-home-results">
-          <div><span>Usable home equity</span><strong id="nextHomeEquity">—</strong><small id="nextHomeEquityNote">—</small></div>
+          <div><span>Equity available to move</span><strong id="nextHomeEquity">—</strong><small id="nextHomeEquityNote">—</small></div>
           <div><span>Illustrative borrowing</span><strong id="nextHomeBorrowing">—</strong><small id="nextHomeBorrowingNote">—</small></div>
           <div class="primary"><span>Approx. next-home budget</span><strong id="nextHomeBudget">—</strong><small id="nextHomeBudgetNote">—</small></div>
         </div>
@@ -163,17 +163,17 @@
     const purchaseCosts=Math.max(0,Number(settings.purchaseCosts)||0);
 
     $('nextHomeEquity').textContent=money(now.usableEquity);
-    $('nextHomeEquityNote').textContent=`Your share value less the mortgage${Number(settings.saleCosts)>0?` and ${money(settings.saleCosts)} selling costs`:''}.`;
+    $('nextHomeEquityNote').textContent=Number(settings.saleCosts)>0
+      ? `Current equity less ${money(settings.saleCosts)} selling costs.`
+      : 'Current equity before selling costs.';
     $('nextHomeBorrowing').textContent=income?money(now.borrowing):'Add income';
     $('nextHomeBorrowingNote').textContent=income?`${money(income)} household income × ${multiple.toFixed(1)} planning multiple.`:'Add household income under Budget assumptions.';
 
     if(income || now.availableCash>0){
       $('nextHomeBudget').textContent=money(now.budget);
-      const parts=[`${money(now.usableEquity)} usable equity`];
+      const parts=[`${money(now.usableEquity)} move equity`];
       if(savings) parts.push(`${money(savings)} savings`);
-      if(buffer) parts.push(`less ${money(buffer)} buffer`);
-      if(purchaseCosts) parts.push(`less ${money(purchaseCosts)} purchase costs`);
-      if(income) parts.push(`${money(now.borrowing)} illustrative borrowing`);
+      if(income) parts.push(`${money(now.borrowing)} borrowing`);
       $('nextHomeBudgetNote').textContent=parts.join(' · ');
     } else {
       $('nextHomeBudget').textContent='Add assumptions';
@@ -184,14 +184,14 @@
     const rows=horizons.map((years)=>({years,...calculateAt(years)}));
     $('nextHomeTimelineRows').innerHTML=rows.map((row)=>{
       const label=row.years===0?'Today':row.years===3?'In 3 years':'In 5 years';
-      return `<div class="next-home-timeline-row"><span>${label}</span><strong>${income||row.availableCash>0?money(row.budget):'—'}</strong><small><b>${money(row.usableEquity)}</b> usable equity</small><small><b>${money(row.futureMortgage)}</b> mortgage remaining</small></div>`;
+      return `<div class="next-home-timeline-row"><span>${label}</span><strong>${income||row.availableCash>0?money(row.budget):'—'}</strong><small><b>${money(row.usableEquity)}</b> move equity</small><small><b>${money(row.futureMortgage)}</b> mortgage remaining</small></div>`;
     }).join('');
     $('nextHomeTrendNote').textContent=`Starts from your current property estimate, then uses ${now.trend.toFixed(1)}%/yr forward growth and your current repayment path${now.scenarioExtra>0?` plus ${money(now.scenarioExtra)}/month extra`:''}.`;
 
     const ownership=Math.min(100,Math.max(0,Number(mortgage.ownership)||0));
     $('nextHomeNote').textContent=ownership<100
-      ? 'This is a simplified planning estimate. With shared ownership/shared equity, the amount released on sale can depend on the scheme’s legal redemption rules, so usable equity may differ from this illustration. It is not a lending decision.'
-      : 'This is a simplified planning estimate, not a lending decision. It does not assess lender affordability rules, credit commitments, stress tests, taxes or eligibility unless you include relevant costs yourself.';
+      ? 'Planning estimate only. With shared ownership/shared equity, the amount released on sale depends on the scheme’s redemption rules.'
+      : 'Planning estimate only. Actual lender affordability, taxes and eligibility can differ.';
   }
 
   load();
