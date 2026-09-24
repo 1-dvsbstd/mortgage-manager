@@ -3,7 +3,7 @@
   const STORAGE_KEY = 'mortgage-manager-home-projection-v4';
   const VALUE_HISTORY_KEY = 'mortgage-manager-home-value-history-v1';
   const MORTGAGE_HISTORY_KEY = 'mortgage-manager-mortgage-history-v1';
-  const defaults = { low: 1, trend: 2.5, high: 4, purchasePrice: '', purchaseMonth: '', postcode: '', improvements: '', recentValue: '' };
+  const defaults = { low: 1, trend: 2.5, high: 4, purchasePrice: '', purchaseMonth: '', postcode: '', localAuthority: '', localAuthorityCode: '', improvements: '', recentValue: '' };
   let settings = { ...defaults };
 
   const money = (value) => new Intl.NumberFormat('en-GB', { style:'currency', currency:'GBP', maximumFractionDigits:0 }).format(Math.max(0, Number(value)||0));
@@ -255,3 +255,10 @@
   document.addEventListener('mortgage-history-updated',()=>{ syncPurchaseFromMortgageHistory(); requestAnimationFrame(render); });
   render();
 })();
+document.addEventListener('home-profile-settings-updated',(event)=>{
+  const detail=event.detail;
+  if(!detail || typeof detail!=='object') return;
+  settings={...settings,...detail};
+  saveSettings();
+  requestAnimationFrame(render);
+});
