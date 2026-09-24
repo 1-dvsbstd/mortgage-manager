@@ -122,7 +122,7 @@
         <label>Month bought<input id="projectionPurchaseMonth" type="month"></label>
         <label>Property postcode<input id="projectionPostcode" type="text" inputmode="text" autocomplete="postal-code" placeholder="e.g. CF62 7AB"><span>Used for local house-price data.</span></label>
         <label>Property type<select id="projectionPropertyType"><option value="">Select property type</option><option value="detached">Detached</option><option value="semi-detached">Semi-detached</option><option value="terraced">Terraced</option><option value="flat">Flat / maisonette</option></select><span>Used for local sold-price comparisons.</span></label>
-        <label>Bedrooms<input id="projectionBedrooms" type="number" min="0" step="1" inputmode="numeric"><span>Used to refine comparable properties.</span></label>
+        <label>Bedrooms<select id="projectionBedrooms"><option value="">Select bedrooms</option><option value="1">1 bedroom</option><option value="2">2 bedrooms</option><option value="3">3 bedrooms</option><option value="4">4 bedrooms</option><option value="5">5 bedrooms</option><option value="6">6+ bedrooms</option></select><span>Used to refine comparable properties.</span></label>
         <label>Value added by improvements (£)<input id="projectionImprovements" type="number" min="0" step="1000" inputmode="decimal"><span>Optional: extension, major renovation, etc.</span></label>
         <label>Recent valuation / estimate (£)<input id="projectionRecentValue" type="number" min="0" step="1000" inputmode="decimal"><span>Optional: takes priority for today's estimate</span></label>
         <label>Low growth<input id="projectionLowRate" type="number" min="-5" max="10" step="0.1" inputmode="decimal"><span>% per year</span></label>
