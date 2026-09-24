@@ -426,3 +426,39 @@
   .app-view-future #futureModelRange .home-forecast-grid{grid-template-columns:1fr!important}
   .app-view-future #futureModelRange .home-forecast-card{min-height:0!important}
 }
+
+/* Property forecast — visual growth cue. */
+.app-view-future #futureModelRange .home-forecast-growth{
+  display:grid!important;
+  grid-template-columns:minmax(70px,1fr) auto!important;
+  gap:9px!important;
+  align-items:center!important;
+  margin:0 0 10px!important;
+}
+.app-view-future #futureModelRange .home-forecast-growth-track{
+  height:5px!important;
+  overflow:hidden!important;
+  border-radius:999px!important;
+  background:#e5ddd3!important;
+}
+.app-view-future #futureModelRange .home-forecast-growth-track>i{
+  display:block!important;
+  height:100%!important;
+  width:0;
+  border-radius:inherit!important;
+  background:#b9875f!important;
+  transition:width .25s ease!important;
+}
+.app-view-future #futureModelRange .home-forecast-card:nth-child(3) .home-forecast-growth-track>i{
+  background:var(--accent-strong)!important;
+}
+.app-view-future #futureModelRange .home-forecast-growth>b{
+  color:var(--accent-strong)!important;
+  font-size:9px!important;
+  font-weight:750!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .app-view-future #futureModelRange .home-forecast-growth-track>i{transition:none!important}
+}
