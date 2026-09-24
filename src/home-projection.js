@@ -3,7 +3,7 @@
   const STORAGE_KEY = 'mortgage-manager-home-projection-v4';
   const VALUE_HISTORY_KEY = 'mortgage-manager-home-value-history-v1';
   const MORTGAGE_HISTORY_KEY = 'mortgage-manager-mortgage-history-v1';
-  const defaults = { low: 1, trend: 2.5, high: 4, purchasePrice: '', purchaseMonth: '', postcode: '', localAuthority: '', localAuthorityCode: '', propertyType: '', improvements: '', recentValue: '' };
+  const defaults = { low: 1, trend: 2.5, high: 4, purchasePrice: '', purchaseMonth: '', postcode: '', localAuthority: '', localAuthorityCode: '', propertyType: '', bedrooms: '', improvements: '', recentValue: '' };
   let settings = { ...defaults };
 
   const money = (value) => new Intl.NumberFormat('en-GB', { style:'currency', currency:'GBP', maximumFractionDigits:0 }).format(Math.max(0, Number(value)||0));
@@ -122,6 +122,7 @@
         <label>Month bought<input id="projectionPurchaseMonth" type="month"></label>
         <label>Property postcode<input id="projectionPostcode" type="text" inputmode="text" autocomplete="postal-code" placeholder="e.g. CF62 7AB"><span>Used for local house-price data.</span></label>
         <label>Property type<select id="projectionPropertyType"><option value="">Select property type</option><option value="detached">Detached</option><option value="semi-detached">Semi-detached</option><option value="terraced">Terraced</option><option value="flat">Flat / maisonette</option></select><span>Used for local sold-price comparisons.</span></label>
+        <label>Bedrooms<input id="projectionBedrooms" type="number" min="0" step="1" inputmode="numeric"><span>Used to refine comparable properties.</span></label>
         <label>Value added by improvements (£)<input id="projectionImprovements" type="number" min="0" step="1000" inputmode="decimal"><span>Optional: extension, major renovation, etc.</span></label>
         <label>Recent valuation / estimate (£)<input id="projectionRecentValue" type="number" min="0" step="1000" inputmode="decimal"><span>Optional: takes priority for today's estimate</span></label>
         <label>Low growth<input id="projectionLowRate" type="number" min="-5" max="10" step="0.1" inputmode="decimal"><span>% per year</span></label>
@@ -130,12 +131,13 @@
       </div><p class="deep-note">A recent valuation or agent estimate takes priority for today's displayed estimate. Otherwise the model grows your purchase price from the month you bought and adds any improvement value you enter. The low/centre/high range is a planning range from your purchase data; local comparable sales are not included yet.</p></details>`;
     detail.appendChild(section);
 
-    const fields={projectionPurchasePrice:'purchasePrice',projectionPurchaseMonth:'purchaseMonth',projectionPostcode:'postcode',projectionPropertyType:'propertyType',projectionImprovements:'improvements',projectionRecentValue:'recentValue',projectionLowRate:'low',projectionTrendRate:'trend',projectionHighRate:'high'};
+    const fields={projectionPurchasePrice:'purchasePrice',projectionPurchaseMonth:'purchaseMonth',projectionPostcode:'postcode',projectionPropertyType:'propertyType',projectionBedrooms:'bedrooms',projectionImprovements:'improvements',projectionRecentValue:'recentValue',projectionLowRate:'low',projectionTrendRate:'trend',projectionHighRate:'high'};
     Object.entries(fields).forEach(([id,key])=>{ if($(id)) $(id).value=settings[key] ?? ''; });
     Object.keys(fields).forEach((id)=>$(id).addEventListener('input',()=>{
       settings.purchasePrice=$('projectionPurchasePrice').value; settings.purchaseMonth=$('projectionPurchaseMonth').value;
       settings.postcode=($('projectionPostcode').value||'').trim().toUpperCase();
       settings.propertyType=$('projectionPropertyType').value||'';
+      settings.bedrooms=$('projectionBedrooms').value||'';
       settings.improvements=$('projectionImprovements').value; settings.recentValue=$('projectionRecentValue').value;
       settings.low=clamp(+$('projectionLowRate').value,-5,10,defaults.low); settings.trend=clamp(+$('projectionTrendRate').value,-5,10,defaults.trend); settings.high=clamp(+$('projectionHighRate').value,-5,12,defaults.high);
       saveSettings(); render();
@@ -205,6 +207,7 @@
     if($('projectionPurchaseMonth') && !$('projectionPurchaseMonth').value && settings.purchaseMonth) $('projectionPurchaseMonth').value=settings.purchaseMonth;
     if($('projectionPostcode') && !$('projectionPostcode').value && settings.postcode) $('projectionPostcode').value=settings.postcode;
     if($('projectionPropertyType') && !$('projectionPropertyType').value && settings.propertyType) $('projectionPropertyType').value=settings.propertyType;
+    if($('projectionBedrooms') && !$('projectionBedrooms').value && settings.bedrooms) $('projectionBedrooms').value=settings.bedrooms;
 
     $('projectionPurchase').textContent=validPurchase?`${money(purchasePrice)} · ${new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(new Date(`${purchaseMonth}-01T12:00:00`))}`:'Add purchase details';
     $('projectionPurchaseNote').textContent=validPurchase?'Used as the historical anchor for the estimate.':'Purchase price and date give the estimate a factual starting point.';
