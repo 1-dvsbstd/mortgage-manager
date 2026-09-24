@@ -514,9 +514,9 @@
     $('projectionCurrentNote').textContent=recentValue
       ? 'Using your recent valuation / estimate.'
       : hpiAnchoredToday
-        ? `Your purchase price adjusted by ${hmlrPropertyTypeLabel(settings.propertyType)} UK HPI movement in ${hpiModel.authority} from ${hpiModel.purchaseMonth} to ${hpiModel.latestMonth}${improvements?`, plus ${money(improvements)} improvements`:''}.`
+        ? `Calculated using local HPI${improvements?' + improvements':''}.`
         : validPurchase
-          ? `Local HPI unavailable; using the fallback ${settings.trend.toFixed(1)}% annual-growth model${improvements?` plus ${money(improvements)} improvements`:''}.`
+          ? `Local HPI unavailable; using the fallback growth model${improvements?' + improvements':''}.`
           : 'Using the property value saved in the dashboard.';
 
     const ownedValueToday=estimatedToday*ownership/100;
