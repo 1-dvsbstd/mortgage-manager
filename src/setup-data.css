@@ -58,3 +58,12 @@
   .personal-form{grid-template-columns:1fr}
   .personal-form .wide{grid-column:auto}
 }
+
+/* Property value history rows are informational; only the outer section should carry elevation. */
+.personal-modal .home-value-history-row,
+.personal-modal .home-value-history-row:hover{
+  transform:none!important;
+  translate:none!important;
+  box-shadow:none!important;
+  transition:none!important;
+}
