@@ -111,7 +111,7 @@ canvas { display:block; max-width:100%; background:rgba(3,16,13,.55); border:1px
 .edit-content { border-top:1px solid var(--border); padding:20px; }
 .inputs { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
 label { color:var(--muted); font-size:12px; }
-input[type="number"],input[type="month"] { width:100%; margin-top:6px; padding:12px 13px; border-radius:12px; border:1px solid var(--border); background:rgba(3,16,13,.62); color:var(--text); font-size:16px; color-scheme:dark; }
+input[type="number"],input[type="month"],input[type="text"] { width:100%; margin-top:6px; padding:12px 13px; border-radius:12px; border:1px solid var(--border); background:rgba(3,16,13,.62); color:var(--text); font-size:16px; color-scheme:dark; box-sizing:border-box; }
 input:focus { outline:2px solid rgba(84,224,180,.45); outline-offset:1px; }
 .field-note { margin:10px 0 0; color:var(--muted); font-size:12px; line-height:1.45; }
 .warning { color:var(--warning); font-size:13px; margin-bottom:0; }
