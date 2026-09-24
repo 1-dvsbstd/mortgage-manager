@@ -62,7 +62,7 @@
     section.id = 'propertyCostComparison';
     section.className = 'property-cost-comparison';
     section.innerHTML = `
-      <div class="deep-heading"><div><p class="eyebrow">Cost vs value</p><h2>Lifetime cost vs value when mortgage-free</h2></div></div>
+      <div class="deep-heading"><div><p class="eyebrow">Cost vs value</p><h2>Lifetime cost vs value when mortgage-free</h2></div><span class="source-date" id="costPlanContext">—</span></div>
       <div class="property-cost-grid property-cost-grid-two">
         <div class="property-cost-card"><span>Estimated value when mortgage-free</span><strong id="costFutureValue">—</strong><small id="costFutureValueNote">Projected from your current property estimate.</small></div>
         <div class="property-cost-card"><span>Estimated lifetime cost floor</span><strong id="costKnownBasis">—</strong><small id="costKnownBasisNote">Add purchase details for this comparison.</small></div>
@@ -93,6 +93,14 @@
     const improvements = Math.max(0, Number(settings.improvements)||0);
     const historicalInterest = Math.max(0, Number(history.historicalInterest) || 0);
     const years = path.months / 12;
+    const payoffDate = new Date();
+    payoffDate.setMonth(payoffDate.getMonth() + Math.max(0, Math.round(path.months)));
+    const payoffLabel = new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(payoffDate);
+    const totalOverpayment = currentOverpay + scenarioExtra;
+    const planContext = $('costPlanContext');
+    if (planContext) {
+      planContext.textContent = `Mortgage-free ${payoffLabel} · ${totalOverpayment > 0 ? `${money(totalOverpayment)}/mo overpayment` : 'no overpayment'}`;
+    }
     const futureWholeValue = home * Math.pow(1 + trend/100, years);
     const futureShareValue = futureWholeValue * ownership/100;
     const futureInterest = Math.max(0, Number(path.interest)||0);
@@ -101,7 +109,7 @@
     $('costFutureValue').textContent = money(futureShareValue || futureWholeValue);
     $('costFutureValueNote').textContent = ownership < 100
       ? `${ownership.toFixed(ownership%1?1:0)}% share of the projected property value.`
-      : `Projected from today’s estimate using ${trend.toFixed(1)}% annual growth.`;
+      : `Projected to ${payoffLabel} from today’s estimate.`;
     if (knownBasis) {
       $('costKnownBasis').textContent = money(knownBasis);
       const historyText = historicalInterest > 0 ? ` + ${money(historicalInterest)} estimated past interest` : '';
