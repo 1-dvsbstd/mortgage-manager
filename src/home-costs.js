@@ -1,6 +1,7 @@
 (() => {
   const $ = (id) => document.getElementById(id);
   const money = (value) => new Intl.NumberFormat('en-GB', { style:'currency', currency:'GBP', maximumFractionDigits:0 }).format(Math.max(0, Number(value)||0));
+  const HPI_KEY = 'mortgage-manager-local-hpi-v1';
 
   function getHomeSettings() {
     try { return JSON.parse(localStorage.getItem('mortgage-manager-home-projection-v4') || '{}'); }
@@ -15,6 +16,29 @@
   function getTrendRate() {
     const trend = Number(getHomeSettings().trend);
     return Number.isFinite(trend) ? trend : 2.5;
+  }
+
+  function regionSlug(value) {
+    return String(value||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/&/g,' and ').replace(/['’]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  }
+
+  function currentEstimatedHomeValue(fallback) {
+    const settings = getHomeSettings();
+    const recent = Math.max(0, Number(settings.recentValue)||0);
+    if (recent) return recent;
+    const purchasePrice = Math.max(0, Number(settings.purchasePrice)||0);
+    const purchaseMonth = String(settings.purchaseMonth||'').slice(0,7);
+    const slug = regionSlug(settings.localAuthority||'');
+    if (purchasePrice && purchaseMonth && slug && settings.propertyType) {
+      try {
+        const cache = JSON.parse(localStorage.getItem(HPI_KEY)||'{}') || {};
+        const model = cache[`${slug}|${settings.propertyType}|${purchaseMonth}`];
+        if (model?.multiplier > 0) {
+          return purchasePrice * Number(model.multiplier) + Math.max(0, Number(settings.improvements)||0);
+        }
+      } catch (_) {}
+    }
+    return Math.max(0, Number(fallback)||0);
   }
 
   function currentMortgage() {
@@ -39,9 +63,8 @@
     section.className = 'property-cost-comparison';
     section.innerHTML = `
       <div class="deep-heading"><div><p class="eyebrow">Cost vs value</p><h2>What you may pay versus what the home may be worth</h2></div></div>
-      <div class="property-cost-grid">
-        <div class="property-cost-card"><span>Estimated value when mortgage-free</span><strong id="costFutureValue">—</strong><small id="costFutureValueNote">Uses the Home trend assumption.</small></div>
-        <div class="property-cost-card"><span>Remaining mortgage payments</span><strong id="costRemainingPayments">—</strong><small id="costRemainingPaymentsNote">Projected from today.</small></div>
+      <div class="property-cost-grid property-cost-grid-two">
+        <div class="property-cost-card"><span>Estimated value when mortgage-free</span><strong id="costFutureValue">—</strong><small id="costFutureValueNote">Projected from your current property estimate.</small></div>
         <div class="property-cost-card"><span>Estimated lifetime cost floor</span><strong id="costKnownBasis">—</strong><small id="costKnownBasisNote">Add purchase details for this comparison.</small></div>
       </div>
       <p class="deep-note" id="costComparisonNote">Add mortgage history to include estimated interest already paid.</p>`;
@@ -58,7 +81,7 @@
     const payment = Math.max(0,Number(mortgage.payment)||0);
     const currentOverpay = Math.max(0,Number(mortgage.currentOverpayment)||0);
     const scenarioExtra = Math.max(0,Number(mortgage.scenarioExtra)||0);
-    const home = Math.max(0,Number(mortgage.homeValue)||0);
+    const home = currentEstimatedHomeValue(mortgage.homeValue);
     const ownership = Math.min(100,Math.max(0,Number(mortgage.ownership)||0));
     const path = MortgageMath.amortize(balance, rate, payment + currentOverpay + scenarioExtra);
     if (!Number.isFinite(path.months)) return;
@@ -73,18 +96,12 @@
     const futureWholeValue = home * Math.pow(1 + trend/100, years);
     const futureShareValue = futureWholeValue * ownership/100;
     const futureInterest = Math.max(0, Number(path.interest)||0);
-    const remainingPayments = balance + futureInterest;
     const knownBasis = purchasePrice ? purchasePrice + improvements + historicalInterest + futureInterest : 0;
 
     $('costFutureValue').textContent = money(futureShareValue || futureWholeValue);
     $('costFutureValueNote').textContent = ownership < 100
       ? `${ownership.toFixed(ownership%1?1:0)}% share of the projected property value.`
-      : `Projected property value using ${trend.toFixed(1)}% annual growth.`;
-    $('costRemainingPayments').textContent = money(remainingPayments);
-    $('costRemainingPaymentsNote').textContent = scenarioExtra > 0
-      ? `Projected using your regular overpayment plus ${money(scenarioExtra)}/month extra.`
-      : 'Projected using your current payment and regular overpayment.';
-
+      : `Projected from today’s estimate using ${trend.toFixed(1)}% annual growth.`;
     if (knownBasis) {
       $('costKnownBasis').textContent = money(knownBasis);
       const historyText = historicalInterest > 0 ? ` + ${money(historicalInterest)} estimated past interest` : '';
