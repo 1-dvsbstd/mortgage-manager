@@ -670,3 +670,49 @@ body .personal-modal details>summary .methodology-chevron,
 body .personal-modal details>summary .summary-plus{
   display:none!important;
 }
+
+/* App-wide disclosure icon system — one chevron for every native details/summary control. */
+body details>summary{
+  position:relative!important;
+  padding-right:30px!important;
+  list-style:none!important;
+}
+body details>summary::-webkit-details-marker{
+  display:none!important;
+}
+body details>summary::before{
+  content:none!important;
+  display:none!important;
+}
+body details>summary::after{
+  content:""!important;
+  position:absolute!important;
+  float:none!important;
+  right:6px!important;
+  top:50%!important;
+  display:block!important;
+  width:7px!important;
+  height:7px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-right:1.5px solid #8b6849!important;
+  border-bottom:1.5px solid #8b6849!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:transparent!important;
+  font-size:0!important;
+  line-height:0!important;
+  transform:translateY(-65%) rotate(45deg)!important;
+  transform-origin:center!important;
+  transition:transform .15s ease!important;
+}
+body details[open]>summary::after{
+  transform:translateY(-35%) rotate(225deg)!important;
+}
+body details>summary .summary-plus,
+body details>summary .history-summary-chevron,
+body details>summary .methodology-chevron{
+  display:none!important;
+}
