@@ -514,9 +514,9 @@
     $('projectionCurrentNote').textContent=recentValue
       ? 'Using your recent valuation / estimate.'
       : hpiAnchoredToday
-        ? `Calculated using local HPI${improvements?' + improvements':''}.`
+        ? `Local HPI · updated ${monthLabel(hpiModel.latestMonth)}${improvements?' + improvements':''}`
         : validPurchase
-          ? `Local HPI unavailable; using the fallback growth model${improvements?' + improvements':''}.`
+          ? `Fallback growth model${improvements?' + improvements':''}`
           : 'Using the property value saved in the dashboard.';
 
     const ownedValueToday=estimatedToday*ownership/100;
