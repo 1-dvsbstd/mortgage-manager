@@ -1,7 +1,7 @@
 (() => {
   const HOME_KEY = 'mortgage-manager-home-projection-v4';
   const LEGACY_HOME_KEY = 'mortgage-manager-home-projection-v3';
-  const defaults = { low:1, trend:2.5, high:4, purchasePrice:'', purchaseMonth:'', postcode:'', localAuthority:'', localAuthorityCode:'', propertyType:'', improvements:'', recentValue:'' };
+  const defaults = { low:1, trend:2.5, high:4, purchasePrice:'', purchaseMonth:'', postcode:'', localAuthority:'', localAuthorityCode:'', propertyType:'', bedrooms:'', improvements:'', recentValue:'' };
 
   function loadSettings(){
     try {
@@ -15,7 +15,7 @@
 
   function bridgeInputs(settings){
     const map = {
-      projectionPurchasePrice:'purchasePrice', projectionPurchaseMonth:'purchaseMonth', projectionPostcode:'postcode', projectionPropertyType:'propertyType',
+      projectionPurchasePrice:'purchasePrice', projectionPurchaseMonth:'purchaseMonth', projectionPostcode:'postcode', projectionPropertyType:'propertyType', projectionBedrooms:'bedrooms',
       projectionImprovements:'improvements', projectionRecentValue:'recentValue',
       projectionLowRate:'low', projectionTrendRate:'trend', projectionHighRate:'high',
     };
@@ -64,6 +64,7 @@
         ${field('setupHomePurchaseMonth','Month bought','month')}
         <label>Property postcode<input id="setupHomePostcode" type="text" autocomplete="postal-code"><span id="setupHomePostcodeNote">Used for local house-price data</span></label>
         <label>Property type<select id="setupHomePropertyType"><option value="">Select property type</option><option value="detached">Detached</option><option value="semi-detached">Semi-detached</option><option value="terraced">Terraced</option><option value="flat">Flat / maisonette</option></select><span>Used to make local sold-price comparisons more relevant.</span></label>
+        ${field('setupHomeBedrooms','Bedrooms','number','1','Used to refine comparable properties')}
         ${field('setupHomeImprovements','Value added by improvements (£)','number','1000','Optional')}
         ${field('setupHomeRecentValue','Recent valuation / estimate (£)','number','1000','Optional; overrides the modelled value today')}
         ${field('setupHomeLowRate','Low growth (%)','number','0.1')}
@@ -77,6 +78,7 @@
       purchaseMonth: section.querySelector('#setupHomePurchaseMonth'),
       postcode: section.querySelector('#setupHomePostcode'),
       propertyType: section.querySelector('#setupHomePropertyType'),
+      bedrooms: section.querySelector('#setupHomeBedrooms'),
       improvements: section.querySelector('#setupHomeImprovements'),
       recentValue: section.querySelector('#setupHomeRecentValue'),
       low: section.querySelector('#setupHomeLowRate'),
@@ -125,6 +127,7 @@
         localAuthority: resolvedAuthority,
         localAuthorityCode: resolvedAuthorityCode,
         propertyType: refs.propertyType?.value || '',
+        bedrooms: refs.bedrooms?.value || '',
         improvements: refs.improvements?.value || '',
         recentValue: refs.recentValue?.value || '',
         low: Number(refs.low?.value || defaults.low),
