@@ -488,17 +488,22 @@
     const cachedBenchmark=readBenchmarkCache()[benchmarkKey];
     const hasBenchmark=applyLocalBenchmark(cachedBenchmark,estimatedToday);
     if(!hasBenchmark && validPurchase){
-      const lowToday=projectedValue(purchasePrice,settings.low,yearsOwned)+improvements;
-      const trendToday=projectedValue(purchasePrice,settings.trend,yearsOwned)+improvements;
-      const highToday=projectedValue(purchasePrice,settings.high,yearsOwned)+improvements;
+      const lowModel=projectedValue(purchasePrice,settings.low,yearsOwned)+improvements;
+      const centreModel=projectedValue(purchasePrice,settings.trend,yearsOwned)+improvements;
+      const highModel=projectedValue(purchasePrice,settings.high,yearsOwned)+improvements;
+      const centre=Math.max(0,estimatedToday);
+      const lowRatio=centreModel>0?Math.max(.65,Math.min(1,lowModel/centreModel)):.9;
+      const highRatio=centreModel>0?Math.min(1.45,Math.max(1,highModel/centreModel)):1.1;
+      const lowToday=centre*lowRatio;
+      const highToday=centre*highRatio;
       range.hidden=false;
       $('homeRangeLow').textContent=money(lowToday);
-      $('homeRangeTrend').textContent=money(trendToday);
+      $('homeRangeTrend').textContent=money(centre);
       $('homeRangeHigh').textContent=money(highToday);
       $('homeProfileRangeNote').textContent=settings.postcode&&settings.propertyType
-        ? hpiAnchoredToday?'HPI-anchored estimate shown while local comparable sales refresh.':'Saved purchase-model range shown while local market data refreshes.'
+        ? hpiAnchoredToday?'HPI estimate centred here while local comparable sales refresh.':'Saved purchase-model range shown while local market data refreshes.'
         : 'Add postcode and property type in Setup & data to use local sold-price benchmarks.';
-      if($('homeProfileRangeSource')) $('homeProfileRangeSource').textContent=hpiAnchoredToday?`Centre uses ${hpiModel.authority} ${hmlrPropertyTypeLabel(settings.propertyType)} UK HPI movement from ${hpiModel.purchaseMonth} to ${hpiModel.latestMonth}.`:'Fallback range uses your saved low / centre / high growth assumptions.';
+      if($('homeProfileRangeSource')) $('homeProfileRangeSource').textContent=hpiAnchoredToday?`Centre matches today’s HPI estimate. Range width is provisional until local comparable sales are available.`:'Fallback range uses your saved low / centre / high growth assumptions.';
     } else if(!hasBenchmark) {
       range.hidden=true;
     }
