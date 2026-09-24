@@ -112,9 +112,9 @@
       <div id="homeProfileRange" class="home-profile-range home-forecast" data-range-refined="true" hidden>
         <small id="homeProfileRangeNote" class="home-forecast-note">Based on local HPI history</small>
         <div class="home-forecast-grid">
-          <div class="home-forecast-card"><span>In 1 year</span><strong id="homeForecast1">—</strong><small id="homeForecast1Range">—</small></div>
-          <div class="home-forecast-card"><span>In 3 years</span><strong id="homeForecast3">—</strong><small id="homeForecast3Range">—</small></div>
-          <div class="home-forecast-card"><span>In 5 years</span><strong id="homeForecast5">—</strong><small id="homeForecast5Range">—</small></div>
+          <div class="home-forecast-card"><span>In 1 year</span><strong id="homeForecast1">—</strong><div class="home-forecast-growth"><div class="home-forecast-growth-track"><i id="homeForecast1Bar"></i></div><b id="homeForecast1Growth">—</b></div><small id="homeForecast1Range">—</small></div>
+          <div class="home-forecast-card"><span>In 3 years</span><strong id="homeForecast3">—</strong><div class="home-forecast-growth"><div class="home-forecast-growth-track"><i id="homeForecast3Bar"></i></div><b id="homeForecast3Growth">—</b></div><small id="homeForecast3Range">—</small></div>
+          <div class="home-forecast-card"><span>In 5 years</span><strong id="homeForecast5">—</strong><div class="home-forecast-growth"><div class="home-forecast-growth-track"><i id="homeForecast5Bar"></i></div><b id="homeForecast5Growth">—</b></div><small id="homeForecast5Range">—</small></div>
         </div>
         <small id="homeProfileRangeSource" class="home-profile-range-source"></small>
       </div>
@@ -492,14 +492,23 @@
       const centreRate=hasLocalBands?Number(hpiModel.medianAnnual):Number(settings.trend||defaults.trend);
       const lowRate=hasLocalBands?Number(hpiModel.lowerAnnual):Number(settings.low||defaults.low);
       const highRate=hasLocalBands?Number(hpiModel.upperAnnual):Number(settings.high||defaults.high);
-      [1,3,5].forEach((years)=>{
+      const forecastRows=[1,3,5].map((years)=>{
         const centreValue=projectedValue(estimatedToday,centreRate,years);
         const lowValue=projectedValue(estimatedToday,lowRate,years);
         const highValue=projectedValue(estimatedToday,highRate,years);
-        const valueEl=$(`homeForecast${years}`);
-        const rangeEl=$(`homeForecast${years}Range`);
-        if(valueEl) valueEl.textContent=money(centreValue);
-        if(rangeEl) rangeEl.textContent=`${money(lowValue)}–${money(highValue)}`;
+        const growth=estimatedToday>0?Math.max(0,(centreValue/estimatedToday-1)*100):0;
+        return {years,centreValue,lowValue,highValue,growth};
+      });
+      const maxGrowth=Math.max(1,...forecastRows.map((row)=>row.growth));
+      forecastRows.forEach((row)=>{
+        const valueEl=$(`homeForecast${row.years}`);
+        const rangeEl=$(`homeForecast${row.years}Range`);
+        const growthEl=$(`homeForecast${row.years}Growth`);
+        const barEl=$(`homeForecast${row.years}Bar`);
+        if(valueEl) valueEl.textContent=money(row.centreValue);
+        if(rangeEl) rangeEl.textContent=`${money(row.lowValue)}–${money(row.highValue)}`;
+        if(growthEl) growthEl.textContent=`+${row.growth.toFixed(1)}% from today`;
+        if(barEl) barEl.style.width=`${Math.max(8,(row.growth/maxGrowth)*100)}%`;
       });
       range.hidden=false;
       $('homeProfileRangeNote').textContent=hasLocalBands?'Based on local HPI history':'Based on fallback growth model';
