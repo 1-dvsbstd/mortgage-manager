@@ -3,7 +3,7 @@
 
 .topbar-actions{display:flex;align-items:center;gap:8px}
 .personal-data-button,.progress-action,.personal-button{min-height:36px;padding:8px 11px;border:1px solid rgba(255,255,255,.09);border-radius:10px;background:rgba(255,255,255,.03);color:var(--text);font:inherit;font-size:11px;font-weight:750;cursor:pointer}
-.personal-data-button:hover,.progress-action:hover,.personal-button:hover{border-color:rgba(104,222,185,.22);background:rgba(255,255,255,.05)}
+.personal-data-button:hover,.personal-data-button:focus-visible{border-color:rgba(157,102,57,.28);background:#f3e7d9;color:var(--text);box-shadow:0 0 0 2px rgba(157,102,57,.08)}.progress-action:hover,.personal-button:hover{border-color:rgba(104,222,185,.22);background:rgba(255,255,255,.05)}
 .personal-button.primary{background:var(--accent);border-color:transparent;color:#052018}
 .personal-button.danger{color:#d9b4ac}
 
