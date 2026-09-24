@@ -64,7 +64,7 @@
         ${field('setupHomePurchaseMonth','Month bought','month')}
         <label>Property postcode<input id="setupHomePostcode" type="text" autocomplete="postal-code"><span id="setupHomePostcodeNote">Used for local house-price data</span></label>
         <label>Property type<select id="setupHomePropertyType"><option value="">Select property type</option><option value="detached">Detached</option><option value="semi-detached">Semi-detached</option><option value="terraced">Terraced</option><option value="flat">Flat / maisonette</option></select><span>Used to make local sold-price comparisons more relevant.</span></label>
-        ${field('setupHomeBedrooms','Bedrooms','number','1','Used to refine comparable properties')}
+        <label>Bedrooms<select id="setupHomeBedrooms"><option value="">Select bedrooms</option><option value="1">1 bedroom</option><option value="2">2 bedrooms</option><option value="3">3 bedrooms</option><option value="4">4 bedrooms</option><option value="5">5 bedrooms</option><option value="6">6+ bedrooms</option></select><span>Used to refine comparable properties.</span></label>
         ${field('setupHomeImprovements','Value added by improvements (£)','number','1000','Optional')}
         ${field('setupHomeRecentValue','Recent valuation / estimate (£)','number','1000','Optional; overrides the modelled value today')}
         ${field('setupHomeLowRate','Low growth (%)','number','0.1')}
