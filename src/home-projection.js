@@ -107,7 +107,7 @@
       </div>
 
       <div id="homeProfileRange" class="home-profile-range" hidden>
-        <div class="home-profile-range-head"><div><span>Model range today</span><strong>Low · centre · high</strong></div><small id="homeProfileRangeNote">Based on your purchase data.</small></div>
+        <div class="home-profile-range-head"><div><span>Local sold-price range</span><strong>Low · centre · high</strong></div><small id="homeProfileRangeNote">Based on recent matching sales.</small></div>
         <div class="home-profile-range-values"><div><span>Low</span><strong id="homeRangeLow">—</strong></div><div class="centre"><span>Centre</span><strong id="homeRangeTrend">—</strong></div><div><span>High</span><strong id="homeRangeHigh">—</strong></div></div>
         <small id="homeProfileRangeSource" class="home-profile-range-source"></small>
       </div>
