@@ -772,3 +772,32 @@ body .personal-modal select{
   background-position:right 13px center!important;
   background-size:12px 8px!important;
 }
+
+/* Setup fields — exact control dimensions so selects and inputs visually match. */
+body .personal-modal .setup-home-profile-fields input:not([type="file"]),
+body .personal-modal .setup-home-profile-fields select{
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:46px!important;
+  min-height:46px!important;
+  max-height:46px!important;
+  margin-top:6px!important;
+  padding-top:0!important;
+  padding-bottom:0!important;
+  border:1px solid #ddd2c6!important;
+  border-radius:12px!important;
+  background-color:#fffaf4!important;
+  color:#202833!important;
+  font-family:inherit!important;
+  font-size:16px!important;
+  font-weight:500!important;
+  line-height:44px!important;
+}
+body .personal-modal .setup-home-profile-fields input:not([type="file"]){
+  padding-left:13px!important;
+  padding-right:13px!important;
+}
+body .personal-modal .setup-home-profile-fields select{
+  padding-left:13px!important;
+  padding-right:38px!important;
+}
