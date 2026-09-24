@@ -342,3 +342,71 @@
   .app-view-future #futureModelRange .home-forecast-grid{grid-template-columns:1fr!important}
   .app-view-future #futureModelRange .home-forecast-card{min-height:0!important}
 }
+
+/* Property forecast — full-width 1 / 3 / 5 year cards. */
+.app-view-future #futureModelRange .future-model-heading{margin-bottom:14px!important}
+.app-view-future #futureModelRange .future-model-subtitle{
+  margin:5px 0 0!important;
+  color:var(--muted)!important;
+  font-size:10px!important;
+  line-height:1.4!important;
+}
+.app-view-future #futureModelRange .home-forecast-note{display:none!important}
+.app-view-future #futureModelRange .home-forecast{
+  display:block!important;
+  width:100%!important;
+}
+.app-view-future #futureModelRange .home-forecast-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:12px!important;
+  width:100%!important;
+  margin:0!important;
+}
+.app-view-future #futureModelRange .home-forecast-card{
+  min-width:0!important;
+  min-height:112px!important;
+  padding:18px 20px!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:17px!important;
+  background:#f2ece3!important;
+  box-shadow:none!important;
+}
+.app-view-future #futureModelRange .home-forecast-card:nth-child(3){
+  background:#efe4d7!important;
+  border-color:rgba(197,138,86,.22)!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>span{
+  display:block!important;
+  color:var(--muted)!important;
+  font-size:10px!important;
+  line-height:1.35!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>strong{
+  display:block!important;
+  margin:7px 0 6px!important;
+  color:var(--text)!important;
+  font-size:24px!important;
+  line-height:1.05!important;
+  letter-spacing:-.02em!important;
+}
+.app-view-future #futureModelRange .home-forecast-card:nth-child(3)>strong{
+  color:var(--accent-strong)!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>small{
+  display:block!important;
+  color:var(--muted)!important;
+  font-size:10px!important;
+  line-height:1.4!important;
+}
+.app-view-future #futureModelRange .home-profile-range-source{
+  display:block!important;
+  margin-top:10px!important;
+  color:var(--muted)!important;
+  font-size:9.5px!important;
+  line-height:1.35!important;
+}
+@media(max-width:700px){
+  .app-view-future #futureModelRange .home-forecast-grid{grid-template-columns:1fr!important}
+  .app-view-future #futureModelRange .home-forecast-card{min-height:0!important}
+}
