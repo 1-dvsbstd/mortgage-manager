@@ -322,3 +322,22 @@ body .personal-modal #methodologySection>summary::after{
 body .personal-modal #methodologySection[open]>summary::after{
   transform:translateY(-50%) rotate(90deg)!important;
 }
+
+/* Methodology disclosure chevron — draw the arrow instead of relying on a text glyph. */
+body .personal-modal #methodologySection>summary::after{
+  content:""!important;
+  box-sizing:border-box!important;
+  width:24px!important;
+  height:24px!important;
+  border:0!important;
+  border-radius:999px!important;
+  background:
+    linear-gradient(45deg, transparent 46%, #7e5837 47%, #7e5837 56%, transparent 57%) calc(50% - 2px) 50%/7px 7px no-repeat,
+    linear-gradient(-45deg, transparent 46%, #7e5837 47%, #7e5837 56%, transparent 57%) calc(50% + 2px) 50%/7px 7px no-repeat,
+    #f1e6da!important;
+  transform:translateY(-50%) rotate(0deg)!important;
+  transform-origin:center!important;
+}
+body .personal-modal #methodologySection[open]>summary::after{
+  transform:translateY(-50%) rotate(180deg)!important;
+}
