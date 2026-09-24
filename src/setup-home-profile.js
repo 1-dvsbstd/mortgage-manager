@@ -67,9 +67,6 @@
         <label>Bedrooms<select id="setupHomeBedrooms"><option value="">Select bedrooms</option><option value="1">1 bedroom</option><option value="2">2 bedrooms</option><option value="3">3 bedrooms</option><option value="4">4 bedrooms</option><option value="5">5 bedrooms</option><option value="6">6+ bedrooms</option></select><span>Used to refine comparable properties.</span></label>
         ${field('setupHomeImprovements','Value added by improvements (£)','number','1000','Optional')}
         ${field('setupHomeRecentValue','Recent valuation / estimate (£)','number','1000','Optional; overrides the modelled value today')}
-        ${field('setupHomeLowRate','Low growth (%)','number','0.1')}
-        ${field('setupHomeTrendRate','Trend growth (%)','number','0.1')}
-        ${field('setupHomeHighRate','High growth (%)','number','0.1')}
       </div>`;
     mortgageForm.insertAdjacentElement('afterend', section);
 
@@ -81,9 +78,6 @@
       bedrooms: section.querySelector('#setupHomeBedrooms'),
       improvements: section.querySelector('#setupHomeImprovements'),
       recentValue: section.querySelector('#setupHomeRecentValue'),
-      low: section.querySelector('#setupHomeLowRate'),
-      trend: section.querySelector('#setupHomeTrendRate'),
-      high: section.querySelector('#setupHomeHighRate'),
     };
     Object.entries(refs).forEach(([key,input]) => { if(input) input.value = settings[key] ?? ''; });
     const postcodeNote=section.querySelector('#setupHomePostcodeNote');
@@ -130,9 +124,9 @@
         bedrooms: refs.bedrooms?.value || '',
         improvements: refs.improvements?.value || '',
         recentValue: refs.recentValue?.value || '',
-        low: Number(refs.low?.value || defaults.low),
-        trend: Number(refs.trend?.value || defaults.trend),
-        high: Number(refs.high?.value || defaults.high),
+        low: Number(settings.low ?? defaults.low),
+        trend: Number(settings.trend ?? defaults.trend),
+        high: Number(settings.high ?? defaults.high),
       };
       saveSettings(next);
     };
