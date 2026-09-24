@@ -462,3 +462,166 @@
 @media(prefers-reduced-motion:reduce){
   .app-view-future #futureModelRange .home-forecast-growth-track>i{transition:none!important}
 }
+
+/* Future page visual variety — forecast track + milestone strip. */
+.app-view-future #futureModelRange .home-forecast-grid{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:0!important;
+  padding:22px 0 0!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+.app-view-future #futureModelRange .home-forecast-grid::before{
+  content:""!important;
+  position:absolute!important;
+  left:8.5%!important;
+  right:8.5%!important;
+  top:15px!important;
+  height:2px!important;
+  border-radius:999px!important;
+  background:#d8c5b2!important;
+}
+.app-view-future #futureModelRange .home-forecast-card{
+  position:relative!important;
+  min-height:0!important;
+  padding:17px 18px 4px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  text-align:center!important;
+}
+.app-view-future #futureModelRange .home-forecast-card::before{
+  content:""!important;
+  position:absolute!important;
+  top:-13px!important;
+  left:50%!important;
+  width:11px!important;
+  height:11px!important;
+  border:3px solid #fffaf4!important;
+  border-radius:50%!important;
+  background:#b9875f!important;
+  box-shadow:0 0 0 1px #c9ab90!important;
+  transform:translateX(-50%)!important;
+  z-index:2!important;
+}
+.app-view-future #futureModelRange .home-forecast-card:nth-child(3){
+  background:transparent!important;
+  border:0!important;
+}
+.app-view-future #futureModelRange .home-forecast-card:nth-child(3)::before{
+  width:13px!important;
+  height:13px!important;
+  top:-14px!important;
+  background:var(--accent-strong)!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>span{
+  font-size:10px!important;
+  font-weight:700!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>strong{
+  margin:6px 0 5px!important;
+  font-size:25px!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>small{
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  font-size:9px!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>small::before{
+  content:""!important;
+}
+.app-view-future #futureModelRange .home-forecast-growth{
+  display:block!important;
+  margin:5px 0 6px!important;
+}
+.app-view-future #futureModelRange .home-forecast-growth-track{
+  display:none!important;
+}
+.app-view-future #futureModelRange .home-forecast-growth>b{
+  font-size:9px!important;
+  font-weight:750!important;
+}
+.app-view-future #futureModelRange .home-profile-range-source{
+  margin-top:14px!important;
+  padding-top:10px!important;
+  border-top:1px solid rgba(68,58,48,.07)!important;
+  text-align:center!important;
+}
+
+/* Looking ahead becomes one continuous milestone strip, not three cards. */
+.app-view-future #futureWaitPlanner .next-home-timeline-rows{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:0!important;
+  overflow:hidden!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:17px!important;
+  background:#f6f0e8!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row{
+  position:relative!important;
+  display:block!important;
+  min-height:0!important;
+  padding:18px 20px 17px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row+ .next-home-timeline-row{
+  border-left:1px solid rgba(68,58,48,.09)!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row:nth-child(3){
+  background:#f1e5d7!important;
+  border-color:rgba(68,58,48,.09)!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row>span{
+  display:block!important;
+  margin-bottom:6px!important;
+  color:var(--muted)!important;
+  font-size:9.5px!important;
+  font-weight:700!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row>strong{
+  display:block!important;
+  margin:0 0 11px!important;
+  font-size:25px!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row>small{
+  display:block!important;
+  margin-top:3px!important;
+  font-size:9px!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row:nth-child(3)>strong{
+  color:var(--accent-strong)!important;
+}
+
+@media(max-width:700px){
+  .app-view-future #futureModelRange .home-forecast-grid{
+    grid-template-columns:1fr!important;
+    gap:0!important;
+    padding:0!important;
+  }
+  .app-view-future #futureModelRange .home-forecast-grid::before{display:none!important}
+  .app-view-future #futureModelRange .home-forecast-card{
+    padding:14px 0!important;
+    text-align:left!important;
+    border-top:1px solid rgba(68,58,48,.08)!important;
+  }
+  .app-view-future #futureModelRange .home-forecast-card:first-child{border-top:0!important}
+  .app-view-future #futureModelRange .home-forecast-card::before{display:none!important}
+  .app-view-future #futureModelRange .home-profile-range-source{text-align:left!important}
+  .app-view-future #futureWaitPlanner .next-home-timeline-rows{
+    grid-template-columns:1fr!important;
+  }
+  .app-view-future #futureWaitPlanner .next-home-timeline-row+ .next-home-timeline-row{
+    border-left:0!important;
+    border-top:1px solid rgba(68,58,48,.09)!important;
+  }
+}
