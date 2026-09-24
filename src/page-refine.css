@@ -801,3 +801,36 @@ body .personal-modal .setup-home-profile-fields select{
   padding-left:13px!important;
   padding-right:38px!important;
 }
+
+/* Setup disclosure icons — exact same SVG asset for Mortgage history + Methodology. */
+body .personal-modal .mortgage-history-section>summary::after,
+body .personal-modal #methodologySection>summary::after{
+  content:""!important;
+  position:absolute!important;
+  right:6px!important;
+  top:50%!important;
+  width:12px!important;
+  height:8px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background-color:transparent!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M2 2l4 4 4-4' stroke='%238b6849' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:12px 8px!important;
+  box-shadow:none!important;
+  transform:translateY(-50%) rotate(0deg)!important;
+  transform-origin:center!important;
+  transition:transform .15s ease!important;
+}
+body .personal-modal .mortgage-history-section[open]>summary::after,
+body .personal-modal #methodologySection[open]>summary::after{
+  transform:translateY(-50%) rotate(180deg)!important;
+}
+body .personal-modal .mortgage-history-section>summary::before,
+body .personal-modal #methodologySection>summary::before{
+  content:none!important;
+  display:none!important;
+}
