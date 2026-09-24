@@ -1,7 +1,7 @@
 (() => {
   const HOME_KEY = 'mortgage-manager-home-projection-v4';
   const LEGACY_HOME_KEY = 'mortgage-manager-home-projection-v3';
-  const defaults = { low:1, trend:2.5, high:4, purchasePrice:'', purchaseMonth:'', improvements:'', recentValue:'' };
+  const defaults = { low:1, trend:2.5, high:4, purchasePrice:'', purchaseMonth:'', postcode:'', improvements:'', recentValue:'' };
 
   function loadSettings(){
     try {
@@ -15,7 +15,7 @@
 
   function bridgeInputs(settings){
     const map = {
-      projectionPurchasePrice:'purchasePrice', projectionPurchaseMonth:'purchaseMonth',
+      projectionPurchasePrice:'purchasePrice', projectionPurchaseMonth:'purchaseMonth', projectionPostcode:'postcode',
       projectionImprovements:'improvements', projectionRecentValue:'recentValue',
       projectionLowRate:'low', projectionTrendRate:'trend', projectionHighRate:'high',
     };
@@ -62,6 +62,7 @@
       <div class="projection-controls purchase-controls setup-home-profile-fields">
         ${field('setupHomePurchasePrice','Purchase price (£)','number','1000')}
         ${field('setupHomePurchaseMonth','Month bought','month')}
+        ${field('setupHomePostcode','Property postcode','text','1','Used for local house-price data')}
         ${field('setupHomeImprovements','Value added by improvements (£)','number','1000','Optional')}
         ${field('setupHomeRecentValue','Recent valuation / estimate (£)','number','1000','Optional; overrides the modelled value today')}
         ${field('setupHomeLowRate','Low growth (%)','number','0.1')}
@@ -73,6 +74,7 @@
     const refs = {
       purchasePrice: section.querySelector('#setupHomePurchasePrice'),
       purchaseMonth: section.querySelector('#setupHomePurchaseMonth'),
+      postcode: section.querySelector('#setupHomePostcode'),
       improvements: section.querySelector('#setupHomeImprovements'),
       recentValue: section.querySelector('#setupHomeRecentValue'),
       low: section.querySelector('#setupHomeLowRate'),
@@ -85,6 +87,7 @@
       const next = {
         purchasePrice: refs.purchasePrice?.value || '',
         purchaseMonth: refs.purchaseMonth?.value || '',
+        postcode: (refs.postcode?.value || '').trim().toUpperCase(),
         improvements: refs.improvements?.value || '',
         recentValue: refs.recentValue?.value || '',
         low: Number(refs.low?.value || defaults.low),
