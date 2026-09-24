@@ -1,7 +1,7 @@
 (() => {
   const HOME_KEY = 'mortgage-manager-home-projection-v4';
   const LEGACY_HOME_KEY = 'mortgage-manager-home-projection-v3';
-  const defaults = { low:1, trend:2.5, high:4, purchasePrice:'', purchaseMonth:'', postcode:'', improvements:'', recentValue:'' };
+  const defaults = { low:1, trend:2.5, high:4, purchasePrice:'', purchaseMonth:'', postcode:'', localAuthority:'', localAuthorityCode:'', improvements:'', recentValue:'' };
 
   function loadSettings(){
     try {
@@ -62,7 +62,7 @@
       <div class="projection-controls purchase-controls setup-home-profile-fields">
         ${field('setupHomePurchasePrice','Purchase price (£)','number','1000')}
         ${field('setupHomePurchaseMonth','Month bought','month')}
-        ${field('setupHomePostcode','Property postcode','text','1','Used for local house-price data')}
+        <label>Property postcode<input id="setupHomePostcode" type="text" autocomplete="postal-code"><span id="setupHomePostcodeNote">Used for local house-price data</span></label>
         ${field('setupHomeImprovements','Value added by improvements (£)','number','1000','Optional')}
         ${field('setupHomeRecentValue','Recent valuation / estimate (£)','number','1000','Optional; overrides the modelled value today')}
         ${field('setupHomeLowRate','Low growth (%)','number','0.1')}
@@ -82,12 +82,46 @@
       high: section.querySelector('#setupHomeHighRate'),
     };
     Object.entries(refs).forEach(([key,input]) => { if(input) input.value = settings[key] ?? ''; });
+    const postcodeNote=section.querySelector('#setupHomePostcodeNote');
+    let resolvedAuthority=settings.localAuthority || '';
+    let resolvedAuthorityCode=settings.localAuthorityCode || '';
+    if(postcodeNote && resolvedAuthority) postcodeNote.textContent=`${resolvedAuthority} · local house-price area`;
+
+    const resolvePostcode=async()=>{
+      const postcode=(refs.postcode?.value || '').trim().toUpperCase();
+      if(!postcode){
+        resolvedAuthority='';
+        resolvedAuthorityCode='';
+        if(postcodeNote) postcodeNote.textContent='Used for local house-price data';
+        return;
+      }
+      if(postcodeNote) postcodeNote.textContent='Checking postcode…';
+      try{
+        const response=await fetch(`https://api.postcodes.io/postcodes/${encodeURIComponent(postcode)}`,{cache:'no-store'});
+        if(!response.ok) throw new Error('Postcode not found');
+        const data=await response.json();
+        const result=data?.result;
+        if(!result?.admin_district) throw new Error('Local authority unavailable');
+        refs.postcode.value=result.postcode || postcode;
+        resolvedAuthority=result.admin_district;
+        resolvedAuthorityCode=result.codes?.admin_district || '';
+        if(postcodeNote) postcodeNote.textContent=`${resolvedAuthority} · local house-price area`;
+      }catch(_){
+        resolvedAuthority='';
+        resolvedAuthorityCode='';
+        if(postcodeNote) postcodeNote.textContent='Could not match this postcode — check it and try again';
+      }
+    };
+    refs.postcode?.addEventListener('blur',resolvePostcode);
+    refs.postcode?.addEventListener('change',resolvePostcode);
 
     const persist = () => {
       const next = {
         purchasePrice: refs.purchasePrice?.value || '',
         purchaseMonth: refs.purchaseMonth?.value || '',
         postcode: (refs.postcode?.value || '').trim().toUpperCase(),
+        localAuthority: resolvedAuthority,
+        localAuthorityCode: resolvedAuthorityCode,
         improvements: refs.improvements?.value || '',
         recentValue: refs.recentValue?.value || '',
         low: Number(refs.low?.value || defaults.low),
