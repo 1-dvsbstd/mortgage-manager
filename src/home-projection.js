@@ -109,9 +109,13 @@
         <div class="projection-core-card"><span>Current equity</span><strong id="projectionShareValue">—</strong><small id="projectionShareNote">—</small></div>
       </div>
 
-      <div id="homeProfileRange" class="home-profile-range" hidden>
-        <div class="home-profile-range-head"><div><span>Estimated value range</span><strong>Low · centre · high</strong></div><small id="homeProfileRangeNote">Anchored to your home and checked against local sales.</small></div>
-        <div class="home-profile-range-values"><div><span>Low</span><strong id="homeRangeLow">—</strong></div><div class="centre"><span>Centre</span><strong id="homeRangeTrend">—</strong></div><div><span>High</span><strong id="homeRangeHigh">—</strong></div></div>
+      <div id="homeProfileRange" class="home-profile-range home-forecast" data-range-refined="true" hidden>
+        <div class="home-profile-range-head"><div><span>Property forecast</span><strong>1 · 3 · 5 years</strong></div><small id="homeProfileRangeNote">Local HPI outlook</small></div>
+        <div class="home-forecast-grid">
+          <div class="home-forecast-card"><span>In 1 year</span><strong id="homeForecast1">—</strong><small id="homeForecast1Range">—</small></div>
+          <div class="home-forecast-card"><span>In 3 years</span><strong id="homeForecast3">—</strong><small id="homeForecast3Range">—</small></div>
+          <div class="home-forecast-card"><span>In 5 years</span><strong id="homeForecast5">—</strong><small id="homeForecast5Range">—</small></div>
+        </div>
         <small id="homeProfileRangeSource" class="home-profile-range-source"></small>
       </div>
 
@@ -391,27 +395,7 @@
   }
 
   function applyLocalBenchmark(benchmark,estimate=0){
-    const range=$('homeProfileRange');
-    const note=$('homeProfileRangeNote');
-    const source=$('homeProfileRangeSource');
-    if(!range||!benchmark) return false;
-    const centreEstimate=Math.max(0,Number(estimate)||0);
-    const rawCentre=Math.max(1,Number(benchmark.centre)||1);
-    const lowRatio=Math.max(.65,Math.min(1,Number(benchmark.low||rawCentre)/rawCentre));
-    const highRatio=Math.min(1.45,Math.max(1,Number(benchmark.high||rawCentre)/rawCentre));
-    const low=centreEstimate?centreEstimate*lowRatio:benchmark.low;
-    const centre=centreEstimate||benchmark.centre;
-    const high=centreEstimate?centreEstimate*highRatio:benchmark.high;
-    range.hidden=false;
-    $('homeRangeLow').textContent=money(low);
-    $('homeRangeTrend').textContent=money(centre);
-    $('homeRangeHigh').textContent=money(high);
-    const typeText=benchmark.propertyTypeLabel ? benchmark.propertyTypeLabel.toLowerCase() : 'matching';
-    const bedText=benchmark.bedrooms ? ` · ${benchmark.bedrooms==='6'?'6+':benchmark.bedrooms} bed profile saved` : '';
-    const latest=benchmark.latestSale ? ` · latest ${formatSaleMonth(benchmark.latestSale)}` : '';
-    if(note) note.textContent=`Local sales · ${benchmark.count} match${benchmark.count===1?'':'es'}`;
-    if(source) source.textContent=`HMLR median ${money(benchmark.centre)}.`;
-    return true;
+    return Boolean(benchmark && estimate);
   }
 
   async function refreshLocalBenchmark(){
@@ -503,46 +487,30 @@
     $('projectionPurchaseNote').textContent=validPurchase?'Used as the historical anchor for the estimate.':'Purchase price and date give the estimate a factual starting point.';
 
     const range=$('homeProfileRange');
-    const benchmarkKey=`${normalisePostcode(settings.postcode)}|${settings.propertyType||''}`;
-    const cachedBenchmark=readBenchmarkCache()[benchmarkKey];
-    const hasBenchmark=applyLocalBenchmark(cachedBenchmark,estimatedToday);
-    if(!hasBenchmark && validPurchase){
-      const centre=Math.max(0,estimatedToday);
-      let lowToday=0, highToday=0;
-      const hasLocalBands=hpiModel && Number.isFinite(hpiModel.lowerAnnual) && Number.isFinite(hpiModel.medianAnnual) && Number.isFinite(hpiModel.upperAnnual);
-      if(hpiAnchoredToday && hasLocalBands){
-        const baseCentre=Math.max(0,purchasePrice*Number(hpiModel.multiplier));
-        const medianBase=Math.max(.01,1+Number(hpiModel.medianAnnual)/100);
-        const lowBase=Math.max(.01,1+Number(hpiModel.lowerAnnual)/100);
-        const highBase=Math.max(.01,1+Number(hpiModel.upperAnnual)/100);
-        const lowFactor=Math.pow(lowBase/medianBase,yearsOwned);
-        const highFactor=Math.pow(highBase/medianBase,yearsOwned);
-        lowToday=Math.min(centre,baseCentre*lowFactor+improvements);
-        highToday=Math.max(centre,baseCentre*highFactor+improvements);
-      } else {
-        const lowModel=projectedValue(purchasePrice,settings.low,yearsOwned)+improvements;
-        const centreModel=projectedValue(purchasePrice,settings.trend,yearsOwned)+improvements;
-        const highModel=projectedValue(purchasePrice,settings.high,yearsOwned)+improvements;
-        const lowRatio=centreModel>0?Math.max(.65,Math.min(1,lowModel/centreModel)):.9;
-        const highRatio=centreModel>0?Math.min(1.45,Math.max(1,highModel/centreModel)):1.1;
-        lowToday=centre*lowRatio;
-        highToday=centre*highRatio;
-      }
+    const hasLocalBands=hpiModel && Number.isFinite(hpiModel.lowerAnnual) && Number.isFinite(hpiModel.medianAnnual) && Number.isFinite(hpiModel.upperAnnual);
+    if(estimatedToday){
+      const centreRate=hasLocalBands?Number(hpiModel.medianAnnual):Number(settings.trend||defaults.trend);
+      const lowRate=hasLocalBands?Number(hpiModel.lowerAnnual):Number(settings.low||defaults.low);
+      const highRate=hasLocalBands?Number(hpiModel.upperAnnual):Number(settings.high||defaults.high);
+      [1,3,5].forEach((years)=>{
+        const centreValue=projectedValue(estimatedToday,centreRate,years);
+        const lowValue=projectedValue(estimatedToday,lowRate,years);
+        const highValue=projectedValue(estimatedToday,highRate,years);
+        const valueEl=$(`homeForecast${years}`);
+        const rangeEl=$(`homeForecast${years}Range`);
+        if(valueEl) valueEl.textContent=money(centreValue);
+        if(rangeEl) rangeEl.textContent=`${money(lowValue)}–${money(highValue)}`;
+      });
       range.hidden=false;
-      $('homeRangeLow').textContent=money(lowToday);
-      $('homeRangeTrend').textContent=money(centre);
-      $('homeRangeHigh').textContent=money(highToday);
-      $('homeProfileRangeNote').textContent=settings.postcode&&settings.propertyType
-        ? hpiAnchoredToday?'Local HPI range':'Local range loading'
-        : 'Add postcode + property type';
-      if($('homeProfileRangeSource')) $('homeProfileRangeSource').textContent=hpiAnchoredToday&&hasLocalBands
-        ? `${hpiModel.authority} HPI · ${hpiModel.lowerAnnual.toFixed(1)}%–${hpiModel.upperAnnual.toFixed(1)}%`
-        : hpiAnchoredToday
-          ? 'Centre = local HPI estimate'
-          : 'Fallback model';
-    } else if(!hasBenchmark) {
+      $('homeProfileRangeNote').textContent=hasLocalBands?'Local HPI history':'Fallback growth model';
+      if($('homeProfileRangeSource')) $('homeProfileRangeSource').textContent=hasLocalBands
+        ? `${hpiModel.authority} · ${hmlrPropertyTypeLabel(settings.propertyType)}`
+        : '';
+    } else {
       range.hidden=true;
     }
+
+
     refreshLocalBenchmark();
 
     if(!estimatedToday){
