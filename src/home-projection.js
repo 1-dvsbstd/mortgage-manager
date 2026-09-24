@@ -99,7 +99,7 @@
         <div class="projection-core-card"><span>Bought for</span><strong id="projectionPurchase">Add purchase details</strong><small id="projectionPurchaseNote">Purchase price and date give the estimate a factual starting point.</small></div>
         <div class="projection-core-card current-estimate"><span>Estimated value today</span><strong id="projectionCurrentEstimate">—</strong><small id="projectionCurrentNote">—</small><button type="button" id="useCurrentEstimate" class="projection-use-button">Use for dashboard</button></div>
         <div class="projection-core-card future-estimate"><span>Estimated value in 5 years</span><strong id="projectionFutureValue">—</strong><small id="projectionFutureNote">—</small></div>
-        <div class="projection-core-card"><span>Your projected equity in 5 years</span><strong id="projectionShareValue">—</strong><small id="projectionShareNote">—</small></div>
+        <div class="projection-core-card"><span>Current equity</span><strong id="projectionShareValue">—</strong><small id="projectionShareNote">—</small></div>
       </div>
 
       <div id="homeProfileRange" class="home-profile-range" hidden>
@@ -228,6 +228,12 @@
     $('projectionCurrentEstimate').textContent=money(estimatedToday); $('useCurrentEstimate').dataset.value=String(estimatedToday); $('useCurrentEstimate').style.display='inline-flex';
     $('projectionCurrentNote').textContent=recentValue?'Using your recent valuation / estimate.':validPurchase?`Modelled from purchase price at ${settings.trend.toFixed(1)}% annual growth${improvements?` plus ${money(improvements)} improvements`:''}.`:'Using the property value saved in the dashboard.';
 
+    const ownedValueToday=estimatedToday*ownership/100;
+    const equityToday=Math.max(0,ownedValueToday-balance);
+    $('projectionShareValue').textContent=money(equityToday);
+    $('projectionShareNote').textContent=`${ownership.toFixed(ownership%1?1:0)}% share less ${money(balance)} mortgage remaining.`;
+    $('projectionPlainNote').textContent=`Today: about ${money(estimatedToday)} estimated property value and ${money(equityToday)} household equity.`;
+
     if(!Number.isFinite(months)){ $('projectionFutureValue').textContent='—'; $('projectionFutureNote').textContent='A valid repayment path is needed.'; renderValueHistory(); return; }
 
     const horizonYears=5, horizonMonths=horizonYears*12;
@@ -238,8 +244,6 @@
     const equityInFive=Math.max(0,ownedValueInFive-balanceInFive);
     const year=new Date().getFullYear()+horizonYears;
     $('projectionFutureValue').textContent=money(trendFuture); $('projectionFutureNote').textContent=`Centre estimate for ${year}; rough range ${money(lowFuture)}–${money(highFuture)}. Property growth is held constant across overpayment choices.`;
-    $('projectionShareValue').textContent=money(equityInFive); $('projectionShareNote').textContent=`${ownership.toFixed(ownership%1?1:0)}% share less ${money(balanceInFive)} mortgage remaining.`;
-    $('projectionPlainNote').textContent=`Five-year comparison: about ${money(trendFuture)} property value and ${money(equityInFive)} household equity under the selected repayment path.`;
     renderValueHistory();
   }
 
