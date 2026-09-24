@@ -108,3 +108,69 @@
     grid-column:2!important;
   }
 }
+
+/* Property value history — flat log styling inside the outer section card. */
+.personal-modal .setup-value-history-list{
+  margin-top:10px!important;
+  border-top:1px solid rgba(68,58,48,.09)!important;
+}
+.personal-modal .setup-value-history-list .setup-history-row{
+  display:grid!important;
+  grid-template-columns:90px 120px minmax(0,1fr)!important;
+  align-items:center!important;
+  column-gap:18px!important;
+  min-height:42px!important;
+  padding:9px 2px!important;
+  border:0!important;
+  border-bottom:1px solid rgba(68,58,48,.07)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.personal-modal .setup-value-history-list .setup-history-row:last-child{
+  border-bottom:0!important;
+}
+.personal-modal .setup-value-history-list .setup-history-row span{
+  color:var(--muted)!important;
+  font-size:9.5px!important;
+  font-weight:600!important;
+}
+.personal-modal .setup-value-history-list .setup-history-row strong{
+  color:var(--text)!important;
+  font-size:13px!important;
+  font-weight:800!important;
+  letter-spacing:-.01em!important;
+}
+.personal-modal .setup-value-history-list .setup-history-row small{
+  justify-self:end!important;
+  color:var(--muted)!important;
+  font-size:9.5px!important;
+  font-weight:500!important;
+}
+.personal-modal .setup-value-history-section .setup-save-value{
+  min-height:34px!important;
+  padding:7px 11px!important;
+  border-color:rgba(157,102,57,.18)!important;
+  background:#fffaf4!important;
+  color:#7e5837!important;
+  box-shadow:none!important;
+  font-size:10px!important;
+}
+.personal-modal .setup-value-history-section .setup-save-value:hover,
+.personal-modal .setup-value-history-section .setup-save-value:focus-visible{
+  border-color:rgba(157,102,57,.30)!important;
+  background:#f3e7d9!important;
+  color:#6f4a2d!important;
+  box-shadow:none!important;
+}
+@media(max-width:700px){
+  .personal-modal .setup-value-history-list .setup-history-row{
+    grid-template-columns:82px 1fr!important;
+    row-gap:3px!important;
+    column-gap:12px!important;
+  }
+  .personal-modal .setup-value-history-list .setup-history-row small{
+    grid-column:2!important;
+    justify-self:start!important;
+  }
+}
