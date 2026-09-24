@@ -309,7 +309,7 @@
       if(!rangePanel){
         rangePanel=document.createElement('section');
         rangePanel.id='futureModelRange'; rangePanel.className='panel future-model-range-panel';
-        rangePanel.innerHTML='<div class="future-model-heading"><p class="eyebrow">Model range</p><h2>How different growth assumptions change today’s estimate</h2></div><div class="future-model-range-host"></div>';
+        rangePanel.innerHTML='<div class="future-model-heading"><p class="eyebrow">Local market</p><h2>What comparable local sales suggest</h2></div><div class="future-model-range-host"></div>';
         home.insertAdjacentElement('afterend',rangePanel);
       }
       const host=$('.future-model-range-host',rangePanel);
