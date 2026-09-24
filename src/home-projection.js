@@ -315,11 +315,13 @@
     hpiRequestKey=key;
     hpiRequest=(async()=>{
       try{
-        const purchaseDate=`${purchaseMonth}-01`;
+        const [purchaseYear,purchaseMon]=purchaseMonth.split('-').map(Number);
+        const historyStartYear=Math.max(1995,(purchaseYear||new Date().getFullYear())-10);
+        const historyStart=`${historyStartYear}-${String(purchaseMon||1).padStart(2,'0')}-01`;
         const params=new URLSearchParams();
-        params.set('_pageSize','200');
+        params.set('_pageSize','400');
         params.set('_sort','refPeriodStart');
-        params.set('min-refPeriodStart',purchaseDate);
+        params.set('min-refPeriodStart',historyStart);
         params.set('_properties',`refMonth,${field}`);
         const url=`https://landregistry.data.gov.uk/data/ukhpi/region/${slug}.json?${params.toString()}`;
         const response=await fetch(url,{cache:'no-store',headers:{Accept:'application/json'}});
@@ -334,6 +336,19 @@
         const purchasePoint=items.reduce((best,item)=>monthDistance(item.month,purchaseMonth)<monthDistance(best?.month,purchaseMonth)?item:best,null);
         const latestPoint=items[items.length-1];
         if(!purchasePoint||!latestPoint||monthDistance(purchasePoint.month,purchaseMonth)>3) return cached||null;
+
+        const annualChanges=[];
+        for(let i=12;i<items.length;i+=1){
+          const prior=items[i-12], current=items[i];
+          if(!prior?.index||!current?.index) continue;
+          const change=(current.index/prior.index-1)*100;
+          if(Number.isFinite(change) && change>-40 && change<60) annualChanges.push(change);
+        }
+        annualChanges.sort((a,b)=>a-b);
+        const lowerAnnual=annualChanges.length?quantile(annualChanges,.25):null;
+        const medianAnnual=annualChanges.length?quantile(annualChanges,.5):null;
+        const upperAnnual=annualChanges.length?quantile(annualChanges,.75):null;
+
         const result={
           authority,
           propertyType:settings.propertyType,
@@ -342,6 +357,10 @@
           latestMonth:latestPoint.month,
           latestIndex:latestPoint.index,
           multiplier:latestPoint.index/purchasePoint.index,
+          lowerAnnual,
+          medianAnnual,
+          upperAnnual,
+          historyYears:Math.max(0,(new Date(latestPoint.month+'-01').getFullYear()-historyStartYear)),
           fetchedAt:new Date().toISOString()
         };
         cache[key]=result;
@@ -488,14 +507,27 @@
     const cachedBenchmark=readBenchmarkCache()[benchmarkKey];
     const hasBenchmark=applyLocalBenchmark(cachedBenchmark,estimatedToday);
     if(!hasBenchmark && validPurchase){
-      const lowModel=projectedValue(purchasePrice,settings.low,yearsOwned)+improvements;
-      const centreModel=projectedValue(purchasePrice,settings.trend,yearsOwned)+improvements;
-      const highModel=projectedValue(purchasePrice,settings.high,yearsOwned)+improvements;
       const centre=Math.max(0,estimatedToday);
-      const lowRatio=centreModel>0?Math.max(.65,Math.min(1,lowModel/centreModel)):.9;
-      const highRatio=centreModel>0?Math.min(1.45,Math.max(1,highModel/centreModel)):1.1;
-      const lowToday=centre*lowRatio;
-      const highToday=centre*highRatio;
+      let lowToday=0, highToday=0;
+      const hasLocalBands=hpiModel && Number.isFinite(hpiModel.lowerAnnual) && Number.isFinite(hpiModel.medianAnnual) && Number.isFinite(hpiModel.upperAnnual);
+      if(hpiAnchoredToday && hasLocalBands){
+        const baseCentre=Math.max(0,purchasePrice*Number(hpiModel.multiplier));
+        const medianBase=Math.max(.01,1+Number(hpiModel.medianAnnual)/100);
+        const lowBase=Math.max(.01,1+Number(hpiModel.lowerAnnual)/100);
+        const highBase=Math.max(.01,1+Number(hpiModel.upperAnnual)/100);
+        const lowFactor=Math.pow(lowBase/medianBase,yearsOwned);
+        const highFactor=Math.pow(highBase/medianBase,yearsOwned);
+        lowToday=Math.min(centre,baseCentre*lowFactor+improvements);
+        highToday=Math.max(centre,baseCentre*highFactor+improvements);
+      } else {
+        const lowModel=projectedValue(purchasePrice,settings.low,yearsOwned)+improvements;
+        const centreModel=projectedValue(purchasePrice,settings.trend,yearsOwned)+improvements;
+        const highModel=projectedValue(purchasePrice,settings.high,yearsOwned)+improvements;
+        const lowRatio=centreModel>0?Math.max(.65,Math.min(1,lowModel/centreModel)):.9;
+        const highRatio=centreModel>0?Math.min(1.45,Math.max(1,highModel/centreModel)):1.1;
+        lowToday=centre*lowRatio;
+        highToday=centre*highRatio;
+      }
       range.hidden=false;
       $('homeRangeLow').textContent=money(lowToday);
       $('homeRangeTrend').textContent=money(centre);
@@ -503,7 +535,11 @@
       $('homeProfileRangeNote').textContent=settings.postcode&&settings.propertyType
         ? hpiAnchoredToday?'HPI estimate centred here while local comparable sales refresh.':'Saved purchase-model range shown while local market data refreshes.'
         : 'Add postcode and property type in Setup & data to use local sold-price benchmarks.';
-      if($('homeProfileRangeSource')) $('homeProfileRangeSource').textContent=hpiAnchoredToday?`Centre matches today’s HPI estimate. Range width is provisional until local comparable sales are available.`:'Fallback range uses your saved low / centre / high growth assumptions.';
+      if($('homeProfileRangeSource')) $('homeProfileRangeSource').textContent=hpiAnchoredToday&&hasLocalBands
+        ? `Provisional range uses historical ${hpiModel.authority} ${hmlrPropertyTypeLabel(settings.propertyType).toLowerCase()} HPI growth bands (${hpiModel.lowerAnnual.toFixed(1)}%–${hpiModel.upperAnnual.toFixed(1)}% annual).`
+        : hpiAnchoredToday
+          ? 'Centre matches today’s HPI estimate. Range width is provisional until local comparable sales are available.'
+          : 'Fallback range uses your saved low / centre / high growth assumptions.';
     } else if(!hasBenchmark) {
       range.hidden=true;
     }
