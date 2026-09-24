@@ -3,6 +3,10 @@
   const STORAGE_KEY = 'mortgage-manager-home-projection-v4';
   const VALUE_HISTORY_KEY = 'mortgage-manager-home-value-history-v1';
   const MORTGAGE_HISTORY_KEY = 'mortgage-manager-mortgage-history-v1';
+  const LOCAL_BENCHMARK_KEY = 'mortgage-manager-local-benchmark-v1';
+  const ONLINE_MODE_KEY = 'mortgage-manager-online-mode-v1';
+  let benchmarkRequestKey='';
+  let benchmarkRequest=null;
   const defaults = { low: 1, trend: 2.5, high: 4, purchasePrice: '', purchaseMonth: '', postcode: '', localAuthority: '', localAuthorityCode: '', propertyType: '', bedrooms: '', improvements: '', recentValue: '' };
   let settings = { ...defaults };
 
@@ -105,6 +109,7 @@
       <div id="homeProfileRange" class="home-profile-range" hidden>
         <div class="home-profile-range-head"><div><span>Model range today</span><strong>Low · centre · high</strong></div><small id="homeProfileRangeNote">Based on your purchase data.</small></div>
         <div class="home-profile-range-values"><div><span>Low</span><strong id="homeRangeLow">—</strong></div><div class="centre"><span>Centre</span><strong id="homeRangeTrend">—</strong></div><div><span>High</span><strong id="homeRangeHigh">—</strong></div></div>
+        <small id="homeProfileRangeSource" class="home-profile-range-source"></small>
       </div>
 
       <p class="projection-plain-note" id="projectionPlainNote">Add purchase details to anchor the estimate to something you know.</p>
@@ -165,6 +170,153 @@
     });
   }
 
+  function normalisePostcode(value){
+    const compact=String(value||'').toUpperCase().replace(/\s+/g,'');
+    if(compact.length<5) return '';
+    return compact.slice(0,-3)+' '+compact.slice(-3);
+  }
+
+  function outwardPostcode(value){
+    return normalisePostcode(value).split(' ')[0]||'';
+  }
+
+  function hmlrPropertyTypeLabel(value){
+    return ({detached:'Detached','semi-detached':'Semi-Detached',terraced:'Terraced',flat:'Flat/Maisonette'})[value]||'';
+  }
+
+  function readBenchmarkCache(){
+    try{
+      const parsed=JSON.parse(localStorage.getItem(LOCAL_BENCHMARK_KEY)||'{}');
+      return parsed && typeof parsed==='object' ? parsed : {};
+    }catch(_){ return {}; }
+  }
+
+  function writeBenchmarkCache(cache){
+    try{ localStorage.setItem(LOCAL_BENCHMARK_KEY,JSON.stringify(cache)); }catch(_){}
+  }
+
+  function quantile(sorted,q){
+    if(!sorted.length) return 0;
+    if(sorted.length===1) return sorted[0];
+    const pos=(sorted.length-1)*q, base=Math.floor(pos), rest=pos-base;
+    return sorted[base+1]!==undefined ? sorted[base]+rest*(sorted[base+1]-sorted[base]) : sorted[base];
+  }
+
+  function extractHmlrItems(data){
+    const raw=data?.result?.items || data?.items || [];
+    return Array.isArray(raw)?raw:[];
+  }
+
+  function extractSale(item){
+    const price=Number(item?.pricePaid?._value ?? item?.pricePaid ?? 0);
+    const date=String(item?.transactionDate?._value ?? item?.transactionDate ?? '');
+    const typeRaw=item?.propertyType?.label ?? item?.propertyType?._label ?? item?.propertyType ?? '';
+    const type=typeof typeRaw==='string' ? typeRaw : String(typeRaw?.value||'');
+    const postcode=String(item?.propertyAddress?.postcode ?? item?.propertyAddress?.postcode?._value ?? '');
+    if(!Number.isFinite(price)||price<=0||!date) return null;
+    return {price,date,type,postcode};
+  }
+
+  async function fetchHmlrSales(postcode,propertyType){
+    const params=new URLSearchParams();
+    params.set('propertyAddress.postcode',postcode);
+    if(propertyType) params.set('propertyType.label',propertyType);
+    params.set('_pageSize','100');
+    params.set('_sort','-transactionDate');
+    const url='https://landregistry.data.gov.uk/data/ppi/transaction-record.json?'+params.toString();
+    const response=await fetch(url,{cache:'no-store',headers:{Accept:'application/json'}});
+    if(!response.ok) throw new Error('Land Registry lookup failed');
+    const data=await response.json();
+    return extractHmlrItems(data).map(extractSale).filter(Boolean);
+  }
+
+  function benchmarkFromSales(sales,areaLabel,propertyTypeLabel,bedrooms){
+    const cutoff=new Date();
+    cutoff.setFullYear(cutoff.getFullYear()-5);
+    let recent=sales.filter((sale)=>{
+      const d=new Date(sale.date);
+      return Number.isFinite(d.getTime()) && d>=cutoff;
+    });
+    if(recent.length<3) recent=sales;
+    const prices=recent.map((sale)=>sale.price).filter((v)=>Number.isFinite(v)&&v>0).sort((a,b)=>a-b);
+    if(!prices.length) return null;
+    const dates=recent.map((sale)=>sale.date).filter(Boolean).sort();
+    return {
+      low:Math.round(quantile(prices,.25)),
+      centre:Math.round(quantile(prices,.5)),
+      high:Math.round(quantile(prices,.75)),
+      count:prices.length,
+      areaLabel,
+      propertyTypeLabel,
+      bedrooms:String(bedrooms||''),
+      latestSale:dates[dates.length-1]||'',
+      fetchedAt:new Date().toISOString(),
+      source:'HM Land Registry Price Paid Data'
+    };
+  }
+
+  function formatSaleMonth(value){
+    if(!value) return '';
+    const d=new Date(value);
+    if(!Number.isFinite(d.getTime())) return '';
+    return new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(d);
+  }
+
+  function applyLocalBenchmark(benchmark){
+    const range=$('homeProfileRange');
+    const note=$('homeProfileRangeNote');
+    const source=$('homeProfileRangeSource');
+    if(!range||!benchmark) return false;
+    range.hidden=false;
+    $('homeRangeLow').textContent=money(benchmark.low);
+    $('homeRangeTrend').textContent=money(benchmark.centre);
+    $('homeRangeHigh').textContent=money(benchmark.high);
+    const typeText=benchmark.propertyTypeLabel ? benchmark.propertyTypeLabel.toLowerCase() : 'matching';
+    const bedText=benchmark.bedrooms ? ` · ${benchmark.bedrooms==='6'?'6+':benchmark.bedrooms} bed profile saved` : '';
+    const latest=benchmark.latestSale ? ` · latest ${formatSaleMonth(benchmark.latestSale)}` : '';
+    if(note) note.textContent=`${benchmark.count} ${typeText} sale${benchmark.count===1?'':'s'} in ${benchmark.areaLabel}${latest}${bedText}.`;
+    if(source) source.textContent='Bedrooms are not recorded in Land Registry Price Paid Data. Contains HM Land Registry data © Crown copyright and database right 2026. Licensed under OGL v3.0.';
+    return true;
+  }
+
+  async function refreshLocalBenchmark(){
+    const postcode=normalisePostcode(settings.postcode);
+    const propertyTypeLabel=hmlrPropertyTypeLabel(settings.propertyType);
+    if(!postcode||!propertyTypeLabel) return null;
+    const key=`${postcode}|${settings.propertyType}`;
+    const cache=readBenchmarkCache();
+    const cached=cache[key];
+    if(cached) applyLocalBenchmark(cached);
+
+    const online=(()=>{ try{return localStorage.getItem(ONLINE_MODE_KEY)==='online';}catch(_){return false;} })();
+    if(!online) return cached||null;
+    if(benchmarkRequestKey===key && benchmarkRequest) return benchmarkRequest;
+
+    benchmarkRequestKey=key;
+    benchmarkRequest=(async()=>{
+      try{
+        let sales=await fetchHmlrSales(postcode,propertyTypeLabel);
+        let areaLabel=postcode;
+        if(sales.length<5){
+          const outward=outwardPostcode(postcode);
+          const wider=outward && outward!==postcode ? await fetchHmlrSales(outward,propertyTypeLabel) : [];
+          if(wider.length>sales.length){ sales=wider; areaLabel=outward; }
+        }
+        const benchmark=benchmarkFromSales(sales,areaLabel,propertyTypeLabel,settings.bedrooms);
+        if(!benchmark) return cached||null;
+        cache[key]=benchmark;
+        writeBenchmarkCache(cache);
+        applyLocalBenchmark(benchmark);
+        return benchmark;
+      }catch(_){
+        return cached||null;
+      }finally{
+        benchmarkRequest=null;
+      }
+    })();
+    return benchmarkRequest;
+  }
+
   function renderValueHistory(){
     const list=$('homeValueHistoryList');
     const summary=$('homeValueHistorySummary');
@@ -213,7 +365,10 @@
     $('projectionPurchaseNote').textContent=validPurchase?'Used as the historical anchor for the estimate.':'Purchase price and date give the estimate a factual starting point.';
 
     const range=$('homeProfileRange');
-    if(validPurchase){
+    const benchmarkKey=`${normalisePostcode(settings.postcode)}|${settings.propertyType||''}`;
+    const cachedBenchmark=readBenchmarkCache()[benchmarkKey];
+    const hasBenchmark=applyLocalBenchmark(cachedBenchmark);
+    if(!hasBenchmark && validPurchase){
       const lowToday=projectedValue(purchasePrice,settings.low,yearsOwned)+improvements;
       const trendToday=projectedValue(purchasePrice,settings.trend,yearsOwned)+improvements;
       const highToday=projectedValue(purchasePrice,settings.high,yearsOwned)+improvements;
@@ -221,12 +376,14 @@
       $('homeRangeLow').textContent=money(lowToday);
       $('homeRangeTrend').textContent=money(trendToday);
       $('homeRangeHigh').textContent=money(highToday);
-      $('homeProfileRangeNote').textContent=recentValue
-        ? `Purchase-model range; your ${money(recentValue)} recent estimate overrides the centre value used elsewhere.`
-        : `Based on ${settings.low.toFixed(1)}%, ${settings.trend.toFixed(1)}% and ${settings.high.toFixed(1)}% annual growth from purchase.`;
-    } else {
+      $('homeProfileRangeNote').textContent=settings.postcode&&settings.propertyType
+        ? 'Saved purchase-model range shown while local sold-price data refreshes.'
+        : 'Add postcode and property type in Setup & data to use local sold-price benchmarks.';
+      if($('homeProfileRangeSource')) $('homeProfileRangeSource').textContent='Fallback range uses your saved low / centre / high growth assumptions.';
+    } else if(!hasBenchmark) {
       range.hidden=true;
     }
+    refreshLocalBenchmark();
 
     if(!estimatedToday){
       $('projectionCurrentEstimate').textContent='—'; $('projectionCurrentNote').textContent='Add purchase details, a recent estimate, or a dashboard property value.';
@@ -264,6 +421,7 @@
     if(!detail || typeof detail!=='object') return;
     settings={...settings,...detail};
     saveSettings();
+    benchmarkRequestKey=''; benchmarkRequest=null;
     requestAnimationFrame(render);
   });
   render();
