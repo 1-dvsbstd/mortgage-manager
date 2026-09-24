@@ -35,7 +35,7 @@
     const rows=loadValueHistory();
     if(!rows.length){summary.textContent='No saved checkpoints yet';list.innerHTML='<p class="setup-empty">Save the current dashboard property value to start a simple monthly history.</p>';return;}
     const first=rows[0],latest=rows[rows.length-1],change=latest.value-first.value;
-    summary.textContent=`${rows.length} checkpoint${rows.length===1?'':'s'} · latest ${money(latest.value)}`;
+    summary.textContent=`${rows.length} checkpoint${rows.length===1?'':'s'}`;
     list.innerHTML=rows.slice(-8).reverse().map((row)=>`<div class="setup-history-row"><span>${monthLabel(row.month)}</span><strong>${money(row.value)}</strong><small>${row.source||'Saved value'}</small></div>`).join('')+(rows.length>1?`<div class="setup-history-total"><span>Since ${monthLabel(first.month)}</span><strong>${change>=0?'+':'−'}${money(Math.abs(change))}</strong></div>`:'');
   }
 
