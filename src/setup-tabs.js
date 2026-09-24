@@ -104,9 +104,12 @@
     const futureIntro=document.createElement('div'); futureIntro.className='setup-pane-intro'; futureIntro.innerHTML='<p class="eyebrow">Future assumptions</p><h3>Property and next-home planning</h3><p>Inputs used only for longer-term projections and planning.</p>'; future.appendChild(futureIntro);
 
     const sections=[...modal.querySelectorAll('.personal-section')];
+    const mortgageHistory=sections.find((section)=>section.classList.contains('mortgage-history-section'));
     const monthly=sections.find((section)=>$('h3',section)?.textContent.trim()==='Monthly history');
     const backup=sections.find((section)=>$('h3',section)?.textContent.trim()==='Backup');
-    if(monthly) current.appendChild(monthly); if(backup) current.appendChild(backup);
+    if(mortgageHistory) current.appendChild(mortgageHistory);
+    if(monthly) current.appendChild(monthly);
+    if(backup) current.appendChild(backup);
 
     const profile=$('.personal-home-profile-section',modal); if(profile) future.appendChild(profile);
     addBudgetSection(future,modal); addValueHistorySection(future);
