@@ -30,8 +30,8 @@
 
     const eyebrow = $('.future-model-heading .eyebrow', panel);
     const title = $('.future-model-heading h2', panel);
-    if(eyebrow) eyebrow.textContent = 'Estimate range';
-    if(title) title.textContent = 'A sensible range for today’s home value';
+    if(eyebrow) eyebrow.textContent = 'Property forecast';
+    if(title) title.textContent = 'Where your home value could be heading';
 
     if(range.dataset.rangeRefined !== 'true'){
       const low = $('#homeRangeLow', range)?.textContent || '—';
