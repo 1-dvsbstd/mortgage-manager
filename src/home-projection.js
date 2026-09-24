@@ -253,12 +253,12 @@
   loadSettings();
   if(window.MortgageStore?.subscribe) window.MortgageStore.subscribe(()=>requestAnimationFrame(render));
   document.addEventListener('mortgage-history-updated',()=>{ syncPurchaseFromMortgageHistory(); requestAnimationFrame(render); });
+  document.addEventListener('home-profile-settings-updated',(event)=>{
+    const detail=event.detail;
+    if(!detail || typeof detail!=='object') return;
+    settings={...settings,...detail};
+    saveSettings();
+    requestAnimationFrame(render);
+  });
   render();
 })();
-document.addEventListener('home-profile-settings-updated',(event)=>{
-  const detail=event.detail;
-  if(!detail || typeof detail!=='object') return;
-  settings={...settings,...detail};
-  saveSettings();
-  requestAnimationFrame(render);
-});
