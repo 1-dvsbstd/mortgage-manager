@@ -242,3 +242,61 @@
 @media(max-width:700px){
   .app-view-future .property-cost-grid.property-cost-grid-two{grid-template-columns:1fr!important}
 }
+
+/* Future page — consistent section typography and card hierarchy. */
+.app-view-future .projection-heading h2,
+.app-view-future .future-model-heading h2,
+.app-view-future #nextHomePlanner .next-home-heading h2,
+.app-view-future .future-wait-heading h2,
+.app-view-future #propertyCostComparison .deep-heading h2{
+  margin-top:3px!important;
+  font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
+  font-size:19px!important;
+  line-height:1.15!important;
+  font-weight:500!important;
+  letter-spacing:-.015em!important;
+  color:var(--text)!important;
+}
+.app-view-future #nextHomePlanner .next-home-results{
+  gap:12px!important;
+  margin-top:16px!important;
+}
+.app-view-future #nextHomePlanner .next-home-results>div{
+  min-height:104px!important;
+  padding:16px 17px!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:17px!important;
+  background:#f2ece3!important;
+  box-shadow:none!important;
+}
+.app-view-future #nextHomePlanner .next-home-results>div.primary{
+  background:#efe4d7!important;
+  border-color:rgba(197,138,86,.22)!important;
+}
+.app-view-future #nextHomePlanner .next-home-results span,
+.app-view-future #nextHomePlanner .next-home-results small,
+.app-view-future #propertyCostComparison .property-cost-card span,
+.app-view-future #propertyCostComparison .property-cost-card small{
+  color:var(--muted)!important;
+  font-size:10px!important;
+  line-height:1.45!important;
+}
+.app-view-future #nextHomePlanner .next-home-results strong,
+.app-view-future #propertyCostComparison .property-cost-card strong{
+  display:block!important;
+  margin-top:5px!important;
+  color:var(--text)!important;
+  font-size:23px!important;
+  line-height:1.05!important;
+  letter-spacing:-.02em!important;
+}
+.app-view-future #nextHomePlanner .next-home-results small,
+.app-view-future #propertyCostComparison .property-cost-card small{
+  margin-top:6px!important;
+}
+.app-view-future #nextHomePlanner .next-home-note{
+  margin-top:11px!important;
+  color:var(--muted)!important;
+  font-size:9.5px!important;
+  line-height:1.45!important;
+}
