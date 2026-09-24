@@ -309,7 +309,7 @@
       if(!rangePanel){
         rangePanel=document.createElement('section');
         rangePanel.id='futureModelRange'; rangePanel.className='panel future-model-range-panel';
-        rangePanel.innerHTML='<div class="future-model-heading"><p class="eyebrow">Valuation range</p><h2>Your estimate, checked against the local market</h2></div><div class="future-model-range-host"></div>';
+        rangePanel.innerHTML='<div class="future-model-heading"><p class="eyebrow">Property forecast</p><h2>Where your home value could be heading</h2><p class="future-model-subtitle">Based on local HPI history</p></div><div class="future-model-range-host"></div>';
         home.insertAdjacentElement('afterend',rangePanel);
       }
       const host=$('.future-model-range-host',rangePanel);
