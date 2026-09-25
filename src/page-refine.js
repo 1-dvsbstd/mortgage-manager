@@ -196,12 +196,12 @@
     grid.innerHTML=rates.map(({rate,label})=>{
       const scenarioPayment=paymentFor(position.balance,rate,position.remainingMonths);
       const diff=scenarioPayment-position.scheduledPayment;
-      const note=Math.abs(diff)<1?'About the same as your scheduled payment':`${money(Math.abs(diff))}/mo ${diff>0?'more':'less'} than your scheduled payment`;
+      const note=Math.abs(diff)<1?'About the same':`${money(Math.abs(diff))}/mo ${diff>0?'more':'less'}`;
       const current=label==='Current rate';
-      return `<div class="deal-planner-rate ${current?'is-current-rate':''}"><span>${rate.toFixed(2)}% · ${label}</span><strong>${money(scenarioPayment)}<small>/mo</small></strong><em>${note} · without overpayment</em></div>`;
+      return `<div class="deal-planner-rate ${current?'is-current-rate':''}"><span>${rate.toFixed(2)}% · ${label}</span><strong>${money(scenarioPayment)}<small>/mo</small></strong><em>${note}</em></div>`;
     }).join('');
     const note=$('.deal-planner-note');
-    if(note) note.textContent='Payments shown exclude overpayments. They use the projected balance and remaining term on your scheduled-payment path. The centre values use your current rate and the calculated 2-year / 5-year market estimates; outer values are simple stress tests.';
+    if(note) note.textContent='Payments exclude overpayments and use your projected deal-end balance and remaining term. Centre rates use your current rate and market benchmarks; outer rates are simple stress tests.';
   }
 
   function refineUpcoming(){
