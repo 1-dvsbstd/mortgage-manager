@@ -139,9 +139,6 @@ body{
 .app-view-future h2,.app-view-future h3,.app-view-future .home-profile-heading h2,.app-view-future .next-home-heading h2,.app-view-future .cost-heading h2{color:var(--text)!important}
 .app-view-future .home-profile-range>div,.app-view-future .next-home-summary-card,.app-view-future .next-home-timeline-row,.app-view-future .property-cost-card,.app-view-future .future-model-range-panel .model-range-summary,.app-view-future .future-wait-host{background:#f3ece3!important;border-color:var(--border-soft)!important;color:var(--text)!important}
 .app-view-future .home-profile-range strong,.app-view-future .next-home-summary-card strong,.app-view-future .next-home-timeline-row strong,.app-view-future .property-cost-card strong{color:var(--text)!important}
-.future-assumption-controls button,.future-assumption-controls label{background:var(--surface-control)!important;border-color:var(--border)!important;color:var(--text)!important}
-.future-assumption-controls button:hover{background:#f4e6d7!important;border-color:rgba(200,142,92,.36)!important}
-.future-assumption-controls button.active{background:var(--ink-active)!important;color:var(--ink-on-active)!important;border-color:var(--ink-active)!important}
 
 /* Inputs / setup / modal surfaces */
 input,select,textarea{color:var(--text)}
