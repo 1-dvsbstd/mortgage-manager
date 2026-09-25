@@ -38,7 +38,8 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Consolidate labels, eyebrows and metadata
 - [ ] Consolidate form inputs and select controls
 - [ ] Consolidate modal/backdrop/close controls
-- [ ] Remove obsolete duplicate component rules
+- [x] Start removing obsolete duplicate component rules
+- [ ] Continue duplicate-rule removal component by component
 
 ## 4. Current
 - [ ] Hero layout and typography
@@ -97,7 +98,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Map selectors in V15 patch files
 - [ ] Move surviving rules to authoritative component/page files
 - [ ] Remove redundant `!important` declarations where safe
-- [ ] Remove superseded V15 stylesheet files
+- [ ] Remove superseded V15 stylesheet files (started: retired v15.10 removed)
 - [ ] Remove superseded V15 script files where safe
 - [ ] Remove dead selectors/styles
 - [ ] Reduce final stylesheet count to a clear logical set
