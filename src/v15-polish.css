@@ -1,21 +1,5 @@
 /* V0.15.2 — coherent light palette, tighter sizing, current journey */
 
-:root{
-  --bg:#f4f1eb;
-  --surface:#fbf8f3;
-  --surface-soft:#f2ece3;
-  --surface-muted:#ece4d9;
-  --text:#202833;
-  --muted:#70767c;
-  --muted-2:#92969a;
-  --border:rgba(64,54,45,.14);
-  --border-soft:rgba(64,54,45,.09);
-  --accent:#c58a56;
-  --accent-strong:#9b663b;
-  --equity:#6fae9d;
-  --debt:#82909a;
-}
-
 /* Make the light visual system decisively override legacy dark styles. */
 html,body{background:var(--bg)!important;color:var(--text)!important}
 .app-view,.app-view-content,.upcoming-workspace,.upcoming-sections{background:transparent!important;color:var(--text)!important}
