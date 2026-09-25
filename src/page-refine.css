@@ -273,6 +273,8 @@
   line-height:1.35!important;
 }
 @media(max-width:700px){
+  .app-view-future #futureWaitPlanner{padding:18px!important}
+  .app-view-future #futureWaitPlanner .next-home-timeline-row>strong{font-size:22px!important}
   .app-view-future #futureModelRange .home-forecast-grid{grid-template-columns:1fr!important}
   .app-view-future #futureModelRange .home-forecast-card{min-height:0!important}
 }
@@ -404,6 +406,44 @@
   text-align:center!important;
 }
 
+/* Looking Ahead section shell — retained unique presentation from the earlier implementation. */
+.app-view-future #futureWaitPlanner{
+  padding:24px!important;
+}
+.app-view-future #futureWaitPlanner .future-wait-heading{
+  margin-bottom:16px!important;
+}
+.app-view-future #futureWaitPlanner .future-wait-heading h2{
+  margin-top:3px!important;
+  color:var(--text)!important;
+  font-size:19px!important;
+}
+.app-view-future #futureWaitPlanner .future-wait-heading .eyebrow{
+  color:var(--accent-strong)!important;
+}
+.app-view-future #futureWaitPlanner .future-wait-host,
+.app-view-future #futureWaitPlanner .next-home-timeline{
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline{
+  overflow:visible!important;
+}
+.app-view-future #futureWaitPlanner .next-home-trend-note{
+  display:block!important;
+  margin-top:12px!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  color:var(--muted)!important;
+  font-size:9.5px!important;
+  line-height:1.45!important;
+}
+
 /* Looking ahead becomes one continuous milestone strip, not three cards. */
 .app-view-future #futureWaitPlanner .next-home-timeline-rows{
   display:grid!important;
@@ -441,12 +481,21 @@
 .app-view-future #futureWaitPlanner .next-home-timeline-row>strong{
   display:block!important;
   margin:0 0 11px!important;
+  color:var(--text)!important;
   font-size:25px!important;
+  line-height:1!important;
+  letter-spacing:-.02em!important;
 }
 .app-view-future #futureWaitPlanner .next-home-timeline-row>small{
   display:block!important;
   margin-top:3px!important;
+  color:var(--muted)!important;
   font-size:9px!important;
+  line-height:1.45!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row>small b{
+  color:var(--text)!important;
+  font-weight:750!important;
 }
 .app-view-future #futureWaitPlanner .next-home-timeline-row:nth-child(3)>strong{
   color:var(--accent-strong)!important;
