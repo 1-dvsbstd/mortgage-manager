@@ -32,7 +32,7 @@ body{
 .app-section-nav-top{background:rgba(255,255,255,.44)!important;border-color:var(--border-soft)!important;box-shadow:0 8px 26px rgba(67,52,38,.05)!important}
 .app-section-nav button{background:transparent!important;border-color:transparent!important;color:var(--muted)!important}
 .app-section-nav button:hover{background:rgba(200,142,92,.08)!important;color:var(--text)!important}
-.app-section-nav button.is-active{background:#252d36!important;color:#fffaf3!important;border-color:#252d36!important;box-shadow:0 8px 22px rgba(32,39,46,.13)!important}
+.app-section-nav button.is-active{background:var(--ink-active)!important;color:var(--ink-on-active)!important;border-color:var(--ink-active)!important;box-shadow:0 8px 22px rgba(32,39,46,.13)!important}
 
 /* CURRENT — ownership-first editorial hero */
 .app-view-current .hero-panel.current-hero-condensed{
@@ -70,12 +70,12 @@ body{
 .v15-stat span{display:block;color:var(--muted)!important;font-size:10px;line-height:1.35}
 .v15-stat strong{display:block;margin-top:5px;font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;font-size:22px;font-weight:600;letter-spacing:-.025em;color:var(--text)!important}
 .v15-stat small{display:block;margin-top:4px;color:var(--muted-2)!important;font-size:9px;line-height:1.35}
-.v15-stat.is-positive strong,.v15-stat.is-positive small{color:#477e70!important}
+.v15-stat.is-positive strong,.v15-stat.is-positive small{color:var(--positive)!important}
 .v15-stat.is-warm strong{color:var(--accent-strong)!important}
 
 .v15-action-card{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0;padding:18px 20px;border:1px solid rgba(200,142,92,.24);border-radius:18px;background:linear-gradient(90deg,#fff8ef,#f1e2d2);box-shadow:0 12px 34px rgba(85,58,36,.055)}
 .v15-action-copy{display:flex;align-items:center;gap:14px;min-width:0}
-.v15-action-icon{display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border-radius:12px;background:#252d36;color:#f4bd88;font-size:19px}
+.v15-action-icon{display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border-radius:12px;background:var(--ink-active);color:#f4bd88;font-size:19px}
 .v15-action-copy span{display:block;color:var(--muted)!important;font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:800}
 .v15-action-copy strong{display:block;margin-top:3px;font-size:18px;letter-spacing:-.02em;color:var(--text)!important}
 .v15-action-card button{appearance:none;border:0;background:transparent;color:var(--accent-strong)!important;font:inherit;font-weight:800;cursor:pointer;white-space:nowrap}
@@ -100,10 +100,10 @@ body{
 .trajectory-current-saving>strong{display:block;margin-top:3px;font-size:17px;color:var(--text)!important}
 .trajectory-current-saving>small{display:block;margin-top:3px;color:var(--accent-strong)!important;font-size:10px;line-height:1.35}
 .trajectory-overpay-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.app-view-current .trajectory-overpay-row button,.app-view-current .trajectory-custom-overpay{min-height:40px;border:1px solid var(--border)!important;border-radius:12px!important;background:#fffaf4!important;color:var(--text)!important;font-weight:750;box-shadow:0 2px 8px rgba(64,50,38,.03)!important}
+.app-view-current .trajectory-overpay-row button,.app-view-current .trajectory-custom-overpay{min-height:40px;border:1px solid var(--border)!important;border-radius:12px!important;background:var(--surface-control)!important;color:var(--text)!important;font-weight:750;box-shadow:0 2px 8px rgba(64,50,38,.03)!important}
 .trajectory-overpay-row button{padding:8px 14px;cursor:pointer}
 .app-view-current .trajectory-overpay-row button:hover{background:#f4e6d7!important;border-color:rgba(200,142,92,.36)!important}
-.app-view-current .trajectory-overpay-row button.active{background:#252d36!important;color:#fffaf3!important;border-color:#252d36!important}
+.app-view-current .trajectory-overpay-row button.active{background:var(--ink-active)!important;color:var(--ink-on-active)!important;border-color:var(--ink-active)!important}
 .trajectory-custom-overpay{display:flex;align-items:center;gap:5px;padding:8px 12px;color:var(--muted)!important}
 .trajectory-custom-overpay input{width:74px;border:0;outline:0;background:transparent!important;color:var(--text)!important;font:inherit;font-weight:750}
 .app-view-current .trajectory-with-what-if>.chart-wrap{margin:18px 24px 0!important;width:calc(100% - 48px)!important;padding:0!important;border:0!important;border-radius:14px!important;background:transparent!important;box-shadow:none!important;overflow:hidden!important}
@@ -140,19 +140,19 @@ body{
 
 /* FUTURE */
 .app-view-future .future-overpayment-assumption,.app-view-future .future-model-range-panel,.app-view-future .future-wait-planner,.app-view-future .temporal-feature-home-projection,.app-view-future .temporal-feature-next-home,.app-view-future .temporal-feature-cost-comparison{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important;box-shadow:0 16px 44px rgba(62,49,38,.065)!important}
-.app-view-future .future-overpayment-assumption{background:#efe4d7!important;box-shadow:none!important}
+.app-view-future .future-overpayment-assumption{background:var(--surface-warm)!important;box-shadow:none!important}
 .future-assumption-copy strong{color:var(--accent-strong)!important}
 .app-view-future h2,.app-view-future h3,.app-view-future .home-profile-heading h2,.app-view-future .next-home-heading h2,.app-view-future .cost-heading h2{color:var(--text)!important}
 .app-view-future .home-profile-range>div,.app-view-future .next-home-summary-card,.app-view-future .next-home-timeline-row,.app-view-future .property-cost-card,.app-view-future .future-model-range-panel .model-range-summary,.app-view-future .future-wait-host{background:#f3ece3!important;border-color:var(--border-soft)!important;color:var(--text)!important}
 .app-view-future .home-profile-range strong,.app-view-future .next-home-summary-card strong,.app-view-future .next-home-timeline-row strong,.app-view-future .property-cost-card strong{color:var(--text)!important}
-.future-assumption-controls button,.future-assumption-controls label{background:#fffaf4!important;border-color:var(--border)!important;color:var(--text)!important}
+.future-assumption-controls button,.future-assumption-controls label{background:var(--surface-control)!important;border-color:var(--border)!important;color:var(--text)!important}
 .future-assumption-controls button:hover{background:#f4e6d7!important;border-color:rgba(200,142,92,.36)!important}
-.future-assumption-controls button.active{background:#252d36!important;color:#fffaf3!important;border-color:#252d36!important}
+.future-assumption-controls button.active{background:var(--ink-active)!important;color:var(--ink-on-active)!important;border-color:var(--ink-active)!important}
 
 /* Inputs / setup / modal surfaces */
 input,select,textarea{color:var(--text)}
 .mortgage-details-editor .inputs label,.personal-modal,.projection-controls label,.next-home-settings label{background:#f7f2eb!important;border-color:var(--border)!important;color:var(--text)!important}
-.mortgage-details-editor .inputs input,.personal-modal input,.projection-controls input,.next-home-settings input{background:#fffdf9!important;border-color:var(--border)!important;color:var(--text)!important}
+.mortgage-details-editor .inputs input,.personal-modal input,.projection-controls input,.next-home-settings input{background:var(--surface-input)!important;border-color:var(--border)!important;color:var(--text)!important}
 .card-backdrop,.personal-backdrop{background:rgba(31,34,36,.34)!important;backdrop-filter:blur(10px)!important}
 .footer{color:#85807a!important}
 
@@ -168,7 +168,7 @@ input,select,textarea{color:var(--text)}
 @media(max-width:700px){
   body{background:#f4f1eb!important}
   .app-section-nav-bottom{background:rgba(251,248,243,.95)!important;border-color:var(--border)!important;box-shadow:0 18px 46px rgba(66,52,39,.16)!important}
-  .app-section-nav-bottom button.is-active{background:#252d36!important;color:#fff!important}
+  .app-section-nav-bottom button.is-active{background:var(--ink-active)!important;color:#fff!important}
   .current-hero-condensed .hero-main{padding:24px 20px 22px!important}
   .v15-home-copy h1{font-size:42px}
   .v15-home-visual{min-height:220px}
