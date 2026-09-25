@@ -3,8 +3,76 @@
 /* The What-if controls already do this job; remove the duplicate recommendation row. */
 .app-view-current .v15-action-card{display:none!important}
 
+/* Current trajectory controls — authoritative consolidated owner.
+   Values match the pre-consolidation computed appearance. */
+.app-view-current .trajectory-overpay-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+.app-view-current .trajectory-overpay-row button{
+  min-height:36px!important;
+  padding:7px 12px!important;
+  border:1px solid var(--border)!important;
+  border-radius:10px!important;
+  background:var(--surface-control)!important;
+  color:var(--text)!important;
+  box-shadow:none!important;
+  font-weight:750!important;
+  cursor:pointer;
+}
+.app-view-current .trajectory-overpay-row button:hover{
+  background:#f4e6d7!important;
+  border-color:rgba(200,142,92,.36)!important;
+}
+.app-view-current .trajectory-overpay-row button.active{
+  background:var(--ink-active)!important;
+  color:var(--ink-on-active)!important;
+  border-color:var(--ink-active)!important;
+}
+.app-view-current .trajectory-custom-overpay{
+  box-sizing:border-box!important;
+  min-height:40px!important;
+  height:40px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  padding:8px 14px!important;
+  border:1px solid var(--border)!important;
+  border-radius:12px!important;
+  background:var(--surface-control)!important;
+  color:var(--text)!important;
+  box-shadow:0 2px 8px rgba(64,50,38,.03)!important;
+  font-size:12px!important;
+  font-weight:750!important;
+  line-height:1!important;
+}
+.app-view-current .trajectory-custom-overpay input{
+  width:66px!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  outline:0!important;
+  background:transparent!important;
+  color:var(--text)!important;
+  font:inherit!important;
+  font-weight:750!important;
+  line-height:1!important;
+}
+.app-view-current .trajectory-with-what-if>.chart-wrap{
+  margin:18px 24px 0!important;
+  width:calc(100% - 48px)!important;
+  padding:0!important;
+  border:1px solid var(--border)!important;
+  border-radius:14px!important;
+  background:#f3ede5!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45)!important;
+  overflow:hidden!important;
+}
+
 /* Custom amount is a chip, not a form block. */
-.app-view-current .trajectory-custom-overpay,
 .app-view-current .total-custom-chip,
 .app-view-future .future-assumption-controls label{
   box-sizing:border-box!important;
@@ -23,7 +91,6 @@
   font-weight:750!important;
   line-height:1!important;
 }
-.app-view-current .trajectory-custom-overpay input,
 .app-view-current .total-custom-chip input,
 .app-view-future .future-assumption-controls label input{
   width:66px!important;
