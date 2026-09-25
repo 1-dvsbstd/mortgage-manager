@@ -1,37 +1,37 @@
 /* Mortgage Manager design tokens
    Authoritative visual primitives for the consolidation branch.
-   Values intentionally match the current V15 light theme first; visual refresh
-   comes only after the existing UI has been consolidated. */
+   These values match the effective current light theme before visual refresh. */
 :root {
   /* Core palette */
   --bg: #f4f1eb;
   --surface: #fbf8f3;
-  --surface-soft: #f2ebe2;
+  --surface-soft: #f2ece3;
+  --surface-muted: #ebe2d6;
   --surface-raised: #e9dfd3;
-  --text: #1c2430;
-  --muted: #6d7278;
-  --muted-2: #8a8d91;
-  --border: rgba(68, 58, 48, .13);
-  --border-soft: rgba(68, 58, 48, .09);
+  --text: #202833;
+  --muted: #70767c;
+  --muted-2: #92969a;
+  --border: rgba(64, 54, 45, .14);
+  --border-soft: rgba(64, 54, 45, .09);
 
   /* Accent / semantic palette */
-  --accent: #c88e5c;
-  --accent-strong: #9d6639;
+  --accent: #c58a56;
+  --accent-strong: #9b663b;
   --accent-soft: #ead2bc;
   --warm: #b98a5c;
-  --debt: #7e8b95;
-  --equity: #6fae9d;
+  --debt: #8a949c;
+  --equity: #78978e;
   --property: #c9b28d;
   --upcoming: #d2a05b;
   --scheme: #b7aa98;
 
   /* Shape */
-  --radius-card: 24px;
+  --radius-card: 26px;
   --radius-tile: 14px;
   --radius-control: 12px;
   --radius-pill: 999px;
 
-  /* Spacing primitives — introduced now, adopted component-by-component */
+  /* Spacing */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -39,12 +39,14 @@
   --space-5: 20px;
   --space-6: 24px;
   --space-8: 32px;
+  --space-page: 24px;
+  --space-card: 26px;
 
   /* Elevation */
   --shadow-card: 0 18px 52px rgba(64, 50, 38, .08);
   --shadow-soft: 0 16px 44px rgba(62, 49, 38, .065);
 
-  /* Typography families */
+  /* Typography */
   --font-ui: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-display: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
 }
