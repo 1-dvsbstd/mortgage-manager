@@ -834,3 +834,38 @@ body .personal-modal #methodologySection>summary::before{
   content:none!important;
   display:none!important;
 }
+
+/* Upcoming — market data is supporting metadata, not a second projection panel. */
+body .app-view-upcoming .upcoming-rates .live-rate-choices{
+  margin:10px 0 0!important;
+  padding:10px 0 0!important;
+  border:0!important;
+  border-top:1px solid rgba(68,58,48,.09)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body .app-view-upcoming .upcoming-rates .live-rate-meta{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  color:var(--muted)!important;
+  font-size:9.5px!important;
+  line-height:1.35!important;
+}
+body .app-view-upcoming .upcoming-rates .live-rate-meta span{
+  font-weight:600!important;
+}
+body .app-view-upcoming .upcoming-rates .live-rate-meta strong{
+  color:var(--muted)!important;
+  font-size:9.5px!important;
+  font-weight:500!important;
+}
+@media(max-width:620px){
+  body .app-view-upcoming .upcoming-rates .live-rate-meta{
+    align-items:flex-start!important;
+    flex-direction:column!important;
+    gap:3px!important;
+  }
+}
