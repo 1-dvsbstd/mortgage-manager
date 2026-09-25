@@ -254,6 +254,8 @@
       const summary=$('#dealPlannerSummary',position);
       if(box&&summary){
         box.classList.add('deal-position-interest');
+        const label=box.querySelector(':scope > span');
+        if(label) label.textContent='Interest remaining on current path';
         summary.appendChild(box);
       }
       interest.remove();
