@@ -93,8 +93,8 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Visual check by Nathan
 
 ## 9. Legacy cleanup
-- [ ] Map selectors in `layout-finalize.css`
-- [ ] Map selectors in `layout-qa.css`
+- [x] Map/retire legacy theme rules in `layout-finalize.css`
+- [x] Map legacy `layout-qa.css` colours onto shared tokens
 - [ ] Map selectors in V15 patch files
 - [ ] Move surviving rules to authoritative component/page files
 - [ ] Remove redundant `!important` declarations where safe
