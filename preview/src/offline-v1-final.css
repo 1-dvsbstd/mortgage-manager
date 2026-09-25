@@ -1,0 +1,446 @@
+/* Offline V1 final visual pass — authoritative last-mile UI polish */
+
+/* Shared page-intro/banner language */
+body .v15-journey-shell,
+body .deal-action-hint,
+body #futureOverpaymentAssumption{
+  border:1px solid rgba(157,102,57,.16)!important;
+  border-radius:20px!important;
+  background:linear-gradient(135deg,rgba(255,250,244,.96),rgba(244,233,220,.9))!important;
+  box-shadow:0 14px 34px rgba(65,50,37,.065)!important;
+}
+body .deal-action-hint,
+body #futureOverpaymentAssumption{padding:16px 18px!important}
+body .app-view-upcoming .deal-action-hint{margin:12px 0 16px!important}
+
+/* Setup & data — rounded sections with breathing room */
+body .personal-modal .setup-pane{padding:16px 6px 6px!important}
+body .personal-modal .personal-section{
+  margin-top:16px!important;
+  padding:18px!important;
+  border:1px solid #ddd2c6!important;
+  border-radius:18px!important;
+  background:rgba(255,250,244,.72)!important;
+  box-shadow:0 8px 24px rgba(61,48,36,.035)!important;
+}
+body .personal-modal .personal-section + .personal-section{margin-top:14px!important}
+body .personal-modal .personal-section h3{margin-top:0!important}
+body .personal-modal details.personal-section>summary,
+body .personal-modal .personal-section>summary{
+  position:relative!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:16px!important;
+  min-height:44px!important;
+  padding:0 34px 0 0!important;
+  list-style:none!important;
+  cursor:pointer!important;
+}
+body .personal-modal details.personal-section>summary::-webkit-details-marker,
+body .personal-modal .personal-section>summary::-webkit-details-marker{display:none!important}
+body .personal-modal details.personal-section>summary::after,
+body .personal-modal .personal-section>summary::after{
+  content:'›'!important;
+  position:absolute!important;
+  right:2px!important;
+  top:50%!important;
+  transform:translateY(-50%) rotate(0deg)!important;
+  display:grid!important;
+  place-items:center!important;
+  width:24px!important;
+  height:24px!important;
+  border-radius:999px!important;
+  background:#f1e6da!important;
+  color:#7e5837!important;
+  font-size:18px!important;
+  line-height:1!important;
+  transition:transform .12s ease!important;
+}
+body .personal-modal details.personal-section[open]>summary::after,
+body .personal-modal .personal-section[open]>summary::after{transform:translateY(-50%) rotate(90deg)!important}
+body .personal-modal .history-summary-chevron,
+body .personal-modal .summary-plus{display:none!important}
+body .personal-modal .mortgage-history-body{padding-top:14px!important}
+body .personal-modal input[type='month']{color-scheme:light!important;padding-right:12px!important}
+body .personal-modal input[type='month']::-webkit-calendar-picker-indicator{
+  opacity:.9!important;
+  cursor:pointer!important;
+  filter:contrast(1.25)!important;
+}
+
+/* Variable-height disclosure panels must not lift/animate while opening. */
+body details,
+body details[open],
+body .personal-modal details.personal-section,
+body .app-view details,
+body #nextHomePlanner,
+body #homeValueHistory,
+body .next-home-settings,
+body .edit-panel{
+  transition:none!important;
+  animation:none!important;
+  transform:none!important;
+  overflow-anchor:none!important;
+}
+@media(hover:hover) and (pointer:fine){
+  body .personal-modal details.personal-section:hover,
+  body .app-view details:hover,
+  body #nextHomePlanner:hover,
+  body #homeValueHistory:hover,
+  body .next-home-settings:hover,
+  body .edit-panel:hover{
+    transform:none!important;
+  }
+}
+
+/* Ownership wording is clarified in JS; make history grid less cramped. */
+body .personal-modal .history-deal-row{border-radius:16px!important;background:var(--surface-control)!important}
+
+/* Current summary — eight distinct floating tiles, 4 × 2 on desktop */
+body .v15-current-stats{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:12px!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  overflow:visible!important;
+  box-shadow:none!important;
+}
+body .v15-current-stats .v15-stat{
+  min-height:108px!important;
+  padding:17px 18px!important;
+  border:1px solid rgba(68,58,48,.11)!important;
+  border-radius:17px!important;
+  background:rgba(251,248,243,.98)!important;
+  box-shadow:0 10px 28px rgba(62,49,38,.065)!important;
+}
+body .v15-current-stats .v15-stat:nth-child(n){border-right:1px solid rgba(68,58,48,.11)!important;border-bottom:1px solid rgba(68,58,48,.11)!important}
+@media(hover:hover) and (pointer:fine){
+  body .v15-current-stats .v15-stat{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease!important}
+  body .v15-current-stats .v15-stat:hover{
+    transform:translateY(-2px)!important;
+    border-color:rgba(200,142,92,.22)!important;
+    box-shadow:0 18px 38px rgba(61,48,36,.09)!important;
+  }
+}
+
+/* Editable values should feel editable without shouting EDIT. */
+body .app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable::after{display:none!important;content:none!important}
+body .app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable{
+  border-radius:12px!important;
+  padding:7px 9px!important;
+  margin:-7px -9px!important;
+  transition:background .16s ease,box-shadow .16s ease,transform .16s ease!important;
+}
+@media(hover:hover) and (pointer:fine){
+  body .app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable:hover{
+    background:rgba(255,250,244,.82)!important;
+    box-shadow:0 8px 20px rgba(61,48,36,.07)!important;
+    transform:translateY(-1px)!important;
+  }
+}
+body .app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable:focus-visible{
+  outline:2px solid rgba(200,142,92,.42)!important;
+  outline-offset:3px!important;
+}
+
+/* Legacy expanded-card behaviour must never leak into the final UI. */
+body .app-view .card-close-bar,
+body .app-view .expand-hint,
+body .app-view [data-expand-card],
+body .card-backdrop{display:none!important}
+body.card-open{overflow:auto!important}
+
+/* Journey — centred, chronological and visibly progressed. */
+body .v15-journey-shell{padding:18px 20px!important;overflow:hidden!important}
+body .v15-journey-strip{
+  width:min(1120px,100%)!important;
+  margin:0 auto 12px!important;
+  padding:0 18px!important;
+  align-items:start!important;
+}
+body .v15-journey-strip::before{
+  left:10%!important;
+  right:10%!important;
+  top:31px!important;
+  height:3px!important;
+  border-radius:999px!important;
+  background:linear-gradient(90deg,#6fae9d 0%,#6fae9d var(--journey-progress,0%),#d7d6d1 var(--journey-progress,0%),#d7d6d1 100%)!important;
+}
+body .v15-journey-step.is-complete .v15-journey-icon{box-shadow:0 0 0 4px rgba(111,174,157,.08)!important}
+body .v15-journey-step.is-current .v15-journey-icon{box-shadow:0 0 0 5px rgba(200,142,92,.11)!important}
+
+/* Upcoming — compact, stronger hierarchy, no faux empty panels. */
+body .app-view-upcoming .upcoming-sections{gap:16px!important}
+body .app-view-upcoming .upcoming-section{padding:20px 22px!important;border-radius:20px!important}
+body .app-view-upcoming .upcoming-section-heading{margin-bottom:12px!important;padding-bottom:10px!important}
+body .app-view-upcoming .upcoming-rates,
+body .app-view-upcoming .upcoming-position{background:rgba(247,242,234,.98)!important}
+body .app-view-upcoming .upcoming-rates .upcoming-section-body,
+body .app-view-upcoming .upcoming-position .upcoming-section-body{min-height:0!important}
+body .app-view-upcoming .deal-planner-summary>div,
+body .app-view-upcoming .deal-planner-rate{
+  border-radius:16px!important;
+  background:var(--surface-control)!important;
+  box-shadow:0 8px 22px rgba(61,48,36,.045)!important;
+}
+
+/* Replace the old pale-green market box with the same warm neutral card language. */
+body .upcoming-rates .live-rate-choices{
+  margin:12px 0 0!important;
+  padding:14px 16px!important;
+  border:1px solid rgba(68,58,48,.10)!important;
+  border-radius:16px!important;
+  background:var(--surface-control)!important;
+  box-shadow:0 8px 22px rgba(61,48,36,.04)!important;
+}
+body .upcoming-rates .live-rate-head{margin-bottom:10px!important}
+body .upcoming-rates .live-rate-grid{gap:10px!important}
+
+/* Market benchmark cards are read-only scenarios, not selectable products. */
+body .upcoming-rates .live-rate-card{
+  cursor:default!important;
+  pointer-events:none!important;
+  border-radius:14px!important;
+  background:#f7f0e8!important;
+  border-color:rgba(68,58,48,.09)!important;
+}
+body .upcoming-rates .live-rate-card::after{display:none!important;content:none!important}
+body .upcoming-rates .live-rate-card.is-selected{border-color:rgba(68,58,48,.09)!important;background:#f7f0e8!important}
+body .upcoming-rates .live-rate-selected-summary,
+body .upcoming-rates .live-rate-selection-note{display:none!important}
+
+/* Future — restore distinct rounded tiles and depth. */
+body .app-view-future .future-cost-inline,
+body .app-view-future .property-cost-grid{
+  border-radius:18px!important;
+}
+body .app-view-future .next-home-summary-card,
+body .app-view-future .home-profile-range>div{
+  border:1px solid rgba(68,58,48,.11)!important;
+  border-radius:17px!important;
+  background:var(--surface-control)!important;
+  box-shadow:0 10px 28px rgba(62,49,38,.06)!important;
+}
+body .app-view-future .next-home-subhead>div>span{display:none!important}
+body .app-view-future .next-home-subhead{margin-bottom:12px!important}
+@media(hover:hover) and (pointer:fine){
+  body .app-view-future .next-home-summary-card{
+    transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease!important;
+  }
+  body .app-view-future .next-home-summary-card:hover{
+    transform:translateY(-3px)!important;
+    border-radius:17px!important;
+    border-color:rgba(200,142,92,.25)!important;
+    box-shadow:0 18px 38px rgba(61,48,36,.10)!important;
+    background:var(--surface-control)!important;
+  }
+}
+
+/* Prevent flat square hover layers from older CSS. */
+body .app-view-future .future-wait-planner:hover,
+body .app-view-future #nextHomePlanner:hover,
+body .app-view-future #homeProjection:hover{
+  border-radius:24px!important;
+}
+
+@media(max-width:900px){
+  body .v15-current-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:620px){
+  body .personal-modal .setup-pane{padding-inline:0!important}
+  body .personal-modal .personal-section{padding:15px!important;border-radius:16px!important}
+  body .v15-current-stats{grid-template-columns:1fr!important;gap:10px!important}
+  body .v15-journey-strip{grid-template-columns:1fr!important;padding:0!important;gap:10px!important}
+  body .v15-journey-strip::before{display:none!important}
+  body .v15-journey-step{display:grid!important;grid-template-columns:40px 1fr!important;grid-template-rows:auto auto!important;text-align:left!important;padding:0!important;column-gap:10px!important}
+  body .v15-journey-icon{grid-row:1/3!important;margin:0!important}
+  body .v15-journey-step strong,body .v15-journey-step span{align-self:center!important}
+}
+
+
+/* V0.15.25 — Upcoming empty-state colour cleanup + interest-card overflow fix */
+/* Empty planner prompts are informational, not success states: keep them in the warm ivory/copper system. */
+body .app-view-upcoming .deal-planner-empty{
+  margin:12px 0 0!important;
+  padding:16px 18px!important;
+  border:1px solid rgba(157,102,57,.16)!important;
+  border-radius:16px!important;
+  background:linear-gradient(135deg,var(--surface-control),#f3e8dc)!important;
+  box-shadow:0 8px 22px rgba(61,48,36,.04)!important;
+}
+body .app-view-upcoming .deal-planner-empty strong{
+  color:var(--text)!important;
+}
+body .app-view-upcoming .deal-planner-empty span{
+  color:var(--muted)!important;
+}
+
+/* Remove the remaining pale-mint fill from completed journey markers.
+   Completion can stay legible through the icon/border without introducing another surface colour. */
+body .v15-current-journey-step.is-complete .v15-current-journey-icon,
+body .v15-journey-step.is-complete .v15-journey-icon{
+  background:#f2e8dc!important;
+  border-color:#b99a7c!important;
+  color:#76583f!important;
+}
+
+/* Setup methodology disclosure — keep title/subtitle stacked and chevron centred. */
+body .personal-modal #methodologySection>summary{
+  align-items:center!important;
+  min-height:52px!important;
+  padding:4px 38px 4px 0!important;
+}
+body .personal-modal #methodologySection>summary>span:first-child{
+  display:grid!important;
+  gap:3px!important;
+  min-width:0!important;
+}
+body .personal-modal #methodologySection>summary>span:first-child>strong,
+body .personal-modal #methodologySection>summary>span:first-child>small{
+  display:block!important;
+  margin:0!important;
+  line-height:1.25!important;
+}
+body .personal-modal #methodologySection>summary>span:first-child>strong{
+  font-size:14px!important;
+}
+body .personal-modal #methodologySection>summary>span:first-child>small{
+  color:var(--muted)!important;
+  font-size:10px!important;
+  font-weight:500!important;
+}
+body .personal-modal #methodologySection>summary::after{
+  top:50%!important;
+  right:0!important;
+  width:24px!important;
+  height:24px!important;
+  margin:0!important;
+  transform:translateY(-50%) rotate(0deg)!important;
+}
+body .personal-modal #methodologySection[open]>summary::after{
+  transform:translateY(-50%) rotate(90deg)!important;
+}
+
+/* Methodology disclosure chevron — draw the arrow instead of relying on a text glyph. */
+body .personal-modal #methodologySection>summary::after{
+  content:""!important;
+  box-sizing:border-box!important;
+  width:24px!important;
+  height:24px!important;
+  border:0!important;
+  border-radius:999px!important;
+  background:
+    linear-gradient(45deg, transparent 46%, #7e5837 47%, #7e5837 56%, transparent 57%) calc(50% - 2px) 50%/7px 7px no-repeat,
+    linear-gradient(-45deg, transparent 46%, #7e5837 47%, #7e5837 56%, transparent 57%) calc(50% + 2px) 50%/7px 7px no-repeat,
+    #f1e6da!important;
+  transform:translateY(-50%) rotate(0deg)!important;
+  transform-origin:center!important;
+}
+body .personal-modal #methodologySection[open]>summary::after{
+  transform:translateY(-50%) rotate(180deg)!important;
+}
+
+/* Methodology disclosure — simple centred chevron. */
+body .personal-modal #methodologySection>summary::after{
+  display:none!important;
+  content:none!important;
+}
+body .personal-modal #methodologySection .methodology-chevron{
+  position:absolute!important;
+  right:0!important;
+  top:50%!important;
+  display:grid!important;
+  place-items:center!important;
+  width:24px!important;
+  height:24px!important;
+  margin:0!important;
+  border-radius:999px!important;
+  background:#f1e6da!important;
+  color:#7e5837!important;
+  transform:translateY(-50%)!important;
+}
+body .personal-modal #methodologySection .methodology-chevron::before{
+  content:""!important;
+  width:6px!important;
+  height:6px!important;
+  border-right:1.5px solid currentColor!important;
+  border-bottom:1.5px solid currentColor!important;
+  transform:translateY(-1px) rotate(45deg)!important;
+  transform-origin:center!important;
+}
+body .personal-modal #methodologySection[open] .methodology-chevron::before{
+  transform:translateY(1px) rotate(225deg)!important;
+}
+
+/* Mortgage history disclosure — centred down/up chevron. */
+body .personal-modal .mortgage-history-section>summary::after{
+  content:""!important;
+  position:absolute!important;
+  right:2px!important;
+  top:50%!important;
+  width:24px!important;
+  height:24px!important;
+  margin:0!important;
+  border-radius:999px!important;
+  background:#f1e6da!important;
+  color:#7e5837!important;
+  transform:translateY(-50%)!important;
+}
+body .personal-modal .mortgage-history-section>summary::before{
+  content:""!important;
+  position:absolute!important;
+  right:10px!important;
+  top:50%!important;
+  width:6px!important;
+  height:6px!important;
+  border-right:1.5px solid #7e5837!important;
+  border-bottom:1.5px solid #7e5837!important;
+  transform:translateY(-65%) rotate(45deg)!important;
+  transform-origin:center!important;
+  z-index:1!important;
+}
+body .personal-modal .mortgage-history-section[open]>summary::after{
+  transform:translateY(-50%)!important;
+}
+body .personal-modal .mortgage-history-section[open]>summary::before{
+  transform:translateY(-35%) rotate(225deg)!important;
+}
+
+/* Setup & data disclosure system — simple professional chevrons. */
+body .personal-modal details.personal-section>summary{
+  position:relative!important;
+  padding-right:30px!important;
+}
+body .personal-modal details.personal-section>summary::after{
+  content:""!important;
+  position:absolute!important;
+  right:4px!important;
+  top:50%!important;
+  display:block!important;
+  width:7px!important;
+  height:7px!important;
+  margin:0!important;
+  border:0!important;
+  border-right:1.5px solid #8b6849!important;
+  border-bottom:1.5px solid #8b6849!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  transform:translateY(-65%) rotate(45deg)!important;
+  transform-origin:center!important;
+  transition:transform .15s ease!important;
+}
+body .personal-modal details.personal-section[open]>summary::after{
+  transform:translateY(-35%) rotate(225deg)!important;
+}
+body .personal-modal details.personal-section>summary::before{
+  display:none!important;
+  content:none!important;
+}
+body .personal-modal .history-summary-chevron,
+body .personal-modal .summary-plus,
+body .personal-modal .methodology-chevron{
+  display:none!important;
+}

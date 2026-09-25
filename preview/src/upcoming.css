@@ -1,0 +1,37 @@
+/* Upcoming uses the shared design system from layout-finalize.css.
+   This file deliberately removes all legacy page-specific visual treatment. */
+.app-view-upcoming{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.app-view-upcoming .upcoming-workspace{width:100%!important;max-width:none!important;margin:0!important}
+.app-view-upcoming .upcoming-sections{display:grid!important;grid-template-columns:1fr}
+
+/* Every Upcoming data tile uses the exact same tile recipe as Current/Future. */
+.app-view-upcoming .current-fix-stats>div,
+.app-view-upcoming .deal-planner-rate,
+.app-view-upcoming .deal-planner-summary>div{
+  background:var(--surface-soft)!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:var(--radius-tile)!important;
+  box-shadow:none!important;
+}
+
+/* No hover or selected-state geometry changes. */
+.app-view-upcoming .current-fix-stats>div:hover,
+.app-view-upcoming .deal-planner-rate:hover,
+.app-view-upcoming .deal-planner-summary>div:hover,
+.app-view-upcoming .upcoming-rates .deal-planner-rate.is-current-rate,
+.app-view-upcoming .upcoming-rates .deal-planner-rate.is-current-rate:hover{
+  background:var(--surface-soft)!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:var(--radius-tile)!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+
+/* Milestone and interest presentation is owned by the final Upcoming layout.
+   Keep only the nested milestone copy unboxed. */
+.app-view-upcoming .deal-planner-milestone-copy{
+  background:transparent!important;
+  box-shadow:none!important;
+  border:0!important;
+  border-radius:0!important;
+}

@@ -1,0 +1,144 @@
+html{background:var(--bg)!important}
+body{background:linear-gradient(180deg,#09110f 0%,#0d1713 46%,#09120f 100%)!important;color:var(--text)!important}
+.panel,.hero-panel{background:var(--surface)!important;border:1px solid var(--border)!important;border-radius:var(--radius-card)!important;box-shadow:0 18px 50px rgba(0,0,0,.22)!important}
+.hero-panel{background:linear-gradient(145deg,#102019,#14271f)!important}
+.kicker,.eyebrow,.future-assumption-label{color:var(--accent)!important}
+.subtle,.field-note,.deep-note,.source-date,.next-event-text,.timeline-labels,.app-view-heading>p{color:var(--muted)!important}
+.design-source-only{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;white-space:nowrap!important}
+
+/* One page rhythm */
+.app-view-content{gap:var(--space-page)!important}
+.app-view-current .app-view-content,.app-view-future .app-view-content{display:grid!important;grid-template-columns:1fr!important;align-items:start}
+.app-view-upcoming .app-view-content{display:block!important}
+.app-view-current .hero-panel,.app-view-current .chart-panel,.app-view-future .panel,.app-view-upcoming .upcoming-section{border-radius:var(--radius-card)!important}
+.app-view-heading{margin:0 2px 14px!important;align-items:baseline!important}
+.app-view-heading>div{gap:8px!important}
+.app-view-heading .eyebrow{display:none!important}
+.app-view-heading h1{font-size:14px!important;font-weight:780!important}
+.app-view-heading>p{font-size:11px!important}
+
+/* Unified inner tiles */
+.hero-balance-row>div,.home-stats>div,.interest-box,.chart-stat,.current-fix-stats>div,.deal-planner-rate,.deal-planner-summary>div,.next-home-summary-card,.next-home-timeline-row,.property-cost-card,.home-profile-range>div{
+  background:var(--surface-soft)!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:var(--radius-tile)!important;
+  box-shadow:none!important;
+}
+.hero-balance-row span,.home-stats span,.interest-box span,.chart-stat span,.current-fix-stats span,.deal-planner-rate span,.deal-planner-summary span,.next-home-summary-card span,.next-home-timeline-row span{color:var(--muted)!important}
+
+/* Current */
+.current-hero-condensed{grid-template-columns:1fr!important;padding:var(--space-card)!important}
+.current-hero-condensed>.hero-progress-card{display:none!important}
+.current-hero-condensed .hero-main>h1{margin-bottom:2px}
+.current-hero-condensed .hero-date{margin-bottom:14px}
+.current-hero-condensed .hero-balance-row{margin-top:14px;gap:10px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.current-hero-condensed .hero-overpay-summary,.current-hero-condensed [data-mortgage-tile="currentOverpayment"]{display:none!important}
+.current-hero-condensed .current-home-inline{display:grid!important;grid-template-columns:minmax(0,1fr) 132px;grid-template-areas:"value donut" "stats donut";column-gap:20px;row-gap:10px;align-items:center;margin-top:18px!important;padding-top:18px!important;border-top:1px solid var(--border-soft)!important;background:transparent!important}
+.current-hero-condensed .current-home-inline .panel-heading,.current-hero-condensed .current-home-inline .ownership-legend{display:none!important}
+.current-hero-condensed .current-home-inline .home-value{grid-area:value;display:flex;align-items:baseline;gap:10px;margin:0!important;text-align:left!important}
+.current-hero-condensed .current-home-inline .home-value span{font-size:11px;color:var(--muted)!important}
+.current-hero-condensed .current-home-inline .home-value strong{font-size:28px}
+.current-hero-condensed .current-home-inline .home-value small{font-size:11px;color:var(--muted)!important}
+.current-hero-condensed .current-home-inline .home-stats{grid-area:stats;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0!important}
+.current-hero-condensed .current-home-inline .home-stats>div{padding:10px 12px!important}
+.current-hero-condensed .current-home-inline .home-stats span{font-size:10px}
+.current-hero-condensed .current-home-inline .home-stats strong{font-size:16px}
+.current-hero-condensed .current-home-inline .ownership-bar{grid-area:donut;display:grid!important;place-items:center!important;width:124px!important;height:124px!important;margin:0 auto!important;background:transparent!important;border:0!important}
+.current-hero-condensed .current-home-inline .ownership-segment{display:none!important}
+.current-hero-condensed .current-home-inline .ownership-donut{display:block!important;width:124px!important;height:124px!important}
+.current-hero-condensed #currentOverpaymentPanel{display:none!important}
+
+/* Trajectory */
+.trajectory-with-what-if{padding:0!important;overflow:hidden;cursor:default!important}
+.trajectory-with-what-if .trajectory-what-if{display:none!important}
+.trajectory-with-what-if>.panel-heading{padding:var(--space-card) var(--space-card) 0!important}
+.trajectory-scenario-controls{margin:18px var(--space-card)!important;padding:16px;border:1px solid var(--border-soft);border-radius:var(--radius-tile);background:var(--surface-soft)}
+.trajectory-scenario-copy{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding-bottom:13px;margin-bottom:13px;border-bottom:1px solid var(--border-soft)}
+.trajectory-scenario-copy h3{margin:0;font-size:18px;letter-spacing:-.02em}
+.trajectory-current-saving{min-width:220px;text-align:right}
+.trajectory-current-saving>span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.06em}
+.trajectory-current-saving>strong{display:block;margin-top:3px;font-size:17px;color:var(--text)}
+.trajectory-current-saving>small{display:block;margin-top:3px;color:var(--warm);font-size:10px;line-height:1.35}
+.trajectory-overpay-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.trajectory-overpay-row button,.trajectory-custom-overpay,.future-assumption-controls button,.future-assumption-controls label{min-height:40px;border:1px solid var(--border-soft)!important;border-radius:12px!important;background:var(--surface-raised)!important;color:var(--text)!important;font-weight:750}
+.trajectory-overpay-row button{padding:8px 14px;cursor:pointer}
+.trajectory-overpay-row button:hover,.future-assumption-controls button:hover{border-color:rgba(112,200,168,.34)!important;background:#21372d!important}
+.trajectory-overpay-row button.active,.future-assumption-controls button.active{background:var(--accent)!important;color:#0a1712!important;border-color:transparent!important}
+.trajectory-custom-overpay{display:flex;align-items:center;gap:5px;padding:8px 12px;color:var(--muted)!important}
+.trajectory-custom-overpay input{width:74px;border:0;outline:0;background:transparent;color:var(--text);font:inherit;font-weight:750}
+.trajectory-with-what-if>.chart-wrap{margin:18px var(--space-card) 0!important;width:calc(100% - (var(--space-card) * 2))!important}
+.trajectory-with-what-if>.legend{margin:10px var(--space-card) 0!important;padding-bottom:24px!important;gap:10px 18px!important;color:var(--muted)!important}
+.dot.scheduled-line{background:var(--debt)!important}.dot.regular-line{background:var(--warm)!important}.dot.selected-line{background:var(--accent)!important}.dot.equity-line{background:#e7e1d6!important}
+
+/* Upcoming uses the same full-width surface system as Future */
+.upcoming-workspace,.design-workspace-full{width:100%!important;max-width:none!important;margin:0!important}
+.upcoming-sections{display:grid!important;grid-template-columns:1fr!important;gap:var(--space-page)!important}
+.upcoming-section{position:relative;margin:0!important;padding:var(--space-card)!important;background:var(--surface)!important;border-color:var(--border)!important;box-shadow:0 18px 50px rgba(0,0,0,.22)!important}
+.upcoming-section::before{display:none!important}
+.upcoming-section-heading{margin-bottom:18px!important;padding-left:0!important}
+.upcoming-section-heading h2{font-size:19px!important}
+.upcoming-timeline,.upcoming-position,.upcoming-rates,.upcoming-action,.upcoming-interest{background:var(--surface)!important}
+.upcoming-timeline #nextEventTitle{font-size:28px;line-height:1.08;letter-spacing:-.035em}
+.upcoming-timeline .next-event-text{margin:8px 0 20px;max-width:720px}
+.current-fix-stats{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px!important;margin-top:18px!important}
+.current-fix-stats>div{padding:14px!important}
+.current-fix-stats strong{font-size:18px!important}
+.upcoming-rates .deal-planner-rate-grid{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:10px!important;margin:0!important}
+.upcoming-rates .deal-planner-rate{padding:14px!important}
+.upcoming-rates .deal-planner-rate.is-current-rate{border-color:rgba(112,200,168,.42)!important;box-shadow:inset 0 0 0 1px rgba(112,200,168,.08)!important}
+.upcoming-rates .deal-planner-rate span{color:var(--muted)!important}
+.upcoming-rates .deal-planner-rate.is-current-rate span{color:var(--accent)!important}
+.upcoming-rates .deal-planner-note{margin-top:14px!important;color:var(--muted)!important}
+.upcoming-position .deal-planner-summary{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;margin:0!important}
+.upcoming-position .deal-planner-summary>div{padding:16px!important}
+.upcoming-position .deal-planner-summary>div:nth-child(3){display:none!important}
+.upcoming-position .deal-planner-summary strong{font-size:25px}
+.upcoming-position .deal-planner-milestone{margin:18px 0 0!important;padding:18px 0 0!important;border:0!important;background:transparent!important}
+
+/* Future remains the reference */
+.app-view-future .app-view-content{gap:var(--space-page)!important}
+.future-overpayment-assumption,.future-model-range-panel,.future-wait-planner,.temporal-feature-home-projection,.temporal-feature-next-home{background:var(--surface)!important;border-color:var(--border)!important;border-radius:var(--radius-card)!important}
+.temporal-feature-home-projection{padding:var(--space-card)!important}
+.temporal-feature-next-home .next-home-body{padding:var(--space-card)!important}
+.future-overpayment-assumption{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 18px!important}
+.future-assumption-copy{display:flex;align-items:baseline;gap:14px;min-width:0}.future-assumption-copy>div{display:flex;align-items:baseline;gap:8px}.future-assumption-copy strong{color:var(--warm);font-size:18px;white-space:nowrap}.future-assumption-copy p{margin:0;color:var(--muted)!important;font-size:11px}
+.future-assumption-controls{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}.future-assumption-controls button{min-width:52px;padding:7px 10px;cursor:pointer}.future-assumption-controls label{display:flex;align-items:center;gap:4px;padding:7px 10px;color:var(--muted)!important}.future-assumption-controls input{width:68px;border:0;background:transparent;color:var(--text);font:inherit;font-weight:750;outline:none}
+.future-model-range-panel .home-profile-range,.next-home-summary-card,.future-wait-host,.future-cost-inline{background:transparent!important}
+.future-wait-planner{margin-top:0!important}
+
+/* Remove dead expansion behaviour visually */
+.app-view [data-expand-card],.app-view .expand-hint,.app-view .legacy-expand-cta{display:none!important}
+.app-view .hero-panel,.app-view .panel,.app-view .chart-panel{cursor:default!important}
+.app-view .hero-panel:hover,.app-view .panel:hover,.app-view .chart-panel:hover{transform:none!important;box-shadow:0 18px 50px rgba(0,0,0,.22)!important}
+.app-view .expand-detail{display:none!important}.app-view .home-glance-source{display:block!important}
+
+/* Navigation */
+.app-section-nav button{background:#111e19!important;border-color:var(--border-soft)!important;color:var(--muted)!important;border-radius:12px!important}.app-section-nav button.is-active{background:var(--surface-raised)!important;color:var(--text)!important;border-color:rgba(112,200,168,.30)!important;box-shadow:none!important}
+
+@media(max-width:1050px){
+  .current-fix-stats,.upcoming-rates .deal-planner-rate-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+
+@media(max-width:800px){
+  .current-hero-condensed .current-home-inline{grid-template-columns:minmax(0,1fr) 112px}
+  .current-hero-condensed .current-home-inline .ownership-bar,.current-hero-condensed .current-home-inline .ownership-donut{width:108px!important;height:108px!important}
+}
+
+@media(max-width:700px){
+  :root{--space-page:16px;--space-card:18px;--radius-card:19px}
+  .app-view-heading{display:none!important}
+  .current-fix-stats,.upcoming-rates .deal-planner-rate-grid{grid-template-columns:1fr 1fr!important}
+  .trajectory-scenario-copy{display:block}.trajectory-current-saving{min-width:0;margin-top:10px;text-align:left}
+  .trajectory-overpay-row button,.trajectory-custom-overpay{flex:1 1 auto;justify-content:center}
+  .trajectory-custom-overpay input{width:62px}
+  .future-overpayment-assumption{display:grid;gap:10px}.future-assumption-copy{display:grid;gap:4px}.future-assumption-copy>div{justify-content:space-between}.future-assumption-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));justify-content:stretch}.future-assumption-controls button{min-width:0}.future-assumption-controls label{grid-column:1/-1}.future-assumption-controls input{flex:1;width:auto}
+}
+
+@media(max-width:560px){
+  .current-hero-condensed .hero-balance-row{grid-template-columns:1fr 1fr}
+  .current-hero-condensed .current-home-inline{grid-template-columns:1fr 96px;column-gap:10px}
+  .current-hero-condensed .current-home-inline .home-value{display:block}
+  .current-hero-condensed .current-home-inline .home-stats{grid-template-columns:1fr 1fr}
+  .current-hero-condensed .current-home-inline .ownership-bar,.current-hero-condensed .current-home-inline .ownership-donut{width:92px!important;height:92px!important}
+  .chart-panel .legend{font-size:10px!important}
+}

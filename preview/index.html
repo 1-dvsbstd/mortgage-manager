@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en" class="app-hydrating app-settling">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f4f1eb" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Mortgage" />
+  <meta name="description" content="A visual mortgage manager for tracking balance, equity, payoff time and overpayment impact." />
+  <title>Mortgage Manager</title>
+  <style>html{background:#f4f1eb}html.app-hydrating body,html.app-settling body{visibility:hidden!important}</style>
+  <script>window.setTimeout(()=>document.documentElement.classList.remove('app-hydrating','app-settling'),3000);</script>
+  <link rel="icon" href="public/icon.svg?v=01518" type="image/svg+xml" />
+  <link rel="stylesheet" href="src/bundle-foundation.css?v=consolidation-001" />
+  <link rel="stylesheet" href="src/bundle-features.css?v=consolidation-001" />
+  <link rel="stylesheet" href="src/bundle-shell.css?v=consolidation-001" />
+  <link rel="stylesheet" href="src/bundle-refinements-a.css?v=consolidation-001" />
+  <link id="offlineV1FinalStyle" rel="stylesheet" href="src/bundle-refinements-b.css?v=consolidation-001" />
+  <script>
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+    }
+  </script>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div><p class="brand">Mortgage Manager <span>V0.15.18</span></p><p class="topline">See what you owe, what you own, and how quickly you can change it.</p></div>
+      <div class="save-status" id="saveStatus">Saved on this device</div>
+    </header>
+
+    <section class="hero-panel expandable-card" data-expandable-card="mortgage" tabindex="0" aria-expanded="false">
+      <div class="hero-main">
+        <div class="section-topline"><div><p class="kicker">Mortgage-free in</p></div><button type="button" class="expand-card-button" data-expand-card>View details</button></div>
+        <h1 id="yearsRemaining">—</h1><p id="payoffDate" class="hero-date">—</p>
+        <div class="hero-balance-row">
+          <div class="editable-metric" data-edit-target="balance" tabindex="0" role="button" aria-label="Edit mortgage balance"><span>Mortgage remaining</span><strong id="balanceLine">—</strong></div>
+          <div class="editable-metric" data-edit-target="payment" tabindex="0" role="button" aria-label="Edit monthly payment"><span>Monthly payment</span><strong id="paymentStat">—</strong></div>
+          <div class="editable-metric" data-edit-target="rate" tabindex="0" role="button" aria-label="Edit interest rate"><span>Rate</span><strong id="rateStat">—</strong></div>
+        </div>
+        <div class="expand-detail mortgage-deep-dive" id="mortgageDeepDive">
+          <h2>How your mortgage is moving</h2>
+          <div class="deep-grid three">
+            <div class="deep-stat"><span>Interest this month</span><strong id="monthInterest">—</strong><small>Approximate at your current balance and rate</small></div>
+            <div class="deep-stat"><span>Capital this month</span><strong id="monthCapital">—</strong><small>From your scheduled payment</small></div>
+            <div class="deep-stat"><span>Next 12 months</span><strong id="yearCapital">—</strong><small id="yearInterest">—</small></div>
+          </div>
+          <div class="market-block">
+            <div class="deep-heading"><div><p class="eyebrow">Market snapshot</p><h2>Your rate vs indicative UK averages</h2></div><span class="source-date">Market benchmark · dated snapshot</span></div>
+            <div class="market-comparison">
+              <div class="market-current"><span>Your rate</span><strong id="marketCurrentRate">—</strong><small id="marketLtvBand">—</small></div>
+              <div><span>Avg 2-year fix</span><strong id="market2yRate">—</strong><small id="market2yPayment">—</small></div>
+              <div><span>Avg 5-year fix</span><strong id="market5yRate">—</strong><small id="market5yPayment">—</small></div>
+            </div>
+            <p class="deep-note">Indicative UK market benchmarks for planning only, not personalised mortgage offers. Fees, eligibility, lender criteria and property details are not included.</p>
+          </div>
+        </div>
+      </div>
+      <div class="hero-progress-card">
+        <div class="hero-progress-copy"><span>Mortgage-free share</span><strong id="equityProgress">—</strong><small id="progressCaption">—</small></div>
+        <div class="progress-track" aria-hidden="true"><div id="progressFill" class="progress-fill"></div></div>
+        <div class="hero-scenario" id="heroScenario">—</div>
+      </div>
+      <p class="expand-hint">Tap for repayment breakdown</p>
+    </section>
+
+    <section class="panel scenario-panel expandable-card" data-expandable-card="overpayment" tabindex="0" aria-expanded="false">
+      <div class="scenario-top"><div><p class="eyebrow">What if?</p><h2>Overpay <span id="overpayHeadline">£50/month</span></h2></div><div class="card-actions"><div class="scenario-summary" id="scenarioSummary">—</div><button type="button" class="expand-card-button" data-expand-card>Compare</button></div></div>
+      <input id="extraSlider" class="range" type="range" min="0" max="1000" step="10" value="50" aria-label="Monthly overpayment" />
+      <div class="scenario-chips" id="overpayButtons">
+        <button type="button" data-extra="0">£0</button><button type="button" data-extra="50" class="active">£50</button><button type="button" data-extra="100">£100</button><button type="button" data-extra="250">£250</button><button type="button" data-extra="500">£500</button>
+        <label class="custom-chip">Custom £<input id="customExtra" inputmode="decimal" type="number" min="0" step="10" value="50" /></label>
+      </div>
+      <div class="expand-detail">
+        <div class="deep-heading"><div><p class="eyebrow">Scenario lab</p><h2>Compare overpayments side by side</h2></div></div>
+        <div class="scenario-table-wrap"><table class="scenario-table"><thead><tr><th>Extra</th><th>Finish</th><th>Time saved</th><th>Interest saved</th></tr></thead><tbody id="scenarioCompareBody"></tbody></table></div>
+        <div class="target-box"><span>Useful rule of thumb</span><strong id="overpayTargetInsight">—</strong><small>Uses the same balance, rate and scheduled payment as the dashboard.</small></div>
+      </div>
+      <p class="expand-hint">Tap to compare several overpayment levels</p>
+    </section>
+
+    <section class="dashboard-grid">
+      <article class="panel home-panel expandable-card" data-expandable-card="home" tabindex="0" aria-expanded="false">
+        <div class="panel-heading">
+          <div><p class="eyebrow">Your home</p><h2>Where the property value sits</h2></div>
+          <div class="card-actions"><button type="button" id="ownershipBadge" class="ownership-badge inline-edit-trigger" data-edit-target="ownership" aria-label="Edit property ownership share">100% share</button><button type="button" class="expand-card-button" data-expand-card>View details</button></div>
+        </div>
+        <div class="ownership-bar" aria-label="Property ownership breakdown"><div id="debtSegment" class="ownership-segment debt"></div><div id="equitySegment" class="ownership-segment equity"></div><div id="schemeSegment" class="ownership-segment scheme"></div></div>
+        <div class="home-value"><span>Your equity</span><strong id="equityStat">—</strong><small id="equitySubtext">—</small></div>
+        <div class="expand-detail">
+          <div class="ownership-legend"><span><i class="dot debt-dot"></i>Mortgage debt <strong id="debtLegend">—</strong></span><span><i class="dot equity-dot"></i>Your equity <strong id="equityLegend">—</strong></span><span id="schemeLegendWrap"><i class="dot scheme-dot"></i>Other share <strong id="schemeLegend">—</strong></span></div>
+          <div class="home-stats"><div class="editable-metric" data-edit-target="homeValue" tabindex="0" role="button" aria-label="Edit property value"><span>Property value</span><strong id="homeValueStat">—</strong></div><div><span>Your share value</span><strong id="ownedValueStat">—</strong></div><div><span>LTV</span><strong id="ltvStat">—</strong></div></div>
+        </div>
+        <p class="expand-hint">Tap for ownership breakdown</p>
+      </article>
+
+      <article class="panel next-panel expandable-card" data-expandable-card="deal" tabindex="0" aria-expanded="false">
+        <div class="next-heading-row"><p class="eyebrow">Next important thing</p><div class="card-actions"><button type="button" class="expand-card-button" data-expand-card>View details</button></div></div>
+        <h2 id="nextEventTitle">Add your fixed-rate end date</h2><p id="nextEventText" class="next-event-text">We’ll keep the next mortgage milestone visible here.</p>
+        <div class="timeline-track"><div id="timelineFill" class="timeline-fill"></div></div><div class="timeline-labels"><span>Now</span><span id="timelineEndLabel">Deal end</span></div>
+        <div class="expand-detail"><div class="interest-box"><span>Projected interest left</span><strong id="interestRemaining">—</strong><small id="interestWithExtraText">—</small></div></div>
+        <p class="expand-hint">Tap for deal-end balance, LTV and next-rate scenarios</p>
+      </article>
+    </section>
+
+    <section class="panel chart-panel expandable-card" data-expandable-card="trajectory" tabindex="0" aria-expanded="false">
+      <div class="panel-heading"><div><p class="eyebrow">Trajectory</p><h2>Your mortgage and equity over time</h2><p class="subtle">Debt falls while your projected equity builds.</p></div><div class="card-actions"><div class="chart-stat"><span>Time saved</span><strong id="timeSaved">—</strong></div><button type="button" class="expand-card-button" data-expand-card>Explore</button></div></div>
+      <div class="chart-wrap"><canvas id="chart" aria-label="Mortgage balance and projected equity over time"></canvas></div><div class="legend"><span><i class="dot current"></i>Current payment</span><span><i class="dot overpay"></i>With overpayment</span></div>
+      <div class="expand-detail trajectory-details">
+        <div class="deep-heading"><div><p class="eyebrow">Milestones</p><h2>What the journey looks like</h2></div></div>
+        <div class="deep-grid" id="trajectoryMilestones"></div>
+        <div class="yearly-table-wrap"><table class="scenario-table"><thead><tr><th>Point</th><th>Current path</th><th>With overpayment</th><th>LTV</th></tr></thead><tbody id="yearlyBalanceBody"></tbody></table></div>
+      </div>
+      <p class="expand-hint">Tap for yearly balances, equity and mortgage milestones</p>
+    </section>
+
+    <details class="panel edit-panel">
+      <summary><span><strong>All mortgage details</strong><small>View or update everything in one place</small></span><span class="summary-plus">＋</span></summary>
+      <div class="edit-content"><div class="inputs">
+        <label>Current balance (£)<input id="balance" inputmode="decimal" type="number" min="0" step="100" value="180000" /></label><label>Monthly payment (£)<input id="payment" inputmode="decimal" type="number" min="0" step="10" value="1100" /></label><label>Interest rate (%)<input id="rate" inputmode="decimal" type="number" min="0" max="20" step="0.01" value="4.25" /></label><label>Fixed rate ends<input id="fixedEnd" type="month" /></label><label>Property value (£)<input id="homeValue" inputmode="decimal" type="number" min="0" step="1000" value="300000" /></label><label>Property share owned (%)<input id="ownership" inputmode="decimal" type="number" min="0" max="100" step="1" value="100" /></label>
+      </div><p class="field-note">Use 100% for a normally owned home. If a government scheme or third party retains a share, enter the percentage belonging to you or your household.</p><p id="warning" class="warning"></p></div>
+    </details>
+
+    <footer class="footer">Illustrative planning tool only. Market rates are dated indicative averages, not mortgage offers. Home-value projections are scenarios rather than valuations. Property-share figures are simplified and may not match the legal or lender treatment of every ownership/equity scheme. Mortgage projections assume the entered rate and payment remain unchanged.</footer>
+  </main>
+
+  <script src="src/mortgage-layout.js?v=01518"></script>
+  <script src="src/mortgage-store.js?v=01518"></script>
+  <script src="src/mortgage.js?v=01518"></script>
+  <script src="src/app.js?v=015290"></script>
+  <script src="src/inline-edit.js?v=01518"></script>
+  <script src="src/deep-dive.js?v=01518"></script>
+  <script src="src/home-projection.js?v=015265"></script>
+  <script src="src/next-home-planner.js?v=015258"></script>
+  <script src="src/chart-enhance.js?v=01518"></script>
+  <script src="src/mortgage-detail-ui.js?v=01518"></script>
+  <script src="src/deal-end-planner.js?v=01518"></script>
+  <script src="src/balance-projection.js?v=01518"></script>
+  <script src="src/home-costs.js?v=015257"></script>
+  <script src="src/setup-data.js?v=01518"></script>
+  <script src="src/setup-home-profile.js?v=015272"></script>
+  <script src="src/mortgage-history.js?v=01518"></script>
+  <script src="src/app-runtime.js?v=015288"></script>
+  <script src="src/app-navigation.js?v=015208"></script>
+  <script src="src/page-refine.js?v=015290"></script>
+  <script src="src/setup-tabs.js?v=015285"></script>
+  <script src="src/layout-finalize.js?v=01518"></script>
+  <script src="src/v15-refresh.js?v=015209"></script>
+  <script src="src/v15-polish.js?v=015194"></script>
+  <script src="src/v15.5.js?v=015263"></script>
+  <script src="src/v15.11.js?v=01518"></script>
+  <script src="src/v15.14.js?v=01518"></script>
+  <script src="src/v15.15.js?v=015287"></script>
+  <script id="offlineV1FinalScript" src="src/offline-v1-final.js?v=015222"></script>
+</body>
+</html>

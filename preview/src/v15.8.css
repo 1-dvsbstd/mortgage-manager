@@ -1,0 +1,58 @@
+/* V0.15.8 — Future property typography contrast fix */
+
+/* Property-value heading was still inheriting a washed-out legacy colour. */
+body[data-app-view="future"] #homeProjection .projection-heading h2,
+body[data-app-view="future"] #homeProjection .projection-heading h2 strong,
+body[data-app-view="future"] #futureModelRange .future-model-heading h2{
+  color:#202833!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#202833!important;
+}
+
+body[data-app-view="future"] #homeProjection .projection-heading .eyebrow,
+body[data-app-view="future"] #futureModelRange .future-model-heading .eyebrow{
+  color:#9d6639!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#9d6639!important;
+}
+
+body[data-app-view="future"] #homeProjection .projection-heading .source-date{
+  color:#6d7278!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#6d7278!important;
+}
+
+/* Planning-range hierarchy: ink values, copper centre, muted support copy. */
+body[data-app-view="future"] #futureModelRange .v157-range-copy > strong{
+  color:#202833!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#202833!important;
+}
+body[data-app-view="future"] #futureModelRange .v157-range-copy > strong i,
+body[data-app-view="future"] #futureModelRange .v157-range-copy > small,
+body[data-app-view="future"] #futureModelRange .v157-range-labels span{
+  color:#6d7278!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#6d7278!important;
+}
+body[data-app-view="future"] #futureModelRange .v157-range-labels strong{
+  color:#202833!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#202833!important;
+}
+body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre strong{
+  color:#9d6639!important;
+  -webkit-text-fill-color:#9d6639!important;
+}
+
+/* Keep the three property summary cards aligned to the same hierarchy. */
+body[data-app-view="future"] #homeProjection .projection-core-card > span,
+body[data-app-view="future"] #homeProjection .projection-core-card > small{
+  color:#6d7278!important;
+  opacity:1!important;
+}
+body[data-app-view="future"] #homeProjection .projection-core-card > strong{
+  color:#202833!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#202833!important;
+}

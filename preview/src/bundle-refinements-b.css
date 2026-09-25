@@ -1,0 +1,1849 @@
+/* Mortgage Manager consolidated refinement styles B.
+   Preserves original source order. */
+
+/* ===== src/v15.11.css ===== */
+/* V0.15.11 — glance-first interaction model + setup/data polish */
+
+/* Main app: cards are glance-first, not tap-to-open. */
+.app-view-current [data-expandable-card],
+.app-view-upcoming [data-expandable-card],
+.app-view-future [data-expandable-card]{
+  cursor:default!important;
+}
+.app-view-current .expand-hint,
+.app-view-upcoming .expand-hint,
+.app-view-future .expand-hint,
+.app-view-current [data-expand-card],
+.app-view-upcoming [data-expand-card],
+.app-view-future [data-expand-card]{
+  display:none!important;
+}
+
+/* Keep the useful home/mortgage edit row visible without opening a modal card. */
+.app-view-current #mortgageExtraTiles{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:18px!important;
+  margin-top:18px!important;
+  padding-top:16px!important;
+  border-top:1px solid var(--border-soft)!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile{
+  min-width:0!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile span{
+  display:block!important;
+  color:var(--muted)!important;
+  font-size:11px!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile strong{
+  display:block!important;
+  margin-top:6px!important;
+  color:var(--text)!important;
+  font-size:18px!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable::after{
+  content:'Edit'!important;
+  position:absolute!important;
+  top:0!important;
+  right:0!important;
+  color:var(--accent-strong)!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  letter-spacing:.08em!important;
+  text-transform:uppercase!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable{
+  position:relative!important;
+  cursor:pointer!important;
+}
+
+/* A consistent, premium hover lift across the product. */
+@media (hover:hover) and (pointer:fine){
+  .app-view-current .hero-panel,
+  .app-view-current .panel,
+  .app-view-current .v15-current-journey,
+  .app-view-upcoming .upcoming-section,
+  .app-view-upcoming .deal-planner,
+  .app-view-future #homeProjection,
+  .app-view-future .future-model-range-panel,
+  .app-view-future #futureWaitPlanner,
+  .app-view-future #nextHomePlanner,
+  .personal-modal .personal-section{
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease!important;
+  }
+  .app-view-current .hero-panel:hover,
+  .app-view-current .panel:hover,
+  .app-view-upcoming .upcoming-section:hover,
+  .app-view-upcoming .deal-planner:hover,
+  .app-view-future #homeProjection:hover,
+  .app-view-future .future-model-range-panel:hover,
+  .app-view-future #futureWaitPlanner:hover,
+  .app-view-future #nextHomePlanner:hover,
+  .personal-modal .personal-section:hover{
+    transform:translateY(-2px)!important;
+    box-shadow:0 20px 50px rgba(61,48,36,.10)!important;
+    border-color:#d3b99f!important;
+  }
+}
+
+/* Setup & data — warm light controls, not the old dark setup theme. */
+.personal-backdrop{
+  background:rgba(32,40,51,.34)!important;
+  backdrop-filter:blur(10px)!important;
+}
+.personal-modal{
+  background:#f8f4ee!important;
+  color:#202833!important;
+  border:1px solid #d9d0c5!important;
+  box-shadow:0 32px 90px rgba(38,31,24,.22)!important;
+}
+.personal-modal-head h2,
+.personal-modal h3,
+.personal-modal strong{color:#202833!important}
+.personal-modal-head p,
+.personal-modal p,
+.personal-modal small,
+.personal-modal label{color:#6d7278!important}
+.personal-modal .eyebrow{color:#9d6639!important}
+
+.personal-close{
+  width:auto!important;
+  min-width:64px!important;
+  height:36px!important;
+  padding:0 14px!important;
+  border:1px solid #d6c8b8!important;
+  border-radius:11px!important;
+  background:#fffaf4!important;
+  color:#202833!important;
+  font-size:11px!important;
+  font-weight:780!important;
+  box-shadow:0 3px 10px rgba(61,48,36,.05)!important;
+}
+.personal-close:hover,
+.personal-close:focus-visible{
+  background:#f2e7da!important;
+  border-color:#c9986e!important;
+  color:#202833!important;
+  box-shadow:0 10px 24px rgba(61,48,36,.12)!important;
+  outline:none!important;
+}
+
+/* Setup tabs: selected tab must stay visible. */
+.personal-modal .setup-tab-nav{
+  background:#eee7de!important;
+  border-color:#ddd2c6!important;
+}
+.personal-modal .setup-tab-nav button{
+  color:#6d7278!important;
+  border:1px solid transparent!important;
+}
+.personal-modal .setup-tab-nav button.active,
+.personal-modal .setup-tab-nav button[aria-selected="true"]{
+  background:#252d36!important;
+  color:#fffaf3!important;
+  border-color:#252d36!important;
+  box-shadow:0 6px 16px rgba(37,45,54,.15)!important;
+}
+.personal-modal .setup-tab-nav button:hover:not(.active){
+  background:#fffaf4!important;
+  color:#202833!important;
+}
+
+/* Setup inputs and buttons stay aligned and on-theme. */
+.personal-modal .personal-form label,
+.personal-modal .setup-future-grid label{
+  background:transparent!important;
+  border:0!important;
+  padding:0!important;
+}
+.personal-modal input,
+.personal-modal select,
+.personal-modal textarea{
+  min-height:46px!important;
+  border:1px solid #ddd2c6!important;
+  border-radius:12px!important;
+  background:#fffaf4!important;
+  color:#202833!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.75)!important;
+}
+.personal-modal input:focus,
+.personal-modal select:focus,
+.personal-modal textarea:focus{
+  border-color:#c9986e!important;
+  outline:2px solid rgba(200,142,92,.14)!important;
+  outline-offset:1px!important;
+}
+.personal-modal .personal-button,
+.personal-modal .progress-action{
+  min-height:38px!important;
+  border:1px solid #d6c8b8!important;
+  background:#fffaf4!important;
+  color:#202833!important;
+  box-shadow:0 3px 10px rgba(61,48,36,.04)!important;
+}
+.personal-modal .personal-button:hover,
+.personal-modal .progress-action:hover{
+  background:#f2e7da!important;
+  border-color:#c9986e!important;
+  box-shadow:0 10px 24px rgba(61,48,36,.10)!important;
+}
+.personal-modal .personal-button.primary{
+  background:#252d36!important;
+  color:#fffaf3!important;
+  border-color:#252d36!important;
+}
+
+/* Reserve the helper-text row so paired Future assumption fields finish level. */
+.personal-modal .setup-future-grid label{
+  display:grid!important;
+  grid-template-rows:auto 46px 16px!important;
+  align-content:start!important;
+  gap:7px!important;
+}
+.personal-modal .setup-future-grid label>span{
+  min-height:16px!important;
+  align-self:start!important;
+}
+
+/* Warm scrollbars for the page and Setup modal. */
+html,
+body,
+.personal-modal{
+  scrollbar-color:#b9875f #ebe3d9;
+  scrollbar-width:thin;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.personal-modal::-webkit-scrollbar{width:11px;height:11px}
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+.personal-modal::-webkit-scrollbar-track{background:#ebe3d9}
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+.personal-modal::-webkit-scrollbar-thumb{
+  background:#b9875f;
+  border:3px solid #ebe3d9;
+  border-radius:999px;
+}
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+.personal-modal::-webkit-scrollbar-thumb:hover{background:#9d6639}
+
+@media(max-width:760px){
+  .app-view-current #mortgageExtraTiles{grid-template-columns:1fr!important;gap:12px!important}
+}
+
+
+/* ===== src/v15.12.css ===== */
+/* V0.15.12 — remove legacy green surfaces and bring quick-edit into the warm light system */
+
+/* Quick edit sheet: same visual language as the rest of V15. */
+.summary-quick-editor-backdrop{
+  background:rgba(32,40,51,.34)!important;
+  backdrop-filter:blur(10px)!important;
+}
+.summary-quick-editor{
+  background:#f8f4ee!important;
+  color:var(--text)!important;
+  border:1px solid #d9d0c5!important;
+  box-shadow:0 30px 90px rgba(38,31,24,.24)!important;
+}
+.summary-quick-editor-head span{color:#9d6639!important}
+.summary-quick-editor-head strong{color:var(--text)!important}
+.summary-quick-close{
+  color:#6d7278!important;
+  background:transparent!important;
+}
+.summary-quick-close:hover,.summary-quick-close:focus-visible{color:var(--text)!important}
+.summary-quick-field{color:#6d7278!important}
+.summary-quick-input-wrap{
+  background:var(--surface-control)!important;
+  border:1px solid #d6c8b8!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.75)!important;
+}
+.summary-quick-input-wrap:focus-within{
+  border-color:#c88e5c!important;
+  box-shadow:0 0 0 3px rgba(200,142,92,.12)!important;
+}
+.summary-quick-input-wrap i{color:#6d7278!important}
+.summary-quick-input-wrap input{
+  color:var(--text)!important;
+  -webkit-text-fill-color:var(--text)!important;
+}
+.summary-quick-actions button{
+  border:1px solid #d6c8b8!important;
+  background:var(--surface-control)!important;
+  color:var(--text)!important;
+  box-shadow:0 3px 10px rgba(61,48,36,.05)!important;
+}
+.summary-quick-actions button:hover{
+  background:#f2e7da!important;
+  border-color:#c9986e!important;
+  box-shadow:0 10px 24px rgba(61,48,36,.10)!important;
+}
+.summary-quick-save{
+  background:#c88e5c!important;
+  color:var(--text)!important;
+  border-color:#c88e5c!important;
+}
+.summary-quick-save:hover{background:#b77c4b!important;border-color:#b77c4b!important}
+
+/* Editing affordances should be copper, not mint/green. */
+.summary-editable:hover,.summary-editable:focus-visible{
+  border-color:#d3b99f!important;
+  background:#f7efe5!important;
+}
+
+/* Remove the last pale green card backgrounds. Keep colour as a small semantic accent only. */
+.deal-action-hint,
+body[data-app-view="upcoming"] .deal-action-hint{
+  background:#f2ebe2!important;
+  border-color:#ded0c0!important;
+}
+.deal-action-hint span{color:#9d6639!important}
+.deal-action-hint strong{color:var(--text)!important}
+.deal-action-hint small{color:#6d7278!important}
+
+body[data-app-view="future"] #homeProjection .projection-core-card.current-estimate,
+body[data-app-view="future"] #homeProjection .projection-core-card.future-estimate,
+body[data-app-view="future"] .next-home-results>div.primary,
+body[data-app-view="future"] #nextHomePlanner .next-home-results>div.primary{
+  background:#f7f1e8!important;
+  border-color:#dfd1c1!important;
+}
+body[data-app-view="future"] #homeProjection .projection-core-card.current-estimate strong,
+body[data-app-view="future"] #homeProjection .projection-core-card.future-estimate strong,
+body[data-app-view="future"] .next-home-results>div.primary strong{
+  color:var(--text)!important;
+  -webkit-text-fill-color:var(--text)!important;
+}
+body[data-app-view="future"] #homeProjection .projection-core-card.current-estimate span,
+body[data-app-view="future"] #homeProjection .projection-core-card.current-estimate small,
+body[data-app-view="future"] #homeProjection .projection-core-card.future-estimate span,
+body[data-app-view="future"] #homeProjection .projection-core-card.future-estimate small,
+body[data-app-view="future"] .next-home-results>div.primary span,
+body[data-app-view="future"] .next-home-results>div.primary small{
+  color:#6d7278!important;
+  -webkit-text-fill-color:#6d7278!important;
+}
+
+/* Selected/use actions stay warm and quiet rather than green. */
+body[data-app-view="future"] .projection-use-button{
+  background:var(--surface-control)!important;
+  border-color:#d3b99f!important;
+  color:#9d6639!important;
+}
+body[data-app-view="future"] .projection-use-button:hover{
+  background:#f2e7da!important;
+  border-color:#c88e5c!important;
+  color:#7d4e2b!important;
+}
+
+/* Setup & data: give mortgage-history rows enough room inside the modal itself. */
+.personal-backdrop .personal-modal{
+  width:min(900px,calc(100vw - 36px))!important;
+}
+.personal-modal .history-row,
+.personal-modal .history-deal-row{
+  min-width:0!important;
+}
+.personal-modal .history-deal-row{
+  grid-template-columns:minmax(0,1.15fr) minmax(0,1.15fr) minmax(72px,.62fr) minmax(96px,.85fr) minmax(96px,.85fr) auto!important;
+  gap:10px!important;
+}
+.personal-modal .history-deal-row label,
+.personal-modal .history-deal-row input{min-width:0!important}
+.personal-modal .history-deal-row .history-remove{
+  align-self:end!important;
+  white-space:nowrap!important;
+}
+
+@media(max-width:860px){
+  .personal-backdrop .personal-modal{width:min(760px,calc(100vw - 20px))!important}
+  .personal-modal .history-deal-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .personal-modal .history-deal-row .history-remove{grid-column:1/-1!important;width:100%!important}
+}
+
+
+/* ===== src/v15.14.css ===== */
+/* V0.15.14 — source-level Setup width fix + no stale-data flash */
+
+/* Setup dialog is genuinely wide enough for history, but still respects the viewport. */
+body .personal-backdrop .personal-modal{
+  width:min(900px,calc(100vw - 36px))!important;
+  max-width:900px!important;
+  box-sizing:border-box!important;
+}
+
+/* Mortgage deal rows: five data fields across, action on its own clean row. */
+body .personal-modal .history-deal-row{
+  width:100%!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(130px,1.2fr) minmax(130px,1.2fr) minmax(72px,.58fr) minmax(96px,.82fr) minmax(96px,.82fr)!important;
+  gap:10px!important;
+  overflow:visible!important;
+}
+body .personal-modal .history-deal-row label,
+body .personal-modal .history-deal-row input{
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+body .personal-modal .history-deal-row .history-remove{
+  grid-column:1/-1!important;
+  justify-self:end!important;
+  width:auto!important;
+  max-width:100%!important;
+  margin-top:0!important;
+}
+
+/* Setup Close: authoritative warm control, including inherited generic button rules. */
+body .personal-backdrop .personal-modal button.personal-close,
+body .personal-backdrop .personal-modal .personal-modal-head button.personal-close{
+  appearance:none!important;
+  width:auto!important;
+  min-width:64px!important;
+  max-width:none!important;
+  height:36px!important;
+  min-height:36px!important;
+  padding:0 14px!important;
+  margin:0!important;
+  border:1px solid #d6c8b8!important;
+  border-radius:11px!important;
+  background:var(--surface-control)!important;
+  background-image:none!important;
+  color:var(--text)!important;
+  -webkit-text-fill-color:var(--text)!important;
+  font:inherit!important;
+  font-size:11px!important;
+  font-weight:780!important;
+  line-height:1!important;
+  box-shadow:0 3px 10px rgba(61,48,36,.05)!important;
+}
+body .personal-backdrop .personal-modal button.personal-close:hover,
+body .personal-backdrop .personal-modal button.personal-close:focus-visible{
+  background:#f2e7da!important;
+  color:var(--text)!important;
+  -webkit-text-fill-color:var(--text)!important;
+  border-color:#c9986e!important;
+  box-shadow:0 10px 24px rgba(61,48,36,.12)!important;
+  outline:none!important;
+}
+
+@media(max-width:760px){
+  body .personal-backdrop .personal-modal{width:min(100%,calc(100vw - 16px))!important}
+  body .personal-modal .history-deal-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  body .personal-modal .history-deal-row .history-remove{grid-column:1/-1!important;width:100%!important;justify-self:stretch!important}
+}
+
+
+/* ===== src/offline-v1-final.css ===== */
+/* Offline V1 final visual pass — authoritative last-mile UI polish */
+
+/* Shared page-intro/banner language */
+body .v15-journey-shell,
+body .deal-action-hint,
+body #futureOverpaymentAssumption{
+  border:1px solid rgba(157,102,57,.16)!important;
+  border-radius:20px!important;
+  background:linear-gradient(135deg,rgba(255,250,244,.96),rgba(244,233,220,.9))!important;
+  box-shadow:0 14px 34px rgba(65,50,37,.065)!important;
+}
+body .deal-action-hint,
+body #futureOverpaymentAssumption{padding:16px 18px!important}
+body .app-view-upcoming .deal-action-hint{margin:12px 0 16px!important}
+
+/* Setup & data — rounded sections with breathing room */
+body .personal-modal .setup-pane{padding:16px 6px 6px!important}
+body .personal-modal .personal-section{
+  margin-top:16px!important;
+  padding:18px!important;
+  border:1px solid #ddd2c6!important;
+  border-radius:18px!important;
+  background:rgba(255,250,244,.72)!important;
+  box-shadow:0 8px 24px rgba(61,48,36,.035)!important;
+}
+body .personal-modal .personal-section + .personal-section{margin-top:14px!important}
+body .personal-modal .personal-section h3{margin-top:0!important}
+body .personal-modal details.personal-section>summary,
+body .personal-modal .personal-section>summary{
+  position:relative!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:16px!important;
+  min-height:44px!important;
+  padding:0 34px 0 0!important;
+  list-style:none!important;
+  cursor:pointer!important;
+}
+body .personal-modal details.personal-section>summary::-webkit-details-marker,
+body .personal-modal .personal-section>summary::-webkit-details-marker{display:none!important}
+body .personal-modal details.personal-section>summary::after,
+body .personal-modal .personal-section>summary::after{
+  content:'›'!important;
+  position:absolute!important;
+  right:2px!important;
+  top:50%!important;
+  transform:translateY(-50%) rotate(0deg)!important;
+  display:grid!important;
+  place-items:center!important;
+  width:24px!important;
+  height:24px!important;
+  border-radius:999px!important;
+  background:#f1e6da!important;
+  color:#7e5837!important;
+  font-size:18px!important;
+  line-height:1!important;
+  transition:transform .12s ease!important;
+}
+body .personal-modal details.personal-section[open]>summary::after,
+body .personal-modal .personal-section[open]>summary::after{transform:translateY(-50%) rotate(90deg)!important}
+body .personal-modal .history-summary-chevron,
+body .personal-modal .summary-plus{display:none!important}
+body .personal-modal .mortgage-history-body{padding-top:14px!important}
+body .personal-modal input[type='month']{color-scheme:light!important;padding-right:12px!important}
+body .personal-modal input[type='month']::-webkit-calendar-picker-indicator{
+  opacity:.9!important;
+  cursor:pointer!important;
+  filter:contrast(1.25)!important;
+}
+
+/* Variable-height disclosure panels must not lift/animate while opening. */
+body details,
+body details[open],
+body .personal-modal details.personal-section,
+body .app-view details,
+body #nextHomePlanner,
+body #homeValueHistory,
+body .next-home-settings,
+body .edit-panel{
+  transition:none!important;
+  animation:none!important;
+  transform:none!important;
+  overflow-anchor:none!important;
+}
+@media(hover:hover) and (pointer:fine){
+  body .personal-modal details.personal-section:hover,
+  body .app-view details:hover,
+  body #nextHomePlanner:hover,
+  body #homeValueHistory:hover,
+  body .next-home-settings:hover,
+  body .edit-panel:hover{
+    transform:none!important;
+  }
+}
+
+/* Ownership wording is clarified in JS; make history grid less cramped. */
+body .personal-modal .history-deal-row{border-radius:16px!important;background:var(--surface-control)!important}
+
+/* Current summary — eight distinct floating tiles, 4 × 2 on desktop */
+body .v15-current-stats{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:12px!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  overflow:visible!important;
+  box-shadow:none!important;
+}
+body .v15-current-stats .v15-stat{
+  min-height:108px!important;
+  padding:17px 18px!important;
+  border:1px solid rgba(68,58,48,.11)!important;
+  border-radius:17px!important;
+  background:rgba(251,248,243,.98)!important;
+  box-shadow:0 10px 28px rgba(62,49,38,.065)!important;
+}
+body .v15-current-stats .v15-stat:nth-child(n){border-right:1px solid rgba(68,58,48,.11)!important;border-bottom:1px solid rgba(68,58,48,.11)!important}
+@media(hover:hover) and (pointer:fine){
+  body .v15-current-stats .v15-stat{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease!important}
+  body .v15-current-stats .v15-stat:hover{
+    transform:translateY(-2px)!important;
+    border-color:rgba(200,142,92,.22)!important;
+    box-shadow:0 18px 38px rgba(61,48,36,.09)!important;
+  }
+}
+
+/* Editable values should feel editable without shouting EDIT. */
+body .app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable::after{display:none!important;content:none!important}
+body .app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable{
+  border-radius:12px!important;
+  padding:7px 9px!important;
+  margin:-7px -9px!important;
+  transition:background .16s ease,box-shadow .16s ease,transform .16s ease!important;
+}
+@media(hover:hover) and (pointer:fine){
+  body .app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable:hover{
+    background:rgba(255,250,244,.82)!important;
+    box-shadow:0 8px 20px rgba(61,48,36,.07)!important;
+    transform:translateY(-1px)!important;
+  }
+}
+body .app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable:focus-visible{
+  outline:2px solid rgba(200,142,92,.42)!important;
+  outline-offset:3px!important;
+}
+
+/* Legacy expanded-card behaviour must never leak into the final UI. */
+body .app-view .card-close-bar,
+body .app-view .expand-hint,
+body .app-view [data-expand-card],
+body .card-backdrop{display:none!important}
+body.card-open{overflow:auto!important}
+
+/* Journey — centred, chronological and visibly progressed. */
+body .v15-journey-shell{padding:18px 20px!important;overflow:hidden!important}
+body .v15-journey-strip{
+  width:min(1120px,100%)!important;
+  margin:0 auto 12px!important;
+  padding:0 18px!important;
+  align-items:start!important;
+}
+body .v15-journey-strip::before{
+  left:10%!important;
+  right:10%!important;
+  top:31px!important;
+  height:3px!important;
+  border-radius:999px!important;
+  background:linear-gradient(90deg,#6fae9d 0%,#6fae9d var(--journey-progress,0%),#d7d6d1 var(--journey-progress,0%),#d7d6d1 100%)!important;
+}
+body .v15-journey-step.is-complete .v15-journey-icon{box-shadow:0 0 0 4px rgba(111,174,157,.08)!important}
+body .v15-journey-step.is-current .v15-journey-icon{box-shadow:0 0 0 5px rgba(200,142,92,.11)!important}
+
+/* Upcoming — compact, stronger hierarchy, no faux empty panels. */
+body .app-view-upcoming .upcoming-sections{gap:16px!important}
+body .app-view-upcoming .upcoming-section{padding:20px 22px!important;border-radius:20px!important}
+body .app-view-upcoming .upcoming-section-heading{margin-bottom:12px!important;padding-bottom:10px!important}
+body .app-view-upcoming .upcoming-rates,
+body .app-view-upcoming .upcoming-position{background:rgba(247,242,234,.98)!important}
+body .app-view-upcoming .upcoming-rates .upcoming-section-body,
+body .app-view-upcoming .upcoming-position .upcoming-section-body{min-height:0!important}
+body .app-view-upcoming .deal-planner-summary>div,
+body .app-view-upcoming .deal-planner-rate{
+  border-radius:16px!important;
+  background:var(--surface-control)!important;
+  box-shadow:0 8px 22px rgba(61,48,36,.045)!important;
+}
+
+/* Replace the old pale-green market box with the same warm neutral card language. */
+body .upcoming-rates .live-rate-choices{
+  margin:12px 0 0!important;
+  padding:14px 16px!important;
+  border:1px solid rgba(68,58,48,.10)!important;
+  border-radius:16px!important;
+  background:var(--surface-control)!important;
+  box-shadow:0 8px 22px rgba(61,48,36,.04)!important;
+}
+body .upcoming-rates .live-rate-head{margin-bottom:10px!important}
+body .upcoming-rates .live-rate-grid{gap:10px!important}
+
+/* Market benchmark cards are read-only scenarios, not selectable products. */
+body .upcoming-rates .live-rate-card{
+  cursor:default!important;
+  pointer-events:none!important;
+  border-radius:14px!important;
+  background:#f7f0e8!important;
+  border-color:rgba(68,58,48,.09)!important;
+}
+body .upcoming-rates .live-rate-card::after{display:none!important;content:none!important}
+body .upcoming-rates .live-rate-card.is-selected{border-color:rgba(68,58,48,.09)!important;background:#f7f0e8!important}
+body .upcoming-rates .live-rate-selected-summary,
+body .upcoming-rates .live-rate-selection-note{display:none!important}
+
+/* Future — restore distinct rounded tiles and depth. */
+body .app-view-future .future-cost-inline,
+body .app-view-future .property-cost-grid{
+  border-radius:18px!important;
+}
+body .app-view-future .next-home-summary-card,
+body .app-view-future .home-profile-range>div{
+  border:1px solid rgba(68,58,48,.11)!important;
+  border-radius:17px!important;
+  background:var(--surface-control)!important;
+  box-shadow:0 10px 28px rgba(62,49,38,.06)!important;
+}
+body .app-view-future .next-home-subhead>div>span{display:none!important}
+body .app-view-future .next-home-subhead{margin-bottom:12px!important}
+@media(hover:hover) and (pointer:fine){
+  body .app-view-future .next-home-summary-card{
+    transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease!important;
+  }
+  body .app-view-future .next-home-summary-card:hover{
+    transform:translateY(-3px)!important;
+    border-radius:17px!important;
+    border-color:rgba(200,142,92,.25)!important;
+    box-shadow:0 18px 38px rgba(61,48,36,.10)!important;
+    background:var(--surface-control)!important;
+  }
+}
+
+/* Prevent flat square hover layers from older CSS. */
+body .app-view-future .future-wait-planner:hover,
+body .app-view-future #nextHomePlanner:hover,
+body .app-view-future #homeProjection:hover{
+  border-radius:24px!important;
+}
+
+@media(max-width:900px){
+  body .v15-current-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:620px){
+  body .personal-modal .setup-pane{padding-inline:0!important}
+  body .personal-modal .personal-section{padding:15px!important;border-radius:16px!important}
+  body .v15-current-stats{grid-template-columns:1fr!important;gap:10px!important}
+  body .v15-journey-strip{grid-template-columns:1fr!important;padding:0!important;gap:10px!important}
+  body .v15-journey-strip::before{display:none!important}
+  body .v15-journey-step{display:grid!important;grid-template-columns:40px 1fr!important;grid-template-rows:auto auto!important;text-align:left!important;padding:0!important;column-gap:10px!important}
+  body .v15-journey-icon{grid-row:1/3!important;margin:0!important}
+  body .v15-journey-step strong,body .v15-journey-step span{align-self:center!important}
+}
+
+
+/* V0.15.25 — Upcoming empty-state colour cleanup + interest-card overflow fix */
+/* Empty planner prompts are informational, not success states: keep them in the warm ivory/copper system. */
+body .app-view-upcoming .deal-planner-empty{
+  margin:12px 0 0!important;
+  padding:16px 18px!important;
+  border:1px solid rgba(157,102,57,.16)!important;
+  border-radius:16px!important;
+  background:linear-gradient(135deg,var(--surface-control),#f3e8dc)!important;
+  box-shadow:0 8px 22px rgba(61,48,36,.04)!important;
+}
+body .app-view-upcoming .deal-planner-empty strong{
+  color:var(--text)!important;
+}
+body .app-view-upcoming .deal-planner-empty span{
+  color:var(--muted)!important;
+}
+
+/* Remove the remaining pale-mint fill from completed journey markers.
+   Completion can stay legible through the icon/border without introducing another surface colour. */
+body .v15-current-journey-step.is-complete .v15-current-journey-icon,
+body .v15-journey-step.is-complete .v15-journey-icon{
+  background:#f2e8dc!important;
+  border-color:#b99a7c!important;
+  color:#76583f!important;
+}
+
+/* Setup methodology disclosure — keep title/subtitle stacked and chevron centred. */
+body .personal-modal #methodologySection>summary{
+  align-items:center!important;
+  min-height:52px!important;
+  padding:4px 38px 4px 0!important;
+}
+body .personal-modal #methodologySection>summary>span:first-child{
+  display:grid!important;
+  gap:3px!important;
+  min-width:0!important;
+}
+body .personal-modal #methodologySection>summary>span:first-child>strong,
+body .personal-modal #methodologySection>summary>span:first-child>small{
+  display:block!important;
+  margin:0!important;
+  line-height:1.25!important;
+}
+body .personal-modal #methodologySection>summary>span:first-child>strong{
+  font-size:14px!important;
+}
+body .personal-modal #methodologySection>summary>span:first-child>small{
+  color:var(--muted)!important;
+  font-size:10px!important;
+  font-weight:500!important;
+}
+body .personal-modal #methodologySection>summary::after{
+  top:50%!important;
+  right:0!important;
+  width:24px!important;
+  height:24px!important;
+  margin:0!important;
+  transform:translateY(-50%) rotate(0deg)!important;
+}
+body .personal-modal #methodologySection[open]>summary::after{
+  transform:translateY(-50%) rotate(90deg)!important;
+}
+
+/* Methodology disclosure chevron — draw the arrow instead of relying on a text glyph. */
+body .personal-modal #methodologySection>summary::after{
+  content:""!important;
+  box-sizing:border-box!important;
+  width:24px!important;
+  height:24px!important;
+  border:0!important;
+  border-radius:999px!important;
+  background:
+    linear-gradient(45deg, transparent 46%, #7e5837 47%, #7e5837 56%, transparent 57%) calc(50% - 2px) 50%/7px 7px no-repeat,
+    linear-gradient(-45deg, transparent 46%, #7e5837 47%, #7e5837 56%, transparent 57%) calc(50% + 2px) 50%/7px 7px no-repeat,
+    #f1e6da!important;
+  transform:translateY(-50%) rotate(0deg)!important;
+  transform-origin:center!important;
+}
+body .personal-modal #methodologySection[open]>summary::after{
+  transform:translateY(-50%) rotate(180deg)!important;
+}
+
+/* Methodology disclosure — simple centred chevron. */
+body .personal-modal #methodologySection>summary::after{
+  display:none!important;
+  content:none!important;
+}
+body .personal-modal #methodologySection .methodology-chevron{
+  position:absolute!important;
+  right:0!important;
+  top:50%!important;
+  display:grid!important;
+  place-items:center!important;
+  width:24px!important;
+  height:24px!important;
+  margin:0!important;
+  border-radius:999px!important;
+  background:#f1e6da!important;
+  color:#7e5837!important;
+  transform:translateY(-50%)!important;
+}
+body .personal-modal #methodologySection .methodology-chevron::before{
+  content:""!important;
+  width:6px!important;
+  height:6px!important;
+  border-right:1.5px solid currentColor!important;
+  border-bottom:1.5px solid currentColor!important;
+  transform:translateY(-1px) rotate(45deg)!important;
+  transform-origin:center!important;
+}
+body .personal-modal #methodologySection[open] .methodology-chevron::before{
+  transform:translateY(1px) rotate(225deg)!important;
+}
+
+/* Mortgage history disclosure — centred down/up chevron. */
+body .personal-modal .mortgage-history-section>summary::after{
+  content:""!important;
+  position:absolute!important;
+  right:2px!important;
+  top:50%!important;
+  width:24px!important;
+  height:24px!important;
+  margin:0!important;
+  border-radius:999px!important;
+  background:#f1e6da!important;
+  color:#7e5837!important;
+  transform:translateY(-50%)!important;
+}
+body .personal-modal .mortgage-history-section>summary::before{
+  content:""!important;
+  position:absolute!important;
+  right:10px!important;
+  top:50%!important;
+  width:6px!important;
+  height:6px!important;
+  border-right:1.5px solid #7e5837!important;
+  border-bottom:1.5px solid #7e5837!important;
+  transform:translateY(-65%) rotate(45deg)!important;
+  transform-origin:center!important;
+  z-index:1!important;
+}
+body .personal-modal .mortgage-history-section[open]>summary::after{
+  transform:translateY(-50%)!important;
+}
+body .personal-modal .mortgage-history-section[open]>summary::before{
+  transform:translateY(-35%) rotate(225deg)!important;
+}
+
+/* Setup & data disclosure system — simple professional chevrons. */
+body .personal-modal details.personal-section>summary{
+  position:relative!important;
+  padding-right:30px!important;
+}
+body .personal-modal details.personal-section>summary::after{
+  content:""!important;
+  position:absolute!important;
+  right:4px!important;
+  top:50%!important;
+  display:block!important;
+  width:7px!important;
+  height:7px!important;
+  margin:0!important;
+  border:0!important;
+  border-right:1.5px solid #8b6849!important;
+  border-bottom:1.5px solid #8b6849!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  transform:translateY(-65%) rotate(45deg)!important;
+  transform-origin:center!important;
+  transition:transform .15s ease!important;
+}
+body .personal-modal details.personal-section[open]>summary::after{
+  transform:translateY(-35%) rotate(225deg)!important;
+}
+body .personal-modal details.personal-section>summary::before{
+  display:none!important;
+  content:none!important;
+}
+body .personal-modal .history-summary-chevron,
+body .personal-modal .summary-plus,
+body .personal-modal .methodology-chevron{
+  display:none!important;
+}
+
+
+/* ===== src/page-refine.css ===== */
+.current-home-inline{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.07);background:transparent!important;box-shadow:none!important;border-radius:0!important}.current-home-inline .panel-heading{margin-bottom:8px}.current-home-inline .panel-heading h2{font-size:15px}.current-home-inline .ownership-bar{margin-top:8px;height:8px}.current-home-inline .home-value{display:flex;align-items:baseline;gap:10px;margin-top:10px}.current-home-inline .home-value span{font-size:10px}.current-home-inline .home-value strong{font-size:30px}.current-home-inline .home-value small{margin:0}.current-home-inline .home-stats{margin-top:10px!important;gap:8px}.current-home-inline .home-stats>div{padding:10px 12px!important}.current-home-inline .home-stats strong{font-size:16px!important}.current-home-inline .ownership-legend{margin-top:9px!important;padding-top:9px!important}.app-view-current>.app-view-content>#currentOverpaymentPanel{display:none!important}
+.whatif-source-only{display:none!important}.trajectory-what-if #compactWhatIf{display:none!important}.whatif-regular-inline{display:grid;grid-template-columns:minmax(160px,.55fr) minmax(360px,1.45fr);gap:12px;align-items:center;margin:12px 0 10px;padding:11px 12px;border-top:1px solid rgba(255,255,255,.065);border-bottom:1px solid rgba(255,255,255,.065)}.whatif-regular-label span{display:block;color:var(--muted);font-size:10px}.whatif-regular-label strong{display:block;margin-top:3px;font-size:18px}.whatif-regular-live{display:grid;grid-template-columns:minmax(0,.8fr) minmax(210px,1.2fr);gap:8px}.whatif-regular-live .current-savings-summary,.whatif-regular-live .current-overpay-control{margin:0!important;min-height:0!important;padding:10px 12px!important;background:rgba(255,255,255,.025)!important}.whatif-regular-live .current-savings-summary strong{font-size:17px!important}.whatif-regular-live .current-savings-summary span,.whatif-regular-live .current-savings-summary small,.whatif-regular-live .current-overpay-control small{font-size:10px!important}.total-overpay-buttons{margin-top:10px}.total-overpay-buttons button.active{background:var(--accent);color:#062018;border-color:transparent}.total-custom-chip input{min-width:72px}
+.future-remove{display:none!important}.future-model-range-panel,.future-wait-planner{padding:24px;margin:0!important}.future-model-heading,.future-wait-heading{margin-bottom:16px}.future-model-heading h2,.future-wait-heading h2{margin-top:3px;font-size:19px}.future-model-range-panel .home-profile-range{margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}.temporal-feature-home-projection .projection-core-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.future-stage-label{display:none!important}
+@media(max-width:1050px){.current-fix-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.whatif-regular-inline{grid-template-columns:1fr}.whatif-regular-live{grid-template-columns:1fr 1fr}.temporal-feature-home-projection .projection-core-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.current-home-inline{margin-top:12px;padding-top:12px}.current-home-inline .home-value{display:block}.current-home-inline .home-value small{display:block;margin-top:3px}.whatif-regular-inline{grid-template-columns:1fr;padding:10px 0}.whatif-regular-live{grid-template-columns:1fr}.current-fix-stats{grid-template-columns:1fr 1fr}.app-view-upcoming .upcoming-section{padding:18px!important}.temporal-feature-home-projection .projection-core-grid{grid-template-columns:1fr}.future-model-range-panel{padding:18px}}
+@media(max-width:430px){.current-fix-stats{grid-template-columns:1fr}}
+
+/* Upcoming — authoritative final layout */
+.app-view-upcoming .upcoming-sections{
+  gap:18px;
+}
+.app-view-upcoming .upcoming-section{
+  border-radius:20px;
+}
+.app-view-upcoming .upcoming-section-heading{
+  padding-bottom:12px;
+}
+.app-view-upcoming .upcoming-section-heading h2{
+  font-size:19px;
+}
+.app-view-upcoming .upcoming-position .upcoming-section-heading h2{
+  display:flex;
+  align-items:baseline;
+  flex-wrap:wrap;
+}
+.app-view-upcoming .deal-end-title-separator{
+  margin:0 .38em;
+  color:var(--muted-2);
+  font-family:inherit;
+  font-size:.72em;
+  font-weight:400;
+}
+.app-view-upcoming .deal-end-title-date{
+  color:var(--muted);
+  font-family:inherit;
+  font-size:.68em;
+  font-weight:500;
+  letter-spacing:.01em;
+  white-space:nowrap;
+}
+.app-view-upcoming .current-fix-stats{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:9px;
+  margin-top:18px;
+}
+.app-view-upcoming .deal-position-milestone{
+  display:grid;
+  grid-template-columns:minmax(220px,2fr) minmax(0,3fr);
+  align-items:center;
+  column-gap:32px;
+  margin-top:18px;
+  padding:20px 24px;
+  border:1px solid rgba(68,58,48,.10);
+  border-radius:16px;
+  background:var(--surface-control);
+  box-shadow:0 8px 22px rgba(61,48,36,.045);
+}
+.app-view-upcoming .deal-position-milestone>div:first-child,
+.app-view-upcoming .deal-position-milestone .deal-planner-milestone-copy{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-height:58px;
+}
+.app-view-upcoming .deal-position-milestone .deal-planner-milestone-copy{
+  gap:6px;
+}
+.app-view-upcoming .deal-position-milestone .deal-planner-milestone-copy strong,
+.app-view-upcoming .deal-position-milestone .deal-planner-milestone-copy small{
+  margin:0;
+}
+.app-view-upcoming .deal-position-interest{
+  display:grid;
+  gap:6px;
+  margin-top:16px;
+  padding:18px 24px 19px;
+  border:1px solid var(--border-soft);
+  border-radius:16px;
+  background:#f2ece3;
+  box-shadow:none;
+}
+.app-view-upcoming .deal-position-interest>span,
+.app-view-upcoming .deal-position-interest #interestWithExtraText{
+  margin:0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.35;
+}
+.app-view-upcoming .deal-position-interest #interestRemaining{
+  display:block;
+  margin:0;
+  font-size:30px;
+  line-height:1.05;
+}
+.app-view-upcoming .upcoming-rates .deal-planner-rate-grid{
+  grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+}
+@media(max-width:1050px){
+  .app-view-upcoming .current-fix-stats{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+@media(max-width:700px){
+  .app-view-upcoming .upcoming-section{
+    padding:18px;
+  }
+  .app-view-upcoming .current-fix-stats{
+    grid-template-columns:1fr 1fr;
+  }
+  .app-view-upcoming .deal-position-milestone{
+    grid-template-columns:1fr;
+    row-gap:12px;
+  }
+}
+@media(max-width:430px){
+  .app-view-upcoming .current-fix-stats{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* Future next-home progression — authoritative final layout */
+.app-view-future #futureWaitPlanner{
+  padding:24px!important;
+}
+.app-view-future #futureWaitPlanner .future-wait-heading{
+  margin-bottom:16px!important;
+}
+.app-view-future #futureWaitPlanner .future-wait-heading h2{
+  margin-top:3px!important;
+  color:var(--text)!important;
+  font-size:19px!important;
+}
+.app-view-future #futureWaitPlanner .future-wait-heading .eyebrow{
+  color:var(--accent-strong)!important;
+}
+.app-view-future #futureWaitPlanner .future-wait-host{
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline{
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-rows{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:12px!important;
+  margin:0!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  min-height:138px!important;
+  gap:3px!important;
+  padding:20px 22px!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:17px!important;
+  background:#f2ece3!important;
+  box-shadow:none!important;
+  text-align:left!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row>span{
+  color:var(--muted)!important;
+  font-size:10px!important;
+  font-weight:650!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row>strong{
+  margin:4px 0 8px!important;
+  color:var(--text)!important;
+  font-size:25px!important;
+  line-height:1!important;
+  letter-spacing:-.02em!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row>small{
+  display:block!important;
+  color:var(--muted)!important;
+  font-size:10px!important;
+  line-height:1.45!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row>small b{
+  color:var(--text)!important;
+  font-weight:750!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row:nth-child(3){
+  background:var(--surface-warm)!important;
+  border-color:rgba(197,138,86,.22)!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row:nth-child(3)>strong{
+  color:var(--accent-strong)!important;
+}
+.app-view-future #futureWaitPlanner .next-home-trend-note{
+  display:block!important;
+  margin-top:12px!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  color:var(--muted)!important;
+  font-size:9.5px!important;
+  line-height:1.45!important;
+}
+@media(max-width:760px){
+  .app-view-future #futureWaitPlanner{
+    padding:18px!important;
+  }
+  .app-view-future #futureWaitPlanner .next-home-timeline-rows{
+    grid-template-columns:1fr!important;
+  }
+  .app-view-future #futureWaitPlanner .next-home-timeline-row{
+    min-height:0!important;
+    padding:18px 20px!important;
+  }
+  .app-view-future #futureWaitPlanner .next-home-timeline-row>strong{
+    font-size:22px!important;
+  }
+}
+
+
+/* Next-home planner has no visible summary row, so its body needs no top divider. */
+.app-view-future #nextHomePlanner .next-home-body{
+  border-top:0!important;
+}
+
+/* Future cost/value is a direct two-point comparison. */
+.app-view-future .property-cost-grid.property-cost-grid-two{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:12px!important;
+}
+@media(max-width:700px){
+  .app-view-future .property-cost-grid.property-cost-grid-two{grid-template-columns:1fr!important}
+}
+
+/* Future page — consistent section typography and card hierarchy. */
+.app-view-future .projection-heading h2,
+.app-view-future .future-model-heading h2,
+.app-view-future #nextHomePlanner .next-home-heading h2,
+.app-view-future .future-wait-heading h2,
+.app-view-future #propertyCostComparison .deep-heading h2{
+  margin-top:3px!important;
+  font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
+  font-size:19px!important;
+  line-height:1.15!important;
+  font-weight:500!important;
+  letter-spacing:-.015em!important;
+  color:var(--text)!important;
+}
+.app-view-future #nextHomePlanner .next-home-results{
+  gap:12px!important;
+  margin-top:16px!important;
+}
+.app-view-future #nextHomePlanner .next-home-results>div{
+  min-height:104px!important;
+  padding:16px 17px!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:17px!important;
+  background:#f2ece3!important;
+  box-shadow:none!important;
+}
+.app-view-future #nextHomePlanner .next-home-results>div.primary{
+  background:var(--surface-warm)!important;
+  border-color:rgba(197,138,86,.22)!important;
+}
+.app-view-future #nextHomePlanner .next-home-results span,
+.app-view-future #nextHomePlanner .next-home-results small,
+.app-view-future #propertyCostComparison .property-cost-card span,
+.app-view-future #propertyCostComparison .property-cost-card small{
+  color:var(--muted)!important;
+  font-size:10px!important;
+  line-height:1.45!important;
+}
+.app-view-future #nextHomePlanner .next-home-results strong,
+.app-view-future #propertyCostComparison .property-cost-card strong{
+  display:block!important;
+  margin-top:5px!important;
+  color:var(--text)!important;
+  font-size:23px!important;
+  line-height:1.05!important;
+  letter-spacing:-.02em!important;
+}
+.app-view-future #nextHomePlanner .next-home-results small,
+.app-view-future #propertyCostComparison .property-cost-card small{
+  margin-top:6px!important;
+}
+.app-view-future #nextHomePlanner .next-home-note{
+  margin-top:11px!important;
+  color:var(--muted)!important;
+  font-size:9.5px!important;
+  line-height:1.45!important;
+}
+
+/* Future property forecast — 1 / 3 / 5 years. */
+.app-view-future #futureModelRange .home-forecast-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:12px!important;
+  margin-top:14px!important;
+}
+.app-view-future #futureModelRange .home-forecast-card{
+  min-height:104px!important;
+  padding:17px 18px!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:17px!important;
+  background:#f2ece3!important;
+  box-shadow:none!important;
+}
+.app-view-future #futureModelRange .home-forecast-card:nth-child(3){
+  background:var(--surface-warm)!important;
+  border-color:rgba(197,138,86,.22)!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>span,
+.app-view-future #futureModelRange .home-forecast-card>small{
+  display:block!important;
+  color:var(--muted)!important;
+  font-size:10px!important;
+  line-height:1.4!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>strong{
+  display:block!important;
+  margin:6px 0!important;
+  color:var(--text)!important;
+  font-size:23px!important;
+  line-height:1.05!important;
+  letter-spacing:-.02em!important;
+}
+.app-view-future #futureModelRange .home-forecast-card:nth-child(3)>strong{
+  color:var(--accent-strong)!important;
+}
+@media(max-width:700px){
+  .app-view-future #futureModelRange .home-forecast-grid{grid-template-columns:1fr!important}
+  .app-view-future #futureModelRange .home-forecast-card{min-height:0!important}
+}
+
+/* Property forecast — full-width 1 / 3 / 5 year cards. */
+.app-view-future #futureModelRange .future-model-heading{margin-bottom:16px!important}
+.app-view-future #futureModelRange .future-model-subtitle{
+  margin:5px 0 0!important;
+  color:var(--muted)!important;
+  font-size:10px!important;
+  line-height:1.4!important;
+}
+.app-view-future #futureModelRange .home-forecast-note{display:none!important}
+.app-view-future #futureModelRange .home-forecast{
+  display:block!important;
+  width:100%!important;
+}
+.app-view-future #futureModelRange .home-forecast-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:14px!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.app-view-future #futureModelRange .home-forecast-card{
+  min-width:0!important;
+  min-height:118px!important;
+  padding:18px 20px 16px!important;
+  border:1px solid rgba(68,58,48,.10)!important;
+  border-radius:17px!important;
+  background:var(--surface-control)!important;
+  box-shadow:0 8px 24px rgba(62,49,38,.035)!important;
+}
+.app-view-future #futureModelRange .home-forecast-card:nth-child(3){
+  background:#f3e7d9!important;
+  border-color:rgba(197,138,86,.26)!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>span{
+  display:block!important;
+  color:var(--muted)!important;
+  font-size:9.5px!important;
+  font-weight:700!important;
+  line-height:1.3!important;
+  letter-spacing:.025em!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>strong{
+  display:block!important;
+  margin:7px 0 10px!important;
+  color:var(--text)!important;
+  font-size:25px!important;
+  line-height:1!important;
+  letter-spacing:-.025em!important;
+}
+.app-view-future #futureModelRange .home-forecast-card:nth-child(3)>strong{
+  color:var(--accent-strong)!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>small{
+  display:block!important;
+  margin-top:0!important;
+  padding-top:9px!important;
+  border-top:1px solid rgba(68,58,48,.08)!important;
+  color:var(--muted)!important;
+  font-size:9.5px!important;
+  line-height:1.35!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>small::before{
+  content:"Range ";
+  font-weight:650;
+  color:var(--muted);
+}
+.app-view-future #futureModelRange .home-profile-range-source{
+  display:block!important;
+  margin-top:11px!important;
+  padding-left:2px!important;
+  color:var(--muted)!important;
+  font-size:9px!important;
+  line-height:1.35!important;
+}
+@media(max-width:700px){
+  .app-view-future #futureModelRange .home-forecast-grid{grid-template-columns:1fr!important}
+  .app-view-future #futureModelRange .home-forecast-card{min-height:0!important}
+}
+
+/* Property forecast — visual growth cue. */
+.app-view-future #futureModelRange .home-forecast-growth{
+  display:grid!important;
+  grid-template-columns:minmax(70px,1fr) auto!important;
+  gap:9px!important;
+  align-items:center!important;
+  margin:0 0 10px!important;
+}
+.app-view-future #futureModelRange .home-forecast-growth-track{
+  height:5px!important;
+  overflow:hidden!important;
+  border-radius:999px!important;
+  background:#e5ddd3!important;
+}
+.app-view-future #futureModelRange .home-forecast-growth-track>i{
+  display:block!important;
+  height:100%!important;
+  width:0;
+  border-radius:inherit!important;
+  background:#b9875f!important;
+  transition:width .25s ease!important;
+}
+.app-view-future #futureModelRange .home-forecast-card:nth-child(3) .home-forecast-growth-track>i{
+  background:var(--accent-strong)!important;
+}
+.app-view-future #futureModelRange .home-forecast-growth>b{
+  color:var(--accent-strong)!important;
+  font-size:9px!important;
+  font-weight:750!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .app-view-future #futureModelRange .home-forecast-growth-track>i{transition:none!important}
+}
+
+/* Future page visual variety — forecast track + milestone strip. */
+.app-view-future #futureModelRange .home-forecast-grid{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:0!important;
+  padding:22px 0 0!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+.app-view-future #futureModelRange .home-forecast-grid::before{
+  content:""!important;
+  position:absolute!important;
+  left:8.5%!important;
+  right:8.5%!important;
+  top:15px!important;
+  height:2px!important;
+  border-radius:999px!important;
+  background:#d8c5b2!important;
+}
+.app-view-future #futureModelRange .home-forecast-card{
+  position:relative!important;
+  min-height:0!important;
+  padding:17px 18px 4px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  text-align:center!important;
+}
+.app-view-future #futureModelRange .home-forecast-card::before{
+  content:""!important;
+  position:absolute!important;
+  top:-13px!important;
+  left:50%!important;
+  width:11px!important;
+  height:11px!important;
+  border:3px solid var(--surface-control)!important;
+  border-radius:50%!important;
+  background:#b9875f!important;
+  box-shadow:0 0 0 1px #c9ab90!important;
+  transform:translateX(-50%)!important;
+  z-index:2!important;
+}
+.app-view-future #futureModelRange .home-forecast-card:nth-child(3){
+  background:transparent!important;
+  border:0!important;
+}
+.app-view-future #futureModelRange .home-forecast-card:nth-child(3)::before{
+  width:13px!important;
+  height:13px!important;
+  top:-14px!important;
+  background:var(--accent-strong)!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>span{
+  font-size:10px!important;
+  font-weight:700!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>strong{
+  margin:6px 0 5px!important;
+  font-size:25px!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>small{
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  font-size:9px!important;
+}
+.app-view-future #futureModelRange .home-forecast-card>small::before{
+  content:""!important;
+}
+.app-view-future #futureModelRange .home-forecast-growth{
+  display:block!important;
+  margin:5px 0 6px!important;
+}
+.app-view-future #futureModelRange .home-forecast-growth-track{
+  display:none!important;
+}
+.app-view-future #futureModelRange .home-forecast-growth>b{
+  font-size:9px!important;
+  font-weight:750!important;
+}
+.app-view-future #futureModelRange .home-profile-range-source{
+  margin-top:14px!important;
+  padding-top:10px!important;
+  border-top:1px solid rgba(68,58,48,.07)!important;
+  text-align:center!important;
+}
+
+/* Looking ahead becomes one continuous milestone strip, not three cards. */
+.app-view-future #futureWaitPlanner .next-home-timeline-rows{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:0!important;
+  overflow:hidden!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:17px!important;
+  background:#f6f0e8!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row{
+  position:relative!important;
+  display:block!important;
+  min-height:0!important;
+  padding:18px 20px 17px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row+ .next-home-timeline-row{
+  border-left:1px solid rgba(68,58,48,.09)!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row:nth-child(3){
+  background:#f1e5d7!important;
+  border-color:rgba(68,58,48,.09)!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row>span{
+  display:block!important;
+  margin-bottom:6px!important;
+  color:var(--muted)!important;
+  font-size:9.5px!important;
+  font-weight:700!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row>strong{
+  display:block!important;
+  margin:0 0 11px!important;
+  font-size:25px!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row>small{
+  display:block!important;
+  margin-top:3px!important;
+  font-size:9px!important;
+}
+.app-view-future #futureWaitPlanner .next-home-timeline-row:nth-child(3)>strong{
+  color:var(--accent-strong)!important;
+}
+
+@media(max-width:700px){
+  .app-view-future #futureModelRange .home-forecast-grid{
+    grid-template-columns:1fr!important;
+    gap:0!important;
+    padding:0!important;
+  }
+  .app-view-future #futureModelRange .home-forecast-grid::before{display:none!important}
+  .app-view-future #futureModelRange .home-forecast-card{
+    padding:14px 0!important;
+    text-align:left!important;
+    border-top:1px solid rgba(68,58,48,.08)!important;
+  }
+  .app-view-future #futureModelRange .home-forecast-card:first-child{border-top:0!important}
+  .app-view-future #futureModelRange .home-forecast-card::before{display:none!important}
+  .app-view-future #futureModelRange .home-profile-range-source{text-align:left!important}
+  .app-view-future #futureWaitPlanner .next-home-timeline-rows{
+    grid-template-columns:1fr!important;
+  }
+  .app-view-future #futureWaitPlanner .next-home-timeline-row+ .next-home-timeline-row{
+    border-left:0!important;
+    border-top:1px solid rgba(68,58,48,.09)!important;
+  }
+}
+
+/* Setup & data — authoritative disclosure icon treatment for every expandable row. */
+body .personal-modal details>summary{
+  position:relative!important;
+  padding-right:30px!important;
+  list-style:none!important;
+}
+body .personal-modal details>summary::-webkit-details-marker{
+  display:none!important;
+}
+body .personal-modal details>summary::before{
+  content:none!important;
+  display:none!important;
+}
+body .personal-modal details>summary::after{
+  content:""!important;
+  position:absolute!important;
+  right:5px!important;
+  top:50%!important;
+  display:block!important;
+  width:7px!important;
+  height:7px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-right:1.5px solid #8b6849!important;
+  border-bottom:1.5px solid #8b6849!important;
+  border-radius:0!important;
+  background:none!important;
+  box-shadow:none!important;
+  color:transparent!important;
+  font-size:0!important;
+  line-height:0!important;
+  transform:translateY(-65%) rotate(45deg)!important;
+  transform-origin:center!important;
+  transition:transform .15s ease!important;
+}
+body .personal-modal details[open]>summary::after{
+  transform:translateY(-35%) rotate(225deg)!important;
+}
+body .personal-modal details>summary .history-summary-chevron,
+body .personal-modal details>summary .methodology-chevron,
+body .personal-modal details>summary .summary-plus{
+  display:none!important;
+}
+
+/* App-wide disclosure icon system — one chevron for every native details/summary control. */
+body details>summary{
+  position:relative!important;
+  padding-right:30px!important;
+  list-style:none!important;
+}
+body details>summary::-webkit-details-marker{
+  display:none!important;
+}
+body details>summary::before{
+  content:none!important;
+  display:none!important;
+}
+body details>summary::after{
+  content:""!important;
+  position:absolute!important;
+  float:none!important;
+  right:6px!important;
+  top:50%!important;
+  display:block!important;
+  width:7px!important;
+  height:7px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-right:1.5px solid #8b6849!important;
+  border-bottom:1.5px solid #8b6849!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:transparent!important;
+  font-size:0!important;
+  line-height:0!important;
+  transform:translateY(-65%) rotate(45deg)!important;
+  transform-origin:center!important;
+  transition:transform .15s ease!important;
+}
+body details[open]>summary::after{
+  transform:translateY(-35%) rotate(225deg)!important;
+}
+body details>summary .summary-plus,
+body details>summary .history-summary-chevron,
+body details>summary .methodology-chevron{
+  display:none!important;
+}
+
+/* Methodology disclosure — match Mortgage history exactly. */
+body .personal-modal details#methodologySection.personal-section>summary{
+  position:relative!important;
+  padding-right:30px!important;
+}
+body .personal-modal details#methodologySection.personal-section>summary::before{
+  content:none!important;
+  display:none!important;
+}
+body .personal-modal details#methodologySection.personal-section>summary::after{
+  content:""!important;
+  position:absolute!important;
+  right:6px!important;
+  top:50%!important;
+  display:block!important;
+  width:7px!important;
+  height:7px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-right:1.5px solid #8b6849!important;
+  border-bottom:1.5px solid #8b6849!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:transparent!important;
+  font-size:0!important;
+  line-height:0!important;
+  transform:translateY(-65%) rotate(45deg)!important;
+  transform-origin:center!important;
+  transition:transform .15s ease!important;
+}
+body .personal-modal details#methodologySection.personal-section[open]>summary::after{
+  transform:translateY(-35%) rotate(225deg)!important;
+}
+
+/* Setup fields — keep native inputs/selects dimensionally identical and use the app chevron. */
+body .personal-modal input:not([type="file"]),
+body .personal-modal select,
+body .personal-modal textarea{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:46px!important;
+  border-radius:12px!important;
+}
+body .personal-modal select{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  padding:11px 38px 11px 13px!important;
+  background-color:var(--surface-control)!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M2 2l4 4 4-4' stroke='%238b6849' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")!important;
+  background-repeat:no-repeat!important;
+  background-position:right 13px center!important;
+  background-size:12px 8px!important;
+}
+
+/* Setup fields — exact control dimensions so selects and inputs visually match. */
+body .personal-modal .setup-home-profile-fields input:not([type="file"]),
+body .personal-modal .setup-home-profile-fields select{
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:46px!important;
+  min-height:46px!important;
+  max-height:46px!important;
+  margin-top:6px!important;
+  padding-top:0!important;
+  padding-bottom:0!important;
+  border:1px solid #ddd2c6!important;
+  border-radius:12px!important;
+  background-color:var(--surface-control)!important;
+  color:var(--text)!important;
+  font-family:inherit!important;
+  font-size:16px!important;
+  font-weight:500!important;
+  line-height:44px!important;
+}
+body .personal-modal .setup-home-profile-fields input:not([type="file"]){
+  padding-left:13px!important;
+  padding-right:13px!important;
+}
+body .personal-modal .setup-home-profile-fields select{
+  padding-left:13px!important;
+  padding-right:38px!important;
+}
+
+/* Setup disclosure icons — exact same SVG asset for Mortgage history + Methodology. */
+body .personal-modal .mortgage-history-section>summary::after,
+body .personal-modal #methodologySection>summary::after{
+  content:""!important;
+  position:absolute!important;
+  right:6px!important;
+  top:50%!important;
+  width:12px!important;
+  height:8px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background-color:transparent!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M2 2l4 4 4-4' stroke='%238b6849' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:12px 8px!important;
+  box-shadow:none!important;
+  transform:translateY(-50%) rotate(0deg)!important;
+  transform-origin:center!important;
+  transition:transform .15s ease!important;
+}
+body .personal-modal .mortgage-history-section[open]>summary::after,
+body .personal-modal #methodologySection[open]>summary::after{
+  transform:translateY(-50%) rotate(180deg)!important;
+}
+body .personal-modal .mortgage-history-section>summary::before,
+body .personal-modal #methodologySection>summary::before{
+  content:none!important;
+  display:none!important;
+}
+
+/* Upcoming — market data is supporting metadata, not a second projection panel. */
+body .app-view-upcoming .upcoming-rates .live-rate-choices{
+  margin:10px 0 0!important;
+  padding:10px 0 0!important;
+  border:0!important;
+  border-top:1px solid rgba(68,58,48,.09)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body .app-view-upcoming .upcoming-rates .live-rate-meta{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  color:var(--muted)!important;
+  font-size:9.5px!important;
+  line-height:1.35!important;
+}
+body .app-view-upcoming .upcoming-rates .live-rate-meta span{
+  font-weight:600!important;
+}
+body .app-view-upcoming .upcoming-rates .live-rate-meta strong{
+  color:var(--muted)!important;
+  font-size:9.5px!important;
+  font-weight:500!important;
+}
+@media(max-width:620px){
+  body .app-view-upcoming .upcoming-rates .live-rate-meta{
+    align-items:flex-start!important;
+    flex-direction:column!important;
+    gap:3px!important;
+  }
+}
+
+/* Upcoming deal-end snapshot — compact and hide empty milestones correctly. */
+body .app-view-upcoming .deal-position-milestone[hidden]{
+  display:none!important;
+}
+body .app-view-upcoming .upcoming-position .deal-planner-summary{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+}
+body .app-view-upcoming .upcoming-position .deal-planner-summary>.deal-position-interest{
+  display:block!important;
+  margin:0!important;
+  padding:16px!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:var(--radius-tile)!important;
+  background:var(--surface-soft)!important;
+  box-shadow:none!important;
+}
+body .app-view-upcoming .upcoming-position .deal-planner-summary>.deal-position-interest>span{
+  display:block!important;
+  color:var(--muted)!important;
+  font-size:10px!important;
+}
+body .app-view-upcoming .upcoming-position .deal-planner-summary>.deal-position-interest #interestRemaining{
+  display:block!important;
+  margin-top:5px!important;
+  font-size:25px!important;
+  line-height:1.05!important;
+}
+body .app-view-upcoming .upcoming-position .deal-planner-summary>.deal-position-interest #interestWithExtraText{
+  display:block!important;
+  margin-top:5px!important;
+  color:var(--muted)!important;
+  font-size:10px!important;
+  line-height:1.4!important;
+}
+@media(max-width:760px){
+  body .app-view-upcoming .upcoming-position .deal-planner-summary{
+    grid-template-columns:1fr!important;
+  }
+}
+
+/* Heading metadata — sit below the title line so it reads as supporting context. */
+body .deep-heading>.source-date,
+body .next-home-heading>.source-date,
+body .deal-planner-heading>.source-date,
+body .future-model-heading>.source-date,
+body .future-wait-heading>.source-date{
+  align-self:flex-end!important;
+  margin:0 0 2px!important;
+  line-height:1.3!important;
+}
+@media(max-width:700px){
+  body .deep-heading>.source-date,
+  body .next-home-heading>.source-date,
+  body .deal-planner-heading>.source-date,
+  body .future-model-heading>.source-date,
+  body .future-wait-heading>.source-date{
+    align-self:start!important;
+    margin:4px 0 0!important;
+    text-align:left!important;
+  }
+}
+
+/* Trajectory — lower right-side context so it reads as supporting metadata. */
+body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat{
+  align-self:flex-end!important;
+  margin-bottom:2px!important;
+}
+body .app-view-current .trajectory-scenario-copy .trajectory-current-saving{
+  align-self:flex-end!important;
+  margin-bottom:2px!important;
+}
+@media(max-width:700px){
+  body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat,
+  body .app-view-current .trajectory-scenario-copy .trajectory-current-saving{
+    align-self:flex-start!important;
+    margin-top:8px!important;
+    margin-bottom:0!important;
+    text-align:left!important;
+  }
+}
+

@@ -1,0 +1,121 @@
+/* Consolidated mortgage/dashboard UI styles */
+.hero-balance-row{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important;margin-top:24px!important}
+.hero-balance-row>div,.mortgage-edit-tile{position:relative;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:13px 14px;min-height:76px;background:linear-gradient(180deg,rgba(255,255,255,.041),rgba(255,255,255,.025));box-shadow:0 1px 0 rgba(255,255,255,.02) inset}
+.hero-balance-row span,.mortgage-edit-tile span{display:block;color:#9ca9a4;font-size:11px;letter-spacing:.015em}
+.hero-balance-row strong,.mortgage-edit-tile strong{display:block;margin-top:5px;font-size:19px;letter-spacing:-.015em;color:var(--text)}
+.hero-balance-row>div,.home-panel .panel-heading,.next-panel .next-heading-row{cursor:default}
+.hero-balance-row>div::after,.home-panel .panel-heading [data-edit-target]::after{display:none!important}
+.hero-overpay-summary strong{display:block;margin-top:4px;color:var(--text)!important;font-size:20px;line-height:1.15}
+.current-overpay-amount{color:var(--text)}
+.current-overpay-suffix{display:inline!important;margin-left:6px!important;color:var(--muted)!important;font-size:11px!important;font-weight:600!important}
+.summary-overpayment-value{display:flex!important;align-items:baseline;gap:4px;white-space:nowrap}
+.summary-overpayment-value .current-overpay-amount{color:var(--text)!important;font-size:inherit!important;font-weight:inherit!important}
+.summary-overpayment-value .current-overpay-suffix{color:var(--muted)!important;font-size:.62em!important;font-weight:600!important}
+
+.mortgage-extra-tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+.hero-panel.is-expanded .mortgage-extra-tiles{display:grid!important}
+.summary-editable{cursor:pointer!important;transition:border-color .16s ease,background .16s ease,transform .16s ease}
+.summary-editable::after{content:'Edit';position:absolute;top:11px;right:12px;color:var(--accent);font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;opacity:.72}
+.summary-editable:hover,.summary-editable:focus-visible{border-color:rgba(104,222,185,.34)!important;background:rgba(104,222,185,.055)!important;outline:none}
+.summary-editable:active{transform:scale(.995)}
+.source-fields-only{display:none!important}
+.payoff-date-visible{display:block!important;visibility:visible!important;opacity:1!important;margin:12px 0 0!important;color:#aeb9b4!important;font-weight:650!important;font-size:15px!important;min-height:1.3em}
+
+.scenario-panel:not(.is-expanded) .range,.scenario-panel:not(.is-expanded) .scenario-chips,.scenario-panel:not(.is-expanded) .what-if-label,.scenario-panel:not(.is-expanded) #scenarioSummary{display:none!important}
+.scenario-panel .scenario-top{display:block}
+.scenario-panel .scenario-top>div:first-child{display:none}
+.scenario-panel .what-if-label{display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+.current-savings-summary{padding:0;border:0}
+.current-savings-summary span{display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.current-savings-summary strong{display:block;margin-top:4px;color:var(--text);font-size:22px}
+.current-savings-summary small{display:block;margin-top:4px;color:var(--warm);font-size:12px;line-height:1.4}
+.what-if-prompt{display:none!important}
+.compact-what-if{margin-top:18px;padding-top:16px;border-top:1px solid var(--border)}
+.compact-what-if-head{display:flex;justify-content:space-between;gap:18px;align-items:end}
+.compact-what-if-head>div span{display:block;color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.compact-what-if-head>div strong{display:block;margin-top:3px;font-size:16px}
+.compact-what-if-head small{max-width:520px;color:var(--warm);font-size:12px;line-height:1.4;text-align:right}
+.compact-what-if-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.compact-what-if-buttons button{min-width:68px;min-height:40px;padding:8px 14px;border-radius:10px;font-weight:750}
+.compact-what-if-buttons button.active{background:var(--accent);color:#062018;border-color:transparent}
+.scenario-panel.is-expanded .compact-what-if{display:none}
+.scenario-panel>.expand-hint{display:none!important}
+.current-overpay-control{margin:4px 0 18px;padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--panel-soft)}
+.current-overpay-control label{display:grid;gap:7px;font-size:12px;color:var(--text);font-weight:700}
+.current-overpay-control input{max-width:220px}
+.current-overpay-control small{display:block;margin-top:7px;color:var(--muted);font-size:11px}
+.what-if-heading{margin-top:2px}
+.scenario-chips button,.rate-buttons button,.projection-use-button{border-radius:10px!important}
+.scenario-chips button{min-width:64px}
+.rate-buttons button{min-width:52px}
+
+.expandable-card:not(.is-expanded){cursor:pointer}
+.expandable-card.is-expanded{cursor:default}
+.chart-panel:not(.is-expanded) .chart-readout{display:none!important}
+.chart-panel:not(.is-expanded) canvas{pointer-events:none}
+.chart-panel.is-expanded canvas{pointer-events:auto;cursor:crosshair}
+.current-only-hidden{display:none!important}
+.deal-equity-hidden{display:none!important}
+.mortgage-deep-dive .deep-grid.three{grid-template-columns:repeat(2,minmax(0,1fr))}
+.balance-anchor-status{margin:12px 0 4px;padding:12px 13px;border:1px solid var(--border);border-radius:12px;background:var(--panel-soft)}
+.balance-anchor-status span,.balance-anchor-status small{display:block;color:var(--muted);font-size:11px}
+.balance-anchor-status strong{display:block;margin-top:4px;font-size:15px}
+.balance-anchor-status small{margin-top:5px;line-height:1.4}
+
+.deal-market-compare{margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.next-rate-check{margin:18px 0 4px!important;padding:16px 0 0!important;border-top:1px solid var(--border)!important;border-bottom:0!important}
+.next-rate-check .deep-heading{align-items:end}
+.next-rate-check .deep-heading h2{font-size:16px;margin-top:2px}
+.next-rate-check .market-comparison{margin-top:10px}
+.next-rate-check .market-comparison>div{padding:11px 12px}
+.next-rate-check .market-comparison strong{font-size:18px}
+.next-panel:not(.is-expanded) .next-rate-check{padding-top:12px!important}
+.next-panel:not(.is-expanded) .next-rate-check .deep-heading{display:none!important}
+.next-panel:not(.is-expanded) .next-rate-check .market-comparison{margin-top:0}
+.next-panel:not(.is-expanded) .next-rate-check .market-comparison small{display:none!important}
+.next-panel:not(.is-expanded) .next-rate-check .market-comparison>div{padding:12px 14px}
+.next-panel:not(.is-expanded) .next-rate-check .market-comparison strong{font-size:22px;margin-top:4px}
+
+.summary-quick-editor-backdrop{position:fixed;inset:0;z-index:1200;background:rgba(1,8,7,.72);backdrop-filter:blur(3px)}
+.summary-quick-editor{position:fixed;z-index:1201;left:50%;top:50%;transform:translate(-50%,-50%);width:min(520px,calc(100vw - 28px));padding:20px;border:1px solid rgba(84,224,180,.28);border-radius:18px;background:#0b211b;box-shadow:0 24px 70px rgba(0,0,0,.42)}
+.summary-quick-editor-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.summary-quick-editor-head span{display:block;color:var(--accent);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.summary-quick-editor-head strong{display:block;margin-top:3px;font-size:21px}
+.summary-quick-close{width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;padding:5px 0!important;border:0!important;border-radius:0!important;background:transparent!important;color:var(--muted)!important;font-size:12px!important;box-shadow:none!important}
+.summary-quick-close:hover{color:var(--text)!important}
+.summary-quick-field{display:grid;gap:8px;margin-top:18px;color:var(--muted);font-size:12px}
+.summary-quick-input-wrap{display:flex;align-items:center;gap:8px;padding:0 14px;border:1px solid rgba(255,255,255,.14);border-radius:13px;background:rgba(3,16,13,.88)}
+.summary-quick-input-wrap:focus-within{border-color:rgba(84,224,180,.5);box-shadow:0 0 0 2px rgba(84,224,180,.11)}
+.summary-quick-input-wrap i{color:var(--muted);font-style:normal;font-size:13px;font-weight:700;white-space:nowrap}
+.summary-quick-input-wrap input{flex:1;min-width:0;padding:15px 0;border:0!important;background:transparent!important;color:var(--text)!important;font-size:24px!important;font-weight:750;outline:none!important;box-shadow:none!important}
+.summary-quick-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:18px}
+.summary-quick-actions button{min-width:90px}
+.summary-quick-save{background:var(--accent)!important;color:#062018!important;border-color:transparent!important}
+
+.property-cost-comparison{margin-top:18px;padding-top:14px;border-top:1px solid var(--border)}
+.property-cost-comparison>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;padding:9px 0;color:var(--text);font-size:13px;font-weight:800}
+.property-cost-comparison>summary::-webkit-details-marker{display:none}
+.property-cost-comparison>summary::after{content:'+';color:var(--accent);font-size:16px}
+.property-cost-comparison[open]>summary::after{content:'−'}
+.property-cost-subtitle{display:block;margin-top:3px;color:var(--muted);font-size:10px;font-weight:500}
+.property-cost-body{padding:8px 0 2px}
+
+@media(max-width:900px){.hero-balance-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:850px){.mortgage-extra-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.mortgage-extra-tiles>div:last-child{grid-column:1/-1}}
+@media(max-width:700px){
+  .scenario-summary{max-width:none!important}
+  .compact-what-if-head{display:grid;gap:7px}
+  .compact-what-if-head small{text-align:left;max-width:none}
+  .compact-what-if-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .compact-what-if-buttons button{min-width:0}
+  .mortgage-deep-dive .deep-grid.three{grid-template-columns:1fr}
+  .next-rate-check .market-comparison{grid-template-columns:1fr}
+  .next-rate-check .deep-heading{align-items:flex-start}
+}
+@media(max-width:600px){
+  .hero-balance-row,.mortgage-extra-tiles{grid-template-columns:1fr!important}
+  .mortgage-extra-tiles>div:last-child{grid-column:auto}
+  .summary-quick-editor{top:max(14px,env(safe-area-inset-top));bottom:auto;transform:translateX(-50%);max-height:calc(100dvh - 28px - env(safe-area-inset-top));overflow:auto;padding:18px}
+  .summary-quick-actions{display:grid;grid-template-columns:1fr 1fr}
+  .summary-quick-actions button{width:100%}
+}

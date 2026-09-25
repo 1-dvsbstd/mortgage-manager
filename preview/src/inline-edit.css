@@ -1,0 +1,145 @@
+.editable-metric,
+.inline-edit-trigger { position: relative; }
+
+.editable-metric {
+  cursor: pointer;
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+
+.editable-metric::after {
+  content: "Edit";
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 800;
+  opacity: .75;
+}
+
+.editable-metric:hover,
+.editable-metric:focus-visible {
+  border-color: rgba(84,224,180,.38);
+  background: rgba(84,224,180,.055);
+  outline: none;
+}
+
+.editable-metric:active { transform: scale(.99); }
+
+.ownership-badge.inline-edit-trigger {
+  cursor: pointer;
+  min-height: 0;
+  background: rgba(255,255,255,.035);
+}
+
+.ownership-badge.inline-edit-trigger::after {
+  content: " · Edit";
+  color: var(--accent);
+}
+
+.next-heading-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.mini-edit {
+  min-height: 0;
+  padding: 5px 9px;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--accent);
+  background: rgba(84,224,180,.06);
+  border-color: rgba(84,224,180,.2);
+}
+
+/* Editing is a compact sheet, not a form squeezed into the metric tile. */
+.inline-editor {
+  position: fixed;
+  z-index: 2600;
+  top: max(72px, calc(env(safe-area-inset-top) + 56px));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(460px, calc(100vw - 28px));
+  margin: 0;
+  padding: 16px;
+  border: 1px solid rgba(104,222,185,.20);
+  border-radius: 18px;
+  background: linear-gradient(180deg,#0b211b,#071713);
+  box-shadow: 0 24px 80px rgba(0,0,0,.55);
+}
+
+.inline-editor-title {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.inline-editor-row { display: block; }
+
+.inline-editor input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 52px;
+  margin: 0 !important;
+  padding: 12px 14px !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(84,224,180,.32) !important;
+  background: #04130f !important;
+  color: var(--text) !important;
+  font-size: 18px !important;
+  line-height: 1.2 !important;
+  box-sizing: border-box;
+}
+
+/* Remove browser number steppers everywhere in the app. */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.inline-editor-note {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.inline-editor-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.inline-editor button {
+  min-height: 40px;
+  padding: 9px 14px;
+  font-size: 12px;
+}
+
+.inline-editor .save-inline {
+  background: var(--accent);
+  color: #062018;
+  border-color: transparent;
+}
+.inline-editor .cancel-inline { background: rgba(255,255,255,.04); }
+
+@media (max-width:650px) {
+  .editable-metric::after { top: 7px; right: 8px; }
+  .inline-editor {
+    top: max(68px, calc(env(safe-area-inset-top) + 50px));
+    width: calc(100vw - 20px);
+    padding: 15px;
+    border-radius: 16px;
+  }
+  .inline-editor input { font-size: 20px !important; }
+}

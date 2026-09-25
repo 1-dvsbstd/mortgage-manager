@@ -1,0 +1,67 @@
+/* V0.15.4 — deterministic Upcoming light surfaces */
+
+/* The five dynamically-rendered rate cards. Use IDs to outrank legacy theme rules. */
+body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate,
+body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate:hover,
+body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate:focus-within{
+  background:#f2ece3!important;
+  background-image:none!important;
+  border:1px solid rgba(64,54,45,.09)!important;
+  box-shadow:none!important;
+  color:var(--text)!important;
+  transform:none!important;
+}
+
+body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-current-rate,
+body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-current-rate:hover{
+  background:#fff6eb!important;
+  background-image:none!important;
+  border-color:rgba(197,138,86,.34)!important;
+}
+
+body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate > span,
+body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate > em,
+body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate > strong small{
+  color:var(--muted)!important;
+}
+
+body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate > strong{
+  color:var(--text)!important;
+}
+
+body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-current-rate > span{
+  color:var(--accent-strong)!important;
+}
+
+/* Deal-end position cards. */
+body[data-app-view="upcoming"] #dealPlannerSummary > div,
+body[data-app-view="upcoming"] #dealPlannerSummary > div:hover{
+  background:#f2ece3!important;
+  background-image:none!important;
+  border:1px solid rgba(64,54,45,.09)!important;
+  box-shadow:none!important;
+  color:var(--text)!important;
+  transform:none!important;
+}
+
+body[data-app-view="upcoming"] #dealPlannerSummary > div > span,
+body[data-app-view="upcoming"] #dealPlannerSummary > div > small{
+  color:var(--muted)!important;
+}
+
+body[data-app-view="upcoming"] #dealPlannerSummary > div > strong{
+  color:var(--text)!important;
+}
+
+/* Current-fix glance cards use the same warm neutral recipe. */
+body[data-app-view="upcoming"] .current-fix-stats > div,
+body[data-app-view="upcoming"] .current-fix-stats > div:hover{
+  background:#f2ece3!important;
+  background-image:none!important;
+  border:1px solid rgba(64,54,45,.09)!important;
+  box-shadow:none!important;
+  color:var(--text)!important;
+}
+
+body[data-app-view="upcoming"] .current-fix-stats > div > span{color:var(--muted)!important}
+body[data-app-view="upcoming"] .current-fix-stats > div > strong{color:var(--text)!important}
