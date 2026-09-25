@@ -254,14 +254,7 @@
     const untilEnd = monthsUntil(state.fixedEnd);
     if (untilEnd === null || untilEnd < 0) { box.hidden = true; return; }
     box.hidden = false;
-    const endIndex = Math.min(untilEnd, result.base.monthlyPoints.length - 1);
-    const balanceAtEnd = Math.max(0, result.base.monthlyPoints[endIndex] || 0);
-    const remainingMonths = Math.max(1, result.base.months - untilEnd);
-    const twoRate = Number(band?.twoYear || data.overall.twoYear);
-    const fiveRate = Number(band?.fiveYear || data.overall.fiveYear);
-    const twoPayment = paymentFor(balanceAtEnd, twoRate, remainingMonths);
-    const fivePayment = paymentFor(balanceAtEnd, fiveRate, remainingMonths);
-    box.innerHTML = `<div class="live-rate-head"><strong>${isOnlineMode() ? 'Latest market projection' : 'Saved market projection'}</strong><small>${band ? `Using ${band.ltv}% LTV benchmark` : 'Overall market benchmark'} · ${formatSourceDate(data.sourceAsOf)}</small></div><div class="live-rate-grid"><div class="live-rate-card"><span>Indicative 2-year fix</span><strong>${twoRate.toFixed(2)}%</strong><small>${money(twoPayment)}/month at projected deal-end balance</small></div><div class="live-rate-card"><span>Indicative 5-year fix</span><strong>${fiveRate.toFixed(2)}%</strong><small>${money(fivePayment)}/month at projected deal-end balance</small></div></div>`;
+    box.innerHTML = `<div class="live-rate-meta"><span>${isOnlineMode() ? 'Market benchmark' : 'Saved market benchmark'}</span><strong>${band ? `${band.ltv}% LTV` : 'Overall market'} · ${formatSourceDate(data.sourceAsOf)}</strong></div>`;
   }
 
   function applyMarketRates(data) {
