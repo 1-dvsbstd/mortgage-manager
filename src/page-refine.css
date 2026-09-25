@@ -931,3 +931,22 @@ body .future-wait-heading>.source-date{
     text-align:left!important;
   }
 }
+
+/* Trajectory — lower right-side context so it reads as supporting metadata. */
+body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat{
+  align-self:flex-end!important;
+  margin-bottom:2px!important;
+}
+body .app-view-current .trajectory-scenario-copy .trajectory-current-saving{
+  align-self:flex-end!important;
+  margin-bottom:2px!important;
+}
+@media(max-width:700px){
+  body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat,
+  body .app-view-current .trajectory-scenario-copy .trajectory-current-saving{
+    align-self:flex-start!important;
+    margin-top:8px!important;
+    margin-bottom:0!important;
+    text-align:left!important;
+  }
+}
