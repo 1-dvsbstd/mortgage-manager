@@ -43,19 +43,6 @@
 .v15-current-journey-track::before{background:#d8d1c8!important}
 .v15-current-journey-step.is-complete .v15-current-journey-icon{background:#f7f3ed!important;border-color:#9ca9a4!important;color:#55625e!important}
 
-/* Trajectory should follow the light product palette. */
-.app-view-current .trajectory-with-what-if>.chart-wrap{
-  background:#f3ede5!important;
-  border:1px solid var(--border)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.45)!important;
-}
-.chart-readout{background:#ebe3d9!important;border-color:var(--border-soft)!important;color:var(--text)!important}
-.chart-readout span,.chart-readout strong{color:var(--text)!important}
-.dot.scheduled-line{background:#8a949c!important}
-.dot.regular-line{background:#c39b72!important}
-.dot.selected-line{background:var(--accent-strong)!important}
-.dot.equity-line{background:#b8aa99!important}
-
 /* Future: no pale blue/green selected cards or mint bars. */
 .app-view-future .home-profile-range-values .centre,
 .app-view-future .next-home-summary-card:last-child,

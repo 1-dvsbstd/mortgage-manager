@@ -23,8 +23,6 @@ html,body{background:var(--bg)!important;color:var(--text)!important}
 .app-view-current .trajectory-scenario-copy h3{font-size:16px!important;color:var(--text)!important}
 .app-view-current .trajectory-current-saving>strong{color:var(--text)!important}
 .app-view-current .trajectory-overpay-row button.active{background:var(--ink-active)!important;color:var(--ink-on-active)!important;border-color:var(--ink-active)!important}
-.app-view-current .trajectory-with-what-if>.chart-wrap{margin:18px 24px 0!important;width:calc(100% - 48px)!important;padding:0!important;border:0!important;border-radius:14px!important;background:transparent!important;box-shadow:none!important;overflow:hidden!important}
-.app-view-current .trajectory-with-what-if>.legend{margin:9px 24px 0!important;padding:0 0 20px!important}
 
 /* UPCOMING — ivory cards, smaller nested tiles, no forest-green carryover. */
 .app-view-upcoming .upcoming-workspace,.app-view-upcoming .design-workspace-full,.app-view-upcoming .upcoming-sections{background:transparent!important;box-shadow:none!important}
@@ -75,7 +73,5 @@ html,body{background:var(--bg)!important;color:var(--text)!important}
 
 @media(max-width:700px){  .app-view-current .trajectory-with-what-if>.panel-heading{padding:18px 18px 12px!important}
   .app-view-current .trajectory-scenario-controls{margin:0 18px!important;padding:14px 0 15px!important}
-  .app-view-current .trajectory-with-what-if>.chart-wrap{margin:15px 18px 0!important;width:calc(100% - 36px)!important}
-  .app-view-current .trajectory-with-what-if>.legend{margin:9px 18px 0!important;padding-bottom:17px!important}
   .app-view-upcoming .upcoming-section,.app-view-future .future-model-range-panel,.app-view-future .future-wait-planner,.app-view-future .temporal-feature-home-projection,.app-view-future .temporal-feature-next-home{padding:18px!important;border-radius:19px!important}
 }
