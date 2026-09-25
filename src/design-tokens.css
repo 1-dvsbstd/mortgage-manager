@@ -8,6 +8,9 @@
   --surface-soft: #f2ece3;
   --surface-muted: #ebe2d6;
   --surface-raised: #e9dfd3;
+  --surface-control: #fffaf4;
+  --surface-warm: #efe4d7;
+  --surface-input: #fffdf9;
   --text: #202833;
   --muted: #70767c;
   --muted-2: #92969a;
@@ -24,6 +27,9 @@
   --property: #c9b28d;
   --upcoming: #d2a05b;
   --scheme: #b7aa98;
+  --ink-active: #252d36;
+  --ink-on-active: #fffaf3;
+  --positive: #477e70;
 
   /* Shape */
   --radius-card: 26px;
