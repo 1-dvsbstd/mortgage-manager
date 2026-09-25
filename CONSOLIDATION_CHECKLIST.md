@@ -100,7 +100,15 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Remove dead selectors/styles
 - [ ] Reduce final stylesheet count to a clear logical set
 
-## 10. Final premium polish
+## 10. Optional colour themes
+- [x] Keep consolidation token-based so multiple themes remain possible
+- [ ] Design 3–4 complete colour palettes after core consolidation
+- [ ] Ensure every theme preserves semantic colours and accessibility contrast
+- [ ] Add a local theme selector in Setup & data
+- [ ] Persist chosen theme on-device
+- [ ] Verify charts, controls, focus states and illustrations in every theme
+
+## 11. Final premium polish
 - [ ] Review palette after consolidation
 - [ ] Review typography hierarchy
 - [ ] Review whitespace/rhythm
@@ -110,7 +118,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Cross-page consistency check
 - [ ] Final visual approval by Nathan
 
-## 11. Release QA
+## 12. Release QA
 - [ ] Desktop Chrome
 - [ ] Desktop Edge
 - [ ] Mobile Chrome
