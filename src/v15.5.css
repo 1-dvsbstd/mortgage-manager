@@ -146,6 +146,10 @@
   color:var(--text)!important;
   box-shadow:0 2px 8px rgba(64,50,38,.03)!important;
 }
+.app-view-future #futureOverpaymentAssumption .future-assumption-controls button:hover{
+  background:#f4e6d7!important;
+  border-color:rgba(200,142,92,.36)!important;
+}
 .app-view-future #futureOverpaymentAssumption .future-assumption-controls button.active{
   background:var(--ink-active)!important;
   color:var(--ink-on-active)!important;
