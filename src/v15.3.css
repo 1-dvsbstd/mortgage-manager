@@ -1,21 +1,5 @@
 /* V0.15.3 — warm ivory / ink / copper consolidation */
 
-:root{
-  --bg:#f4f1eb;
-  --surface:#fbf8f3;
-  --surface-soft:#f2ece3;
-  --surface-muted:#ebe2d6;
-  --text:#202833;
-  --muted:#70767c;
-  --muted-2:#92969a;
-  --border:rgba(64,54,45,.14);
-  --border-soft:rgba(64,54,45,.09);
-  --accent:#c58a56;
-  --accent-strong:#9b663b;
-  --equity:#78978e;
-  --debt:#8a949c;
-}
-
 /* Journey is part of the hero, not another card. */
 .app-view-current .hero-panel.current-hero-condensed{grid-template-rows:auto 1fr!important}
 .app-view-current .v15-current-journey{
