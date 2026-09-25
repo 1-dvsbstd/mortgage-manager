@@ -4,9 +4,9 @@
 body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate,
 body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate:hover,
 body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate:focus-within{
-  background:#f2ece3!important;
+  background:var(--surface-soft)!important;
   background-image:none!important;
-  border:1px solid rgba(64,54,45,.09)!important;
+  border:1px solid var(--border-soft)!important;
   box-shadow:none!important;
   color:var(--text)!important;
   transform:none!important;
@@ -36,9 +36,9 @@ body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-curr
 /* Deal-end position cards. */
 body[data-app-view="upcoming"] #dealPlannerSummary > div,
 body[data-app-view="upcoming"] #dealPlannerSummary > div:hover{
-  background:#f2ece3!important;
+  background:var(--surface-soft)!important;
   background-image:none!important;
-  border:1px solid rgba(64,54,45,.09)!important;
+  border:1px solid var(--border-soft)!important;
   box-shadow:none!important;
   color:var(--text)!important;
   transform:none!important;
@@ -56,9 +56,9 @@ body[data-app-view="upcoming"] #dealPlannerSummary > div > strong{
 /* Current-fix glance cards use the same warm neutral recipe. */
 body[data-app-view="upcoming"] .current-fix-stats > div,
 body[data-app-view="upcoming"] .current-fix-stats > div:hover{
-  background:#f2ece3!important;
+  background:var(--surface-soft)!important;
   background-image:none!important;
-  border:1px solid rgba(64,54,45,.09)!important;
+  border:1px solid var(--border-soft)!important;
   box-shadow:none!important;
   color:var(--text)!important;
 }
