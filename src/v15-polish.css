@@ -48,8 +48,8 @@ html,body{background:var(--bg)!important;color:var(--text)!important}
 .app-view-current .trajectory-scenario-copy h3{font-size:16px!important;color:var(--text)!important}
 .app-view-current .trajectory-current-saving>strong{color:var(--text)!important}
 .app-view-current .trajectory-current-saving>span{color:var(--muted)!important}
-.app-view-current .trajectory-overpay-row button,.app-view-current .trajectory-custom-overpay{min-height:36px!important;padding:7px 12px!important;border:1px solid var(--border)!important;border-radius:10px!important;background:#fffaf4!important;color:var(--text)!important;box-shadow:none!important}
-.app-view-current .trajectory-overpay-row button.active{background:#252d36!important;color:#fffaf3!important;border-color:#252d36!important}
+.app-view-current .trajectory-overpay-row button,.app-view-current .trajectory-custom-overpay{min-height:36px!important;padding:7px 12px!important;border:1px solid var(--border)!important;border-radius:10px!important;background:var(--surface-control)!important;color:var(--text)!important;box-shadow:none!important}
+.app-view-current .trajectory-overpay-row button.active{background:var(--ink-active)!important;color:var(--ink-on-active)!important;border-color:var(--ink-active)!important}
 .app-view-current .trajectory-with-what-if>.chart-wrap{margin:18px 24px 0!important;width:calc(100% - 48px)!important;padding:0!important;border:0!important;border-radius:14px!important;background:transparent!important;box-shadow:none!important;overflow:hidden!important}
 .app-view-current .trajectory-with-what-if>.legend{margin:9px 24px 0!important;padding:0 0 20px!important}
 
@@ -101,7 +101,7 @@ html,body{background:var(--bg)!important;color:var(--text)!important}
 .app-view-future .future-cost-inline{margin-top:20px!important;padding-top:20px!important;border-top:1px solid var(--border-soft)!important}
 
 /* Keep green semantic only. */
-.v15-stat.is-positive strong,.v15-stat.is-positive small,.app-view-future .is-positive strong{color:#477e70!important}
+.v15-stat.is-positive strong,.v15-stat.is-positive small,.app-view-future .is-positive strong{color:var(--positive)!important}
 
 @media(max-width:900px){
   .v15-current-journey-track{grid-template-columns:repeat(5,150px);overflow-x:auto;padding-bottom:5px;scroll-snap-type:x proximity}
