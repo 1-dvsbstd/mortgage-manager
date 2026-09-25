@@ -36,9 +36,11 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Consolidate card surfaces
 - [ ] Consolidate inset tiles / metric blocks
 - [ ] Consolidate labels, eyebrows and metadata
-- [ ] Consolidate form inputs and select controls
+- [x] Consolidate Setup form inputs and select controls
+- [ ] Consolidate non-Setup form controls
 - [x] Consolidate disclosure chevrons into one app-wide icon system
-- [ ] Consolidate remaining modal/backdrop controls
+- [x] Consolidate Setup modal/backdrop shell
+- [ ] Consolidate remaining non-Setup modal/backdrop controls
 - [x] Start removing obsolete duplicate component rules
 - [ ] Continue duplicate-rule removal component by component
 
@@ -64,7 +66,8 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Visual check by Nathan
 
 ## 6. Future
-- [ ] Planning/overpayment strip
+- [x] Consolidate Future planning/overpayment control styling
+- [ ] Planning/overpayment strip visual polish
 - [ ] Property-value card
 - [ ] Forecast timeline
 - [ ] Looking-ahead / next-home sections

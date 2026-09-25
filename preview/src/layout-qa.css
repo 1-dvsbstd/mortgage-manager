@@ -221,13 +221,6 @@ body{background:var(--bg)!important;color:var(--text)!important}
   box-shadow:0 40px 120px rgba(0,0,0,.5)!important;
 }
 .personal-form{gap:12px!important;margin-top:16px!important}
-.personal-form label{
-  padding:11px 12px!important;
-  border-radius:15px!important;
-  background:rgba(244,240,229,.028)!important;
-  border-color:var(--border-soft)!important;
-}
-.personal-form input,.setup-future-grid input{min-height:40px!important;background:var(--surface-input)!important;border-color:var(--border-soft)!important}
 .personal-section{margin-top:16px!important;padding-top:16px!important;border-top-color:var(--border-soft)!important}
 .personal-footer-actions{margin-top:16px!important;padding-top:16px!important;border-top-color:var(--border-soft)!important}
 
