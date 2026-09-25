@@ -33,7 +33,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 ## 3. Shared components
 - [ ] Consolidate primary / secondary / ghost / icon buttons
 - [ ] Consolidate chips and segmented controls (Current trajectory controls consolidated)
-- [ ] Consolidate card surfaces
+- [ ] Consolidate card surfaces (Current journey consolidated)
 - [ ] Consolidate inset tiles / metric blocks (Current summary tiles consolidated)
 - [ ] Consolidate labels, eyebrows and metadata
 - [x] Consolidate Setup form inputs and select controls
