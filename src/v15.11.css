@@ -87,26 +87,6 @@
   }
 }
 
-/* Setup & data — warm light controls, not the old dark setup theme. */
-.personal-backdrop{
-  background:rgba(32,40,51,.34)!important;
-  backdrop-filter:blur(10px)!important;
-}
-.personal-modal{
-  background:#f8f4ee!important;
-  color:#202833!important;
-  border:1px solid #d9d0c5!important;
-  box-shadow:0 32px 90px rgba(38,31,24,.22)!important;
-}
-.personal-modal-head h2,
-.personal-modal h3,
-.personal-modal strong{color:#202833!important}
-.personal-modal-head p,
-.personal-modal p,
-.personal-modal small,
-.personal-modal label{color:#6d7278!important}
-.personal-modal .eyebrow{color:#9d6639!important}
-
 /* Setup buttons stay aligned and on-theme. */
 .personal-modal .personal-button,
 .personal-modal .progress-action{
