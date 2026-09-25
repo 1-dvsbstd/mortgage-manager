@@ -107,30 +107,7 @@
 .personal-modal label{color:#6d7278!important}
 .personal-modal .eyebrow{color:#9d6639!important}
 
-/* Setup inputs and buttons stay aligned and on-theme. */
-.personal-modal .personal-form label,
-.personal-modal .setup-future-grid label{
-  background:transparent!important;
-  border:0!important;
-  padding:0!important;
-}
-.personal-modal input,
-.personal-modal select,
-.personal-modal textarea{
-  min-height:46px!important;
-  border:1px solid #ddd2c6!important;
-  border-radius:12px!important;
-  background:#fffaf4!important;
-  color:#202833!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.75)!important;
-}
-.personal-modal input:focus,
-.personal-modal select:focus,
-.personal-modal textarea:focus{
-  border-color:#c9986e!important;
-  outline:2px solid rgba(200,142,92,.14)!important;
-  outline-offset:1px!important;
-}
+/* Setup buttons stay aligned and on-theme. */
 .personal-modal .personal-button,
 .personal-modal .progress-action{
   min-height:38px!important;
