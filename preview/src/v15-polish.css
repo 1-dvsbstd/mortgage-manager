@@ -47,8 +47,6 @@ html,body{background:var(--bg)!important;color:var(--text)!important}
 .app-view-current .trajectory-scenario-copy{padding:0!important;margin:0 0 11px!important;border:0!important}
 .app-view-current .trajectory-scenario-copy h3{font-size:16px!important;color:var(--text)!important}
 .app-view-current .trajectory-current-saving>strong{color:var(--text)!important}
-.app-view-current .trajectory-current-saving>span{color:var(--muted)!important}
-.app-view-current .trajectory-overpay-row button,.app-view-current .trajectory-custom-overpay{min-height:36px!important;padding:7px 12px!important;border:1px solid var(--border)!important;border-radius:10px!important;background:var(--surface-control)!important;color:var(--text)!important;box-shadow:none!important}
 .app-view-current .trajectory-overpay-row button.active{background:var(--ink-active)!important;color:var(--ink-on-active)!important;border-color:var(--ink-active)!important}
 .app-view-current .trajectory-with-what-if>.chart-wrap{margin:18px 24px 0!important;width:calc(100% - 48px)!important;padding:0!important;border:0!important;border-radius:14px!important;background:transparent!important;box-shadow:none!important;overflow:hidden!important}
 .app-view-current .trajectory-with-what-if>.legend{margin:9px 24px 0!important;padding:0 0 20px!important}

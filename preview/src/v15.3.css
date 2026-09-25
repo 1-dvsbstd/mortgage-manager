@@ -16,7 +16,6 @@
 .v15-current-journey-link{font-size:10px!important}
 .v15-current-journey-track::before{background:#d8d1c8!important}
 .v15-current-journey-step.is-complete .v15-current-journey-icon{background:#f7f3ed!important;border-color:#9ca9a4!important;color:#55625e!important}
-.v15-current-journey-step.is-current .v15-current-journey-icon{background:#fff3e7!important;border-color:var(--accent)!important;color:var(--accent-strong)!important}
 
 /* Trajectory should follow the light product palette. */
 .app-view-current .trajectory-with-what-if>.chart-wrap{

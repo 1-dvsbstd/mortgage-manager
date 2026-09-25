@@ -32,12 +32,12 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 
 ## 3. Shared components
 - [ ] Consolidate primary / secondary / ghost / icon buttons
-- [ ] Consolidate chips and segmented controls
+- [ ] Consolidate chips and segmented controls (Current trajectory controls consolidated)
 - [ ] Consolidate card surfaces
 - [ ] Consolidate inset tiles / metric blocks
 - [ ] Consolidate labels, eyebrows and metadata
 - [ ] Consolidate form inputs and select controls
-- [ ] Consolidate modal/backdrop/close controls
+- [ ] Consolidate modal/backdrop/close controls (Setup close consolidated)
 - [x] Start removing obsolete duplicate component rules
 - [ ] Continue duplicate-rule removal component by component
 
@@ -95,7 +95,8 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 ## 9. Legacy cleanup
 - [x] Map/retire legacy theme rules in `layout-finalize.css`
 - [x] Map legacy `layout-qa.css` colours onto shared tokens
-- [ ] Map selectors in V15 patch files
+- [ ] Map selectors in V15 patch files (Current trajectory ownership consolidated)
+- [x] Retire legacy global theme declarations from `premium.css`
 - [ ] Move surviving rules to authoritative component/page files
 - [ ] Remove redundant `!important` declarations where safe
 - [ ] Remove superseded V15 stylesheet files (started: retired v15.10 removed)

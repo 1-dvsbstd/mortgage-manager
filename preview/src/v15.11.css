@@ -107,28 +107,6 @@
 .personal-modal label{color:#6d7278!important}
 .personal-modal .eyebrow{color:#9d6639!important}
 
-.personal-close{
-  width:auto!important;
-  min-width:64px!important;
-  height:36px!important;
-  padding:0 14px!important;
-  border:1px solid #d6c8b8!important;
-  border-radius:11px!important;
-  background:#fffaf4!important;
-  color:#202833!important;
-  font-size:11px!important;
-  font-weight:780!important;
-  box-shadow:0 3px 10px rgba(61,48,36,.05)!important;
-}
-.personal-close:hover,
-.personal-close:focus-visible{
-  background:#f2e7da!important;
-  border-color:#c9986e!important;
-  color:#202833!important;
-  box-shadow:0 10px 24px rgba(61,48,36,.12)!important;
-  outline:none!important;
-}
-
 /* Setup tabs: selected tab must stay visible. */
 .personal-modal .setup-tab-nav{
   background:#eee7de!important;

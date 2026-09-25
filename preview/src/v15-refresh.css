@@ -99,12 +99,6 @@ body{
 .trajectory-current-saving>span{display:block;color:var(--muted)!important;font-size:10px;text-transform:uppercase;letter-spacing:.06em}
 .trajectory-current-saving>strong{display:block;margin-top:3px;font-size:17px;color:var(--text)!important}
 .trajectory-current-saving>small{display:block;margin-top:3px;color:var(--accent-strong)!important;font-size:10px;line-height:1.35}
-.trajectory-overpay-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.app-view-current .trajectory-overpay-row button,.app-view-current .trajectory-custom-overpay{min-height:40px;border:1px solid var(--border)!important;border-radius:12px!important;background:var(--surface-control)!important;color:var(--text)!important;font-weight:750;box-shadow:0 2px 8px rgba(64,50,38,.03)!important}
-.trajectory-overpay-row button{padding:8px 14px;cursor:pointer}
-.app-view-current .trajectory-overpay-row button:hover{background:#f4e6d7!important;border-color:rgba(200,142,92,.36)!important}
-.app-view-current .trajectory-overpay-row button.active{background:var(--ink-active)!important;color:var(--ink-on-active)!important;border-color:var(--ink-active)!important}
-.trajectory-custom-overpay{display:flex;align-items:center;gap:5px;padding:8px 12px;color:var(--muted)!important}
 .trajectory-custom-overpay input{width:74px;border:0;outline:0;background:transparent!important;color:var(--text)!important;font:inherit;font-weight:750}
 .app-view-current .trajectory-with-what-if>.chart-wrap{margin:18px 24px 0!important;width:calc(100% - 48px)!important;padding:0!important;border:0!important;border-radius:14px!important;background:transparent!important;box-shadow:none!important;overflow:hidden!important}
 .chart-panel canvas{background:transparent!important;border:0!important;box-shadow:none!important}

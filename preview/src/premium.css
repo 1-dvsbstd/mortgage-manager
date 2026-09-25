@@ -1,27 +1,7 @@
-/* Premium visual pass */
-:root{
-  --bg:#06110f;
-  --panel:rgba(11,28,23,.82);
-  --panel-deep:rgba(7,22,18,.94);
-  --panel-raised:rgba(18,42,34,.88);
-  --panel-soft:rgba(255,255,255,.035);
-  --text:#f4f1e8;
-  --muted:#9aa9a3;
-  --muted-2:#74847e;
-  --border:rgba(217,236,226,.095);
-  --border-strong:rgba(107,225,188,.22);
-  --accent:#68deb9;
-  --accent-2:#36b88f;
-  --warm:#e8d9bc;
-  --warm-soft:#c9b995;
-}
-
-html{background:#06110f}
+/* Premium component geometry — legacy palette retired during consolidation */
+html{background:var(--bg)}
 body{
-  background:
-    radial-gradient(900px 480px at 80% -80px,rgba(73,189,151,.11),transparent 62%),
-    radial-gradient(760px 420px at 0% 8%,rgba(211,188,139,.055),transparent 64%),
-    linear-gradient(180deg,#071410 0%,#06110f 58%,#050d0b 100%);
+  background:var(--bg);
   color:var(--text);
 }
 
@@ -151,7 +131,7 @@ h2{font-size:18px;letter-spacing:-.025em;font-weight:760}
   radial-gradient(280px 180px at 90% 0%,rgba(211,188,139,.045),transparent 70%),
   linear-gradient(180deg,rgba(16,34,29,.92),rgba(9,25,21,.92));
 }
-.next-event-text{color:#9aa9a3}
+.next-event-text{color:var(--muted)}
 .next-panel .mini-edit{display:none!important}
 
 .chart-panel canvas{
