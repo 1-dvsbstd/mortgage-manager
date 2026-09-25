@@ -36,7 +36,8 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Consolidate card surfaces
 - [ ] Consolidate inset tiles / metric blocks
 - [ ] Consolidate labels, eyebrows and metadata
-- [ ] Consolidate form inputs and select controls
+- [x] Consolidate Setup form inputs and select controls
+- [ ] Consolidate non-Setup form controls
 - [x] Consolidate disclosure chevrons into one app-wide icon system
 - [ ] Consolidate remaining modal/backdrop controls
 - [x] Start removing obsolete duplicate component rules
