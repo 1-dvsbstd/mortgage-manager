@@ -64,14 +64,6 @@
   background:#f4ede4!important;
   border-color:rgba(197,138,86,.22)!important;
 }
-.app-view-future .home-profile-range-values>div,
-.app-view-future .next-home-summary-card,
-.app-view-future .next-home-timeline-row,
-.app-view-future .property-cost-card,
-.app-view-future .future-wait-host{
-  background:#f2ece3!important;
-  border-color:var(--border-soft)!important;
-}
 .app-view-future .cost-scale{background:#ddd4c9!important}
 .app-view-future .cost-scale>i{background:linear-gradient(90deg,#d3b18e,#b77f4e)!important}
 .app-view-future .projection-use-button,

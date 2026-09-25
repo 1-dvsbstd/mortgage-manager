@@ -230,7 +230,16 @@ body .app-view-future .home-profile-range>div{
   border:1px solid rgba(68,58,48,.11)!important;
   border-radius:17px!important;
   background:var(--surface-control)!important;
+  color:var(--text)!important;
   box-shadow:0 10px 28px rgba(62,49,38,.06)!important;
+}
+body .app-view-future .home-profile-range>div{
+  min-height:66px!important;
+  padding:13px 15px!important;
+}
+body .app-view-future .next-home-summary-card{
+  min-height:92px!important;
+  padding:15px!important;
 }
 body .app-view-future .next-home-subhead>div>span{display:none!important}
 body .app-view-future .next-home-subhead{margin-bottom:12px!important}
