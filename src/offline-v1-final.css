@@ -39,28 +39,6 @@ body .personal-modal .personal-section>summary{
 }
 body .personal-modal details.personal-section>summary::-webkit-details-marker,
 body .personal-modal .personal-section>summary::-webkit-details-marker{display:none!important}
-body .personal-modal details.personal-section>summary::after,
-body .personal-modal .personal-section>summary::after{
-  content:'›'!important;
-  position:absolute!important;
-  right:2px!important;
-  top:50%!important;
-  transform:translateY(-50%) rotate(0deg)!important;
-  display:grid!important;
-  place-items:center!important;
-  width:24px!important;
-  height:24px!important;
-  border-radius:999px!important;
-  background:#f1e6da!important;
-  color:#7e5837!important;
-  font-size:18px!important;
-  line-height:1!important;
-  transition:transform .12s ease!important;
-}
-body .personal-modal details.personal-section[open]>summary::after,
-body .personal-modal .personal-section[open]>summary::after{transform:translateY(-50%) rotate(90deg)!important}
-body .personal-modal .history-summary-chevron,
-body .personal-modal .summary-plus{display:none!important}
 body .personal-modal .mortgage-history-body{padding-top:14px!important}
 body .personal-modal input[type='month']{color-scheme:light!important;padding-right:12px!important}
 body .personal-modal input[type='month']::-webkit-calendar-picker-indicator{
@@ -311,18 +289,6 @@ body .personal-modal #methodologySection>summary>span:first-child>small{
   font-size:10px!important;
   font-weight:500!important;
 }
-body .personal-modal #methodologySection>summary::after{
-  top:50%!important;
-  right:0!important;
-  width:24px!important;
-  height:24px!important;
-  margin:0!important;
-  transform:translateY(-50%) rotate(0deg)!important;
-}
-body .personal-modal #methodologySection[open]>summary::after{
-  transform:translateY(-50%) rotate(90deg)!important;
-}
-
 /* Setup & data disclosure system — simple professional chevrons. */
 body .personal-modal details.personal-section>summary{
   position:relative!important;
