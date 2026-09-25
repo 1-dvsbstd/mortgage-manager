@@ -251,7 +251,11 @@
     }
     if(interest){
       const box=$('.interest-box',interest);
-      if(box){ box.classList.add('deal-position-interest'); $('.upcoming-section-body',position)?.appendChild(box); }
+      const summary=$('#dealPlannerSummary',position);
+      if(box&&summary){
+        box.classList.add('deal-position-interest');
+        summary.appendChild(box);
+      }
       interest.remove();
     }
     shell.append(timeline,rates,position);
