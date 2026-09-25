@@ -53,7 +53,7 @@
   padding:20px 24px;
   border:1px solid rgba(68,58,48,.10);
   border-radius:16px;
-  background:#fffaf4;
+  background:var(--surface-control);
   box-shadow:0 8px 22px rgba(61,48,36,.045);
 }
 .app-view-upcoming .deal-position-milestone>div:first-child,
@@ -195,7 +195,7 @@
   font-weight:750!important;
 }
 .app-view-future #futureWaitPlanner .next-home-timeline-row:nth-child(3){
-  background:#efe4d7!important;
+  background:var(--surface-warm)!important;
   border-color:rgba(197,138,86,.22)!important;
 }
 .app-view-future #futureWaitPlanner .next-home-timeline-row:nth-child(3)>strong{
@@ -270,7 +270,7 @@
   box-shadow:none!important;
 }
 .app-view-future #nextHomePlanner .next-home-results>div.primary{
-  background:#efe4d7!important;
+  background:var(--surface-warm)!important;
   border-color:rgba(197,138,86,.22)!important;
 }
 .app-view-future #nextHomePlanner .next-home-results span,
@@ -317,7 +317,7 @@
   box-shadow:none!important;
 }
 .app-view-future #futureModelRange .home-forecast-card:nth-child(3){
-  background:#efe4d7!important;
+  background:var(--surface-warm)!important;
   border-color:rgba(197,138,86,.22)!important;
 }
 .app-view-future #futureModelRange .home-forecast-card>span,
@@ -374,7 +374,7 @@
   padding:18px 20px 16px!important;
   border:1px solid rgba(68,58,48,.10)!important;
   border-radius:17px!important;
-  background:#fffaf4!important;
+  background:var(--surface-control)!important;
   box-shadow:0 8px 24px rgba(62,49,38,.035)!important;
 }
 .app-view-future #futureModelRange .home-forecast-card:nth-child(3){
@@ -502,7 +502,7 @@
   left:50%!important;
   width:11px!important;
   height:11px!important;
-  border:3px solid #fffaf4!important;
+  border:3px solid var(--surface-control)!important;
   border-radius:50%!important;
   background:#b9875f!important;
   box-shadow:0 0 0 1px #c9ab90!important;
@@ -766,7 +766,7 @@ body .personal-modal select{
   appearance:none!important;
   -webkit-appearance:none!important;
   padding:11px 38px 11px 13px!important;
-  background-color:#fffaf4!important;
+  background-color:var(--surface-control)!important;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M2 2l4 4 4-4' stroke='%238b6849' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")!important;
   background-repeat:no-repeat!important;
   background-position:right 13px center!important;
@@ -786,8 +786,8 @@ body .personal-modal .setup-home-profile-fields select{
   padding-bottom:0!important;
   border:1px solid #ddd2c6!important;
   border-radius:12px!important;
-  background-color:#fffaf4!important;
-  color:#202833!important;
+  background-color:var(--surface-control)!important;
+  color:var(--text)!important;
   font-family:inherit!important;
   font-size:16px!important;
   font-weight:500!important;
