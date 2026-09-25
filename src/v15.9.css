@@ -3,9 +3,9 @@
 body[data-app-view="future"] #propertyCostComparison .deep-heading h2,
 body[data-app-view="future"] #homeProjection .projection-heading h2,
 body[data-app-view="future"] #futureModelRange .future-model-heading h2{
-  color:#202833!important;
+  color:var(--text)!important;
   opacity:1!important;
-  -webkit-text-fill-color:#202833!important;
+  -webkit-text-fill-color:var(--text)!important;
 }
 
 body[data-app-view="future"] #propertyCostComparison .deep-heading .eyebrow,
@@ -19,9 +19,9 @@ body[data-app-view="future"] #futureModelRange .future-model-heading .eyebrow{
 body[data-app-view="future"] #propertyCostComparison .property-cost-card>strong,
 body[data-app-view="future"] #futureModelRange .v157-range-copy>strong,
 body[data-app-view="future"] #futureModelRange .v157-range-labels strong{
-  color:#202833!important;
+  color:var(--text)!important;
   opacity:1!important;
-  -webkit-text-fill-color:#202833!important;
+  -webkit-text-fill-color:var(--text)!important;
 }
 
 body[data-app-view="future"] #propertyCostComparison .property-cost-card>span,
@@ -35,7 +35,7 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels span{
 }
 
 body[data-app-view="future"] #futureModelRange .v157-range-copy>strong{
-  color:#202833!important;
+  color:var(--text)!important;
 }
 
 body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre strong{
