@@ -186,3 +186,14 @@
   text-align:center!important;
   pointer-events:none!important;
 }
+
+/* Setup toast — keep original bottom placement, improve text contrast. */
+.personal-toast{
+  top:auto!important;
+  bottom:24px!important;
+  left:50%!important;
+  transform:translateX(-50%)!important;
+  color:#fffaf4!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
