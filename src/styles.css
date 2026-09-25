@@ -1,18 +1,3 @@
-:root {
-  --bg: #071713;
-  --panel: rgba(12, 34, 28, 0.92);
-  --panel-soft: rgba(255, 255, 255, 0.045);
-  --text: #f6f5ef;
-  --muted: #9fb1aa;
-  --border: rgba(255, 255, 255, 0.10);
-  --accent: #54e0b4;
-  --accent-2: #2bb991;
-  --warm: #e7dcc4;
-  --debt: #5e746d;
-  --scheme: #8b826f;
-  --warning: #ffc37a;
-}
-
 * { box-sizing: border-box; }
 html { background: var(--bg); }
 body {
