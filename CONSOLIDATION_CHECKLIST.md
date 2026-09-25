@@ -72,7 +72,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Visual check by Nathan
 
 ## 7. Setup & data
-- [ ] Setup navigation/tabs
+- [x] Setup navigation/tabs
 - [ ] Mortgage/property inputs
 - [ ] Backup/restore/reset controls
 - [ ] Methodology/help panels
