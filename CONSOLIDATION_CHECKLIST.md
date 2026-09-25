@@ -72,6 +72,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Property-value card
 - [ ] Forecast timeline
 - [ ] Looking-ahead / next-home sections
+- [x] Remove duplicate Future forecast/timeline implementations
 - [x] Future looking-ahead timeline surface ownership moved to final page rules
 - [x] Future floating summary/range tiles consolidated
 - [ ] Cost/value presentation
