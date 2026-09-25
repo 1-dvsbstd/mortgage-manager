@@ -66,6 +66,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Visual check by Nathan
 
 ## 6. Future
+- [x] Cost comparison bars update immediately with overpayment changes
 - [x] Consolidate Future planning/overpayment control styling
 - [ ] Planning/overpayment strip visual polish
 - [ ] Property-value card
