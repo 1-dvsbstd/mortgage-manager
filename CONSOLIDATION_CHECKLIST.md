@@ -14,6 +14,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [x] Create one authoritative design-token file
 - [x] Move the current light palette out of the V15 patch layer
 - [ ] Replace repeated hard-coded surface/text/accent colours with tokens
+- [x] Remove competing global palette overrides from legacy/V15 layers
 - [ ] Define final spacing scale
 - [ ] Define final typography scale
 - [ ] Define final radius scale
