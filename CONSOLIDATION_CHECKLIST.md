@@ -73,6 +73,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Forecast timeline
 - [ ] Looking-ahead / next-home sections
 - [x] Remove duplicate Future forecast/timeline implementations
+- [x] Restore retained Looking Ahead shell and typography after duplicate cleanup
 - [x] Future looking-ahead timeline surface ownership moved to final page rules
 - [x] Future floating summary/range tiles consolidated
 - [ ] Cost/value presentation
