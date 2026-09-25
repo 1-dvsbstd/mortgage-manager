@@ -7,20 +7,20 @@
 }
 .summary-quick-editor{
   background:#f8f4ee!important;
-  color:#202833!important;
+  color:var(--text)!important;
   border:1px solid #d9d0c5!important;
   box-shadow:0 30px 90px rgba(38,31,24,.24)!important;
 }
 .summary-quick-editor-head span{color:#9d6639!important}
-.summary-quick-editor-head strong{color:#202833!important}
+.summary-quick-editor-head strong{color:var(--text)!important}
 .summary-quick-close{
   color:#6d7278!important;
   background:transparent!important;
 }
-.summary-quick-close:hover,.summary-quick-close:focus-visible{color:#202833!important}
+.summary-quick-close:hover,.summary-quick-close:focus-visible{color:var(--text)!important}
 .summary-quick-field{color:#6d7278!important}
 .summary-quick-input-wrap{
-  background:#fffaf4!important;
+  background:var(--surface-control)!important;
   border:1px solid #d6c8b8!important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.75)!important;
 }
@@ -30,13 +30,13 @@
 }
 .summary-quick-input-wrap i{color:#6d7278!important}
 .summary-quick-input-wrap input{
-  color:#202833!important;
-  -webkit-text-fill-color:#202833!important;
+  color:var(--text)!important;
+  -webkit-text-fill-color:var(--text)!important;
 }
 .summary-quick-actions button{
   border:1px solid #d6c8b8!important;
-  background:#fffaf4!important;
-  color:#202833!important;
+  background:var(--surface-control)!important;
+  color:var(--text)!important;
   box-shadow:0 3px 10px rgba(61,48,36,.05)!important;
 }
 .summary-quick-actions button:hover{
@@ -46,7 +46,7 @@
 }
 .summary-quick-save{
   background:#c88e5c!important;
-  color:#202833!important;
+  color:var(--text)!important;
   border-color:#c88e5c!important;
 }
 .summary-quick-save:hover{background:#b77c4b!important;border-color:#b77c4b!important}
@@ -64,7 +64,7 @@ body[data-app-view="upcoming"] .deal-action-hint{
   border-color:#ded0c0!important;
 }
 .deal-action-hint span{color:#9d6639!important}
-.deal-action-hint strong{color:#202833!important}
+.deal-action-hint strong{color:var(--text)!important}
 .deal-action-hint small{color:#6d7278!important}
 
 body[data-app-view="future"] #homeProjection .projection-core-card.current-estimate,
@@ -77,8 +77,8 @@ body[data-app-view="future"] #nextHomePlanner .next-home-results>div.primary{
 body[data-app-view="future"] #homeProjection .projection-core-card.current-estimate strong,
 body[data-app-view="future"] #homeProjection .projection-core-card.future-estimate strong,
 body[data-app-view="future"] .next-home-results>div.primary strong{
-  color:#202833!important;
-  -webkit-text-fill-color:#202833!important;
+  color:var(--text)!important;
+  -webkit-text-fill-color:var(--text)!important;
 }
 body[data-app-view="future"] #homeProjection .projection-core-card.current-estimate span,
 body[data-app-view="future"] #homeProjection .projection-core-card.current-estimate small,
@@ -92,7 +92,7 @@ body[data-app-view="future"] .next-home-results>div.primary small{
 
 /* Selected/use actions stay warm and quiet rather than green. */
 body[data-app-view="future"] .projection-use-button{
-  background:#fffaf4!important;
+  background:var(--surface-control)!important;
   border-color:#d3b99f!important;
   color:#9d6639!important;
 }
@@ -128,9 +128,9 @@ body .personal-backdrop .personal-modal .personal-modal-head .personal-close{
   padding:0 14px!important;
   border:1px solid #d6c8b8!important;
   border-radius:11px!important;
-  background:#fffaf4!important;
-  color:#202833!important;
-  -webkit-text-fill-color:#202833!important;
+  background:var(--surface-control)!important;
+  color:var(--text)!important;
+  -webkit-text-fill-color:var(--text)!important;
   font:inherit!important;
   font-size:11px!important;
   font-weight:780!important;
@@ -139,8 +139,8 @@ body .personal-backdrop .personal-modal .personal-modal-head .personal-close{
 body .personal-backdrop .personal-modal .personal-modal-head .personal-close:hover,
 body .personal-backdrop .personal-modal .personal-modal-head .personal-close:focus-visible{
   background:#f2e7da!important;
-  color:#202833!important;
-  -webkit-text-fill-color:#202833!important;
+  color:var(--text)!important;
+  -webkit-text-fill-color:var(--text)!important;
   border-color:#c9986e!important;
   box-shadow:0 10px 24px rgba(61,48,36,.12)!important;
   outline:none!important;
