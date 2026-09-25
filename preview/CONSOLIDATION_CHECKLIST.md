@@ -54,6 +54,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 
 ## 5. Upcoming
 - [ ] Section/card spacing
+- [x] Consolidate Upcoming rate/summary/current-fix card surface ownership into `v15.4.css`
 - [ ] Deal-end position
 - [ ] Milestone/timeline treatment
 - [ ] Rate scenario cards
@@ -71,7 +72,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Visual check by Nathan
 
 ## 7. Setup & data
-- [ ] Setup navigation/tabs
+- [x] Setup navigation/tabs
 - [ ] Mortgage/property inputs
 - [ ] Backup/restore/reset controls
 - [ ] Methodology/help panels
@@ -95,7 +96,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 ## 9. Legacy cleanup
 - [x] Map/retire legacy theme rules in `layout-finalize.css`
 - [x] Map legacy `layout-qa.css` colours onto shared tokens
-- [ ] Map selectors in V15 patch files (Current trajectory ownership consolidated)
+- [ ] Map selectors in V15 patch files (Current trajectory + Upcoming card ownership consolidated)
 - [x] Retire legacy global theme declarations from `premium.css`
 - [ ] Move surviving rules to authoritative component/page files
 - [ ] Remove redundant `!important` declarations where safe

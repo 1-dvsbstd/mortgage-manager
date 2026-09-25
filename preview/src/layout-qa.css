@@ -230,8 +230,6 @@ body{background:var(--bg)!important;color:var(--text)!important}
 .personal-form input,.setup-future-grid input{min-height:40px!important;background:var(--surface-input)!important;border-color:var(--border-soft)!important}
 .personal-section{margin-top:16px!important;padding-top:16px!important;border-top-color:var(--border-soft)!important}
 .personal-footer-actions{margin-top:16px!important;padding-top:16px!important;border-top-color:var(--border-soft)!important}
-.setup-tab-nav{background:var(--surface)!important;border-color:var(--border-soft)!important}
-.setup-tab-nav button.active{background:var(--surface-raised)!important;color:var(--text)!important}
 
 /* Micro-finish */
 .brand{color:var(--text)!important}.brand span{color:var(--muted-2)!important}

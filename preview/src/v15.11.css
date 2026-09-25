@@ -107,27 +107,6 @@
 .personal-modal label{color:#6d7278!important}
 .personal-modal .eyebrow{color:#9d6639!important}
 
-/* Setup tabs: selected tab must stay visible. */
-.personal-modal .setup-tab-nav{
-  background:#eee7de!important;
-  border-color:#ddd2c6!important;
-}
-.personal-modal .setup-tab-nav button{
-  color:#6d7278!important;
-  border:1px solid transparent!important;
-}
-.personal-modal .setup-tab-nav button.active,
-.personal-modal .setup-tab-nav button[aria-selected="true"]{
-  background:#252d36!important;
-  color:#fffaf3!important;
-  border-color:#252d36!important;
-  box-shadow:0 6px 16px rgba(37,45,54,.15)!important;
-}
-.personal-modal .setup-tab-nav button:hover:not(.active){
-  background:#fffaf4!important;
-  color:#202833!important;
-}
-
 /* Setup inputs and buttons stay aligned and on-theme. */
 .personal-modal .personal-form label,
 .personal-modal .setup-future-grid label{

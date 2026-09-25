@@ -30,69 +30,6 @@
 .dot.selected-line{background:var(--accent-strong)!important}
 .dot.equity-line{background:#b8aa99!important}
 
-/* Upcoming: remove all green slabs and hover-only correction. */
-.app-view-upcoming .deal-planner-rate,
-.app-view-upcoming .deal-planner-summary>div,
-.app-view-upcoming .current-fix-stats>div{
-  background:#f2ece3!important;
-  background-image:none!important;
-  border-color:var(--border-soft)!important;
-}
-.app-view-upcoming .deal-planner-rate:hover,
-.app-view-upcoming .deal-planner-summary>div:hover,
-.app-view-upcoming .current-fix-stats>div:hover{background:#eee6dc!important;background-image:none!important}
-.app-view-upcoming .deal-planner-rate.is-current-rate{background:#fff6eb!important;background-image:none!important;border-color:rgba(197,138,86,.36)!important}
-.app-view-upcoming .deal-planner-rate>strong,
-.app-view-upcoming .deal-planner-summary strong,
-.app-view-upcoming .current-fix-stats strong{color:var(--text)!important}
-.app-view-upcoming .deal-planner-rate>span,
-.app-view-upcoming .deal-planner-rate>em,
-.app-view-upcoming .deal-planner-summary span,
-.app-view-upcoming .deal-planner-summary small,
-.app-view-upcoming .current-fix-stats span,
-.app-view-upcoming .current-fix-stats small{color:var(--muted)!important}
-.app-view-upcoming .deal-planner-milestone{background:#f1e8dd!important}
-.app-view-upcoming .upcoming-action{background:#f8efe4!important;border-color:rgba(197,138,86,.18)!important}
-
-/* Deterministic selectors for the dynamically rebuilt Upcoming cards. */
-body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate,
-body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate:hover,
-body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate:focus-within{
-  background:#f2ece3!important;
-  background-image:none!important;
-  border:1px solid rgba(64,54,45,.09)!important;
-  box-shadow:none!important;
-  color:var(--text)!important;
-  transform:none!important;
-}
-body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-current-rate,
-body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-current-rate:hover{
-  background:#fff6eb!important;
-  background-image:none!important;
-  border-color:rgba(197,138,86,.34)!important;
-}
-body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate > strong,
-body[data-app-view="upcoming"] #dealPlannerSummary > div > strong,
-body[data-app-view="upcoming"] .current-fix-stats > div > strong{color:var(--text)!important}
-body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate > span,
-body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate > em,
-body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate > strong small,
-body[data-app-view="upcoming"] #dealPlannerSummary > div > span,
-body[data-app-view="upcoming"] #dealPlannerSummary > div > small,
-body[data-app-view="upcoming"] .current-fix-stats > div > span{color:var(--muted)!important}
-body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-current-rate > span{color:var(--accent-strong)!important}
-body[data-app-view="upcoming"] #dealPlannerSummary > div,
-body[data-app-view="upcoming"] #dealPlannerSummary > div:hover,
-body[data-app-view="upcoming"] .current-fix-stats > div,
-body[data-app-view="upcoming"] .current-fix-stats > div:hover{
-  background:#f2ece3!important;
-  background-image:none!important;
-  border:1px solid rgba(64,54,45,.09)!important;
-  box-shadow:none!important;
-  color:var(--text)!important;
-  transform:none!important;
-}
-
 /* Future: no pale blue/green selected cards or mint bars. */
 .app-view-future .home-profile-range-values .centre,
 .app-view-future .next-home-summary-card:last-child,
