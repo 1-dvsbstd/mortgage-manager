@@ -101,7 +101,9 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Remove superseded V15 stylesheet files (started: retired v15.10 removed)
 - [ ] Remove superseded V15 script files where safe
 - [ ] Remove dead selectors/styles
-- [ ] Reduce final stylesheet count to a clear logical set
+- [x] Reduce active stylesheet stack to five logical bundles
+- [ ] Prune duplicate/obsolete rules inside the consolidated bundles
+- [ ] Delete superseded source stylesheets after visual validation
 
 ## 10. Optional colour themes
 - [x] Keep consolidation token-based so multiple themes remain possible
