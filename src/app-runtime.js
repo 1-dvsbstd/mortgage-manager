@@ -420,7 +420,7 @@
 
   if (window.MortgageStore?.subscribe) {
     window.MortgageStore.subscribe((next, previous) => {
-      if (['balance','homeValue','ownership','rate','payment','fixedEnd'].some((key) => next[key] !== previous[key])) {
+      if (['balance','homeValue','ownership','rate','payment','fixedEnd','currentOverpayment','scenarioExtra'].some((key) => next[key] !== previous[key])) {
         schedule();
         if (isOnlineMode()) refreshMarketRates();
       }
@@ -434,6 +434,7 @@
     if (event.target.matches('#projectionTrendRate,#projectionPurchasePrice,#projectionImprovements')) schedule(20);
   });
   document.addEventListener('mortgage-history-updated', () => schedule(35));
+  document.addEventListener('home-cost-comparison-updated', () => schedule());
   document.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
     const button = document.querySelector('.personal-modal .personal-close');
