@@ -1,5 +1,5 @@
 html{background:var(--bg)!important}
-body{background:linear-gradient(180deg,#09110f 0%,#0d1713 46%,#09120f 100%)!important;color:var(--text)!important}
+body{background:var(--bg)!important;color:var(--text)!important}
 .panel,.hero-panel{background:var(--surface)!important;border:1px solid var(--border)!important;border-radius:var(--radius-card)!important;box-shadow:0 18px 50px rgba(0,0,0,.22)!important}
 .hero-panel{background:linear-gradient(145deg,#102019,#14271f)!important}
 .kicker,.eyebrow,.future-assumption-label{color:var(--accent)!important}
@@ -63,7 +63,7 @@ body{background:linear-gradient(180deg,#09110f 0%,#0d1713 46%,#09120f 100%)!impo
 .trajectory-overpay-row button,.trajectory-custom-overpay,.future-assumption-controls button,.future-assumption-controls label{min-height:40px;border:1px solid var(--border-soft)!important;border-radius:12px!important;background:var(--surface-raised)!important;color:var(--text)!important;font-weight:750}
 .trajectory-overpay-row button{padding:8px 14px;cursor:pointer}
 .trajectory-overpay-row button:hover,.future-assumption-controls button:hover{border-color:rgba(112,200,168,.34)!important;background:#21372d!important}
-.trajectory-overpay-row button.active,.future-assumption-controls button.active{background:var(--accent)!important;color:#0a1712!important;border-color:transparent!important}
+.trajectory-overpay-row button.active,.future-assumption-controls button.active{background:var(--accent)!important;color:var(--ink-on-active)!important;border-color:transparent!important}
 .trajectory-custom-overpay{display:flex;align-items:center;gap:5px;padding:8px 12px;color:var(--muted)!important}
 .trajectory-custom-overpay input{width:74px;border:0;outline:0;background:transparent;color:var(--text);font:inherit;font-weight:750}
 .trajectory-with-what-if>.chart-wrap{margin:18px var(--space-card) 0!important;width:calc(100% - (var(--space-card) * 2))!important}
@@ -113,7 +113,7 @@ body{background:linear-gradient(180deg,#09110f 0%,#0d1713 46%,#09120f 100%)!impo
 .app-view .expand-detail{display:none!important}.app-view .home-glance-source{display:block!important}
 
 /* Navigation */
-.app-section-nav button{background:#111e19!important;border-color:var(--border-soft)!important;color:var(--muted)!important;border-radius:12px!important}.app-section-nav button.is-active{background:var(--surface-raised)!important;color:var(--text)!important;border-color:rgba(112,200,168,.30)!important;box-shadow:none!important}
+.app-section-nav button{background:var(--surface)!important;border-color:var(--border-soft)!important;color:var(--muted)!important;border-radius:12px!important}.app-section-nav button.is-active{background:var(--surface-raised)!important;color:var(--text)!important;border-color:rgba(112,200,168,.30)!important;box-shadow:none!important}
 
 @media(max-width:1050px){
   .current-fix-stats,.upcoming-rates .deal-planner-rate-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
