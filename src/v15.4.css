@@ -8,7 +8,7 @@ body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate:focus-w
   background-image:none!important;
   border:1px solid rgba(64,54,45,.09)!important;
   box-shadow:none!important;
-  color:#202833!important;
+  color:var(--text)!important;
   transform:none!important;
 }
 
@@ -22,15 +22,15 @@ body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-curr
 body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate > span,
 body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate > em,
 body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate > strong small{
-  color:#70767c!important;
+  color:var(--muted)!important;
 }
 
 body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate > strong{
-  color:#202833!important;
+  color:var(--text)!important;
 }
 
 body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-current-rate > span{
-  color:#9b663b!important;
+  color:var(--accent-strong)!important;
 }
 
 /* Deal-end position cards. */
@@ -40,17 +40,17 @@ body[data-app-view="upcoming"] #dealPlannerSummary > div:hover{
   background-image:none!important;
   border:1px solid rgba(64,54,45,.09)!important;
   box-shadow:none!important;
-  color:#202833!important;
+  color:var(--text)!important;
   transform:none!important;
 }
 
 body[data-app-view="upcoming"] #dealPlannerSummary > div > span,
 body[data-app-view="upcoming"] #dealPlannerSummary > div > small{
-  color:#70767c!important;
+  color:var(--muted)!important;
 }
 
 body[data-app-view="upcoming"] #dealPlannerSummary > div > strong{
-  color:#202833!important;
+  color:var(--text)!important;
 }
 
 /* Current-fix glance cards use the same warm neutral recipe. */
@@ -60,8 +60,8 @@ body[data-app-view="upcoming"] .current-fix-stats > div:hover{
   background-image:none!important;
   border:1px solid rgba(64,54,45,.09)!important;
   box-shadow:none!important;
-  color:#202833!important;
+  color:var(--text)!important;
 }
 
-body[data-app-view="upcoming"] .current-fix-stats > div > span{color:#70767c!important}
-body[data-app-view="upcoming"] .current-fix-stats > div > strong{color:#202833!important}
+body[data-app-view="upcoming"] .current-fix-stats > div > span{color:var(--muted)!important}
+body[data-app-view="upcoming"] .current-fix-stats > div > strong{color:var(--text)!important}
