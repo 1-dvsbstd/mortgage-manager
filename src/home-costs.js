@@ -126,6 +126,10 @@
       $('costKnownBasisNote').textContent = 'Purchase price and mortgage history are set under Setup & data.';
       $('costComparisonNote').textContent = 'Add mortgage history to turn this into a more complete lifetime-cost estimate.';
     }
+
+    /* Notify visual dependants only after the card values have been updated.
+       This keeps the comparison bars in sync with overpayment/scenario changes. */
+    document.dispatchEvent(new CustomEvent('home-cost-comparison-updated'));
   }
 
   const schedule = () => requestAnimationFrame(renderCostComparison);
