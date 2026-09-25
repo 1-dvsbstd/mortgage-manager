@@ -671,7 +671,7 @@ body .personal-modal details>summary .summary-plus{
   display:none!important;
 }
 
-/* App-wide disclosure icon system — one chevron for every native details/summary control. */
+/* App-wide disclosure icon system — one identical chevron asset everywhere. */
 body details>summary{
   position:relative!important;
   padding-right:30px!important;
@@ -691,66 +691,32 @@ body details>summary::after{
   right:6px!important;
   top:50%!important;
   display:block!important;
-  width:7px!important;
-  height:7px!important;
+  width:12px!important;
+  height:8px!important;
   margin:0!important;
   padding:0!important;
   border:0!important;
-  border-right:1.5px solid #8b6849!important;
-  border-bottom:1.5px solid #8b6849!important;
   border-radius:0!important;
-  background:transparent!important;
+  background-color:transparent!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M2 2l4 4 4-4' stroke='%238b6849' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:12px 8px!important;
   box-shadow:none!important;
   color:transparent!important;
   font-size:0!important;
   line-height:0!important;
-  transform:translateY(-65%) rotate(45deg)!important;
+  transform:translateY(-50%) rotate(0deg)!important;
   transform-origin:center!important;
   transition:transform .15s ease!important;
 }
 body details[open]>summary::after{
-  transform:translateY(-35%) rotate(225deg)!important;
+  transform:translateY(-50%) rotate(180deg)!important;
 }
 body details>summary .summary-plus,
 body details>summary .history-summary-chevron,
 body details>summary .methodology-chevron{
   display:none!important;
-}
-
-/* Methodology disclosure — match Mortgage history exactly. */
-body .personal-modal details#methodologySection.personal-section>summary{
-  position:relative!important;
-  padding-right:30px!important;
-}
-body .personal-modal details#methodologySection.personal-section>summary::before{
-  content:none!important;
-  display:none!important;
-}
-body .personal-modal details#methodologySection.personal-section>summary::after{
-  content:""!important;
-  position:absolute!important;
-  right:6px!important;
-  top:50%!important;
-  display:block!important;
-  width:7px!important;
-  height:7px!important;
-  margin:0!important;
-  padding:0!important;
-  border:0!important;
-  border-right:1.5px solid #8b6849!important;
-  border-bottom:1.5px solid #8b6849!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-  color:transparent!important;
-  font-size:0!important;
-  line-height:0!important;
-  transform:translateY(-65%) rotate(45deg)!important;
-  transform-origin:center!important;
-  transition:transform .15s ease!important;
-}
-body .personal-modal details#methodologySection.personal-section[open]>summary::after{
-  transform:translateY(-35%) rotate(225deg)!important;
 }
 
 /* Setup fields — keep native inputs/selects dimensionally identical and use the app chevron. */
@@ -800,39 +766,6 @@ body .personal-modal .setup-home-profile-fields input:not([type="file"]){
 body .personal-modal .setup-home-profile-fields select{
   padding-left:13px!important;
   padding-right:38px!important;
-}
-
-/* Setup disclosure icons — exact same SVG asset for Mortgage history + Methodology. */
-body .personal-modal .mortgage-history-section>summary::after,
-body .personal-modal #methodologySection>summary::after{
-  content:""!important;
-  position:absolute!important;
-  right:6px!important;
-  top:50%!important;
-  width:12px!important;
-  height:8px!important;
-  margin:0!important;
-  padding:0!important;
-  border:0!important;
-  border-radius:0!important;
-  background-color:transparent!important;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M2 2l4 4 4-4' stroke='%238b6849' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")!important;
-  background-repeat:no-repeat!important;
-  background-position:center!important;
-  background-size:12px 8px!important;
-  box-shadow:none!important;
-  transform:translateY(-50%) rotate(0deg)!important;
-  transform-origin:center!important;
-  transition:transform .15s ease!important;
-}
-body .personal-modal .mortgage-history-section[open]>summary::after,
-body .personal-modal #methodologySection[open]>summary::after{
-  transform:translateY(-50%) rotate(180deg)!important;
-}
-body .personal-modal .mortgage-history-section>summary::before,
-body .personal-modal #methodologySection>summary::before{
-  content:none!important;
-  display:none!important;
 }
 
 /* Upcoming — market data is supporting metadata, not a second projection panel. */
