@@ -89,13 +89,13 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Visual check by Nathan
 
 ## 8. Charts
-- [ ] Create one chart-surface component
+- [x] Create one Current trajectory chart-surface owner
 - [ ] Standardise chart heading treatment
 - [ ] Standardise axes and tick typography
 - [ ] Reduce grid-line visual weight
 - [ ] Standardise line widths and area fills
 - [ ] Standardise rounded bars
-- [ ] Standardise legends
+- [ ] Standardise legends (Current trajectory consolidated)
 - [ ] Apply semantic data colours consistently
 - [ ] Review Current trajectory chart
 - [ ] Review Future charts
