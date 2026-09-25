@@ -252,10 +252,14 @@
     }
 
     $('yearsRemaining').textContent=humanMonths(result.base.months); $('payoffDate').textContent=`Mortgage-free around ${payoffDate(result.base.months)}`; $('interestRemaining').textContent=money(result.base.interest); $('warning').textContent='';
+    const regularOverpayment=Math.max(0,Number(values.currentOverpayment)||0);
+    $('interestWithExtraText').textContent=regularOverpayment>0
+      ? `Includes your ${money(regularOverpayment)}/month regular overpayment`
+      : 'Based on your scheduled monthly payment';
     if(selectedExtra===0||!Number.isFinite(result.accelerated.months)){
-      $('timeSaved').textContent='No change'; $('scenarioSummary').textContent=`Current finish: ${payoffDate(result.base.months)}`; $('heroScenario').textContent='Choose an overpayment to see how much sooner you could finish.'; $('interestWithExtraText').textContent='Choose an overpayment to preview the saving.';
+      $('timeSaved').textContent='No change'; $('scenarioSummary').textContent=`Current finish: ${payoffDate(result.base.months)}`; $('heroScenario').textContent='Choose an overpayment to see how much sooner you could finish.';
     }else{
-      const finish=payoffDate(result.accelerated.months); $('timeSaved').textContent=compactMonths(result.monthsSaved); $('scenarioSummary').textContent=`${compactMonths(result.monthsSaved)} sooner · ${money(result.interestSaved)} saved · finish ${finish}`; $('heroScenario').textContent=`${money(selectedExtra)}/month gets you mortgage-free ${compactMonths(result.monthsSaved)} sooner and saves ${money(result.interestSaved)} in interest.`; $('interestWithExtraText').textContent=`${money(result.accelerated.interest)} with your ${money(selectedExtra)}/month overpayment`;
+      const finish=payoffDate(result.accelerated.months); $('timeSaved').textContent=compactMonths(result.monthsSaved); $('scenarioSummary').textContent=`${compactMonths(result.monthsSaved)} sooner · ${money(result.interestSaved)} saved · finish ${finish}`; $('heroScenario').textContent=`${money(selectedExtra)}/month gets you mortgage-free ${compactMonths(result.monthsSaved)} sooner and saves ${money(result.interestSaved)} in interest.`;
     }
     drawChart(result.base,result.accelerated);
   }
