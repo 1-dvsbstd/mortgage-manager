@@ -869,3 +869,43 @@ body .app-view-upcoming .upcoming-rates .live-rate-meta strong{
     gap:3px!important;
   }
 }
+
+/* Upcoming deal-end snapshot — compact and hide empty milestones correctly. */
+body .app-view-upcoming .deal-position-milestone[hidden]{
+  display:none!important;
+}
+body .app-view-upcoming .upcoming-position .deal-planner-summary{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+}
+body .app-view-upcoming .upcoming-position .deal-planner-summary>.deal-position-interest{
+  display:block!important;
+  margin:0!important;
+  padding:16px!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:var(--radius-tile)!important;
+  background:var(--surface-soft)!important;
+  box-shadow:none!important;
+}
+body .app-view-upcoming .upcoming-position .deal-planner-summary>.deal-position-interest>span{
+  display:block!important;
+  color:var(--muted)!important;
+  font-size:10px!important;
+}
+body .app-view-upcoming .upcoming-position .deal-planner-summary>.deal-position-interest #interestRemaining{
+  display:block!important;
+  margin-top:5px!important;
+  font-size:25px!important;
+  line-height:1.05!important;
+}
+body .app-view-upcoming .upcoming-position .deal-planner-summary>.deal-position-interest #interestWithExtraText{
+  display:block!important;
+  margin-top:5px!important;
+  color:var(--muted)!important;
+  font-size:10px!important;
+  line-height:1.4!important;
+}
+@media(max-width:760px){
+  body .app-view-upcoming .upcoming-position .deal-planner-summary{
+    grid-template-columns:1fr!important;
+  }
+}
