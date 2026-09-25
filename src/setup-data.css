@@ -174,3 +174,15 @@
     justify-self:start!important;
   }
 }
+
+/* Setup save/status toast — keep confirmation visible after modal closes. */
+.personal-toast{
+  top:max(18px,env(safe-area-inset-top))!important;
+  bottom:auto!important;
+  left:50%!important;
+  transform:translateX(-50%)!important;
+  z-index:3000!important;
+  max-width:min(420px,calc(100vw - 32px))!important;
+  text-align:center!important;
+  pointer-events:none!important;
+}
