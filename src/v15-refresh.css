@@ -146,7 +146,7 @@ body{
 /* Inputs / setup / modal surfaces */
 input,select,textarea{color:var(--text)}
 .mortgage-details-editor .inputs label,.personal-modal,.projection-controls label,.next-home-settings label{background:#f7f2eb!important;border-color:var(--border)!important;color:var(--text)!important}
-.mortgage-details-editor .inputs input,.personal-modal input,.projection-controls input,.next-home-settings input{background:var(--surface-input)!important;border-color:var(--border)!important;color:var(--text)!important}
+.mortgage-details-editor .inputs input,.projection-controls input,.next-home-settings input{background:var(--surface-input)!important;border-color:var(--border)!important;color:var(--text)!important}
 .card-backdrop,.personal-backdrop{background:rgba(31,34,36,.34)!important;backdrop-filter:blur(10px)!important}
 .footer{color:#85807a!important}
 
