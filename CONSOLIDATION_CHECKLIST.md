@@ -71,6 +71,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Property-value card
 - [ ] Forecast timeline
 - [ ] Looking-ahead / next-home sections
+- [x] Future floating summary/range tiles consolidated
 - [ ] Cost/value presentation
 - [ ] Future responsive rules
 - [ ] Visual check by Nathan
