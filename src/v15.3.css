@@ -28,7 +28,7 @@
 .chart-readout span,.chart-readout strong{color:var(--text)!important}
 .dot.scheduled-line{background:#8a949c!important}
 .dot.regular-line{background:#c39b72!important}
-.dot.selected-line{background:#9b663b!important}
+.dot.selected-line{background:var(--accent-strong)!important}
 .dot.equity-line{background:#b8aa99!important}
 
 /* Upcoming: remove all green slabs and hover-only correction. */
@@ -63,7 +63,7 @@ body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate:focus-w
   background-image:none!important;
   border:1px solid rgba(64,54,45,.09)!important;
   box-shadow:none!important;
-  color:#202833!important;
+  color:var(--text)!important;
   transform:none!important;
 }
 body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-current-rate,
@@ -74,14 +74,14 @@ body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-curr
 }
 body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate > strong,
 body[data-app-view="upcoming"] #dealPlannerSummary > div > strong,
-body[data-app-view="upcoming"] .current-fix-stats > div > strong{color:#202833!important}
+body[data-app-view="upcoming"] .current-fix-stats > div > strong{color:var(--text)!important}
 body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate > span,
 body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate > em,
 body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate > strong small,
 body[data-app-view="upcoming"] #dealPlannerSummary > div > span,
 body[data-app-view="upcoming"] #dealPlannerSummary > div > small,
-body[data-app-view="upcoming"] .current-fix-stats > div > span{color:#70767c!important}
-body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-current-rate > span{color:#9b663b!important}
+body[data-app-view="upcoming"] .current-fix-stats > div > span{color:var(--muted)!important}
+body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-current-rate > span{color:var(--accent-strong)!important}
 body[data-app-view="upcoming"] #dealPlannerSummary > div,
 body[data-app-view="upcoming"] #dealPlannerSummary > div:hover,
 body[data-app-view="upcoming"] .current-fix-stats > div,
@@ -90,7 +90,7 @@ body[data-app-view="upcoming"] .current-fix-stats > div:hover{
   background-image:none!important;
   border:1px solid rgba(64,54,45,.09)!important;
   box-shadow:none!important;
-  color:#202833!important;
+  color:var(--text)!important;
   transform:none!important;
 }
 
