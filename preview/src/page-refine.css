@@ -626,51 +626,6 @@
   }
 }
 
-/* Setup & data — authoritative disclosure icon treatment for every expandable row. */
-body .personal-modal details>summary{
-  position:relative!important;
-  padding-right:30px!important;
-  list-style:none!important;
-}
-body .personal-modal details>summary::-webkit-details-marker{
-  display:none!important;
-}
-body .personal-modal details>summary::before{
-  content:none!important;
-  display:none!important;
-}
-body .personal-modal details>summary::after{
-  content:""!important;
-  position:absolute!important;
-  right:5px!important;
-  top:50%!important;
-  display:block!important;
-  width:7px!important;
-  height:7px!important;
-  margin:0!important;
-  padding:0!important;
-  border:0!important;
-  border-right:1.5px solid #8b6849!important;
-  border-bottom:1.5px solid #8b6849!important;
-  border-radius:0!important;
-  background:none!important;
-  box-shadow:none!important;
-  color:transparent!important;
-  font-size:0!important;
-  line-height:0!important;
-  transform:translateY(-65%) rotate(45deg)!important;
-  transform-origin:center!important;
-  transition:transform .15s ease!important;
-}
-body .personal-modal details[open]>summary::after{
-  transform:translateY(-35%) rotate(225deg)!important;
-}
-body .personal-modal details>summary .history-summary-chevron,
-body .personal-modal details>summary .methodology-chevron,
-body .personal-modal details>summary .summary-plus{
-  display:none!important;
-}
-
 /* App-wide disclosure icon system — one identical chevron asset everywhere. */
 body details>summary{
   position:relative!important;
