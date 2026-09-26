@@ -26,6 +26,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 
 ## 2. Global shell
 - [x] Consolidate page background and app-shell rules
+- [x] Warm scrollbar ownership restored; legacy green premium override removed
 - [x] Consolidate top bar / brand / version / save-state styling
 - [x] Consolidate Current / Upcoming / Future navigation
 - [ ] Verify desktop header alignment
