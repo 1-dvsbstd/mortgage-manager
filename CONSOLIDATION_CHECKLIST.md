@@ -9,6 +9,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [x] No calculation/storage/model rewrites as part of the visual pass
 - [ ] Preserve current behaviour on Current / Upcoming / Future / Setup & data
 - [ ] Run regression tests before merge
+- [x] Regression tests updated for retired V15/expandable assets
 
 ## 1. Design foundations
 - [x] Create one authoritative design-token file
