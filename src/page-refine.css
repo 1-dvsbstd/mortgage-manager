@@ -2000,7 +2000,7 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 /* Keep the hero editorial, but use a steadier serif at this scale. */
 .app-view-current .v15-home-copy h1{
   max-width:590px!important;
-  font-family:Georgia,"Times New Roman",serif!important;
+  font-family:var(--font-display)!important;
   font-size:clamp(40px,4.65vw,62px)!important;
   line-height:.98!important;
   letter-spacing:-.045em!important;
