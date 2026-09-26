@@ -1989,3 +1989,72 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
     padding-bottom:18px!important;
   }
 }
+
+/* Premium Step 2.1 — Current hero feedback */
+/* Restore vertical hero flow: the quick-edit row is a sibling of the premium copy. */
+.app-view-current .current-hero-condensed .hero-main{
+  display:block!important;
+  align-items:initial!important;
+}
+
+/* Keep the hero editorial, but use a steadier serif at this scale. */
+.app-view-current .v15-home-copy h1{
+  max-width:590px!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:clamp(40px,4.65vw,62px)!important;
+  line-height:.98!important;
+  letter-spacing:-.045em!important;
+}
+
+/* Quick-edit details sit beneath the ownership story instead of alongside it. */
+.app-view-current #mortgageExtraTiles{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:14px!important;
+  margin-top:22px!important;
+  padding-top:16px!important;
+  border-top:1px solid var(--border-soft)!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile{
+  padding:2px 0!important;
+  margin:0!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile span{
+  font-size:9px!important;
+  font-weight:700!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile strong{
+  margin-top:5px!important;
+  font-size:16px!important;
+}
+
+/* Mortgage-free share is a single equity measure, not a two-state scale. */
+.app-view-current .v15-hero-progress-track{
+  background:var(--surface-soft)!important;
+}
+.app-view-current .v15-hero-progress-track i{
+  background:var(--positive)!important;
+}
+
+/* Keep the two progress captions semantically neutral. */
+.app-view-current .v15-hero-progress-foot span{
+  color:var(--muted-2)!important;
+}
+
+@media(max-width:700px){
+  .app-view-current #mortgageExtraTiles{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:9px!important;
+    margin-top:18px!important;
+    padding-top:14px!important;
+  }
+  .app-view-current #mortgageExtraTiles .mortgage-edit-tile strong{
+    font-size:14px!important;
+  }
+}
+@media(max-width:500px){
+  .app-view-current #mortgageExtraTiles{
+    grid-template-columns:1fr!important;
+  }
+}

@@ -53,6 +53,9 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 
 ## 4. Current
 - [x] Current premium pass applied using Ink & Parchment
+- [x] Current hero flex regression fixed; quick-edit row restored beneath hero story
+- [x] Mortgage-free progress simplified to single equity colour
+- [x] Hero display serif restrained for large-format readability
 - [x] Hero layout and typography
 - [ ] Replace homepage house artwork with premium new image
 - [x] Mortgage progress block
