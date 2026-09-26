@@ -45,6 +45,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Consolidate remaining non-Setup modal/backdrop controls
 - [x] Start removing obsolete duplicate component rules
 - [ ] Continue duplicate-rule removal component by component
+- [x] Runtime UI styles moved out of JS injection into static CSS
 
 ## 4. Current
 - [ ] Hero layout and typography
@@ -119,7 +120,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Remove redundant `!important` declarations where safe
 - [x] Remove superseded standalone V15 stylesheet files
 - [x] Remove superseded/no-op expandable-card script
-- [ ] Remove dead selectors/styles (expansion remnants and superseded global shell/theme declarations removed)
+- [ ] Remove dead selectors/styles (expansion remnants, runtime expanded-state CSS and superseded global shell/theme declarations removed)
 - [ ] Reduce active stylesheet count only after component ownership is validated (four legacy/adjacent layers safely folded)
 - [ ] Continue pruning duplicate/obsolete rules in isolated source stylesheets
 - [ ] Delete superseded source stylesheets only after component-by-component validation
