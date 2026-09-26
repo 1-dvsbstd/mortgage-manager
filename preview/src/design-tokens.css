@@ -30,6 +30,8 @@
   --ink-active: #1d2329;
   --ink-on-active: #faf7f1;
   --positive: #557e73;
+  --positive-soft: rgba(85, 126, 115, .10);
+  --accent-wash: rgba(183, 131, 77, .09);
 
   /* Focus */
   --focus-ring: #b7834d;
