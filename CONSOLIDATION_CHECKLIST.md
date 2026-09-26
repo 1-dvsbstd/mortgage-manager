@@ -113,9 +113,9 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [x] Map legacy `layout-qa.css` colours onto shared tokens
 - [ ] Map selectors in V15 patch files (Current trajectory, Upcoming cards and V15.9 Future typography consolidated)
 - [x] Retire legacy global theme declarations from `premium.css`
-- [ ] Move surviving rules to authoritative component/page files (v15.12 fully redistributed)
+- [ ] Move surviving rules to authoritative component/page files (v15.11 and v15.12 fully redistributed)
 - [ ] Remove redundant `!important` declarations where safe
-- [ ] Remove superseded V15 stylesheet files (retired v15.9, v15.10, v15.12 and v15.14 removed)
+- [ ] Remove superseded V15 stylesheet files (retired v15.9, v15.10, v15.11, v15.12 and v15.14 removed)
 - [ ] Remove superseded V15 script files where safe
 - [ ] Remove dead selectors/styles
 - [ ] Reduce active stylesheet count only after component ownership is validated
