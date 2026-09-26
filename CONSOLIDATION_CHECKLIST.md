@@ -52,14 +52,15 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [x] Final Offline V1 polish styles moved out of V15.15 JS injection
 
 ## 4. Current
-- [ ] Hero layout and typography
+- [x] Current premium pass applied using Ink & Parchment
+- [x] Hero layout and typography
 - [ ] Replace homepage house artwork with premium new image
-- [ ] Mortgage progress block
-- [ ] Metric strip
+- [x] Mortgage progress block
+- [x] Metric strip
 - [ ] Overpayment controls
-- [ ] Home/equity presentation
-- [ ] Trajectory card and controls
-- [ ] Current-page responsive rules
+- [x] Home/equity presentation
+- [x] Trajectory card and controls
+- [x] Current-page responsive rules
 - [ ] Visual check by Nathan
 
 ## 5. Upcoming
