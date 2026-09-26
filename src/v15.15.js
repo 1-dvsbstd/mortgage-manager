@@ -21,21 +21,6 @@
     document.body.appendChild(sinkWrap);
   }
 
-  function ensureOfflineV1Style(){
-    if(document.getElementById('offlineV1PolishStyle')) return;
-    const style=document.createElement('style');
-    style.id='offlineV1PolishStyle';
-    style.textContent=`
-      .upcoming-rates .live-rate-choices{margin-top:16px!important;padding:15px!important;border-color:rgba(84,224,180,.16)!important;background:linear-gradient(145deg,rgba(84,224,180,.05),rgba(255,255,255,.018))!important}
-      .live-rate-card{cursor:pointer;position:relative;transition:border-color .16s ease,background .16s ease,transform .16s ease}.live-rate-card::after{content:"Select";position:absolute;right:10px;top:9px;color:var(--muted-2);font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}.live-rate-card:hover{border-color:rgba(84,224,180,.22);background:rgba(84,224,180,.05)}.live-rate-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.live-rate-card.is-selected{border-color:rgba(84,224,180,.34);background:rgba(84,224,180,.09)}.live-rate-card.is-selected::after{content:"Selected";color:var(--accent)}
-      .live-rate-delta{margin-top:5px!important;color:var(--text)!important;font-weight:700}.live-rate-delta.is-higher{color:var(--warm)!important}.live-rate-delta.is-lower{color:var(--accent)!important}.live-rate-selection-note{margin:9px 0 0;color:var(--muted-2);font-size:10px;line-height:1.4}.live-rate-selected-summary{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:11px;padding-top:11px;border-top:1px solid rgba(255,255,255,.07)}.live-rate-selected-summary span{color:var(--muted);font-size:10px}.live-rate-selected-summary strong{color:var(--text);font-size:12px;text-align:right}
-      .clear-local-data{margin-left:auto}.clear-local-data.danger{border-color:rgba(232,124,124,.24);color:#e9b3b3}
-      .methodology-body{display:grid;gap:12px}.methodology-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.methodology-item{padding:12px 13px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(255,255,255,.018)}.methodology-item strong{display:block;margin-bottom:4px;color:var(--text);font-size:11px}.methodology-item p{margin:0;color:var(--muted);font-size:10px;line-height:1.45}.methodology-disclaimer{margin:0;padding:12px 13px;border:1px solid rgba(232,217,188,.12);border-radius:12px;background:rgba(232,217,188,.035);color:var(--muted);font-size:10px;line-height:1.5}.methodology-disclaimer strong{color:var(--warm)}
-      @media(max-width:700px){.live-rate-card{min-height:86px}.clear-local-data{margin-left:0}.topbar-with-nav>.topbar-actions{display:grid!important;grid-template-columns:auto auto;align-items:center!important;justify-content:end;gap:6px!important;margin-left:auto}.topbar-actions .connectivity-mode{grid-column:1/-1;justify-content:flex-end}.topbar-actions .save-status{display:none}.topbar-actions .personal-data-button{justify-self:end}.connectivity-copy small{display:block!important;max-width:150px;white-space:normal;line-height:1.2}.live-rate-selected-summary{display:grid;gap:3px}.live-rate-selected-summary strong{text-align:left}.methodology-grid{grid-template-columns:1fr}}
-      @media(max-width:420px){.connectivity-copy small{display:none!important}.connectivity-mode{gap:6px}.personal-data-button{padding-inline:9px}}
-    `;
-    document.head.appendChild(style);
-  }
 
   function parseMoney(text){
     const value=Number(String(text||'').replace(/[^0-9.-]/g,''));
@@ -92,7 +77,6 @@
   function decorateMarketChoices(){
     const box=relocateMarketChoices();
     if(!box) return;
-    ensureOfflineV1Style();
     const currentPayment=Math.max(0,Number(window.MortgageStore?.get?.().payment)||0);
     const saved=localStorage.getItem(MARKET_CHOICE_KEY)||'';
     const cards=[...box.querySelectorAll('.live-rate-card')];
@@ -146,7 +130,6 @@
   }
 
   function polishSetupModal(){
-    ensureOfflineV1Style();
     document.getElementById('dataBackupSection')?.remove();
     const modal=document.querySelector('.personal-modal');
     if(!modal) return;
@@ -209,7 +192,6 @@
   }
 
   function wireOfflineV1Polish(){
-    ensureOfflineV1Style();
     document.addEventListener('click',(event)=>{
       const card=event.target.closest?.('.live-rate-card');
       if(card) applyMarketChoice(card,true);
