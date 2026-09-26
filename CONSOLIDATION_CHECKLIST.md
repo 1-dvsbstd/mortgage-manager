@@ -25,8 +25,8 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 
 ## 2. Global shell
 - [ ] Consolidate page background and app-shell rules
-- [ ] Consolidate top bar / brand / version / save-state styling
-- [ ] Consolidate Current / Upcoming / Future navigation
+- [x] Consolidate top bar / brand / version / save-state styling
+- [x] Consolidate Current / Upcoming / Future navigation
 - [ ] Verify desktop header alignment
 - [ ] Verify mobile header alignment
 
@@ -117,9 +117,9 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Remove superseded V15 stylesheet files (started: retired v15.10 removed)
 - [ ] Remove superseded V15 script files where safe
 - [ ] Remove dead selectors/styles
-- [x] Reduce active stylesheet stack to five logical bundles
-- [ ] Prune duplicate/obsolete rules inside the consolidated bundles
-- [ ] Delete superseded source stylesheets after visual validation
+- [ ] Reduce active stylesheet count only after component ownership is validated
+- [ ] Continue pruning duplicate/obsolete rules in isolated source stylesheets
+- [ ] Delete superseded source stylesheets only after component-by-component validation
 
 ## 10. Optional colour themes
 - [x] Keep consolidation token-based so multiple themes remain possible
