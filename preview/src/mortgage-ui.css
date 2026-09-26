@@ -13,7 +13,6 @@
 .summary-overpayment-value .current-overpay-suffix{color:var(--muted)!important;font-size:.62em!important;font-weight:600!important}
 
 .mortgage-extra-tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
-.hero-panel.is-expanded .mortgage-extra-tiles{display:grid!important}
 .summary-editable{cursor:pointer!important;transition:border-color .16s ease,background .16s ease,transform .16s ease}
 .summary-editable::after{content:'Edit';position:absolute;top:11px;right:12px;color:var(--accent);font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;opacity:.72}
 .summary-editable:hover,.summary-editable:focus-visible{border-color:rgba(104,222,185,.34)!important;background:rgba(104,222,185,.055)!important;outline:none}
@@ -38,7 +37,6 @@
 .compact-what-if-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .compact-what-if-buttons button{min-width:68px;min-height:40px;padding:8px 14px;border-radius:10px;font-weight:750}
 .compact-what-if-buttons button.active{background:var(--accent);color:#062018;border-color:transparent}
-.scenario-panel.is-expanded .compact-what-if{display:none}
 .scenario-panel>.expand-hint{display:none!important}
 .current-overpay-control{margin:4px 0 18px;padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--panel-soft)}
 .current-overpay-control label{display:grid;gap:7px;font-size:12px;color:var(--text);font-weight:700}
@@ -50,10 +48,8 @@
 .rate-buttons button{min-width:52px}
 
 .expandable-card:not(.is-expanded){cursor:pointer}
-.expandable-card.is-expanded{cursor:default}
 .chart-panel:not(.is-expanded) .chart-readout{display:none!important}
 .chart-panel:not(.is-expanded) canvas{pointer-events:none}
-.chart-panel.is-expanded canvas{pointer-events:auto;cursor:crosshair}
 .current-only-hidden{display:none!important}
 .deal-equity-hidden{display:none!important}
 .mortgage-deep-dive .deep-grid.three{grid-template-columns:repeat(2,minmax(0,1fr))}
