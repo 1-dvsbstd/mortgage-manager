@@ -5,7 +5,7 @@ body {
   min-height: 100vh;
   background:var(--bg);
   color:var(--text);
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:var(--font-ui);
   -webkit-font-smoothing: antialiased;
 }
 button, input { font: inherit; -webkit-tap-highlight-color: transparent; }
@@ -22,7 +22,7 @@ button, input { font: inherit; -webkit-tap-highlight-color: transparent; }
   padding:24px; border-radius:28px; background:linear-gradient(135deg,rgba(9,31,25,.98),rgba(11,39,32,.95));
 }
 .kicker,.eyebrow { margin:0 0 6px; color:var(--accent); text-transform:uppercase; font-size:11px; font-weight:850; letter-spacing:.12em; }
-h1 { margin:0; font-family:Georgia,"Times New Roman",serif; font-size:clamp(48px,7vw,78px); font-weight:500; line-height:.95; letter-spacing:-.055em; }
+h1 { margin:0; font-family:var(--font-display); font-size:clamp(48px,7vw,78px); font-weight:500; line-height:.95; letter-spacing:-.055em; }
 h2 { margin:0; font-size:19px; letter-spacing:-.02em; }
 .hero-date { margin:10px 0 0; color:var(--muted); font-weight:650; }
 .hero-balance-row { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; margin-top:22px; }
@@ -30,7 +30,7 @@ h2 { margin:0; font-size:19px; letter-spacing:-.02em; }
 .hero-balance-row span,.home-stats span,.interest-box span,.chart-stat span,.home-value span { display:block; color:var(--muted); font-size:12px; }
 .hero-balance-row strong { display:block; margin-top:3px; font-size:19px; }
 .hero-progress-card { display:flex; flex-direction:column; justify-content:center; padding:18px; border-radius:20px; background:rgba(255,255,255,.035); border:1px solid var(--border); }
-.hero-progress-copy strong { display:block; font-family:Georgia,"Times New Roman",serif; font-size:42px; font-weight:500; margin-top:2px; }
+.hero-progress-copy strong { display:block; font-family:var(--font-display); font-size:42px; font-weight:500; margin-top:2px; }
 .hero-progress-copy span,.hero-progress-copy small { color:var(--muted); }
 .hero-progress-copy small { display:block; margin-top:4px; line-height:1.4; }
 .progress-track,.timeline-track { height:10px; border-radius:999px; background:rgba(255,255,255,.08); overflow:hidden; }
@@ -64,7 +64,7 @@ button.active { background:var(--accent); color:#062018; border-color:transparen
 .dot { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:6px; }
 .debt-dot { background:var(--debt); }.equity-dot { background:var(--accent); }.scheme-dot { background:var(--scheme); }
 .home-value { margin-top:22px; }
-.home-value strong { display:block; margin-top:4px; font-family:Georgia,"Times New Roman",serif; font-size:42px; font-weight:500; letter-spacing:-.04em; }
+.home-value strong { display:block; margin-top:4px; font-family:var(--font-display); font-size:42px; font-weight:500; letter-spacing:-.04em; }
 .home-value small { display:block; margin-top:5px; color:var(--muted); }
 .home-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:16px; }
 .home-stats strong { display:block; margin-top:4px; font-size:17px; }
@@ -94,7 +94,7 @@ canvas { display:block; max-width:100%; background:rgba(3,16,13,.55); border:1px
 .inputs { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
 label { color:var(--muted); font-size:12px; }
 input[type="number"],input[type="month"],input[type="text"],.setup-home-profile-fields select,.projection-assumptions select { width:100%; margin-top:6px; padding:12px 13px; border-radius:12px; border:1px solid var(--border); background:rgba(3,16,13,.62); color:var(--text); font:inherit; font-size:16px; font-weight:500; line-height:1.25; color-scheme:dark; box-sizing:border-box; }
-input:focus { outline:2px solid rgba(84,224,180,.45); outline-offset:1px; }
+input:focus { outline:2px solid var(--focus-ring-soft); outline-offset:1px; }
 .field-note { margin:10px 0 0; color:var(--muted); font-size:12px; line-height:1.45; }
 .warning { color:var(--warning); font-size:13px; margin-bottom:0; }
 .footer { margin-top:16px; color:var(--muted); font-size:11px; line-height:1.5; }
@@ -133,7 +133,7 @@ input:focus { outline:2px solid rgba(84,224,180,.45); outline-offset:1px; }
 html,
 body,
 .personal-modal{
-  scrollbar-color:#b9875f #ebe3d9;
+  scrollbar-color:var(--accent) var(--surface-soft);
   scrollbar-width:thin;
 }
 html::-webkit-scrollbar,
@@ -141,14 +141,14 @@ body::-webkit-scrollbar,
 .personal-modal::-webkit-scrollbar{width:11px;height:11px}
 html::-webkit-scrollbar-track,
 body::-webkit-scrollbar-track,
-.personal-modal::-webkit-scrollbar-track{background:#ebe3d9}
+.personal-modal::-webkit-scrollbar-track{background:var(--surface-soft)}
 html::-webkit-scrollbar-thumb,
 body::-webkit-scrollbar-thumb,
 .personal-modal::-webkit-scrollbar-thumb{
-  background:#b9875f;
-  border:3px solid #ebe3d9;
+  background:var(--accent);
+  border:3px solid var(--surface-soft);
   border-radius:999px;
 }
 html::-webkit-scrollbar-thumb:hover,
 body::-webkit-scrollbar-thumb:hover,
-.personal-modal::-webkit-scrollbar-thumb:hover{background:#9d6639}
+.personal-modal::-webkit-scrollbar-thumb:hover{background:var(--accent-strong)}
