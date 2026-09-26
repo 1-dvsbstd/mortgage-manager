@@ -42,16 +42,16 @@
   function addBudgetSection(futurePane,modal){
     if($('.setup-budget-section',futurePane)) return;
     const settings=loadNextHome();
-    const section=document.createElement('section');
+    const section=document.createElement('details');
     section.className='personal-section setup-budget-section';
-    section.innerHTML=`<h3>Next-home budget assumptions</h3><p>Used for move-budget estimates.</p><div class="setup-future-grid">
+    section.innerHTML=`<summary><span><strong>Next-home budget assumptions</strong><small>Income, savings, costs and borrowing multiple used for move-budget estimates.</small></span></summary><div class="setup-budget-body"><div class="setup-future-grid">
       <label>Household income (£/year)<input data-budget-field="householdIncome" type="number" min="0" step="1000" inputmode="decimal"></label>
       <label>Savings available (£)<input data-budget-field="savings" type="number" min="0" step="1000" inputmode="decimal"></label>
       <label>Cash buffer to keep (£)<input data-budget-field="cashBuffer" type="number" min="0" step="1000" inputmode="decimal"></label>
       <label>Estimated selling costs (£)<input data-budget-field="saleCosts" type="number" min="0" step="500" inputmode="decimal"></label>
       <label>Estimated purchase costs (£)<input data-budget-field="purchaseCosts" type="number" min="0" step="500" inputmode="decimal"></label>
-      <label>Borrowing multiple<select data-budget-field="borrowingMultiple"><option value="3">3.0×</option><option value="3.5">3.5×</option><option value="4">4.0×</option><option value="4.5">4.5×</option><option value="5">5.0×</option><option value="5.5">5.5×</option><option value="6">6.0×</option></select><span>Planning only; actual lender affordability can differ.</span></label>
-    </div>`;
+      <label>Borrowing multiple<input data-budget-field="borrowingMultiple" type="number" min="0" max="10" step="0.1" inputmode="decimal"><span>Planning only; actual lender affordability can differ.</span></label>
+    </div></div>`;
     futurePane.appendChild(section);
     section.querySelectorAll('[data-budget-field]').forEach((input)=>{input.value=settings[input.dataset.budgetField]??'';});
     modal.querySelector('[data-action="save"]')?.addEventListener('click',()=>{
