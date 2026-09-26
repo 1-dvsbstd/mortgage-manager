@@ -107,12 +107,13 @@
     });
   }
 
-  function ensureThemeControl(){
-    if(document.getElementById('themeMenuButton')) return;
-    const actions=document.querySelector('.topbar-actions');
-    const setup=document.getElementById('personalDataButton');
-    if(!actions||!setup) return;
+  function ensureThemeControl(modal=document.querySelector('.personal-modal')){
+    if(!modal || modal.querySelector('#themeMenuButton')) return;
+    const head=modal.querySelector('.personal-modal-head');
+    if(!head) return;
 
+    const utility=document.createElement('div');
+    utility.className='setup-utility-row';
     const control=document.createElement('div');
     control.className='theme-menu';
     control.innerHTML=`
@@ -122,7 +123,8 @@
       <div class="theme-menu-popover" role="menu" hidden>
         ${themes.map((theme)=>`<button type="button" role="menuitemradio" data-theme-choice="${theme.id}" aria-checked="false"><span class="theme-menu-swatch ${theme.id}" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>${theme.name}</strong><small>${theme.note}</small></span></button>`).join('')}
       </div>`;
-    actions.insertBefore(control,setup);
+    utility.appendChild(control);
+    head.insertAdjacentElement('afterend',utility);
 
     const button=control.querySelector('#themeMenuButton');
     const popover=control.querySelector('.theme-menu-popover');
@@ -161,7 +163,11 @@
     const current=document.createElement('div'), upcoming=document.createElement('div'), future=document.createElement('div');
     current.className='setup-pane'; upcoming.className='setup-pane'; future.className='setup-pane';
     current.dataset.setupPane='current'; upcoming.dataset.setupPane='upcoming'; future.dataset.setupPane='future';
-    const head=$('.personal-modal-head',modal); head.insertAdjacentElement('afterend',nav); nav.after(current,upcoming,future);
+    const head=$('.personal-modal-head',modal);
+    ensureThemeControl(modal);
+    const utility=$('.setup-utility-row',modal);
+    (utility||head).insertAdjacentElement('afterend',nav);
+    nav.after(current,upcoming,future);
 
     current.appendChild(form);
     const upcomingGrid=document.createElement('div'); upcomingGrid.className='personal-form setup-upcoming-grid'; upcoming.appendChild(upcomingGrid);
@@ -193,6 +199,7 @@
     setTimeout(organise,0);
     setTimeout(()=>{
       organise();
+      ensureThemeControl(document.querySelector('.personal-modal'));
       const modal=$('.personal-modal');
       const upcoming=modal?.querySelector('[data-setup-pane="upcoming"]');
       const future=modal?.querySelector('[data-setup-pane="future"]');
@@ -202,9 +209,6 @@
       if(future&&profile&&!future.contains(profile)) future.insertBefore(profile,future.querySelector('.setup-budget-section'));
     },80);
   }
-
-  ensureThemeControl();
-  setTimeout(ensureThemeControl,80);
 
   const button=document.getElementById('personalDataButton');
   if(button) button.addEventListener('click',organiseAndSettle);
