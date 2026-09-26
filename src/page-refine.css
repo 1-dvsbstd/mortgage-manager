@@ -753,3 +753,39 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
     border-color:#d3b99f!important;
   }
 }
+
+/* Future: no pale blue/green selected cards or mint bars. */
+.app-view-future .home-profile-range-values .centre,
+.app-view-future .next-home-summary-card:last-child,
+.app-view-future .is-highlighted,
+.app-view-future .is-current{
+  background:#f4ede4!important;
+  border-color:rgba(197,138,86,.22)!important;
+}
+.app-view-future .cost-scale{background:#ddd4c9!important}
+.app-view-future .cost-scale>i{background:linear-gradient(90deg,#d3b18e,#b77f4e)!important}
+.app-view-future .projection-use-button,
+.app-view-future button.active{border-color:rgba(197,138,86,.35)!important}
+
+/* Global legacy mint progress bars: warm neutral/copper unless semantically equity. */
+.app-view-upcoming .progress-fill,
+.app-view-upcoming .timeline-fill{background:linear-gradient(90deg,#d6b18c,#b77f4e)!important}
+.app-view-future .progress-fill,
+.app-view-future .timeline-fill,
+.app-view-future .equity-progress-track i{background:linear-gradient(90deg,#d3b18e,#b77f4e)!important}
+
+@media(max-width:900px){
+  .v15-current-journey-track{grid-template-columns:repeat(5,150px);overflow-x:auto;padding-bottom:5px;scroll-snap-type:x proximity}
+  .v15-current-journey-step{scroll-snap-align:start}
+  .v15-current-journey-track::before{left:16px;right:16px}
+}
+
+@media(max-width:1050px){
+  .app-view-current .hero-panel>.v15-current-journey~.v15-home-visual{grid-column:1;grid-row:2}
+
+}
+
+@media(max-width:700px){
+  .app-view-current .v15-current-journey{padding:12px 14px 10px}
+  .v15-current-journey-head>div>strong{font-size:12px!important}
+}
