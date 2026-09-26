@@ -42,10 +42,6 @@ html,body{background:var(--bg)!important;color:var(--text)!important}
 .app-view-upcoming .deal-planner-rate>em{font-size:9px!important;color:var(--muted)!important}
 .app-view-upcoming .deal-planner-rate.is-current-rate{background:#fff7ee!important;border-color:rgba(197,138,86,.34)!important}
 .app-view-upcoming .deal-planner-rate.is-current-rate>span{color:var(--accent-strong)!important}
-.app-view-upcoming .deal-planner-summary{gap:10px!important}
-.app-view-upcoming .deal-planner-summary>div{padding:15px!important;min-height:88px!important}
-.app-view-upcoming .deal-planner-summary span,.app-view-upcoming .deal-planner-summary small{color:var(--muted)!important}
-.app-view-upcoming .deal-planner-summary strong{font-size:23px!important;color:var(--text)!important}
 .app-view-upcoming .deal-planner-milestone{padding:14px 16px!important;background:#f5eee5!important}
 .app-view-upcoming .deal-planner-milestone span{color:var(--accent-strong)!important}
 .app-view-upcoming .upcoming-action{background:linear-gradient(90deg,#fff8ef,#f3e8db)!important;border-color:rgba(197,138,86,.20)!important}
