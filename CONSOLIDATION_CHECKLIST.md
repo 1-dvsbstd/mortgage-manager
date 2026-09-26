@@ -17,12 +17,12 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [x] Replace repeated core surface/text/accent colours with tokens
 - [ ] Continue replacing one-off page colours as components are consolidated
 - [x] Remove competing global palette overrides from legacy/V15 layers
-- [ ] Define final spacing scale
-- [ ] Define final typography scale
-- [ ] Define final radius scale
-- [ ] Define final shadow/elevation scale
-- [ ] Define interaction/focus tokens
-- [ ] Define chart data-visualisation palette
+- [x] Define final spacing scale
+- [x] Define final typography scale
+- [x] Define final radius scale
+- [x] Define final shadow/elevation scale
+- [x] Define interaction/focus tokens
+- [x] Define chart data-visualisation palette
 
 ## 2. Global shell
 - [x] Consolidate page background and app-shell rules
@@ -141,7 +141,8 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 
 ## 11. Final premium polish
 - [x] Premium visual-system comparison lab created (4 palette directions, shared type/spacing/radius/shadow/focus system)
-- [ ] Review palette after consolidation
+- [x] Ink & Parchment applied as the premium foundation
+- [x] Review palette after consolidation — Ink & Parchment selected
 - [ ] Review typography hierarchy
 - [ ] Review whitespace/rhythm
 - [ ] Review microcopy prominence
