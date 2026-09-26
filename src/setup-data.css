@@ -299,3 +299,51 @@ body .personal-backdrop .personal-modal button.personal-close:focus-visible{
   opacity:1!important;
   text-shadow:none!important;
 }
+
+/* Setup mortgage-history geometry — authoritative owner. */
+body .personal-backdrop .personal-modal{
+  width:min(900px,calc(100vw - 36px))!important;
+  max-width:900px!important;
+  box-sizing:border-box!important;
+}
+body .personal-modal .history-row,
+body .personal-modal .history-deal-row{
+  min-width:0!important;
+}
+body .personal-modal .history-deal-row{
+  width:100%!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(130px,1.2fr) minmax(130px,1.2fr) minmax(72px,.58fr) minmax(96px,.82fr) minmax(96px,.82fr)!important;
+  gap:10px!important;
+  overflow:visible!important;
+}
+body .personal-modal .history-deal-row label,
+body .personal-modal .history-deal-row input{
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+body .personal-modal .history-deal-row .history-remove{
+  grid-column:1/-1!important;
+  justify-self:end!important;
+  align-self:end!important;
+  width:auto!important;
+  max-width:100%!important;
+  margin-top:0!important;
+  white-space:nowrap!important;
+}
+@media(max-width:760px){
+  body .personal-backdrop .personal-modal{
+    width:min(100%,calc(100vw - 16px))!important;
+  }
+  body .personal-modal .history-deal-row{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  body .personal-modal .history-deal-row .history-remove{
+    grid-column:1/-1!important;
+    width:100%!important;
+    justify-self:stretch!important;
+  }
+}
