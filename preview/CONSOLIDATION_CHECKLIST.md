@@ -37,6 +37,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Consolidate inset tiles / metric blocks (Current summary tiles consolidated)
 - [ ] Consolidate labels, eyebrows and metadata
 - [x] Consolidate Setup form inputs and select controls
+- [x] Browser autofill matches Setup field styling
 - [ ] Consolidate non-Setup form controls
 - [x] Consolidate disclosure chevrons into one app-wide icon system
 - [x] Consolidate Setup modal/backdrop shell
@@ -154,4 +155,5 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 
 
 ## Parked post-consolidation product notes
+- [ ] Upgrade native select/dropdown presentation for a more premium menu treatment
 - [ ] Recent valuation / estimate should store and display its valuation date

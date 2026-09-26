@@ -74,6 +74,18 @@ body .personal-modal textarea:focus{
   outline:2px solid rgba(200,142,92,.14)!important;
   outline-offset:1px!important;
 }
+/* Keep browser autofill visually inside the Setup control system. */
+body .personal-modal input:-webkit-autofill,
+body .personal-modal input:-webkit-autofill:hover,
+body .personal-modal input:-webkit-autofill:focus,
+body .personal-modal textarea:-webkit-autofill,
+body .personal-modal select:-webkit-autofill{
+  -webkit-text-fill-color:var(--text)!important;
+  caret-color:var(--text)!important;
+  -webkit-box-shadow:0 0 0 1000px var(--surface-control) inset!important;
+  box-shadow:0 0 0 1000px var(--surface-control) inset!important;
+  transition:background-color 9999s ease-out 0s!important;
+}
 body .personal-modal select{
   appearance:none!important;
   -webkit-appearance:none!important;
