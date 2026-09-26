@@ -1679,3 +1679,18 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   .app-view-current .v15-current-journey{padding:12px 14px 10px}
   .v15-current-journey-head>div>strong{font-size:12px!important}
 }
+
+/* Main app: cards are glance-first, not tap-to-open. */
+.app-view-current [data-expandable-card],
+.app-view-upcoming [data-expandable-card],
+.app-view-future [data-expandable-card]{
+  cursor:default!important;
+}
+.app-view-current .expand-hint,
+.app-view-upcoming .expand-hint,
+.app-view-future .expand-hint,
+.app-view-current [data-expand-card],
+.app-view-upcoming [data-expand-card],
+.app-view-future [data-expand-card]{
+  display:none!important;
+}
