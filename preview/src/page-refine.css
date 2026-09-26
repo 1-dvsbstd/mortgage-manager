@@ -612,9 +612,6 @@ body .app-view-upcoming .upcoming-rates .live-rate-meta strong{
 body .app-view-upcoming .deal-position-milestone[hidden]{
   display:none!important;
 }
-body .app-view-upcoming .upcoming-position .deal-planner-summary{
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-}
 body .app-view-upcoming .upcoming-position .deal-planner-summary>.deal-position-interest{
   display:block!important;
   margin:0!important;
@@ -641,11 +638,6 @@ body .app-view-upcoming .upcoming-position .deal-planner-summary>.deal-position-
   color:var(--muted)!important;
   font-size:10px!important;
   line-height:1.4!important;
-}
-@media(max-width:760px){
-  body .app-view-upcoming .upcoming-position .deal-planner-summary{
-    grid-template-columns:1fr!important;
-  }
 }
 
 /* Heading metadata — sit below the title line so it reads as supporting context. */

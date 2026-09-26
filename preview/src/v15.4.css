@@ -65,3 +65,69 @@ body[data-app-view="upcoming"] .current-fix-stats > div:hover{
 
 body[data-app-view="upcoming"] .current-fix-stats > div > span{color:var(--muted)!important}
 body[data-app-view="upcoming"] .current-fix-stats > div > strong{color:var(--text)!important}
+
+/* Upcoming deal-end position — authoritative consolidated owner. */
+.app-view-upcoming .upcoming-position .upcoming-section-body{
+  display:block!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-empty{
+  margin:0 0 16px!important;
+  padding:17px 20px!important;
+  border:1px solid rgba(157,102,57,.16)!important;
+  border-radius:16px!important;
+  background:linear-gradient(135deg,var(--surface-control),#f3e8dc)!important;
+  box-shadow:0 8px 22px rgba(61,48,36,.04)!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-empty strong{
+  display:block!important;
+  color:var(--text)!important;
+  font-size:14px!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-empty span{
+  display:block!important;
+  margin-top:6px!important;
+  color:var(--muted)!important;
+  font-size:11px!important;
+  line-height:1.5!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-summary{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:12px!important;
+  margin:0!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-summary>div{
+  min-height:104px!important;
+  padding:17px 18px!important;
+  border:1px solid rgba(68,58,48,.10)!important;
+  border-radius:16px!important;
+  background:var(--surface-control)!important;
+  box-shadow:0 8px 22px rgba(61,48,36,.045)!important;
+  color:var(--text)!important;
+  transform:none!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-summary span,
+.app-view-upcoming .upcoming-position .deal-planner-summary small{
+  display:block!important;
+  color:var(--muted)!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-summary span{
+  font-size:10px!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-summary strong{
+  display:block!important;
+  margin-top:8px!important;
+  color:var(--text)!important;
+  font-size:25px!important;
+  line-height:1.05!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-summary small{
+  margin-top:8px!important;
+  font-size:10px!important;
+  line-height:1.4!important;
+}
+@media(max-width:760px){
+  .app-view-upcoming .upcoming-position .deal-planner-summary{
+    grid-template-columns:1fr!important;
+  }
+}
