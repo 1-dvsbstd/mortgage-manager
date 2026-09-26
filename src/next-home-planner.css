@@ -239,11 +239,6 @@ h2{font-size:18px;letter-spacing:-.025em;font-weight:760}
 
 .footer{color:#66756f;margin-top:24px;padding:0 4px}
 
-/* Scrollbar treatment */
-html{
-  scrollbar-width:thin;
-  scrollbar-color:#315e50 #071410;
-}
 
 /* Expanded cards should feel like focused sheets */
 .expandable-card.is-expanded{
