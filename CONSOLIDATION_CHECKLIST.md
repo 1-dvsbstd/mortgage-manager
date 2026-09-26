@@ -90,6 +90,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [x] Flatten nested Home profile field boxes
 - [ ] Backup/restore/reset controls
 - [ ] Methodology/help panels
+- [x] Setup modal width/history-row geometry consolidated
 - [ ] Modal and close-state consistency
 - [ ] Setup responsive rules
 - [ ] Visual check by Nathan
@@ -114,7 +115,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [x] Retire legacy global theme declarations from `premium.css`
 - [ ] Move surviving rules to authoritative component/page files
 - [ ] Remove redundant `!important` declarations where safe
-- [ ] Remove superseded V15 stylesheet files (started: retired v15.10 removed)
+- [ ] Remove superseded V15 stylesheet files (retired v15.10 and v15.14 removed)
 - [ ] Remove superseded V15 script files where safe
 - [ ] Remove dead selectors/styles
 - [ ] Reduce active stylesheet count only after component ownership is validated
