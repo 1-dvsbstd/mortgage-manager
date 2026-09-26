@@ -8,7 +8,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [x] No feature changes during consolidation
 - [x] No calculation/storage/model rewrites as part of the visual pass
 - [ ] Preserve current behaviour on Current / Upcoming / Future / Setup & data
-- [ ] Run regression tests before merge
+- [x] Run regression tests before merge (GitHub Actions passed on draft consolidation PR)
 - [x] Regression tests updated for retired V15/expandable assets
 
 ## 1. Design foundations
@@ -124,9 +124,10 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [x] Remove superseded/no-op scripts (expandable-card and V15.14 loader)
 - [ ] Remove dead selectors/styles (expansion remnants, runtime expanded-state CSS and superseded global shell/theme declarations removed)
 - [x] Remove retired expansion work from surviving V15.11 runtime
-- [ ] Reduce active stylesheet count only after component ownership is validated (four legacy/adjacent layers safely folded)
+- [x] Reduce active stylesheet count only after component ownership is validated
 - [ ] Continue pruning duplicate/obsolete rules in isolated source stylesheets
-- [ ] Delete superseded source stylesheets only after component-by-component validation
+- [x] Asset integrity check: no missing index/service-worker assets after consolidation
+- [x] Delete superseded source stylesheets only after component-by-component validation
 
 ## 10. Optional colour themes
 - [x] Keep consolidation token-based so multiple themes remain possible
