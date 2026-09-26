@@ -275,7 +275,7 @@ body .personal-backdrop .personal-modal button.personal-close:focus-visible{
   min-height:34px!important;
   padding:7px 11px!important;
   border-color:rgba(157,102,57,.18)!important;
-  background:#fffaf4!important;
+  background:var(--surface-control)!important;
   color:#7e5837!important;
   box-shadow:none!important;
   font-size:10px!important;
@@ -317,7 +317,7 @@ body .personal-backdrop .personal-modal button.personal-close:focus-visible{
   bottom:24px!important;
   left:50%!important;
   transform:translateX(-50%)!important;
-  color:#fffaf4!important;
+  color:var(--surface-control)!important;
   opacity:1!important;
   text-shadow:none!important;
 }
@@ -375,8 +375,8 @@ body .personal-modal .history-deal-row .history-remove{
 .personal-modal .progress-action{
   min-height:38px!important;
   border:1px solid #d6c8b8!important;
-  background:#fffaf4!important;
-  color:#202833!important;
+  background:var(--surface-control)!important;
+  color:var(--text)!important;
   box-shadow:0 3px 10px rgba(61,48,36,.04)!important;
 }
 .personal-modal .personal-button:hover,
@@ -386,7 +386,7 @@ body .personal-modal .history-deal-row .history-remove{
   box-shadow:0 10px 24px rgba(61,48,36,.10)!important;
 }
 .personal-modal .personal-button.primary{
-  background:#252d36!important;
-  color:#fffaf3!important;
-  border-color:#252d36!important;
+  background:var(--ink-active)!important;
+  color:var(--ink-on-active)!important;
+  border-color:var(--ink-active)!important;
 }
