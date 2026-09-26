@@ -219,6 +219,7 @@
         <div class="personal-footer-actions"><button type="button" class="personal-button" data-action="cancel">Cancel</button><button type="button" class="personal-button primary" data-action="save">Save changes</button></div>
       </section>`;
     document.body.appendChild(backdrop);
+    document.dispatchEvent(new CustomEvent('mortgage-setup-opened', { detail:{ firstRun:!localStorage.getItem(SETUP_KEY) } }));
     const close = () => backdrop.remove();
     backdrop.addEventListener('click', (event) => { if (event.target === backdrop) close(); });
     backdrop.querySelector('.personal-close')?.addEventListener('click', close);

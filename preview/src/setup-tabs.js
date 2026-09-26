@@ -119,9 +119,18 @@
     activate(modal,initial);
   }
 
+  function organiseAndSettle(){
+    setTimeout(organise,0);
+    setTimeout(()=>{
+      organise();
+      const modal=$('.personal-modal');
+      const future=modal?.querySelector('[data-setup-pane="future"]');
+      const profile=modal?.querySelector('.personal-home-profile-section');
+      if(future&&profile&&!future.contains(profile)) future.insertBefore(profile,future.querySelector('.setup-budget-section'));
+    },80);
+  }
+
   const button=document.getElementById('personalDataButton');
-  if(button) button.addEventListener('click',()=>{setTimeout(organise,0);setTimeout(()=>{
-    const modal=$('.personal-modal'); const future=modal?.querySelector('[data-setup-pane="future"]'); const profile=modal?.querySelector('.personal-home-profile-section');
-    if(future&&profile&&!future.contains(profile))future.insertBefore(profile,future.querySelector('.setup-budget-section'));
-  },80);});
+  if(button) button.addEventListener('click',organiseAndSettle);
+  document.addEventListener('mortgage-setup-opened',organiseAndSettle);
 })();
