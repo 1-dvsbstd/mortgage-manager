@@ -140,9 +140,9 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [x] Keep consolidation token-based so multiple themes remain possible
 - [x] Design 3 curated themes after core consolidation — Parchment (default), Warm and Dusk
 - [ ] Ensure every theme preserves semantic colours and accessibility contrast
-- [x] Add a local theme selector in Setup & data
+- [x] Add a global local theme dropdown outside mortgage Setup
 - [x] Persist chosen theme on-device
-- [ ] Verify charts, controls, focus states and illustrations in every theme
+- [ ] Expand theme coverage across remaining hard-coded legacy colours, then verify charts, controls, focus states and illustrations
 
 - [x] Slate/blue direction dropped after visual review
 
