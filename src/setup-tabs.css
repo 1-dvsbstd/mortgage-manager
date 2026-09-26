@@ -201,3 +201,16 @@
   .theme-menu-label{max-width:112px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .theme-menu-popover{right:-2px;width:min(260px,calc(100vw - 24px))}
 }
+
+.setup-utility-row{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  margin:10px 0 6px;
+}
+.setup-utility-row .theme-menu-popover{
+  right:0;
+}
+@media(max-width:620px){
+  .setup-utility-row{margin-top:8px}
+}
