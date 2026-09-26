@@ -119,7 +119,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Remove redundant `!important` declarations where safe
 - [x] Remove superseded standalone V15 stylesheet files
 - [x] Remove superseded/no-op expandable-card script
-- [ ] Remove dead selectors/styles (legacy expandable-card system and deep-dive expansion remnants removed)
+- [ ] Remove dead selectors/styles (legacy expandable-card system, navigation helpers and unreachable expanded-state rules removed)
 - [ ] Reduce active stylesheet count only after component ownership is validated (four legacy/adjacent layers safely folded)
 - [ ] Continue pruning duplicate/obsolete rules in isolated source stylesheets
 - [ ] Delete superseded source stylesheets only after component-by-component validation
