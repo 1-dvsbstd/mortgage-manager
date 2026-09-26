@@ -428,7 +428,7 @@
   }
 
   document.addEventListener('click', (event) => {
-    if (event.target.closest('#personalDataButton,[data-expand-card],#propertyCostComparison,#recordSnapshot,[data-action="snapshot"],[data-action="save"],[data-action="reset-history"]')) schedule(35);
+    if (event.target.closest('#personalDataButton,#propertyCostComparison,#recordSnapshot,[data-action="snapshot"],[data-action="save"],[data-action="reset-history"]')) schedule(35);
   });
   document.addEventListener('input', (event) => {
     if (event.target.matches('#projectionTrendRate,#projectionPurchasePrice,#projectionImprovements')) schedule(20);
