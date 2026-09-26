@@ -111,16 +111,16 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Visual check by Nathan
 
 ## 9. Legacy cleanup
-- [x] Map/retire legacy theme rules in `layout-finalize.css`
+- [x] Fold `layout-finalize.css` into final page refinement layer preserving cascade
 - [x] Fold legacy `layout-qa.css` into `layout-finalize.css` preserving cascade
 - [x] Retire all standalone V15 CSS patch files into authoritative/page refinement owners
-- [x] Retire legacy global theme declarations from `premium.css`
+- [x] Fold `premium.css` into adjacent component layer preserving cascade
 - [ ] Move surviving rules to authoritative component/page files (v15.11 and v15.12 fully redistributed)
 - [ ] Remove redundant `!important` declarations where safe
 - [x] Remove superseded standalone V15 stylesheet files
 - [ ] Remove superseded V15 script files where safe
 - [ ] Remove dead selectors/styles
-- [ ] Reduce active stylesheet count only after component ownership is validated (two adjacent layers safely folded)
+- [ ] Reduce active stylesheet count only after component ownership is validated (four legacy/adjacent layers safely folded)
 - [ ] Continue pruning duplicate/obsolete rules in isolated source stylesheets
 - [ ] Delete superseded source stylesheets only after component-by-component validation
 
