@@ -38,6 +38,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Consolidate labels, eyebrows and metadata
 - [x] Consolidate Setup form inputs and select controls
 - [x] Browser autofill matches Setup field styling
+- [x] Focused/selected Setup text stays dark on light fields
 - [ ] Consolidate non-Setup form controls
 - [x] Consolidate disclosure chevrons into one app-wide icon system
 - [x] Consolidate Setup modal/backdrop shell
