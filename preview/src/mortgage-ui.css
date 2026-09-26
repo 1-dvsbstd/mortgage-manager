@@ -119,3 +119,50 @@
   .summary-quick-actions{display:grid;grid-template-columns:1fr 1fr}
   .summary-quick-actions button{width:100%}
 }
+
+/* Keep the useful home/mortgage edit row visible without opening a modal card. */
+.app-view-current #mortgageExtraTiles{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:18px!important;
+  margin-top:18px!important;
+  padding-top:16px!important;
+  border-top:1px solid var(--border-soft)!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile{
+  min-width:0!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile span{
+  display:block!important;
+  color:var(--muted)!important;
+  font-size:11px!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile strong{
+  display:block!important;
+  margin-top:6px!important;
+  color:var(--text)!important;
+  font-size:18px!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable::after{
+  content:'Edit'!important;
+  position:absolute!important;
+  top:0!important;
+  right:0!important;
+  color:var(--accent-strong)!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  letter-spacing:.08em!important;
+  text-transform:uppercase!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable{
+  position:relative!important;
+  cursor:pointer!important;
+}
+
+@media(max-width:760px){
+  .app-view-current #mortgageExtraTiles{grid-template-columns:1fr!important;gap:12px!important}
+}

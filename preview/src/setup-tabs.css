@@ -76,3 +76,15 @@
 .setup-budget-body{
   padding-top:14px;
 }
+
+/* Reserve the helper-text row so paired Future assumption fields finish level. */
+.personal-modal .setup-future-grid label{
+  display:grid!important;
+  grid-template-rows:auto 46px 16px!important;
+  align-content:start!important;
+  gap:7px!important;
+}
+.personal-modal .setup-future-grid label>span{
+  min-height:16px!important;
+  align-self:start!important;
+}

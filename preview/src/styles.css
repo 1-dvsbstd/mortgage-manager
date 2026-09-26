@@ -131,3 +131,27 @@ input:focus { outline:2px solid rgba(84,224,180,.45); outline-offset:1px; }
   .panel-heading { display:block; }.ownership-badge,.chart-stat { display:inline-block; margin-top:10px; text-align:left; }
   .home-value strong { font-size:38px; }
 }
+
+/* Warm scrollbars for the page and Setup modal. */
+html,
+body,
+.personal-modal{
+  scrollbar-color:#b9875f #ebe3d9;
+  scrollbar-width:thin;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.personal-modal::-webkit-scrollbar{width:11px;height:11px}
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+.personal-modal::-webkit-scrollbar-track{background:#ebe3d9}
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+.personal-modal::-webkit-scrollbar-thumb{
+  background:#b9875f;
+  border:3px solid #ebe3d9;
+  border-radius:999px;
+}
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+.personal-modal::-webkit-scrollbar-thumb:hover{background:#9d6639}

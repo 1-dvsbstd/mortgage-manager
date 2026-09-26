@@ -42,3 +42,18 @@ body.card-open { overflow:hidden; }
   .card-close-button{width:54px!important;min-width:54px!important;max-width:54px!important;height:30px!important;min-height:30px!important;max-height:30px!important;font-size:10px!important}
 }
 @media (prefers-reduced-motion:reduce){ .expandable-card,.card-backdrop,.expandable-card.is-expanded .home-stats,.expandable-card.is-expanded .ownership-legend,.expandable-card.is-expanded .interest-box,.expandable-card.is-expanded #dealForecast{animation:none;transition:none} }
+
+/* Main app: cards are glance-first, not tap-to-open. */
+.app-view-current [data-expandable-card],
+.app-view-upcoming [data-expandable-card],
+.app-view-future [data-expandable-card]{
+  cursor:default!important;
+}
+.app-view-current .expand-hint,
+.app-view-upcoming .expand-hint,
+.app-view-future .expand-hint,
+.app-view-current [data-expand-card],
+.app-view-upcoming [data-expand-card],
+.app-view-future [data-expand-card]{
+  display:none!important;
+}
