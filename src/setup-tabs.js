@@ -91,21 +91,58 @@
     if(meta) meta.content=id==='warm'?'#f7eee5':id==='dusk'?'#e7e1d4':'#f0ece5';
   }
 
-  function addAppearanceSection(current){
-    if($('.setup-appearance-section',current)) return;
-    let selected='parchment';
-    try{selected=localStorage.getItem(THEME_KEY)||document.documentElement.dataset.theme||'parchment';}catch(_){}
-    const section=document.createElement('section');
-    section.className='personal-section setup-appearance-section';
-    section.innerHTML=`<div class="setup-section-heading"><div><h3>Appearance</h3><p>Choose the visual style that feels easiest to use. Your choice stays on this device.</p></div></div><div class="setup-theme-grid">${themes.map((theme)=>`<button type="button" class="setup-theme-card ${theme.id===selected?'active':''}" data-theme-choice="${theme.id}" aria-pressed="${theme.id===selected}"><span class="setup-theme-preview ${theme.id}" aria-hidden="true"><i></i><i></i><i></i></span><strong>${theme.name}</strong><small>${theme.note}</small></button>`).join('')}</div>`;
-    current.appendChild(section);
-    section.addEventListener('click',(event)=>{
-      const button=event.target.closest('[data-theme-choice]'); if(!button)return;
-      applyTheme(button.dataset.themeChoice);
-      section.querySelectorAll('[data-theme-choice]').forEach((item)=>{
-        const active=item===button; item.classList.toggle('active',active); item.setAttribute('aria-pressed',String(active));
-      });
+  function currentTheme(){
+    try{return localStorage.getItem(THEME_KEY)||document.documentElement.dataset.theme||'parchment';}catch(_){return document.documentElement.dataset.theme||'parchment';}
+  }
+
+  function syncThemeControl(){
+    const selected=currentTheme();
+    const active=themes.find((theme)=>theme.id===selected)||themes[0];
+    const label=document.querySelector('#themeMenuButton .theme-menu-label');
+    if(label) label.textContent=`Theme · ${active.name}`;
+    document.querySelectorAll('[data-theme-choice]').forEach((item)=>{
+      const on=item.dataset.themeChoice===active.id;
+      item.classList.toggle('active',on);
+      item.setAttribute('aria-checked',String(on));
     });
+  }
+
+  function ensureThemeControl(){
+    if(document.getElementById('themeMenuButton')) return;
+    const actions=document.querySelector('.topbar-actions');
+    const setup=document.getElementById('personalDataButton');
+    if(!actions||!setup) return;
+
+    const control=document.createElement('div');
+    control.className='theme-menu';
+    control.innerHTML=`
+      <button type="button" id="themeMenuButton" class="theme-menu-button" aria-haspopup="menu" aria-expanded="false">
+        <span class="theme-menu-label">Theme</span><span class="theme-menu-chevron" aria-hidden="true">⌄</span>
+      </button>
+      <div class="theme-menu-popover" role="menu" hidden>
+        ${themes.map((theme)=>`<button type="button" role="menuitemradio" data-theme-choice="${theme.id}" aria-checked="false"><span class="theme-menu-swatch ${theme.id}" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>${theme.name}</strong><small>${theme.note}</small></span></button>`).join('')}
+      </div>`;
+    actions.insertBefore(control,setup);
+
+    const button=control.querySelector('#themeMenuButton');
+    const popover=control.querySelector('.theme-menu-popover');
+    const close=()=>{popover.hidden=true;button.setAttribute('aria-expanded','false');};
+    const open=()=>{popover.hidden=false;button.setAttribute('aria-expanded','true');};
+
+    button.addEventListener('click',(event)=>{
+      event.stopPropagation();
+      popover.hidden?open():close();
+    });
+    control.addEventListener('click',(event)=>{
+      const choice=event.target.closest('[data-theme-choice]');
+      if(!choice)return;
+      applyTheme(choice.dataset.themeChoice);
+      syncThemeControl();
+      close();
+    });
+    document.addEventListener('click',(event)=>{if(!control.contains(event.target))close();});
+    document.addEventListener('keydown',(event)=>{if(event.key==='Escape')close();});
+    syncThemeControl();
   }
 
   function activate(modal,key){
@@ -142,7 +179,6 @@
     if(mortgageHistory) current.appendChild(mortgageHistory);
     if(monthly) current.appendChild(monthly);
     if(backup) current.appendChild(backup);
-    addAppearanceSection(current);
     if(methodology) upcoming.appendChild(methodology);
 
     const profile=$('.personal-home-profile-section',modal); if(profile) future.appendChild(profile);
@@ -166,6 +202,9 @@
       if(future&&profile&&!future.contains(profile)) future.insertBefore(profile,future.querySelector('.setup-budget-section'));
     },80);
   }
+
+  ensureThemeControl();
+  setTimeout(ensureThemeControl,80);
 
   const button=document.getElementById('personalDataButton');
   if(button) button.addEventListener('click',organiseAndSettle);
