@@ -101,6 +101,8 @@
     const upcomingIntro=document.createElement('div'); upcomingIntro.className='setup-pane-intro'; upcomingIntro.innerHTML='<p class="eyebrow">Current deal</p><h3>Rate and fixed period</h3><p>These values drive the Upcoming payment and deal-end scenarios.</p>'; upcoming.insertBefore(upcomingIntro,upcomingGrid);
 
     const currentIntro=document.createElement('div'); currentIntro.className='setup-pane-intro'; currentIntro.innerHTML='<p class="eyebrow">Current position</p><h3>Mortgage and home today</h3><p>Balance, payments, regular overpayment and your current property position.</p>'; current.insertBefore(currentIntro,form);
+    const firstRunNote=$('.setup-first-run-note',modal);
+    if(firstRunNote) currentIntro.insertAdjacentElement('afterend',firstRunNote);
     const futureIntro=document.createElement('div'); futureIntro.className='setup-pane-intro'; futureIntro.innerHTML='<p class="eyebrow">Future assumptions</p><h3>Property and next-home planning</h3><p>Inputs used only for longer-term projections and planning.</p>'; future.appendChild(futureIntro);
 
     const sections=[...modal.querySelectorAll('.personal-section')];
