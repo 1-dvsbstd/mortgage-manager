@@ -190,25 +190,6 @@ body{background:var(--bg)!important;color:var(--text)!important}
 .future-model-range-panel .home-profile-range,
 .future-wait-host,.future-cost-inline{border-color:var(--border-soft)!important}
 
-/* Navigation: quieter luxury segmented control */
-.app-section-nav-top{
-  background:var(--surface)!important;
-  border-color:var(--border-soft)!important;
-  box-shadow:0 1px 0 rgba(255,255,255,.015) inset!important;
-}
-.app-section-nav button{
-  background:transparent!important;
-  color:var(--muted)!important;
-  border-color:transparent!important;
-  box-shadow:none!important;
-}
-.app-section-nav button.is-active{
-  background:rgba(244,240,229,.07)!important;
-  color:var(--text)!important;
-  border-color:var(--border-soft)!important;
-  box-shadow:0 8px 22px rgba(0,0,0,.12)!important;
-}
-
 /* Setup: same material language */
 .personal-modal{
   width:min(780px,100%)!important;
