@@ -50,7 +50,7 @@
       <label>Cash buffer to keep (£)<input data-budget-field="cashBuffer" type="number" min="0" step="1000" inputmode="decimal"></label>
       <label>Estimated selling costs (£)<input data-budget-field="saleCosts" type="number" min="0" step="500" inputmode="decimal"></label>
       <label>Estimated purchase costs (£)<input data-budget-field="purchaseCosts" type="number" min="0" step="500" inputmode="decimal"></label>
-      <label>Borrowing multiple<input data-budget-field="borrowingMultiple" type="number" min="0" max="10" step="0.1" inputmode="decimal"><span>Planning only.</span></label>
+      <label>Borrowing multiple<select data-budget-field="borrowingMultiple"><option value="3">3.0×</option><option value="3.5">3.5×</option><option value="4">4.0×</option><option value="4.5">4.5×</option><option value="5">5.0×</option><option value="5.5">5.5×</option><option value="6">6.0×</option></select><span>Planning only; actual lender affordability can differ.</span></label>
     </div>`;
     futurePane.appendChild(section);
     section.querySelectorAll('[data-budget-field]').forEach((input)=>{input.value=settings[input.dataset.budgetField]??'';});
@@ -101,8 +101,6 @@
     const upcomingIntro=document.createElement('div'); upcomingIntro.className='setup-pane-intro'; upcomingIntro.innerHTML='<p class="eyebrow">Current deal</p><h3>Rate and fixed period</h3><p>These values drive the Upcoming payment and deal-end scenarios.</p>'; upcoming.insertBefore(upcomingIntro,upcomingGrid);
 
     const currentIntro=document.createElement('div'); currentIntro.className='setup-pane-intro'; currentIntro.innerHTML='<p class="eyebrow">Current position</p><h3>Mortgage and home today</h3><p>Balance, payments, regular overpayment and your current property position.</p>'; current.insertBefore(currentIntro,form);
-    const firstRunNote=$('.setup-first-run-note',modal);
-    if(firstRunNote) currentIntro.insertAdjacentElement('afterend',firstRunNote);
     const futureIntro=document.createElement('div'); futureIntro.className='setup-pane-intro'; futureIntro.innerHTML='<p class="eyebrow">Future assumptions</p><h3>Property and next-home planning</h3><p>Inputs used only for longer-term projections and planning.</p>'; future.appendChild(futureIntro);
 
     const sections=[...modal.querySelectorAll('.personal-section')];
