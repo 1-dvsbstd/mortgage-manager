@@ -9,39 +9,24 @@
   <meta name="apple-mobile-web-app-title" content="Mortgage" />
   <meta name="description" content="A visual mortgage manager for tracking balance, equity, payoff time and overpayment impact." />
   <title>Mortgage Manager</title>
+  <script>try{const t=localStorage.getItem("mortgage-manager-theme-v1");if(t)document.documentElement.dataset.theme=t;}catch(_){}</script>
   <style>html{background:#f4f1eb}html.app-hydrating body,html.app-settling body{visibility:hidden!important}</style>
   <script>window.setTimeout(()=>document.documentElement.classList.remove('app-hydrating','app-settling'),3000);</script>
   <link rel="icon" href="public/icon.svg?v=01518" type="image/svg+xml" />
-  <link rel="stylesheet" href="src/styles.css?v=015250" />
-  <link rel="stylesheet" href="src/inline-edit.css?v=01518" />
-  <link rel="stylesheet" href="src/expandable-cards.css?v=01518" />
-  <link rel="stylesheet" href="src/deep-dive.css?v=01518" />
-  <link rel="stylesheet" href="src/chart-enhance.css?v=01518" />
-  <link rel="stylesheet" href="src/mortgage-ui.css?v=01518" />
-  <link rel="stylesheet" href="src/deal-end-planner.css?v=015207" />
-  <link rel="stylesheet" href="src/home-profile.css?v=015251" />
-  <link rel="stylesheet" href="src/next-home-planner.css?v=01518" />
-  <link rel="stylesheet" href="src/premium.css?v=01518" />
-  <link rel="stylesheet" href="src/setup-data.css?v=015292" />
+  <link rel="stylesheet" href="src/styles.css?v=premium-001" />
+  <link rel="stylesheet" href="src/inline-edit.css?v=consolidation-031" />  <link rel="stylesheet" href="src/deep-dive.css?v=consolidation-043" />
+  <link rel="stylesheet" href="src/chart-enhance.css?v=consolidation-020" />
+  <link rel="stylesheet" href="src/mortgage-ui.css?v=consolidation-044" />
+  <link rel="stylesheet" href="src/deal-end-planner.css?v=consolidation-031" />
+  <link rel="stylesheet" href="src/home-profile.css?v=consolidation-031" />
+  <link rel="stylesheet" href="src/next-home-planner.css?v=consolidation-050" />  <link rel="stylesheet" href="src/design-tokens.css?v=premium-003" />
+  <link rel="stylesheet" href="src/setup-data.css?v=premium-001" />
   <link rel="stylesheet" href="src/mortgage-history.css?v=01518" />
-  <link rel="stylesheet" href="src/app-runtime.css?v=01518" />
-  <link rel="stylesheet" href="src/app-navigation.css?v=015208" />
-  <link rel="stylesheet" href="src/upcoming.css?v=015223" />
-  <link rel="stylesheet" href="src/setup-tabs.css?v=01518" />
-  <link rel="stylesheet" href="src/layout-finalize.css?v=015219" />
-  <link rel="stylesheet" href="src/layout-qa.css?v=015200" />
-  <link rel="stylesheet" href="src/v15-refresh.css?v=015201" />
-  <link rel="stylesheet" href="src/v15-polish.css?v=015219" />
-  <link rel="stylesheet" href="src/v15.3.css?v=015224" />
-  <link rel="stylesheet" href="src/v15.4.css?v=01518" />
-  <link rel="stylesheet" href="src/v15.5.css?v=015226" />
-  <link rel="stylesheet" href="src/v15.9.css?v=01518" />
-  <link rel="stylesheet" href="src/v15.10.css?v=015226" />
-  <link rel="stylesheet" href="src/v15.11.css?v=015269" />
-  <link rel="stylesheet" href="src/v15.12.css?v=01518" />
-  <link rel="stylesheet" href="src/v15.14.css?v=01518" />
-  <link id="offlineV1FinalStyle" rel="stylesheet" href="src/offline-v1-final.css?v=015278" />
-  <link rel="stylesheet" href="src/page-refine.css?v=015294" />
+  <link rel="stylesheet" href="src/app-runtime.css?v=consolidation-046" />
+  <link rel="stylesheet" href="src/app-navigation.css?v=premium-001" />
+  <link rel="stylesheet" href="src/upcoming.css?v=consolidation-036" />
+  <link rel="stylesheet" href="src/setup-tabs.css?v=premium-003" />  <link id="offlineV1FinalStyle" rel="stylesheet" href="src/offline-v1-final.css?v=consolidation-016" />
+  <link rel="stylesheet" href="src/page-refine.css?v=premium-005" />
   <script>
     if ('serviceWorker' in navigator && location.protocol !== 'file:') {
       window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
@@ -162,21 +147,19 @@
   <script src="src/mortgage-detail-ui.js?v=01518"></script>
   <script src="src/deal-end-planner.js?v=01518"></script>
   <script src="src/balance-projection.js?v=01518"></script>
-  <script src="src/home-costs.js?v=015257"></script>
-  <script src="src/setup-data.js?v=01518"></script>
+  <script src="src/home-costs.js?v=consolidation-018"></script>
+  <script src="src/setup-data.js?v=consolidation-026"></script>
   <script src="src/setup-home-profile.js?v=015272"></script>
   <script src="src/mortgage-history.js?v=01518"></script>
-  <script src="src/app-runtime.js?v=015288"></script>
-  <script src="src/app-navigation.js?v=015208"></script>
+  <script src="src/app-runtime.js?v=consolidation-046"></script>
+  <script src="src/app-navigation.js?v=consolidation-044"></script>
   <script src="src/page-refine.js?v=015290"></script>
-  <script src="src/setup-tabs.js?v=015285"></script>
+  <script src="src/setup-tabs.js?v=premium-003"></script>
   <script src="src/layout-finalize.js?v=01518"></script>
   <script src="src/v15-refresh.js?v=015209"></script>
   <script src="src/v15-polish.js?v=015194"></script>
   <script src="src/v15.5.js?v=015263"></script>
-  <script src="src/v15.11.js?v=01518"></script>
-  <script src="src/v15.14.js?v=01518"></script>
-  <script src="src/v15.15.js?v=015287"></script>
+  <script src="src/v15.11.js?v=consolidation-047"></script>  <script src="src/v15.15.js?v=consolidation-048"></script>
   <script id="offlineV1FinalScript" src="src/offline-v1-final.js?v=015222"></script>
 </body>
 </html>

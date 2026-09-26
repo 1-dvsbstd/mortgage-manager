@@ -1,0 +1,138 @@
+/* Mortgage Manager design tokens
+   Premium direction: Ink & Parchment.
+   Authoritative visual primitives for the app. */
+:root {
+  /* Core palette */
+  --bg: #f0ece5;
+  --surface: #faf7f1;
+  --surface-soft: #e9e2d8;
+  --surface-muted: #e3dbd0;
+  --surface-raised: #eee7de;
+  --surface-control: #fffdf8;
+  --surface-warm: #eadfce;
+  --surface-input: #fffdf8;
+  --text: #1d2329;
+  --muted: #666d73;
+  --muted-2: #8c9195;
+  --border: rgba(29, 35, 41, .14);
+  --border-soft: rgba(29, 35, 41, .085);
+
+  /* Accent / semantic palette */
+  --accent: #b7834d;
+  --accent-strong: #80572e;
+  --accent-soft: #ead7c0;
+  --warm: #a87849;
+  --debt: #747f87;
+  --equity: #557e73;
+  --property: #bca384;
+  --upcoming: #bd884d;
+  --scheme: #aa9f91;
+  --ink-active: #1d2329;
+  --ink-on-active: #faf7f1;
+  --positive: #557e73;
+  --positive-soft: rgba(85, 126, 115, .10);
+  --accent-wash: rgba(183, 131, 77, .09);
+
+  /* Focus */
+  --focus-ring: #b7834d;
+  --focus-ring-soft: rgba(183, 131, 77, .36);
+
+  /* Shape */
+  --radius-card: 24px;
+  --radius-tile: 16px;
+  --radius-control: 12px;
+  --radius-pill: 999px;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-page: 24px;
+  --space-card: 24px;
+
+  /* Elevation */
+  --shadow-card: 0 19px 52px rgba(29, 35, 41, .085);
+  --shadow-soft: 0 14px 38px rgba(29, 35, 41, .06);
+  --shadow-tile: 0 2px 8px rgba(29, 35, 41, .025);
+
+  /* Typography */
+  --font-ui: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+}
+
+
+/* Theme: Warm — approachable, friendly and less finance-formal. */
+html[data-theme="warm"]{
+  --bg:#f7eee5;
+  --surface:#fff8f1;
+  --surface-soft:#f4e4d4;
+  --surface-muted:#ecd8c6;
+  --surface-raised:#f8e9dc;
+  --surface-control:#fffaf6;
+  --surface-warm:#f4d2b9;
+  --surface-input:#fffaf7;
+  --text:#3b241d;
+  --muted:#805f53;
+  --muted-2:#a07f72;
+  --border:rgba(85,48,36,.14);
+  --border-soft:rgba(85,48,36,.08);
+  --accent:#df6a3b;
+  --accent-strong:#9d3d25;
+  --accent-soft:#f7c8b1;
+  --warm:#dc7b49;
+  --debt:#8e7770;
+  --equity:#5f9270;
+  --property:#dfa957;
+  --upcoming:#e59b40;
+  --scheme:#a9a29c;
+  --ink-active:#6f2d1e;
+  --ink-on-active:#fff8f1;
+  --positive:#5f9270;
+  --positive-soft:rgba(95,146,112,.12);
+  --accent-wash:rgba(223,106,59,.10);
+  --focus-ring:#df6a3b;
+  --focus-ring-soft:rgba(223,106,59,.32);
+  --shadow-card:0 19px 52px rgba(100,56,38,.075);
+  --shadow-soft:0 14px 38px rgba(100,56,38,.055);
+  --font-display:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+/* Theme: Dusk — richer contrast with deep green and amber accents. */
+html[data-theme="dusk"]{
+  --bg:#e7e1d4;
+  --surface:#fff8e8;
+  --surface-soft:#eee5d1;
+  --surface-muted:#e3d8c0;
+  --surface-raised:#f4ecd9;
+  --surface-control:#fffaf0;
+  --surface-warm:#f0d9ad;
+  --surface-input:#fffaf0;
+  --text:#17342f;
+  --muted:#5f6e68;
+  --muted-2:#87918c;
+  --border:rgba(18,64,56,.16);
+  --border-soft:rgba(18,64,56,.09);
+  --accent:#d69a1c;
+  --accent-strong:#8a5c00;
+  --accent-soft:#f3d28a;
+  --warm:#c97942;
+  --debt:#647570;
+  --equity:#235f52;
+  --property:#c9a26a;
+  --upcoming:#d79a1c;
+  --scheme:#9b988d;
+  --ink-active:#103f37;
+  --ink-on-active:#fff8e8;
+  --positive:#235f52;
+  --positive-soft:rgba(35,95,82,.12);
+  --accent-wash:rgba(214,154,28,.11);
+  --focus-ring:#c8890d;
+  --focus-ring-soft:rgba(200,137,13,.34);
+  --shadow-card:0 19px 52px rgba(17,56,49,.09);
+  --shadow-soft:0 14px 38px rgba(17,56,49,.06);
+  --font-display:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+}

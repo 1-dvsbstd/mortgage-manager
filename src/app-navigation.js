@@ -95,15 +95,6 @@
     else chart.appendChild(scenario);
   }
 
-  function refineExpandableCues(){
-    const labels={ mortgage:'More · repayment breakdown', trajectory:'More · yearly balances and scenario comparison' };
-    document.querySelectorAll('[data-expandable-card]').forEach((card)=>{
-      card.querySelector('[data-expand-card]')?.classList.add('legacy-expand-cta');
-      const hint=card.querySelector('.expand-hint'); const key=card.dataset.expandableCard;
-      if(hint&&labels[key]) hint.textContent=labels[key];
-    });
-  }
-
   function relocateCurrentFeatures(){
     const current=$('.app-view-current .app-view-content'); if(!current)return;
     ensureCurrentOverpaymentPanel(); makeHomeGlance();
@@ -240,7 +231,7 @@
     setTimeout(mountProfileSettingsInSetup,520);
   }
 
-  function organiseViews(){ relocateFutureFeatures(); relocateCurrentFeatures(); relocateUpcomingFeatures(); refineExpandableCues(); wireSetupProfileSettings(); }
+  function organiseViews(){ relocateFutureFeatures(); relocateCurrentFeatures(); relocateUpcomingFeatures(); wireSetupProfileSettings(); }
 
   function buildShell(){
     const main=$('.app-shell'), topbar=$('.topbar',main), footer=$('.footer',main); if(!main||!topbar||!footer||$('.app-view-shell',main))return;
@@ -256,10 +247,8 @@
     activateView(savedView(),false); setTimeout(organiseViews,320); setTimeout(organiseViews,720);
   }
 
-  function closeExpandedCards(){ document.querySelectorAll('.expandable-card.is-expanded').forEach((card)=>{ card.classList.remove('is-expanded'); card.setAttribute('aria-expanded','false'); }); document.body.classList.remove('card-open'); document.querySelector('.card-backdrop')?.remove(); }
-
   function activateView(key,userInitiated){
-    if(!views[key]) key='current'; closeExpandedCards(); organiseViews();
+    if(!views[key]) key='current'; organiseViews();
     document.querySelectorAll('.app-view').forEach((view)=>{ const active=view.dataset.view===key; view.hidden=!active; view.classList.toggle('is-active',active); });
     document.querySelectorAll('[data-app-view]').forEach((button)=>{ const active=button.dataset.appView===key; button.classList.toggle('is-active',active); if(active) button.setAttribute('aria-current','page'); else button.removeAttribute('aria-current'); });
     document.body.dataset.appView=key;

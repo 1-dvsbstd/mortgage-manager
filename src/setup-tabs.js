@@ -1,6 +1,12 @@
 (() => {
   const NEXT_HOME_KEY='mortgage-manager-next-home-v1';
   const VALUE_HISTORY_KEY='mortgage-manager-home-value-history-v1';
+  const THEME_KEY='mortgage-manager-theme-v1';
+  const themes=[
+    {id:'parchment',name:'Parchment',note:'Premium, distinctive and calm.'},
+    {id:'warm',name:'Warm',note:'Friendly, approachable and inviting.'},
+    {id:'dusk',name:'Dusk',note:'Richer contrast with more character.'},
+  ];
   const nextHomeDefaults={householdIncome:'',savings:'',cashBuffer:'',saleCosts:'',purchaseCosts:'',borrowingMultiple:4.5};
   const $=(selector,root=document)=>root.querySelector(selector);
   const money=(value)=>new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP',maximumFractionDigits:0}).format(Math.max(0,Number(value)||0));
@@ -42,16 +48,16 @@
   function addBudgetSection(futurePane,modal){
     if($('.setup-budget-section',futurePane)) return;
     const settings=loadNextHome();
-    const section=document.createElement('section');
+    const section=document.createElement('details');
     section.className='personal-section setup-budget-section';
-    section.innerHTML=`<h3>Next-home budget assumptions</h3><p>Used for move-budget estimates.</p><div class="setup-future-grid">
+    section.innerHTML=`<summary><span><strong>Next-home budget assumptions</strong><small>Income, savings, costs and borrowing multiple used for move-budget estimates.</small></span></summary><div class="setup-budget-body"><div class="setup-future-grid">
       <label>Household income (£/year)<input data-budget-field="householdIncome" type="number" min="0" step="1000" inputmode="decimal"></label>
       <label>Savings available (£)<input data-budget-field="savings" type="number" min="0" step="1000" inputmode="decimal"></label>
       <label>Cash buffer to keep (£)<input data-budget-field="cashBuffer" type="number" min="0" step="1000" inputmode="decimal"></label>
       <label>Estimated selling costs (£)<input data-budget-field="saleCosts" type="number" min="0" step="500" inputmode="decimal"></label>
       <label>Estimated purchase costs (£)<input data-budget-field="purchaseCosts" type="number" min="0" step="500" inputmode="decimal"></label>
-      <label>Borrowing multiple<input data-budget-field="borrowingMultiple" type="number" min="0" max="10" step="0.1" inputmode="decimal"><span>Planning only.</span></label>
-    </div>`;
+      <label>Borrowing multiple<input data-budget-field="borrowingMultiple" type="number" min="0" max="10" step="0.1" inputmode="decimal"><span>Planning only; actual lender affordability can differ.</span></label>
+    </div></div>`;
     futurePane.appendChild(section);
     section.querySelectorAll('[data-budget-field]').forEach((input)=>{input.value=settings[input.dataset.budgetField]??'';});
     modal.querySelector('[data-action="save"]')?.addEventListener('click',()=>{
@@ -77,6 +83,70 @@
     renderHistory(section);
   }
 
+  function applyTheme(theme){
+    const id=themes.some((item)=>item.id===theme)?theme:'parchment';
+    document.documentElement.dataset.theme=id;
+    try{localStorage.setItem(THEME_KEY,id);}catch(_){}
+    const meta=document.querySelector('meta[name="theme-color"]');
+    if(meta) meta.content=id==='warm'?'#f7eee5':id==='dusk'?'#e7e1d4':'#f0ece5';
+  }
+
+  function currentTheme(){
+    try{return localStorage.getItem(THEME_KEY)||document.documentElement.dataset.theme||'parchment';}catch(_){return document.documentElement.dataset.theme||'parchment';}
+  }
+
+  function syncThemeControl(){
+    const selected=currentTheme();
+    const active=themes.find((theme)=>theme.id===selected)||themes[0];
+    const label=document.querySelector('#themeMenuButton .theme-menu-label');
+    if(label) label.textContent=`Theme · ${active.name}`;
+    document.querySelectorAll('[data-theme-choice]').forEach((item)=>{
+      const on=item.dataset.themeChoice===active.id;
+      item.classList.toggle('active',on);
+      item.setAttribute('aria-checked',String(on));
+    });
+  }
+
+  function ensureThemeControl(modal=document.querySelector('.personal-modal')){
+    if(!modal || modal.querySelector('#themeMenuButton')) return;
+    const head=modal.querySelector('.personal-modal-head');
+    if(!head) return;
+
+    const utility=document.createElement('div');
+    utility.className='setup-utility-row';
+    const control=document.createElement('div');
+    control.className='theme-menu';
+    control.innerHTML=`
+      <button type="button" id="themeMenuButton" class="theme-menu-button" aria-haspopup="menu" aria-expanded="false">
+        <span class="theme-menu-label">Theme</span><span class="theme-menu-chevron" aria-hidden="true">⌄</span>
+      </button>
+      <div class="theme-menu-popover" role="menu" hidden>
+        ${themes.map((theme)=>`<button type="button" role="menuitemradio" data-theme-choice="${theme.id}" aria-checked="false"><span class="theme-menu-swatch ${theme.id}" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>${theme.name}</strong><small>${theme.note}</small></span></button>`).join('')}
+      </div>`;
+    utility.appendChild(control);
+    head.insertAdjacentElement('afterend',utility);
+
+    const button=control.querySelector('#themeMenuButton');
+    const popover=control.querySelector('.theme-menu-popover');
+    const close=()=>{popover.hidden=true;button.setAttribute('aria-expanded','false');};
+    const open=()=>{popover.hidden=false;button.setAttribute('aria-expanded','true');};
+
+    button.addEventListener('click',(event)=>{
+      event.stopPropagation();
+      popover.hidden?open():close();
+    });
+    control.addEventListener('click',(event)=>{
+      const choice=event.target.closest('[data-theme-choice]');
+      if(!choice)return;
+      applyTheme(choice.dataset.themeChoice);
+      syncThemeControl();
+      close();
+    });
+    document.addEventListener('click',(event)=>{if(!control.contains(event.target))close();});
+    document.addEventListener('keydown',(event)=>{if(event.key==='Escape')close();});
+    syncThemeControl();
+  }
+
   function activate(modal,key){
     modal.querySelectorAll('[data-setup-pane]').forEach((pane)=>pane.hidden=pane.dataset.setupPane!==key);
     modal.querySelectorAll('[data-setup-tab]').forEach((button)=>{const active=button.dataset.setupTab===key;button.classList.toggle('active',active);button.setAttribute('aria-selected',String(active));});
@@ -93,7 +163,11 @@
     const current=document.createElement('div'), upcoming=document.createElement('div'), future=document.createElement('div');
     current.className='setup-pane'; upcoming.className='setup-pane'; future.className='setup-pane';
     current.dataset.setupPane='current'; upcoming.dataset.setupPane='upcoming'; future.dataset.setupPane='future';
-    const head=$('.personal-modal-head',modal); head.insertAdjacentElement('afterend',nav); nav.after(current,upcoming,future);
+    const head=$('.personal-modal-head',modal);
+    ensureThemeControl(modal);
+    const utility=$('.setup-utility-row',modal);
+    (utility||head).insertAdjacentElement('afterend',nav);
+    nav.after(current,upcoming,future);
 
     current.appendChild(form);
     const upcomingGrid=document.createElement('div'); upcomingGrid.className='personal-form setup-upcoming-grid'; upcoming.appendChild(upcomingGrid);
@@ -107,9 +181,11 @@
     const mortgageHistory=sections.find((section)=>section.classList.contains('mortgage-history-section'));
     const monthly=sections.find((section)=>$('h3',section)?.textContent.trim()==='Monthly history');
     const backup=sections.find((section)=>$('h3',section)?.textContent.trim()==='Backup');
+    const methodology=$('#methodologySection',modal);
     if(mortgageHistory) current.appendChild(mortgageHistory);
     if(monthly) current.appendChild(monthly);
     if(backup) current.appendChild(backup);
+    if(methodology) upcoming.appendChild(methodology);
 
     const profile=$('.personal-home-profile-section',modal); if(profile) future.appendChild(profile);
     addBudgetSection(future,modal); addValueHistorySection(future);
@@ -119,9 +195,22 @@
     activate(modal,initial);
   }
 
+  function organiseAndSettle(){
+    setTimeout(organise,0);
+    setTimeout(()=>{
+      organise();
+      ensureThemeControl(document.querySelector('.personal-modal'));
+      const modal=$('.personal-modal');
+      const upcoming=modal?.querySelector('[data-setup-pane="upcoming"]');
+      const future=modal?.querySelector('[data-setup-pane="future"]');
+      const methodology=modal?.querySelector('#methodologySection');
+      const profile=modal?.querySelector('.personal-home-profile-section');
+      if(upcoming&&methodology&&!upcoming.contains(methodology)) upcoming.appendChild(methodology);
+      if(future&&profile&&!future.contains(profile)) future.insertBefore(profile,future.querySelector('.setup-budget-section'));
+    },80);
+  }
+
   const button=document.getElementById('personalDataButton');
-  if(button) button.addEventListener('click',()=>{setTimeout(organise,0);setTimeout(()=>{
-    const modal=$('.personal-modal'); const future=modal?.querySelector('[data-setup-pane="future"]'); const profile=modal?.querySelector('.personal-home-profile-section');
-    if(future&&profile&&!future.contains(profile))future.insertBefore(profile,future.querySelector('.setup-budget-section'));
-  },80);});
+  if(button) button.addEventListener('click',organiseAndSettle);
+  document.addEventListener('mortgage-setup-opened',organiseAndSettle);
 })();

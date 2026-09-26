@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mortgage Manager — Premium visual system lab</title>
+<link rel="stylesheet" href="src/theme-lab.css?v=1">
+</head>
+<body data-theme="editorial">
+<main class="lab-shell">
+  <header class="lab-head">
+    <div>
+      <p class="lab-kicker">Mortgage Manager · Step 1</p>
+      <h1>Premium visual system</h1>
+      <p class="lab-intro">Same typography, spacing, radii and hierarchy. Only the palette and tonal character change.</p>
+    </div>
+    <a href="./">Back to app</a>
+  </header>
+
+  <nav class="theme-switcher" aria-label="Theme directions">
+    <button class="active" data-theme-btn="editorial"><span>A</span> Warm Editorial</button>
+    <button data-theme-btn="stone"><span>B</span> Stone & Copper</button>
+    <button data-theme-btn="sage"><span>C</span> Sage & Bronze</button>
+    <button data-theme-btn="ink"><span>D</span> Ink & Parchment</button>
+  </nav>
+
+  <section class="theme-summary">
+    <div>
+      <p class="eyebrow" id="themeEyebrow">A · Warm Editorial</p>
+      <h2 id="themeTitle">Warm, calm and reassuring</h2>
+      <p id="themeCopy">Closest to the current product, but cleaner and more deliberate. Soft ivory surfaces, restrained copper and muted sage data colours.</p>
+    </div>
+    <div class="swatches" aria-label="Current theme swatches">
+      <i class="sw bg"></i><i class="sw surface"></i><i class="sw text"></i><i class="sw accent"></i><i class="sw positive"></i>
+    </div>
+  </section>
+
+  <section class="demo-shell">
+    <header class="demo-topbar">
+      <div class="brand">Mortgage Manager <small>Offline</small></div>
+      <div class="segmented"><button class="active">Current</button><button>Upcoming</button><button>Future</button></div>
+      <button class="ghost">Setup & data</button>
+    </header>
+
+    <div class="hero-card">
+      <div class="hero-copy">
+        <p class="eyebrow">Your mortgage</p>
+        <h3>£112,840</h3>
+        <p class="muted">On your current path, you could be mortgage-free in <strong>2041</strong>.</p>
+        <div class="progress"><i></i></div>
+        <div class="hero-metrics">
+          <div><span>Monthly payment</span><strong>£771</strong></div>
+          <div><span>Regular overpayment</span><strong>£71</strong></div>
+          <div><span>Current rate</span><strong>3.92%</strong></div>
+        </div>
+      </div>
+      <div class="property-card">
+        <p class="eyebrow">Your home</p>
+        <div class="home-value">£260,000</div>
+        <div class="donut"><span>54%</span></div>
+        <p class="muted centre">Mortgage-free share of your owned portion</p>
+      </div>
+    </div>
+
+    <div class="demo-grid">
+      <article class="panel">
+        <div class="panel-head">
+          <div><p class="eyebrow">Trajectory</p><h4>Balance over time</h4></div>
+          <span class="meta">Updated now</span>
+        </div>
+        <div class="chart">
+          <svg viewBox="0 0 620 190" role="img" aria-label="Example mortgage trajectory chart">
+            <line class="grid" x1="0" y1="40" x2="620" y2="40"/>
+            <line class="grid" x1="0" y1="95" x2="620" y2="95"/>
+            <line class="grid" x1="0" y1="150" x2="620" y2="150"/>
+            <path class="line debt-line" d="M8,28 C120,42 210,67 300,91 C390,117 500,144 612,174"/>
+            <path class="line overpay-line" d="M8,28 C118,48 216,78 305,112 C390,143 480,165 560,177"/>
+          </svg>
+        </div>
+        <div class="legend"><span><i class="debt"></i>Scheduled</span><span><i class="overpay"></i>With overpayment</span></div>
+        <div class="control-row">
+          <button>£100</button><button class="active">£250</button><button>£500</button><label>Custom <input value="325" aria-label="Custom overpayment"></label>
+        </div>
+      </article>
+
+      <aside class="panel side">
+        <p class="eyebrow">At a glance</p>
+        <h4>£18,420 saved</h4>
+        <p class="muted">Estimated lifetime interest reduction from your current overpayment plan.</p>
+        <div class="metric-list">
+          <div><span>Time saved</span><strong>3y 8m</strong></div>
+          <div><span>Projected LTV</span><strong>43.4%</strong></div>
+          <div><span>Next milestone</span><strong>40%</strong></div>
+        </div>
+        <button class="primary">Explore this scenario</button>
+      </aside>
+    </div>
+
+    <section class="system-strip">
+      <div><span>Display</span><strong>Iowan / Palatino / Georgia</strong></div>
+      <div><span>UI</span><strong>Inter / system sans</strong></div>
+      <div><span>Card radius</span><strong>24px</strong></div>
+      <div><span>Tile radius</span><strong>16px</strong></div>
+      <div><span>Control radius</span><strong>12px</strong></div>
+      <div><span>Spacing</span><strong>4 · 8 · 12 · 16 · 24 · 32</strong></div>
+    </section>
+
+    <section class="focus-demo">
+      <p class="eyebrow">Interaction</p>
+      <div><button>Secondary</button><button class="primary">Primary</button><button class="focus-example">Focus state</button></div>
+    </section>
+  </section>
+</main>
+<script>
+const themes={
+editorial:{eyebrow:'A · Warm Editorial',title:'Warm, calm and reassuring',copy:'Closest to the current product, but cleaner and more deliberate. Soft ivory surfaces, restrained copper and muted sage data colours.'},
+stone:{eyebrow:'B · Stone & Copper',title:'Sharper and more architectural',copy:'Cooler stone neutrals with a richer copper accent. More contemporary and premium, with less farmhouse warmth and stronger visual precision.'},
+sage:{eyebrow:'C · Sage & Bronze',title:'Quietly financial without feeling corporate',copy:'A soft mineral green foundation with bronze accents. Feels trustworthy and calm while keeping the interface distinctly different from a bank dashboard.'},
+ink:{eyebrow:'D · Ink & Parchment',title:'Editorial contrast with a luxury edge',copy:'Deep charcoal text, parchment surfaces and a controlled brass accent. The highest-contrast direction and the most magazine-like of the four.'}
+};
+document.querySelectorAll('[data-theme-btn]').forEach(btn=>btn.addEventListener('click',()=>{
+ const key=btn.dataset.themeBtn;
+ document.body.dataset.theme=key;
+ document.querySelectorAll('[data-theme-btn]').forEach(b=>b.classList.toggle('active',b===btn));
+ document.getElementById('themeEyebrow').textContent=themes[key].eyebrow;
+ document.getElementById('themeTitle').textContent=themes[key].title;
+ document.getElementById('themeCopy').textContent=themes[key].copy;
+}));
+</script>
+</body>
+</html>

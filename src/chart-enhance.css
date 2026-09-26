@@ -1,1 +1,45 @@
 .expand-card-button{display:none!important}.expandable-card{cursor:pointer}.chart-wrap{position:relative}.chart-wrap canvas{cursor:crosshair}.chart-readout{display:flex;flex-wrap:wrap;gap:7px 14px;align-items:center;margin-top:10px;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.025);color:var(--muted);font-size:11px;line-height:1.35}.chart-readout strong{color:var(--text);font-size:12px}.chart-readout span{white-space:nowrap}.expandable-card[data-expandable-card="trajectory"].is-expanded .chart-readout{font-size:12px}.expandable-card[data-expandable-card="trajectory"].is-expanded .chart-readout strong{font-size:13px}@media(hover:hover) and (pointer:fine){.expandable-card:not(.is-expanded){transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease}.expandable-card:not(.is-expanded):hover{transform:translateY(-2px);border-color:rgba(84,224,180,.34);box-shadow:0 24px 68px rgba(0,0,0,.28);background-color:rgba(15,42,34,.96)}}@media(max-width:650px){.chart-readout{display:grid;grid-template-columns:1fr 1fr}.chart-readout strong{grid-column:1/-1}.chart-readout span{white-space:normal}}
+/* Current trajectory chart surface — authoritative consolidated owner. */
+.app-view-current .trajectory-with-what-if>.chart-wrap{
+  margin:18px 24px 0!important;
+  width:calc(100% - 48px)!important;
+  padding:0!important;
+  border:1px solid var(--border)!important;
+  border-radius:14px!important;
+  background:#f3ede5!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45)!important;
+  overflow:hidden!important;
+}
+.chart-panel canvas{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.chart-readout{
+  background:#ebe3d9!important;
+  border-color:var(--border-soft)!important;
+  color:var(--text)!important;
+}
+.chart-readout span,
+.chart-readout strong{color:var(--text)!important}
+.app-view-current .trajectory-with-what-if>.legend{
+  margin:9px 24px 0!important;
+  padding:0 0 20px!important;
+  gap:10px 18px!important;
+  color:var(--muted)!important;
+}
+.dot.scheduled-line{background:#8a949c!important}
+.dot.regular-line{background:#c39b72!important}
+.dot.selected-line{background:var(--accent-strong)!important}
+.dot.equity-line{background:#b8aa99!important}
+
+@media(max-width:700px){
+  .app-view-current .trajectory-with-what-if>.chart-wrap{
+    margin:15px 18px 0!important;
+    width:calc(100% - 36px)!important;
+  }
+  .app-view-current .trajectory-with-what-if>.legend{
+    margin:9px 18px 0!important;
+    padding-bottom:17px!important;
+  }
+}
