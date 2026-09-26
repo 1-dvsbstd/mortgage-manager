@@ -680,3 +680,47 @@ body .app-view-current .trajectory-scenario-copy .trajectory-current-saving{
     text-align:left!important;
   }
 }
+
+/* Retained Future typography rules from retired V15.9. */
+body[data-app-view="future"] #propertyCostComparison .deep-heading h2,
+body[data-app-view="future"] #homeProjection .projection-heading h2,
+body[data-app-view="future"] #futureModelRange .future-model-heading h2{
+  color:var(--text)!important;
+  opacity:1!important;
+  -webkit-text-fill-color:var(--text)!important;
+}
+
+body[data-app-view="future"] #propertyCostComparison .deep-heading .eyebrow,
+body[data-app-view="future"] #homeProjection .projection-heading .eyebrow,
+body[data-app-view="future"] #futureModelRange .future-model-heading .eyebrow{
+  color:#9d6639!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#9d6639!important;
+}
+
+body[data-app-view="future"] #propertyCostComparison .property-cost-card>strong,
+body[data-app-view="future"] #futureModelRange .v157-range-copy>strong,
+body[data-app-view="future"] #futureModelRange .v157-range-labels strong{
+  color:var(--text)!important;
+  opacity:1!important;
+  -webkit-text-fill-color:var(--text)!important;
+}
+
+body[data-app-view="future"] #propertyCostComparison .property-cost-card>span,
+body[data-app-view="future"] #propertyCostComparison .property-cost-card>small,
+body[data-app-view="future"] #propertyCostComparison .deep-note,
+body[data-app-view="future"] #futureModelRange .v157-range-copy>small,
+body[data-app-view="future"] #futureModelRange .v157-range-labels span{
+  color:#6d7278!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#6d7278!important;
+}
+
+body[data-app-view="future"] #futureModelRange .v157-range-copy>strong{
+  color:var(--text)!important;
+}
+
+body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre strong{
+  color:#9d6639!important;
+  -webkit-text-fill-color:#9d6639!important;
+}

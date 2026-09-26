@@ -25,8 +25,8 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 
 ## 2. Global shell
 - [ ] Consolidate page background and app-shell rules
-- [ ] Consolidate top bar / brand / version / save-state styling
-- [ ] Consolidate Current / Upcoming / Future navigation
+- [x] Consolidate top bar / brand / version / save-state styling
+- [x] Consolidate Current / Upcoming / Future navigation
 - [ ] Verify desktop header alignment
 - [ ] Verify mobile header alignment
 
@@ -90,6 +90,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [x] Flatten nested Home profile field boxes
 - [ ] Backup/restore/reset controls
 - [ ] Methodology/help panels
+- [x] Setup modal width/history-row geometry consolidated
 - [ ] Modal and close-state consistency
 - [ ] Setup responsive rules
 - [ ] Visual check by Nathan
@@ -110,16 +111,16 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 ## 9. Legacy cleanup
 - [x] Map/retire legacy theme rules in `layout-finalize.css`
 - [x] Map legacy `layout-qa.css` colours onto shared tokens
-- [ ] Map selectors in V15 patch files (Current trajectory + Upcoming card ownership consolidated)
+- [ ] Map selectors in V15 patch files (Current trajectory, Upcoming cards and V15.9 Future typography consolidated)
 - [x] Retire legacy global theme declarations from `premium.css`
 - [ ] Move surviving rules to authoritative component/page files
 - [ ] Remove redundant `!important` declarations where safe
-- [ ] Remove superseded V15 stylesheet files (started: retired v15.10 removed)
+- [ ] Remove superseded V15 stylesheet files (retired v15.9, v15.10 and v15.14 removed)
 - [ ] Remove superseded V15 script files where safe
 - [ ] Remove dead selectors/styles
-- [x] Reduce active stylesheet stack to five logical bundles
-- [ ] Prune duplicate/obsolete rules inside the consolidated bundles
-- [ ] Delete superseded source stylesheets after visual validation
+- [ ] Reduce active stylesheet count only after component ownership is validated
+- [ ] Continue pruning duplicate/obsolete rules in isolated source stylesheets
+- [ ] Delete superseded source stylesheets only after component-by-component validation
 
 ## 10. Optional colour themes
 - [x] Keep consolidation token-based so multiple themes remain possible
