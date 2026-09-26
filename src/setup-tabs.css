@@ -50,3 +50,29 @@
 .personal-home-profile-section{margin-top:0!important}.setup-pane .personal-section{margin-top:16px;padding-top:16px}.setup-pane>.personal-form{margin-bottom:0}
 .setup-pane .personal-form{gap:12px;margin-top:14px}.setup-pane .personal-form label{padding:11px 12px}.setup-pane .personal-form input{min-height:40px}
 @media(max-width:620px){.personal-modal .setup-tab-nav{position:sticky;top:0;z-index:3;gap:4px;margin-top:12px}.setup-tab-nav button{padding:8px 6px;font-size:11px}.setup-future-grid{grid-template-columns:1fr}.setup-section-heading{display:grid}.setup-history-row{grid-template-columns:1fr auto}.setup-history-row small{grid-column:1/-1}.setup-pane .personal-section{margin-top:14px;padding-top:14px}}
+
+/* Future setup — keep optional planning assumptions collapsed until needed. */
+.setup-budget-section>summary{
+  min-height:54px;
+  display:flex;
+  align-items:center;
+  cursor:pointer;
+}
+.setup-budget-section>summary>span{
+  display:block;
+}
+.setup-budget-section>summary strong{
+  display:block;
+  color:var(--text)!important;
+  font-size:14px;
+}
+.setup-budget-section>summary small{
+  display:block;
+  margin-top:4px;
+  color:var(--muted)!important;
+  font-size:10.5px;
+  line-height:1.4;
+}
+.setup-budget-body{
+  padding-top:14px;
+}
