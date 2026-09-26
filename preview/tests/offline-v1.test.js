@@ -7,8 +7,6 @@ const market = JSON.parse(fs.readFileSync('public/market-rates.json', 'utf8'));
 const polish = fs.readFileSync('src/v15.15.js', 'utf8');
 const finalPolish = fs.readFileSync('src/offline-v1-final.js', 'utf8');
 const finalStyle = fs.readFileSync('src/offline-v1-final.css', 'utf8');
-const loader = fs.readFileSync('src/v15.14.js', 'utf8');
-const expandable = fs.readFileSync('src/expandable-cards.js', 'utf8');
 const launcher = fs.readFileSync('launch.ps1', 'utf8');
 
 assert.match(index, /navigator\.serviceWorker\.register\('\.\/sw\.js'\)/, 'Offline V1 should register its service worker');
@@ -30,20 +28,22 @@ assert.doesNotMatch(index, /caches\.keys\(\).*caches\.delete/s, 'The app must no
 
 assert.match(sw, /ignoreSearch:\s*true/, 'Offline fallback should tolerate cache-busting query strings');
 assert.match(sw, /cache:'no-store'/, 'Service worker should bypass ordinary browser cache while online');
-const legacyStyleIndex = index.indexOf('src/v15.14.css');
 const finalStyleIndex = index.indexOf('src/offline-v1-final.css');
 const pageRefineStyleIndex = index.indexOf('src/page-refine.css');
-assert.ok(legacyStyleIndex >= 0 && finalStyleIndex > legacyStyleIndex, 'Final UI stylesheet should be loaded after legacy style layers');
+assert.ok(finalStyleIndex >= 0, 'Final UI stylesheet should remain loaded');
 assert.ok(pageRefineStyleIndex > finalStyleIndex, 'Page refinement stylesheet should load after the general final UI layer');
+assert.doesNotMatch(index, /src\/v15\.14\.css|src\/v15-refresh\.css|src\/v15-polish\.css|src\/v15\.3\.css|src\/v15\.4\.css|src\/v15\.5\.css/, 'Retired standalone V15 stylesheets must not be reintroduced');
+assert.doesNotMatch(sw, /\.\/src\/v15\.14\.css|\.\/src\/v15-refresh\.css|\.\/src\/v15-polish\.css|\.\/src\/v15\.3\.css|\.\/src\/v15\.4\.css|\.\/src\/v15\.5\.css/, 'Service worker must not cache retired standalone V15 stylesheets');
 
 const legacyScriptIndex = index.indexOf('src/v15.15.js');
 const finalScriptIndex = index.indexOf('src/offline-v1-final.js');
 assert.ok(legacyScriptIndex >= 0 && finalScriptIndex > legacyScriptIndex, 'Final UI script should be loaded after legacy script layers');
-assert.match(loader, /legacy dynamic loader retired/i, 'Legacy dynamic loader should remain retired');
+assert.doesNotMatch(index, /src\/v15\.14\.js|src\/expandable-cards\.js/, 'Retired no-op scripts must not be loaded');
+assert.doesNotMatch(sw, /\.\/src\/v15\.14\.js|\.\/src\/expandable-cards\.js/, 'Service worker must not cache retired no-op scripts');
 assert.match(finalPolish, /V0\.15\.20/, 'Final UI should expose the current visible build marker');
 assert.match(finalPolish, /undefined\|nan/i, 'Final UI layer should guard invalid LTV milestones');
 assert.match(finalStyle, /grid-template-columns:repeat\(4/, 'Current summary should use a compact four-column desktop grid');
-assert.doesNotMatch(expandable, /openCard\(/, 'Legacy expandable-card runtime must remain inert');
+assert.doesNotMatch(index, /src\/expandable-cards\.css/, 'Legacy expandable-card stylesheet must remain retired');
 assert.match(launcher, /Cache-Control: no-store, no-cache/, 'Windows launcher should prevent stale browser shell caching');
 assert.match(launcher, /Serving from:/, 'Windows launcher should show which folder is actually being served');
 

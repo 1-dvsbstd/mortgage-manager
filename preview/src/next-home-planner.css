@@ -244,15 +244,6 @@ html{
   scrollbar-width:thin;
   scrollbar-color:#315e50 #071410;
 }
-::-webkit-scrollbar{width:10px;height:10px}
-::-webkit-scrollbar-track{background:#071410}
-::-webkit-scrollbar-thumb{
-  background:linear-gradient(180deg,#315e50,#23463b);
-  border:2px solid #071410;
-  border-radius:999px;
-}
-::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#3e725f,#2c5548)}
-::-webkit-scrollbar-corner{background:#071410}
 
 /* Expanded cards should feel like focused sheets */
 .expandable-card.is-expanded{
