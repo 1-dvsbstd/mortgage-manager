@@ -4,9 +4,9 @@
   gap:8px;
   margin:16px 0 8px;
   padding:5px;
-  border:1px solid #ddd2c6!important;
+  border:1px solid var(--border)!important;
   border-radius:14px;
-  background:#eee7de!important;
+  background:var(--surface-raised)!important;
 }
 .personal-modal .setup-tab-nav button{
   appearance:none;
@@ -87,4 +87,64 @@
 .personal-modal .setup-future-grid label>span{
   min-height:16px!important;
   align-self:start!important;
+}
+
+
+/* Appearance themes — three curated choices, stored locally. */
+.setup-theme-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin-top:14px;
+}
+.setup-theme-card{
+  appearance:none;
+  display:grid;
+  grid-template-rows:auto auto 1fr;
+  gap:6px;
+  min-width:0;
+  padding:12px;
+  border:1px solid var(--border)!important;
+  border-radius:var(--radius-tile);
+  background:var(--surface-control)!important;
+  color:var(--text)!important;
+  text-align:left;
+  cursor:pointer;
+  box-shadow:none!important;
+}
+.setup-theme-card:hover{
+  border-color:var(--accent)!important;
+  background:var(--surface)!important;
+}
+.setup-theme-card.active{
+  border-color:var(--accent)!important;
+  box-shadow:0 0 0 2px var(--accent-wash)!important;
+}
+.setup-theme-card strong{font-size:12px;line-height:1.2}
+.setup-theme-card small{color:var(--muted)!important;font-size:10px;line-height:1.35}
+.setup-theme-preview{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  min-height:32px;
+  padding:7px 8px;
+  border-radius:10px;
+  background:#f0ece5;
+}
+.setup-theme-preview i{display:block;width:14px;height:14px;border-radius:50%}
+.setup-theme-preview.parchment i:nth-child(1){background:#1f5f54}
+.setup-theme-preview.parchment i:nth-child(2){background:#b7834d}
+.setup-theme-preview.parchment i:nth-child(3){background:#eadfce}
+.setup-theme-preview.warm{background:#f7eee5}
+.setup-theme-preview.warm i:nth-child(1){background:#df6a3b}
+.setup-theme-preview.warm i:nth-child(2){background:#5f9270}
+.setup-theme-preview.warm i:nth-child(3){background:#f2b24f}
+.setup-theme-preview.dusk{background:#e7e1d4}
+.setup-theme-preview.dusk i:nth-child(1){background:#174f46}
+.setup-theme-preview.dusk i:nth-child(2){background:#d69a1c}
+.setup-theme-preview.dusk i:nth-child(3){background:#c97942}
+@media(max-width:620px){
+  .setup-theme-grid{grid-template-columns:1fr}
+  .setup-theme-card{grid-template-columns:86px 1fr;grid-template-rows:auto auto;align-items:center}
+  .setup-theme-preview{grid-row:1/3}
 }
