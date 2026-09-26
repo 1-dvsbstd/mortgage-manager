@@ -9,6 +9,7 @@
   <meta name="apple-mobile-web-app-title" content="Mortgage" />
   <meta name="description" content="A visual mortgage manager for tracking balance, equity, payoff time and overpayment impact." />
   <title>Mortgage Manager</title>
+  <script>try{const t=localStorage.getItem("mortgage-manager-theme-v1");if(t)document.documentElement.dataset.theme=t;}catch(_){}</script>
   <style>html{background:#f4f1eb}html.app-hydrating body,html.app-settling body{visibility:hidden!important}</style>
   <script>window.setTimeout(()=>document.documentElement.classList.remove('app-hydrating','app-settling'),3000);</script>
   <link rel="icon" href="public/icon.svg?v=01518" type="image/svg+xml" />
@@ -18,14 +19,14 @@
   <link rel="stylesheet" href="src/mortgage-ui.css?v=consolidation-044" />
   <link rel="stylesheet" href="src/deal-end-planner.css?v=consolidation-031" />
   <link rel="stylesheet" href="src/home-profile.css?v=consolidation-031" />
-  <link rel="stylesheet" href="src/next-home-planner.css?v=consolidation-050" />  <link rel="stylesheet" href="src/design-tokens.css?v=premium-002" />
+  <link rel="stylesheet" href="src/next-home-planner.css?v=consolidation-050" />  <link rel="stylesheet" href="src/design-tokens.css?v=premium-003" />
   <link rel="stylesheet" href="src/setup-data.css?v=premium-001" />
   <link rel="stylesheet" href="src/mortgage-history.css?v=01518" />
   <link rel="stylesheet" href="src/app-runtime.css?v=consolidation-046" />
   <link rel="stylesheet" href="src/app-navigation.css?v=premium-001" />
   <link rel="stylesheet" href="src/upcoming.css?v=consolidation-036" />
-  <link rel="stylesheet" href="src/setup-tabs.css?v=consolidation-032" />  <link id="offlineV1FinalStyle" rel="stylesheet" href="src/offline-v1-final.css?v=consolidation-016" />
-  <link rel="stylesheet" href="src/page-refine.css?v=premium-004" />
+  <link rel="stylesheet" href="src/setup-tabs.css?v=premium-001" />  <link id="offlineV1FinalStyle" rel="stylesheet" href="src/offline-v1-final.css?v=consolidation-016" />
+  <link rel="stylesheet" href="src/page-refine.css?v=premium-005" />
   <script>
     if ('serviceWorker' in navigator && location.protocol !== 'file:') {
       window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
@@ -153,7 +154,7 @@
   <script src="src/app-runtime.js?v=consolidation-046"></script>
   <script src="src/app-navigation.js?v=consolidation-044"></script>
   <script src="src/page-refine.js?v=015290"></script>
-  <script src="src/setup-tabs.js?v=consolidation-039"></script>
+  <script src="src/setup-tabs.js?v=premium-001"></script>
   <script src="src/layout-finalize.js?v=01518"></script>
   <script src="src/v15-refresh.js?v=015209"></script>
   <script src="src/v15-polish.js?v=015194"></script>
