@@ -24,7 +24,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Define chart data-visualisation palette
 
 ## 2. Global shell
-- [ ] Consolidate page background and app-shell rules
+- [x] Consolidate page background and app-shell rules
 - [x] Consolidate top bar / brand / version / save-state styling
 - [x] Consolidate Current / Upcoming / Future navigation
 - [ ] Verify desktop header alignment
@@ -119,7 +119,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Remove redundant `!important` declarations where safe
 - [x] Remove superseded standalone V15 stylesheet files
 - [x] Remove superseded/no-op expandable-card script
-- [ ] Remove dead selectors/styles (legacy expandable-card system, navigation helpers and unreachable expanded-state rules removed)
+- [ ] Remove dead selectors/styles (expansion remnants and superseded global shell/theme declarations removed)
 - [ ] Reduce active stylesheet count only after component ownership is validated (four legacy/adjacent layers safely folded)
 - [ ] Continue pruning duplicate/obsolete rules in isolated source stylesheets
 - [ ] Delete superseded source stylesheets only after component-by-component validation
