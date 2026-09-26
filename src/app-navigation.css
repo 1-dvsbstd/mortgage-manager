@@ -40,7 +40,7 @@
 }
 .brand::before{
   background:var(--accent)!important;
-  box-shadow:0 0 0 5px rgba(200,142,92,.12)!important;
+  box-shadow:0 0 0 5px rgba(183,131,77,.12)!important;
 }
 .topline,
 .save-status{
@@ -61,7 +61,7 @@
   color:var(--muted)!important;
 }
 .app-section-nav button:hover{
-  background:rgba(200,142,92,.08)!important;
+  background:rgba(183,131,77,.08)!important;
   color:var(--text)!important;
 }
 .app-section-nav button.is-active{
