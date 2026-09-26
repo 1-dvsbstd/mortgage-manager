@@ -1,3 +1,290 @@
+/* Consolidated former V15.5 planning/control layer. Kept at the top so later page refinements retain their existing precedence. */
+/* The What-if controls already do this job; remove the duplicate recommendation row. */
+.app-view-current .v15-action-card{display:none!important}
+
+/* Current trajectory controls — authoritative consolidated owner.
+   Values match the pre-consolidation computed appearance. */
+.app-view-current .trajectory-overpay-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+.app-view-current .trajectory-overpay-row button{
+  min-height:36px!important;
+  padding:7px 12px!important;
+  border:1px solid var(--border)!important;
+  border-radius:10px!important;
+  background:var(--surface-control)!important;
+  color:var(--text)!important;
+  box-shadow:none!important;
+  font-weight:750!important;
+  cursor:pointer;
+}
+.app-view-current .trajectory-overpay-row button:hover{
+  background:#f4e6d7!important;
+  border-color:rgba(200,142,92,.36)!important;
+}
+.app-view-current .trajectory-overpay-row button.active{
+  background:var(--ink-active)!important;
+  color:var(--ink-on-active)!important;
+  border-color:var(--ink-active)!important;
+}
+.app-view-current .trajectory-custom-overpay{
+  box-sizing:border-box!important;
+  min-height:40px!important;
+  height:40px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  padding:8px 14px!important;
+  border:1px solid var(--border)!important;
+  border-radius:12px!important;
+  background:var(--surface-control)!important;
+  color:var(--text)!important;
+  box-shadow:0 2px 8px rgba(64,50,38,.03)!important;
+  font-size:12px!important;
+  font-weight:750!important;
+  line-height:1!important;
+}
+.app-view-current .trajectory-custom-overpay input{
+  width:66px!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  outline:0!important;
+  background:transparent!important;
+  color:var(--text)!important;
+  font:inherit!important;
+  font-weight:750!important;
+  line-height:1!important;
+}
+.app-view-current .trajectory-with-what-if>.chart-wrap{
+  margin:18px 24px 0!important;
+  width:calc(100% - 48px)!important;
+  padding:0!important;
+  border:1px solid var(--border)!important;
+  border-radius:14px!important;
+  background:#f3ede5!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45)!important;
+  overflow:hidden!important;
+}
+
+/* Custom amount is a chip, not a form block. */
+.app-view-current .total-custom-chip,
+.app-view-future .future-assumption-controls label{
+  box-sizing:border-box!important;
+  min-height:40px!important;
+  height:40px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  padding:8px 14px!important;
+  border:1px solid var(--border)!important;
+  border-radius:12px!important;
+  background:var(--surface-control)!important;
+  color:var(--text)!important;
+  box-shadow:0 2px 8px rgba(64,50,38,.03)!important;
+  font-size:12px!important;
+  font-weight:750!important;
+  line-height:1!important;
+}
+.app-view-current .total-custom-chip input,
+.app-view-future .future-assumption-controls label input{
+  width:66px!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  outline:0!important;
+  background:transparent!important;
+  color:var(--text)!important;
+  font:inherit!important;
+  font-weight:750!important;
+  line-height:1!important;
+}
+
+/* Future: make the planning assumption part of the page heading, not a separate banner. */
+.app-view-future .app-view-heading.future-heading-integrated{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  grid-template-areas:"title subtitle" "assumption assumption"!important;
+  gap:7px 22px!important;
+  align-items:end!important;
+  margin-bottom:16px!important;
+  padding:0 2px 12px!important;
+  border-bottom:1px solid var(--border-soft)!important;
+}
+.app-view-future .app-view-heading.future-heading-integrated>div:first-child{grid-area:title}
+.app-view-future .app-view-heading.future-heading-integrated>p{grid-area:subtitle;margin:0!important;text-align:right!important}
+.app-view-future .app-view-heading.future-heading-integrated>#futureOverpaymentAssumption{
+  grid-area:assumption;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:18px!important;
+  margin:7px 0 0!important;
+  padding:10px 0 0!important;
+  border:0!important;
+  border-top:1px solid var(--border-soft)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.app-view-future #futureOverpaymentAssumption .future-assumption-copy{gap:10px!important}
+.app-view-future #futureOverpaymentAssumption .future-assumption-copy p{font-size:10px!important}
+.app-view-future #futureOverpaymentAssumption .future-assumption-controls{gap:7px!important}
+.app-view-future #futureOverpaymentAssumption .future-assumption-controls button{
+  min-height:40px!important;
+  height:40px!important;
+  padding:8px 13px!important;
+  border:1px solid var(--border)!important;
+  border-radius:12px!important;
+  background:var(--surface-control)!important;
+  color:var(--text)!important;
+  box-shadow:0 2px 8px rgba(64,50,38,.03)!important;
+}
+.app-view-future #futureOverpaymentAssumption .future-assumption-controls button:hover{
+  background:#f4e6d7!important;
+  border-color:rgba(200,142,92,.36)!important;
+}
+.app-view-future #futureOverpaymentAssumption .future-assumption-controls button.active{
+  background:var(--ink-active)!important;
+  color:var(--ink-on-active)!important;
+  border-color:var(--ink-active)!important;
+}
+
+/* Home-value model range: one readable range, not a badge plus three stacked boxes. */
+.app-view-future .future-model-range-panel{padding:24px!important}
+.app-view-future .future-model-heading{margin-bottom:16px!important}
+.app-view-future .future-model-heading h2{color:var(--text)!important}
+.app-view-future #homeProfileRange{
+  display:grid!important;
+  grid-template-columns:minmax(240px,.78fr) minmax(0,1.22fr)!important;
+  gap:28px!important;
+  align-items:center!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.app-view-future .v157-range-copy>span{
+  display:block;color:var(--accent-strong)!important;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+}
+.app-view-future .v157-range-copy>strong{
+  display:block;margin-top:5px;color:var(--text)!important;font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;font-size:25px;font-weight:600;letter-spacing:-.025em;
+}
+.app-view-future .v157-range-copy>strong i{
+  margin:0 5px;color:var(--muted)!important;font-family:inherit;font-size:13px;font-style:normal;font-weight:500;
+}
+.app-view-future .v157-range-copy>small{
+  display:block;margin-top:8px;max-width:420px;color:var(--muted)!important;font-size:10px;line-height:1.5;
+}
+.app-view-future .v157-range-line{
+  position:relative;height:6px;margin:12px 8px 11px;border-radius:999px;background:linear-gradient(90deg,#d8c7b5 0%,#c88e5c 50%,#d8c7b5 100%);
+}
+.app-view-future .v157-range-line::before,
+.app-view-future .v157-range-line::after{
+  content:"";position:absolute;top:50%;width:10px;height:10px;border-radius:50%;background:var(--surface-control);border:2px solid #bca58e;transform:translateY(-50%);
+}
+.app-view-future .v157-range-line::before{left:-2px}
+.app-view-future .v157-range-line::after{right:-2px}
+.app-view-future .v157-centre-marker{
+  position:absolute;left:50%;top:50%;width:14px;height:14px;border-radius:50%;background:var(--ink-active);border:3px solid var(--surface-control);box-shadow:0 0 0 2px rgba(200,142,92,.34);transform:translate(-50%,-50%);
+}
+.app-view-future .v157-range-labels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start}
+.app-view-future .v157-range-labels>div:nth-child(2){text-align:center}
+.app-view-future .v157-range-labels>div:nth-child(3){text-align:right}
+.app-view-future .v157-range-labels span{display:block;color:var(--muted)!important;font-size:9px}
+.app-view-future .v157-range-labels strong{display:block;margin-top:3px;color:var(--text)!important;font-size:15px}
+.app-view-future .v157-range-labels .is-centre strong{color:var(--accent-strong)!important;font-size:17px}
+
+/* Authoritative Future typography — prevent washed-out legacy light text. */
+body[data-app-view="future"] #homeProjection .projection-heading h2,
+body[data-app-view="future"] #futureModelRange .future-model-heading h2,
+body[data-app-view="future"] #propertyCostComparison .deep-heading h2{
+  color:var(--text)!important;
+  opacity:1!important;
+  -webkit-text-fill-color:var(--text)!important;
+}
+body[data-app-view="future"] #homeProjection .projection-heading .eyebrow,
+body[data-app-view="future"] #futureModelRange .future-model-heading .eyebrow,
+body[data-app-view="future"] #propertyCostComparison .deep-heading .eyebrow{
+  color:#9d6639!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#9d6639!important;
+}
+body[data-app-view="future"] #homeProjection .projection-heading .source-date{
+  color:#6d7278!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#6d7278!important;
+}
+body[data-app-view="future"] #futureModelRange .v157-range-copy>strong,
+body[data-app-view="future"] #futureModelRange .v157-range-labels strong,
+body[data-app-view="future"] #homeProjection .projection-core-card>strong,
+body[data-app-view="future"] #propertyCostComparison .property-cost-card>strong{
+  color:var(--text)!important;
+  opacity:1!important;
+  -webkit-text-fill-color:var(--text)!important;
+}
+body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre strong{
+  color:#9d6639!important;
+  -webkit-text-fill-color:#9d6639!important;
+}
+body[data-app-view="future"] #futureModelRange .v157-range-copy>strong i,
+body[data-app-view="future"] #futureModelRange .v157-range-copy>small,
+body[data-app-view="future"] #futureModelRange .v157-range-labels span,
+body[data-app-view="future"] #homeProjection .projection-core-card>span,
+body[data-app-view="future"] #homeProjection .projection-core-card>small,
+body[data-app-view="future"] #propertyCostComparison .property-cost-card>span,
+body[data-app-view="future"] #propertyCostComparison .property-cost-card>small,
+body[data-app-view="future"] #propertyCostComparison .deep-note{
+  color:#6d7278!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#6d7278!important;
+}
+
+/* Upcoming status/action: neutral warm surface, not pale green. */
+.app-view-upcoming .upcoming-action,
+.app-view-upcoming .upcoming-action:hover,
+.app-view-upcoming .upcoming-action:focus-within{
+  background:var(--surface)!important;
+  background-image:none!important;
+  border-color:var(--border)!important;
+  box-shadow:0 16px 44px rgba(62,49,38,.055)!important;
+}
+.app-view-upcoming .upcoming-action .upcoming-section-body,
+.app-view-upcoming .upcoming-action .deal-planner-milestone,
+.app-view-upcoming .upcoming-action .deal-planner-milestone-copy{
+  background:#f2ece3!important;
+  background-image:none!important;
+  border-color:var(--border-soft)!important;
+  color:var(--text)!important;
+  box-shadow:none!important;
+}
+.app-view-upcoming .upcoming-action .eyebrow,
+.app-view-upcoming .upcoming-action [class*="label"]{color:var(--accent-strong)!important}
+.app-view-upcoming .upcoming-action p,
+.app-view-upcoming .upcoming-action small,
+.app-view-upcoming .upcoming-action span{color:var(--muted)!important}
+.app-view-upcoming .upcoming-action strong,
+.app-view-upcoming .upcoming-action h2,
+.app-view-upcoming .upcoming-action h3{color:var(--text)!important}
+
+@media(max-width:760px){
+  .app-view-future #homeProfileRange{grid-template-columns:1fr!important;gap:18px!important;padding:18px!important}
+  .app-view-future .v157-range-copy>strong{font-size:22px}
+}
+
+@media(max-width:700px){
+  .app-view-future .app-view-heading.future-heading-integrated{display:block!important;padding-bottom:10px!important}
+  .app-view-future .app-view-heading.future-heading-integrated>p{text-align:left!important;margin-top:4px!important}
+  .app-view-future .app-view-heading.future-heading-integrated>#futureOverpaymentAssumption{display:grid!important;gap:10px!important;margin-top:10px!important}
+}
+
 .current-home-inline{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.07);background:transparent!important;box-shadow:none!important;border-radius:0!important}.current-home-inline .panel-heading{margin-bottom:8px}.current-home-inline .panel-heading h2{font-size:15px}.current-home-inline .ownership-bar{margin-top:8px;height:8px}.current-home-inline .home-value{display:flex;align-items:baseline;gap:10px;margin-top:10px}.current-home-inline .home-value span{font-size:10px}.current-home-inline .home-value strong{font-size:30px}.current-home-inline .home-value small{margin:0}.current-home-inline .home-stats{margin-top:10px!important;gap:8px}.current-home-inline .home-stats>div{padding:10px 12px!important}.current-home-inline .home-stats strong{font-size:16px!important}.current-home-inline .ownership-legend{margin-top:9px!important;padding-top:9px!important}.app-view-current>.app-view-content>#currentOverpaymentPanel{display:none!important}
 .whatif-source-only{display:none!important}.trajectory-what-if #compactWhatIf{display:none!important}.whatif-regular-inline{display:grid;grid-template-columns:minmax(160px,.55fr) minmax(360px,1.45fr);gap:12px;align-items:center;margin:12px 0 10px;padding:11px 12px;border-top:1px solid rgba(255,255,255,.065);border-bottom:1px solid rgba(255,255,255,.065)}.whatif-regular-label span{display:block;color:var(--muted);font-size:10px}.whatif-regular-label strong{display:block;margin-top:3px;font-size:18px}.whatif-regular-live{display:grid;grid-template-columns:minmax(0,.8fr) minmax(210px,1.2fr);gap:8px}.whatif-regular-live .current-savings-summary,.whatif-regular-live .current-overpay-control{margin:0!important;min-height:0!important;padding:10px 12px!important;background:rgba(255,255,255,.025)!important}.whatif-regular-live .current-savings-summary strong{font-size:17px!important}.whatif-regular-live .current-savings-summary span,.whatif-regular-live .current-savings-summary small,.whatif-regular-live .current-overpay-control small{font-size:10px!important}.total-overpay-buttons{margin-top:10px}.total-overpay-buttons button.active{background:var(--accent);color:#062018;border-color:transparent}.total-custom-chip input{min-width:72px}
 .future-remove{display:none!important}.future-model-range-panel,.future-wait-planner{padding:24px;margin:0!important}.future-model-heading,.future-wait-heading{margin-bottom:16px}.future-model-heading h2,.future-wait-heading h2{margin-top:3px;font-size:19px}.future-model-range-panel .home-profile-range{margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}.temporal-feature-home-projection .projection-core-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.future-stage-label{display:none!important}
