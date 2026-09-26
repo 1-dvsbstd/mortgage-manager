@@ -140,6 +140,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Verify charts, controls, focus states and illustrations in every theme
 
 ## 11. Final premium polish
+- [x] Premium visual-system comparison lab created (4 palette directions, shared type/spacing/radius/shadow/focus system)
 - [ ] Review palette after consolidation
 - [ ] Review typography hierarchy
 - [ ] Review whitespace/rhythm
