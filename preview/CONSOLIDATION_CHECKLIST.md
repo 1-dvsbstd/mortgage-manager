@@ -91,7 +91,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [x] Restore numeric borrowing multiple and collapsible Next-home assumptions section
 - [x] Flatten nested Home profile field boxes
 - [ ] Backup/restore/reset controls
-- [ ] Methodology/help panels
+- [x] Methodology/help panel belongs to Upcoming Setup tab only
 - [x] Setup modal width/history-row geometry consolidated
 - [ ] Modal and close-state consistency
 - [ ] Setup responsive rules
