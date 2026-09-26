@@ -83,8 +83,10 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 
 ## 7. Setup & data
 - [x] Setup navigation/tabs
-- [x] First-run setup note appears only on Current tab
+- [x] Remove redundant first-run setup note entirely
 - [ ] Mortgage/property inputs
+- [x] Restore borrowing-multiple dropdown in Next-home assumptions
+- [x] Flatten nested Home profile field boxes
 - [ ] Backup/restore/reset controls
 - [ ] Methodology/help panels
 - [ ] Modal and close-state consistency

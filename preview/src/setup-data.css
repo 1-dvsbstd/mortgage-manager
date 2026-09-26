@@ -43,10 +43,17 @@
 
 /* Setup form controls — authoritative owner. */
 body .personal-modal .personal-form label,
-body .personal-modal .setup-future-grid label{
+body .personal-modal .setup-future-grid label,
+body .personal-modal .setup-home-profile-fields label{
   background:transparent!important;
   border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
   padding:0!important;
+}
+body .personal-modal .setup-home-profile-fields label{
+  display:grid!important;
+  gap:6px!important;
 }
 body .personal-modal input:not([type="file"]),
 body .personal-modal select,
