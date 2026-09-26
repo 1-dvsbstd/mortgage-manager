@@ -107,9 +107,11 @@
     const mortgageHistory=sections.find((section)=>section.classList.contains('mortgage-history-section'));
     const monthly=sections.find((section)=>$('h3',section)?.textContent.trim()==='Monthly history');
     const backup=sections.find((section)=>$('h3',section)?.textContent.trim()==='Backup');
+    const methodology=$('#methodologySection',modal);
     if(mortgageHistory) current.appendChild(mortgageHistory);
     if(monthly) current.appendChild(monthly);
     if(backup) current.appendChild(backup);
+    if(methodology) upcoming.appendChild(methodology);
 
     const profile=$('.personal-home-profile-section',modal); if(profile) future.appendChild(profile);
     addBudgetSection(future,modal); addValueHistorySection(future);
@@ -124,8 +126,11 @@
     setTimeout(()=>{
       organise();
       const modal=$('.personal-modal');
+      const upcoming=modal?.querySelector('[data-setup-pane="upcoming"]');
       const future=modal?.querySelector('[data-setup-pane="future"]');
+      const methodology=modal?.querySelector('#methodologySection');
       const profile=modal?.querySelector('.personal-home-profile-section');
+      if(upcoming&&methodology&&!upcoming.contains(methodology)) upcoming.appendChild(methodology);
       if(future&&profile&&!future.contains(profile)) future.insertBefore(profile,future.querySelector('.setup-budget-section'));
     },80);
   }
