@@ -58,7 +58,8 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 ## 5. Upcoming
 - [ ] Section/card spacing
 - [x] Consolidate Upcoming rate/summary/current-fix card surface ownership into `v15.4.css`
-- [ ] Deal-end position
+- [x] Upcoming deal-end position spacing/surfaces consolidated
+- [ ] Deal-end position final polish
 - [ ] Milestone/timeline treatment
 - [ ] Rate scenario cards
 - [ ] Payment/interest hierarchy
