@@ -151,3 +151,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Backup → clear → restore
 - [ ] `npm test`
 - [ ] Merge only after visual approval
+
+
+## Parked post-consolidation product notes
+- [ ] Recent valuation / estimate should store and display its valuation date

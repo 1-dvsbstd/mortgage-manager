@@ -112,9 +112,6 @@ body{background:var(--bg)!important;color:var(--text)!important}
 .app-view .hero-panel:hover,.app-view .panel:hover,.app-view .chart-panel:hover{transform:none!important;box-shadow:0 18px 50px rgba(0,0,0,.22)!important}
 .app-view .expand-detail{display:none!important}.app-view .home-glance-source{display:block!important}
 
-/* Navigation */
-.app-section-nav button{background:var(--surface)!important;border-color:var(--border-soft)!important;color:var(--muted)!important;border-radius:12px!important}.app-section-nav button.is-active{background:var(--surface-raised)!important;color:var(--text)!important;border-color:rgba(112,200,168,.30)!important;box-shadow:none!important}
-
 @media(max-width:1050px){
   .current-fix-stats,.upcoming-rates .deal-planner-rate-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
 }
