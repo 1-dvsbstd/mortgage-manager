@@ -83,6 +83,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 
 ## 7. Setup & data
 - [x] Setup navigation/tabs
+- [x] First automatic Setup open uses the same three-tab flow
 - [x] Remove redundant first-run setup note entirely
 - [ ] Mortgage/property inputs
 - [x] Restore numeric borrowing multiple and collapsible Next-home assumptions section
