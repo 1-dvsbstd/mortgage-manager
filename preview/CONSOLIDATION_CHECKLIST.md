@@ -119,8 +119,9 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Move surviving rules to authoritative component/page files (v15.11 and v15.12 fully redistributed)
 - [ ] Remove redundant `!important` declarations where safe
 - [x] Remove superseded standalone V15 stylesheet files
-- [x] Remove superseded/no-op expandable-card script
+- [x] Remove superseded/no-op scripts (expandable-card and V15.14 loader)
 - [ ] Remove dead selectors/styles (expansion remnants, runtime expanded-state CSS and superseded global shell/theme declarations removed)
+- [x] Remove retired expansion work from surviving V15.11 runtime
 - [ ] Reduce active stylesheet count only after component ownership is validated (four legacy/adjacent layers safely folded)
 - [ ] Continue pruning duplicate/obsolete rules in isolated source stylesheets
 - [ ] Delete superseded source stylesheets only after component-by-component validation
