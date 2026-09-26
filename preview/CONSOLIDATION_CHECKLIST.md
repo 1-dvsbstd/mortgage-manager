@@ -138,11 +138,13 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 
 ## 10. Optional colour themes
 - [x] Keep consolidation token-based so multiple themes remain possible
-- [ ] Design 3–4 complete colour palettes after core consolidation
+- [x] Design 3 curated themes after core consolidation — Parchment (default), Warm and Dusk
 - [ ] Ensure every theme preserves semantic colours and accessibility contrast
-- [ ] Add a local theme selector in Setup & data
-- [ ] Persist chosen theme on-device
+- [x] Add a local theme selector in Setup & data
+- [x] Persist chosen theme on-device
 - [ ] Verify charts, controls, focus states and illustrations in every theme
+
+- [x] Slate/blue direction dropped after visual review
 
 ## 11. Final premium polish
 - [x] Premium visual-system comparison lab created (4 palette directions, shared type/spacing/radius/shadow/focus system)

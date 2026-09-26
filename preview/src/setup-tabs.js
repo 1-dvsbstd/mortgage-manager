@@ -1,6 +1,12 @@
 (() => {
   const NEXT_HOME_KEY='mortgage-manager-next-home-v1';
   const VALUE_HISTORY_KEY='mortgage-manager-home-value-history-v1';
+  const THEME_KEY='mortgage-manager-theme-v1';
+  const themes=[
+    {id:'parchment',name:'Parchment',note:'Premium, distinctive and calm.'},
+    {id:'warm',name:'Warm',note:'Friendly, approachable and inviting.'},
+    {id:'dusk',name:'Dusk',note:'Richer contrast with more character.'},
+  ];
   const nextHomeDefaults={householdIncome:'',savings:'',cashBuffer:'',saleCosts:'',purchaseCosts:'',borrowingMultiple:4.5};
   const $=(selector,root=document)=>root.querySelector(selector);
   const money=(value)=>new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP',maximumFractionDigits:0}).format(Math.max(0,Number(value)||0));
@@ -77,6 +83,31 @@
     renderHistory(section);
   }
 
+  function applyTheme(theme){
+    const id=themes.some((item)=>item.id===theme)?theme:'parchment';
+    document.documentElement.dataset.theme=id;
+    try{localStorage.setItem(THEME_KEY,id);}catch(_){}
+    const meta=document.querySelector('meta[name="theme-color"]');
+    if(meta) meta.content=id==='warm'?'#f7eee5':id==='dusk'?'#e7e1d4':'#f0ece5';
+  }
+
+  function addAppearanceSection(current){
+    if($('.setup-appearance-section',current)) return;
+    let selected='parchment';
+    try{selected=localStorage.getItem(THEME_KEY)||document.documentElement.dataset.theme||'parchment';}catch(_){}
+    const section=document.createElement('section');
+    section.className='personal-section setup-appearance-section';
+    section.innerHTML=`<div class="setup-section-heading"><div><h3>Appearance</h3><p>Choose the visual style that feels easiest to use. Your choice stays on this device.</p></div></div><div class="setup-theme-grid">${themes.map((theme)=>`<button type="button" class="setup-theme-card ${theme.id===selected?'active':''}" data-theme-choice="${theme.id}" aria-pressed="${theme.id===selected}"><span class="setup-theme-preview ${theme.id}" aria-hidden="true"><i></i><i></i><i></i></span><strong>${theme.name}</strong><small>${theme.note}</small></button>`).join('')}</div>`;
+    current.appendChild(section);
+    section.addEventListener('click',(event)=>{
+      const button=event.target.closest('[data-theme-choice]'); if(!button)return;
+      applyTheme(button.dataset.themeChoice);
+      section.querySelectorAll('[data-theme-choice]').forEach((item)=>{
+        const active=item===button; item.classList.toggle('active',active); item.setAttribute('aria-pressed',String(active));
+      });
+    });
+  }
+
   function activate(modal,key){
     modal.querySelectorAll('[data-setup-pane]').forEach((pane)=>pane.hidden=pane.dataset.setupPane!==key);
     modal.querySelectorAll('[data-setup-tab]').forEach((button)=>{const active=button.dataset.setupTab===key;button.classList.toggle('active',active);button.setAttribute('aria-selected',String(active));});
@@ -111,6 +142,7 @@
     if(mortgageHistory) current.appendChild(mortgageHistory);
     if(monthly) current.appendChild(monthly);
     if(backup) current.appendChild(backup);
+    addAppearanceSection(current);
     if(methodology) upcoming.appendChild(methodology);
 
     const profile=$('.personal-home-profile-section',modal); if(profile) future.appendChild(profile);
