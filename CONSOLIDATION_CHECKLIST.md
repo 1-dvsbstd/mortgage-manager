@@ -83,6 +83,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 
 ## 7. Setup & data
 - [x] Setup navigation/tabs
+- [x] First-run setup note appears only on Current tab
 - [ ] Mortgage/property inputs
 - [ ] Backup/restore/reset controls
 - [ ] Methodology/help panels
