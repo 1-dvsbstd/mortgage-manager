@@ -46,6 +46,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [x] Start removing obsolete duplicate component rules
 - [ ] Continue duplicate-rule removal component by component
 - [x] Runtime UI styles moved out of JS injection into static CSS
+- [x] Final Offline V1 polish styles moved out of V15.15 JS injection
 
 ## 4. Current
 - [ ] Hero layout and typography
