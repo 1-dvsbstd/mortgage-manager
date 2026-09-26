@@ -35,13 +35,16 @@
 .brand{
   color:var(--text)!important;
 }
+.brand span{
+  color:var(--muted-2)!important;
+}
 .brand::before{
   background:var(--accent)!important;
   box-shadow:0 0 0 5px rgba(200,142,92,.12)!important;
 }
 .topline,
 .save-status{
-  color:var(--muted)!important;
+  color:var(--muted-2)!important;
 }
 .save-status{
   background:rgba(255,255,255,.52)!important;
