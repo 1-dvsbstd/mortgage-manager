@@ -38,3 +38,24 @@
 .next-home-controls input{margin-top:6px;width:100%}
 .next-home-note{margin:12px 1px 0;color:var(--muted);font-size:10px;line-height:1.5}
 @media(max-width:760px){.next-home-results{grid-template-columns:1fr}.next-home-heading,.next-home-subhead{display:grid;gap:5px}.next-home-subhead>small{text-align:left}.next-home-timeline-row{grid-template-columns:90px 1fr}.next-home-timeline-row small{grid-column:2}.next-home-controls{grid-template-columns:1fr}}
+
+body[data-app-view="future"] .next-home-results>div.primary,
+body[data-app-view="future"] #nextHomePlanner .next-home-results>div.primary{
+  background:#f7f1e8!important;
+  border-color:#dfd1c1!important;
+}
+body[data-app-view="future"] #homeProjection .projection-core-card.current-estimate strong,
+body[data-app-view="future"] #homeProjection .projection-core-card.future-estimate strong,
+body[data-app-view="future"] .next-home-results>div.primary strong{
+  color:var(--text)!important;
+  -webkit-text-fill-color:var(--text)!important;
+}
+body[data-app-view="future"] #homeProjection .projection-core-card.current-estimate span,
+body[data-app-view="future"] #homeProjection .projection-core-card.current-estimate small,
+body[data-app-view="future"] #homeProjection .projection-core-card.future-estimate span,
+body[data-app-view="future"] #homeProjection .projection-core-card.future-estimate small,
+body[data-app-view="future"] .next-home-results>div.primary span,
+body[data-app-view="future"] .next-home-results>div.primary small{
+  color:#6d7278!important;
+  -webkit-text-fill-color:#6d7278!important;
+}
