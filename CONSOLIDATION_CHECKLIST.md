@@ -68,14 +68,15 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Visual check by Nathan
 
 ## 5. Upcoming
-- [ ] Section/card spacing
+- [x] Upcoming premium pass applied using Ink & Parchment
+- [x] Section/card spacing
 - [x] Consolidate Upcoming rate/summary/current-fix card surface ownership into `v15.4.css`
 - [x] Upcoming deal-end position spacing/surfaces consolidated
-- [ ] Deal-end position final polish
-- [ ] Milestone/timeline treatment
-- [ ] Rate scenario cards
-- [ ] Payment/interest hierarchy
-- [ ] Upcoming responsive rules
+- [x] Deal-end position final polish
+- [x] Milestone/timeline treatment
+- [x] Rate scenario cards
+- [x] Payment/interest hierarchy
+- [x] Upcoming responsive rules
 - [ ] Visual check by Nathan
 
 ## 6. Future
