@@ -153,9 +153,9 @@
     const ordered=[
       $('#futureOverpaymentAssumption'),
       $('#homeProjection'),
+      $('#nextHomePlanner'),
       $('#futureModelRange'),
       $('#futureWaitPlanner'),
-      $('#nextHomePlanner'),
       $('#propertyCostComparison')
     ].filter(Boolean);
 
