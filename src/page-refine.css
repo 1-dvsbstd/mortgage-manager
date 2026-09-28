@@ -2695,11 +2695,13 @@ body[data-app-view="upcoming"] #dealPlannerSummary>div>small{
   letter-spacing:.04em!important;
 }
 .app-view-upcoming .deal-position-interest #interestRemaining{
-  margin-top:5px!important;
+  margin-top:8px!important;
   color:var(--text)!important;
   font-family:var(--font-display)!important;
-  font-size:24px!important;
+  font-size:31px!important;
   font-weight:600!important;
+  line-height:1!important;
+  letter-spacing:-.035em!important;
 }
 .app-view-upcoming .deal-position-interest #interestWithExtraText{
   margin-top:5px!important;
