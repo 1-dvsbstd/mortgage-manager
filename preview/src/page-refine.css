@@ -3553,3 +3553,50 @@ body .app-view-future .v157-range-track{
 
 body .trajectory-overpay-row button:hover,
 body .future-assumption-controls button:hover{background:var(--theme-hover)!important}
+
+
+/* Visual audit 01 — Current hero: let progress live in the editorial layout, not another card. */
+body .app-view-current .v15-hero-progress{
+  margin-top:28px!important;
+  padding:20px 0 0!important;
+  border:0!important;
+  border-top:1px solid var(--border-soft)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body .app-view-current .v15-hero-progress-head{
+  display:flex!important;
+  align-items:baseline!important;
+  justify-content:space-between!important;
+  gap:18px!important;
+}
+body .app-view-current .v15-hero-progress-head span{
+  color:var(--muted)!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  letter-spacing:.09em!important;
+  text-transform:uppercase!important;
+}
+body .app-view-current .v15-hero-progress-head strong{
+  color:var(--theme-hero-ink)!important;
+  font-family:var(--font-ui)!important;
+  font-size:12px!important;
+  font-weight:800!important;
+}
+body .app-view-current .v15-hero-progress-track{
+  height:7px!important;
+  margin-top:11px!important;
+  border-radius:999px!important;
+}
+body .app-view-current .v15-hero-progress-foot{
+  margin-top:10px!important;
+  font-size:10px!important;
+}
+body .app-view-current .v15-hero-progress-foot span:first-child{
+  color:var(--equity)!important;
+  font-weight:750!important;
+}
+body .app-view-current .v15-hero-progress-foot span:last-child{
+  color:var(--muted)!important;
+}
