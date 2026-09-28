@@ -77,7 +77,7 @@ jobs:
           observed_months = set()
 
           for row in rows:
-              if len(row) < 7:
+              if len(row) < 16:
                   continue
               month = parse_month(row[0])
               if not month or month < cutoff:
@@ -95,11 +95,14 @@ jobs:
                   except Exception:
                       return None
 
+              # Property-type file column groups are:
+              # Detached price/index/1m/12m, Semi-detached price/index/1m/12m,
+              # Terraced price/index/1m/12m, Flat price/index/1m/12m.
               prices = {
                   'detached': num(row[3]),
-                  'semiDetached': num(row[4]),
-                  'terraced': num(row[5]),
-                  'flat': num(row[6]),
+                  'semiDetached': num(row[7]),
+                  'terraced': num(row[11]),
+                  'flat': num(row[15]),
               }
               if not any(v and v > 0 for v in prices.values()):
                   continue
