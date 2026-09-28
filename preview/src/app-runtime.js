@@ -155,6 +155,7 @@
   function setOnlineMode(enabled) {
     localStorage.setItem(ONLINE_MODE_KEY, enabled ? 'online' : 'offline');
     updateConnectivityControl();
+    document.dispatchEvent(new CustomEvent('connectivity-mode-changed',{detail:{online:enabled}}));
     if (enabled) refreshMarketRates(true);
     else applyCachedMarketRates();
   }
