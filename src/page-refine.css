@@ -1112,3 +1112,13 @@ body .app-view-current .trajectory-scenario-copy .trajectory-current-saving{
   font-size:10px!important;
   line-height:1.45!important;
 }
+
+
+/* Future section explainers */
+.app-view-future #futureWaitPlanner .future-wait-subtitle{
+  margin:5px 0 0!important;
+  max-width:680px!important;
+  color:var(--muted)!important;
+  font-size:10px!important;
+  line-height:1.4!important;
+}
