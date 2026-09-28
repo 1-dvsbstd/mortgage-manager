@@ -216,6 +216,19 @@
     return strip;
   }
 
+
+  function journeyIcon(kind) {
+    const common = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"';
+    const icons = {
+      home: `<svg ${common}><path d="M3.5 10.5 12 3.8l8.5 6.7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.3 20v-6.2h5.4V20"/></svg>`,
+      today: `<svg ${common}><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="2.4"/><path d="M12 2.5V5M12 19v2.5M2.5 12H5M19 12h2.5"/></svg>`,
+      switch: `<svg ${common}><path d="M5 7.5h11.8"/><path d="m14.3 4.8 2.7 2.7-2.7 2.7"/><path d="M19 16.5H7.2"/><path d="m9.7 13.8-2.7 2.7 2.7 2.7"/></svg>`,
+      calendar: `<svg ${common}><rect x="4" y="5.5" width="16" height="14" rx="2.5"/><path d="M8 3.8v3.4M16 3.8v3.4M4 9.5h16"/><path d="M9 13h3v3H9z"/></svg>`,
+      finish: `<svg ${common}><path d="M5 20V5"/><path d="M5 6h10.5l-1.8 3 1.8 3H5"/><path d="m9.2 16.3 1.8 1.8 3.8-4"/></svg>`
+    };
+    return icons[kind] || '';
+  }
+
   function renderJourney() {
     const state = window.MortgageStore?.get?.();
     if (!state) return;
@@ -224,15 +237,16 @@
     const dates = journeyDates(state);
     const now = new Date();
     const payoff = dates.payoffDate ? new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(dates.payoffDate) : '—';
+    const today = new Intl.DateTimeFormat('en-GB', { month:'short', year:'numeric' }).format(new Date());
     const steps = [
-      ['⌂','Home purchased',dateLabel(dates.purchase),dates.purchase ? 'complete' : ''],
-      ['%','Current deal started',dateLabel(dates.dealStart),dates.dealStart ? 'complete' : ''],
-      ['▣','Fixed rate ends',monthLabel(dates.fixedEnd),'current'],
-      ['↔','Remortgage window',dates.remortgage ? `from ${monthLabel(dates.remortgage)}` : '—',''],
-      ['⚑','Mortgage free',payoff,''],
+      ['home','Home purchased',dateLabel(dates.purchase),dates.purchase ? 'complete' : ''],
+      ['today','Today',today,'current'],
+      ['switch','Remortgage prep',dates.remortgage ? `from ${monthLabel(dates.remortgage)}` : '—',''],
+      ['calendar','Fixed rate ends',monthLabel(dates.fixedEnd),''],
+      ['finish','Mortgage free',payoff,''],
     ];
     $('.v15-journey-strip', shell).innerHTML = steps.map(([icon,title,date,status]) => `
-      <div class="v15-journey-step ${status ? `is-${status}` : ''}"><div class="v15-journey-icon">${icon}</div><strong>${title}</strong><span>${date}</span></div>`).join('');
+      <div class="v15-journey-step ${status ? `is-${status}` : ''}"><div class="v15-journey-icon">${journeyIcon(icon)}</div><strong>${title}</strong><span>${date}</span></div>`).join('');
     const left = monthsUntil(dates.fixedEnd);
     const callout = $('.v15-journey-callout', shell);
     if (callout) callout.textContent = left === null ? 'Add your fixed-rate end date to complete the journey' : left <= 0 ? 'Your fixed-rate end needs attention' : `${compactDuration(left)} to fixed-rate end`;
