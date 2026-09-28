@@ -182,9 +182,17 @@
 
     const horizons=[0,3,5];
     const rows=horizons.map((years)=>({years,...calculateAt(years)}));
+    const baseline=rows[0];
+    const hasBudget=(row)=>income||row.availableCash>0;
     $('nextHomeTimelineRows').innerHTML=rows.map((row)=>{
       const label=row.years===0?'Today':row.years===3?'In 3 years':'In 5 years';
-      return `<div class="next-home-timeline-row"><span>${label}</span><strong>${income||row.availableCash>0?money(row.budget):'—'}</strong><small><b>${money(row.usableEquity)}</b> move equity</small><small><b>${money(row.futureMortgage)}</b> mortgage remaining</small></div>`;
+      const delta=hasBudget(row)&&hasBudget(baseline)?row.budget-baseline.budget:0;
+      const change=row.years===0
+        ? '<span class="next-home-change is-baseline">Starting point</span>'
+        : hasBudget(row)
+          ? `<span class="next-home-change">${delta>=0?'+':'−'}${money(Math.abs(delta))} vs today</span>`
+          : '<span class="next-home-change">Add assumptions to compare</span>';
+      return `<div class="next-home-timeline-row" data-years="${row.years}"><span class="next-home-period">${label}</span><strong>${hasBudget(row)?money(row.budget):'—'}</strong>${change}<div class="next-home-support"><small><b>${money(row.usableEquity)}</b> move equity</small><small><b>${money(row.futureMortgage)}</b> mortgage remaining</small></div></div>`;
     }).join('');
     $('nextHomeTrendNote').textContent=`Starts from your current property estimate, then uses ${now.trend.toFixed(1)}%/yr forward growth and your current repayment path${now.scenarioExtra>0?` plus ${money(now.scenarioExtra)}/month extra`:''}.`;
 
