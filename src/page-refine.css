@@ -1307,3 +1307,72 @@ body .app-view-current .v15-hero-progress{
   background:transparent!important;
   box-shadow:none!important;
 }
+
+
+/* Flat-card cleanup — remove the remaining hero/image depth and keep card copy inside bounds. */
+body .app-view-current .hero-panel,
+body .app-view-current .hero-panel.current-hero-condensed,
+body .app-view-current .hero-panel:hover{
+  box-shadow:none!important;
+  filter:none!important;
+}
+body .app-view-current .v15-home-visual,
+body .app-view-current .v15-home-visual:hover{
+  box-shadow:none!important;
+  filter:none!important;
+}
+body .app-view-current .v15-home-visual::after{
+  background:linear-gradient(90deg,color-mix(in srgb,var(--surface) 10%,transparent),transparent 34%)!important;
+  box-shadow:none!important;
+}
+
+/* Card text-fit guardrails. Labels may wrap; figures stay intact. */
+body .app-view-current .v15-current-stats .v15-stat,
+body .app-view-upcoming .current-fix-stats>div,
+body .app-view-upcoming .deal-planner-rate,
+body .app-view-upcoming .deal-planner-summary>div,
+body .app-view-future .home-profile-range>div,
+body .app-view-future .next-home-summary-card,
+body .app-view-future .next-home-timeline-row,
+body .app-view-future .property-cost-card{
+  box-sizing:border-box!important;
+  min-width:0!important;
+  height:auto!important;
+  overflow:visible!important;
+}
+body .app-view-current .v15-current-stats .v15-stat span,
+body .app-view-current .v15-current-stats .v15-stat small,
+body .app-view-upcoming .current-fix-stats span,
+body .app-view-upcoming .current-fix-stats small,
+body .app-view-upcoming .deal-planner-rate span,
+body .app-view-upcoming .deal-planner-rate em,
+body .app-view-upcoming .deal-planner-summary span,
+body .app-view-upcoming .deal-planner-summary small,
+body .app-view-future .home-profile-range span,
+body .app-view-future .home-profile-range small,
+body .app-view-future .next-home-summary-card span,
+body .app-view-future .next-home-summary-card small,
+body .app-view-future .next-home-timeline-row span,
+body .app-view-future .next-home-timeline-row small,
+body .app-view-future .property-cost-card span,
+body .app-view-future .property-cost-card small{
+  white-space:normal!important;
+  overflow-wrap:break-word!important;
+  word-break:normal!important;
+  line-height:1.35!important;
+}
+body .app-view-current .v15-current-stats .v15-stat strong,
+body .app-view-upcoming .current-fix-stats strong,
+body .app-view-upcoming .deal-planner-rate strong,
+body .app-view-upcoming .deal-planner-summary strong,
+body .app-view-future .home-profile-range strong,
+body .app-view-future .next-home-summary-card strong,
+body .app-view-future .next-home-timeline-row strong,
+body .app-view-future .property-cost-card strong{
+  max-width:100%!important;
+  white-space:normal!important;
+  overflow-wrap:normal!important;
+}
+body .app-view-current .v15-current-stats .v15-stat{
+  min-height:112px!important;
+}
