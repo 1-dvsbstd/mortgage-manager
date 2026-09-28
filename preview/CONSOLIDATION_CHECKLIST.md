@@ -82,16 +82,16 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 ## 6. Future
 - [x] Cost comparison bars update immediately with overpayment changes
 - [x] Consolidate Future planning/overpayment control styling
-- [ ] Planning/overpayment strip visual polish
-- [ ] Property-value card
-- [ ] Forecast timeline
-- [ ] Looking-ahead / next-home sections
+- [x] Planning/overpayment strip visual polish
+- [x] Property-value card
+- [x] Forecast timeline
+- [x] Looking-ahead / next-home sections
 - [x] Remove duplicate Future forecast/timeline implementations
 - [x] Restore retained Looking Ahead shell and typography after duplicate cleanup
 - [x] Future looking-ahead timeline surface ownership moved to final page rules
 - [x] Future floating summary/range tiles consolidated
-- [ ] Cost/value presentation
-- [ ] Future responsive rules
+- [x] Cost/value presentation
+- [x] Future responsive rules
 - [ ] Visual check by Nathan
 
 ## 7. Setup & data
