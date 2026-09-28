@@ -2768,3 +2768,40 @@ body[data-app-view="upcoming"] #dealPlannerSummary>div>small{
     grid-template-columns:1fr!important;
   }
 }
+
+
+/* Upcoming position mini visuals — small data cues without adding more copy. */
+.app-view-upcoming .deal-position-mini{
+  position:relative;
+  height:7px;
+  margin-top:13px;
+  border-radius:var(--radius-pill);
+  background:var(--surface-raised);
+  overflow:hidden;
+}
+.app-view-upcoming .deal-position-mini>span{
+  display:block;
+  width:var(--mini-progress,0%);
+  height:100%;
+  border-radius:inherit;
+  transition:width .25s ease;
+}
+.app-view-upcoming .balance-mini>span{
+  background:var(--debt);
+}
+.app-view-upcoming .ltv-mini>span{
+  background:var(--positive);
+}
+.app-view-upcoming .ltv-mini{
+  overflow:visible;
+}
+.app-view-upcoming .ltv-marker{
+  position:absolute;
+  top:-3px;
+  width:1px;
+  height:13px;
+  background:rgba(29,35,41,.22);
+}
+.app-view-upcoming .marker-60{left:60%}
+.app-view-upcoming .marker-75{left:75%}
+.app-view-upcoming .marker-80{left:80%}
