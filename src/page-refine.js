@@ -281,7 +281,15 @@
     const heading=$('.next-home-heading',body);
     if(heading){
       const eyebrow=$('.eyebrow',heading); if(eyebrow) eyebrow.textContent='Next-home position';
-      const title=$('h2',heading); if(title) title.textContent='What your current equity could mean today';
+      const title=$('h2',heading); if(title) title.textContent='What your equity could give you today';
+      let explainer=$('.next-home-heading-note',heading);
+      if(!explainer){
+        explainer=document.createElement('p');
+        explainer.className='next-home-heading-note';
+        const copy=heading.firstElementChild;
+        if(copy) copy.appendChild(explainer);
+      }
+      if(explainer) explainer.textContent='Combines the equity you could take with you and illustrative borrowing from your saved assumptions.';
     }
 
     let wait=$('#futureWaitPlanner');
