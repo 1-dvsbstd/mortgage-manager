@@ -209,32 +209,46 @@
     if(!summary||!state) return;
     const balanceCard=$('#dealPlannerBalance')?.closest('div');
     const ltvCard=$('#dealPlannerLtv')?.closest('div');
+
     if(balanceCard){
-      let visual=$('.deal-position-mini',balanceCard);
+      let visual=$('.deal-balance-visual',balanceCard);
       if(!visual){
         visual=document.createElement('div');
-        visual.className='deal-position-mini balance-mini';
-        visual.setAttribute('aria-hidden','true');
-        visual.innerHTML='<span></span>';
+        visual.className='deal-balance-visual';
         balanceCard.appendChild(visual);
       }
       const projected=Number(String($('#dealPlannerBalance')?.textContent||'').replace(/[^0-9.\-]/g,''));
-      const current=Math.max(1,Number(state.balance)||1);
-      const ratio=Number.isFinite(projected)?Math.max(0,Math.min(100,projected/current*100)):0;
-      visual.style.setProperty('--mini-progress',`${ratio}%`);
+      const current=Math.max(0,Number(state.balance)||0);
+      const drop=Math.max(0,current-(Number.isFinite(projected)?projected:current));
+      visual.innerHTML=`
+        <div class="deal-balance-points" aria-hidden="true">
+          <span><small>Today</small><strong>${money(current)}</strong></span>
+          <i>→</i>
+          <span><small>Deal end</small><strong>${Number.isFinite(projected)?money(projected):'—'}</strong></span>
+        </div>
+        <div class="deal-balance-drop">${drop>0?`${money(drop)} lower by deal end`:'Balance change will appear here'}</div>`;
     }
+
     if(ltvCard){
-      let visual=$('.deal-position-mini',ltvCard);
+      let visual=$('.deal-ltv-scale',ltvCard);
       if(!visual){
         visual=document.createElement('div');
-        visual.className='deal-position-mini ltv-mini';
-        visual.setAttribute('aria-hidden','true');
-        visual.innerHTML='<span></span><i class="ltv-marker marker-60"></i><i class="ltv-marker marker-75"></i><i class="ltv-marker marker-80"></i>';
+        visual.className='deal-ltv-scale';
         ltvCard.appendChild(visual);
       }
       const ltv=Number(String($('#dealPlannerLtv')?.textContent||'').replace(/[^0-9.\-]/g,''));
       const ratio=Number.isFinite(ltv)?Math.max(0,Math.min(100,ltv)):0;
-      visual.style.setProperty('--mini-progress',`${ratio}%`);
+      visual.style.setProperty('--ltv-position',`${ratio}%`);
+      visual.innerHTML=`
+        <div class="deal-ltv-track" aria-hidden="true">
+          <span class="ltv-zone zone-low"></span>
+          <span class="ltv-zone zone-mid"></span>
+          <span class="ltv-zone zone-high"></span>
+          <i class="ltv-pointer"></i>
+        </div>
+        <div class="deal-ltv-labels" aria-hidden="true">
+          <span style="left:60%">60</span><span style="left:75%">75</span><span style="left:80%">80</span><span style="left:90%">90</span>
+        </div>`;
     }
   }
 
