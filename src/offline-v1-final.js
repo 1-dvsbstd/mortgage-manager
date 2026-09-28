@@ -7,8 +7,8 @@
 
   function markBuild(){
     const version=$('.brand span');
-    if(version) version.textContent='V0.15.20';
-    document.documentElement.dataset.mortgageManagerBuild='01520';
+    if(version) version.textContent='V0.15.21';
+    document.documentElement.dataset.mortgageManagerBuild='01521';
   }
 
   function history(){
@@ -142,6 +142,75 @@
     }
   }
 
+  function futureMoneyValue(text){
+    return Number(String(text||'').replace(/[^0-9.-]/g,''))||0;
+  }
+
+  function stabiliseFuture(){
+    const future=$('.app-view-future .app-view-content');
+    if(!future) return;
+
+    const ordered=[
+      $('#futureOverpaymentAssumption'),
+      $('#homeProjection'),
+      $('#futureModelRange'),
+      $('#futureWaitPlanner'),
+      $('#nextHomePlanner'),
+      $('#propertyCostComparison')
+    ].filter(Boolean);
+
+    ordered.forEach((node,index)=>{
+      const current=[...future.children].filter((child)=>ordered.includes(child));
+      if(node.parentElement!==future || current[index]!==node){
+        future.appendChild(node);
+      }
+    });
+
+    const cost=$('#propertyCostComparison');
+    if(cost){
+      cost.classList.add('panel','temporal-feature-card','temporal-feature-cost-comparison');
+      cost.classList.remove('future-cost-inline');
+    }
+
+    const rows=$('#futureWaitPlanner .next-home-timeline-row').slice(0,3);
+    if(rows.length===3){
+      const baseline=futureMoneyValue($(':scope > strong',rows[0])?.textContent);
+      rows.forEach((row,index)=>{
+        row.dataset.years=String(index===0?0:index===1?3:5);
+        $(':scope > span',row)?.classList.add('next-home-period');
+
+        let change=$(':scope > .next-home-change',row);
+        if(!change){
+          change=document.createElement('span');
+          change.className='next-home-change';
+          const main=$(':scope > strong',row);
+          if(main) main.insertAdjacentElement('afterend',change); else row.appendChild(change);
+        }
+        if(index===0){
+          change.classList.add('is-baseline');
+          change.textContent='Starting point';
+        }else{
+          change.classList.remove('is-baseline');
+          const value=futureMoneyValue($(':scope > strong',row)?.textContent);
+          const delta=value-baseline;
+          change.textContent=value&&baseline
+            ? `${delta>=0?'+':'−'}£${Math.abs(delta).toLocaleString('en-GB',{maximumFractionDigits:0})} vs today`
+            : 'Future position';
+        }
+
+        if(!$(':scope > .next-home-support',row)){
+          const smalls=$(':scope > small',row);
+          if(smalls.length){
+            const support=document.createElement('div');
+            support.className='next-home-support';
+            smalls[0].insertAdjacentElement('beforebegin',support);
+            smalls.forEach((small)=>support.appendChild(small));
+          }
+        }
+      });
+    }
+  }
+
   function dedupeFuture(){
     const subhead=$('.app-view-future .next-home-subhead');
     const eyebrow=$('span',subhead);
@@ -162,6 +231,7 @@
     renameOwnershipLabels();
     updateEquityCopy();
     renderJourney();
+    stabiliseFuture();
     dedupeFuture();
     markSharedBanners();
   }
@@ -183,6 +253,19 @@
     run();
     window.MortgageStore?.subscribe?.(()=>requestAnimationFrame(run));
     window.addEventListener('pageshow',run);
+
+    let futureQueued=false;
+    const queueFuture=()=>{
+      if(futureQueued) return;
+      futureQueued=true;
+      requestAnimationFrame(()=>{ futureQueued=false; stabiliseFuture(); });
+    };
+    const observer=new MutationObserver(queueFuture);
+    observer.observe(document.body,{childList:true,subtree:true});
+    document.addEventListener('click',(event)=>{
+      if(event.target.closest?.('[data-app-view="future"]')) setTimeout(stabiliseFuture,0);
+    },true);
+    [250,700,1400,2600].forEach((delay)=>setTimeout(stabiliseFuture,delay));
   };
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start,{once:true}); else start();
 })();
