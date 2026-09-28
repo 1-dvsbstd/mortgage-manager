@@ -28,6 +28,11 @@
     if (!year || !month) return '—';
     return new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(new Date(year,month-1,1));
   };
+  const checkedLabel = (value) => {
+    const d=new Date(value||'');
+    if(!Number.isFinite(d.getTime())) return '';
+    return new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(d);
+  };
 
   function currentMortgage(){
     const state=window.MortgageStore?.get?.();
@@ -815,7 +820,7 @@
       ? 'Using your recent valuation / estimate.'
       : hpiAnchoredToday
         ? hpiModel.officialBundled
-          ? `Latest official local HPI · ${monthLabel(hpiModel.latestMonth)}${improvements?' + improvements':''}`
+          ? `Latest official local HPI · ${monthLabel(hpiModel.latestMonth)}${bundledHpiData?.generatedAt?` · dataset refreshed ${checkedLabel(bundledHpiData.generatedAt)}`:''}${improvements?' + improvements':''}`
           : hpiModel.bridgedFromMonth
             ? `Latest local HPI · ${monthLabel(hpiModel.latestMonth)} · property-type data to ${monthLabel(hpiModel.propertyTypeLatestMonth||hpiModel.bridgedFromMonth)}${improvements?' + improvements':''}`
             : `Local property-type HPI · ${monthLabel(hpiModel.latestMonth)}${improvements?' + improvements':''}`
