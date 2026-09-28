@@ -204,6 +204,40 @@
     if(note) note.textContent='Payments exclude overpayments and use your projected deal-end balance and remaining term. Centre rates use your current rate and market benchmarks; outer rates are simple stress tests.';
   }
 
+  function decorateUpcomingPosition(state){
+    const summary=$('#dealPlannerSummary');
+    if(!summary||!state) return;
+    const balanceCard=$('#dealPlannerBalance')?.closest('div');
+    const ltvCard=$('#dealPlannerLtv')?.closest('div');
+    if(balanceCard){
+      let visual=$('.deal-position-mini',balanceCard);
+      if(!visual){
+        visual=document.createElement('div');
+        visual.className='deal-position-mini balance-mini';
+        visual.setAttribute('aria-hidden','true');
+        visual.innerHTML='<span></span>';
+        balanceCard.appendChild(visual);
+      }
+      const projected=Number(String($('#dealPlannerBalance')?.textContent||'').replace(/[^0-9.\-]/g,''));
+      const current=Math.max(1,Number(state.balance)||1);
+      const ratio=Number.isFinite(projected)?Math.max(0,Math.min(100,projected/current*100)):0;
+      visual.style.setProperty('--mini-progress',`${ratio}%`);
+    }
+    if(ltvCard){
+      let visual=$('.deal-position-mini',ltvCard);
+      if(!visual){
+        visual=document.createElement('div');
+        visual.className='deal-position-mini ltv-mini';
+        visual.setAttribute('aria-hidden','true');
+        visual.innerHTML='<span></span><i class="ltv-marker marker-60"></i><i class="ltv-marker marker-75"></i><i class="ltv-marker marker-80"></i>';
+        ltvCard.appendChild(visual);
+      }
+      const ltv=Number(String($('#dealPlannerLtv')?.textContent||'').replace(/[^0-9.\-]/g,''));
+      const ratio=Number.isFinite(ltv)?Math.max(0,Math.min(100,ltv)):0;
+      visual.style.setProperty('--mini-progress',`${ratio}%`);
+    }
+  }
+
   function refineUpcoming(){
     const shell=$('.app-view-upcoming .upcoming-sections');
     if(!shell) return;
@@ -270,6 +304,7 @@
     });
 
     renderUpcomingRates();
+    decorateUpcomingPosition(state);
   }
 
   function splitNextHomePlanner(){
