@@ -5,7 +5,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $Root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Address = [System.Net.IPAddress]::Loopback
-$Build = '01519'
+$Build = '01521'
 $LaunchNonce = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
 $Url = "http://localhost:$Port/?build=$Build&launch=$LaunchNonce"
 
@@ -34,7 +34,7 @@ try {
   Write-Host "Mortgage Manager could not start on port $Port." -ForegroundColor Red
   Write-Host 'Another copy may already be running. Close the older Mortgage Manager PowerShell window first, then try again.'
   Write-Host "This copy would serve from: $Root"
-  Write-Host "Expected UI build: V0.15.19"
+  Write-Host "Expected UI build: V0.15.21"
   Read-Host 'Press Enter to close'
   exit 1
 }
@@ -43,7 +43,7 @@ Write-Host ''
 Write-Host 'Mortgage Manager is running locally.' -ForegroundColor Green
 Write-Host $Url
 Write-Host "Serving from: $Root" -ForegroundColor Cyan
-Write-Host "Expected UI build: V0.15.19" -ForegroundColor Yellow
+Write-Host "Expected UI build: V0.15.21" -ForegroundColor Yellow
 Write-Host 'Your mortgage data stays in this browser on this device.'
 Write-Host 'Keep this window open while using the app. Press Ctrl+C to stop.'
 Write-Host ''
