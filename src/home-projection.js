@@ -491,24 +491,61 @@
         params.set('_pageSize','400');
         params.set('_sort','refPeriodStart');
         params.set('min-refPeriodStart',historyStart);
-        params.set('_properties',`refMonth,${field}`);
+        /* The property-type series can lag the headline local-authority
+           series by several releases. Fetch both. We keep the property-type
+           index as the historical anchor and, only when it stops earlier,
+           bridge the missing months using the same local authority's official
+           all-property HPI. This is more local than a regional/national
+           fallback and avoids presenting a stale property-type month as
+           today's estimate. */
+        params.set('_properties',`refMonth,housePriceIndex,${field}`);
         const url=`https://landregistry.data.gov.uk/data/ukhpi/region/${slug}.json?${params.toString()}`;
         const response=await fetch(url,{cache:'no-store',headers:{Accept:'application/json'}});
         if(!response.ok) throw new Error('UK HPI lookup failed');
         const data=await response.json();
-        const items=extractHmlrItems(data).map((item)=>({
+        const observations=extractHmlrItems(data).map((item)=>({
           month:String(item?.refMonth?._value ?? item?.refMonth ?? '').slice(0,7),
-          index:hpiValue(item,field)
-        })).filter((item)=>item.month&&Number.isFinite(item.index)&&item.index>0);
-        if(!items.length) return cached||null;
-        items.sort((a,b)=>a.month.localeCompare(b.month));
-        const purchasePoint=items.reduce((best,item)=>monthDistance(item.month,purchaseMonth)<monthDistance(best?.month,purchaseMonth)?item:best,null);
-        const latestPoint=items[items.length-1];
-        if(!purchasePoint||!latestPoint||monthDistance(purchasePoint.month,purchaseMonth)>3) return cached||null;
+          typeIndex:hpiValue(item,field),
+          localIndex:hpiValue(item,'housePriceIndex')
+        })).filter((item)=>item.month);
+        observations.sort((a,b)=>a.month.localeCompare(b.month));
+
+        const typeItems=observations
+          .filter((item)=>Number.isFinite(item.typeIndex)&&item.typeIndex>0)
+          .map((item)=>({month:item.month,index:item.typeIndex}));
+        const localItems=observations
+          .filter((item)=>Number.isFinite(item.localIndex)&&item.localIndex>0)
+          .map((item)=>({month:item.month,index:item.localIndex}));
+        if(!typeItems.length) return cached||null;
+
+        const purchasePoint=typeItems.reduce((best,item)=>monthDistance(item.month,purchaseMonth)<monthDistance(best?.month,purchaseMonth)?item:best,null);
+        const latestTypePoint=typeItems[typeItems.length-1];
+        if(!purchasePoint||!latestTypePoint||monthDistance(purchasePoint.month,purchaseMonth)>3) return cached||null;
+
+        let latestPoint=latestTypePoint;
+        let multiplier=latestTypePoint.index/purchasePoint.index;
+        let bridgedFromMonth='';
+        let bridgeMethod='';
+
+        if(localItems.length){
+          const latestLocalPoint=localItems[localItems.length-1];
+          if(monthDistance(latestLocalPoint.month,latestTypePoint.month)>0 && latestLocalPoint.month>latestTypePoint.month){
+            const localAtTypeMonth=localItems.reduce((best,item)=>monthDistance(item.month,latestTypePoint.month)<monthDistance(best?.month,latestTypePoint.month)?item:best,null);
+            if(localAtTypeMonth?.index && monthDistance(localAtTypeMonth.month,latestTypePoint.month)<=1){
+              const bridgeGrowth=latestLocalPoint.index/localAtTypeMonth.index;
+              if(Number.isFinite(bridgeGrowth)&&bridgeGrowth>0.7&&bridgeGrowth<1.3){
+                multiplier*=bridgeGrowth;
+                latestPoint={month:latestLocalPoint.month,index:latestTypePoint.index*bridgeGrowth};
+                bridgedFromMonth=latestTypePoint.month;
+                bridgeMethod='property-type HPI + local all-property HPI';
+              }
+            }
+          }
+        }
 
         const annualChanges=[];
-        for(let i=12;i<items.length;i+=1){
-          const prior=items[i-12], current=items[i];
+        for(let i=12;i<typeItems.length;i+=1){
+          const prior=typeItems[i-12], current=typeItems[i];
           if(!prior?.index||!current?.index) continue;
           const change=(current.index/prior.index-1)*100;
           if(Number.isFinite(change) && change>-40 && change<60) annualChanges.push(change);
@@ -525,7 +562,11 @@
           purchaseIndex:purchasePoint.index,
           latestMonth:latestPoint.month,
           latestIndex:latestPoint.index,
-          multiplier:latestPoint.index/purchasePoint.index,
+          multiplier,
+          propertyTypeLatestMonth:latestTypePoint.month,
+          bridgedFromMonth,
+          bridgeMethod,
+          officialLatest:Boolean(bridgedFromMonth),
           lowerAnnual,
           medianAnnual,
           upperAnnual,
@@ -641,7 +682,6 @@
     if(validPurchase) fallbackModelToday=projectedValue(purchasePrice,settings.trend,yearsOwned)+improvements;
     const estimatedToday=recentValue || hpiAnchoredToday || fallbackModelToday || savedHomeValue;
     fetchLocalHpiModel();
-    refreshOfficialHpiModel();
 
     if($('projectionPurchasePrice') && !$('projectionPurchasePrice').value && settings.purchasePrice) $('projectionPurchasePrice').value=settings.purchasePrice;
     if($('projectionPurchaseMonth') && !$('projectionPurchaseMonth').value && settings.purchaseMonth) $('projectionPurchaseMonth').value=settings.purchaseMonth;
@@ -698,7 +738,9 @@
     $('projectionCurrentNote').textContent=recentValue
       ? 'Using your recent valuation / estimate.'
       : hpiAnchoredToday
-        ? `${hpiModel.officialLatest?'Latest official local HPI':'Local HPI'} · ${monthLabel(hpiModel.latestMonth)}${improvements?' + improvements':''}`
+        ? hpiModel.bridgedFromMonth
+          ? `Latest local HPI · ${monthLabel(hpiModel.latestMonth)} · property-type data to ${monthLabel(hpiModel.propertyTypeLatestMonth||hpiModel.bridgedFromMonth)}${improvements?' + improvements':''}`
+          : `Local property-type HPI · ${monthLabel(hpiModel.latestMonth)}${improvements?' + improvements':''}`
         : validPurchase
           ? `Fallback growth model${improvements?' + improvements':''}`
           : 'Using the property value saved in the dashboard.';
