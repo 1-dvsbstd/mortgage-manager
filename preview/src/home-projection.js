@@ -842,6 +842,16 @@
     renderValueHistory();
   }
 
+  function refreshHpiSources(){
+    loadBundledOfficialHpi().then(()=>requestAnimationFrame(render));
+    const online=(()=>{ try{return localStorage.getItem(ONLINE_MODE_KEY)==='online';}catch(_){return false;} })();
+    if(online){
+      hpiRequestKey=''; hpiRequest=null;
+      fetchLocalHpiModel().then(()=>requestAnimationFrame(render));
+      refreshLocalBenchmark();
+    }
+  }
+
   loadSettings();
   if(window.MortgageStore?.subscribe) window.MortgageStore.subscribe(()=>requestAnimationFrame(render));
   document.addEventListener('mortgage-history-updated',()=>{ syncPurchaseFromMortgageHistory(); requestAnimationFrame(render); });
@@ -853,6 +863,14 @@
     benchmarkRequestKey=''; benchmarkRequest=null;
     hpiRequestKey=''; hpiRequest=null; officialHpiRequestKey=''; officialHpiRequest=null;
     requestAnimationFrame(render);
+    refreshHpiSources();
   });
+  document.addEventListener('connectivity-mode-changed',(event)=>{
+    if(event.detail?.online) refreshHpiSources();
+    else loadBundledOfficialHpi().then(()=>requestAnimationFrame(render));
+  });
+  window.addEventListener('pageshow',refreshHpiSources);
+  document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') refreshHpiSources(); });
   render();
+  refreshHpiSources();
 })();
