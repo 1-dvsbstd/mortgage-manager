@@ -136,3 +136,48 @@ html[data-theme="dusk"]{
   --shadow-soft:0 14px 38px rgba(17,56,49,.06);
   --font-display:"Iowan Old Style","Palatino Linotype",Georgia,serif;
 }
+
+
+/* Theme bridge: semantic colours used by the final visual layer. */
+:root{
+  --theme-hero-ink:#203d35;
+  --theme-greeting:#3d5e55;
+  --theme-illustration-bg:#e9dfd1;
+  --theme-progress-track:#e7e0d7;
+  --theme-highlight:#f3ece3;
+  --theme-highlight-strong:#efe3d5;
+  --theme-hover:#f4e6d7;
+  --theme-rate-current:#fff7ee;
+  --theme-milestone:#f5eee5;
+  --theme-action:#f3e8db;
+  --theme-range-edge:#d8c7b5;
+  --theme-range-mid:#c88e5c;
+}
+html[data-theme="warm"]{
+  --theme-hero-ink:#6d3224;
+  --theme-greeting:#a34c32;
+  --theme-illustration-bg:#f0d7c8;
+  --theme-progress-track:#ecd5c8;
+  --theme-highlight:#f8e1d5;
+  --theme-highlight-strong:#f4d3c0;
+  --theme-hover:#f7d8c7;
+  --theme-rate-current:#fff0e6;
+  --theme-milestone:#fae4d8;
+  --theme-action:#f7d7c6;
+  --theme-range-edge:#e7bca6;
+  --theme-range-mid:#df6a3b;
+}
+html[data-theme="dusk"]{
+  --theme-hero-ink:#173f37;
+  --theme-greeting:#326a5e;
+  --theme-illustration-bg:#ded7bd;
+  --theme-progress-track:#d9d4be;
+  --theme-highlight:#eee6cb;
+  --theme-highlight-strong:#e9d8ad;
+  --theme-hover:#eee0b9;
+  --theme-rate-current:#fff3cf;
+  --theme-milestone:#f4e8c4;
+  --theme-action:#efe0b8;
+  --theme-range-edge:#cabd91;
+  --theme-range-mid:#d69a1c;
+}
