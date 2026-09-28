@@ -3512,3 +3512,44 @@ body .app-view-current .v15-current-stats .v15-stat:last-child{padding-right:0!i
   body .app-view-current .v15-current-stats .v15-stat:nth-child(n){padding:14px 0!important;border-right:0!important;border-bottom:1px solid var(--border-soft)!important}
   body .app-view-current .v15-current-stats .v15-stat:last-child{border-bottom:0!important}
 }
+
+
+/* Theme propagation fix — remove parchment-only colours from the visible product layer. */
+body .app-view-current .current-hero-condensed .hero-main{
+  background:linear-gradient(90deg,var(--surface) 0%,var(--surface) 72%,color-mix(in srgb,var(--surface) 72%,transparent) 100%)!important;
+}
+body .app-view-current .v15-home-copy .v15-greeting{color:var(--theme-greeting)!important}
+body .app-view-current .v15-home-copy h1,
+body .app-view-current .v15-home-copy .v15-subline strong,
+body .app-view-current .v15-hero-progress-head strong{color:var(--theme-hero-ink)!important}
+body .app-view-current .v15-home-visual{background-color:var(--theme-illustration-bg)!important}
+body .app-view-current .v15-hero-progress{
+  background:color-mix(in srgb,var(--surface-control) 72%,transparent)!important;
+  border-color:var(--border-soft)!important;
+}
+body .app-view-current .v15-hero-progress-track{background:var(--theme-progress-track)!important}
+body .app-view-current .v15-hero-progress-track i{background:linear-gradient(90deg,var(--equity),color-mix(in srgb,var(--equity) 65%,white))!important}
+
+body .app-view-upcoming .deal-planner-rate.is-current-rate,
+body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-current-rate,
+body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-current-rate:hover{
+  background:var(--theme-rate-current)!important;
+  border-color:color-mix(in srgb,var(--accent) 38%,transparent)!important;
+}
+body .app-view-upcoming .deal-planner-milestone{background:var(--theme-milestone)!important}
+body .app-view-upcoming .upcoming-action{background:linear-gradient(90deg,var(--surface-control),var(--theme-action))!important}
+body .app-view-upcoming .live-rate-card{background:var(--theme-highlight)!important}
+
+body .app-view-future .future-overpayment-assumption{background:var(--theme-highlight-strong)!important}
+body .app-view-future .home-profile-range>div,
+body .app-view-future .next-home-summary-card,
+body .app-view-future .next-home-timeline-row,
+body .app-view-future .property-cost-card,
+body .app-view-future .future-model-range-panel .model-range-summary,
+body .app-view-future .future-wait-host{background:var(--theme-highlight)!important}
+body .app-view-future .v157-range-track{
+  background:linear-gradient(90deg,var(--theme-range-edge) 0%,var(--theme-range-mid) 50%,var(--theme-range-edge) 100%)!important;
+}
+
+body .trajectory-overpay-row button:hover,
+body .future-assumption-controls button:hover{background:var(--theme-hover)!important}
