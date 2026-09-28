@@ -296,6 +296,20 @@
     if(timeline.parentElement!==host) host.appendChild(timeline);
   }
 
+  function organiseFutureFlow(){
+    const future=$('.app-view-future .app-view-content');
+    if(!future) return;
+    const order=[
+      $('#futureOverpaymentAssumption'),
+      $('#homeProjection'),
+      $('#futureModelRange'),
+      $('#futureWaitPlanner'),
+      $('#nextHomePlanner'),
+      $('#propertyCostComparison')
+    ].filter(Boolean);
+    order.forEach((node)=>future.appendChild(node));
+  }
+
   function refineFuture(){
     const future=$('.app-view-future .app-view-content'), home=$('#homeProjection'), range=$('#homeProfileRange'), planner=$('#nextHomePlanner');
     if(!future||!home) return;
@@ -322,6 +336,13 @@
       if(host && range.parentElement!==host) host.appendChild(range);
     }
     splitNextHomePlanner();
+
+    const cost=$('#propertyCostComparison');
+    if(cost){
+      cost.classList.add('panel','temporal-feature-card','temporal-feature-cost-comparison');
+      cost.classList.remove('future-cost-inline');
+    }
+    organiseFutureFlow();
   }
 
   function run(){
@@ -335,7 +356,7 @@
   if(window.MortgageStore?.subscribe){
     MortgageStore.subscribe((next,previous)=>{
       if(next.currentOverpayment!==previous.currentOverpayment && next.scenarioExtra!==0) MortgageStore.set({scenarioExtra:0});
-      requestAnimationFrame(()=>{ renderWhatIfControls(); refineFutureAssumption(); refineUpcoming(); renderUpcomingRates(); });
+      requestAnimationFrame(()=>{ renderWhatIfControls(); refineFutureAssumption(); refineUpcoming(); renderUpcomingRates(); organiseFutureFlow(); });
     });
   }
 
