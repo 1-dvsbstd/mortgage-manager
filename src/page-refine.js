@@ -302,9 +302,9 @@
     const order=[
       $('#futureOverpaymentAssumption'),
       $('#homeProjection'),
+      $('#nextHomePlanner'),
       $('#futureModelRange'),
       $('#futureWaitPlanner'),
-      $('#nextHomePlanner'),
       $('#propertyCostComparison')
     ].filter(Boolean);
     order.forEach((node)=>future.appendChild(node));
