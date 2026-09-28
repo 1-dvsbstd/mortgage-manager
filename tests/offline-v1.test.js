@@ -10,6 +10,9 @@ const finalStyle = fs.readFileSync('src/offline-v1-final.css', 'utf8');
 const loader = fs.readFileSync('src/v15.14.js', 'utf8');
 const expandable = fs.readFileSync('src/expandable-cards.js', 'utf8');
 const launcher = fs.readFileSync('launch.ps1', 'utf8');
+const homeProjection = fs.readFileSync('src/home-projection.js', 'utf8');
+const appRuntime = fs.readFileSync('src/app-runtime.js', 'utf8');
+const hpiBundle = JSON.parse(fs.readFileSync('public/hpi-local-property-type.json', 'utf8'));
 
 assert.match(index, /navigator\.serviceWorker\.register\('\.\/sw\.js'\)/, 'Offline V1 should register its service worker');
 assert.doesNotMatch(index, /serviceWorker\.getRegistrations\(\).*unregister/s, 'The app must not unregister service workers on load');
@@ -19,6 +22,7 @@ assert.doesNotMatch(index, /caches\.keys\(\).*caches\.delete/s, 'The app must no
   './index.html',
   './public/home-editorial.svg',
   './public/market-rates.json',
+  './public/hpi-local-property-type.json',
   './src/app-runtime.js',
   './src/app-navigation.js',
   './src/v15.15.js',
@@ -52,6 +56,12 @@ assert.equal(market.source, 'Bank of England Database', 'Bundled benchmarks shou
 assert.equal(market.licence, 'UK Open Government Licence', 'Bundled benchmarks should record their reuse licence');
 assert.ok(Array.isArray(market.bands) && market.bands.length >= 2, 'Market feed should include benchmark bands');
 assert.doesNotMatch(JSON.stringify(market), /Moneyfacts/i, 'Bundled commercial market data must not contain Moneyfacts data or branding');
+assert.match(homeProjection, /refreshHpiSources\(\);/, 'HPI should refresh automatically at startup');
+assert.match(homeProjection, /connectivity-mode-changed/, 'HPI should react immediately to connectivity-mode changes');
+assert.match(appRuntime, /connectivity-mode-changed/, 'Connectivity switch should broadcast mode changes to data features');
+assert.equal(hpiBundle.source, 'HM Land Registry UK House Price Index', 'Bundled HPI should come from the official HMLR UK HPI');
+assert.match(hpiBundle.latestMonth, /^20\d{2}-\d{2}$/, 'Bundled HPI should expose its latest official month');
+assert.ok(Object.keys(hpiBundle.areas || {}).length > 300, 'Bundled HPI should contain local-authority coverage');
 assert.match(polish, /migrateLegacyMarketCache/, 'Old preview market caches should be migrated away');
 
 console.log('Offline V1 service-worker, final-polish, stale-shell and market-source checks passed');
