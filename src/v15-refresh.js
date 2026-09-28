@@ -87,12 +87,12 @@
       copy.className = 'v15-home-copy';
       copy.innerHTML = `
         <p class="v15-greeting"></p>
-        <h1><span class="v15-equity-value">—</span><br>of your home</h1>
-        <p class="v15-subline">That’s <strong class="v15-owned-pct">—</strong> of your share</p>
+        <h1><span class="v15-equity-value">—</span><br>equity in your home</h1>
+        <p class="v15-subline">That’s <strong class="v15-owned-pct">—</strong> of the share you own</p>
         <div class="v15-hero-progress">
-          <div class="v15-hero-progress-head"><span>Mortgage-free share</span><strong class="v15-progress-value">—</strong></div>
+          <div class="v15-hero-progress-head"><span>Your share paid off</span><strong class="v15-progress-value">—</strong></div>
           <div class="v15-hero-progress-track"><i></i></div>
-          <div class="v15-hero-progress-foot"><span class="v15-progress-owned">— owned</span><span class="v15-progress-debt">— mortgage remaining</span></div>
+          <div class="v15-hero-progress-foot"><span class="v15-progress-owned">— equity</span><span class="v15-progress-debt">— mortgage remaining</span></div>
         </div>`;
       const main = $('.hero-main', hero);
       if (main) main.insertAdjacentElement('afterbegin', copy);
@@ -118,14 +118,10 @@
       grid.className = 'v15-current-stats';
       grid.setAttribute('aria-label','Mortgage and home summary');
       grid.innerHTML = `
+        <div class="v15-stat"><span>Mortgage remaining</span><strong data-v15="balance">—</strong><small data-v15="ltv">— LTV</small></div>
         <div class="v15-stat"><span>Monthly payment</span><strong data-v15="payment">—</strong><small>Scheduled payment</small></div>
         <div class="v15-stat"><span>Regular overpayment</span><strong data-v15="regular">—</strong><small>Already paid each month</small></div>
-        <div class="v15-stat"><span>Interest rate</span><strong data-v15="rate">—</strong><small data-v15="fix">Current mortgage deal</small></div>
-        <div class="v15-stat is-warm"><span>Interest remaining</span><strong data-v15="interest">—</strong><small>On your current repayment path</small></div>
-        <div class="v15-stat is-positive"><span>Interest saved</span><strong data-v15="saved">—</strong><small data-v15="saved-note">With selected What-if</small></div>
-        <div class="v15-stat"><span>Home value</span><strong data-v15="home">—</strong><small>Current saved value</small></div>
-        <div class="v15-stat"><span>Ownership share</span><strong data-v15="ownership">—</strong><small>Your household share</small></div>
-        <div class="v15-stat is-positive"><span>Your equity</span><strong data-v15="equity">—</strong><small data-v15="ltv">— LTV</small></div>`;
+        <div class="v15-stat"><span>Interest rate</span><strong data-v15="rate">—</strong><small data-v15="fix">Current mortgage deal</small></div>`;
       hero.insertAdjacentElement('afterend', grid);
     }
     return grid;
@@ -139,8 +135,8 @@
       card = document.createElement('section');
       card.className = 'v15-action-card';
       card.innerHTML = `
-        <div class="v15-action-copy"><div class="v15-action-icon">↗</div><div><span>Increase your overpayment</span><strong data-v15="plus100">+£100/month</strong></div></div>
-        <button type="button" data-v15-action>Use +£100 What-if →</button>`;
+        <div class="v15-action-copy"><div class="v15-action-icon">↗</div><div><span>See the impact of a little more</span><strong data-v15="plus100">+£100/month</strong><small data-v15="plus100-interest"></small></div></div>
+        <button type="button" data-v15-action>Try +£100 What-if →</button>`;
       grid.insertAdjacentElement('afterend', card);
       $('[data-v15-action]', card)?.addEventListener('click', () => window.MortgageStore?.set?.({ scenarioExtra:100 }));
     }
@@ -157,33 +153,25 @@
     if (!hero || !grid || !action) return;
 
     $('.v15-greeting', hero).textContent = greeting();
-    $('.v15-equity-value', hero).textContent = `You own ${money(c.equity)}`;
+    $('.v15-equity-value', hero).textContent = money(c.equity);
     $('.v15-owned-pct', hero).textContent = pct(c.ownedSharePct);
     $('.v15-progress-value', hero).textContent = pct(c.ownedSharePct);
-    $('.v15-progress-owned', hero).textContent = `${pct(c.ownedSharePct)} owned`;
+    $('.v15-progress-owned', hero).textContent = `${pct(c.ownedSharePct)} equity`;
     $('.v15-progress-debt', hero).textContent = `${pct(100 - c.ownedSharePct)} mortgage remaining`;
     const fill = $('.v15-hero-progress-track i', hero); if (fill) fill.style.width = `${c.ownedSharePct}%`;
 
+    $('[data-v15="balance"]', grid).textContent = money(c.balance);
     $('[data-v15="payment"]', grid).textContent = money(c.payment);
     $('[data-v15="regular"]', grid).textContent = money(c.regular);
     $('[data-v15="rate"]', grid).textContent = pct(c.rate,2);
     $('[data-v15="fix"]', grid).textContent = state.fixedEnd ? `Fixed until ${monthLabel(state.fixedEnd)}` : 'Current mortgage deal';
-    $('[data-v15="interest"]', grid).textContent = Number.isFinite(c.base?.interest) ? money(c.base.interest) : '—';
-    $('[data-v15="saved"]', grid).textContent = money(c.combinedInterestSaved || 0);
-    const savedNote = $('[data-v15="saved-note"]', grid);
-    if (savedNote) {
-      if (c.regular > 0 && c.extra > 0) savedNote.textContent = `With ${money(c.regular)}/month regular + ${money(c.extra)}/month What-if`;
-      else if (c.regular > 0) savedNote.textContent = `With ${money(c.regular)}/month regular overpayment`;
-      else if (c.extra > 0) savedNote.textContent = `With ${money(c.extra)}/month What-if`;
-      else savedNote.textContent = 'No overpayment selected';
-    }
-    $('[data-v15="home"]', grid).textContent = money(c.homeValue);
-    $('[data-v15="ownership"]', grid).textContent = pct(c.ownership);
-    $('[data-v15="equity"]', grid).textContent = money(c.equity);
     $('[data-v15="ltv"]', grid).textContent = `${pct(c.ltv,1)} LTV`;
 
     const saved = c.plus100?.monthsSaved || 0;
+    const savedInterest = c.plus100?.interestSaved || 0;
     $('[data-v15="plus100"]', action).textContent = saved > 0 ? `+£100/month = ${compactDuration(saved)} sooner` : '+£100/month changes your payoff path';
+    const plus100Interest = $('[data-v15="plus100-interest"]', action);
+    if (plus100Interest) plus100Interest.textContent = savedInterest > 0 ? `${money(savedInterest)} less interest on the current assumptions` : 'Compare it with your current repayment path';
   }
 
   function journeyDates(state) {
