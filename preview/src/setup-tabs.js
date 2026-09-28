@@ -147,23 +147,6 @@
     syncThemeControl();
   }
 
-  function addSecondChargeSection(current){
-    if($('.setup-second-charge-section',current)) return;
-    const state=window.MortgageStore?.get?.()||{};
-    const section=document.createElement('details');
-    section.className='personal-section setup-second-charge-section';
-    section.innerHTML=`<summary><span><strong>Second charge / secured loan</strong><small>Optional — only add borrowing secured against this property.</small></span></summary>
-      <div class="setup-second-charge-body">
-        <div class="setup-future-grid">
-          <label>Balance (£)<input data-personal-field="secondChargeBalance" id="secondChargeBalance" type="number" min="0" step="100" inputmode="decimal" value="${Math.max(0,Number(state.secondChargeBalance)||0)}"></label>
-          <label>Interest rate (%)<input data-personal-field="secondChargeRate" id="secondChargeRate" type="number" min="0" max="30" step="0.01" inputmode="decimal" value="${Math.max(0,Number(state.secondChargeRate)||0)}"></label>
-          <label>Monthly payment (£)<input data-personal-field="secondChargePayment" id="secondChargePayment" type="number" min="0" step="1" inputmode="decimal" value="${Math.max(0,Number(state.secondChargePayment)||0)}"></label>
-        </div>
-        <p class="setup-field-note">Mortgage LTV remains your first mortgage divided by the full property value. A second charge can be shown separately as combined secured borrowing where relevant.</p>
-      </div>`;
-    current.appendChild(section);
-  }
-
   function activate(modal,key){
     modal.querySelectorAll('[data-setup-pane]').forEach((pane)=>pane.hidden=pane.dataset.setupPane!==key);
     modal.querySelectorAll('[data-setup-tab]').forEach((button)=>{const active=button.dataset.setupTab===key;button.classList.toggle('active',active);button.setAttribute('aria-selected',String(active));});
@@ -199,7 +182,6 @@
     const monthly=sections.find((section)=>$('h3',section)?.textContent.trim()==='Monthly history');
     const backup=sections.find((section)=>$('h3',section)?.textContent.trim()==='Backup');
     const methodology=$('#methodologySection',modal);
-    addSecondChargeSection(current);
     if(mortgageHistory) current.appendChild(mortgageHistory);
     if(monthly) current.appendChild(monthly);
     if(backup) current.appendChild(backup);
