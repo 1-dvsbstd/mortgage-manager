@@ -40,7 +40,7 @@ const legacyScriptIndex = index.indexOf('src/v15.15.js');
 const finalScriptIndex = index.indexOf('src/offline-v1-final.js');
 assert.ok(legacyScriptIndex >= 0 && finalScriptIndex > legacyScriptIndex, 'Final UI script should be loaded after legacy script layers');
 assert.match(loader, /legacy dynamic loader retired/i, 'Legacy dynamic loader should remain retired');
-assert.match(finalPolish, /V0\.15\.20/, 'Final UI should expose the current visible build marker');
+assert.match(finalPolish, /V0\.15\.21/, 'Final UI should expose the current visible build marker');
 assert.match(finalPolish, /undefined\|nan/i, 'Final UI layer should guard invalid LTV milestones');
 assert.match(finalStyle, /grid-template-columns:repeat\(4/, 'Current summary should use a compact four-column desktop grid');
 assert.doesNotMatch(expandable, /openCard\(/, 'Legacy expandable-card runtime must remain inert');
