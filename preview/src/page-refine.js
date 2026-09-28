@@ -204,54 +204,6 @@
     if(note) note.textContent='Payments exclude overpayments and use your projected deal-end balance and remaining term. Centre rates use your current rate and market benchmarks; outer rates are simple stress tests.';
   }
 
-  function decorateUpcomingPosition(state){
-    const summary=$('#dealPlannerSummary');
-    if(!summary||!state) return;
-    const balanceCard=$('#dealPlannerBalance')?.closest('div');
-    const ltvCard=$('#dealPlannerLtv')?.closest('div');
-
-    if(balanceCard){
-      let visual=$('.deal-balance-visual',balanceCard);
-      if(!visual){
-        visual=document.createElement('div');
-        visual.className='deal-balance-visual';
-        balanceCard.appendChild(visual);
-      }
-      const projected=Number(String($('#dealPlannerBalance')?.textContent||'').replace(/[^0-9.\-]/g,''));
-      const current=Math.max(0,Number(state.balance)||0);
-      const drop=Math.max(0,current-(Number.isFinite(projected)?projected:current));
-      visual.innerHTML=`
-        <div class="deal-balance-points" aria-hidden="true">
-          <span><small>Today</small><strong>${money(current)}</strong></span>
-          <i>→</i>
-          <span><small>Deal end</small><strong>${Number.isFinite(projected)?money(projected):'—'}</strong></span>
-        </div>
-        <div class="deal-balance-drop">${drop>0?`${money(drop)} lower by deal end`:'Balance change will appear here'}</div>`;
-    }
-
-    if(ltvCard){
-      let visual=$('.deal-ltv-scale',ltvCard);
-      if(!visual){
-        visual=document.createElement('div');
-        visual.className='deal-ltv-scale';
-        ltvCard.appendChild(visual);
-      }
-      const ltv=Number(String($('#dealPlannerLtv')?.textContent||'').replace(/[^0-9.\-]/g,''));
-      const ratio=Number.isFinite(ltv)?Math.max(0,Math.min(100,ltv)):0;
-      visual.style.setProperty('--ltv-position',`${ratio}%`);
-      visual.innerHTML=`
-        <div class="deal-ltv-track" aria-hidden="true">
-          <span class="ltv-zone zone-low"></span>
-          <span class="ltv-zone zone-mid"></span>
-          <span class="ltv-zone zone-high"></span>
-          <i class="ltv-pointer"></i>
-        </div>
-        <div class="deal-ltv-labels" aria-hidden="true">
-          <span style="left:60%">60</span><span style="left:75%">75</span><span style="left:80%">80</span><span style="left:90%">90</span>
-        </div>`;
-    }
-  }
-
   function refineUpcoming(){
     const shell=$('.app-view-upcoming .upcoming-sections');
     if(!shell) return;
@@ -318,7 +270,6 @@
     });
 
     renderUpcomingRates();
-    decorateUpcomingPosition(state);
   }
 
   function splitNextHomePlanner(){
