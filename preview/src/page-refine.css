@@ -1,5 +1,5 @@
 /* Consolidated former layout-finalize.css layer. Kept before all page refinements to preserve cascade. */
-.panel,.hero-panel{background:var(--surface)!important;border:1px solid var(--border)!important;border-radius:var(--radius-card)!important;box-shadow:0 18px 50px rgba(0,0,0,.22)!important}
+.panel,.hero-panel{background:var(--surface)!important;border:1px solid var(--border)!important;border-radius:18px!important;box-shadow:none!important}
 .hero-panel{background:linear-gradient(145deg,#102019,#14271f)!important}
 .kicker,.eyebrow,.future-assumption-label{color:var(--accent)!important}
 .subtle,.field-note,.deep-note,.source-date,.next-event-text,.timeline-labels,.app-view-heading>p{color:var(--muted)!important}
@@ -9,7 +9,7 @@
 .app-view-content{gap:var(--space-page)!important}
 .app-view-current .app-view-content,.app-view-future .app-view-content{display:grid!important;grid-template-columns:1fr!important;align-items:start}
 .app-view-upcoming .app-view-content{display:block!important}
-.app-view-current .hero-panel,.app-view-current .chart-panel,.app-view-future .panel,.app-view-upcoming .upcoming-section{border-radius:var(--radius-card)!important}
+.app-view-current .hero-panel,.app-view-current .chart-panel,.app-view-future .panel,.app-view-upcoming .upcoming-section{border-radius:18px!important}
 .app-view-heading{margin:0 2px 14px!important;align-items:baseline!important}
 .app-view-heading>div{gap:8px!important}
 .app-view-heading .eyebrow{display:none!important}
@@ -96,7 +96,7 @@
 
 /* Future remains the reference */
 .app-view-future .app-view-content{gap:var(--space-page)!important}
-.future-overpayment-assumption,.future-model-range-panel,.future-wait-planner,.temporal-feature-home-projection,.temporal-feature-next-home{background:var(--surface)!important;border-color:var(--border)!important;border-radius:var(--radius-card)!important}
+.future-overpayment-assumption,.future-model-range-panel,.future-wait-planner,.temporal-feature-home-projection,.temporal-feature-next-home{background:var(--surface)!important;border-color:var(--border)!important;border-radius:18px!important}
 .temporal-feature-home-projection{padding:var(--space-card)!important}
 .temporal-feature-next-home .next-home-body{padding:var(--space-card)!important}
 .future-overpayment-assumption{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 18px!important}
@@ -281,7 +281,7 @@ body{background:var(--bg)!important;color:var(--text)!important}
 .trajectory-overpay-row button.active,.future-assumption-controls button.active{
   background:linear-gradient(180deg,#79d2b4,#66bea1)!important;
   color:var(--ink-on-active)!important;
-  box-shadow:0 10px 24px rgba(73,159,130,.18)!important;
+  box-shadow:none!important;
 }
 
 /* Upcoming: composed sections, not a grid of generic boxes */
@@ -384,7 +384,7 @@ body{background:var(--bg)!important;color:var(--text)!important}
   background:rgba(251,248,243,.96)!important;
   border-color:var(--border)!important;
   color:var(--text)!important;
-  box-shadow:var(--shadow-card)!important;
+  box-shadow:none!important;
 }
 
 .app-view h1,.app-view h2,.app-view h3,.app-view h4,.app-view strong,
@@ -436,7 +436,7 @@ body{background:var(--bg)!important;color:var(--text)!important}
   background:var(--surface)!important;
   border:1px solid var(--border)!important;
   color:var(--text)!important;
-  box-shadow:var(--shadow-card)!important;
+  box-shadow:none!important;
 }
 .trajectory-with-what-if .trajectory-what-if{display:none!important}
 .app-view-current .trajectory-with-what-if>.panel-heading{padding:26px 26px 16px!important;margin:0!important;border-bottom:1px solid var(--border-soft)!important}
@@ -457,7 +457,7 @@ body{background:var(--bg)!important;color:var(--text)!important}
   background:var(--surface)!important;
   border:1px solid var(--border)!important;
   color:var(--text)!important;
-  box-shadow:0 16px 44px rgba(62,49,38,.065)!important;
+  box-shadow:none!important;
 }
 .app-view-upcoming .upcoming-action{background:linear-gradient(90deg,var(--surface-control),#f2e6d8)!important;border-color:rgba(183,131,77,.22)!important}
 .app-view-upcoming .upcoming-section-heading{border-bottom-color:var(--border-soft)!important}
@@ -523,7 +523,7 @@ input,select,textarea{color:var(--text)}
 .panel,.hero-panel,.upcoming-section,.future-overpayment-assumption,.future-model-range-panel,.future-wait-planner,.temporal-feature-home-projection,.temporal-feature-next-home{
   background:var(--surface)!important;
   border-color:var(--border)!important;
-  box-shadow:var(--shadow-soft)!important;
+  box-shadow:none!important;
 }
 
 /* Upcoming no longer repeats the timeline; Current is the overview, Upcoming is the detail. */
@@ -540,7 +540,7 @@ input,select,textarea{color:var(--text)}
 
 /* UPCOMING — ivory cards, smaller nested tiles, no forest-green carryover. */
 .app-view-upcoming .upcoming-workspace,.app-view-upcoming .design-workspace-full,.app-view-upcoming .upcoming-sections{background:transparent!important;box-shadow:none!important}
-.app-view-upcoming .upcoming-section{padding:22px 24px!important;background:var(--surface)!important;border:1px solid var(--border)!important;border-radius:22px!important;box-shadow:var(--shadow-soft)!important}
+.app-view-upcoming .upcoming-section{padding:22px 24px!important;background:var(--surface)!important;border:1px solid var(--border)!important;border-radius:18px!important;box-shadow:var(--shadow-soft)!important}
 .app-view-upcoming .upcoming-section-heading{margin-bottom:14px!important;padding-bottom:12px!important;border-bottom:1px solid var(--border-soft)!important}
 .app-view-upcoming .upcoming-section-heading h2{font-size:19px!important;font-family:var(--font-display)!important;font-weight:500!important;color:var(--text)!important}
 .app-view-upcoming .current-fix-stats>div,.app-view-upcoming .deal-planner-summary>div,.app-view-upcoming .deal-planner-rate,.app-view-upcoming .deal-planner-milestone{
@@ -563,7 +563,7 @@ input,select,textarea{color:var(--text)}
 /* FUTURE — reduce oversized whitespace and harmonise nested cards. */
 .app-view-future .app-view-content{gap:20px!important}
 .app-view-future .future-overpayment-assumption{padding:14px 18px!important;background:#efe3d5!important;box-shadow:none!important}
-.app-view-future .future-model-range-panel,.app-view-future .future-wait-planner,.app-view-future .temporal-feature-home-projection,.app-view-future .temporal-feature-next-home{padding:22px 24px!important;border-radius:22px!important}
+.app-view-future .future-model-range-panel,.app-view-future .future-wait-planner,.app-view-future .temporal-feature-home-projection,.app-view-future .temporal-feature-next-home{padding:22px 24px!important;border-radius:18px!important}
 .app-view-future .home-profile-heading,.app-view-future .next-home-heading,.app-view-future .cost-heading{margin-bottom:14px!important}
 .app-view-future .home-profile-heading h2,.app-view-future .next-home-heading h2,.app-view-future .cost-heading h2,.app-view-future .future-model-range-panel h2{color:var(--text)!important;font-size:19px!important}
 .app-view-future .home-profile-range,.app-view-future .next-home-summary,.app-view-future .next-home-timeline{gap:10px!important}
@@ -630,7 +630,7 @@ input,select,textarea{color:var(--text)}
   border-radius:12px!important;
   background:var(--surface-control)!important;
   color:var(--text)!important;
-  box-shadow:var(--shadow-tile)!important;
+  box-shadow:none!important;
   font-size:12px!important;
   font-weight:750!important;
   line-height:1!important;
@@ -655,7 +655,7 @@ input,select,textarea{color:var(--text)}
   border:1px solid var(--border)!important;
   border-radius:14px!important;
   background:#f3ede5!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.45)!important;
+  box-shadow:none!important;
   overflow:hidden!important;
 }
 
@@ -673,7 +673,7 @@ input,select,textarea{color:var(--text)}
   border-radius:12px!important;
   background:var(--surface-control)!important;
   color:var(--text)!important;
-  box-shadow:var(--shadow-tile)!important;
+  box-shadow:none!important;
   font-size:12px!important;
   font-weight:750!important;
   line-height:1!important;
@@ -731,7 +731,7 @@ input,select,textarea{color:var(--text)}
   border-radius:12px!important;
   background:var(--surface-control)!important;
   color:var(--text)!important;
-  box-shadow:var(--shadow-tile)!important;
+  box-shadow:none!important;
 }
 .app-view-future #futureOverpaymentAssumption .future-assumption-controls button:hover{
   background:#f4e6d7!important;
@@ -842,7 +842,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   background:var(--surface)!important;
   background-image:none!important;
   border-color:var(--border)!important;
-  box-shadow:0 16px 44px rgba(62,49,38,.055)!important;
+  box-shadow:none!important;
 }
 .app-view-upcoming .upcoming-action .upcoming-section-body,
 .app-view-upcoming .upcoming-action .deal-planner-milestone,
@@ -1032,7 +1032,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   min-height:104px!important;
   padding:16px 17px!important;
   border:1px solid var(--border-soft)!important;
-  border-radius:17px!important;
+  border-radius:18px!important;
   background:var(--surface-soft)!important;
   box-shadow:none!important;
 }
@@ -1098,9 +1098,9 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   min-height:118px!important;
   padding:18px 20px 16px!important;
   border:1px solid rgba(68,58,48,.10)!important;
-  border-radius:17px!important;
+  border-radius:18px!important;
   background:var(--surface-control)!important;
-  box-shadow:0 8px 24px rgba(62,49,38,.035)!important;
+  box-shadow:none!important;
 }
 .app-view-future #futureModelRange .home-forecast-card:nth-child(3){
   background:#f3e7d9!important;
@@ -1326,7 +1326,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   gap:0!important;
   overflow:hidden!important;
   border:1px solid var(--border-soft)!important;
-  border-radius:17px!important;
+  border-radius:18px!important;
   background:#f6f0e8!important;
 }
 .app-view-future #futureWaitPlanner .next-home-timeline-row{
@@ -1623,8 +1623,8 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   .app-view-future #futureWaitPlanner:hover,
   .app-view-future #nextHomePlanner:hover,
   .personal-modal .personal-section:hover{
-    transform:translateY(-2px)!important;
-    box-shadow:0 20px 50px rgba(61,48,36,.10)!important;
+    transform:none!important;
+    box-shadow:none!important;
     border-color:#d3b99f!important;
   }
 }
@@ -1695,7 +1695,7 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   min-height:442px!important;
   background:var(--surface)!important;
   border-color:var(--border)!important;
-  box-shadow:var(--shadow-card)!important;
+  box-shadow:none!important;
 }
 .app-view-current .current-hero-condensed .hero-main{
   display:flex!important;
@@ -1761,10 +1761,10 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   min-height:414px!important;
   margin:14px 14px 14px 0!important;
   border:1px solid var(--border-soft)!important;
-  border-radius:20px!important;
+  border-radius:18px!important;
   background-color:var(--surface-soft)!important;
   overflow:hidden!important;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)!important;
+  box-shadow:none!important;
 }
 .app-view-current .v15-home-visual::after{
   background:linear-gradient(90deg,rgba(250,247,241,.10),transparent 34%),linear-gradient(180deg,transparent 64%,rgba(29,35,41,.10))!important;
@@ -1772,22 +1772,35 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 
 /* Current mortgage/home summary: crisp floating parchment tiles. */
 body .app-view-current .v15-current-stats{
-  gap:10px!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:12px!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
 }
 body .app-view-current .v15-current-stats .v15-stat{
-  min-height:104px!important;
+  min-width:0!important;
+  min-height:112px!important;
+  height:auto!important;
   padding:16px 17px!important;
-  border-color:var(--border)!important;
-  border-radius:var(--radius-tile)!important;
+  border:1px solid var(--border)!important;
+  border-radius:18px!important;
   background:var(--surface-control)!important;
-  box-shadow:var(--shadow-tile)!important;
+  box-shadow:none!important;
+  overflow:visible!important;
 }
 body .app-view-current .v15-current-stats .v15-stat span{
+  display:block!important;
   color:var(--muted)!important;
   font-size:9px!important;
   font-weight:700!important;
   letter-spacing:.035em!important;
+  line-height:1.35!important;
   text-transform:uppercase!important;
+  white-space:normal!important;
+  overflow-wrap:break-word!important;
 }
 body .app-view-current .v15-current-stats .v15-stat strong{
   margin-top:6px!important;
@@ -1795,9 +1808,13 @@ body .app-view-current .v15-current-stats .v15-stat strong{
   font-size:23px!important;
 }
 body .app-view-current .v15-current-stats .v15-stat small{
+  display:block!important;
   margin-top:5px!important;
   color:var(--muted-2)!important;
   font-size:9px!important;
+  line-height:1.35!important;
+  white-space:normal!important;
+  overflow-wrap:break-word!important;
 }
 body .app-view-current .v15-current-stats .v15-stat.is-warm{
   background:linear-gradient(145deg,var(--surface-control),rgba(234,215,192,.42))!important;
@@ -1843,7 +1860,7 @@ body .app-view-current .v15-current-stats .v15-stat.is-positive small{color:var(
 .app-view-current .chart-panel.trajectory-with-what-if{
   background:var(--surface-control)!important;
   border-color:var(--border)!important;
-  box-shadow:var(--shadow-card)!important;
+  box-shadow:none!important;
 }
 .app-view-current .trajectory-with-what-if>.panel-heading{
   padding:24px 26px 18px!important;
@@ -1911,7 +1928,7 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   background:var(--ink-active)!important;
   border-color:var(--ink-active)!important;
   color:var(--ink-on-active)!important;
-  box-shadow:0 7px 18px rgba(29,35,41,.10)!important;
+  box-shadow:none!important;
 }
 .app-view-current .trajectory-with-what-if>.chart-wrap{
   margin:18px 26px 0!important;
@@ -1919,7 +1936,7 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   border-color:var(--border-soft)!important;
   border-radius:var(--radius-tile)!important;
   background:var(--surface-soft)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.55)!important;
+  box-shadow:none!important;
 }
 .app-view-current .trajectory-with-what-if>.legend{
   margin:10px 26px 0!important;
@@ -1933,15 +1950,15 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 
 @media(hover:hover) and (pointer:fine){
   body .app-view-current .v15-current-stats .v15-stat:hover{
-    transform:translateY(-1px)!important;
+    transform:none!important;
     border-color:rgba(183,131,77,.20)!important;
-    box-shadow:0 12px 28px rgba(29,35,41,.055)!important;
+    box-shadow:none!important;
   }
   .app-view-current .hero-panel:hover,
   .app-view-current .chart-panel:hover{
     transform:none!important;
     border-color:var(--border)!important;
-    box-shadow:var(--shadow-card)!important;
+    box-shadow:none!important;
   }
 }
 
@@ -1964,7 +1981,7 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   .app-view-current .v15-home-visual{
     min-height:230px!important;
     margin:0 10px 10px!important;
-    border-radius:16px!important;
+    border-radius:18px!important;
   }
   body .app-view-current .v15-current-stats{
     gap:9px!important;
@@ -2063,9 +2080,9 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 .app-view-current .v15-current-journey{
   padding:18px 22px 20px!important;
   border:1px solid var(--border)!important;
-  border-radius:20px!important;
+  border-radius:18px!important;
   background:var(--surface-control)!important;
-  box-shadow:var(--shadow-soft)!important;
+  box-shadow:none!important;
 }
 .app-view-current .v15-current-journey-head{
   align-items:flex-end!important;
@@ -2186,7 +2203,7 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 @media(max-width:700px){
   .app-view-current .v15-current-journey{
     padding:16px 16px 17px!important;
-    border-radius:17px!important;
+    border-radius:18px!important;
   }
   .app-view-current .v15-current-journey-head{
     margin-bottom:16px!important;
@@ -2276,7 +2293,7 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   background:var(--ink-active)!important;
   border-color:var(--ink-active)!important;
   color:var(--ink-on-active)!important;
-  box-shadow:0 7px 18px rgba(29,35,41,.10)!important;
+  box-shadow:none!important;
 }
 .app-view-current .trajectory-custom-overpay{
   display:flex!important;
@@ -2404,9 +2421,9 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 .app-view-upcoming .upcoming-section{
   padding:24px 26px!important;
   border:1px solid var(--border)!important;
-  border-radius:22px!important;
+  border-radius:18px!important;
   background:var(--surface-control)!important;
-  box-shadow:var(--shadow-card)!important;
+  box-shadow:none!important;
 }
 .app-view-upcoming .upcoming-section-heading{
   margin:0 0 18px!important;
@@ -2521,7 +2538,7 @@ body[data-app-view="upcoming"] #dealPlannerRateGrid>.deal-planner-rate:focus-wit
   min-height:138px!important;
   padding:16px!important;
   border:1px solid var(--border-soft)!important;
-  border-radius:16px!important;
+  border-radius:18px!important;
   background:var(--surface-soft)!important;
   box-shadow:none!important;
 }
@@ -2616,7 +2633,7 @@ body[data-app-view="upcoming"] #dealPlannerSummary>div:hover{
   min-height:118px!important;
   padding:17px 18px!important;
   border:1px solid var(--border-soft)!important;
-  border-radius:16px!important;
+  border-radius:18px!important;
   background:var(--surface-soft)!important;
   box-shadow:none!important;
 }
@@ -2783,9 +2800,9 @@ body[data-app-view="upcoming"] #dealPlannerSummary>div>small{
   margin:0!important;
   padding:24px 26px!important;
   border:1px solid var(--border)!important;
-  border-radius:22px!important;
+  border-radius:18px!important;
   background:var(--surface-control)!important;
-  box-shadow:var(--shadow-card)!important;
+  box-shadow:none!important;
   overflow:hidden!important;
 }
 
@@ -2794,7 +2811,7 @@ body[data-app-view="upcoming"] #dealPlannerSummary>div>small{
   min-height:64px!important;
   padding:12px 16px!important;
   border:1px solid rgba(183,131,77,.16)!important;
-  border-radius:16px!important;
+  border-radius:18px!important;
   background:var(--accent-wash)!important;
   box-shadow:none!important;
 }
@@ -2880,7 +2897,7 @@ body[data-app-view="upcoming"] #dealPlannerSummary>div>small{
   min-height:126px!important;
   padding:17px 18px!important;
   border:1px solid var(--border-soft)!important;
-  border-radius:16px!important;
+  border-radius:18px!important;
   background:var(--surface-soft)!important;
   box-shadow:none!important;
 }
@@ -3064,7 +3081,7 @@ body[data-app-view="upcoming"] #dealPlannerSummary>div>small{
   min-height:122px!important;
   padding:17px 18px!important;
   border:1px solid var(--border-soft)!important;
-  border-radius:16px!important;
+  border-radius:18px!important;
   background:var(--surface-soft)!important;
   box-shadow:none!important;
 }
@@ -3125,7 +3142,7 @@ body[data-app-view="upcoming"] #dealPlannerSummary>div>small{
   gap:0!important;
   margin:0!important;
   border:1px solid var(--border-soft)!important;
-  border-radius:16px!important;
+  border-radius:18px!important;
   background:var(--surface-soft)!important;
   overflow:hidden!important;
 }
@@ -3238,7 +3255,7 @@ body[data-app-view="upcoming"] #dealPlannerSummary>div>small{
   .app-view-future #nextHomePlanner:hover{
     transform:none!important;
     border-color:var(--border)!important;
-    box-shadow:var(--shadow-card)!important;
+    box-shadow:none!important;
   }
 }
 
@@ -3323,7 +3340,7 @@ body[data-app-view="upcoming"] #dealPlannerSummary>div>small{
   border:1px solid rgba(68,58,48,.10)!important;
   border-radius:18px!important;
   background:#fffaf4!important;
-  box-shadow:0 8px 24px rgba(62,49,38,.035)!important;
+  box-shadow:none!important;
 }
 .app-view-future #futureWaitPlanner .next-home-timeline-rows::before{
   content:""!important;
@@ -3555,215 +3572,3 @@ body .trajectory-overpay-row button:hover,
 body .future-assumption-controls button:hover{background:var(--theme-hover)!important}
 
 
-/* Visual audit 01 — Current hero: let progress live in the editorial layout, not another card. */
-body .app-view-current .v15-hero-progress{
-  margin-top:28px!important;
-  padding:20px 0 0!important;
-  border:0!important;
-  border-top:1px solid var(--border-soft)!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-body .app-view-current .v15-hero-progress-head{
-  display:flex!important;
-  align-items:baseline!important;
-  justify-content:space-between!important;
-  gap:18px!important;
-}
-body .app-view-current .v15-hero-progress-head span{
-  color:var(--muted)!important;
-  font-size:9px!important;
-  font-weight:800!important;
-  letter-spacing:.09em!important;
-  text-transform:uppercase!important;
-}
-body .app-view-current .v15-hero-progress-head strong{
-  color:var(--theme-hero-ink)!important;
-  font-family:var(--font-ui)!important;
-  font-size:12px!important;
-  font-weight:800!important;
-}
-body .app-view-current .v15-hero-progress-track{
-  height:7px!important;
-  margin-top:11px!important;
-  border-radius:999px!important;
-}
-body .app-view-current .v15-hero-progress-foot{
-  margin-top:10px!important;
-  font-size:10px!important;
-}
-body .app-view-current .v15-hero-progress-foot span:first-child{
-  color:var(--equity)!important;
-  font-weight:750!important;
-}
-body .app-view-current .v15-hero-progress-foot span:last-child{
-  color:var(--muted)!important;
-}
-
-
-/* Visual reset — one consistent flat card language across Current, Upcoming and Future. */
-body .app-view-current .hero-panel,
-body .app-view-current .panel,
-body .app-view-current .chart-panel,
-body .app-view-current .v15-current-stats .v15-stat,
-body .app-view-current .v15-current-journey,
-body .app-view-current .trajectory-scenario-controls,
-body .app-view-upcoming .upcoming-section,
-body .app-view-upcoming .current-fix-stats>div,
-body .app-view-upcoming .deal-planner-rate,
-body .app-view-upcoming .deal-planner-summary>div,
-body .app-view-upcoming .live-rate-choices,
-body .app-view-upcoming .live-rate-card,
-body .app-view-upcoming .deal-planner-empty,
-body .app-view-future .future-overpayment-assumption,
-body .app-view-future .future-model-range-panel,
-body .app-view-future .future-wait-planner,
-body .app-view-future .temporal-feature-home-projection,
-body .app-view-future .temporal-feature-next-home,
-body .app-view-future .temporal-feature-cost-comparison,
-body .app-view-future .home-profile-range>div,
-body .app-view-future .next-home-summary-card,
-body .app-view-future .next-home-timeline-row,
-body .app-view-future .property-cost-card,
-body .app-view-future .future-wait-host{
-  border:1px solid var(--border)!important;
-  border-radius:18px!important;
-  box-shadow:none!important;
-  transform:none!important;
-}
-
-@media(hover:hover) and (pointer:fine){
-  body .app-view-current .hero-panel:hover,
-  body .app-view-current .panel:hover,
-  body .app-view-current .chart-panel:hover,
-  body .app-view-current .v15-current-stats .v15-stat:hover,
-  body .app-view-current .v15-current-journey:hover,
-  body .app-view-upcoming .upcoming-section:hover,
-  body .app-view-upcoming .current-fix-stats>div:hover,
-  body .app-view-upcoming .deal-planner-rate:hover,
-  body .app-view-upcoming .deal-planner-summary>div:hover,
-  body .app-view-upcoming .live-rate-card:hover,
-  body .app-view-future .future-overpayment-assumption:hover,
-  body .app-view-future .future-model-range-panel:hover,
-  body .app-view-future .future-wait-planner:hover,
-  body .app-view-future .temporal-feature-home-projection:hover,
-  body .app-view-future .temporal-feature-next-home:hover,
-  body .app-view-future .temporal-feature-cost-comparison:hover,
-  body .app-view-future .home-profile-range>div:hover,
-  body .app-view-future .next-home-summary-card:hover,
-  body .app-view-future .next-home-timeline-row:hover,
-  body .app-view-future .property-cost-card:hover,
-  body .app-view-future .future-wait-host:hover{
-    box-shadow:none!important;
-    transform:none!important;
-  }
-}
-
-/* Restore the four Current summary facts as cards within the shared flat system. */
-body .app-view-current .v15-current-stats{
-  display:grid!important;
-  grid-template-columns:repeat(4,minmax(0,1fr))!important;
-  gap:12px!important;
-  margin-top:0!important;
-  padding:0!important;
-  border:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-body .app-view-current .v15-current-stats .v15-stat,
-body .app-view-current .v15-current-stats .v15-stat:hover{
-  min-height:104px!important;
-  padding:16px 17px!important;
-  border:1px solid var(--border)!important;
-  border-radius:18px!important;
-  background:var(--surface-control)!important;
-  background-image:none!important;
-  box-shadow:none!important;
-  opacity:1!important;
-  transform:none!important;
-}
-@media(max-width:760px){
-  body .app-view-current .v15-current-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-}
-@media(max-width:500px){
-  body .app-view-current .v15-current-stats{grid-template-columns:1fr!important}
-}
-
-/* Keep internal progress treatment integrated; it is not a standalone card. */
-body .app-view-current .v15-hero-progress{
-  border:0!important;
-  border-top:1px solid var(--border-soft)!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-
-
-/* Flat-card cleanup — remove the remaining hero/image depth and keep card copy inside bounds. */
-body .app-view-current .hero-panel,
-body .app-view-current .hero-panel.current-hero-condensed,
-body .app-view-current .hero-panel:hover{
-  box-shadow:none!important;
-  filter:none!important;
-}
-body .app-view-current .v15-home-visual,
-body .app-view-current .v15-home-visual:hover{
-  box-shadow:none!important;
-  filter:none!important;
-}
-body .app-view-current .v15-home-visual::after{
-  background:linear-gradient(90deg,color-mix(in srgb,var(--surface) 10%,transparent),transparent 34%)!important;
-  box-shadow:none!important;
-}
-
-/* Card text-fit guardrails. Labels may wrap; figures stay intact. */
-body .app-view-current .v15-current-stats .v15-stat,
-body .app-view-upcoming .current-fix-stats>div,
-body .app-view-upcoming .deal-planner-rate,
-body .app-view-upcoming .deal-planner-summary>div,
-body .app-view-future .home-profile-range>div,
-body .app-view-future .next-home-summary-card,
-body .app-view-future .next-home-timeline-row,
-body .app-view-future .property-cost-card{
-  box-sizing:border-box!important;
-  min-width:0!important;
-  height:auto!important;
-  overflow:visible!important;
-}
-body .app-view-current .v15-current-stats .v15-stat span,
-body .app-view-current .v15-current-stats .v15-stat small,
-body .app-view-upcoming .current-fix-stats span,
-body .app-view-upcoming .current-fix-stats small,
-body .app-view-upcoming .deal-planner-rate span,
-body .app-view-upcoming .deal-planner-rate em,
-body .app-view-upcoming .deal-planner-summary span,
-body .app-view-upcoming .deal-planner-summary small,
-body .app-view-future .home-profile-range span,
-body .app-view-future .home-profile-range small,
-body .app-view-future .next-home-summary-card span,
-body .app-view-future .next-home-summary-card small,
-body .app-view-future .next-home-timeline-row span,
-body .app-view-future .next-home-timeline-row small,
-body .app-view-future .property-cost-card span,
-body .app-view-future .property-cost-card small{
-  white-space:normal!important;
-  overflow-wrap:break-word!important;
-  word-break:normal!important;
-  line-height:1.35!important;
-}
-body .app-view-current .v15-current-stats .v15-stat strong,
-body .app-view-upcoming .current-fix-stats strong,
-body .app-view-upcoming .deal-planner-rate strong,
-body .app-view-upcoming .deal-planner-summary strong,
-body .app-view-future .home-profile-range strong,
-body .app-view-future .next-home-summary-card strong,
-body .app-view-future .next-home-timeline-row strong,
-body .app-view-future .property-cost-card strong{
-  max-width:100%!important;
-  white-space:normal!important;
-  overflow-wrap:normal!important;
-}
-body .app-view-current .v15-current-stats .v15-stat{
-  min-height:112px!important;
-}
