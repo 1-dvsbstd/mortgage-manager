@@ -174,3 +174,13 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 ## Parked post-consolidation product notes
 - [ ] Upgrade native select/dropdown presentation for a more premium menu treatment
 - [ ] Recent valuation / estimate should store and display its valuation date
+
+
+## Parked visual-character notes
+- [ ] Current visual character pass — add a few more non-text visual anchors without making the page busy
+- [ ] Replace Current hero house artwork with a more premium illustration
+- [ ] Refresh mortgage-journey iconography as one coherent icon system
+- [ ] Add 2–3 restrained supporting visuals or mini data graphics where they genuinely improve scanning
+- [ ] Refine chart styling so charts feel designed as part of the product rather than embedded utilities
+- [ ] Use status markers / milestone cues selectively for progress and opportunities
+- [ ] Keep the rule: roughly one strong visual anchor per major section, not decorative elements on every card
