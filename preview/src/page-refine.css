@@ -3600,3 +3600,101 @@ body .app-view-current .v15-hero-progress-foot span:first-child{
 body .app-view-current .v15-hero-progress-foot span:last-child{
   color:var(--muted)!important;
 }
+
+
+/* Visual reset — one consistent flat card language across Current, Upcoming and Future. */
+body .app-view-current .hero-panel,
+body .app-view-current .panel,
+body .app-view-current .chart-panel,
+body .app-view-current .v15-current-stats .v15-stat,
+body .app-view-current .v15-current-journey,
+body .app-view-current .trajectory-scenario-controls,
+body .app-view-upcoming .upcoming-section,
+body .app-view-upcoming .current-fix-stats>div,
+body .app-view-upcoming .deal-planner-rate,
+body .app-view-upcoming .deal-planner-summary>div,
+body .app-view-upcoming .live-rate-choices,
+body .app-view-upcoming .live-rate-card,
+body .app-view-upcoming .deal-planner-empty,
+body .app-view-future .future-overpayment-assumption,
+body .app-view-future .future-model-range-panel,
+body .app-view-future .future-wait-planner,
+body .app-view-future .temporal-feature-home-projection,
+body .app-view-future .temporal-feature-next-home,
+body .app-view-future .temporal-feature-cost-comparison,
+body .app-view-future .home-profile-range>div,
+body .app-view-future .next-home-summary-card,
+body .app-view-future .next-home-timeline-row,
+body .app-view-future .property-cost-card,
+body .app-view-future .future-wait-host{
+  border:1px solid var(--border)!important;
+  border-radius:18px!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+
+@media(hover:hover) and (pointer:fine){
+  body .app-view-current .hero-panel:hover,
+  body .app-view-current .panel:hover,
+  body .app-view-current .chart-panel:hover,
+  body .app-view-current .v15-current-stats .v15-stat:hover,
+  body .app-view-current .v15-current-journey:hover,
+  body .app-view-upcoming .upcoming-section:hover,
+  body .app-view-upcoming .current-fix-stats>div:hover,
+  body .app-view-upcoming .deal-planner-rate:hover,
+  body .app-view-upcoming .deal-planner-summary>div:hover,
+  body .app-view-upcoming .live-rate-card:hover,
+  body .app-view-future .future-overpayment-assumption:hover,
+  body .app-view-future .future-model-range-panel:hover,
+  body .app-view-future .future-wait-planner:hover,
+  body .app-view-future .temporal-feature-home-projection:hover,
+  body .app-view-future .temporal-feature-next-home:hover,
+  body .app-view-future .temporal-feature-cost-comparison:hover,
+  body .app-view-future .home-profile-range>div:hover,
+  body .app-view-future .next-home-summary-card:hover,
+  body .app-view-future .next-home-timeline-row:hover,
+  body .app-view-future .property-cost-card:hover,
+  body .app-view-future .future-wait-host:hover{
+    box-shadow:none!important;
+    transform:none!important;
+  }
+}
+
+/* Restore the four Current summary facts as cards within the shared flat system. */
+body .app-view-current .v15-current-stats{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:12px!important;
+  margin-top:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body .app-view-current .v15-current-stats .v15-stat,
+body .app-view-current .v15-current-stats .v15-stat:hover{
+  min-height:104px!important;
+  padding:16px 17px!important;
+  border:1px solid var(--border)!important;
+  border-radius:18px!important;
+  background:var(--surface-control)!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  opacity:1!important;
+  transform:none!important;
+}
+@media(max-width:760px){
+  body .app-view-current .v15-current-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:500px){
+  body .app-view-current .v15-current-stats{grid-template-columns:1fr!important}
+}
+
+/* Keep internal progress treatment integrated; it is not a standalone card. */
+body .app-view-current .v15-hero-progress{
+  border:0!important;
+  border-top:1px solid var(--border-soft)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
