@@ -87,10 +87,10 @@
       copy.className = 'v15-home-copy';
       copy.innerHTML = `
         <p class="v15-greeting"></p>
-        <h1><span class="v15-equity-value">—</span><br>equity in your home</h1>
-        <p class="v15-subline">That’s <strong class="v15-owned-pct">—</strong> of the share you own</p>
+        <h1><span class="v15-equity-value">—</span></h1>
+        <p class="v15-subline">—</p>
         <div class="v15-hero-progress">
-          <div class="v15-hero-progress-head"><span>Your share paid off</span><strong class="v15-progress-value">—</strong></div>
+          <div class="v15-hero-progress-head"><span>Your progress</span><strong class="v15-progress-value">—</strong></div>
           <div class="v15-hero-progress-track"><i></i></div>
           <div class="v15-hero-progress-foot"><span class="v15-progress-owned">— equity</span><span class="v15-progress-debt">— mortgage remaining</span></div>
         </div>`;
@@ -153,11 +153,20 @@
     if (!hero || !grid || !action) return;
 
     $('.v15-greeting', hero).textContent = greeting();
-    $('.v15-equity-value', hero).textContent = money(c.equity);
-    $('.v15-owned-pct', hero).textContent = pct(c.ownedSharePct);
-    $('.v15-progress-value', hero).textContent = pct(c.ownedSharePct);
-    $('.v15-progress-owned', hero).textContent = `${pct(c.ownedSharePct)} equity`;
-    $('.v15-progress-debt', hero).textContent = `${pct(100 - c.ownedSharePct)} mortgage remaining`;
+    $('.v15-equity-value', hero).textContent = `You’ve built ${money(c.equity)} in equity`;
+    const subline = $('.v15-subline', hero);
+    if (subline) {
+      const p=c.ownedSharePct;
+      subline.textContent = p >= 95 ? 'Almost mortgage-free.'
+        : p >= 75 ? 'Well over three quarters of the way there.'
+        : p >= 55 ? 'More than halfway to being mortgage-free.'
+        : p >= 40 ? 'Nearly halfway to being mortgage-free.'
+        : p >= 20 ? 'A solid start towards being mortgage-free.'
+        : 'Every payment is building your position.';
+    }
+    $('.v15-progress-value', hero).textContent = `${pct(c.ownedSharePct)} paid off`;
+    $('.v15-progress-owned', hero).textContent = `${money(c.equity)} equity`;
+    $('.v15-progress-debt', hero).textContent = `${money(c.balance)} mortgage remaining`;
     const fill = $('.v15-hero-progress-track i', hero); if (fill) fill.style.width = `${c.ownedSharePct}%`;
 
     $('[data-v15="balance"]', grid).textContent = money(c.balance);
