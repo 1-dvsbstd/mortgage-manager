@@ -61,7 +61,7 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Replace homepage house artwork with premium new image
 - [x] Mortgage progress block
 - [x] Metric strip
-- [ ] Overpayment controls
+- [x] Overpayment controls
 - [x] Home/equity presentation
 - [x] Trajectory card and controls
 - [x] Current-page responsive rules
