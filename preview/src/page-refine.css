@@ -3452,3 +3452,13 @@ body[data-app-view="upcoming"] #dealPlannerSummary>div>small{
   }
   .app-view-future #propertyCostComparison{padding:18px!important}
 }
+
+
+/* Current-equity section explainer */
+.app-view-future #nextHomePlanner .next-home-heading-note{
+  margin:6px 0 0!important;
+  max-width:620px!important;
+  color:var(--muted)!important;
+  font-size:10px!important;
+  line-height:1.45!important;
+}
