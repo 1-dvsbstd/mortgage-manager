@@ -2192,3 +2192,206 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
     margin-bottom:16px!important;
   }
 }
+
+
+/* Premium Step 2.3 — Current overpayment controls */
+.app-view-current .trajectory-scenario-controls{
+  margin:0 26px!important;
+  padding:18px 0 20px!important;
+  border:0!important;
+  border-bottom:1px solid var(--border-soft)!important;
+  border-radius:0!important;
+  background:transparent!important;
+}
+.app-view-current .trajectory-scenario-copy{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:end!important;
+  gap:24px!important;
+  margin:0 0 16px!important;
+  padding:0 0 14px!important;
+  border-bottom:1px solid var(--border-soft)!important;
+}
+.app-view-current .trajectory-scenario-copy h3{
+  margin:0!important;
+  color:var(--text)!important;
+  font-family:var(--font-display)!important;
+  font-size:18px!important;
+  font-weight:600!important;
+  letter-spacing:-.02em!important;
+}
+.app-view-current .trajectory-scenario-copy p,
+.app-view-current .trajectory-scenario-copy small{
+  color:var(--muted)!important;
+}
+.app-view-current .trajectory-current-saving{
+  min-width:190px!important;
+  text-align:right!important;
+}
+.app-view-current .trajectory-current-saving>span{
+  color:var(--muted-2)!important;
+  font-size:9px!important;
+  font-weight:750!important;
+  letter-spacing:.06em!important;
+  text-transform:uppercase!important;
+}
+.app-view-current .trajectory-current-saving>strong{
+  margin-top:4px!important;
+  color:var(--text)!important;
+  font-family:var(--font-display)!important;
+  font-size:19px!important;
+  font-weight:600!important;
+}
+.app-view-current .trajectory-current-saving>small{
+  margin-top:4px!important;
+  color:var(--accent-strong)!important;
+  font-size:10px!important;
+}
+.app-view-current .trajectory-overpay-row{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:8px!important;
+}
+.app-view-current .trajectory-overpay-row button,
+.app-view-current .trajectory-custom-overpay{
+  min-height:40px!important;
+  border:1px solid var(--border)!important;
+  border-radius:11px!important;
+  background:var(--surface-control)!important;
+  color:var(--text)!important;
+  box-shadow:none!important;
+}
+.app-view-current .trajectory-overpay-row button{
+  min-width:68px!important;
+  padding:8px 13px!important;
+  font-size:11px!important;
+  font-weight:750!important;
+}
+.app-view-current .trajectory-overpay-row button:hover{
+  border-color:var(--accent)!important;
+  background:var(--accent-wash)!important;
+}
+.app-view-current .trajectory-overpay-row button.active{
+  background:var(--ink-active)!important;
+  border-color:var(--ink-active)!important;
+  color:var(--ink-on-active)!important;
+  box-shadow:0 7px 18px rgba(29,35,41,.10)!important;
+}
+.app-view-current .trajectory-custom-overpay{
+  display:flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  padding:8px 11px!important;
+  color:var(--muted)!important;
+  font-size:10px!important;
+  font-weight:700!important;
+}
+.app-view-current .trajectory-custom-overpay input{
+  width:70px!important;
+  min-width:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  color:var(--text)!important;
+  font:inherit!important;
+  font-size:11px!important;
+  font-weight:800!important;
+  outline:0!important;
+  box-shadow:none!important;
+}
+.app-view-current .whatif-regular-inline{
+  grid-template-columns:minmax(150px,.6fr) minmax(0,1.4fr)!important;
+  gap:12px!important;
+  margin:0 0 15px!important;
+  padding:0!important;
+  border:0!important;
+}
+.app-view-current .whatif-regular-label{
+  align-self:center!important;
+}
+.app-view-current .whatif-regular-label span{
+  color:var(--muted)!important;
+  font-size:9px!important;
+  font-weight:750!important;
+  letter-spacing:.04em!important;
+  text-transform:uppercase!important;
+}
+.app-view-current .whatif-regular-label strong{
+  margin-top:5px!important;
+  color:var(--text)!important;
+  font-family:var(--font-display)!important;
+  font-size:18px!important;
+  font-weight:600!important;
+}
+.app-view-current .whatif-regular-live{
+  grid-template-columns:minmax(0,.9fr) minmax(190px,1.1fr)!important;
+  gap:9px!important;
+}
+.app-view-current .whatif-regular-live .current-savings-summary,
+.app-view-current .whatif-regular-live .current-overpay-control{
+  min-height:74px!important;
+  margin:0!important;
+  padding:12px 13px!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:12px!important;
+  background:var(--surface-soft)!important;
+  box-shadow:none!important;
+}
+.app-view-current .whatif-regular-live .current-savings-summary span,
+.app-view-current .whatif-regular-live .current-overpay-control label,
+.app-view-current .whatif-regular-live .current-overpay-control small{
+  color:var(--muted)!important;
+  font-size:9px!important;
+}
+.app-view-current .whatif-regular-live .current-savings-summary strong{
+  margin-top:4px!important;
+  color:var(--text)!important;
+  font-family:var(--font-display)!important;
+  font-size:17px!important;
+  font-weight:600!important;
+}
+.app-view-current .whatif-regular-live .current-overpay-control input{
+  width:100%!important;
+  max-width:none!important;
+  min-height:32px!important;
+  margin-top:4px!important;
+  border:1px solid var(--border)!important;
+  border-radius:9px!important;
+  background:var(--surface-control)!important;
+  color:var(--text)!important;
+}
+@media(max-width:900px){
+  .app-view-current .whatif-regular-inline{
+    grid-template-columns:1fr!important;
+  }
+}
+@media(max-width:700px){
+  .app-view-current .trajectory-scenario-controls{
+    margin:0 18px!important;
+    padding:16px 0 17px!important;
+  }
+  .app-view-current .trajectory-scenario-copy{
+    grid-template-columns:1fr!important;
+    gap:9px!important;
+  }
+  .app-view-current .trajectory-current-saving{
+    min-width:0!important;
+    text-align:left!important;
+  }
+  .app-view-current .whatif-regular-live{
+    grid-template-columns:1fr!important;
+  }
+  .app-view-current .trajectory-overpay-row{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+  .app-view-current .trajectory-overpay-row button{
+    min-width:0!important;
+    width:100%!important;
+  }
+  .app-view-current .trajectory-custom-overpay{
+    grid-column:1/-1!important;
+    justify-content:center!important;
+  }
+}
