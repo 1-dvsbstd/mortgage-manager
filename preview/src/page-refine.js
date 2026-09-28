@@ -296,7 +296,7 @@
     if(!wait){
       wait=document.createElement('section');
       wait.id='futureWaitPlanner'; wait.className='panel future-wait-planner';
-      wait.innerHTML='<div class="future-wait-heading"><p class="eyebrow">Looking ahead</p><h2>How your next-home budget could grow over time</h2></div><div class="future-wait-host"></div>';
+      wait.innerHTML='<div class="future-wait-heading"><p class="eyebrow">Looking ahead</p><h2>How your next-home budget could grow over time</h2><p class="future-wait-subtitle">Combines projected home value, your falling mortgage balance and your saved borrowing assumptions.</p></div><div class="future-wait-host"></div>';
       planner.insertAdjacentElement('afterend',wait);
     }
     const host=$('.future-wait-host',wait);
@@ -337,7 +337,7 @@
       if(!rangePanel){
         rangePanel=document.createElement('section');
         rangePanel.id='futureModelRange'; rangePanel.className='panel future-model-range-panel';
-        rangePanel.innerHTML='<div class="future-model-heading"><p class="eyebrow">Property forecast</p><h2>Where your home value could be heading</h2><p class="future-model-subtitle">Based on local HPI history</p></div><div class="future-model-range-host"></div>';
+        rangePanel.innerHTML='<div class="future-model-heading"><p class="eyebrow">Property forecast</p><h2>Where your home value could be heading</h2><p class="future-model-subtitle">Property value only · based on local HPI history</p></div><div class="future-model-range-host"></div>';
         home.insertAdjacentElement('afterend',rangePanel);
       }
       const host=$('.future-model-range-host',rangePanel);
