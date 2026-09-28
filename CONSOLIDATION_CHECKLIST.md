@@ -185,3 +185,12 @@ This checklist tracks the consolidation and final visual-polish pass on the `des
 - [ ] Refine chart styling so charts feel designed as part of the product rather than embedded utilities
 - [ ] Use status markers / milestone cues selectively for progress and opportunities
 - [ ] Keep the rule: roughly one strong visual anchor per major section, not decorative elements on every card
+
+
+## Mortgage model notes
+- [x] Mortgage LTV clarified as first-mortgage balance ÷ full property value
+- [x] Upcoming LTV progression can show purchase → today → deal end when purchase history is available
+- [x] Government / other ownership share remains separate from mortgage LTV
+- [x] Optional second-charge / secured-loan fields added to Current Setup
+- [x] Combined secured LTV is shown separately only when a second charge exists
+- [ ] Revisit the visual treatment of balance and LTV progression after logic review
