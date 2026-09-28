@@ -35,86 +35,95 @@ jobs:
               n = year * 12 + (month - 1) + delta
               return n // 12, n % 12 + 1
 
+          def parse_month(value):
+              value = str(value or '').strip()
+              for fmt in ('%d/%m/%Y', '%Y-%m-%d', '%Y-%m'):
+                  try:
+                      return datetime.strptime(value[:10], fmt).strftime('%Y-%m')
+                  except Exception:
+                      pass
+              return ''
+
           today = date.today()
-          months = []
-          # UK HPI is normally published around two months in arrears. Keep
-          # 18 releases so an older linked-data anchor can always overlap.
-          for delta in range(-2, -20, -1):
+          candidates = []
+          for delta in range(-2, -10, -1):
               y, m = shift_month(today.year, today.month, delta)
-              months.append(f'{y:04d}-{m:02d}')
+              candidates.append(f'{y:04d}-{m:02d}')
 
-          areas = {}
-          downloaded = []
-
-          for month in months:
+          raw = None
+          release_month = ''
+          for month in candidates:
               url = BASE.format(month=month)
               try:
                   req = urllib.request.Request(url, headers={'User-Agent': 'Mortgage-Manager-HPI-Updater/1.0'})
-                  with urllib.request.urlopen(req, timeout=30) as response:
+                  with urllib.request.urlopen(req, timeout=45) as response:
                       raw = response.read().decode('utf-8-sig')
+                  release_month = month
+                  print(f'Using official UK HPI property-type file: {month}')
+                  break
               except Exception as exc:
                   print(f'{month}: unavailable ({exc})')
+
+          if not raw:
+              raise SystemExit('No official HPI property-type file could be downloaded.')
+
+          rows = list(csv.reader(io.StringIO(raw)))
+          if rows and rows[0] and str(rows[0][0]).strip().lower() == 'date':
+              rows = rows[1:]
+
+          cutoff_y, cutoff_m = shift_month(today.year, today.month, -26)
+          cutoff = f'{cutoff_y:04d}-{cutoff_m:02d}'
+          areas = {}
+          observed_months = set()
+
+          for row in rows:
+              if len(row) < 7:
+                  continue
+              month = parse_month(row[0])
+              if not month or month < cutoff:
                   continue
 
-              rows = list(csv.reader(io.StringIO(raw)))
-              if not rows:
+              region = str(row[1]).strip()
+              code = str(row[2]).strip().upper()
+              if not region or not code:
                   continue
 
-              # HMLR's individual attribute CSV files are published without
-              # column headers. The documented order for this file is:
-              # Date, RegionName, AreaCode, DetachedPrice,
-              # SemiDetachedPrice, TerracedPrice, FlatPrice.
-              if rows and rows[0] and str(rows[0][0]).strip().lower() == 'date':
-                  rows = rows[1:]
+              def num(value):
+                  try:
+                      value = str(value).strip().replace(',', '')
+                      return round(float(value), 2) if value else None
+                  except Exception:
+                      return None
 
-              row_count = 0
-              for row in rows:
-                  if len(row) < 7:
-                      continue
-                  region = str(row[1]).strip()
-                  code = str(row[2]).strip().upper()
-                  if not region or not code:
-                      continue
+              prices = {
+                  'detached': num(row[3]),
+                  'semiDetached': num(row[4]),
+                  'terraced': num(row[5]),
+                  'flat': num(row[6]),
+              }
+              if not any(v and v > 0 for v in prices.values()):
+                  continue
 
-                  def num(value):
-                      try:
-                          value = str(value).strip().replace(',', '')
-                          return round(float(value), 2) if value else None
-                      except Exception:
-                          return None
+              area = areas.setdefault(code, {'name': region, 'months': {}})
+              area['months'][month] = prices
+              observed_months.add(month)
 
-                  prices = {
-                      'detached': num(row[3]),
-                      'semiDetached': num(row[4]),
-                      'terraced': num(row[5]),
-                      'flat': num(row[6]),
-                  }
-                  if not any(v and v > 0 for v in prices.values()):
-                      continue
+          if not areas or not observed_months:
+              raise SystemExit('Downloaded HPI file did not contain usable recent property-type data.')
 
-                  area = areas.setdefault(code, {'name': region, 'months': {}})
-                  area['months'][month] = prices
-                  row_count += 1
-
-              if row_count:
-                  downloaded.append(month)
-                  print(f'{month}: {row_count} geographies')
-
-          if not downloaded:
-              raise SystemExit('No official HPI property-type files could be downloaded.')
-
-          downloaded.sort()
           for area in areas.values():
               available = sorted(area['months'])
               area['latestMonth'] = available[-1] if available else ''
 
+          observed_months = sorted(observed_months)
           payload = {
               'schema': 1,
               'source': 'HM Land Registry UK House Price Index',
               'sourceUrl': 'https://www.gov.uk/government/collections/uk-house-price-index-reports',
               'licence': 'UK Open Government Licence v3.0',
-              'latestMonth': downloaded[-1],
-              'months': downloaded,
+              'releaseMonth': release_month,
+              'latestMonth': observed_months[-1],
+              'months': observed_months,
               'generatedAt': datetime.now(timezone.utc).isoformat(),
               'areas': areas,
           }
@@ -124,13 +133,13 @@ jobs:
               with open(path, 'w', encoding='utf-8') as handle:
                   json.dump(payload, handle, separators=(',', ':'), ensure_ascii=False)
                   handle.write('\n')
-              print(f'wrote {path} ({len(areas)} geographies, latest {downloaded[-1]})')
+              print(f'wrote {path} ({len(areas)} geographies, latest {observed_months[-1]})')
           PY
 
       - name: Commit updated HPI bundle
         shell: bash
         run: |
-          if git diff --quiet -- public/hpi-local-property-type.json preview/public/hpi-local-property-type.json; then
+          if [ -z "$(git status --porcelain -- public/hpi-local-property-type.json preview/public/hpi-local-property-type.json)" ]; then
             echo "Official HPI bundle is already current."
             exit 0
           fi
