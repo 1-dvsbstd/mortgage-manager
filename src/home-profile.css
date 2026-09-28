@@ -28,3 +28,18 @@
 .home-value-history-total strong{color:var(--accent)}
 .home-value-history-empty{padding:10px 2px 2px;color:var(--muted);font-size:11px;line-height:1.45}
 @media(max-width:700px){.home-profile-range-head{display:grid;gap:5px;align-items:start}.home-profile-range-head small{text-align:left}.home-profile-range-values{grid-template-columns:1fr}.home-value-history-row,.home-value-history-total{grid-template-columns:88px 1fr}.home-value-history-row small{grid-column:2}.home-value-history-total strong{grid-column:2}}
+
+body[data-app-view="future"] #homeProjection .projection-core-card.current-estimate,
+body[data-app-view="future"] #homeProjection .projection-core-card.future-estimate,
+
+/* Selected/use actions stay warm and quiet rather than green. */
+body[data-app-view="future"] .projection-use-button{
+  background:var(--surface-control)!important;
+  border-color:#d3b99f!important;
+  color:#9d6639!important;
+}
+body[data-app-view="future"] .projection-use-button:hover{
+  background:#f2e7da!important;
+  border-color:#c88e5c!important;
+  color:#7d4e2b!important;
+}

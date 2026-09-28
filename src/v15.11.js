@@ -1,20 +1,4 @@
 (() => {
-  const mainViews = ['current','upcoming','future'];
-
-  function disableMainExpansion(){
-    mainViews.forEach((view) => {
-      document.querySelectorAll(`.app-view-${view} [data-expandable-card]`).forEach((card) => {
-        card.dataset.expandableDisabled = 'true';
-        card.classList.remove('is-expanded');
-        card.setAttribute('aria-expanded','false');
-        card.removeAttribute('tabindex');
-        card.querySelector('.card-close-bar')?.remove();
-      });
-    });
-    document.body.classList.remove('card-open');
-    document.querySelector('.card-backdrop')?.remove();
-  }
-
   function exposeMortgageSummary(){
     const hero = document.querySelector('.app-view-current .hero-panel');
     const tiles = document.getElementById('mortgageExtraTiles');
@@ -32,7 +16,6 @@
   }
 
   function run(){
-    disableMainExpansion();
     exposeMortgageSummary();
   }
 

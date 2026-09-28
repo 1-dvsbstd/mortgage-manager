@@ -13,7 +13,6 @@
 .summary-overpayment-value .current-overpay-suffix{color:var(--muted)!important;font-size:.62em!important;font-weight:600!important}
 
 .mortgage-extra-tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
-.hero-panel.is-expanded .mortgage-extra-tiles{display:grid!important}
 .summary-editable{cursor:pointer!important;transition:border-color .16s ease,background .16s ease,transform .16s ease}
 .summary-editable::after{content:'Edit';position:absolute;top:11px;right:12px;color:var(--accent);font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;opacity:.72}
 .summary-editable:hover,.summary-editable:focus-visible{border-color:rgba(104,222,185,.34)!important;background:rgba(104,222,185,.055)!important;outline:none}
@@ -38,7 +37,6 @@
 .compact-what-if-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .compact-what-if-buttons button{min-width:68px;min-height:40px;padding:8px 14px;border-radius:10px;font-weight:750}
 .compact-what-if-buttons button.active{background:var(--accent);color:#062018;border-color:transparent}
-.scenario-panel.is-expanded .compact-what-if{display:none}
 .scenario-panel>.expand-hint{display:none!important}
 .current-overpay-control{margin:4px 0 18px;padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--panel-soft)}
 .current-overpay-control label{display:grid;gap:7px;font-size:12px;color:var(--text);font-weight:700}
@@ -50,10 +48,8 @@
 .rate-buttons button{min-width:52px}
 
 .expandable-card:not(.is-expanded){cursor:pointer}
-.expandable-card.is-expanded{cursor:default}
 .chart-panel:not(.is-expanded) .chart-readout{display:none!important}
 .chart-panel:not(.is-expanded) canvas{pointer-events:none}
-.chart-panel.is-expanded canvas{pointer-events:auto;cursor:crosshair}
 .current-only-hidden{display:none!important}
 .deal-equity-hidden{display:none!important}
 .mortgage-deep-dive .deep-grid.three{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -119,3 +115,93 @@
   .summary-quick-actions{display:grid;grid-template-columns:1fr 1fr}
   .summary-quick-actions button{width:100%}
 }
+
+/* Keep the useful home/mortgage edit row visible without opening a modal card. */
+.app-view-current #mortgageExtraTiles{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:18px!important;
+  margin-top:18px!important;
+  padding-top:16px!important;
+  border-top:1px solid var(--border-soft)!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile{
+  min-width:0!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile span{
+  display:block!important;
+  color:var(--muted)!important;
+  font-size:11px!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile strong{
+  display:block!important;
+  margin-top:6px!important;
+  color:var(--text)!important;
+  font-size:18px!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable::after{
+  content:'Edit'!important;
+  position:absolute!important;
+  top:0!important;
+  right:0!important;
+  color:var(--accent-strong)!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  letter-spacing:.08em!important;
+  text-transform:uppercase!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable{
+  position:relative!important;
+  cursor:pointer!important;
+}
+
+@media(max-width:760px){
+  .app-view-current #mortgageExtraTiles{grid-template-columns:1fr!important;gap:12px!important}
+}
+
+/* Current journey — authoritative consolidated owner. */
+.v15-current-journey{
+  padding:17px 20px 18px;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  cursor:pointer;
+  outline:none;
+}
+.v15-current-journey:hover{border-color:transparent;background:transparent;box-shadow:none}
+.v15-current-journey:focus-visible{box-shadow:0 0 0 2px rgba(197,138,86,.18);border-radius:14px}
+.v15-current-journey-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:14px}
+.v15-current-journey-head>div>span{display:block;color:var(--accent-strong);font-size:9px;font-weight:800;letter-spacing:.10em;text-transform:uppercase}
+.v15-current-journey-head>div>strong{display:block;margin-top:3px;font-size:16px;letter-spacing:-.015em}
+.v15-current-journey-link{color:var(--accent-strong);font-size:11px;font-weight:800;white-space:nowrap}
+.v15-current-journey-track{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:relative;gap:0}
+.v15-current-journey-track::before{content:"";position:absolute;left:0;right:0;top:16px;height:2px;transform:translateY(-50%);background:#d7d7d2}
+.v15-current-journey-step{position:relative;z-index:1;display:grid;grid-template-columns:32px 1fr;align-items:center;gap:8px;min-width:0;padding:0 8px}
+.v15-current-journey-icon{box-sizing:border-box;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#faf7f1;border:2px solid #bcc5c1;color:#45515a;font-size:12px}
+.v15-current-journey-step.is-complete .v15-current-journey-icon{background:#eaf3ef;border-color:var(--equity);color:#467f70}
+.v15-current-journey-step.is-current .v15-current-journey-icon{background:#fff3e7;border-color:var(--accent);color:var(--accent-strong);box-shadow:0 0 0 4px rgba(197,138,86,.10)}
+.v15-current-journey-step strong{display:block;font-size:10px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v15-current-journey-step span{display:block;margin-top:2px;color:var(--muted);font-size:9px;white-space:nowrap}
+
+
+/* Journey is part of the hero, not another card. */
+.app-view-current .hero-panel.current-hero-condensed{grid-template-rows:auto 1fr!important}
+.app-view-current .v15-current-journey{
+  margin:0;
+  padding:15px 20px 16px;
+  border:1px solid var(--border)!important;
+  border-radius:20px!important;
+  background:var(--surface)!important;
+  box-shadow:0 12px 34px rgba(64,50,38,.05)!important;
+}
+
+.v15-current-journey-head{margin-bottom:9px!important;align-items:center!important}
+.v15-current-journey-head>div>strong{font-size:13px!important}
+.v15-current-journey-link{font-size:10px!important}
+.v15-current-journey-track::before{background:#d8d1c8!important}
+.v15-current-journey-step.is-complete .v15-current-journey-icon{background:#f7f3ed!important;border-color:#9ca9a4!important;color:#55625e!important}

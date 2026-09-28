@@ -82,3 +82,13 @@
   height:0!important;
   overflow:hidden!important;
 }
+
+/* Remove the last pale green card backgrounds. Keep colour as a small semantic accent only. */
+.deal-action-hint,
+body[data-app-view="upcoming"] .deal-action-hint{
+  background:#f2ebe2!important;
+  border-color:#ded0c0!important;
+}
+.deal-action-hint span{color:#9d6639!important}
+.deal-action-hint strong{color:var(--text)!important}
+.deal-action-hint small{color:#6d7278!important}
