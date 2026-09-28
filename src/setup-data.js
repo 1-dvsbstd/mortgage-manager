@@ -29,9 +29,6 @@
       rate: readNum('rate'),
       payment: readNum('payment'),
       currentOverpayment: readNum('currentOverpayment'),
-      secondChargeBalance: readNum('secondChargeBalance'),
-      secondChargeRate: readNum('secondChargeRate'),
-      secondChargePayment: readNum('secondChargePayment'),
       fixedEnd: $('fixedEnd')?.value || '',
     };
   }
@@ -53,9 +50,6 @@
       rate: Math.max(0, Number(state.rate) || 0),
       payment: Math.max(0, Number(state.payment) || 0),
       currentOverpayment: Math.max(0, Number(state.currentOverpayment) || 0),
-      secondChargeBalance: Math.max(0, Number(state.secondChargeBalance) || 0),
-      secondChargeRate: Math.max(0, Number(state.secondChargeRate) || 0),
-      secondChargePayment: Math.max(0, Number(state.secondChargePayment) || 0),
       fixedEnd: state.fixedEnd || '',
       payoffText: $('payoffDate')?.textContent || '',
       remainingText: $('yearsRemaining')?.textContent || '',
