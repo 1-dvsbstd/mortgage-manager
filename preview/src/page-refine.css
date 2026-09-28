@@ -2769,39 +2769,106 @@ body[data-app-view="upcoming"] #dealPlannerSummary>div>small{
   }
 }
 
+/* Upcoming mortgage-specific visuals */
+.app-view-upcoming .deal-balance-visual{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid var(--border-soft);
+}
+.app-view-upcoming .deal-balance-points{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  align-items:center;
+  gap:10px;
+}
+.app-view-upcoming .deal-balance-points>span{
+  display:grid;
+  gap:2px;
+}
+.app-view-upcoming .deal-balance-points>span:last-child{
+  text-align:right;
+}
+.app-view-upcoming .deal-balance-points small{
+  color:var(--muted-2);
+  font-size:8px;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+.app-view-upcoming .deal-balance-points strong{
+  color:var(--text);
+  font-family:var(--font-ui);
+  font-size:11px;
+  font-weight:800;
+}
+.app-view-upcoming .deal-balance-points>i{
+  color:var(--accent-strong);
+  font-style:normal;
+  font-size:15px;
+  font-weight:800;
+}
+.app-view-upcoming .deal-balance-drop{
+  margin-top:7px;
+  color:var(--positive);
+  font-size:9px;
+  font-weight:700;
+}
 
-/* Upcoming position mini visuals — small data cues without adding more copy. */
-.app-view-upcoming .deal-position-mini{
+.app-view-upcoming .deal-ltv-scale{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid var(--border-soft);
+}
+.app-view-upcoming .deal-ltv-track{
   position:relative;
-  height:7px;
-  margin-top:13px;
+  display:grid;
+  grid-template-columns:60fr 15fr 25fr;
+  height:8px;
   border-radius:var(--radius-pill);
   background:var(--surface-raised);
-  overflow:hidden;
-}
-.app-view-upcoming .deal-position-mini>span{
-  display:block;
-  width:var(--mini-progress,0%);
-  height:100%;
-  border-radius:inherit;
-  transition:width .25s ease;
-}
-.app-view-upcoming .balance-mini>span{
-  background:var(--debt);
-}
-.app-view-upcoming .ltv-mini>span{
-  background:var(--positive);
-}
-.app-view-upcoming .ltv-mini{
   overflow:visible;
 }
-.app-view-upcoming .ltv-marker{
-  position:absolute;
-  top:-3px;
-  width:1px;
-  height:13px;
-  background:rgba(29,35,41,.22);
+.app-view-upcoming .ltv-zone{
+  display:block;
+  height:8px;
 }
-.app-view-upcoming .marker-60{left:60%}
-.app-view-upcoming .marker-75{left:75%}
-.app-view-upcoming .marker-80{left:80%}
+.app-view-upcoming .zone-low{
+  border-radius:var(--radius-pill) 0 0 var(--radius-pill);
+  background:rgba(85,126,115,.28);
+}
+.app-view-upcoming .zone-mid{
+  background:rgba(183,131,77,.24);
+}
+.app-view-upcoming .zone-high{
+  border-radius:0 var(--radius-pill) var(--radius-pill) 0;
+  background:rgba(116,127,135,.20);
+}
+.app-view-upcoming .ltv-pointer{
+  position:absolute;
+  left:var(--ltv-position,0%);
+  top:50%;
+  width:12px;
+  height:12px;
+  border:2px solid var(--surface-control);
+  border-radius:50%;
+  background:var(--text);
+  box-shadow:0 1px 5px rgba(29,35,41,.18);
+  transform:translate(-50%,-50%);
+}
+.app-view-upcoming .deal-ltv-labels{
+  position:relative;
+  height:14px;
+  margin-top:5px;
+}
+.app-view-upcoming .deal-ltv-labels span{
+  position:absolute;
+  transform:translateX(-50%);
+  color:var(--muted-2);
+  font-size:8px;
+  font-weight:650;
+}
+@media(max-width:760px){
+  .app-view-upcoming .deal-balance-points{
+    grid-template-columns:1fr auto 1fr;
+  }
+}
