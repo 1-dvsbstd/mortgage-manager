@@ -209,6 +209,9 @@
     if(!summary||!state) return;
     const balanceCard=$('#dealPlannerBalance')?.closest('div');
     const ltvCard=$('#dealPlannerLtv')?.closest('div');
+    const projectedBalance=Number(String($('#dealPlannerBalance')?.textContent||'').replace(/[^0-9.\-]/g,''));
+    const currentBalance=Math.max(0,Number(state.balance)||0);
+    const homeValue=Math.max(0,Number(state.homeValue)||0);
 
     if(balanceCard){
       let visual=$('.deal-balance-visual',balanceCard);
@@ -217,38 +220,57 @@
         visual.className='deal-balance-visual';
         balanceCard.appendChild(visual);
       }
-      const projected=Number(String($('#dealPlannerBalance')?.textContent||'').replace(/[^0-9.\-]/g,''));
-      const current=Math.max(0,Number(state.balance)||0);
-      const drop=Math.max(0,current-(Number.isFinite(projected)?projected:current));
+      const projected=Number.isFinite(projectedBalance)?projected:currentBalance;
+      const drop=Math.max(0,currentBalance-projected);
       visual.innerHTML=`
-        <div class="deal-balance-points" aria-hidden="true">
-          <span><small>Today</small><strong>${money(current)}</strong></span>
-          <i>→</i>
-          <span><small>Deal end</small><strong>${Number.isFinite(projected)?money(projected):'—'}</strong></span>
+        <div class="deal-balance-route" aria-label="Mortgage balance from today to deal end">
+          <div class="deal-balance-point"><i></i><span>Today</span><strong>${money(currentBalance)}</strong></div>
+          <div class="deal-balance-line"><span></span></div>
+          <div class="deal-balance-point is-end"><i></i><span>Deal end</span><strong>${money(projected)}</strong></div>
         </div>
-        <div class="deal-balance-drop">${drop>0?`${money(drop)} lower by deal end`:'Balance change will appear here'}</div>`;
+        <div class="deal-balance-drop">${drop>0?`${money(drop)} lower by deal end`:'No projected balance reduction'}</div>`;
     }
 
     if(ltvCard){
-      let visual=$('.deal-ltv-scale',ltvCard);
+      let visual=$('.deal-ltv-progression',ltvCard);
       if(!visual){
         visual=document.createElement('div');
-        visual.className='deal-ltv-scale';
+        visual.className='deal-ltv-progression';
         ltvCard.appendChild(visual);
       }
-      const ltv=Number(String($('#dealPlannerLtv')?.textContent||'').replace(/[^0-9.\-]/g,''));
-      const ratio=Number.isFinite(ltv)?Math.max(0,Math.min(100,ltv)):0;
-      visual.style.setProperty('--ltv-position',`${ratio}%`);
+      let history={};
+      try{history=window.MortgageHistory?.load?.()||JSON.parse(localStorage.getItem('mortgage-manager-mortgage-history-v1')||'{}')||{};}catch(_){}
+      const purchasePrice=Math.max(0,Number(history.purchasePrice)||0);
+      const originalMortgage=Math.max(0,Number(history.originalMortgage)||0);
+      const purchaseLtv=purchasePrice>0&&originalMortgage>0?originalMortgage/purchasePrice*100:null;
+      const currentLtv=homeValue>0?currentBalance/homeValue*100:null;
+      const dealLtv=Number(String($('#dealPlannerLtv')?.textContent||'').replace(/[^0-9.\-]/g,''));
+      const points=[
+        purchaseLtv!==null?{label:'Purchase',value:purchaseLtv}:null,
+        currentLtv!==null?{label:'Today',value:currentLtv}:null,
+        Number.isFinite(dealLtv)?{label:'Deal end',value:dealLtv}:null,
+      ].filter(Boolean);
       visual.innerHTML=`
-        <div class="deal-ltv-track" aria-hidden="true">
-          <span class="ltv-zone zone-low"></span>
-          <span class="ltv-zone zone-mid"></span>
-          <span class="ltv-zone zone-high"></span>
-          <i class="ltv-pointer"></i>
+        <div class="deal-ltv-route" aria-label="Mortgage LTV progression">
+          ${points.map((point,index)=>`<div class="deal-ltv-point ${index===points.length-1?'is-end':''}"><span>${point.label}</span><strong>${point.value.toFixed(1)}%</strong></div>`).join('<i aria-hidden="true">→</i>')}
         </div>
-        <div class="deal-ltv-labels" aria-hidden="true">
-          <span style="left:60%">60</span><span style="left:75%">75</span><span style="left:80%">80</span><span style="left:90%">90</span>
-        </div>`;
+        <div class="deal-ltv-definition">Mortgage balance ÷ full property value</div>`;
+
+      const secondBalance=Math.max(0,Number(state.secondChargeBalance)||0);
+      if(secondBalance>0&&homeValue>0){
+        const months=monthsUntil(state.fixedEnd);
+        let secondProjected=secondBalance;
+        const secondRate=Math.max(0,Number(state.secondChargeRate)||0);
+        const secondPayment=Math.max(0,Number(state.secondChargePayment)||0);
+        if(months!==null&&months>0&&secondPayment>0&&window.MortgageMath){
+          const path=MortgageMath.amortize(secondBalance,secondRate,secondPayment);
+          const pts=path.monthlyPoints||[];
+          secondProjected=pts[Math.min(months,Math.max(0,pts.length-1))]??secondBalance;
+        }
+        const combinedNow=(currentBalance+secondBalance)/homeValue*100;
+        const combinedEnd=(Number.isFinite(projectedBalance)?projectedBalance:currentBalance)+secondProjected;
+        visual.insertAdjacentHTML('beforeend',`<div class="deal-ltv-combined">Combined secured borrowing: <strong>${combinedNow.toFixed(1)}%</strong> today${months!==null? ` → <strong>${(combinedEnd/homeValue*100).toFixed(1)}%</strong> at deal end`:''}</div>`);
+      }
     }
   }
 
