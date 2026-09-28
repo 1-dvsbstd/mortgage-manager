@@ -8,16 +8,13 @@
     rate: 4.25,
     payment: 1100,
     currentOverpayment: 0,
-    secondChargeBalance: 0,
-    secondChargeRate: 0,
-    secondChargePayment: 0,
     fixedEnd: '',
     homeValue: 300000,
     ownership: 100,
     scenarioExtra: 50,
   });
 
-  const numericFields = new Set(['balance', 'rate', 'payment', 'currentOverpayment', 'secondChargeBalance', 'secondChargeRate', 'secondChargePayment', 'homeValue', 'ownership', 'scenarioExtra']);
+  const numericFields = new Set(['balance', 'rate', 'payment', 'currentOverpayment', 'homeValue', 'ownership', 'scenarioExtra']);
   let state = null;
   const subscribers = new Set();
 
@@ -55,9 +52,6 @@
       fixedEnd: legacy?.fixedEnd,
       scenarioExtra: legacy?.extra,
       currentOverpayment: overpayRaw !== null ? overpayRaw : undefined,
-      secondChargeBalance: legacy?.secondChargeBalance,
-      secondChargeRate: legacy?.secondChargeRate,
-      secondChargePayment: legacy?.secondChargePayment,
     });
   }
 
@@ -100,9 +94,6 @@
       rate: value('rate'),
       payment: value('payment'),
       currentOverpayment: value('currentOverpayment'),
-      secondChargeBalance: value('secondChargeBalance'),
-      secondChargeRate: value('secondChargeRate'),
-      secondChargePayment: value('secondChargePayment'),
       fixedEnd: value('fixedEnd') || '',
       homeValue: value('homeValue'),
       ownership: value('ownership'),
@@ -112,7 +103,7 @@
 
   function applyToDom(fields = null, options = {}) {
     const current = initialise();
-    const ids = fields || ['balance','rate','payment','currentOverpayment','secondChargeBalance','secondChargeRate','secondChargePayment','fixedEnd','homeValue','ownership','scenarioExtra'];
+    const ids = fields || ['balance','rate','payment','currentOverpayment','fixedEnd','homeValue','ownership','scenarioExtra'];
     const map = { scenarioExtra: 'customExtra' };
     ids.forEach((field) => {
       const element = document.getElementById(map[field] || field);
