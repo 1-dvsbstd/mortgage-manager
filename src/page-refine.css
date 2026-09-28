@@ -167,7 +167,7 @@
   gap:3px!important;
   padding:20px 22px!important;
   border:1px solid var(--border-soft)!important;
-  border-radius:17px!important;
+  border-radius:18px!important;
   background:#f2ece3!important;
   box-shadow:none!important;
   text-align:left!important;
@@ -265,7 +265,7 @@
   min-height:104px!important;
   padding:16px 17px!important;
   border:1px solid var(--border-soft)!important;
-  border-radius:17px!important;
+  border-radius:18px!important;
   background:#f2ece3!important;
   box-shadow:none!important;
 }
@@ -312,7 +312,7 @@
   min-height:104px!important;
   padding:17px 18px!important;
   border:1px solid var(--border-soft)!important;
-  border-radius:17px!important;
+  border-radius:18px!important;
   background:#f2ece3!important;
   box-shadow:none!important;
 }
@@ -373,9 +373,9 @@
   min-height:118px!important;
   padding:18px 20px 16px!important;
   border:1px solid rgba(68,58,48,.10)!important;
-  border-radius:17px!important;
+  border-radius:18px!important;
   background:#fffaf4!important;
-  box-shadow:0 8px 24px rgba(62,49,38,.035)!important;
+  box-shadow:none!important;
 }
 .app-view-future #futureModelRange .home-forecast-card:nth-child(3){
   background:#f3e7d9!important;
@@ -561,7 +561,7 @@
   gap:0!important;
   overflow:hidden!important;
   border:1px solid var(--border-soft)!important;
-  border-radius:17px!important;
+  border-radius:18px!important;
   background:#f6f0e8!important;
 }
 .app-view-future #futureWaitPlanner .next-home-timeline-row{
@@ -962,7 +962,7 @@ body .app-view-current .trajectory-scenario-copy .trajectory-current-saving{
   border:1px solid rgba(68,58,48,.10)!important;
   border-radius:18px!important;
   background:#fffaf4!important;
-  box-shadow:0 8px 24px rgba(62,49,38,.035)!important;
+  box-shadow:none!important;
 }
 .app-view-future #futureWaitPlanner .next-home-timeline-rows::before{
   content:""!important;
@@ -1164,215 +1164,3 @@ body .app-view-current .v15-current-stats .v15-stat:last-child{padding-right:0!i
 }
 
 
-/* Visual audit 01 — Current hero: let progress live in the editorial layout, not another card. */
-body .app-view-current .v15-hero-progress{
-  margin-top:28px!important;
-  padding:20px 0 0!important;
-  border:0!important;
-  border-top:1px solid var(--border-soft)!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-body .app-view-current .v15-hero-progress-head{
-  display:flex!important;
-  align-items:baseline!important;
-  justify-content:space-between!important;
-  gap:18px!important;
-}
-body .app-view-current .v15-hero-progress-head span{
-  color:var(--muted)!important;
-  font-size:9px!important;
-  font-weight:800!important;
-  letter-spacing:.09em!important;
-  text-transform:uppercase!important;
-}
-body .app-view-current .v15-hero-progress-head strong{
-  color:var(--theme-hero-ink)!important;
-  font-family:var(--font-ui)!important;
-  font-size:12px!important;
-  font-weight:800!important;
-}
-body .app-view-current .v15-hero-progress-track{
-  height:7px!important;
-  margin-top:11px!important;
-  border-radius:999px!important;
-}
-body .app-view-current .v15-hero-progress-foot{
-  margin-top:10px!important;
-  font-size:10px!important;
-}
-body .app-view-current .v15-hero-progress-foot span:first-child{
-  color:var(--equity)!important;
-  font-weight:750!important;
-}
-body .app-view-current .v15-hero-progress-foot span:last-child{
-  color:var(--muted)!important;
-}
-
-
-/* Visual reset — one consistent flat card language across Current, Upcoming and Future. */
-body .app-view-current .hero-panel,
-body .app-view-current .panel,
-body .app-view-current .chart-panel,
-body .app-view-current .v15-current-stats .v15-stat,
-body .app-view-current .v15-current-journey,
-body .app-view-current .trajectory-scenario-controls,
-body .app-view-upcoming .upcoming-section,
-body .app-view-upcoming .current-fix-stats>div,
-body .app-view-upcoming .deal-planner-rate,
-body .app-view-upcoming .deal-planner-summary>div,
-body .app-view-upcoming .live-rate-choices,
-body .app-view-upcoming .live-rate-card,
-body .app-view-upcoming .deal-planner-empty,
-body .app-view-future .future-overpayment-assumption,
-body .app-view-future .future-model-range-panel,
-body .app-view-future .future-wait-planner,
-body .app-view-future .temporal-feature-home-projection,
-body .app-view-future .temporal-feature-next-home,
-body .app-view-future .temporal-feature-cost-comparison,
-body .app-view-future .home-profile-range>div,
-body .app-view-future .next-home-summary-card,
-body .app-view-future .next-home-timeline-row,
-body .app-view-future .property-cost-card,
-body .app-view-future .future-wait-host{
-  border:1px solid var(--border)!important;
-  border-radius:18px!important;
-  box-shadow:none!important;
-  transform:none!important;
-}
-
-@media(hover:hover) and (pointer:fine){
-  body .app-view-current .hero-panel:hover,
-  body .app-view-current .panel:hover,
-  body .app-view-current .chart-panel:hover,
-  body .app-view-current .v15-current-stats .v15-stat:hover,
-  body .app-view-current .v15-current-journey:hover,
-  body .app-view-upcoming .upcoming-section:hover,
-  body .app-view-upcoming .current-fix-stats>div:hover,
-  body .app-view-upcoming .deal-planner-rate:hover,
-  body .app-view-upcoming .deal-planner-summary>div:hover,
-  body .app-view-upcoming .live-rate-card:hover,
-  body .app-view-future .future-overpayment-assumption:hover,
-  body .app-view-future .future-model-range-panel:hover,
-  body .app-view-future .future-wait-planner:hover,
-  body .app-view-future .temporal-feature-home-projection:hover,
-  body .app-view-future .temporal-feature-next-home:hover,
-  body .app-view-future .temporal-feature-cost-comparison:hover,
-  body .app-view-future .home-profile-range>div:hover,
-  body .app-view-future .next-home-summary-card:hover,
-  body .app-view-future .next-home-timeline-row:hover,
-  body .app-view-future .property-cost-card:hover,
-  body .app-view-future .future-wait-host:hover{
-    box-shadow:none!important;
-    transform:none!important;
-  }
-}
-
-/* Restore the four Current summary facts as cards within the shared flat system. */
-body .app-view-current .v15-current-stats{
-  display:grid!important;
-  grid-template-columns:repeat(4,minmax(0,1fr))!important;
-  gap:12px!important;
-  margin-top:0!important;
-  padding:0!important;
-  border:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-body .app-view-current .v15-current-stats .v15-stat,
-body .app-view-current .v15-current-stats .v15-stat:hover{
-  min-height:104px!important;
-  padding:16px 17px!important;
-  border:1px solid var(--border)!important;
-  border-radius:18px!important;
-  background:var(--surface-control)!important;
-  background-image:none!important;
-  box-shadow:none!important;
-  opacity:1!important;
-  transform:none!important;
-}
-@media(max-width:760px){
-  body .app-view-current .v15-current-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-}
-@media(max-width:500px){
-  body .app-view-current .v15-current-stats{grid-template-columns:1fr!important}
-}
-
-/* Keep internal progress treatment integrated; it is not a standalone card. */
-body .app-view-current .v15-hero-progress{
-  border:0!important;
-  border-top:1px solid var(--border-soft)!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-
-
-/* Flat-card cleanup — remove the remaining hero/image depth and keep card copy inside bounds. */
-body .app-view-current .hero-panel,
-body .app-view-current .hero-panel.current-hero-condensed,
-body .app-view-current .hero-panel:hover{
-  box-shadow:none!important;
-  filter:none!important;
-}
-body .app-view-current .v15-home-visual,
-body .app-view-current .v15-home-visual:hover{
-  box-shadow:none!important;
-  filter:none!important;
-}
-body .app-view-current .v15-home-visual::after{
-  background:linear-gradient(90deg,color-mix(in srgb,var(--surface) 10%,transparent),transparent 34%)!important;
-  box-shadow:none!important;
-}
-
-/* Card text-fit guardrails. Labels may wrap; figures stay intact. */
-body .app-view-current .v15-current-stats .v15-stat,
-body .app-view-upcoming .current-fix-stats>div,
-body .app-view-upcoming .deal-planner-rate,
-body .app-view-upcoming .deal-planner-summary>div,
-body .app-view-future .home-profile-range>div,
-body .app-view-future .next-home-summary-card,
-body .app-view-future .next-home-timeline-row,
-body .app-view-future .property-cost-card{
-  box-sizing:border-box!important;
-  min-width:0!important;
-  height:auto!important;
-  overflow:visible!important;
-}
-body .app-view-current .v15-current-stats .v15-stat span,
-body .app-view-current .v15-current-stats .v15-stat small,
-body .app-view-upcoming .current-fix-stats span,
-body .app-view-upcoming .current-fix-stats small,
-body .app-view-upcoming .deal-planner-rate span,
-body .app-view-upcoming .deal-planner-rate em,
-body .app-view-upcoming .deal-planner-summary span,
-body .app-view-upcoming .deal-planner-summary small,
-body .app-view-future .home-profile-range span,
-body .app-view-future .home-profile-range small,
-body .app-view-future .next-home-summary-card span,
-body .app-view-future .next-home-summary-card small,
-body .app-view-future .next-home-timeline-row span,
-body .app-view-future .next-home-timeline-row small,
-body .app-view-future .property-cost-card span,
-body .app-view-future .property-cost-card small{
-  white-space:normal!important;
-  overflow-wrap:break-word!important;
-  word-break:normal!important;
-  line-height:1.35!important;
-}
-body .app-view-current .v15-current-stats .v15-stat strong,
-body .app-view-upcoming .current-fix-stats strong,
-body .app-view-upcoming .deal-planner-rate strong,
-body .app-view-upcoming .deal-planner-summary strong,
-body .app-view-future .home-profile-range strong,
-body .app-view-future .next-home-summary-card strong,
-body .app-view-future .next-home-timeline-row strong,
-body .app-view-future .property-cost-card strong{
-  max-width:100%!important;
-  white-space:normal!important;
-  overflow-wrap:normal!important;
-}
-body .app-view-current .v15-current-stats .v15-stat{
-  min-height:112px!important;
-}
