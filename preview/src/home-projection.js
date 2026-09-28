@@ -13,6 +13,8 @@
   let hpiRequest=null;
   let officialHpiRequestKey='';
   let officialHpiRequest=null;
+  let bundledHpiData=null;
+  let bundledHpiRequest=null;
   const defaults = { low: 1, trend: 2.5, high: 4, purchasePrice: '', purchaseMonth: '', postcode: '', localAuthority: '', localAuthorityCode: '', propertyType: '', bedrooms: '', improvements: '', recentValue: '' };
   let settings = { ...defaults };
 
@@ -218,6 +220,78 @@
 
   function writeHpiCache(cache){
     try{ localStorage.setItem(LOCAL_HPI_KEY,JSON.stringify(cache)); }catch(_){}
+  }
+
+  async function loadBundledOfficialHpi(){
+    if(bundledHpiData) return bundledHpiData;
+    if(bundledHpiRequest) return bundledHpiRequest;
+    bundledHpiRequest=(async()=>{
+      try{
+        const response=await fetch('./public/hpi-local-property-type.json',{cache:'no-store'});
+        if(!response.ok) throw new Error('Bundled HPI unavailable');
+        const data=await response.json();
+        if(!data?.areas || !data?.latestMonth) throw new Error('Bundled HPI invalid');
+        bundledHpiData=data;
+        requestAnimationFrame(render);
+        return data;
+      }catch(_){
+        return null;
+      }finally{
+        bundledHpiRequest=null;
+      }
+    })();
+    return bundledHpiRequest;
+  }
+
+  function bundledOfficialArea(){
+    if(!bundledHpiData?.areas) return null;
+    const code=String(settings.localAuthorityCode||'').trim().toUpperCase();
+    if(code && bundledHpiData.areas[code]) return bundledHpiData.areas[code];
+    const wanted=regionSlug(settings.localAuthority||'');
+    if(!wanted) return null;
+    return Object.values(bundledHpiData.areas).find((area)=>regionSlug(area?.name||'')===wanted)||null;
+  }
+
+  function bundledPrice(area,month,propertyType){
+    const key=propertyType==='semi-detached'?'semiDetached':propertyType;
+    const value=Number(area?.months?.[month]?.[key]||0);
+    return Number.isFinite(value)&&value>0?value:0;
+  }
+
+  function upgradeWithBundledOfficialHpi(base){
+    if(!base?.multiplier||!base?.latestMonth||!bundledHpiData?.latestMonth) return base;
+    const area=bundledOfficialArea();
+    if(!area?.months) return base;
+    const available=Object.keys(area.months).sort();
+    if(!available.length) return base;
+    const latestMonth=area.latestMonth||available[available.length-1];
+    if(!latestMonth || latestMonth<=base.latestMonth) return base;
+
+    const latestPrice=bundledPrice(area,latestMonth,settings.propertyType);
+    if(!latestPrice) return base;
+
+    const overlap=available.reduce((best,month)=>{
+      if(month>base.latestMonth) return best;
+      if(!bundledPrice(area,month,settings.propertyType)) return best;
+      return !best || month>best ? month : best;
+    },'');
+    if(!overlap) return base;
+
+    const overlapPrice=bundledPrice(area,overlap,settings.propertyType);
+    if(!overlapPrice) return base;
+    const growth=latestPrice/overlapPrice;
+    if(!Number.isFinite(growth)||growth<0.7||growth>1.3) return base;
+
+    return {
+      ...base,
+      multiplier:base.multiplier*growth,
+      latestMonth,
+      officialLatest:true,
+      officialBundled:true,
+      officialBridgeMonth:overlap,
+      officialSource:bundledHpiData.source||'HM Land Registry UK House Price Index',
+      officialFetchedAt:bundledHpiData.generatedAt||''
+    };
   }
 
   function quantile(sorted,q){
@@ -590,7 +664,8 @@
     const slug=regionSlug(settings.localAuthority||'');
     const purchaseMonth=String(settings.purchaseMonth||'').slice(0,7);
     if(!slug||!settings.propertyType||!purchaseMonth) return null;
-    return readHpiCache()[`${slug}|${settings.propertyType}|${purchaseMonth}`]||null;
+    const base=readHpiCache()[`${slug}|${settings.propertyType}|${purchaseMonth}`]||null;
+    return upgradeWithBundledOfficialHpi(base);
   }
 
   function formatSaleMonth(value){
@@ -675,6 +750,7 @@
     const purchasePrice=Math.max(0,Number(settings.purchasePrice)||0), purchaseMonth=settings.purchaseMonth||'', improvements=Math.max(0,Number(settings.improvements)||0), recentValue=Math.max(0,Number(settings.recentValue)||0);
     const validPurchase=purchasePrice>0 && purchaseMonth;
     const yearsOwned=validPurchase?yearsSince(purchaseMonth):0;
+    loadBundledOfficialHpi();
     const hpiModel=cachedLocalHpiModel();
     let hpiAnchoredToday=0;
     if(validPurchase&&hpiModel?.multiplier>0) hpiAnchoredToday=purchasePrice*hpiModel.multiplier+improvements;
@@ -738,9 +814,11 @@
     $('projectionCurrentNote').textContent=recentValue
       ? 'Using your recent valuation / estimate.'
       : hpiAnchoredToday
-        ? hpiModel.bridgedFromMonth
-          ? `Latest local HPI · ${monthLabel(hpiModel.latestMonth)} · property-type data to ${monthLabel(hpiModel.propertyTypeLatestMonth||hpiModel.bridgedFromMonth)}${improvements?' + improvements':''}`
-          : `Local property-type HPI · ${monthLabel(hpiModel.latestMonth)}${improvements?' + improvements':''}`
+        ? hpiModel.officialBundled
+          ? `Latest official local HPI · ${monthLabel(hpiModel.latestMonth)}${improvements?' + improvements':''}`
+          : hpiModel.bridgedFromMonth
+            ? `Latest local HPI · ${monthLabel(hpiModel.latestMonth)} · property-type data to ${monthLabel(hpiModel.propertyTypeLatestMonth||hpiModel.bridgedFromMonth)}${improvements?' + improvements':''}`
+            : `Local property-type HPI · ${monthLabel(hpiModel.latestMonth)}${improvements?' + improvements':''}`
         : validPurchase
           ? `Fallback growth model${improvements?' + improvements':''}`
           : 'Using the property value saved in the dashboard.';
