@@ -227,10 +227,10 @@
     mergeFuturePlanning(); labelFutureStages();
 
     /* Future tells one story: set the scenario, establish today's property
-       position, show how it changes, then what that enables and finally the
-       lifetime outcome. Append is intentional: it also repairs ordering after
-       legacy modules have moved nodes. */
-    [assumption,home,model,outlook,planner,cost].forEach((node)=>{
+       value, show what today's equity enables, then move into forecasts and
+       the longer-term outcome. Append is intentional: it also repairs ordering
+       after legacy modules have moved nodes. */
+    [assumption,home,planner,model,outlook,cost].forEach((node)=>{
       if(node && node.parentElement!==future) future.appendChild(node);
       else if(node) future.appendChild(node);
     });
