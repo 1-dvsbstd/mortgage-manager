@@ -172,7 +172,7 @@
       cost.classList.remove('future-cost-inline');
     }
 
-    const rows=$('#futureWaitPlanner .next-home-timeline-row').slice(0,3);
+    const rows=[...document.querySelectorAll('#futureWaitPlanner .next-home-timeline-row')].slice(0,3);
     if(rows.length===3){
       const baseline=futureMoneyValue($(':scope > strong',rows[0])?.textContent);
       rows.forEach((row,index)=>{
@@ -199,7 +199,7 @@
         }
 
         if(!$(':scope > .next-home-support',row)){
-          const smalls=$(':scope > small',row);
+          const smalls=[...row.querySelectorAll(':scope > small')];
           if(smalls.length){
             const support=document.createElement('div');
             support.className='next-home-support';
