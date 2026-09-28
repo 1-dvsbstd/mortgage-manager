@@ -1,0 +1,141 @@
+name: Refresh official UK HPI bundle
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '20 9 17-24 * *'
+  push:
+    paths:
+      - '.github/workflows/update-hpi.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Download and normalise latest official UK HPI property-type data
+        shell: bash
+        run: |
+          python - <<'PY'
+          import csv
+          import io
+          import json
+          import os
+          import urllib.request
+          from datetime import date, datetime, timezone
+
+          BASE = 'https://publicdata.landregistry.gov.uk/market-trend-data/house-price-index-data/Average-prices-Property-Type-{month}.csv'
+
+          def shift_month(year, month, delta):
+              n = year * 12 + (month - 1) + delta
+              return n // 12, n % 12 + 1
+
+          today = date.today()
+          months = []
+          # UK HPI is normally published around two months in arrears. Keep
+          # 18 releases so an older linked-data anchor can always overlap.
+          for delta in range(-2, -20, -1):
+              y, m = shift_month(today.year, today.month, delta)
+              months.append(f'{y:04d}-{m:02d}')
+
+          areas = {}
+          downloaded = []
+
+          for month in months:
+              url = BASE.format(month=month)
+              try:
+                  req = urllib.request.Request(url, headers={'User-Agent': 'Mortgage-Manager-HPI-Updater/1.0'})
+                  with urllib.request.urlopen(req, timeout=30) as response:
+                      raw = response.read().decode('utf-8-sig')
+              except Exception as exc:
+                  print(f'{month}: unavailable ({exc})')
+                  continue
+
+              rows = list(csv.reader(io.StringIO(raw)))
+              if not rows:
+                  continue
+
+              # HMLR's individual attribute CSV files are published without
+              # column headers. The documented order for this file is:
+              # Date, RegionName, AreaCode, DetachedPrice,
+              # SemiDetachedPrice, TerracedPrice, FlatPrice.
+              if rows and rows[0] and str(rows[0][0]).strip().lower() == 'date':
+                  rows = rows[1:]
+
+              row_count = 0
+              for row in rows:
+                  if len(row) < 7:
+                      continue
+                  region = str(row[1]).strip()
+                  code = str(row[2]).strip().upper()
+                  if not region or not code:
+                      continue
+
+                  def num(value):
+                      try:
+                          value = str(value).strip().replace(',', '')
+                          return round(float(value), 2) if value else None
+                      except Exception:
+                          return None
+
+                  prices = {
+                      'detached': num(row[3]),
+                      'semiDetached': num(row[4]),
+                      'terraced': num(row[5]),
+                      'flat': num(row[6]),
+                  }
+                  if not any(v and v > 0 for v in prices.values()):
+                      continue
+
+                  area = areas.setdefault(code, {'name': region, 'months': {}})
+                  area['months'][month] = prices
+                  row_count += 1
+
+              if row_count:
+                  downloaded.append(month)
+                  print(f'{month}: {row_count} geographies')
+
+          if not downloaded:
+              raise SystemExit('No official HPI property-type files could be downloaded.')
+
+          downloaded.sort()
+          for area in areas.values():
+              available = sorted(area['months'])
+              area['latestMonth'] = available[-1] if available else ''
+
+          payload = {
+              'schema': 1,
+              'source': 'HM Land Registry UK House Price Index',
+              'sourceUrl': 'https://www.gov.uk/government/collections/uk-house-price-index-reports',
+              'licence': 'UK Open Government Licence v3.0',
+              'latestMonth': downloaded[-1],
+              'months': downloaded,
+              'generatedAt': datetime.now(timezone.utc).isoformat(),
+              'areas': areas,
+          }
+
+          for path in ['public/hpi-local-property-type.json', 'preview/public/hpi-local-property-type.json']:
+              os.makedirs(os.path.dirname(path), exist_ok=True)
+              with open(path, 'w', encoding='utf-8') as handle:
+                  json.dump(payload, handle, separators=(',', ':'), ensure_ascii=False)
+                  handle.write('\n')
+              print(f'wrote {path} ({len(areas)} geographies, latest {downloaded[-1]})')
+          PY
+
+      - name: Commit updated HPI bundle
+        shell: bash
+        run: |
+          if git diff --quiet -- public/hpi-local-property-type.json preview/public/hpi-local-property-type.json; then
+            echo "Official HPI bundle is already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/hpi-local-property-type.json preview/public/hpi-local-property-type.json
+          git commit -m "Refresh bundled official UK HPI data"
+          git push
