@@ -90,7 +90,7 @@
         <h1><span class="v15-equity-value">—</span></h1>
         <p class="v15-subline">—</p>
         <div class="v15-hero-progress">
-          <div class="v15-hero-progress-head"><span>Mortgage paid off</span><strong class="v15-progress-value">—</strong></div>
+          <div class="v15-hero-progress-head"><span>Mortgage progress</span><strong class="v15-progress-value">—</strong></div>
           <div class="v15-hero-progress-track"><i></i></div>
           <div class="v15-hero-progress-foot"><span class="v15-progress-owned">— equity</span><span class="v15-progress-debt">— mortgage remaining</span></div>
         </div>`;
