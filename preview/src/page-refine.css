@@ -2094,7 +2094,7 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 
 /* Premium Step 2.2 — Current mortgage journey */
 .app-view-current .v15-current-journey{
-  padding:18px 22px 20px!important;
+  padding:16px 22px 17px!important;
   border:1px solid var(--border)!important;
   border-radius:18px!important;
   background:var(--surface-control)!important;
@@ -2102,7 +2102,7 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 }
 .app-view-current .v15-current-journey-head{
   align-items:flex-end!important;
-  margin-bottom:18px!important;
+  margin-bottom:12px!important;
 }
 .app-view-current .v15-current-journey-head>div>span{
   color:var(--accent-strong)!important;
@@ -2119,16 +2119,11 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   font-weight:750!important;
   letter-spacing:-.01em!important;
 }
-.app-view-current .v15-current-journey-link{
-  align-self:flex-start!important;
-  padding-top:2px!important;
-  color:var(--accent-strong)!important;
-  font-size:10px!important;
-  font-weight:800!important;
-}
+.app-view-current .v15-current-journey-link{display:none!important}
+
 .app-view-current .v15-current-journey-track{
   display:grid!important;
-  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  grid-template-columns:1fr 1fr .76fr .76fr 1.22fr!important;
   gap:0!important;
   position:relative!important;
   overflow:visible!important;
@@ -2139,10 +2134,11 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   position:absolute!important;
   left:10%!important;
   right:10%!important;
-  top:22px!important;
+  top:25px!important;
   height:2px!important;
+  border-radius:999px!important;
   transform:none!important;
-  background:var(--border)!important;
+  background:linear-gradient(90deg,var(--positive) 0 25%,var(--border) 25% 100%)!important;
 }
 .app-view-current .v15-current-journey-step{
   position:relative!important;
@@ -2152,15 +2148,15 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   align-items:center!important;
   gap:0!important;
   min-width:0!important;
-  padding:0 8px!important;
+  padding:0 7px!important;
   text-align:center!important;
 }
 .app-view-current .v15-current-journey-icon{
   display:grid!important;
   place-items:center!important;
-  width:44px!important;
-  height:44px!important;
-  margin:0 auto 11px!important;
+  width:46px!important;
+  height:46px!important;
+  margin:2px auto 10px!important;
   border:1.5px solid var(--border)!important;
   border-radius:14px!important;
   background:var(--surface-control)!important;
@@ -2169,34 +2165,8 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 }
 .app-view-current .v15-current-journey-icon svg{
   display:block!important;
-  width:21px!important;
-  height:21px!important;
-}
-.app-view-current .v15-current-journey-step.is-current .v15-current-journey-icon{
-  width:48px!important;
-  height:48px!important;
-  margin-top:-2px!important;
-  margin-bottom:9px!important;
-  border-radius:15px!important;
-}
-.app-view-current .v15-current-journey-step strong{
-  display:block!important;
-  max-width:100%!important;
-  color:var(--text)!important;
-  font-size:10px!important;
-  font-weight:750!important;
-  line-height:1.25!important;
-  white-space:normal!important;
-  overflow:visible!important;
-  text-overflow:clip!important;
-}
-.app-view-current .v15-current-journey-step span{
-  display:block!important;
-  margin-top:4px!important;
-  color:var(--muted-2)!important;
-  font-size:9px!important;
-  line-height:1.2!important;
-  white-space:nowrap!important;
+  width:22px!important;
+  height:22px!important;
 }
 .app-view-current .v15-current-journey-step.is-complete .v15-current-journey-icon{
   background:var(--positive-soft)!important;
@@ -2204,17 +2174,73 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   color:var(--positive)!important;
 }
 .app-view-current .v15-current-journey-step.is-current .v15-current-journey-icon{
+  width:52px!important;
+  height:52px!important;
+  margin:-1px auto 7px!important;
+  border-radius:16px!important;
   background:var(--accent-soft)!important;
   border-color:var(--accent)!important;
   color:var(--accent-strong)!important;
   box-shadow:none!important;
 }
+.app-view-current .v15-current-journey-step.is-current .v15-current-journey-icon svg{
+  width:24px!important;
+  height:24px!important;
+}
+.app-view-current .v15-current-journey-copy{
+  display:grid!important;
+  justify-items:center!important;
+  min-width:0!important;
+}
+.app-view-current .v15-current-journey-step strong{
+  display:block!important;
+  max-width:100%!important;
+  color:var(--text)!important;
+  font-size:10px!important;
+  font-weight:780!important;
+  line-height:1.25!important;
+  white-space:normal!important;
+}
 .app-view-current .v15-current-journey-step.is-current strong{
   color:var(--accent-strong)!important;
 }
+.app-view-current .v15-current-journey-date{
+  display:block!important;
+  margin-top:4px!important;
+  color:var(--muted)!important;
+  font-size:10px!important;
+  font-weight:650!important;
+  line-height:1.2!important;
+  white-space:nowrap!important;
+}
+.app-view-current .v15-current-journey-step small{
+  display:block!important;
+  margin-top:3px!important;
+  color:var(--muted-2)!important;
+  font-size:8px!important;
+  font-weight:600!important;
+  line-height:1.2!important;
+  white-space:nowrap!important;
+}
+.app-view-current .v15-current-journey-step.is-actionable{
+  cursor:pointer!important;
+}
+.app-view-current .v15-current-journey-step.is-actionable:focus-visible{
+  outline:2px solid var(--focus-ring-soft)!important;
+  outline-offset:4px!important;
+  border-radius:12px!important;
+}
+@media(hover:hover) and (pointer:fine){
+  .app-view-current .v15-current-journey-step.is-actionable:hover .v15-current-journey-icon{
+    border-color:var(--accent)!important;
+    color:var(--accent-strong)!important;
+    background:var(--accent-wash)!important;
+  }
+}
+
 @media(max-width:900px){
   .app-view-current .v15-current-journey-track{
-    grid-template-columns:repeat(5,minmax(120px,1fr))!important;
+    grid-template-columns:repeat(5,minmax(128px,1fr))!important;
     overflow-x:auto!important;
     padding:2px 0 6px!important;
     scroll-snap-type:x proximity!important;
@@ -2223,20 +2249,20 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
     scroll-snap-align:start!important;
   }
   .app-view-current .v15-current-journey-track::before{
-    left:60px!important;
-    right:60px!important;
+    left:64px!important;
+    right:64px!important;
+    background:linear-gradient(90deg,var(--positive) 0 25%,var(--border) 25% 100%)!important;
   }
 }
 @media(max-width:700px){
   .app-view-current .v15-current-journey{
-    padding:16px 16px 17px!important;
+    padding:15px 16px 16px!important;
     border-radius:18px!important;
   }
   .app-view-current .v15-current-journey-head{
-    margin-bottom:16px!important;
+    margin-bottom:11px!important;
   }
 }
-
 
 /* Premium Step 2.3 — Current overpayment controls */
 .app-view-current .trajectory-scenario-controls{
