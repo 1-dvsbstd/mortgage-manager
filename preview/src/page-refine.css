@@ -620,7 +620,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
 
 .future-remove{display:none!important}.future-model-range-panel,.future-wait-planner{padding:24px;margin:0!important}.future-model-heading,.future-wait-heading{margin-bottom:16px}.future-model-heading h2,.future-wait-heading h2{margin-top:3px;font-size:19px}.future-model-range-panel .home-profile-range{margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}.temporal-feature-home-projection .projection-core-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.future-stage-label{display:none!important}
 @media(max-width:1050px){.current-fix-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.temporal-feature-home-projection .projection-core-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:700px){.current-home-inline{margin-top:12px;padding-top:12px}.current-home-inline .home-value{display:block}.current-home-inline .home-value small{display:block;margin-top:3px}.current-fix-stats{grid-template-columns:1fr 1fr}.app-view-upcoming .upcoming-section{padding:18px!important}.temporal-feature-home-projection .projection-core-grid{grid-template-columns:1fr}.future-model-range-panel{padding:18px}}
+@media(max-width:700px){.current-fix-stats{grid-template-columns:1fr 1fr}.app-view-upcoming .upcoming-section{padding:18px!important}.temporal-feature-home-projection .projection-core-grid{grid-template-columns:1fr}.future-model-range-panel{padding:18px}}
 @media(max-width:430px){.current-fix-stats{grid-template-columns:1fr}}
 
 /* Upcoming — authoritative final layout */
@@ -1478,7 +1478,6 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 .app-view-current .current-hero-condensed #yearsRemaining,
 .app-view-current .current-hero-condensed .hero-date,
 .app-view-current .current-hero-condensed .hero-balance-row,
-.app-view-current .current-hero-condensed .current-home-inline,
 .app-view-current .current-hero-condensed>.hero-progress-card{
   display:none!important;
 }
