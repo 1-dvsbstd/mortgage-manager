@@ -1813,14 +1813,16 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   }
 }
 
-/* Current mortgage/home summary: crisp floating parchment tiles. */
+/* Current mortgage/home summary — canonical source */
 body .app-view-current .v15-current-stats{
   display:grid!important;
   grid-template-columns:repeat(4,minmax(0,1fr))!important;
   gap:12px!important;
+  margin-top:0!important;
   padding:0!important;
   border:0!important;
   background:transparent!important;
+  overflow:visible!important;
   box-shadow:none!important;
 }
 body .app-view-current .v15-current-stats .v15-stat{
@@ -1838,21 +1840,26 @@ body .app-view-current .v15-current-stats .v15-stat span{
   display:block!important;
   color:var(--muted)!important;
   font-size:9px!important;
-  font-weight:700!important;
-  letter-spacing:.035em!important;
+  font-weight:750!important;
+  letter-spacing:.05em!important;
   line-height:1.35!important;
   text-transform:uppercase!important;
   white-space:normal!important;
   overflow-wrap:break-word!important;
 }
 body .app-view-current .v15-current-stats .v15-stat strong{
-  margin-top:6px!important;
+  display:block!important;
+  margin-top:7px!important;
   color:var(--text)!important;
+  font-family:var(--font-display)!important;
   font-size:23px!important;
+  font-weight:600!important;
+  letter-spacing:-.025em!important;
+  line-height:1.1!important;
 }
 body .app-view-current .v15-current-stats .v15-stat small{
   display:block!important;
-  margin-top:5px!important;
+  margin-top:6px!important;
   color:var(--muted-2)!important;
   font-size:9px!important;
   line-height:1.35!important;
@@ -1865,9 +1872,44 @@ body .app-view-current .v15-current-stats .v15-stat.is-warm{
 body .app-view-current .v15-current-stats .v15-stat.is-positive{
   background:linear-gradient(145deg,var(--surface-control),var(--positive-soft))!important;
 }
-body .app-view-current .v15-current-stats .v15-stat.is-warm strong{color:var(--accent-strong)!important}
+body .app-view-current .v15-current-stats .v15-stat.is-warm strong{
+  color:var(--accent-strong)!important;
+}
 body .app-view-current .v15-current-stats .v15-stat.is-positive strong,
-body .app-view-current .v15-current-stats .v15-stat.is-positive small{color:var(--positive)!important}
+body .app-view-current .v15-current-stats .v15-stat.is-positive small{
+  color:var(--positive)!important;
+}
+@media(hover:hover) and (pointer:fine){
+  body .app-view-current .v15-current-stats .v15-stat,
+  body .app-view-current .v15-current-stats .v15-stat:hover{
+    transform:none!important;
+    box-shadow:none!important;
+    opacity:1!important;
+  }
+  body .app-view-current .v15-current-stats .v15-stat:hover{
+    border-color:rgba(183,131,77,.20)!important;
+  }
+}
+@media(max-width:900px){
+  body .app-view-current .v15-current-stats{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+@media(max-width:700px){
+  body .app-view-current .v15-current-stats{
+    gap:9px!important;
+  }
+  body .app-view-current .v15-current-stats .v15-stat{
+    min-height:96px!important;
+    padding:14px 15px!important;
+  }
+}
+@media(max-width:620px){
+  body .app-view-current .v15-current-stats{
+    grid-template-columns:1fr!important;
+    gap:10px!important;
+  }
+}
 
 /* Trajectory: stronger hierarchy, less legacy green, cleaner data surface. */
 .app-view-current .chart-panel.trajectory-with-what-if{
@@ -1962,11 +2004,6 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 .app-view-current .dot.equity-line{background:var(--property)!important}
 
 @media(hover:hover) and (pointer:fine){
-  body .app-view-current .v15-current-stats .v15-stat:hover{
-    transform:none!important;
-    border-color:rgba(183,131,77,.20)!important;
-    box-shadow:none!important;
-  }
   .app-view-current .hero-panel:hover,
   .app-view-current .chart-panel:hover{
     transform:none!important;
@@ -1976,13 +2013,6 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 }
 
 @media(max-width:700px){
-  body .app-view-current .v15-current-stats{
-    gap:9px!important;
-  }
-  body .app-view-current .v15-current-stats .v15-stat{
-    min-height:96px!important;
-    padding:14px 15px!important;
-  }
   .app-view-current .trajectory-with-what-if>.panel-heading{
     padding:20px 18px 15px!important;
   }
