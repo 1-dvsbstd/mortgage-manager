@@ -1548,7 +1548,7 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   height:10px!important;
   margin-top:10px!important;
   border-radius:999px!important;
-  background:color-mix(in srgb,var(--theme-hero-ink) 13%,var(--surface-control))!important;
+  background:color-mix(in srgb,var(--theme-hero-ink) 18%,var(--surface))!important;
   overflow:visible!important;
 }
 .app-view-current .v15-hero-progress-track::after{
@@ -1567,7 +1567,7 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   height:100%!important;
   border-radius:999px!important;
   overflow:hidden!important;
-  background:linear-gradient(90deg,var(--equity),color-mix(in srgb,var(--equity) 65%,white))!important;
+  background:linear-gradient(90deg,var(--equity),color-mix(in srgb,var(--equity) 82%,var(--theme-hero-ink)))!important;
 }
 .app-view-current .v15-hero-progress-foot{
   display:flex!important;
@@ -1584,6 +1584,8 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 .app-view-current .v15-home-visual{
   position:relative!important;
   min-height:414px!important;
+  height:calc(100% - 28px)!important;
+  align-self:stretch!important;
   margin:14px 14px 14px 0!important;
   border:0!important;
   border-radius:18px!important;
