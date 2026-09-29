@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true">
+  <defs>
+    <style>
+      .ink{stroke:var(--icon-ink,currentColor);fill:none;stroke-linecap:round;stroke-linejoin:round}
+      .inkfill{fill:var(--icon-ink,currentColor)}
+      .accent{stroke:var(--icon-accent,currentColor);fill:none;stroke-linecap:round;stroke-linejoin:round}
+      .accentfill{fill:var(--icon-accent,currentColor)}
+      .soft{fill:var(--icon-soft,rgba(120,140,110,.18))}
+      .paper{fill:var(--icon-paper,#f7f1e6)}
+      .positive{stroke:var(--icon-positive,currentColor);fill:none;stroke-linecap:round;stroke-linejoin:round}
+      .positivefill{fill:var(--icon-positive,currentColor)}
+    </style>
+
+    <symbol id="icon-balance" viewBox="0 0 64 64">
+      <ellipse class="soft" cx="28" cy="52" rx="22" ry="4"/>
+      <path class="soft" d="M8 49c4-8 8-10 13-8-1 5-5 9-13 8Zm39 1c4-7 8-9 12-7-1 5-5 8-12 7Z"/>
+      <path class="ink" stroke-width="3" d="M10 30 31 13l20 17"/>
+      <path class="paper" stroke="var(--icon-ink,currentColor)" stroke-width="3" stroke-linejoin="round" d="M15 28v23h32V28L31 16 15 28Z"/>
+      <rect class="soft" x="21" y="31" width="7" height="7" rx="1.2"/>
+      <rect class="soft" x="33" y="31" width="7" height="7" rx="1.2"/>
+      <path class="inkfill" d="M27 51V40.5c0-2.5 2-4.5 4.5-4.5s4.5 2 4.5 4.5V51Z"/>
+      <circle class="accentfill" cx="48" cy="45" r="11"/>
+      <circle cx="48" cy="45" r="9.2" fill="none" stroke="var(--icon-paper,#f7f1e6)" stroke-width="1.4" opacity=".72"/>
+      <path d="M51.5 38.5c-1-1.1-2.1-1.6-3.7-1.6-2.7 0-4.5 1.8-4.5 4.3 0 2.2 1.2 3.3 2.3 4.2 1 .8 1.6 1.5 1.6 2.6 0 1.7-1.1 2.8-3.3 2.8h7.7M43.3 44.7h6.1" fill="none" stroke="var(--icon-paper,#f7f1e6)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+
+    <symbol id="icon-payment" viewBox="0 0 64 64">
+      <ellipse class="soft" cx="30" cy="53" rx="22" ry="4"/>
+      <rect class="paper" x="11" y="15" width="39" height="37" rx="6" stroke="var(--icon-ink,currentColor)" stroke-width="3"/>
+      <path class="inkfill" d="M11 22h39v9H11z"/>
+      <path class="ink" stroke-width="3" d="M20 10v9m21-9v9"/>
+      <g fill="var(--icon-soft,rgba(120,140,110,.18))">
+        <rect x="18" y="35" width="7" height="6" rx="1.5"/><rect x="29" y="35" width="7" height="6" rx="1.5"/><rect x="40" y="35" width="5" height="6" rx="1.5"/>
+        <rect x="18" y="44" width="7" height="5" rx="1.5"/><rect x="29" y="44" width="7" height="5" rx="1.5"/>
+      </g>
+      <circle class="accentfill" cx="47" cy="45" r="11"/>
+      <circle cx="47" cy="45" r="9.2" fill="none" stroke="var(--icon-paper,#f7f1e6)" stroke-width="1.4" opacity=".72"/>
+      <path d="M50.5 38.5c-1-1.1-2.1-1.6-3.7-1.6-2.7 0-4.5 1.8-4.5 4.3 0 2.2 1.2 3.3 2.3 4.2 1 .8 1.6 1.5 1.6 2.6 0 1.7-1.1 2.8-3.3 2.8h7.7M42.3 44.7h6.1" fill="none" stroke="var(--icon-paper,#f7f1e6)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+
+    <symbol id="icon-rate" viewBox="0 0 64 64">
+      <circle class="soft" cx="32" cy="32" r="25"/>
+      <circle cx="22" cy="22" r="6.5" fill="none" stroke="var(--icon-accent,currentColor)" stroke-width="4"/>
+      <circle cx="42" cy="42" r="6.5" fill="none" stroke="var(--icon-accent,currentColor)" stroke-width="4"/>
+      <path class="accent" stroke-width="5" d="M18 47 46 17"/>
+    </symbol>
+
+    <symbol id="icon-overpay" viewBox="0 0 64 64">
+      <ellipse class="soft" cx="29" cy="53" rx="23" ry="4"/>
+      <path class="soft" d="M8 48c4-8 8-10 13-8-1 5-5 9-13 8Zm38 2c4-7 8-9 12-7-1 5-5 8-12 7Z"/>
+      <g stroke="var(--icon-ink,currentColor)" stroke-width="2.6" fill="var(--icon-paper,#f7f1e6)">
+        <ellipse cx="26" cy="23" rx="13" ry="5"/><path d="M13 23v8c0 2.8 5.8 5 13 5s13-2.2 13-5v-8"/>
+        <path d="M13 31v8c0 2.8 5.8 5 13 5s13-2.2 13-5v-8"/>
+        <path d="M13 39v7c0 2.8 5.8 5 13 5 3.8 0 7.2-.6 9.6-1.7"/>
+      </g>
+      <circle class="positivefill" cx="46" cy="42" r="12"/>
+      <circle cx="46" cy="42" r="10.2" fill="none" stroke="var(--icon-paper,#f7f1e6)" stroke-width="1.3" opacity=".72"/>
+      <path d="M46 35.5v13M39.5 42h13" stroke="var(--icon-paper,#f7f1e6)" stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+
+    <symbol id="icon-start" viewBox="0 0 64 64">
+      <ellipse class="soft" cx="32" cy="53" rx="22" ry="4"/>
+      <path class="soft" d="M44 50c4-7 8-9 12-7-1 5-5 8-12 7Z"/>
+      <circle cx="22" cy="24" r="9" fill="none" stroke="var(--icon-accent,currentColor)" stroke-width="3"/>
+      <circle cx="30" cy="18" r="8" fill="none" stroke="var(--icon-ink,currentColor)" stroke-width="3"/>
+      <path class="accent" stroke-width="4" d="m16 31-8 14 5 3 4-5 3 1.5 3-5.5 2 1 5-8"/>
+      <path class="ink" stroke-width="3" d="m31 30 11-9 13 10m-20 0v18h16V31"/>
+      <path class="inkfill" d="M40 49v-9h6v9Z"/>
+    </symbol>
+
+    <symbol id="icon-today" viewBox="0 0 64 64">
+      <ellipse class="soft" cx="32" cy="50" rx="20" ry="8"/>
+      <ellipse cx="32" cy="50" rx="12" ry="4.5" fill="none" stroke="var(--icon-soft,rgba(120,140,110,.18))" stroke-width="3"/>
+      <path class="inkfill" d="M32 8c-10.3 0-18 7.5-18 17.1 0 12 13.4 26.1 16.8 29.5a1.7 1.7 0 0 0 2.4 0C36.6 51.2 50 37.1 50 25.1 50 15.5 42.3 8 32 8Z"/>
+      <circle cx="32" cy="25" r="7" fill="var(--icon-paper,#f7f1e6)"/>
+    </symbol>
+
+    <symbol id="icon-remortgage" viewBox="0 0 64 64">
+      <ellipse class="soft" cx="32" cy="54" rx="22" ry="4"/>
+      <path class="soft" d="M10 50c4-7 8-9 12-7-1 5-5 8-12 7Zm33 1c4-8 8-10 13-8-1 5-5 9-13 8Z"/>
+      <path class="ink" stroke-width="5" d="M32 12v39"/>
+      <path d="M14 18h28l7 7-7 7H14l-7-7 7-7Z" fill="var(--icon-soft,rgba(120,140,110,.18))" stroke="var(--icon-ink,currentColor)" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M24 34h26l7 7-7 7H24l-7-7 7-7Z" fill="var(--icon-paper,#f7f1e6)" stroke="var(--icon-accent,currentColor)" stroke-width="2.5" stroke-linejoin="round"/>
+    </symbol>
+
+    <symbol id="icon-fixed-end" viewBox="0 0 64 64">
+      <ellipse class="soft" cx="32" cy="54" rx="22" ry="4"/>
+      <path class="soft" d="M9 49c4-7 8-9 12-7-1 5-5 8-12 7Zm36 1c4-8 8-10 13-8-1 5-5 9-13 8Z"/>
+      <path class="paper" stroke="var(--icon-accent,currentColor)" stroke-width="2.8" stroke-linejoin="round" d="M17 10h23l10 10v34H17V10Z"/>
+      <path class="accent" stroke-width="2.8" d="M40 10v10h10"/>
+      <circle cx="28" cy="29" r="4" fill="none" stroke="var(--icon-accent,currentColor)" stroke-width="2.8"/>
+      <circle cx="40" cy="40" r="4" fill="none" stroke="var(--icon-accent,currentColor)" stroke-width="2.8"/>
+      <path class="accent" stroke-width="3" d="m26 43 16-17"/>
+      <path class="accent" stroke-width="2.2" d="M25 49h17"/>
+    </symbol>
+
+    <symbol id="icon-finish" viewBox="0 0 64 64">
+      <ellipse class="soft" cx="32" cy="54" rx="22" ry="4"/>
+      <path class="soft" d="M40 51c4-7 8-9 12-7-1 5-5 8-12 7Z"/>
+      <path class="ink" stroke-width="4" d="M17 10v43"/>
+      <path d="M19 13c11-5 19 5 30 0v22c-11 5-19-5-30 0V13Z" fill="var(--icon-paper,#f7f1e6)" stroke="var(--icon-ink,currentColor)" stroke-width="2.2" stroke-linejoin="round"/>
+      <path class="inkfill" d="M19 13h8v8h-8zm16 0h8v8h-8zm8 8h8v8h-8zm-16 0h8v8h-8zm-8 8h8v7h-8zm16 0h8v7h-8z"/>
+    </symbol>
+  </defs>
+</svg>
