@@ -120,18 +120,27 @@
       const statIcon = (kind) => {
         const common = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"';
         const icons = {
-          balance: `<svg ${common}><path d="M5 8.5h14M6.5 8.5V19m11-10.5V19M4 19h16"/><path d="M8 5h8l2 3.5H6z"/></svg>`,
+          balance: `<svg ${common}><path d="M3.5 10.5 12 3.8l8.5 6.7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.3 20v-6.2h5.4V20"/></svg>`,
           payment: `<svg ${common}><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="M3.5 9.5h17M7 14h4"/></svg>`,
-          overpay: `<svg ${common}><circle cx="12" cy="12" r="8.5"/><path d="M12 8v8M8 12h8"/></svg>`,
-          rate: `<svg ${common}><path d="m7 17 10-10"/><circle cx="8" cy="8" r="2.2"/><circle cx="16" cy="16" r="2.2"/></svg>`
+          rate: `<svg ${common}><path d="m7 17 10-10"/><circle cx="8" cy="8" r="2.2"/><circle cx="16" cy="16" r="2.2"/></svg>`,
+          overpay: `<svg ${common}><circle cx="12" cy="12" r="8.5"/><path d="M12 8v8M8 12h8"/></svg>`
         };
         return icons[kind] || '';
       };
+      const stat = (kind, label, valueKey, support, supportKey = '') => `
+        <div class="v15-stat" data-stat="${kind}">
+          <i class="v15-stat-icon">${statIcon(kind)}</i>
+          <div class="v15-stat-copy">
+            <span>${label}</span>
+            <strong data-v15="${valueKey}">—</strong>
+            <small ${supportKey ? `data-v15="${supportKey}"` : ''}>${support}</small>
+          </div>
+        </div>`;
       grid.innerHTML = `
-        <div class="v15-stat" data-stat="balance"><div class="v15-stat-top"><span>Mortgage remaining</span><i class="v15-stat-icon">${statIcon('balance')}</i></div><strong data-v15="balance">—</strong><small data-v15="ltv">— LTV</small></div>
-        <div class="v15-stat" data-stat="payment"><div class="v15-stat-top"><span>Monthly payment</span><i class="v15-stat-icon">${statIcon('payment')}</i></div><strong data-v15="payment">—</strong><small>Scheduled monthly payment</small></div>
-        <div class="v15-stat" data-stat="overpay"><div class="v15-stat-top"><span>Regular overpayment</span><i class="v15-stat-icon">${statIcon('overpay')}</i></div><strong data-v15="regular">—</strong><small>Extra every month</small></div>
-        <div class="v15-stat" data-stat="rate"><div class="v15-stat-top"><span>Interest rate</span><i class="v15-stat-icon">${statIcon('rate')}</i></div><strong data-v15="rate">—</strong><small data-v15="fix">Current mortgage deal</small></div>`;
+        ${stat('balance','Mortgage remaining','balance','— LTV','ltv')}
+        ${stat('payment','Monthly payment','payment','Scheduled monthly payment')}
+        ${stat('rate','Interest rate','rate','Current mortgage deal','fix')}
+        ${stat('overpay','Regular overpayment','regular','— extra per year','annual-overpay')}`;
       hero.insertAdjacentElement('afterend', grid);
     }
     return grid;
@@ -185,6 +194,7 @@
     $('[data-v15="rate"]', grid).textContent = pct(c.rate,2);
     $('[data-v15="fix"]', grid).textContent = state.fixedEnd ? `Fixed until ${monthLabel(state.fixedEnd)}` : 'Current mortgage deal';
     $('[data-v15="ltv"]', grid).textContent = `${pct(c.ltv,1)} LTV`;
+    $('[data-v15="annual-overpay"]', grid).textContent = c.regular > 0 ? `${money(c.regular * 12)} extra per year` : 'No regular overpayment';
 
     const saved = c.plus100?.monthsSaved || 0;
     const savedInterest = c.plus100?.interestSaved || 0;
