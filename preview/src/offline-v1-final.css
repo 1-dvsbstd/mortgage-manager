@@ -306,7 +306,6 @@ body .app-view-upcoming .deal-planner-empty span{
 
 /* Remove the remaining pale-mint fill from completed journey markers.
    Completion can stay legible through the icon/border without introducing another surface colour. */
-body .v15-current-journey-step.is-complete .v15-current-journey-icon,
 body .v15-journey-step.is-complete .v15-journey-icon{
   background:#f2e8dc!important;
   border-color:#b99a7c!important;
