@@ -117,11 +117,21 @@
       grid = document.createElement('section');
       grid.className = 'v15-current-stats';
       grid.setAttribute('aria-label','Mortgage and home summary');
+      const statIcon = (kind) => {
+        const common = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"';
+        const icons = {
+          balance: `<svg ${common}><path d="M5 8.5h14M6.5 8.5V19m11-10.5V19M4 19h16"/><path d="M8 5h8l2 3.5H6z"/></svg>`,
+          payment: `<svg ${common}><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="M3.5 9.5h17M7 14h4"/></svg>`,
+          overpay: `<svg ${common}><circle cx="12" cy="12" r="8.5"/><path d="M12 8v8M8 12h8"/></svg>`,
+          rate: `<svg ${common}><path d="m7 17 10-10"/><circle cx="8" cy="8" r="2.2"/><circle cx="16" cy="16" r="2.2"/></svg>`
+        };
+        return icons[kind] || '';
+      };
       grid.innerHTML = `
-        <div class="v15-stat"><span>Mortgage remaining</span><strong data-v15="balance">—</strong><small data-v15="ltv">— LTV</small></div>
-        <div class="v15-stat"><span>Monthly payment</span><strong data-v15="payment">—</strong><small>Scheduled payment</small></div>
-        <div class="v15-stat"><span>Regular overpayment</span><strong data-v15="regular">—</strong><small>Already paid each month</small></div>
-        <div class="v15-stat"><span>Interest rate</span><strong data-v15="rate">—</strong><small data-v15="fix">Current mortgage deal</small></div>`;
+        <div class="v15-stat" data-stat="balance"><div class="v15-stat-top"><span>Mortgage remaining</span><i class="v15-stat-icon">${statIcon('balance')}</i></div><strong data-v15="balance">—</strong><small data-v15="ltv">— LTV</small></div>
+        <div class="v15-stat" data-stat="payment"><div class="v15-stat-top"><span>Monthly payment</span><i class="v15-stat-icon">${statIcon('payment')}</i></div><strong data-v15="payment">—</strong><small>Scheduled monthly payment</small></div>
+        <div class="v15-stat" data-stat="overpay"><div class="v15-stat-top"><span>Regular overpayment</span><i class="v15-stat-icon">${statIcon('overpay')}</i></div><strong data-v15="regular">—</strong><small>Extra every month</small></div>
+        <div class="v15-stat" data-stat="rate"><div class="v15-stat-top"><span>Interest rate</span><i class="v15-stat-icon">${statIcon('rate')}</i></div><strong data-v15="rate">—</strong><small data-v15="fix">Current mortgage deal</small></div>`;
       hero.insertAdjacentElement('afterend', grid);
     }
     return grid;
