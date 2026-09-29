@@ -83,6 +83,7 @@
       card.innerHTML = `
         <div class="v15-current-journey-head">
           <div><span>Mortgage journey</span><strong>Your current fix and what comes next</strong></div>
+          <div class="v15-current-journey-next"><span>Next milestone</span><strong data-journey-next>—</strong></div>
         </div>
         <div class="v15-current-journey-track"></div>`;
       card.addEventListener('click', (event) => {
@@ -121,14 +122,16 @@
       ['home','Home purchased',dateLabel(data.purchase),'','complete',''],
       ['today','Today',today,'','current',''],
       ['switch','Remortgage prep',data.remortgage ? monthLabel(data.remortgage) : '—','Start looking','','rates'],
-      ['calendar','Fixed rate ends',monthLabel(data.fixedEnd),'Current deal ends','','rates'],
-      ['finish','Mortgage free',data.payoff,'Projected','',''],
+      ['calendar','Fixed rate ends',monthLabel(data.fixedEnd),'Deal ends','','rates'],
+      ['finish','Mortgage free',data.payoff,'At current pace','destination',''],
     ];
     $('.v15-current-journey-track', card).innerHTML = steps.map(([icon,title,date,note,status,action]) => `
       <div class="v15-current-journey-step ${status ? `is-${status}` : ''} ${action ? 'is-actionable' : ''}" ${action ? `data-journey-action="${action}" role="button" tabindex="0" aria-label="${title}: open upcoming rates"` : ''}>
         <div class="v15-current-journey-icon">${journeyIcon(icon)}</div>
         <div class="v15-current-journey-copy"><strong>${title}</strong><span class="v15-current-journey-date">${date}</span>${note ? `<small>${note}</small>` : ''}</div>
       </div>`).join('');
+    const next = $('[data-journey-next]', card);
+    if (next) next.textContent = data.remortgage ? `Start looking · ${monthLabel(data.remortgage)}` : 'Add your fixed-rate end date';
   }
 
   function run() { renderCurrentJourney(); }
