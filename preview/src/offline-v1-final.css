@@ -143,26 +143,6 @@ body .v15-current-stats .v15-stat small{
   body .v15-current-stats{grid-template-columns:1fr!important}
 }
 
-/* Editable values should feel editable without shouting EDIT. */
-body .app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable::after{display:none!important;content:none!important}
-body .app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable{
-  border-radius:12px!important;
-  padding:7px 9px!important;
-  margin:-7px -9px!important;
-  transition:background .16s ease,box-shadow .16s ease,transform .16s ease!important;
-}
-@media(hover:hover) and (pointer:fine){
-  body .app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable:hover{
-    background:rgba(255,250,244,.82)!important;
-    box-shadow:0 8px 20px rgba(61,48,36,.07)!important;
-    transform:none!important;
-  }
-}
-body .app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable:focus-visible{
-  outline:2px solid rgba(200,142,92,.42)!important;
-  outline-offset:3px!important;
-}
-
 /* Legacy expanded-card behaviour must never leak into the final UI. */
 body .app-view .card-close-bar,
 body .app-view .expand-hint,
