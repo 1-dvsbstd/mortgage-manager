@@ -2094,30 +2094,54 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 
 /* Premium Step 2.2 — Current mortgage journey */
 .app-view-current .v15-current-journey{
-  padding:16px 22px 17px!important;
+  padding:14px 22px 15px!important;
   border:1px solid var(--border)!important;
   border-radius:18px!important;
   background:var(--surface-control)!important;
   box-shadow:none!important;
 }
 .app-view-current .v15-current-journey-head{
+  display:flex!important;
   align-items:flex-end!important;
-  margin-bottom:12px!important;
+  justify-content:space-between!important;
+  gap:24px!important;
+  margin-bottom:9px!important;
 }
-.app-view-current .v15-current-journey-head>div>span{
+.app-view-current .v15-current-journey-head>div:first-child>span{
   color:var(--accent-strong)!important;
   font-size:9px!important;
   font-weight:800!important;
   letter-spacing:.11em!important;
   text-transform:uppercase!important;
 }
-.app-view-current .v15-current-journey-head>div>strong{
-  margin-top:4px!important;
+.app-view-current .v15-current-journey-head>div:first-child>strong{
+  display:block!important;
+  margin-top:3px!important;
   color:var(--text)!important;
   font-family:var(--font-ui)!important;
   font-size:14px!important;
   font-weight:750!important;
   letter-spacing:-.01em!important;
+}
+.app-view-current .v15-current-journey-next{
+  display:grid!important;
+  justify-items:end!important;
+  min-width:180px!important;
+  padding-bottom:1px!important;
+  text-align:right!important;
+}
+.app-view-current .v15-current-journey-next span{
+  color:var(--muted-2)!important;
+  font-size:8px!important;
+  font-weight:800!important;
+  letter-spacing:.08em!important;
+  text-transform:uppercase!important;
+}
+.app-view-current .v15-current-journey-next strong{
+  margin-top:3px!important;
+  color:var(--text)!important;
+  font-size:11px!important;
+  font-weight:750!important;
 }
 .app-view-current .v15-current-journey-link{display:none!important}
 
@@ -2132,13 +2156,13 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 .app-view-current .v15-current-journey-track::before{
   content:""!important;
   position:absolute!important;
-  left:10%!important;
-  right:10%!important;
-  top:25px!important;
+  left:10.55%!important;
+  right:12.87%!important;
+  top:24px!important;
   height:2px!important;
   border-radius:999px!important;
   transform:none!important;
-  background:linear-gradient(90deg,var(--positive) 0 25%,var(--border) 25% 100%)!important;
+  background:linear-gradient(90deg,var(--positive) 0 27.5%,var(--border) 27.5% 100%)!important;
 }
 .app-view-current .v15-current-journey-step{
   position:relative!important;
@@ -2154,9 +2178,9 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 .app-view-current .v15-current-journey-icon{
   display:grid!important;
   place-items:center!important;
-  width:46px!important;
-  height:46px!important;
-  margin:2px auto 10px!important;
+  width:44px!important;
+  height:44px!important;
+  margin:2px auto 8px!important;
   border:1.5px solid var(--border)!important;
   border-radius:14px!important;
   background:var(--surface-control)!important;
@@ -2165,8 +2189,8 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 }
 .app-view-current .v15-current-journey-icon svg{
   display:block!important;
-  width:22px!important;
-  height:22px!important;
+  width:21px!important;
+  height:21px!important;
 }
 .app-view-current .v15-current-journey-step.is-complete .v15-current-journey-icon{
   background:var(--positive-soft)!important;
@@ -2174,9 +2198,9 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   color:var(--positive)!important;
 }
 .app-view-current .v15-current-journey-step.is-current .v15-current-journey-icon{
-  width:52px!important;
-  height:52px!important;
-  margin:-1px auto 7px!important;
+  width:50px!important;
+  height:50px!important;
+  margin:-1px auto 5px!important;
   border-radius:16px!important;
   background:var(--accent-soft)!important;
   border-color:var(--accent)!important;
@@ -2184,8 +2208,13 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   box-shadow:none!important;
 }
 .app-view-current .v15-current-journey-step.is-current .v15-current-journey-icon svg{
-  width:24px!important;
-  height:24px!important;
+  width:23px!important;
+  height:23px!important;
+}
+.app-view-current .v15-current-journey-step.is-destination .v15-current-journey-icon{
+  border-color:color-mix(in srgb,var(--accent) 36%,var(--border))!important;
+  background:color-mix(in srgb,var(--accent-soft) 34%,var(--surface-control))!important;
+  color:var(--accent-strong)!important;
 }
 .app-view-current .v15-current-journey-copy{
   display:grid!important;
@@ -2201,15 +2230,16 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   line-height:1.25!important;
   white-space:normal!important;
 }
-.app-view-current .v15-current-journey-step.is-current strong{
+.app-view-current .v15-current-journey-step.is-current strong,
+.app-view-current .v15-current-journey-step.is-destination strong{
   color:var(--accent-strong)!important;
 }
 .app-view-current .v15-current-journey-date{
   display:block!important;
-  margin-top:4px!important;
+  margin-top:3px!important;
   color:var(--muted)!important;
   font-size:10px!important;
-  font-weight:650!important;
+  font-weight:680!important;
   line-height:1.2!important;
   white-space:nowrap!important;
 }
@@ -2217,7 +2247,7 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   display:block!important;
   margin-top:3px!important;
   color:var(--muted-2)!important;
-  font-size:8px!important;
+  font-size:9px!important;
   font-weight:600!important;
   line-height:1.2!important;
   white-space:nowrap!important;
@@ -2239,6 +2269,9 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 }
 
 @media(max-width:900px){
+  .app-view-current .v15-current-journey-head{
+    align-items:flex-start!important;
+  }
   .app-view-current .v15-current-journey-track{
     grid-template-columns:repeat(5,minmax(128px,1fr))!important;
     overflow-x:auto!important;
@@ -2256,11 +2289,18 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 }
 @media(max-width:700px){
   .app-view-current .v15-current-journey{
-    padding:15px 16px 16px!important;
+    padding:14px 16px 15px!important;
     border-radius:18px!important;
   }
   .app-view-current .v15-current-journey-head{
-    margin-bottom:11px!important;
+    display:grid!important;
+    gap:7px!important;
+    margin-bottom:8px!important;
+  }
+  .app-view-current .v15-current-journey-next{
+    justify-items:start!important;
+    min-width:0!important;
+    text-align:left!important;
   }
 }
 
