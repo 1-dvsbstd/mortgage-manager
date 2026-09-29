@@ -40,28 +40,6 @@
   line-height:1.12!important;
 }
 
-/* Current */
-.current-hero-condensed{grid-template-columns:1fr!important;padding:var(--space-card)!important}
-.current-hero-condensed>.hero-progress-card{display:none!important}
-.current-hero-condensed .hero-main>h1{margin-bottom:2px}
-.current-hero-condensed .hero-date{margin-bottom:14px}
-.current-hero-condensed .hero-balance-row{margin-top:14px;gap:10px;grid-template-columns:repeat(3,minmax(0,1fr))}
-.current-hero-condensed .hero-overpay-summary,.current-hero-condensed [data-mortgage-tile="currentOverpayment"]{display:none!important}
-.current-hero-condensed .current-home-inline{display:grid!important;grid-template-columns:minmax(0,1fr) 132px;grid-template-areas:"value donut" "stats donut";column-gap:20px;row-gap:10px;align-items:center;margin-top:18px!important;padding-top:18px!important;border-top:1px solid var(--border-soft)!important;background:transparent!important}
-.current-hero-condensed .current-home-inline .panel-heading,.current-hero-condensed .current-home-inline .ownership-legend{display:none!important}
-.current-hero-condensed .current-home-inline .home-value{grid-area:value;display:flex;align-items:baseline;gap:10px;margin:0!important;text-align:left!important}
-.current-hero-condensed .current-home-inline .home-value span{font-size:11px;color:var(--muted)!important}
-.current-hero-condensed .current-home-inline .home-value strong{font-size:28px}
-.current-hero-condensed .current-home-inline .home-value small{font-size:11px;color:var(--muted)!important}
-.current-hero-condensed .current-home-inline .home-stats{grid-area:stats;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0!important}
-.current-hero-condensed .current-home-inline .home-stats>div{padding:10px 12px!important}
-.current-hero-condensed .current-home-inline .home-stats span{font-size:10px}
-.current-hero-condensed .current-home-inline .home-stats strong{font-size:16px}
-.current-hero-condensed .current-home-inline .ownership-bar{grid-area:donut;display:grid!important;place-items:center!important;width:124px!important;height:124px!important;margin:0 auto!important;background:transparent!important;border:0!important}
-.current-hero-condensed .current-home-inline .ownership-segment{display:none!important}
-.current-hero-condensed .current-home-inline .ownership-donut{display:block!important;width:124px!important;height:124px!important}
-.current-hero-condensed #currentOverpaymentPanel{display:none!important}
-
 /* Trajectory */
 .trajectory-with-what-if{padding:0!important;overflow:hidden;cursor:default!important}
 .trajectory-with-what-if .trajectory-what-if{display:none!important}
@@ -130,10 +108,6 @@
   .current-fix-stats,.upcoming-rates .deal-planner-rate-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
 }
 
-@media(max-width:800px){
-  .current-hero-condensed .current-home-inline{grid-template-columns:minmax(0,1fr) 112px}
-  .current-hero-condensed .current-home-inline .ownership-bar,.current-hero-condensed .current-home-inline .ownership-donut{width:108px!important;height:108px!important}
-}
 
 @media(max-width:700px){
   :root{--space-page:16px;--space-card:18px;--radius-card:19px}
@@ -146,11 +120,6 @@
 }
 
 @media(max-width:560px){
-  .current-hero-condensed .hero-balance-row{grid-template-columns:1fr 1fr}
-  .current-hero-condensed .current-home-inline{grid-template-columns:1fr 96px;column-gap:10px}
-  .current-hero-condensed .current-home-inline .home-value{display:block}
-  .current-hero-condensed .current-home-inline .home-stats{grid-template-columns:1fr 1fr}
-  .current-hero-condensed .current-home-inline .ownership-bar,.current-hero-condensed .current-home-inline .ownership-donut{width:92px!important;height:92px!important}
   .chart-panel .legend{font-size:10px!important}
 }
 
@@ -237,25 +206,6 @@ body{background:var(--bg)!important;color:var(--text)!important}
 .app-view .panel-heading h2,.app-view .upcoming-section-heading h2,
 .app-view .projection-heading h2,.app-view .future-model-heading h2,
 .app-view .future-wait-heading h2,.app-view .next-home-heading h2{font-size:22px!important}
-
-/* Current: compact the hero and tighten the trajectory flow */
-.current-hero-condensed{padding:22px 24px!important}
-.current-hero-condensed .hero-main>h1{
-  color:var(--text)!important;
-  text-shadow:0 8px 30px rgba(0,0,0,.16);
-}
-.current-hero-condensed .hero-date{color:#b3bcb7!important}
-.current-hero-condensed .hero-balance-row{gap:12px!important;margin-top:12px!important}
-.current-hero-condensed .current-home-inline{margin-top:18px!important;padding-top:18px!important;column-gap:24px!important;border-top-color:var(--border-soft)!important}
-.current-hero-condensed .current-home-inline .home-stats{gap:10px!important}
-.current-hero-condensed .current-home-inline .home-value strong{
-  font-family:var(--font-display)!important;
-  font-weight:500!important;
-  color:var(--text)!important;
-}
-.current-hero-condensed .current-home-inline .ownership-donut{
-  filter:drop-shadow(0 12px 22px rgba(0,0,0,.16));
-}
 
 .trajectory-with-what-if>.panel-heading{padding:24px 24px 0!important}
 .trajectory-scenario-controls{
@@ -374,7 +324,6 @@ body{background:var(--bg)!important;color:var(--text)!important}
   .app-view-current .chart-panel,
   .app-view-upcoming .upcoming-section,
   .app-view-future .panel{padding-top:18px!important;padding-bottom:18px!important}
-  .current-hero-condensed{padding:18px!important}
   .trajectory-with-what-if>.panel-heading{padding:18px 18px 0!important}
   .trajectory-scenario-controls{margin:14px 18px 9px!important}
   .trajectory-with-what-if>.chart-wrap{margin:9px 18px 0!important;width:calc(100% - 36px)!important}
@@ -407,35 +356,6 @@ body{background:var(--bg)!important;color:var(--text)!important}
 .home-profile-heading h2,.next-home-heading h2,.cost-heading h2{color:var(--text)!important}
 .kicker,.eyebrow,.future-assumption-label{color:var(--accent-strong)!important}
 .subtle,.field-note,.deep-note,.source-date,.next-event-text,.timeline-labels,.app-view-heading>p{color:var(--muted)!important}
-
-/* CURRENT — ownership-first editorial hero */
-.app-view-current .hero-panel.current-hero-condensed{
-  position:relative!important;
-  display:grid!important;
-  grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr)!important;
-  min-height:430px;
-  padding:0!important;
-  overflow:hidden!important;
-  background:var(--surface)!important;
-}
-.app-view-current .hero-panel::after{display:none!important}
-.current-hero-condensed .hero-main{position:relative;z-index:2;padding:34px 34px 30px!important;background:linear-gradient(90deg,rgba(251,248,243,1) 0%,rgba(251,248,243,.98) 72%,rgba(251,248,243,.72) 100%)}
-.current-hero-condensed .section-topline,.current-hero-condensed #yearsRemaining,.current-hero-condensed .hero-date,.current-hero-condensed .hero-balance-row,.current-hero-condensed .current-home-inline{display:none!important}
-.current-hero-condensed>.hero-progress-card{display:none!important}
-.v15-home-visual{position:relative;min-height:430px;background:#e9dfd1 url('../public/home-editorial.svg') center/cover no-repeat}
-.v15-home-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(251,248,243,.18),transparent 32%),linear-gradient(180deg,transparent 58%,rgba(25,33,39,.10));pointer-events:none}
-.v15-home-copy{max-width:610px}
-.v15-home-copy .v15-greeting{margin:0 0 9px;color:#3d5e55!important;font-size:13px;font-weight:700}
-.v15-home-copy h1{margin:0;font-family:var(--font-display);font-size:clamp(38px,5.1vw,66px);line-height:.98;letter-spacing:-.045em;font-weight:500;color:#203d35!important}
-.v15-home-copy .v15-subline{margin:12px 0 0;color:var(--muted)!important;font-size:15px}
-.v15-home-copy .v15-subline strong{color:#203d35!important}
-.v15-hero-progress{margin-top:26px;padding:18px 20px;border:1px solid var(--border-soft);border-radius:18px;background:rgba(255,255,255,.55)}
-.v15-hero-progress-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px}
-.v15-hero-progress-head span{color:var(--muted)!important;font-size:11px}
-.v15-hero-progress-head strong{font-size:14px;color:#203d35!important}
-.v15-hero-progress-track{height:10px;margin-top:10px;border-radius:999px;background:#e7e0d7;overflow:hidden}
-.v15-hero-progress-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#5d9f8c,#86bea9)}
-.v15-hero-progress-foot{display:flex;justify-content:space-between;gap:14px;margin-top:8px;color:var(--muted)!important;font-size:10px}
 
 .v15-action-card{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0;padding:18px 20px;border:1px solid rgba(183,131,77,.24);border-radius:18px;background:linear-gradient(90deg,var(--surface-control),var(--accent-soft));box-shadow:0 12px 34px rgba(85,58,36,.055)}
 .v15-action-copy{display:flex;align-items:center;gap:14px;min-width:0}
@@ -507,15 +427,8 @@ input,select,textarea{color:var(--text)}
 .card-backdrop{background:rgba(31,34,36,.34)!important;backdrop-filter:blur(10px)!important}
 .footer{color:#85807a!important}
 
-@media(max-width:1050px){
-  .app-view-current .hero-panel.current-hero-condensed{grid-template-columns:1fr!important}
-  .v15-home-visual{min-height:260px;order:-1;background-position:center 47%}
-  .current-hero-condensed .hero-main{background:var(--surface)}}
-
 @media(max-width:700px){
-  .current-hero-condensed .hero-main{padding:24px 20px 22px!important}
-  .v15-home-copy h1{font-size:42px}
-  .v15-home-visual{min-height:220px}  .v15-action-card{align-items:flex-start;padding:16px}.v15-action-card button{padding-top:2px}
+  .v15-action-card{align-items:flex-start;padding:16px}.v15-action-card button{padding-top:2px}
   .app-view-current .trajectory-with-what-if>.panel-heading{padding:20px 18px 14px!important}
   .app-view-current .trajectory-scenario-controls{margin:0 18px!important;padding:15px 0 17px!important}
   .trajectory-scenario-copy{display:block!important}.trajectory-current-saving{min-width:0;margin-top:10px;text-align:left}
@@ -525,7 +438,6 @@ input,select,textarea{color:var(--text)}
 }
 
 @media(max-width:480px){  .v15-action-card{display:grid;grid-template-columns:1fr}.v15-action-card button{text-align:left;margin-left:52px}
-  .v15-home-copy h1{font-size:37px}
 }
 
 /* Consolidated former v15-polish.css layer */
@@ -1689,48 +1601,74 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
       @media(max-width:700px){.live-rate-card{min-height:86px}.clear-local-data{margin-left:0}.topbar-with-nav>.topbar-actions{display:grid!important;grid-template-columns:auto auto;align-items:center!important;justify-content:end;gap:6px!important;margin-left:auto}.topbar-actions .connectivity-mode{grid-column:1/-1;justify-content:flex-end}.topbar-actions .save-status{display:none}.topbar-actions .personal-data-button{justify-self:end}.connectivity-copy small{display:block!important;max-width:150px;white-space:normal;line-height:1.2}.live-rate-selected-summary{display:grid;gap:3px}.live-rate-selected-summary strong{text-align:left}.methodology-grid{grid-template-columns:1fr}}
       @media(max-width:420px){.connectivity-copy small{display:none!important}.connectivity-mode{gap:6px}.personal-data-button{padding-inline:9px}}
 
-/* Premium Step 2 — Current page */
+/* Current hero — canonical source */
 .app-view-current .hero-panel.current-hero-condensed{
+  position:relative!important;
+  display:grid!important;
   grid-template-columns:minmax(0,1.08fr) minmax(330px,.92fr)!important;
   min-height:442px!important;
+  padding:0!important;
+  overflow:hidden!important;
   background:var(--surface)!important;
   border-color:var(--border)!important;
   box-shadow:none!important;
 }
-.app-view-current .current-hero-condensed .hero-main{
-  display:flex!important;
-  align-items:center!important;
-  padding:38px 38px 34px!important;
-  background:linear-gradient(90deg,rgba(250,247,241,1) 0%,rgba(250,247,241,.985) 76%,rgba(250,247,241,.88) 100%)!important;
+.app-view-current .hero-panel.current-hero-condensed::after{display:none!important}
+.app-view-current .current-hero-condensed .section-topline,
+.app-view-current .current-hero-condensed #yearsRemaining,
+.app-view-current .current-hero-condensed .hero-date,
+.app-view-current .current-hero-condensed .hero-balance-row,
+.app-view-current .current-hero-condensed .current-home-inline,
+.app-view-current .current-hero-condensed>.hero-progress-card{
+  display:none!important;
 }
-.app-view-current .v15-home-copy{max-width:620px}
+.app-view-current .current-hero-condensed .hero-main{
+  position:relative!important;
+  z-index:2!important;
+  display:block!important;
+  align-items:initial!important;
+  padding:38px 38px 34px!important;
+  background:linear-gradient(90deg,var(--surface) 0%,var(--surface) 72%,color-mix(in srgb,var(--surface) 72%,transparent) 100%)!important;
+}
+.app-view-current .v15-home-copy{max-width:620px!important}
 .app-view-current .v15-home-copy .v15-greeting{
-  margin-bottom:10px!important;
-  color:var(--accent-strong)!important;
+  margin:0 0 10px!important;
+  color:var(--theme-greeting)!important;
   font-size:11px!important;
   font-weight:800!important;
   letter-spacing:.08em!important;
   text-transform:uppercase!important;
 }
 .app-view-current .v15-home-copy h1{
-  color:var(--text)!important;
-  font-size:clamp(42px,5vw,68px)!important;
-  line-height:.96!important;
-  letter-spacing:-.05em!important;
+  max-width:590px!important;
+  margin:0!important;
+  color:var(--theme-hero-ink)!important;
+  font-family:var(--font-display)!important;
+  font-size:clamp(40px,4.65vw,62px)!important;
+  font-weight:500!important;
+  line-height:.98!important;
+  letter-spacing:-.045em!important;
 }
 .app-view-current .v15-home-copy .v15-subline{
-  margin-top:14px!important;
+  margin:14px 0 0!important;
   color:var(--muted)!important;
   font-size:14px!important;
 }
-.app-view-current .v15-home-copy .v15-subline strong{color:var(--positive)!important}
+.app-view-current .v15-home-copy .v15-subline strong{color:var(--theme-hero-ink)!important}
+
 .app-view-current .v15-hero-progress{
   margin-top:28px!important;
   padding:16px 0 0!important;
   border:0!important;
   border-top:1px solid var(--border-soft)!important;
   border-radius:0!important;
-  background:transparent!important;
+  background:color-mix(in srgb,var(--surface-control) 72%,transparent)!important;
+}
+.app-view-current .v15-hero-progress-head{
+  display:flex!important;
+  align-items:baseline!important;
+  justify-content:space-between!important;
+  gap:16px!important;
 }
 .app-view-current .v15-hero-progress-head span{
   color:var(--muted)!important;
@@ -1739,7 +1677,7 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   letter-spacing:.03em!important;
 }
 .app-view-current .v15-hero-progress-head strong{
-  color:var(--text)!important;
+  color:var(--theme-hero-ink)!important;
   font-family:var(--font-display)!important;
   font-size:17px!important;
   font-weight:600!important;
@@ -1747,27 +1685,121 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 .app-view-current .v15-hero-progress-track{
   height:8px!important;
   margin-top:9px!important;
-  background:var(--surface-soft)!important;
+  border-radius:999px!important;
+  background:var(--theme-progress-track)!important;
+  overflow:hidden!important;
 }
 .app-view-current .v15-hero-progress-track i{
-  background:linear-gradient(90deg,var(--positive) 0%,var(--positive) 72%,var(--accent) 100%)!important;
+  display:block!important;
+  height:100%!important;
+  border-radius:inherit!important;
+  background:linear-gradient(90deg,var(--equity),color-mix(in srgb,var(--equity) 65%,white))!important;
 }
 .app-view-current .v15-hero-progress-foot{
+  display:flex!important;
+  justify-content:space-between!important;
+  gap:14px!important;
   margin-top:7px!important;
   color:var(--muted-2)!important;
   font-size:9px!important;
 }
+.app-view-current .v15-hero-progress-foot span{color:var(--muted-2)!important}
+
 .app-view-current .v15-home-visual{
+  position:relative!important;
   min-height:414px!important;
   margin:14px 14px 14px 0!important;
   border:1px solid var(--border-soft)!important;
   border-radius:18px!important;
-  background-color:var(--surface-soft)!important;
+  background:var(--theme-illustration-bg) url('../public/home-editorial.svg') center/cover no-repeat!important;
   overflow:hidden!important;
   box-shadow:none!important;
 }
 .app-view-current .v15-home-visual::after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
   background:linear-gradient(90deg,rgba(250,247,241,.10),transparent 34%),linear-gradient(180deg,transparent 64%,rgba(29,35,41,.10))!important;
+  pointer-events:none!important;
+}
+
+.app-view-current #mortgageExtraTiles{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:14px!important;
+  margin-top:22px!important;
+  padding-top:16px!important;
+  border-top:1px solid var(--border-soft)!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile{
+  padding:2px 0!important;
+  margin:0!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile span{
+  font-size:9px!important;
+  font-weight:700!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile strong{
+  margin-top:5px!important;
+  font-size:16px!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable::after{
+  display:none!important;
+  content:none!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable{
+  border-radius:12px!important;
+  padding:7px 9px!important;
+  margin:-7px -9px!important;
+  transition:background .16s ease,box-shadow .16s ease,transform .16s ease!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable:focus-visible{
+  outline:2px solid rgba(200,142,92,.42)!important;
+  outline-offset:3px!important;
+}
+@media(hover:hover) and (pointer:fine){
+  .app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable:hover{
+    background:rgba(255,250,244,.82)!important;
+    box-shadow:0 8px 20px rgba(61,48,36,.07)!important;
+    transform:none!important;
+  }
+}
+
+@media(max-width:1050px){
+  .app-view-current .hero-panel.current-hero-condensed{
+    grid-template-columns:1fr!important;
+  }
+  .app-view-current .v15-home-visual{
+    min-height:300px!important;
+    margin:0 14px 14px!important;
+    order:-1!important;
+    background-position:center 47%!important;
+  }
+}
+@media(max-width:700px){
+  .app-view-current .current-hero-condensed .hero-main{
+    padding:26px 22px 24px!important;
+  }
+  .app-view-current .v15-home-visual{
+    min-height:230px!important;
+    margin:0 10px 10px!important;
+    border-radius:18px!important;
+  }
+  .app-view-current #mortgageExtraTiles{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:9px!important;
+    margin-top:18px!important;
+    padding-top:14px!important;
+  }
+  .app-view-current #mortgageExtraTiles .mortgage-edit-tile strong{
+    font-size:14px!important;
+  }
+}
+@media(max-width:500px){
+  .app-view-current #mortgageExtraTiles{
+    grid-template-columns:1fr!important;
+  }
 }
 
 /* Current mortgage/home summary: crisp floating parchment tiles. */
@@ -1932,27 +1964,7 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   }
 }
 
-@media(max-width:1050px){
-  .app-view-current .hero-panel.current-hero-condensed{
-    grid-template-columns:1fr!important;
-  }
-  .app-view-current .v15-home-visual{
-    min-height:300px!important;
-    margin:0 14px 14px!important;
-  }
-}
 @media(max-width:700px){
-  .app-view-current .current-hero-condensed .hero-main{
-    padding:26px 22px 24px!important;
-  }
-  .app-view-current .v15-home-copy h1{
-    font-size:clamp(38px,11vw,54px)!important;
-  }
-  .app-view-current .v15-home-visual{
-    min-height:230px!important;
-    margin:0 10px 10px!important;
-    border-radius:18px!important;
-  }
   body .app-view-current .v15-current-stats{
     gap:9px!important;
   }
@@ -1974,75 +1986,6 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   .app-view-current .trajectory-with-what-if>.legend{
     margin:9px 18px 0!important;
     padding-bottom:18px!important;
-  }
-}
-
-/* Premium Step 2.1 — Current hero feedback */
-/* Restore vertical hero flow: the quick-edit row is a sibling of the premium copy. */
-.app-view-current .current-hero-condensed .hero-main{
-  display:block!important;
-  align-items:initial!important;
-}
-
-/* Keep the hero editorial, but use a steadier serif at this scale. */
-.app-view-current .v15-home-copy h1{
-  max-width:590px!important;
-  font-family:var(--font-display)!important;
-  font-size:clamp(40px,4.65vw,62px)!important;
-  line-height:.98!important;
-  letter-spacing:-.045em!important;
-}
-
-/* Quick-edit details sit beneath the ownership story instead of alongside it. */
-.app-view-current #mortgageExtraTiles{
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  gap:14px!important;
-  margin-top:22px!important;
-  padding-top:16px!important;
-  border-top:1px solid var(--border-soft)!important;
-}
-.app-view-current #mortgageExtraTiles .mortgage-edit-tile{
-  padding:2px 0!important;
-  margin:0!important;
-}
-.app-view-current #mortgageExtraTiles .mortgage-edit-tile span{
-  font-size:9px!important;
-  font-weight:700!important;
-  letter-spacing:.035em!important;
-  text-transform:uppercase!important;
-}
-.app-view-current #mortgageExtraTiles .mortgage-edit-tile strong{
-  margin-top:5px!important;
-  font-size:16px!important;
-}
-
-/* Mortgage-free share is a single equity measure, not a two-state scale. */
-.app-view-current .v15-hero-progress-track{
-  background:var(--surface-soft)!important;
-}
-.app-view-current .v15-hero-progress-track i{
-  background:var(--positive)!important;
-}
-
-/* Keep the two progress captions semantically neutral. */
-.app-view-current .v15-hero-progress-foot span{
-  color:var(--muted-2)!important;
-}
-
-@media(max-width:700px){
-  .app-view-current #mortgageExtraTiles{
-    grid-template-columns:repeat(3,minmax(0,1fr))!important;
-    gap:9px!important;
-    margin-top:18px!important;
-    padding-top:14px!important;
-  }
-  .app-view-current #mortgageExtraTiles .mortgage-edit-tile strong{
-    font-size:14px!important;
-  }
-}
-@media(max-width:500px){
-  .app-view-current #mortgageExtraTiles{
-    grid-template-columns:1fr!important;
   }
 }
 
@@ -3557,22 +3500,7 @@ body[data-app-view="upcoming"] #dealPlannerSummary>div>small{
 }
 
 
-/* Theme propagation fix — remove parchment-only colours from the visible product layer. */
-body .app-view-current .current-hero-condensed .hero-main{
-  background:linear-gradient(90deg,var(--surface) 0%,var(--surface) 72%,color-mix(in srgb,var(--surface) 72%,transparent) 100%)!important;
-}
-body .app-view-current .v15-home-copy .v15-greeting{color:var(--theme-greeting)!important}
-body .app-view-current .v15-home-copy h1,
-body .app-view-current .v15-home-copy .v15-subline strong,
-body .app-view-current .v15-hero-progress-head strong{color:var(--theme-hero-ink)!important}
-body .app-view-current .v15-home-visual{background-color:var(--theme-illustration-bg)!important}
-body .app-view-current .v15-hero-progress{
-  background:color-mix(in srgb,var(--surface-control) 72%,transparent)!important;
-  border-color:var(--border-soft)!important;
-}
-body .app-view-current .v15-hero-progress-track{background:var(--theme-progress-track)!important}
-body .app-view-current .v15-hero-progress-track i{background:linear-gradient(90deg,var(--equity),color-mix(in srgb,var(--equity) 65%,white))!important}
-
+/* Theme propagation fix — non-hero product surfaces. */
 body .app-view-upcoming .deal-planner-rate.is-current-rate,
 body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-current-rate,
 body[data-app-view="upcoming"] #dealPlannerRateGrid > .deal-planner-rate.is-current-rate:hover{
