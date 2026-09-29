@@ -17,7 +17,7 @@
     currentOverpayment:{label:'Regular overpayment',prefix:'£',suffix:'/month'},
     fixedEnd:{label:'Fixed rate ends',prefix:'',suffix:''},
     homeValue:{label:'Property value',prefix:'£',suffix:''},
-    ownership:{label:'Property share owned',prefix:'',suffix:'%'}
+    ownership:{label:'Ownership share',prefix:'',suffix:'%'}
   };
 
   function valueFor(target){
@@ -65,7 +65,7 @@
       extra.innerHTML = `
         <div class="mortgage-edit-tile" data-mortgage-tile="fixedEnd"><span>Fixed rate ends</span><strong data-tile-value="fixedEnd">—</strong></div>
         <div class="mortgage-edit-tile" data-mortgage-tile="homeValue"><span>Property value</span><strong data-tile-value="homeValue">—</strong></div>
-        <div class="mortgage-edit-tile" data-mortgage-tile="ownership"><span>Property share owned</span><strong data-tile-value="ownership">—</strong></div>`;
+        <div class="mortgage-edit-tile" data-mortgage-tile="ownership"><span>Ownership share</span><strong data-tile-value="ownership">—</strong></div>`;
       row.insertAdjacentElement('afterend',extra);
     }
 
