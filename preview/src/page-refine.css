@@ -2127,14 +2127,14 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   display:flex!important;
   align-items:baseline!important;
   justify-content:flex-end!important;
-  gap:6px!important;
+  gap:5px!important;
   min-width:0!important;
   text-align:right!important;
 }
 .app-view-current .v15-current-journey-next span{
   color:var(--muted-2)!important;
   font-size:9px!important;
-  font-weight:650!important;
+  font-weight:700!important;
   letter-spacing:0!important;
   text-transform:none!important;
 }
@@ -2157,6 +2157,7 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 .app-view-current .v15-current-journey-track::before{
   content:""!important;
   position:absolute!important;
+  z-index:0!important;
   left:11.63%!important;
   right:13.95%!important;
   top:25px!important;
@@ -2182,6 +2183,8 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   text-align:center!important;
 }
 .app-view-current .v15-current-journey-icon{
+  position:relative!important;
+  z-index:2!important;
   display:grid!important;
   place-items:center!important;
   width:46px!important;
@@ -2189,7 +2192,7 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   margin:2px auto 8px!important;
   border:1.5px solid var(--border)!important;
   border-radius:14px!important;
-  background:var(--surface-control)!important;
+  background:var(--surface)!important;
   color:var(--muted)!important;
   box-shadow:none!important;
 }
@@ -2199,7 +2202,7 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   height:22px!important;
 }
 .app-view-current .v15-current-journey-step.is-complete .v15-current-journey-icon{
-  background:var(--positive-soft)!important;
+  background:color-mix(in srgb,var(--positive) 10%,var(--surface))!important;
   border-color:color-mix(in srgb,var(--positive) 72%,var(--border))!important;
   color:var(--positive)!important;
 }
@@ -2208,7 +2211,7 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   height:54px!important;
   margin:-2px auto 4px!important;
   border-radius:17px!important;
-  background:var(--accent-soft)!important;
+  background:color-mix(in srgb,var(--accent) 24%,var(--surface))!important;
   border-color:var(--accent)!important;
   color:var(--accent-strong)!important;
   box-shadow:none!important;
@@ -2219,7 +2222,7 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 }
 .app-view-current .v15-current-journey-step.is-destination .v15-current-journey-icon{
   border-color:color-mix(in srgb,var(--accent) 24%,var(--border))!important;
-  background:color-mix(in srgb,var(--accent-soft) 18%,var(--surface-control))!important;
+  background:color-mix(in srgb,var(--accent) 9%,var(--surface))!important;
   color:color-mix(in srgb,var(--accent-strong) 78%,var(--muted))!important;
 }
 .app-view-current .v15-current-journey-copy{
