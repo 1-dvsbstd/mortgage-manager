@@ -119,7 +119,7 @@
     if (!card || !data) return;
     const today = new Intl.DateTimeFormat('en-GB', { month:'short', year:'numeric' }).format(new Date());
     const steps = [
-      ['home','Home purchased',dateLabel(data.purchase),'','complete',''],
+      ['home','Mortgage start',dateLabel(data.purchase),'','complete',''],
       ['today','Today',today,'','current',''],
       ['switch','Remortgage prep',data.remortgage ? monthLabel(data.remortgage) : '—','','','rates'],
       ['calendar','Fixed rate ends',monthLabel(data.fixedEnd),'','','rates'],
