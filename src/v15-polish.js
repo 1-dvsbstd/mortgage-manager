@@ -77,18 +77,19 @@
       card = document.createElement('section');
       card.id = 'v15CurrentJourney';
       card.className = 'v15-current-journey';
-      card.tabIndex = 0;
-      card.setAttribute('role','button');
-      card.setAttribute('aria-label','View upcoming mortgage rate scenarios');
+      card.removeAttribute('tabindex');
+      card.removeAttribute('role');
+      card.setAttribute('aria-label','Mortgage journey');
       card.innerHTML = `
         <div class="v15-current-journey-head">
           <div><span>Mortgage journey</span><strong>Your current fix and what comes next</strong></div>
-          <span class="v15-current-journey-link">Rates →</span>
         </div>
         <div class="v15-current-journey-track"></div>`;
-      card.addEventListener('click', goToUpcomingRates);
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('[data-journey-action="rates"]')) goToUpcomingRates();
+      });
       card.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
+        if ((event.key === 'Enter' || event.key === ' ') && event.target.closest('[data-journey-action="rates"]')) {
           event.preventDefault();
           goToUpcomingRates();
         }
@@ -106,7 +107,7 @@
       today: `<svg ${common}><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="2.4"/><path d="M12 2.5V5M12 19v2.5M2.5 12H5M19 12h2.5"/></svg>`,
       switch: `<svg ${common}><path d="M5 7.5h11.8"/><path d="m14.3 4.8 2.7 2.7-2.7 2.7"/><path d="M19 16.5H7.2"/><path d="m9.7 13.8-2.7 2.7 2.7 2.7"/></svg>`,
       calendar: `<svg ${common}><rect x="4" y="5.5" width="16" height="14" rx="2.5"/><path d="M8 3.8v3.4M16 3.8v3.4M4 9.5h16"/><path d="M9 13h3v3H9z"/></svg>`,
-      finish: `<svg ${common}><path d="M5 20V5"/><path d="M5 6h10.5l-1.8 3 1.8 3H5"/><path d="m9.2 16.3 1.8 1.8 3.8-4"/></svg>`
+      finish: `<svg ${common}><path d="M5 20V5"/><path d="M5 6h10.5l-1.8 3 1.8 3H5"/><path d="m9.2 16.3 1.8 1.8 3.8-4"/><path d="M18.4 4.2v2.2M17.3 5.3h2.2"/></svg>`
     };
     return icons[kind] || '';
   }
@@ -117,16 +118,16 @@
     if (!card || !data) return;
     const today = new Intl.DateTimeFormat('en-GB', { month:'short', year:'numeric' }).format(new Date());
     const steps = [
-      ['home','Home purchased',dateLabel(data.purchase),'complete'],
-      ['today','Today',today,'current'],
-      ['switch','Remortgage prep',data.remortgage ? `from ${monthLabel(data.remortgage)}` : '—',''],
-      ['calendar','Fixed rate ends',monthLabel(data.fixedEnd),''],
-      ['finish','Mortgage free',data.payoff,''],
+      ['home','Home purchased',dateLabel(data.purchase),'','complete',''],
+      ['today','Today',today,'','current',''],
+      ['switch','Remortgage prep',data.remortgage ? monthLabel(data.remortgage) : '—','Start looking','','rates'],
+      ['calendar','Fixed rate ends',monthLabel(data.fixedEnd),'Current deal ends','','rates'],
+      ['finish','Mortgage free',data.payoff,'Projected','',''],
     ];
-    $('.v15-current-journey-track', card).innerHTML = steps.map(([icon,title,date,status]) => `
-      <div class="v15-current-journey-step ${status ? `is-${status}` : ''}">
+    $('.v15-current-journey-track', card).innerHTML = steps.map(([icon,title,date,note,status,action]) => `
+      <div class="v15-current-journey-step ${status ? `is-${status}` : ''} ${action ? 'is-actionable' : ''}" ${action ? `data-journey-action="${action}" role="button" tabindex="0" aria-label="${title}: open upcoming rates"` : ''}>
         <div class="v15-current-journey-icon">${journeyIcon(icon)}</div>
-        <div><strong>${title}</strong><span>${date}</span></div>
+        <div class="v15-current-journey-copy"><strong>${title}</strong><span class="v15-current-journey-date">${date}</span>${note ? `<small>${note}</small>` : ''}</div>
       </div>`).join('');
   }
 
