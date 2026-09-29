@@ -1665,22 +1665,6 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 .app-view-future .timeline-fill,
 .app-view-future .equity-progress-track i{background:linear-gradient(90deg,#d3b18e,#b77f4e)!important}
 
-@media(max-width:900px){
-  .v15-current-journey-track{grid-template-columns:repeat(5,150px);overflow-x:auto;padding-bottom:5px;scroll-snap-type:x proximity}
-  .v15-current-journey-step{scroll-snap-align:start}
-  .v15-current-journey-track::before{left:16px;right:16px}
-}
-
-@media(max-width:1050px){
-  .app-view-current .hero-panel>.v15-current-journey~.v15-home-visual{grid-column:1;grid-row:2}
-
-}
-
-@media(max-width:700px){
-  .app-view-current .v15-current-journey{padding:12px 14px 10px}
-  .v15-current-journey-head>div>strong{font-size:12px!important}
-}
-
 /* Main app: cards are glance-first, not tap-to-open. */
 .app-view-current [data-expandable-card],
 .app-view-upcoming [data-expandable-card],
@@ -1841,36 +1825,6 @@ body .app-view-current .v15-current-stats .v15-stat.is-positive{
 body .app-view-current .v15-current-stats .v15-stat.is-warm strong{color:var(--accent-strong)!important}
 body .app-view-current .v15-current-stats .v15-stat.is-positive strong,
 body .app-view-current .v15-current-stats .v15-stat.is-positive small{color:var(--positive)!important}
-
-/* Current journey should read as a quiet navigation rail, not another card. */
-.app-view-current .v15-current-journey{
-  padding:10px 4px 12px!important;
-}
-.app-view-current .v15-current-journey-head{
-  margin-bottom:11px!important;
-}
-.app-view-current .v15-current-journey-head>div>span{
-  color:var(--accent-strong)!important;
-}
-.app-view-current .v15-current-journey-track::before{
-  background:var(--border)!important;
-}
-.app-view-current .v15-current-journey-icon{
-  background:var(--surface)!important;
-  border-color:#b6b8b7!important;
-  color:var(--muted)!important;
-}
-.app-view-current .v15-current-journey-step.is-complete .v15-current-journey-icon{
-  background:var(--positive-soft)!important;
-  border-color:var(--positive)!important;
-  color:var(--positive)!important;
-}
-.app-view-current .v15-current-journey-step.is-current .v15-current-journey-icon{
-  background:var(--accent-soft)!important;
-  border-color:var(--accent)!important;
-  color:var(--accent-strong)!important;
-  box-shadow:none!important;
-}
 
 /* Trajectory: stronger hierarchy, less legacy green, cleaner data surface. */
 .app-view-current .chart-panel.trajectory-with-what-if{
