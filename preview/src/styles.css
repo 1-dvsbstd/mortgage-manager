@@ -85,13 +85,6 @@ canvas { display:block; max-width:100%; background:rgba(3,16,13,.55); border:1px
 .legend { display:flex; flex-wrap:wrap; gap:18px; margin-top:10px; color:var(--muted); font-size:12px; }
 .dot.current { background:#a8b4b0; }.dot.overpay { background:var(--accent); }
 
-.edit-panel { margin-top:16px; padding:0; overflow:hidden; }
-.edit-panel summary { list-style:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:16px; padding:18px 20px; }
-.edit-panel summary::-webkit-details-marker { display:none; }
-.edit-panel summary strong { display:block; }.edit-panel summary small { display:block; color:var(--muted); margin-top:3px; }
-.summary-plus { color:var(--accent); font-size:24px; transition:transform .2s ease; }.edit-panel[open] .summary-plus { transform:rotate(45deg); }
-.edit-content { border-top:1px solid var(--border); padding:20px; }
-.inputs { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
 label { color:var(--muted); font-size:12px; }
 input[type="number"],input[type="month"],input[type="text"],.setup-home-profile-fields select,.projection-assumptions select { width:100%; margin-top:6px; padding:12px 13px; border-radius:12px; border:1px solid var(--border); background:rgba(3,16,13,.62); color:var(--text); font:inherit; font-size:16px; font-weight:500; line-height:1.25; color-scheme:dark; box-sizing:border-box; }
 input:focus { outline:2px solid var(--focus-ring-soft); outline-offset:1px; }
