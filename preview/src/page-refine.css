@@ -105,8 +105,6 @@ html{background:var(--bg)!important}
 body{background:var(--bg)!important;color:var(--text)!important}
 
 /* Shared card and tile density */
-.app-view-current .hero-panel,
-.app-view-current .chart-panel,
 .app-view-upcoming .upcoming-section,
 .app-view-future .panel{
   padding-top:24px!important;
@@ -252,8 +250,6 @@ body{background:var(--bg)!important;color:var(--text)!important}
 }
 
 @media(max-width:700px){
-  .app-view-current .hero-panel,
-  .app-view-current .chart-panel,
   .app-view-upcoming .upcoming-section,
   .app-view-future .panel{padding-top:18px!important;padding-bottom:18px!important}
   .app-view-upcoming .upcoming-section{padding:18px!important}
@@ -622,7 +618,6 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   .app-view-future .app-view-heading.future-heading-integrated>#futureOverpaymentAssumption{display:grid!important;gap:10px!important;margin-top:10px!important}
 }
 
-.current-home-inline{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.07);background:transparent!important;box-shadow:none!important;border-radius:0!important}.current-home-inline .panel-heading{margin-bottom:8px}.current-home-inline .panel-heading h2{font-size:15px}.current-home-inline .ownership-bar{margin-top:8px;height:8px}.current-home-inline .home-value{display:flex;align-items:baseline;gap:10px;margin-top:10px}.current-home-inline .home-value span{font-size:10px}.current-home-inline .home-value strong{font-size:30px}.current-home-inline .home-value small{margin:0}.current-home-inline .home-stats{margin-top:10px!important;gap:8px}.current-home-inline .home-stats>div{padding:10px 12px!important}.current-home-inline .home-stats strong{font-size:16px!important}.current-home-inline .ownership-legend{margin-top:9px!important;padding-top:9px!important}.app-view-current>.app-view-content>#currentOverpaymentPanel{display:none!important}
 .future-remove{display:none!important}.future-model-range-panel,.future-wait-planner{padding:24px;margin:0!important}.future-model-heading,.future-wait-heading{margin-bottom:16px}.future-model-heading h2,.future-wait-heading h2{margin-top:3px;font-size:19px}.future-model-range-panel .home-profile-range{margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}.temporal-feature-home-projection .projection-core-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.future-stage-label{display:none!important}
 @media(max-width:1050px){.current-fix-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.temporal-feature-home-projection .projection-core-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:700px){.current-home-inline{margin-top:12px;padding-top:12px}.current-home-inline .home-value{display:block}.current-home-inline .home-value small{display:block;margin-top:3px}.current-fix-stats{grid-template-columns:1fr 1fr}.app-view-upcoming .upcoming-section{padding:18px!important}.temporal-feature-home-projection .projection-core-grid{grid-template-columns:1fr}.future-model-range-panel{padding:18px}}
@@ -1331,9 +1326,6 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 
 /* A consistent, premium hover lift across the product. */
 @media (hover:hover) and (pointer:fine){
-  .app-view-current .hero-panel,
-  .app-view-current .panel,
-  .app-view-current .v15-current-journey,
   .app-view-upcoming .upcoming-section,
   .app-view-upcoming .deal-planner,
   .app-view-future #homeProjection,
@@ -1343,8 +1335,6 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   .personal-modal .personal-section{
     transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease!important;
   }
-  .app-view-current .hero-panel:hover,
-  .app-view-current .panel:hover,
   .app-view-upcoming .upcoming-section:hover,
   .app-view-upcoming .deal-planner:hover,
   .app-view-future #homeProjection:hover,
@@ -1401,6 +1391,75 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
       .methodology-body{display:grid;gap:12px}.methodology-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.methodology-item{padding:12px 13px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(255,255,255,.018)}.methodology-item strong{display:block;margin-bottom:4px;color:var(--text);font-size:11px}.methodology-item p{margin:0;color:var(--muted);font-size:10px;line-height:1.45}.methodology-disclaimer{margin:0;padding:12px 13px;border:1px solid rgba(232,217,188,.12);border-radius:12px;background:rgba(232,217,188,.035);color:var(--muted);font-size:10px;line-height:1.5}.methodology-disclaimer strong{color:var(--warm)}
       @media(max-width:700px){.live-rate-card{min-height:86px}.clear-local-data{margin-left:0}.topbar-with-nav>.topbar-actions{display:grid!important;grid-template-columns:auto auto;align-items:center!important;justify-content:end;gap:6px!important;margin-left:auto}.topbar-actions .connectivity-mode{grid-column:1/-1;justify-content:flex-end}.topbar-actions .save-status{display:none}.topbar-actions .personal-data-button{justify-self:end}.connectivity-copy small{display:block!important;max-width:150px;white-space:normal;line-height:1.2}.live-rate-selected-summary{display:grid;gap:3px}.live-rate-selected-summary strong{text-align:left}.methodology-grid{grid-template-columns:1fr}}
       @media(max-width:420px){.connectivity-copy small{display:none!important}.connectivity-mode{gap:6px}.personal-data-button{padding-inline:9px}}
+
+/* Current mortgage details — canonical source */
+.app-view-current .edit-panel{
+  margin-top:16px!important;
+  padding:0!important;
+  overflow:hidden!important;
+  transition:none!important;
+  animation:none!important;
+  transform:none!important;
+  overflow-anchor:none!important;
+  background:var(--surface)!important;
+  border:1px solid var(--border)!important;
+  border-radius:18px!important;
+  box-shadow:none!important;
+}
+.app-view-current .edit-panel summary{
+  list-style:none!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:16px!important;
+  padding:18px 20px!important;
+  cursor:pointer!important;
+}
+.app-view-current .edit-panel summary::-webkit-details-marker{display:none!important}
+.app-view-current .edit-panel summary strong{display:block!important}
+.app-view-current .edit-panel summary small{
+  display:block!important;
+  margin-top:3px!important;
+  color:var(--muted)!important;
+}
+.app-view-current .edit-panel .summary-plus{
+  color:var(--accent)!important;
+  font-size:24px!important;
+  transition:transform .2s ease!important;
+}
+.app-view-current .edit-panel[open] .summary-plus{transform:rotate(45deg)!important}
+.app-view-current .edit-panel .edit-content{
+  padding:20px!important;
+  border-top:1px solid var(--border)!important;
+}
+.app-view-current .edit-panel .inputs{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:12px!important;
+}
+@media(hover:hover) and (pointer:fine){
+  .app-view-current .edit-panel:hover{
+    transform:none!important;
+    border-color:var(--border)!important;
+    box-shadow:none!important;
+  }
+}
+@media(max-width:700px){
+  .app-view-current .edit-panel .inputs{
+    grid-template-columns:1fr 1fr!important;
+  }
+}
+@media(max-width:500px){
+  .app-view-current .edit-panel .inputs{
+    grid-template-columns:1fr!important;
+  }
+}
+
+/* Current hidden compatibility sources — retained for existing data wiring only. */
+.app-view-current .current-home-inline,
+.app-view-current>.app-view-content>#currentOverpaymentPanel{
+  display:none!important;
+}
 
 /* Current hero — canonical source */
 .app-view-current .hero-panel.current-hero-condensed{
