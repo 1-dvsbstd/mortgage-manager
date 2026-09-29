@@ -1754,6 +1754,11 @@ body .app-view-current .v15-current-stats .v15-stat{
   overflow:hidden!important;
 }
 body .app-view-current .v15-current-stats .v15-stat-icon{
+  --icon-ink:var(--theme-hero-ink);
+  --icon-accent:color-mix(in srgb,var(--accent-strong) 84%,var(--theme-hero-ink));
+  --icon-soft:color-mix(in srgb,var(--equity) 16%,transparent);
+  --icon-paper:color-mix(in srgb,var(--surface) 90%,var(--accent-wash));
+  --icon-positive:var(--positive);
   display:grid!important;
   place-items:center!important;
   width:44px!important;
@@ -1761,13 +1766,15 @@ body .app-view-current .v15-current-stats .v15-stat-icon{
   margin:0!important;
   border:0!important;
   border-radius:999px!important;
-  background:color-mix(in srgb,var(--equity) 9%,var(--surface))!important;
+  background:color-mix(in srgb,var(--equity) 8%,var(--surface))!important;
   color:var(--theme-hero-ink)!important;
   font-style:normal!important;
 }
 body .app-view-current .v15-current-stats .v15-stat-icon svg{
-  width:20px!important;
-  height:20px!important;
+  display:block!important;
+  width:34px!important;
+  height:34px!important;
+  overflow:visible!important;
 }
 body .app-view-current .v15-current-stats .v15-stat-copy{
   min-width:0!important;
@@ -1803,12 +1810,17 @@ body .app-view-current .v15-current-stats .v15-stat small{
   overflow-wrap:break-word!important;
 }
 body .app-view-current .v15-current-stats .v15-stat[data-stat="rate"] .v15-stat-icon{
-  color:color-mix(in srgb,var(--accent-strong) 82%,var(--theme-hero-ink))!important;
+  --icon-ink:color-mix(in srgb,var(--accent-strong) 88%,var(--theme-hero-ink));
+  --icon-accent:color-mix(in srgb,var(--accent-strong) 92%,var(--theme-hero-ink));
+  --icon-soft:color-mix(in srgb,var(--accent) 17%,transparent);
   background:color-mix(in srgb,var(--accent) 8%,var(--surface))!important;
 }
 body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] .v15-stat-icon{
-  color:var(--positive)!important;
-  background:color-mix(in srgb,var(--positive) 10%,var(--surface))!important;
+  --icon-ink:var(--theme-hero-ink);
+  --icon-accent:var(--positive);
+  --icon-positive:var(--positive);
+  --icon-soft:color-mix(in srgb,var(--positive) 14%,transparent);
+  background:color-mix(in srgb,var(--positive) 9%,var(--surface))!important;
 }
 body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   color:var(--positive)!important;
@@ -2301,6 +2313,11 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   text-align:center!important;
 }
 .app-view-current .v15-current-journey-icon{
+  --icon-ink:color-mix(in srgb,var(--theme-hero-ink) 88%,var(--muted));
+  --icon-accent:color-mix(in srgb,var(--accent-strong) 78%,var(--theme-hero-ink));
+  --icon-soft:color-mix(in srgb,var(--equity) 14%,transparent);
+  --icon-paper:color-mix(in srgb,var(--surface) 90%,var(--accent-wash));
+  --icon-positive:var(--positive);
   position:relative!important;
   z-index:2!important;
   display:grid!important;
@@ -2316,31 +2333,42 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 }
 .app-view-current .v15-current-journey-icon svg{
   display:block!important;
-  width:22px!important;
-  height:22px!important;
+  width:34px!important;
+  height:34px!important;
+  overflow:visible!important;
 }
 .app-view-current .v15-current-journey-step.is-complete .v15-current-journey-icon{
-  background:color-mix(in srgb,var(--positive) 10%,var(--surface))!important;
-  border-color:color-mix(in srgb,var(--positive) 72%,var(--border))!important;
+  --icon-ink:var(--theme-hero-ink);
+  --icon-accent:color-mix(in srgb,var(--accent-strong) 84%,var(--theme-hero-ink));
+  --icon-positive:var(--positive);
+  --icon-soft:color-mix(in srgb,var(--positive) 15%,transparent);
+  background:color-mix(in srgb,var(--positive) 9%,var(--surface))!important;
+  border-color:color-mix(in srgb,var(--positive) 55%,var(--border))!important;
   color:var(--positive)!important;
 }
 .app-view-current .v15-current-journey-step.is-current .v15-current-journey-icon{
+  --icon-ink:var(--theme-hero-ink);
+  --icon-accent:var(--positive);
+  --icon-soft:color-mix(in srgb,var(--positive) 18%,transparent);
   width:54px!important;
   height:54px!important;
   margin:-2px auto 4px!important;
   border-radius:17px!important;
-  background:color-mix(in srgb,var(--accent) 24%,var(--surface))!important;
-  border-color:var(--accent)!important;
-  color:var(--accent-strong)!important;
+  background:color-mix(in srgb,var(--positive) 10%,var(--surface))!important;
+  border-color:color-mix(in srgb,var(--positive) 52%,var(--border))!important;
+  color:var(--positive)!important;
   box-shadow:none!important;
 }
 .app-view-current .v15-current-journey-step.is-current .v15-current-journey-icon svg{
-  width:25px!important;
-  height:25px!important;
+  width:39px!important;
+  height:39px!important;
 }
 .app-view-current .v15-current-journey-step.is-destination .v15-current-journey-icon{
+  --icon-ink:var(--theme-hero-ink);
+  --icon-accent:var(--accent-strong);
+  --icon-soft:color-mix(in srgb,var(--equity) 14%,transparent);
   border-color:color-mix(in srgb,var(--accent) 24%,var(--border))!important;
-  background:color-mix(in srgb,var(--accent) 9%,var(--surface))!important;
+  background:color-mix(in srgb,var(--equity) 8%,var(--surface))!important;
   color:color-mix(in srgb,var(--accent-strong) 78%,var(--muted))!important;
 }
 .app-view-current .v15-current-journey-copy{
@@ -2384,6 +2412,17 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 .app-view-current .v15-current-journey-step:nth-child(3),
 .app-view-current .v15-current-journey-step:nth-child(4){
   padding-inline:3px!important;
+}
+.app-view-current .v15-current-journey-step:nth-child(3) .v15-current-journey-icon{
+  --icon-accent:var(--positive);
+  --icon-soft:color-mix(in srgb,var(--positive) 13%,transparent);
+  background:color-mix(in srgb,var(--positive) 6%,var(--surface))!important;
+}
+.app-view-current .v15-current-journey-step:nth-child(4) .v15-current-journey-icon{
+  --icon-ink:color-mix(in srgb,var(--accent-strong) 88%,var(--theme-hero-ink));
+  --icon-accent:color-mix(in srgb,var(--accent-strong) 92%,var(--theme-hero-ink));
+  --icon-soft:color-mix(in srgb,var(--accent) 15%,transparent);
+  background:color-mix(in srgb,var(--accent) 7%,var(--surface))!important;
 }
 .app-view-current .v15-current-journey-step.is-actionable{
   cursor:pointer!important;
