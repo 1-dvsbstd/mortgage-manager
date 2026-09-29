@@ -2102,16 +2102,16 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 }
 .app-view-current .v15-current-journey-head{
   display:flex!important;
-  align-items:flex-end!important;
+  align-items:baseline!important;
   justify-content:space-between!important;
-  gap:24px!important;
-  margin-bottom:9px!important;
+  gap:28px!important;
+  margin-bottom:10px!important;
 }
 .app-view-current .v15-current-journey-head>div:first-child>span{
   color:var(--accent-strong)!important;
   font-size:9px!important;
   font-weight:800!important;
-  letter-spacing:.11em!important;
+  letter-spacing:.10em!important;
   text-transform:uppercase!important;
 }
 .app-view-current .v15-current-journey-head>div:first-child>strong{
@@ -2120,34 +2120,35 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   color:var(--text)!important;
   font-family:var(--font-ui)!important;
   font-size:14px!important;
-  font-weight:750!important;
+  font-weight:760!important;
   letter-spacing:-.01em!important;
 }
 .app-view-current .v15-current-journey-next{
-  display:grid!important;
-  justify-items:end!important;
-  min-width:180px!important;
-  padding-bottom:1px!important;
+  display:flex!important;
+  align-items:baseline!important;
+  justify-content:flex-end!important;
+  gap:6px!important;
+  min-width:0!important;
   text-align:right!important;
 }
 .app-view-current .v15-current-journey-next span{
   color:var(--muted-2)!important;
-  font-size:8px!important;
-  font-weight:800!important;
-  letter-spacing:.08em!important;
-  text-transform:uppercase!important;
+  font-size:9px!important;
+  font-weight:650!important;
+  letter-spacing:0!important;
+  text-transform:none!important;
 }
 .app-view-current .v15-current-journey-next strong{
-  margin-top:3px!important;
+  margin:0!important;
   color:var(--text)!important;
   font-size:11px!important;
-  font-weight:750!important;
+  font-weight:760!important;
 }
 .app-view-current .v15-current-journey-link{display:none!important}
 
 .app-view-current .v15-current-journey-track{
   display:grid!important;
-  grid-template-columns:1fr 1fr .76fr .76fr 1.22fr!important;
+  grid-template-columns:1fr 1fr .58fr .52fr 1.2fr!important;
   gap:0!important;
   position:relative!important;
   overflow:visible!important;
@@ -2156,13 +2157,18 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 .app-view-current .v15-current-journey-track::before{
   content:""!important;
   position:absolute!important;
-  left:10.55%!important;
-  right:12.87%!important;
-  top:24px!important;
-  height:2px!important;
+  left:11.63%!important;
+  right:13.95%!important;
+  top:25px!important;
+  height:1.5px!important;
   border-radius:999px!important;
   transform:none!important;
-  background:linear-gradient(90deg,var(--positive) 0 27.5%,var(--border) 27.5% 100%)!important;
+  background:linear-gradient(
+    90deg,
+    color-mix(in srgb,var(--positive) 78%,var(--border)) 0 31.25%,
+    color-mix(in srgb,var(--accent) 28%,var(--border)) 31.25% 73.1%,
+    var(--border-soft) 73.1% 100%
+  )!important;
 }
 .app-view-current .v15-current-journey-step{
   position:relative!important;
@@ -2172,14 +2178,14 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   align-items:center!important;
   gap:0!important;
   min-width:0!important;
-  padding:0 7px!important;
+  padding:0 6px!important;
   text-align:center!important;
 }
 .app-view-current .v15-current-journey-icon{
   display:grid!important;
   place-items:center!important;
-  width:44px!important;
-  height:44px!important;
+  width:46px!important;
+  height:46px!important;
   margin:2px auto 8px!important;
   border:1.5px solid var(--border)!important;
   border-radius:14px!important;
@@ -2189,32 +2195,32 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
 }
 .app-view-current .v15-current-journey-icon svg{
   display:block!important;
-  width:21px!important;
-  height:21px!important;
+  width:22px!important;
+  height:22px!important;
 }
 .app-view-current .v15-current-journey-step.is-complete .v15-current-journey-icon{
   background:var(--positive-soft)!important;
-  border-color:var(--positive)!important;
+  border-color:color-mix(in srgb,var(--positive) 72%,var(--border))!important;
   color:var(--positive)!important;
 }
 .app-view-current .v15-current-journey-step.is-current .v15-current-journey-icon{
-  width:50px!important;
-  height:50px!important;
-  margin:-1px auto 5px!important;
-  border-radius:16px!important;
+  width:54px!important;
+  height:54px!important;
+  margin:-2px auto 4px!important;
+  border-radius:17px!important;
   background:var(--accent-soft)!important;
   border-color:var(--accent)!important;
   color:var(--accent-strong)!important;
   box-shadow:none!important;
 }
 .app-view-current .v15-current-journey-step.is-current .v15-current-journey-icon svg{
-  width:23px!important;
-  height:23px!important;
+  width:25px!important;
+  height:25px!important;
 }
 .app-view-current .v15-current-journey-step.is-destination .v15-current-journey-icon{
-  border-color:color-mix(in srgb,var(--accent) 36%,var(--border))!important;
-  background:color-mix(in srgb,var(--accent-soft) 34%,var(--surface-control))!important;
-  color:var(--accent-strong)!important;
+  border-color:color-mix(in srgb,var(--accent) 24%,var(--border))!important;
+  background:color-mix(in srgb,var(--accent-soft) 18%,var(--surface-control))!important;
+  color:color-mix(in srgb,var(--accent-strong) 78%,var(--muted))!important;
 }
 .app-view-current .v15-current-journey-copy{
   display:grid!important;
@@ -2225,19 +2231,21 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   display:block!important;
   max-width:100%!important;
   color:var(--text)!important;
-  font-size:10px!important;
+  font-size:11px!important;
   font-weight:780!important;
-  line-height:1.25!important;
+  line-height:1.22!important;
   white-space:normal!important;
 }
-.app-view-current .v15-current-journey-step.is-current strong,
-.app-view-current .v15-current-journey-step.is-destination strong{
+.app-view-current .v15-current-journey-step.is-current strong{
   color:var(--accent-strong)!important;
+}
+.app-view-current .v15-current-journey-step.is-destination strong{
+  color:var(--text)!important;
 }
 .app-view-current .v15-current-journey-date{
   display:block!important;
-  margin-top:3px!important;
-  color:var(--muted)!important;
+  margin-top:4px!important;
+  color:color-mix(in srgb,var(--text) 64%,var(--muted))!important;
   font-size:10px!important;
   font-weight:680!important;
   line-height:1.2!important;
@@ -2247,10 +2255,14 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   display:block!important;
   margin-top:3px!important;
   color:var(--muted-2)!important;
-  font-size:9px!important;
+  font-size:8.5px!important;
   font-weight:600!important;
   line-height:1.2!important;
   white-space:nowrap!important;
+}
+.app-view-current .v15-current-journey-step:nth-child(3),
+.app-view-current .v15-current-journey-step:nth-child(4){
+  padding-inline:3px!important;
 }
 .app-view-current .v15-current-journey-step.is-actionable{
   cursor:pointer!important;
@@ -2273,7 +2285,7 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
     align-items:flex-start!important;
   }
   .app-view-current .v15-current-journey-track{
-    grid-template-columns:repeat(5,minmax(128px,1fr))!important;
+    grid-template-columns:repeat(5,minmax(132px,1fr))!important;
     overflow-x:auto!important;
     padding:2px 0 6px!important;
     scroll-snap-type:x proximity!important;
@@ -2282,9 +2294,14 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
     scroll-snap-align:start!important;
   }
   .app-view-current .v15-current-journey-track::before{
-    left:64px!important;
-    right:64px!important;
-    background:linear-gradient(90deg,var(--positive) 0 25%,var(--border) 25% 100%)!important;
+    left:66px!important;
+    right:66px!important;
+    background:linear-gradient(
+      90deg,
+      color-mix(in srgb,var(--positive) 78%,var(--border)) 0 25%,
+      color-mix(in srgb,var(--accent) 28%,var(--border)) 25% 75%,
+      var(--border-soft) 75% 100%
+    )!important;
   }
 }
 @media(max-width:700px){
@@ -2294,12 +2311,11 @@ body .app-view-current .trajectory-with-what-if>.panel-heading .chart-stat stron
   }
   .app-view-current .v15-current-journey-head{
     display:grid!important;
-    gap:7px!important;
+    gap:6px!important;
     margin-bottom:8px!important;
   }
   .app-view-current .v15-current-journey-next{
-    justify-items:start!important;
-    min-width:0!important;
+    justify-content:flex-start!important;
     text-align:left!important;
   }
 }
