@@ -75,74 +75,6 @@ body .edit-panel{
 /* Ownership wording is clarified in JS; make history grid less cramped. */
 body .personal-modal .history-deal-row{border-radius:16px!important;background:var(--surface-control)!important}
 
-/* Current summary — four equal flat rounded cards */
-body .v15-current-stats{
-  display:grid!important;
-  grid-template-columns:repeat(4,minmax(0,1fr))!important;
-  gap:12px!important;
-  margin-top:0!important;
-  padding:0!important;
-  border:0!important;
-  background:transparent!important;
-  overflow:visible!important;
-  box-shadow:none!important;
-}
-body .v15-current-stats .v15-stat{
-  min-width:0!important;
-  min-height:112px!important;
-  height:auto!important;
-  padding:16px 17px!important;
-  border:1px solid var(--border)!important;
-  border-radius:18px!important;
-  background:var(--surface-control)!important;
-  box-shadow:none!important;
-  overflow:visible!important;
-}
-body .v15-current-stats .v15-stat span{
-  display:block!important;
-  color:var(--muted)!important;
-  font-size:9px!important;
-  font-weight:750!important;
-  letter-spacing:.05em!important;
-  line-height:1.35!important;
-  text-transform:uppercase!important;
-  white-space:normal!important;
-  overflow-wrap:break-word!important;
-}
-body .v15-current-stats .v15-stat strong{
-  display:block!important;
-  margin-top:7px!important;
-  font-family:var(--font-display)!important;
-  font-size:23px!important;
-  font-weight:600!important;
-  letter-spacing:-.025em!important;
-  line-height:1.1!important;
-  color:var(--text)!important;
-}
-body .v15-current-stats .v15-stat small{
-  display:block!important;
-  margin-top:6px!important;
-  color:var(--muted-2)!important;
-  font-size:9px!important;
-  line-height:1.35!important;
-  white-space:normal!important;
-  overflow-wrap:break-word!important;
-}
-@media(hover:hover) and (pointer:fine){
-  body .v15-current-stats .v15-stat,
-  body .v15-current-stats .v15-stat:hover{
-    transform:none!important;
-    box-shadow:none!important;
-    opacity:1!important;
-  }
-}
-@media(max-width:760px){
-  body .v15-current-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-}
-@media(max-width:500px){
-  body .v15-current-stats{grid-template-columns:1fr!important}
-}
-
 /* Legacy expanded-card behaviour must never leak into the final UI. */
 body .app-view .card-close-bar,
 body .app-view .expand-hint,
@@ -252,13 +184,9 @@ body .app-view-future #homeProjection:hover{
   border-radius:24px!important;
 }
 
-@media(max-width:900px){
-  body .v15-current-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-}
 @media(max-width:620px){
   body .personal-modal .setup-pane{padding-inline:0!important}
   body .personal-modal .personal-section{padding:15px!important;border-radius:16px!important}
-  body .v15-current-stats{grid-template-columns:1fr!important;gap:10px!important}
   body .v15-journey-strip{grid-template-columns:1fr!important;padding:0!important;gap:10px!important}
   body .v15-journey-strip::before{display:none!important}
   body .v15-journey-step{display:grid!important;grid-template-columns:40px 1fr!important;grid-template-rows:auto auto!important;text-align:left!important;padding:0!important;column-gap:10px!important}
