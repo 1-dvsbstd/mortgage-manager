@@ -118,14 +118,14 @@
       grid.className = 'v15-current-stats';
       grid.setAttribute('aria-label','Mortgage and home summary');
       const statIcon = (kind) => {
-        const common = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"';
-        const icons = {
-          balance: `<svg ${common}><path d="M4 10.2 12 4l8 6.2"/><path d="M6.2 9.4V20h11.6V9.4"/><path d="M9.6 20v-5.8h4.8V20"/></svg>`,
-          payment: `<svg ${common}><path d="M5 18.5V13m4.7 5.5V9.5m4.6 9V6.5m4.7 12V4"/><path d="M4 20h16"/></svg>`,
-          rate: `<svg ${common}><path d="M12 4a8 8 0 1 0 8 8"/><path d="M12 4v8h8"/><circle cx="12" cy="12" r="1.4"/></svg>`,
-          overpay: `<svg ${common}><rect x="4" y="5.5" width="16" height="14" rx="2.5"/><path d="M8 3.8v3.4M16 3.8v3.4M4 9.5h16"/><path d="M12 12v5M9.5 14.5h5"/></svg>`
+        const map = {
+          balance:'icon-balance',
+          payment:'icon-payment',
+          rate:'icon-rate',
+          overpay:'icon-overpay'
         };
-        return icons[kind] || '';
+        const id = map[kind] || map.balance;
+        return `<svg class="v15-art-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><use href="public/mortgage-icons.svg#${id}"></use></svg>`;
       };
       const stat = (kind, label, valueKey, support, supportKey = '') => `
         <div class="v15-stat" data-stat="${kind}">
