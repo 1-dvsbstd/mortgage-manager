@@ -82,8 +82,8 @@
       card.setAttribute('aria-label','Mortgage journey');
       card.innerHTML = `
         <div class="v15-current-journey-head">
-          <div><span>Mortgage journey</span><strong>Your current fix and what comes next</strong></div>
-          <div class="v15-current-journey-next"><span>Next milestone</span><strong data-journey-next>—</strong></div>
+          <div><span>Mortgage journey</span><strong>Your mortgage so far — and what comes next</strong></div>
+          <div class="v15-current-journey-next"><span>Next</span><strong data-journey-next>—</strong></div>
         </div>
         <div class="v15-current-journey-track"></div>`;
       card.addEventListener('click', (event) => {
@@ -121,8 +121,8 @@
     const steps = [
       ['home','Home purchased',dateLabel(data.purchase),'','complete',''],
       ['today','Today',today,'','current',''],
-      ['switch','Remortgage prep',data.remortgage ? monthLabel(data.remortgage) : '—','Start looking','','rates'],
-      ['calendar','Fixed rate ends',monthLabel(data.fixedEnd),'Deal ends','','rates'],
+      ['switch','Remortgage prep',data.remortgage ? monthLabel(data.remortgage) : '—','','','rates'],
+      ['calendar','Fixed rate ends',monthLabel(data.fixedEnd),'','','rates'],
       ['finish','Mortgage free',data.payoff,'At current pace','destination',''],
     ];
     $('.v15-current-journey-track', card).innerHTML = steps.map(([icon,title,date,note,status,action]) => `
@@ -131,7 +131,7 @@
         <div class="v15-current-journey-copy"><strong>${title}</strong><span class="v15-current-journey-date">${date}</span>${note ? `<small>${note}</small>` : ''}</div>
       </div>`).join('');
     const next = $('[data-journey-next]', card);
-    if (next) next.textContent = data.remortgage ? `Start looking · ${monthLabel(data.remortgage)}` : 'Add your fixed-rate end date';
+    if (next) next.textContent = data.remortgage ? `Remortgage prep ${monthLabel(data.remortgage)}` : 'Add your fixed-rate end date';
   }
 
   function run() { renderCurrentJourney(); }
