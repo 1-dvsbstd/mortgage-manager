@@ -1836,6 +1836,12 @@ body .app-view-current .v15-current-stats .v15-stat{
   box-shadow:none!important;
   overflow:visible!important;
 }
+body .app-view-current .v15-current-stats .v15-stat-top{
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+}
 body .app-view-current .v15-current-stats .v15-stat span{
   display:block!important;
   color:var(--muted)!important;
@@ -1847,9 +1853,35 @@ body .app-view-current .v15-current-stats .v15-stat span{
   white-space:normal!important;
   overflow-wrap:break-word!important;
 }
+body .app-view-current .v15-current-stats .v15-stat-icon{
+  display:grid!important;
+  place-items:center!important;
+  flex:0 0 30px!important;
+  width:30px!important;
+  height:30px!important;
+  margin:-2px -2px 0 0!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:10px!important;
+  background:var(--surface)!important;
+  color:var(--muted)!important;
+  font-style:normal!important;
+}
+body .app-view-current .v15-current-stats .v15-stat-icon svg{
+  width:16px!important;
+  height:16px!important;
+}
+body .app-view-current .v15-current-stats .v15-stat[data-stat="balance"] .v15-stat-icon{
+  color:var(--debt)!important;
+}
+body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] .v15-stat-icon{
+  color:var(--positive)!important;
+}
+body .app-view-current .v15-current-stats .v15-stat[data-stat="rate"] .v15-stat-icon{
+  color:var(--accent-strong)!important;
+}
 body .app-view-current .v15-current-stats .v15-stat strong{
   display:block!important;
-  margin-top:7px!important;
+  margin-top:10px!important;
   color:var(--text)!important;
   font-family:var(--font-display)!important;
   font-size:23px!important;
@@ -1859,7 +1891,7 @@ body .app-view-current .v15-current-stats .v15-stat strong{
 }
 body .app-view-current .v15-current-stats .v15-stat small{
   display:block!important;
-  margin-top:6px!important;
+  margin-top:5px!important;
   color:var(--muted-2)!important;
   font-size:9px!important;
   line-height:1.35!important;
