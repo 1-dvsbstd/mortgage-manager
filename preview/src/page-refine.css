@@ -1484,8 +1484,10 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 .app-view-current .current-hero-condensed .hero-main{
   position:relative!important;
   z-index:2!important;
-  display:block!important;
-  align-items:initial!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  min-height:442px!important;
   padding:38px 38px 34px!important;
   background:linear-gradient(90deg,var(--surface) 0%,var(--surface) 72%,color-mix(in srgb,var(--surface) 72%,transparent) 100%)!important;
 }
@@ -1538,20 +1540,33 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 .app-view-current .v15-hero-progress-head strong{
   color:var(--theme-hero-ink)!important;
   font-family:var(--font-display)!important;
-  font-size:17px!important;
+  font-size:19px!important;
   font-weight:600!important;
 }
 .app-view-current .v15-hero-progress-track{
+  position:relative!important;
   height:10px!important;
-  margin-top:9px!important;
+  margin-top:10px!important;
   border-radius:999px!important;
   background:var(--theme-progress-track)!important;
-  overflow:hidden!important;
+  overflow:visible!important;
+}
+.app-view-current .v15-hero-progress-track::after{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;
+  top:-3px!important;
+  width:1px!important;
+  height:16px!important;
+  background:color-mix(in srgb,var(--theme-hero-ink) 42%,transparent)!important;
+  transform:translateX(-.5px)!important;
+  pointer-events:none!important;
 }
 .app-view-current .v15-hero-progress-track i{
   display:block!important;
   height:100%!important;
-  border-radius:inherit!important;
+  border-radius:999px!important;
+  overflow:hidden!important;
   background:linear-gradient(90deg,var(--equity),color-mix(in srgb,var(--equity) 65%,white))!important;
 }
 .app-view-current .v15-hero-progress-foot{
@@ -1584,14 +1599,27 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 
 .app-view-current #mortgageExtraTiles{
   grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  gap:14px!important;
-  margin-top:24px!important;
-  padding-top:0!important;
+  gap:0!important;
+  margin-top:auto!important;
+  padding-top:28px!important;
   border-top:0!important;
 }
 .app-view-current #mortgageExtraTiles .mortgage-edit-tile{
-  padding:2px 0!important;
+  position:relative!important;
+  padding:2px 22px 2px 0!important;
   margin:0!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile + .mortgage-edit-tile{
+  padding-left:22px!important;
+}
+.app-view-current #mortgageExtraTiles .mortgage-edit-tile + .mortgage-edit-tile::before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  top:2px!important;
+  bottom:2px!important;
+  width:1px!important;
+  background:var(--border-soft)!important;
 }
 .app-view-current #mortgageExtraTiles .mortgage-edit-tile span{
   font-size:9px!important;
@@ -1608,9 +1636,11 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   content:none!important;
 }
 .app-view-current #mortgageExtraTiles .mortgage-edit-tile.summary-editable{
-  border-radius:12px!important;
-  padding:7px 9px!important;
-  margin:-7px -9px!important;
+  border-radius:10px!important;
+  padding-top:7px!important;
+  padding-bottom:7px!important;
+  margin-top:-7px!important;
+  margin-bottom:-7px!important;
   transition:background .16s ease,border-color .16s ease!important;
 }
 .app-view-current #mortgageExtraTiles .mortgage-edit-tile:first-child strong{
@@ -1639,6 +1669,9 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 @media(max-width:1050px){
   .app-view-current .hero-panel.current-hero-condensed{
     grid-template-columns:1fr!important;
+  }
+  .app-view-current .current-hero-condensed .hero-main{
+    min-height:0!important;
   }
   .app-view-current .v15-home-visual{
     min-height:300px!important;
@@ -1669,6 +1702,15 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 @media(max-width:500px){
   .app-view-current #mortgageExtraTiles{
     grid-template-columns:1fr!important;
+    gap:14px!important;
+  }
+  .app-view-current #mortgageExtraTiles .mortgage-edit-tile,
+  .app-view-current #mortgageExtraTiles .mortgage-edit-tile + .mortgage-edit-tile{
+    padding-left:0!important;
+    padding-right:0!important;
+  }
+  .app-view-current #mortgageExtraTiles .mortgage-edit-tile + .mortgage-edit-tile::before{
+    display:none!important;
   }
 }
 
