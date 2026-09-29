@@ -120,10 +120,10 @@
       const statIcon = (kind) => {
         const common = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"';
         const icons = {
-          balance: `<svg ${common}><path d="M3.5 10.5 12 3.8l8.5 6.7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.3 20v-6.2h5.4V20"/></svg>`,
-          payment: `<svg ${common}><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="M3.5 9.5h17M7 14h4"/></svg>`,
-          rate: `<svg ${common}><path d="m7 17 10-10"/><circle cx="8" cy="8" r="2.2"/><circle cx="16" cy="16" r="2.2"/></svg>`,
-          overpay: `<svg ${common}><circle cx="12" cy="12" r="8.5"/><path d="M12 8v8M8 12h8"/></svg>`
+          balance: `<svg ${common}><path d="M4 10.2 12 4l8 6.2"/><path d="M6.2 9.4V20h11.6V9.4"/><path d="M9.6 20v-5.8h4.8V20"/></svg>`,
+          payment: `<svg ${common}><path d="M5 18.5V13m4.7 5.5V9.5m4.6 9V6.5m4.7 12V4"/><path d="M4 20h16"/></svg>`,
+          rate: `<svg ${common}><path d="M12 4a8 8 0 1 0 8 8"/><path d="M12 4v8h8"/><circle cx="12" cy="12" r="1.4"/></svg>`,
+          overpay: `<svg ${common}><rect x="4" y="5.5" width="16" height="14" rx="2.5"/><path d="M8 3.8v3.4M16 3.8v3.4M4 9.5h16"/><path d="M12 12v5M9.5 14.5h5"/></svg>`
         };
         return icons[kind] || '';
       };
