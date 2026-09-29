@@ -1466,6 +1466,7 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   position:relative!important;
   display:grid!important;
   grid-template-columns:minmax(0,1.08fr) minmax(330px,.92fr)!important;
+  height:442px!important;
   min-height:442px!important;
   padding:0!important;
   overflow:hidden!important;
@@ -1487,6 +1488,7 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   display:flex!important;
   flex-direction:column!important;
   align-items:stretch!important;
+  height:442px!important;
   min-height:442px!important;
   padding:38px 38px 34px!important;
   background:linear-gradient(90deg,var(--surface) 0%,var(--surface) 72%,color-mix(in srgb,var(--surface) 72%,transparent) 100%)!important;
@@ -1673,8 +1675,10 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 @media(max-width:1050px){
   .app-view-current .hero-panel.current-hero-condensed{
     grid-template-columns:1fr!important;
+    height:auto!important;
   }
   .app-view-current .current-hero-condensed .hero-main{
+    height:auto!important;
     min-height:0!important;
   }
   .app-view-current .v15-home-visual{
