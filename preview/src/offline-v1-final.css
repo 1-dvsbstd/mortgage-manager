@@ -54,8 +54,7 @@ body .personal-modal details.personal-section,
 body .app-view details,
 body #nextHomePlanner,
 body #homeValueHistory,
-body .next-home-settings,
-body .edit-panel{
+body .next-home-settings{
   transition:none!important;
   animation:none!important;
   transform:none!important;
@@ -66,8 +65,7 @@ body .edit-panel{
   body .app-view details:hover,
   body #nextHomePlanner:hover,
   body #homeValueHistory:hover,
-  body .next-home-settings:hover,
-  body .edit-panel:hover{
+  body .next-home-settings:hover{
     transform:none!important;
   }
 }
