@@ -96,7 +96,7 @@
         }
       });
     }
-    if (card.parentElement !== current || card.nextElementSibling !== hero) current.insertBefore(card, hero);
+    if (card.parentElement !== current || hero.nextElementSibling !== card) hero.insertAdjacentElement('afterend', card);
     return card;
   }
 
