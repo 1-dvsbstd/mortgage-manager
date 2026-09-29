@@ -1591,7 +1591,11 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   margin:14px 14px 14px 0!important;
   border:0!important;
   border-radius:18px!important;
-  background:var(--theme-illustration-bg) url('../public/current-hero-premium.svg') center/cover no-repeat!important;
+  background-color:var(--theme-illustration-bg)!important;
+  background-image:url('../public/current-hero-premium.svg')!important;
+  background-position:center center!important;
+  background-size:101.5% 101.5%!important;
+  background-repeat:no-repeat!important;
   overflow:hidden!important;
   box-shadow:none!important;
 }
