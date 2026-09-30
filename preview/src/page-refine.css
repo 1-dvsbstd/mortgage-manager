@@ -1461,6 +1461,14 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   display:none!important;
 }
 
+/* Current page atmosphere — warm parchment field, not another card */
+.app-view-current{
+  background:
+    radial-gradient(ellipse at 7% 1%,color-mix(in srgb,var(--accent-wash) 76%,transparent) 0%,transparent 34%),
+    radial-gradient(ellipse at 96% 30%,color-mix(in srgb,var(--accent) 7%,transparent) 0%,transparent 30%),
+    linear-gradient(180deg,color-mix(in srgb,var(--surface) 64%,var(--surface-soft)) 0%,var(--surface-soft) 48%,color-mix(in srgb,var(--surface-soft) 78%,var(--surface)) 100%)!important;
+}
+
 /* Current hero — canonical source */
 .app-view-current .hero-panel.current-hero-condensed{
   position:relative!important;
@@ -1863,7 +1871,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   padding:0!important;
   overflow:hidden!important;
   cursor:default!important;
-  background:var(--surface-control)!important;
+  background:color-mix(in srgb,var(--surface-control) 94%,transparent)!important;
   border:1px solid var(--border)!important;
   color:var(--text)!important;
   box-shadow:none!important;
@@ -1873,9 +1881,9 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:none!important;
 }
 .app-view-current .trajectory-with-what-if>.panel-heading{
-  padding:25px 28px 20px!important;
+  padding:25px 28px 14px!important;
   margin:0!important;
-  border-bottom:1px solid var(--border-soft)!important;
+  border-bottom:0!important;
 }
 .app-view-current .trajectory-with-what-if>.panel-heading h2{
   margin-top:5px!important;
@@ -1906,7 +1914,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 
 .app-view-current .trajectory-workspace{
   display:grid!important;
-  grid-template-columns:188px minmax(0,1fr)!important;
+  grid-template-columns:180px minmax(0,1fr)!important;
   align-items:stretch!important;
   min-width:0!important;
 }
@@ -1915,11 +1923,11 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   flex-direction:column!important;
   min-width:0!important;
   margin:0!important;
-  padding:22px 16px 20px!important;
+  padding:20px 16px 18px!important;
   border:0!important;
-  border-right:1px solid var(--border-soft)!important;
+  border-right:1px solid color-mix(in srgb,var(--border-soft) 78%,transparent)!important;
   border-radius:0!important;
-  background:color-mix(in srgb,var(--surface-soft) 68%,var(--surface-control))!important;
+  background:transparent!important;
   box-shadow:none!important;
 }
 .app-view-current .trajectory-rail-intro{
@@ -2039,10 +2047,10 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 
 .app-view-current .trajectory-current-saving{
-  margin:14px 0 16px!important;
-  padding:14px 0 15px!important;
+  margin:auto 0 10px!important;
+  padding:14px 0 0!important;
   border-top:1px solid var(--border-soft)!important;
-  border-bottom:1px solid var(--border-soft)!important;
+  border-bottom:0!important;
   text-align:left!important;
 }
 .app-view-current .trajectory-current-saving>span{
@@ -2076,18 +2084,18 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:flex!important;
   flex-direction:column!important;
   min-height:100%!important;
-  padding:18px 20px 18px!important;
-  background:color-mix(in srgb,var(--surface) 88%,var(--surface-soft))!important;
+  padding:14px 14px 14px 20px!important;
+  background:transparent!important;
 }
 .app-view-current .trajectory-chart-stage>.chart-wrap{
   width:100%!important;
   margin:0!important;
   padding:0!important;
-  border:1px solid color-mix(in srgb,var(--border) 72%,transparent)!important;
+  border:0!important;
   flex:1 1 auto!important;
   min-height:0!important;
   border-radius:14px!important;
-  background:color-mix(in srgb,#ffffff 72%,var(--surface-soft))!important;
+  background:transparent!important;
   box-shadow:none!important;
   overflow:hidden!important;
 }
@@ -2135,13 +2143,13 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 @media(max-width:900px){
   .app-view-current .trajectory-workspace{
-    grid-template-columns:172px minmax(0,1fr)!important;
+    grid-template-columns:168px minmax(0,1fr)!important;
   }
   .app-view-current .trajectory-scenario-controls{
     padding:20px 16px!important;
   }
   .app-view-current .trajectory-chart-stage{
-    padding:18px!important;
+    padding:14px 12px 14px 18px!important;
   }
 }
 @media(max-width:700px){
@@ -2163,8 +2171,8 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
   }
   .app-view-current .trajectory-current-saving{
-    margin:13px 0 14px!important;
-    padding:13px 0 14px!important;
+    margin:12px 0 10px!important;
+    padding:12px 0 0!important;
   }
   .app-view-current .trajectory-chart-stage{
     padding:15px 14px 17px!important;
