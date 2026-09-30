@@ -90,7 +90,7 @@
       row.innerHTML=scenarioCandidates(regular).map((value)=>{
         const current=Math.abs(value-regular)<.5;
         const active=Math.abs(value-total)<.5;
-        return `<button type="button" data-total-overpay="${value}" class="${active?'active':''}"><span>${current?'Current':'Monthly'}</span><strong>${money(value)}</strong></button>`;
+        return `<button type="button" data-total-overpay="${value}" class="${active?'active':''}"><span>${current?'Current':''}</span><strong>${money(value)}</strong></button>`;
       }).join('')+`<label class="trajectory-custom-overpay"><span>Custom</span><strong>£<input id="trajectoryCustomOverpay" type="number" min="${regular}" step="10" inputmode="decimal" value="${Math.round(total*100)/100}"></strong></label>`;
     }
 
