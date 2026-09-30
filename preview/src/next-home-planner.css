@@ -62,12 +62,6 @@ body[data-app-view="future"] .next-home-results>div.primary small{
 
 /* Consolidated former premium.css layer */
 /* Premium component geometry — legacy palette retired during consolidation */
-html{background:var(--bg)}
-body{
-  background:var(--bg);
-  color:var(--text);
-}
-
 .app-shell{width:min(1200px,calc(100% - 38px));padding-top:24px;padding-bottom:56px}
 .topbar{margin-bottom:22px;align-items:center}
 .brand{font-size:15px;letter-spacing:.02em}
