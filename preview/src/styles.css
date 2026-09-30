@@ -3,17 +3,14 @@ html { background:var(--bg); color-scheme:light; }
 body {
   margin: 0;
   min-height: 100vh;
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--font-ui);
-  -webkit-font-smoothing: antialiased;
-}
-body[data-app-view="current"] {
-  background-color:#efebe3;
-  background-image:url('../public/current-page-extension.svg');
+  background-color:#d9d6c1;
+  background-image:url('../public/app-background-hybrid.webp');
   background-position:center 72px;
   background-size:100% auto;
   background-repeat:no-repeat;
+  color:var(--text);
+  font-family:var(--font-ui);
+  -webkit-font-smoothing: antialiased;
 }
 button, input { font: inherit; -webkit-tap-highlight-color: transparent; }
 .app-shell { width: min(1180px, calc(100% - 28px)); margin: 0 auto; padding: max(18px, env(safe-area-inset-top)) 0 max(40px, env(safe-area-inset-bottom)); }
