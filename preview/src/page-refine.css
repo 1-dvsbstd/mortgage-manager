@@ -1461,14 +1461,6 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   display:none!important;
 }
 
-/* Current page atmosphere — warm parchment field, not another card */
-.app-view-current{
-  background:
-    radial-gradient(ellipse at 7% 1%,color-mix(in srgb,var(--accent-wash) 76%,transparent) 0%,transparent 34%),
-    radial-gradient(ellipse at 96% 30%,color-mix(in srgb,var(--accent) 7%,transparent) 0%,transparent 30%),
-    linear-gradient(180deg,color-mix(in srgb,var(--surface) 64%,var(--surface-soft)) 0%,var(--surface-soft) 48%,color-mix(in srgb,var(--surface-soft) 78%,var(--surface)) 100%)!important;
-}
-
 /* Current hero — canonical source */
 .app-view-current .hero-panel.current-hero-condensed{
   position:relative!important;
@@ -3529,3 +3521,16 @@ body .app-view-future .v157-range-track{
 body .future-assumption-controls button:hover{background:var(--theme-hover)!important}
 
 
+
+
+/* Current page atmosphere — true page layer, not a section-sized slab. */
+body[data-app-view="current"]{
+  background:
+    radial-gradient(900px 520px at 8% 4%,rgba(197,138,86,.085) 0%,rgba(197,138,86,.035) 34%,transparent 68%),
+    radial-gradient(820px 560px at 96% 34%,rgba(49,85,77,.045) 0%,transparent 66%),
+    linear-gradient(180deg,#f1eee7 0%,#efebe3 48%,#f3f0e9 100%)!important;
+}
+body[data-app-view="current"] .app-view-current,
+body[data-app-view="current"] .app-view-current .app-view-content{
+  background:transparent!important;
+}
