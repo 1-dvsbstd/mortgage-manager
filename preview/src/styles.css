@@ -11,7 +11,7 @@ body {
 body[data-app-view="current"] {
   background-color:#efebe3;
   background-image:url('../public/current-page-extension.svg');
-  background-position:center top;
+  background-position:center 72px;
   background-size:100% auto;
   background-repeat:no-repeat;
 }
