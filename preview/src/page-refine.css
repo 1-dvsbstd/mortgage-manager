@@ -1901,16 +1901,6 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   font-size:11px!important;
   line-height:1.45!important;
 }
-.app-view-current .trajectory-headline-insight{
-  max-width:720px!important;
-  margin:13px 0 0!important;
-  color:var(--theme-hero-ink)!important;
-  font-family:var(--font-display)!important;
-  font-size:17px!important;
-  font-weight:600!important;
-  letter-spacing:-.015em!important;
-  line-height:1.22!important;
-}
 
 .app-view-current .trajectory-workspace{
   display:grid!important;
