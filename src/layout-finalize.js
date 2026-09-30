@@ -34,6 +34,14 @@
     const headingStat=$('.chart-stat',heading||chart);
     if(headingStat) headingStat.classList.add('trajectory-source-stat');
 
+    let insight=$('.trajectory-headline-insight',heading||chart);
+    if(!insight&&heading){
+      insight=document.createElement('p');
+      insight.className='trajectory-headline-insight';
+      const copy=$(':scope > div:first-child',heading);
+      if(copy) copy.appendChild(insight);
+    }
+
     let panel=$('#trajectoryScenarioControls',chart);
     if(!panel){
       panel=document.createElement('section');
@@ -95,6 +103,25 @@
     }
 
     const saving=$('#trajectoryCurrentSaving',panel);
+    if(insight){
+      const scheduled=window.MortgageMath?.amortize?.(
+        Math.max(0,Number(state.balance)||0),
+        Math.max(0,Number(state.rate)||0),
+        Math.max(0,Number(state.payment)||0)
+      );
+      const current=window.MortgageMath?.amortize?.(
+        Math.max(0,Number(state.balance)||0),
+        Math.max(0,Number(state.rate)||0),
+        Math.max(0,Number(state.payment)||0)+regular
+      );
+      const monthsSaved=Number.isFinite(scheduled?.months)&&Number.isFinite(current?.months)
+        ? Math.max(0,scheduled.months-current.months):0;
+      const years=Math.floor(monthsSaved/12), months=Math.round(monthsSaved%12);
+      const duration=years&&months?`${years}y ${months}m`:years?`${years}y`:`${months}m`;
+      insight.textContent=regular>0&&monthsSaved>0
+        ? `Your ${money(regular)} monthly overpayment gets you mortgage-free ${duration} sooner.`
+        : 'See how small monthly changes alter your mortgage path.';
+    }
     if(saving){
       const scheduled=window.MortgageMath?.amortize?.(
         Math.max(0,Number(state.balance)||0),
