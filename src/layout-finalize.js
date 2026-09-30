@@ -58,8 +58,8 @@
           <h3>Try a different monthly overpayment</h3>
           <p>See how a little more changes your path.</p>
         </div>
-        <div class="trajectory-overpay-row" id="trajectoryOverpayRow"></div>
-        <div class="trajectory-current-saving" id="trajectoryCurrentSaving"></div>`;
+        <div class="trajectory-current-saving" id="trajectoryCurrentSaving"></div>
+        <div class="trajectory-overpay-row" id="trajectoryOverpayRow"></div>`;
     }
 
     let workspace=$('.trajectory-workspace',chart);
