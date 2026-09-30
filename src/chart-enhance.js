@@ -7,16 +7,16 @@
   let resizeFrame = null;
 
   const C = {
-    grid:'rgba(64,54,45,.10)',
-    gridSoft:'rgba(64,54,45,.055)',
+    grid:'rgba(64,54,45,.085)',
+    gridSoft:'rgba(64,54,45,.04)',
     label:'#777d80',
-    scheduled:'#8a949c',
-    current:'#c39b72',
-    selected:'#9b663b',
-    equity:'#b8aa99',
-    marker:'rgba(155,102,59,.48)',
+    scheduled:'#a4adb2',
+    current:'#a96f3f',
+    selected:'#547c6c',
+    equity:'#b9ad9d',
+    marker:'rgba(155,102,59,.40)',
     markerText:'#8b603d',
-    hover:'rgba(64,54,45,.24)',
+    hover:'rgba(64,54,45,.20)',
     dotRing:'#f3ede5',
   };
 
@@ -103,7 +103,14 @@
     const v=values(), {scheduled,current,selected}=pathsFor(v);
     if(!scheduled?.monthlyPoints?.length||!current?.monthlyPoints?.length||!selected?.monthlyPoints?.length) return;
     const container=canvas.parentElement, rectWidth=Math.floor(container?.getBoundingClientRect().width||0); if(rectWidth<80) return;
-    const cssWidth=Math.max(280,rectWidth), compact=cssWidth<520, cssHeight=cssWidth<620?270:330, dpr=Math.min(window.devicePixelRatio||1,3);
+    const cssWidth=Math.max(280,rectWidth), compact=cssWidth<520;
+    const workspace=container.closest('.trajectory-workspace');
+    const rail=workspace?.querySelector('.trajectory-scenario-controls');
+    const railHeight=Math.floor(rail?.getBoundingClientRect().height||0);
+    const proportional=Math.round(cssWidth*.43);
+    const desktopFill=railHeight>0?Math.max(310,railHeight-58):330;
+    const cssHeight=compact?270:Math.max(320,Math.min(410,Math.max(proportional,desktopFill)));
+    const dpr=Math.min(window.devicePixelRatio||1,3);
     canvas.style.width='100%'; canvas.style.height=`${cssHeight}px`; canvas.width=Math.floor(cssWidth*dpr); canvas.height=Math.floor(cssHeight*dpr);
     const ctx=canvas.getContext('2d'); if(!ctx) return;
     ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,cssWidth,cssHeight);
@@ -136,10 +143,10 @@
       points.forEach((value,month)=>{ const x=xFor(Math.min(month,maxMonths)), y=yFor(value); month===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
       ctx.stroke(); ctx.restore();
     };
-    drawLine(scheduled.monthlyPoints,C.scheduled,compact?1.7:2,[4,4]);
-    drawLine(current.monthlyPoints,C.current,compact?2.2:2.5);
-    drawLine(selected.monthlyPoints,C.selected,compact?2.9:3.2);
-    drawLine(equity,C.equity,compact?2:2.3,[7,5]);
+    drawLine(scheduled.monthlyPoints,C.scheduled,compact?1.45:1.65,[4,4]);
+    drawLine(current.monthlyPoints,C.current,compact?2.6:3);
+    if(Math.max(0,Number(v.extra)||0)>.01) drawLine(selected.monthlyPoints,C.selected,compact?2.9:3.2);
+    drawLine(equity,C.equity,compact?1.7:1.9,[7,5]);
 
     const fixed=monthsUntil(v.fixedEnd);
     if(fixed!==null&&fixed>=0&&fixed<=maxMonths){
