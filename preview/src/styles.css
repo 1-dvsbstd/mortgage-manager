@@ -8,6 +8,13 @@ body {
   font-family:var(--font-ui);
   -webkit-font-smoothing: antialiased;
 }
+body[data-app-view="current"] {
+  background-color:#efebe3;
+  background-image:url('../public/current-page-extension.svg');
+  background-position:center top;
+  background-size:100% auto;
+  background-repeat:no-repeat;
+}
 button, input { font: inherit; -webkit-tap-highlight-color: transparent; }
 .app-shell { width: min(1180px, calc(100% - 28px)); margin: 0 auto; padding: max(18px, env(safe-area-inset-top)) 0 max(40px, env(safe-area-inset-bottom)); }
 .topbar { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-bottom:14px; }
