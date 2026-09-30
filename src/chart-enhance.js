@@ -6,19 +6,23 @@
   let pinned = false;
   let resizeFrame = null;
 
-  const C = {
-    grid:'rgba(64,54,45,.085)',
-    gridSoft:'rgba(64,54,45,.04)',
-    label:'#777d80',
-    scheduled:'#a4adb2',
-    current:'#a96f3f',
-    selected:'#547c6c',
-    equity:'#b9ad9d',
-    marker:'rgba(155,102,59,.40)',
-    markerText:'#8b603d',
-    hover:'rgba(64,54,45,.20)',
-    dotRing:'#f3ede5',
+  const themeColour = (name, fallback) => {
+    const value=getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return value||fallback;
   };
+  const palette = () => ({
+    grid:'rgba(64,54,45,.075)',
+    gridSoft:'rgba(64,54,45,.035)',
+    label:themeColour('--muted','#777d80'),
+    scheduled:'rgba(125,139,145,.58)',
+    current:themeColour('--theme-hero-ink','#31554d'),
+    selected:themeColour('--positive','#4f806d'),
+    equity:themeColour('--accent','#b58a5b'),
+    marker:'rgba(155,102,59,.32)',
+    markerText:themeColour('--accent-strong','#8b603d'),
+    hover:'rgba(64,54,45,.18)',
+    dotRing:themeColour('--surface','#f3ede5'),
+  });
 
   const money = (value) => new Intl.NumberFormat('en-GB', {
     style:'currency', currency:'GBP', maximumFractionDigits:0,
@@ -100,6 +104,7 @@
   }
 
   function render(){
+    const C=palette();
     const v=values(), {scheduled,current,selected}=pathsFor(v);
     if(!scheduled?.monthlyPoints?.length||!current?.monthlyPoints?.length||!selected?.monthlyPoints?.length) return;
     const container=canvas.parentElement, rectWidth=Math.floor(container?.getBoundingClientRect().width||0); if(rectWidth<80) return;
@@ -143,15 +148,43 @@
       points.forEach((value,month)=>{ const x=xFor(Math.min(month,maxMonths)), y=yFor(value); month===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
       ctx.stroke(); ctx.restore();
     };
-    drawLine(scheduled.monthlyPoints,C.scheduled,compact?1.45:1.65,[4,4]);
-    drawLine(current.monthlyPoints,C.current,compact?2.6:3);
+    if(equity.length){
+      ctx.save();
+      const fill=ctx.createLinearGradient(0,pad.top,0,pad.top+height);
+      fill.addColorStop(0,'rgba(181,138,91,.11)');
+      fill.addColorStop(1,'rgba(181,138,91,.015)');
+      ctx.beginPath();
+      equity.forEach((value,month)=>{
+        const x=xFor(Math.min(month,maxMonths)),y=yFor(value);
+        month===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      });
+      ctx.lineTo(xFor(maxMonths),pad.top+height);
+      ctx.lineTo(xFor(0),pad.top+height);
+      ctx.closePath();
+      ctx.fillStyle=fill;
+      ctx.fill();
+      ctx.restore();
+    }
+    drawLine(scheduled.monthlyPoints,C.scheduled,compact?1.35:1.5,[4,4]);
+    drawLine(current.monthlyPoints,C.current,compact?2.7:3.15);
     if(Math.max(0,Number(v.extra)||0)>.01) drawLine(selected.monthlyPoints,C.selected,compact?2.9:3.2);
-    drawLine(equity,C.equity,compact?1.7:1.9,[7,5]);
+    drawLine(equity,C.equity,compact?1.55:1.7,[7,5]);
 
     const fixed=monthsUntil(v.fixedEnd);
     if(fixed!==null&&fixed>=0&&fixed<=maxMonths){
-      const x=xFor(fixed); ctx.save(); ctx.setLineDash([4,5]); ctx.strokeStyle=C.marker; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(x,pad.top); ctx.lineTo(x,pad.top+height); ctx.stroke(); ctx.restore();
-      ctx.fillStyle=C.markerText; ctx.font=compact?'9px system-ui':'10px system-ui'; ctx.textAlign=x>cssWidth*.72?'right':'left'; ctx.fillText('Fix ends',x+(x>cssWidth*.72?-5:5),pad.top+13);
+      const x=xFor(fixed); ctx.save(); ctx.setLineDash([4,5]); ctx.strokeStyle=C.marker; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(x,pad.top+24); ctx.lineTo(x,pad.top+height); ctx.stroke(); ctx.restore();
+      const label='Fix ends';
+      ctx.font=compact?'9px system-ui':'10px system-ui';
+      const tw=ctx.measureText(label).width, pillW=tw+14, pillH=20;
+      const pillX=Math.max(pad.left+2,Math.min(pad.left+width-pillW-2,x-pillW/2));
+      const pillY=pad.top+3;
+      ctx.save();
+      ctx.fillStyle='rgba(255,255,255,.82)';
+      ctx.strokeStyle=C.marker; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.roundRect(pillX,pillY,pillW,pillH,10); ctx.fill(); ctx.stroke();
+      ctx.fillStyle=C.markerText; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(label,pillX+pillW/2,pillY+pillH/2+.5);
+      ctx.restore();
     }
 
     const readout=ensureReadout();
