@@ -96,7 +96,7 @@
       panel.innerHTML=`
         <div class="trajectory-rail-intro">
           <p class="eyebrow">What if?</p>
-          <h3>Add a little more each month</h3>
+          <h3>Add more each month</h3>
           <p>Extra on top of your current overpayment.</p>
         </div>
         <div class="trajectory-overpay-row" id="trajectoryOverpayRow">
