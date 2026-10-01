@@ -13,19 +13,31 @@
     }catch(_){ return 2.5; }
   }
 
-  function scenarioCandidates(regular){
-    const base=Math.round(Math.max(0,Number(regular)||0)*100)/100;
-    const preset=[base,100,250,500].filter((v)=>v>=base-.01);
-    const values=preset.length>=3?preset:[base,base+100,base+250,base+500];
-    return [...new Set(values.map((v)=>Math.round(v*100)/100))];
+  const scenarioExtras=[50,100,250,500];
+
+  function setScenarioExtra(extra){
+    const value=Math.max(0,Number(extra)||0);
+    window.MortgageStore?.set?.({scenarioExtra:value});
   }
 
-  function setTotalOverpayment(total){
-    const state=window.MortgageStore?.get?.();
-    if(!state) return;
-    const regular=Math.max(0,Number(state.currentOverpayment)||0);
-    const target=Math.max(regular,Number(total)||0);
-    window.MortgageStore.set({scenarioExtra:Math.max(0,target-regular)});
+  function payoffSummary(basePayment,comparisonPayment,state){
+    const scheduled=window.MortgageMath?.amortize?.(
+      Math.max(0,Number(state.balance)||0),
+      Math.max(0,Number(state.rate)||0),
+      Math.max(0,Number(basePayment)||0)
+    );
+    const compared=window.MortgageMath?.amortize?.(
+      Math.max(0,Number(state.balance)||0),
+      Math.max(0,Number(state.rate)||0),
+      Math.max(0,Number(comparisonPayment)||0)
+    );
+    const monthsSaved=Number.isFinite(scheduled?.months)&&Number.isFinite(compared?.months)
+      ? Math.max(0,scheduled.months-compared.months):0;
+    const interestSaved=Number.isFinite(scheduled?.interest)&&Number.isFinite(compared?.interest)
+      ? Math.max(0,scheduled.interest-compared.interest):0;
+    const years=Math.floor(monthsSaved/12),months=Math.round(monthsSaved%12);
+    const duration=years&&months?`${years}y ${months}m`:years?`${years}y`:`${months}m`;
+    return {monthsSaved,interestSaved,duration};
   }
 
   function ensureTrajectoryControls(){
@@ -42,11 +54,14 @@
     if(heading){
       const subtitle=$('.subtle',heading);
       if(subtitle) subtitle.textContent='Debt falls while projected equity builds.';
+      const headingCopy=$(':scope > div:first-child',heading)||heading;
       let assumption=$('.trajectory-assumption-note',heading);
       if(!assumption){
         assumption=document.createElement('span');
         assumption.className='trajectory-assumption-note';
-        heading.appendChild(assumption);
+        headingCopy.appendChild(assumption);
+      }else if(assumption.parentElement!==headingCopy){
+        headingCopy.appendChild(assumption);
       }
       assumption.textContent=`Projection assumes ${homeTrend().toFixed(1)}% annual home-value growth`;
     }
@@ -59,26 +74,35 @@
       panel.id='trajectoryScenarioControls';
       panel.className='trajectory-scenario-controls';
       panel.addEventListener('click',(event)=>{
-        const button=event.target.closest('[data-total-overpay]');
-        if(button) setTotalOverpayment(button.dataset.totalOverpay);
+        const button=event.target.closest('[data-scenario-extra]');
+        if(button) setScenarioExtra(button.dataset.scenarioExtra);
+      });
+      panel.addEventListener('input',(event)=>{
+        if(event.target.id==='trajectoryCustomOverpay') event.target.dataset.userValue=event.target.value;
       });
       panel.addEventListener('change',(event)=>{
-        if(event.target.id==='trajectoryCustomOverpay') setTotalOverpayment(event.target.value);
+        if(event.target.id==='trajectoryCustomOverpay') setScenarioExtra(event.target.value);
       });
       panel.addEventListener('keydown',(event)=>{
-        if(event.target.id==='trajectoryCustomOverpay'&&event.key==='Enter') setTotalOverpayment(event.target.value);
+        if(event.target.id==='trajectoryCustomOverpay'&&event.key==='Enter'){
+          event.preventDefault();
+          setScenarioExtra(event.target.value);
+          event.target.blur();
+        }
       });
     }
-    if(panel.dataset.layout!=='rail-v2'){
-      panel.dataset.layout='rail-v2';
+    if(panel.dataset.layout!=='rail-v3'){
+      panel.dataset.layout='rail-v3';
       panel.innerHTML=`
         <div class="trajectory-rail-intro">
           <p class="eyebrow">What if?</p>
-          <h3>Try a different overpayment</h3>
-          <p>Compare the payoff date and interest saved.</p>
+          <h3>Add a little more each month</h3>
+          <p>Extra on top of your current overpayment.</p>
         </div>
-        <div class="trajectory-current-saving" id="trajectoryCurrentSaving"></div>
-        <div class="trajectory-overpay-row" id="trajectoryOverpayRow"></div>`;
+        <div class="trajectory-overpay-row" id="trajectoryOverpayRow">
+          ${scenarioExtras.map((value)=>`<button type="button" data-scenario-extra="${value}"><strong>${money(value)}</strong></button>`).join('')}
+          <label class="trajectory-custom-overpay"><span>Custom</span><strong>£<input id="trajectoryCustomOverpay" type="number" min="0" step="10" inputmode="decimal" value="0"></strong></label>
+        </div>`;
     }
 
     let workspace=$('.trajectory-workspace',chart);
@@ -103,38 +127,32 @@
 
     const regular=Math.max(0,Number(state.currentOverpayment)||0);
     const extra=Math.max(0,Number(state.scenarioExtra)||0);
-    const total=regular+extra;
-    const row=$('#trajectoryOverpayRow',panel);
-    if(row){
-      row.innerHTML=scenarioCandidates(regular).map((value)=>{
-        const current=Math.abs(value-regular)<.5;
-        const active=Math.abs(value-total)<.5;
-        return `<button type="button" data-total-overpay="${value}" class="${active?'active':''}"><span>${current?'Current':''}</span><strong>${money(value)}</strong></button>`;
-      }).join('')+`<label class="trajectory-custom-overpay"><span>Custom</span><strong>£<input id="trajectoryCustomOverpay" type="number" min="${regular}" step="10" inputmode="decimal" value="${Math.round(total*100)/100}"></strong></label>`;
+
+    panel.querySelectorAll('[data-scenario-extra]').forEach((button)=>{
+      const value=Number(button.dataset.scenarioExtra)||0;
+      button.classList.toggle('active',Math.abs(value-extra)<.5);
+    });
+    const custom=$('#trajectoryCustomOverpay',panel);
+    const isPreset=scenarioExtras.some((value)=>Math.abs(value-extra)<.5);
+    if(custom&&document.activeElement!==custom){
+      if(!isPreset&&extra>0) custom.value=String(Math.round(extra*100)/100);
+      else if(!custom.dataset.userValue) custom.value='0';
     }
 
-    const saving=$('#trajectoryCurrentSaving',panel);
-    if(saving){
-      const scheduled=window.MortgageMath?.amortize?.(
-        Math.max(0,Number(state.balance)||0),
-        Math.max(0,Number(state.rate)||0),
-        Math.max(0,Number(state.payment)||0)
-      );
-      const selected=window.MortgageMath?.amortize?.(
-        Math.max(0,Number(state.balance)||0),
-        Math.max(0,Number(state.rate)||0),
-        Math.max(0,Number(state.payment)||0)+total
-      );
-      const monthsSaved=Number.isFinite(scheduled?.months)&&Number.isFinite(selected?.months)
-        ? Math.max(0,scheduled.months-selected.months):0;
-      const interestSaved=Number.isFinite(scheduled?.interest)&&Number.isFinite(selected?.interest)
-        ? Math.max(0,scheduled.interest-selected.interest):0;
-      const years=Math.floor(monthsSaved/12),months=Math.round(monthsSaved%12);
-      const duration=years&&months?`${years}y ${months}m`:years?`${years}y`:`${months}m`;
-      saving.innerHTML=`
-        <span>${Math.abs(total-regular)<.5?'Your current plan':`With ${money(total)}/month`}</span>
-        <strong>${monthsSaved>0?`${duration} sooner`:'Same payoff date'}</strong>
-        <small>${interestSaved>0?`${money(interestSaved)} less interest`:'No additional interest saving'}</small>`;
+    if(heading){
+      const actions=$('.card-actions',heading)||heading;
+      let currentPlan=$('.trajectory-current-plan',heading);
+      if(!currentPlan){
+        currentPlan=document.createElement('div');
+        currentPlan.className='trajectory-current-plan';
+        actions.appendChild(currentPlan);
+      }
+      const basePayment=Math.max(0,Number(state.payment)||0);
+      const summary=payoffSummary(basePayment,basePayment+regular,state);
+      currentPlan.innerHTML=`
+        <span>Current overpayment</span>
+        <strong>${money(regular)}<small>/month</small></strong>
+        <em>${regular>0&&summary.monthsSaved>0?`${summary.duration} sooner · ${money(summary.interestSaved)} less interest`:'No regular overpayment'}</em>`;
     }
 
     if(legend){
