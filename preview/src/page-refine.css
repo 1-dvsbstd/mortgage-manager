@@ -786,7 +786,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
 .app-view-future #propertyCostComparison .property-cost-card span,
 .app-view-future #propertyCostComparison .property-cost-card small{
   color:var(--muted)!important;
-  font-size:10px!important;
+  font-size:9px!important;
   line-height:1.45!important;
 }
 .app-view-future #nextHomePlanner .next-home-results strong,
@@ -1871,7 +1871,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:none!important;
 }
 .app-view-current .trajectory-with-what-if>.panel-heading{
-  padding:25px 28px 14px!important;
+  padding:26px 30px 12px!important;
   margin:0!important;
   border-bottom:0!important;
 }
@@ -1885,16 +1885,25 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   line-height:1.08!important;
 }
 .app-view-current .trajectory-with-what-if>.panel-heading .subtle{
-  max-width:610px!important;
-  margin-top:7px!important;
+  max-width:520px!important;
+  margin-top:6px!important;
   color:var(--muted)!important;
-  font-size:11px!important;
-  line-height:1.45!important;
+  font-size:10px!important;
+  line-height:1.4!important;
+}
+.app-view-current .trajectory-with-what-if>.panel-heading .trajectory-assumption-note{
+  display:block!important;
+  margin-top:5px!important;
+  color:var(--muted-2)!important;
+  font-size:8.5px!important;
+  font-weight:560!important;
+  letter-spacing:.005em!important;
+  line-height:1.35!important;
 }
 
 .app-view-current .trajectory-workspace{
   display:grid!important;
-  grid-template-columns:180px minmax(0,1fr)!important;
+  grid-template-columns:188px minmax(0,1fr)!important;
   align-items:stretch!important;
   min-width:0!important;
 }
@@ -1903,15 +1912,15 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   flex-direction:column!important;
   min-width:0!important;
   margin:0!important;
-  padding:20px 16px 18px!important;
+  padding:20px 18px 18px!important;
   border:0!important;
-  border-right:1px solid color-mix(in srgb,var(--border-soft) 78%,transparent)!important;
+  border-right:1px solid color-mix(in srgb,var(--border-soft) 58%,transparent)!important;
   border-radius:0!important;
   background:transparent!important;
   box-shadow:none!important;
 }
 .app-view-current .trajectory-rail-intro{
-  margin:0 0 18px!important;
+  margin:0 0 12px!important;
 }
 .app-view-current .trajectory-rail-intro .eyebrow{
   margin:0!important;
@@ -1931,27 +1940,31 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   line-height:1.12!important;
 }
 .app-view-current .trajectory-rail-intro>p:last-child{
-  margin:7px 0 0!important;
-  color:var(--muted)!important;
-  font-size:10px!important;
-  line-height:1.42!important;
+  margin:6px 0 0!important;
+  color:var(--muted-2)!important;
+  font-size:9px!important;
+  line-height:1.4!important;
 }
 
 .app-view-current .trajectory-overpay-row{
   display:grid!important;
   grid-template-columns:1fr!important;
-  gap:7px!important;
+  gap:0!important;
+  overflow:hidden!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:12px!important;
+  background:color-mix(in srgb,var(--surface-soft) 62%,transparent)!important;
 }
 .app-view-current .trajectory-overpay-row button,
 .app-view-current .trajectory-custom-overpay{
   box-sizing:border-box!important;
   width:100%!important;
   min-width:0!important;
-  min-height:38px!important;
+  min-height:40px!important;
   margin:0!important;
-  padding:6px 8px!important;
+  padding:7px 10px!important;
   border:0!important;
-  border-bottom:1px solid var(--border-soft)!important;
+  border-bottom:1px solid color-mix(in srgb,var(--border-soft) 84%,transparent)!important;
   border-radius:0!important;
   background:transparent!important;
   color:var(--text)!important;
@@ -1991,11 +2004,11 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   gap:2px!important;
 }
 .app-view-current .trajectory-overpay-row button:hover{
-  background:color-mix(in srgb,var(--theme-hover) 72%,transparent)!important;
+  background:color-mix(in srgb,var(--surface-control) 78%,transparent)!important;
 }
 .app-view-current .trajectory-overpay-row button.active{
   border:0!important;
-  border-radius:10px!important;
+  border-radius:0!important;
   background:var(--theme-hero-ink)!important;
   color:var(--surface)!important;
 }
@@ -2027,10 +2040,10 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 
 .app-view-current .trajectory-current-saving{
-  margin:auto 0 10px!important;
-  padding:14px 0 0!important;
+  margin:4px 0 16px!important;
+  padding:14px 0 15px!important;
   border-top:1px solid var(--border-soft)!important;
-  border-bottom:0!important;
+  border-bottom:1px solid var(--border-soft)!important;
   text-align:left!important;
 }
 .app-view-current .trajectory-current-saving>span{
@@ -2045,7 +2058,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   margin-top:5px!important;
   color:var(--theme-hero-ink)!important;
   font-family:var(--font-display)!important;
-  font-size:22px!important;
+  font-size:24px!important;
   font-weight:600!important;
   letter-spacing:-.02em!important;
   line-height:1.08!important;
@@ -2064,7 +2077,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:flex!important;
   flex-direction:column!important;
   min-height:100%!important;
-  padding:14px 14px 14px 20px!important;
+  padding:16px 18px 16px 22px!important;
   background:transparent!important;
 }
 .app-view-current .trajectory-chart-stage>.chart-wrap{
@@ -2089,8 +2102,8 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-current .trajectory-chart-stage>.legend{
   display:flex!important;
   flex-wrap:wrap!important;
-  gap:8px 18px!important;
-  margin:11px 3px 0!important;
+  gap:10px 20px!important;
+  margin:9px 4px 0!important;
   padding:0!important;
   color:color-mix(in srgb,var(--muted) 72%,var(--text))!important;
   font-size:10px!important;
@@ -2100,7 +2113,13 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-current .trajectory-chart-stage>.legend span{
   display:inline-flex!important;
   align-items:center!important;
-  gap:6px!important;
+  gap:7px!important;
+}
+.app-view-current .trajectory-chart-stage>.legend .dot{
+  width:16px!important;
+  height:2px!important;
+  border-radius:999px!important;
+  flex:0 0 16px!important;
 }
 .app-view-current .dot.scheduled-line{background:var(--debt)!important}
 .app-view-current .dot.regular-line{background:var(--theme-hero-ink)!important}
@@ -2123,7 +2142,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 @media(max-width:900px){
   .app-view-current .trajectory-workspace{
-    grid-template-columns:168px minmax(0,1fr)!important;
+    grid-template-columns:176px minmax(0,1fr)!important;
   }
   .app-view-current .trajectory-scenario-controls{
     padding:20px 16px!important;
