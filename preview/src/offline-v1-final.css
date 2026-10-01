@@ -99,46 +99,6 @@ body .v15-journey-strip::before{
 body .v15-journey-step.is-complete .v15-journey-icon{box-shadow:0 0 0 4px rgba(111,174,157,.08)!important}
 body .v15-journey-step.is-current .v15-journey-icon{box-shadow:0 0 0 5px rgba(200,142,92,.11)!important}
 
-/* Upcoming — compact, stronger hierarchy, no faux empty panels. */
-body .app-view-upcoming .upcoming-sections{gap:16px!important}
-body .app-view-upcoming .upcoming-section{padding:20px 22px!important;border-radius:20px!important}
-body .app-view-upcoming .upcoming-section-heading{margin-bottom:12px!important;padding-bottom:10px!important}
-body .app-view-upcoming .upcoming-rates,
-body .app-view-upcoming .upcoming-position{background:rgba(247,242,234,.98)!important}
-body .app-view-upcoming .upcoming-rates .upcoming-section-body,
-body .app-view-upcoming .upcoming-position .upcoming-section-body{min-height:0!important}
-body .app-view-upcoming .deal-planner-summary>div,
-body .app-view-upcoming .deal-planner-rate{
-  border-radius:16px!important;
-  background:var(--surface-control)!important;
-  box-shadow:none!important;
-}
-
-/* Replace the old pale-green market box with the same warm neutral card language. */
-body .upcoming-rates .live-rate-choices{
-  margin:12px 0 0!important;
-  padding:14px 16px!important;
-  border:1px solid rgba(68,58,48,.10)!important;
-  border-radius:16px!important;
-  background:var(--surface-control)!important;
-  box-shadow:none!important;
-}
-body .upcoming-rates .live-rate-head{margin-bottom:10px!important}
-body .upcoming-rates .live-rate-grid{gap:10px!important}
-
-/* Market benchmark cards are read-only scenarios, not selectable products. */
-body .upcoming-rates .live-rate-card{
-  cursor:default!important;
-  pointer-events:none!important;
-  border-radius:14px!important;
-  background:#f7f0e8!important;
-  border-color:rgba(68,58,48,.09)!important;
-}
-body .upcoming-rates .live-rate-card::after{display:none!important;content:none!important}
-body .upcoming-rates .live-rate-card.is-selected{border-color:rgba(68,58,48,.09)!important;background:#f7f0e8!important}
-body .upcoming-rates .live-rate-selected-summary,
-body .upcoming-rates .live-rate-selection-note{display:none!important}
-
 /* Future — restore distinct rounded tiles and depth. */
 body .app-view-future .future-cost-inline,
 body .app-view-future .property-cost-grid{
@@ -192,23 +152,6 @@ body .app-view-future #homeProjection:hover{
   body .v15-journey-step strong,body .v15-journey-step span{align-self:center!important}
 }
 
-
-/* V0.15.25 — Upcoming empty-state colour cleanup + interest-card overflow fix */
-/* Empty planner prompts are informational, not success states: keep them in the warm ivory/copper system. */
-body .app-view-upcoming .deal-planner-empty{
-  margin:12px 0 0!important;
-  padding:16px 18px!important;
-  border:1px solid rgba(157,102,57,.16)!important;
-  border-radius:16px!important;
-  background:linear-gradient(135deg,var(--surface-control),#f3e8dc)!important;
-  box-shadow:none!important;
-}
-body .app-view-upcoming .deal-planner-empty strong{
-  color:var(--text)!important;
-}
-body .app-view-upcoming .deal-planner-empty span{
-  color:var(--muted)!important;
-}
 
 /* Remove the remaining pale-mint fill from completed journey markers.
    Completion can stay legible through the icon/border without introducing another surface colour. */
