@@ -115,6 +115,7 @@
   function refineUpcomingLayout(){
     const upcoming=$('.app-view-upcoming .app-view-content'), next=$('.next-panel');
     if(!upcoming||!next||next.dataset.sectionsReady==='true') return;
+
     const summary=document.getElementById('dealPlannerSummary');
     const milestone=document.getElementById('dealPlannerMilestone');
     const rates=$('.deal-planner-rates',next);
@@ -123,55 +124,61 @@
     next.dataset.sectionsReady='true';
     next.classList.remove('panel','expandable-card');
     next.classList.add('upcoming-workspace');
-    next.removeAttribute('tabindex'); next.removeAttribute('aria-expanded');
-    next.querySelector('[data-expand-card]')?.remove(); next.querySelector('.expand-hint')?.remove();
+    next.removeAttribute('tabindex');
+    next.removeAttribute('aria-expanded');
+    next.querySelector('[data-expand-card]')?.remove();
+    next.querySelector('.expand-hint')?.remove();
     document.getElementById('dealForecast')?.setAttribute('hidden','');
 
-    const timeline=makeUpcomingSection('upcoming-timeline','1 · Deal timeline','Your current fix');
+    const timeline=makeUpcomingSection('upcoming-timeline','Remortgage readiness','Your current fix');
     const timelineBody=$('.upcoming-section-body',timeline);
-    const eventTitle=document.getElementById('nextEventTitle'), eventText=document.getElementById('nextEventText'), track=$('.timeline-track',next), labels=$('.timeline-labels',next);
+    const eventTitle=document.getElementById('nextEventTitle');
+    const eventText=document.getElementById('nextEventText');
+    const track=$('.timeline-track',next);
+    const labels=$('.timeline-labels',next);
     [eventTitle,eventText,track,labels].forEach((node)=>{ if(node) timelineBody.appendChild(node); });
 
-    const position=makeUpcomingSection('upcoming-position','2 · At deal end','Projected position');
+    const ratesSection=makeUpcomingSection('upcoming-rates','Rate outlook','What your payment could look like');
+    const ratesBody=$('.upcoming-section-body',ratesSection);
+    const rateGrid=document.getElementById('dealPlannerRateGrid');
+    const rateNote=$('.deal-planner-note',next);
+    if(rateGrid) ratesBody.appendChild(rateGrid);
+    if(rateNote) ratesBody.appendChild(rateNote);
+
+    const position=makeUpcomingSection('upcoming-position','Deal-end snapshot','Your position at deal end');
     const positionBody=$('.upcoming-section-body',position);
-    const plannerHeading=$('.deal-planner-heading',next), plannerMissing=document.getElementById('dealPlannerMissing');
-    if(plannerHeading) positionBody.appendChild(plannerHeading);
+    const plannerMissing=document.getElementById('dealPlannerMissing');
     if(plannerMissing) positionBody.appendChild(plannerMissing);
     positionBody.appendChild(summary);
 
-    const action=makeUpcomingSection('upcoming-action','3 · Next milestone','What could improve your position');
-    $('.upcoming-section-body',action).appendChild(milestone);
-
-    const rateSection=makeUpcomingSection('upcoming-rates','4 · Rate scenarios','What your next payment could look like');
-    const rateBody=$('.upcoming-section-body',rateSection);
-    const rateSubhead=$('.deal-planner-subhead',rates); if(rateSubhead) rateSubhead.remove();
-    const rateGrid=document.getElementById('dealPlannerRateGrid'); if(rateGrid) rateBody.appendChild(rateGrid);
-    const note=$('.deal-planner-note',next); if(note) rateBody.appendChild(note);
-    /* The legacy rates wrapper has a top border of its own. Once its useful
-       children have moved into the Upcoming card it must not remain as an
-       empty separator between cards. */
-    if (rates && rates.parentElement) rates.remove();
-
     const interestBox=$('.interest-box',next);
-    const interest=makeUpcomingSection('upcoming-interest','Supporting context','Interest remaining');
-    if(interestBox) $('.upcoming-section-body',interest).appendChild(interestBox);
+    if(interestBox){
+      interestBox.classList.add('deal-position-interest');
+      const label=interestBox.querySelector(':scope > span');
+      if(label) label.textContent='Interest remaining on current path';
+      summary.appendChild(interestBox);
+    }
+    milestone.classList.add('deal-position-milestone');
+    positionBody.appendChild(milestone);
 
-    const shell=document.createElement('div'); shell.className='upcoming-sections';
-    [timeline,position,action,rateSection,interest].forEach((section)=>shell.appendChild(section));
+    if(rates.parentElement) rates.remove();
+
+    const shell=document.createElement('div');
+    shell.className='upcoming-sections';
+    [timeline,ratesSection,position].forEach((section)=>shell.appendChild(section));
     next.appendChild(shell);
 
-    /* The new Upcoming layout owns the visible UI. Keep old direct children
-       only as hidden data sources so legacy borders/dividers cannot leak into
-       the rebuilt page. */
     [...next.children].forEach((child)=>{
       if(child===shell) return;
       child.hidden=true;
       child.classList.add('upcoming-legacy-source');
     });
 
-    const oldDetail=$('.expand-detail',next), oldPlanner=document.getElementById('dealEndPlanner');
+    const oldDetail=$('.expand-detail',next);
+    const oldPlanner=document.getElementById('dealEndPlanner');
     if(oldDetail) oldDetail.hidden=true;
     if(oldPlanner) oldPlanner.hidden=true;
+    document.getElementById('dealActionHint')?.remove();
   }
 
   function relocateUpcomingFeatures(){
