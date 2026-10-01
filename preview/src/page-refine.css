@@ -237,7 +237,7 @@
   margin:0!important;
   padding:26px 28px!important;
   background:color-mix(in srgb,var(--surface) 98%,transparent)!important;
-  border:1px solid color-mix(in srgb,var(--border) 88%,transparent)!important;
+  border:1px solid color-mix(in srgb,var(--border) 92%,transparent)!important;
   border-radius:18px!important;
   color:var(--text)!important;
   box-shadow:0 2px 5px rgba(54,48,39,.06),0 14px 34px rgba(54,48,39,.11)!important;
@@ -317,7 +317,7 @@
 }
 .app-view-upcoming .upcoming-hero-meta small{
   margin-top:5px!important;
-  color:var(--positive)!important;
+  color:var(--accent-strong)!important;
 }
 .app-view-upcoming .upcoming-hero-snapshot{
   display:grid!important;
@@ -388,25 +388,41 @@
   padding:0 8px!important;
 }
 .app-view-upcoming .v15-journey-icon{
+  --icon-ink:color-mix(in srgb,var(--theme-hero-ink) 88%,var(--muted));
+  --icon-accent:color-mix(in srgb,var(--accent-strong) 82%,var(--theme-hero-ink));
+  --icon-soft:color-mix(in srgb,var(--accent) 10%,transparent);
+  --icon-paper:color-mix(in srgb,var(--surface) 92%,var(--accent-wash));
+  --icon-positive:var(--accent-strong);
   display:grid!important;
   place-items:center!important;
-  width:40px!important;
-  height:40px!important;
-  margin:11px auto 8px!important;
-  border:1px solid var(--border)!important;
-  border-radius:13px!important;
-  background:var(--surface-control)!important;
+  width:46px!important;
+  height:46px!important;
+  margin:8px auto 8px!important;
+  border:1.5px solid var(--border)!important;
+  border-radius:14px!important;
+  background:var(--surface)!important;
   color:var(--muted)!important;
 }
-.app-view-upcoming .v15-journey-icon svg{width:19px!important;height:19px!important}
+.app-view-upcoming .v15-journey-icon svg{
+  display:block!important;
+  width:34px!important;
+  height:34px!important;
+  overflow:visible!important;
+}
 .app-view-upcoming .v15-journey-step.is-complete .v15-journey-icon{
-  background:var(--positive-soft)!important;
-  border-color:color-mix(in srgb,var(--positive) 50%,var(--border))!important;
-  color:var(--positive)!important;
+  --icon-ink:var(--theme-hero-ink);
+  --icon-accent:color-mix(in srgb,var(--accent-strong) 86%,var(--theme-hero-ink));
+  --icon-soft:color-mix(in srgb,var(--accent) 11%,transparent);
+  background:color-mix(in srgb,var(--accent-wash) 62%,var(--surface))!important;
+  border-color:color-mix(in srgb,var(--accent) 42%,var(--border))!important;
+  color:var(--accent-strong)!important;
 }
 .app-view-upcoming .v15-journey-step.is-current .v15-journey-icon{
-  background:var(--accent-soft)!important;
-  border-color:var(--accent)!important;
+  --icon-ink:var(--theme-hero-ink);
+  --icon-accent:var(--accent-strong);
+  --icon-soft:color-mix(in srgb,var(--accent) 14%,transparent);
+  background:color-mix(in srgb,var(--accent-wash) 78%,var(--surface))!important;
+  border-color:color-mix(in srgb,var(--accent) 64%,var(--border))!important;
   color:var(--accent-strong)!important;
   box-shadow:0 5px 14px rgba(54,48,39,.07)!important;
 }
@@ -455,7 +471,7 @@
   top:31px!important;
   height:2px!important;
   border-radius:999px!important;
-  background:linear-gradient(90deg,color-mix(in srgb,var(--positive) 32%,var(--border-soft)),color-mix(in srgb,var(--accent) 46%,var(--border-soft)),color-mix(in srgb,var(--warm) 36%,var(--border-soft)))!important;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--border) 78%,var(--surface)),color-mix(in srgb,var(--accent) 44%,var(--border-soft)),color-mix(in srgb,var(--warm) 34%,var(--border-soft)))!important;
   z-index:0!important;
 }
 .app-view-upcoming .deal-planner-rate{
@@ -627,7 +643,7 @@
   position:relative!important;
 }
 .app-view-upcoming .upcoming-position #dealPlannerEquity{
-  background:color-mix(in srgb,var(--positive) 6%,var(--surface-control))!important;
+  background:color-mix(in srgb,var(--accent-wash) 34%,var(--surface-control))!important;
 }
 body[data-app-view="upcoming"] #dealPlannerSummary > .deal-position-countdown-source{
   display:none!important;
