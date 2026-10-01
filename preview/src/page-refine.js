@@ -26,6 +26,14 @@
     return new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(new Date(year,month-1,1));
   }
 
+  function compactDuration(months){
+    const value=Math.max(0,Math.round(Number(months)||0));
+    const years=Math.floor(value/12), remainder=value%12;
+    if(years&&remainder) return `${years}y ${remainder}m`;
+    if(years) return `${years}y`;
+    return `${remainder}m`;
+  }
+
   function parseRateText(id){
     const text=document.getElementById(id)?.textContent || '';
     const value=Number(String(text).replace(/[^0-9.\-]/g,''));
@@ -210,10 +218,49 @@
     const timeline=$('.upcoming-timeline',shell), rates=$('.upcoming-rates',shell), position=$('.upcoming-position',shell), action=$('.upcoming-action',shell), interest=$('.upcoming-interest',shell);
     if(!timeline||!rates||!position) return;
 
-    $('.upcoming-section-heading h2',timeline).textContent='Your current fix';
-    $('.upcoming-section-heading h2',rates).textContent='What your payment could look like';
-    const positionTitle=$('.upcoming-section-heading h2',position);
     const state=window.MortgageStore?.get?.();
+    const deal=state?projectedDealPosition(state):null;
+    const fixedMonths=state?monthsUntil(state.fixedEnd):null;
+    const prepMonths=fixedMonths===null?null:Math.max(0,fixedMonths-3);
+
+    timeline.classList.add('upcoming-hero');
+    const timelineHeading=$('.upcoming-section-heading',timeline);
+    if(timelineHeading){
+      timelineHeading.innerHTML=`
+        <div class="upcoming-hero-copy">
+          <p class="eyebrow">Remortgage readiness</p>
+          <h2>${prepMonths===null?'Add your fixed-rate end date':prepMonths<=0?'Remortgage prep is due now':`Remortgage prep starts in ${compactDuration(prepMonths)}`}</h2>
+          <p class="upcoming-hero-subtitle">${state?.fixedEnd?`Your fixed rate ends ${formatMonth(state.fixedEnd)}. We’ll make the next steps more prominent as you get closer.`:'Set your fixed-rate end date so Mortgage Manager can build your remortgage timeline.'}</p>
+        </div>
+        <div class="upcoming-hero-meta">
+          <span>Fixed rate ends</span>
+          <strong>${formatMonth(state?.fixedEnd)}</strong>
+          <small>${fixedMonths===null?'Date not set':fixedMonths<=0?'Needs attention':`${compactDuration(fixedMonths)} away`}</small>
+        </div>`;
+    }
+
+    let heroSnapshot=$('.upcoming-hero-snapshot',timeline);
+    if(!heroSnapshot){
+      heroSnapshot=document.createElement('div');
+      heroSnapshot.className='upcoming-hero-snapshot';
+      const body=$('.upcoming-section-body',timeline);
+      if(body) body.insertAdjacentElement('afterbegin',heroSnapshot);
+    }
+    if(heroSnapshot){
+      const projectedBalance=deal?.balance;
+      const homeValue=Math.max(0,Number(state?.homeValue)||0);
+      const projectedLtv=homeValue>0&&Number.isFinite(projectedBalance)?projectedBalance/homeValue*100:null;
+      heroSnapshot.innerHTML=`
+        <div><span>Projected balance at deal end</span><strong>${Number.isFinite(projectedBalance)?money(projectedBalance):'—'}</strong></div>
+        <div><span>Projected LTV</span><strong>${projectedLtv===null?'—':projectedLtv.toFixed(1)+'%'}</strong></div>`;
+    }
+
+    $('.upcoming-section-heading h2',rates).textContent='What your payment could look like';
+    const rateEyebrow=$('.upcoming-section-heading .eyebrow',rates);
+    if(rateEyebrow) rateEyebrow.textContent='Rate outlook';
+
+    const positionHeading=$('.upcoming-section-heading',position);
+    const positionTitle=$('h2',positionHeading||position);
     if(positionTitle){
       positionTitle.textContent='Your position at deal end';
       if(state?.fixedEnd){
@@ -226,20 +273,14 @@
         positionTitle.append(separator,date);
       }
     }
+    const positionEyebrow=$('.upcoming-section-heading .eyebrow',position);
+    if(positionEyebrow) positionEyebrow.textContent='Deal-end snapshot';
+
     const legacyPlannerHeading=$('.deal-planner-heading',position);
     if(legacyPlannerHeading) legacyPlannerHeading.remove();
-    shell.querySelectorAll('.upcoming-section-heading .eyebrow').forEach((el)=>el.remove());
 
-    let fixStats=$('.current-fix-stats',timeline);
-    if(!fixStats){
-      fixStats=document.createElement('div'); fixStats.className='current-fix-stats';
-      $('.upcoming-section-body',timeline)?.appendChild(fixStats);
-    }
-    if(state){
-      const total=Math.max(0,Number(state.payment)||0)+Math.max(0,Number(state.currentOverpayment)||0);
-      const two=parseRateText('market2yRate'), five=parseRateText('market5yRate');
-      fixStats.innerHTML=`<div><span>Current rate</span><strong>${Number(state.rate||0).toFixed(2)}%</strong></div><div><span>Avg 2-year</span><strong>${two?two.toFixed(2)+'%':'—'}</strong></div><div><span>Avg 5-year</span><strong>${five?five.toFixed(2)+'%':'—'}</strong></div><div><span>Total monthly payment</span><strong>${money(total)}</strong></div><div><span>Fix ends</span><strong>${formatMonth(state.fixedEnd)}</strong></div>`;
-    }
+    // Current-fix glance cards are superseded by the new hero snapshot.
+    $('.current-fix-stats',timeline)?.remove();
 
     if(action){
       const milestone=$('#dealPlannerMilestone',action);
@@ -249,6 +290,7 @@
       }
       action.remove();
     }
+
     if(interest){
       const box=$('.interest-box',interest);
       const summary=$('#dealPlannerSummary',position);
@@ -256,15 +298,30 @@
         box.classList.add('deal-position-interest');
         const label=box.querySelector(':scope > span');
         if(label) label.textContent='Interest remaining on current path';
-        summary.appendChild(box);
+        if(box.parentElement!==summary) summary.appendChild(box);
       }
       interest.remove();
     }
+
+    const summary=$('#dealPlannerSummary',position);
+    if(summary&&state&&deal){
+      const countdown=$('#dealPlannerCountdown')?.closest('div');
+      if(countdown) countdown.classList.add('deal-position-countdown-source');
+      let equity=$('#dealPlannerEquity',summary);
+      if(!equity){
+        equity=document.createElement('div');
+        equity.id='dealPlannerEquity';
+        equity.className='deal-position-equity';
+        equity.innerHTML='<span>Projected equity</span><strong>—</strong><small>Using today’s property value.</small>';
+        summary.appendChild(equity);
+      }
+      const homeValue=Math.max(0,Number(state.homeValue)||0);
+      const projectedEquity=Math.max(0,homeValue-Math.max(0,Number(deal.balance)||0));
+      $('strong',equity).textContent=homeValue>0?money(projectedEquity):'—';
+    }
+
     shell.append(timeline,rates,position);
 
-    /* Remove any emptied legacy rate wrapper left behind by the original
-       deal-planner markup. Its border-top otherwise renders as a stray
-       horizontal rule between the Action and payment cards. */
     shell.closest('.upcoming-workspace')?.querySelectorAll('.deal-planner-rates').forEach((legacy) => {
       if (!legacy.querySelector('#dealPlannerRateGrid') && !legacy.querySelector('.deal-planner-note')) legacy.remove();
     });
