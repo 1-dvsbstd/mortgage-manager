@@ -2026,78 +2026,107 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-current .trajectory-overpay-row{
   display:grid!important;
   grid-template-columns:1fr!important;
-  gap:0!important;
-  overflow:hidden!important;
-  border:1px solid var(--border-soft)!important;
-  border-radius:12px!important;
-  background:color-mix(in srgb,var(--surface-soft) 62%,transparent)!important;
-}
-.app-view-current .trajectory-overpay-row button,
-.app-view-current .trajectory-custom-overpay{
-  box-sizing:border-box!important;
-  width:100%!important;
-  min-width:0!important;
-  min-height:42px!important;
-  margin:0!important;
-  padding:7px 10px!important;
+  gap:10px!important;
+  overflow:visible!important;
   border:0!important;
-  border-bottom:1px solid color-mix(in srgb,var(--border-soft) 84%,transparent)!important;
   border-radius:0!important;
   background:transparent!important;
+}
+.app-view-current .trajectory-presets{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;
+}
+.app-view-current .trajectory-presets button{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  min-width:0!important;
+  min-height:58px!important;
+  margin:0!important;
+  padding:10px 11px!important;
+  border:1px solid color-mix(in srgb,var(--border-soft) 90%,transparent)!important;
+  border-radius:11px!important;
+  background:color-mix(in srgb,var(--surface-soft) 60%,transparent)!important;
+  color:var(--text)!important;
+  box-shadow:none!important;
+  cursor:pointer!important;
+  transition:background .16s ease,border-color .16s ease,box-shadow .16s ease!important;
+}
+.app-view-current .trajectory-presets button>strong{
+  color:var(--text)!important;
+  font-family:var(--font-display)!important;
+  font-size:16px!important;
+  font-weight:600!important;
+  letter-spacing:-.015em!important;
+  line-height:1!important;
+}
+.app-view-current .trajectory-presets button>small{
+  display:block!important;
+  margin-top:5px!important;
+  color:var(--muted-2)!important;
+  font-size:8px!important;
+  font-weight:650!important;
+  line-height:1!important;
+}
+.app-view-current .trajectory-presets button:hover{
+  border-color:color-mix(in srgb,var(--accent) 24%,var(--border-soft))!important;
+  background:color-mix(in srgb,var(--surface-control) 82%,transparent)!important;
+}
+.app-view-current .trajectory-presets button.active{
+  border-color:color-mix(in srgb,var(--positive) 35%,var(--border-soft))!important;
+  background:color-mix(in srgb,var(--positive) 9%,var(--surface-control))!important;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--positive) 14%,transparent)!important;
+}
+.app-view-current .trajectory-presets button.active>strong{
+  color:var(--positive)!important;
+}
+.app-view-current .trajectory-presets button.active>small{
+  color:color-mix(in srgb,var(--positive) 78%,var(--muted))!important;
+}
+.app-view-current .trajectory-custom-overpay{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:48px!important;
+  margin:0!important;
+  padding:7px 8px 7px 11px!important;
+  border:1px solid color-mix(in srgb,var(--border-soft) 90%,transparent)!important;
+  border-radius:11px!important;
+  background:color-mix(in srgb,var(--surface-soft) 48%,transparent)!important;
   color:var(--text)!important;
   box-shadow:none!important;
 }
-.app-view-current .trajectory-overpay-row button{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:flex-end!important;
-  gap:9px!important;
-  cursor:pointer!important;
-}
 .app-view-current .trajectory-custom-overpay>span{
+  min-width:0!important;
   color:var(--muted)!important;
-  font-size:9px!important;
+  font-size:8.5px!important;
   font-weight:700!important;
-  line-height:1!important;
+  line-height:1.25!important;
 }
-.app-view-current .trajectory-overpay-row button>strong,
 .app-view-current .trajectory-custom-overpay>strong{
+  display:inline-flex!important;
+  align-items:baseline!important;
+  gap:2px!important;
+  flex:0 0 auto!important;
+  padding:6px 8px!important;
+  border:1px solid color-mix(in srgb,var(--border-soft) 84%,transparent)!important;
+  border-radius:8px!important;
+  background:var(--surface-control)!important;
   color:var(--text)!important;
   font-family:var(--font-display)!important;
   font-size:14px!important;
   font-weight:600!important;
   line-height:1!important;
 }
-.app-view-current .trajectory-custom-overpay>strong{
-  display:inline-flex!important;
-  align-items:baseline!important;
-  gap:2px!important;
-  padding:5px 7px!important;
-  border:1px solid color-mix(in srgb,var(--border-soft) 82%,transparent)!important;
-  border-radius:8px!important;
-  background:color-mix(in srgb,var(--surface-control) 82%,transparent)!important;
-}
-.app-view-current .trajectory-overpay-row button:hover{
-  background:color-mix(in srgb,var(--surface-control) 78%,transparent)!important;
-}
-.app-view-current .trajectory-overpay-row button.active{
-  border:0!important;
-  border-radius:0!important;
-  background:color-mix(in srgb,var(--positive) 10%,var(--surface-control))!important;
-  color:var(--theme-hero-ink)!important;
-  box-shadow:inset 3px 0 0 color-mix(in srgb,var(--positive) 82%,var(--theme-hero-ink))!important;
-}
-.app-view-current .trajectory-overpay-row button.active>strong{
-  color:var(--positive)!important;
-}
-.app-view-current .trajectory-custom-overpay{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  gap:8px!important;
-}
 .app-view-current .trajectory-custom-overpay input{
-  width:58px!important;
+  width:52px!important;
   min-width:0!important;
   margin:0!important;
   padding:0!important;
@@ -2112,18 +2141,22 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   text-align:right!important;
   box-shadow:none!important;
 }
+.app-view-current .trajectory-custom-overpay:hover,
 .app-view-current .trajectory-custom-overpay:focus-within{
-  background:color-mix(in srgb,var(--surface-control) 76%,transparent)!important;
-  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 24%,transparent)!important;
+  border-color:color-mix(in srgb,var(--accent) 30%,var(--border-soft))!important;
+  background:color-mix(in srgb,var(--surface-control) 72%,transparent)!important;
 }
 .app-view-current .trajectory-custom-overpay:focus-within>strong{
-  border-color:color-mix(in srgb,var(--accent) 48%,var(--border-soft))!important;
-  background:var(--surface-control)!important;
+  border-color:color-mix(in srgb,var(--accent) 46%,var(--border-soft))!important;
 }
-.app-view-current .trajectory-custom-overpay:last-child{
-  border-bottom:0!important;
+.app-view-current .trajectory-custom-overpay.is-active{
+  border-color:color-mix(in srgb,var(--positive) 35%,var(--border-soft))!important;
+  background:color-mix(in srgb,var(--positive) 8%,var(--surface-control))!important;
 }
-
+.app-view-current .trajectory-custom-overpay.is-active>strong{
+  color:var(--positive)!important;
+  border-color:color-mix(in srgb,var(--positive) 30%,var(--border-soft))!important;
+}
 
 .app-view-current .trajectory-chart-stage{
   min-width:0!important;
@@ -2239,9 +2272,6 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   }
   .app-view-current .trajectory-rail-intro{
     margin-bottom:13px!important;
-  }
-  .app-view-current .trajectory-overpay-row{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
   }
   .app-view-current .trajectory-chart-stage{
     padding:15px 14px 17px!important;
