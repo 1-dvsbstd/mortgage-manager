@@ -97,7 +97,7 @@ input[type="number"],input[type="month"],input[type="text"],.setup-home-profile-
 input:focus { outline:2px solid var(--focus-ring-soft); outline-offset:1px; }
 .field-note { margin:10px 0 0; color:var(--muted); font-size:12px; line-height:1.45; }
 .warning { color:var(--warning); font-size:13px; margin-bottom:0; }
-.footer { margin-top:16px; color:var(--muted); font-size:11px; line-height:1.5; }
+.footer { margin:28px 4px 0; color:color-mix(in srgb,var(--muted) 76%,transparent); font-size:10px; line-height:1.5; }
 
 @media (max-width:900px) {
   .hero-panel,.dashboard-grid { grid-template-columns:1fr; }
