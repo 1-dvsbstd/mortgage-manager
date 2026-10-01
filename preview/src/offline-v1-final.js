@@ -79,21 +79,8 @@
   }
 
   function updateEquityCopy(){
-    const trend=homeTrend();
-    const label=trend===0?'Projected equity':`Projected equity (${trend.toFixed(1)}% home growth)`;
-    $$('.chart-panel .legend span').forEach((item)=>{
-      if(/Projected equity/i.test(item.textContent||'')){
-        const dot=item.querySelector('i');
-        item.textContent=label;
-        if(dot) item.prepend(dot);
-      }
-    });
-    const subtitle=$('.app-view-current .chart-panel .panel-heading .subtle');
-    if(subtitle){
-      subtitle.textContent=trend===0
-        ? 'Debt falls while equity rises as you repay the mortgage; property value is held flat.'
-        : `Debt falls while projected equity also includes ${trend.toFixed(1)}% annual home-value growth.`;
-    }
+    const assumption=$('.app-view-current .trajectory-assumption-note');
+    if(assumption) assumption.textContent=`Projection assumes ${homeTrend().toFixed(1)}% annual home-value growth`;
   }
 
   function renderJourney(){
