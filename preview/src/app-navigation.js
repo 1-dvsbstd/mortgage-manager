@@ -164,7 +164,7 @@
        only as hidden data sources so legacy borders/dividers cannot leak into
        the rebuilt page. */
     [...next.children].forEach((child)=>{
-      if(child===shell || child.id==='dealActionHint') return;
+      if(child===shell) return;
       child.hidden=true;
       child.classList.add('upcoming-legacy-source');
     });
