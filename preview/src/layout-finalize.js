@@ -5,6 +5,14 @@
     return new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP',maximumFractionDigits:0}).format(Math.max(0,Number(value)||0));
   }
 
+  function homeTrend(){
+    try{
+      const settings=JSON.parse(localStorage.getItem('mortgage-manager-home-projection-v4')||'{}');
+      const value=Number(settings.trend);
+      return Number.isFinite(value)?value:2.5;
+    }catch(_){ return 2.5; }
+  }
+
   function scenarioCandidates(regular){
     const base=Math.round(Math.max(0,Number(regular)||0)*100)/100;
     const preset=[base,100,250,500].filter((v)=>v>=base-.01);
@@ -31,6 +39,17 @@
     $('#currentOverpaymentPanel')?.remove();
 
     const heading=$(':scope > .panel-heading',chart);
+    if(heading){
+      const subtitle=$('.subtle',heading);
+      if(subtitle) subtitle.textContent='Debt falls while projected equity builds.';
+      let assumption=$('.trajectory-assumption-note',heading);
+      if(!assumption){
+        assumption=document.createElement('span');
+        assumption.className='trajectory-assumption-note';
+        heading.appendChild(assumption);
+      }
+      assumption.textContent=`Projection assumes ${homeTrend().toFixed(1)}% annual home-value growth`;
+    }
     const headingStat=$('.chart-stat',heading||chart);
     if(headingStat) headingStat.classList.add('trajectory-source-stat');
 
@@ -50,13 +69,13 @@
         if(event.target.id==='trajectoryCustomOverpay'&&event.key==='Enter') setTotalOverpayment(event.target.value);
       });
     }
-    if(panel.dataset.layout!=='rail-v1'){
-      panel.dataset.layout='rail-v1';
+    if(panel.dataset.layout!=='rail-v2'){
+      panel.dataset.layout='rail-v2';
       panel.innerHTML=`
         <div class="trajectory-rail-intro">
           <p class="eyebrow">What if?</p>
-          <h3>Try a different monthly overpayment</h3>
-          <p>See how a little more changes your path.</p>
+          <h3>Try a different overpayment</h3>
+          <p>Compare the payoff date and interest saved.</p>
         </div>
         <div class="trajectory-current-saving" id="trajectoryCurrentSaving"></div>
         <div class="trajectory-overpay-row" id="trajectoryOverpayRow"></div>`;
