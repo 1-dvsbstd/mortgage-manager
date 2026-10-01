@@ -160,16 +160,15 @@
   function projectedDealPosition(state){
     const months=monthsUntil(state.fixedEnd);
     if(months===null||months<0||!window.MortgageMath) return null;
-    /* Payment scenarios intentionally exclude overpayments. Use the scheduled
-       payment path for both the projected deal-end balance and remaining term
-       so the current-rate scenario reconciles with today's scheduled payment. */
     const scheduledPayment=Math.max(0,Number(state.payment)||0);
-    const path=MortgageMath.amortize(state.balance,state.rate,scheduledPayment);
+    const regularOverpayment=Math.max(0,Number(state.currentOverpayment)||0);
+    const currentTotal=scheduledPayment+regularOverpayment;
+    const path=MortgageMath.amortize(state.balance,state.rate,currentTotal);
     const points=path.monthlyPoints||[];
     const index=Math.min(Math.max(0,months),Math.max(0,points.length-1));
     const balance=points[index]??Math.max(0,Number(state.balance)||0);
     const remainingMonths=Number.isFinite(path.months)?Math.max(1,path.months-months):300;
-    return {months,balance,remainingMonths,scheduledPayment};
+    return {months,balance,remainingMonths,scheduledPayment,regularOverpayment,currentTotal};
   }
 
   function paymentScenarioRates(state){
@@ -309,6 +308,10 @@
       const homeValue=Math.max(0,Number(state.homeValue)||0);
       const projectedEquity=Math.max(0,homeValue-Math.max(0,Number(deal.balance)||0));
       $('strong',equity).textContent=homeValue>0?money(projectedEquity):'—';
+      const balanceValue=$('#dealPlannerBalance',summary);
+      const ltvValue=$('#dealPlannerLtv',summary);
+      if(balanceValue) balanceValue.textContent=money(deal.balance);
+      if(ltvValue) ltvValue.textContent=homeValue>0?`${(deal.balance/homeValue*100).toFixed(1)}%`:'—';
     }
 
     shell.append(timeline,rates,position);
