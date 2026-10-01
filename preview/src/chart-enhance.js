@@ -14,7 +14,7 @@
     grid:'rgba(64,54,45,.055)',
     gridSoft:'rgba(64,54,45,.022)',
     label:themeColour('--muted','#777d80'),
-    scheduled:'rgba(125,139,145,.52)',
+    scheduled:'rgba(125,139,145,.60)',
     current:themeColour('--theme-hero-ink','#31554d'),
     selected:themeColour('--positive','#4f806d'),
     equity:themeColour('--accent','#b58a5b'),
@@ -167,19 +167,19 @@
       ctx.restore();
     }
     const hasWhatIf=Math.max(0,Number(v.extra)||0)>.01;
-    drawLine(scheduled.monthlyPoints,C.scheduled,compact?1.15:1.25,[4,5],.72);
-    drawLine(current.monthlyPoints,C.current,compact?(hasWhatIf?1.9:2.8):(hasWhatIf?2.15:3.05),[],hasWhatIf?.72:1);
-    if(hasWhatIf) drawLine(selected.monthlyPoints,C.selected,compact?3.05:3.35,[],1);
-    drawLine(equity,C.equity,compact?1.45:1.6,[8,6],.9);
+    drawLine(scheduled.monthlyPoints,C.scheduled,compact?1.2:1.3,[4,5],.80);
+    drawLine(current.monthlyPoints,C.current,compact?(hasWhatIf?2.05:2.8):(hasWhatIf?2.3:3.05),[],hasWhatIf?.80:1);
+    if(hasWhatIf) drawLine(selected.monthlyPoints,C.selected,compact?3.2:3.55,[],1);
+    drawLine(equity,C.equity,compact?1.45:1.6,[8,6],.88);
 
     const fixed=monthsUntil(v.fixedEnd);
     if(fixed!==null&&fixed>=0&&fixed<=maxMonths){
-      const x=xFor(fixed); ctx.save(); ctx.setLineDash([3,6]); ctx.strokeStyle=C.marker; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(x,pad.top+21); ctx.lineTo(x,pad.top+height); ctx.stroke(); ctx.restore();
+      const x=xFor(fixed); ctx.save(); ctx.setLineDash([3,6]); ctx.strokeStyle=C.marker; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(x,pad.top+17); ctx.lineTo(x,pad.top+height); ctx.stroke(); ctx.restore();
       const label='Fix ends';
       ctx.font=compact?'9px system-ui':'10px system-ui';
       const tw=ctx.measureText(label).width, pillW=tw+12, pillH=18;
       const pillX=Math.max(pad.left+2,Math.min(pad.left+width-pillW-2,x-pillW/2));
-      const pillY=pad.top+3;
+      const pillY=Math.max(0,pad.top-1);
       ctx.save();
       ctx.fillStyle='rgba(250,247,241,.90)';
       ctx.beginPath(); ctx.roundRect(pillX,pillY,pillW,pillH,9); ctx.fill();
