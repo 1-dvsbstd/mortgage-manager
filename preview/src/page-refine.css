@@ -2089,66 +2089,77 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-current .trajectory-custom-overpay{
   box-sizing:border-box!important;
   display:grid!important;
-  grid-template-columns:1fr!important;
-  align-items:stretch!important;
-  gap:8px!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:10px!important;
   width:100%!important;
   min-width:0!important;
-  min-height:78px!important;
+  min-height:58px!important;
   margin:0!important;
   padding:10px 11px!important;
   border:1px solid color-mix(in srgb,var(--border-soft) 90%,transparent)!important;
   border-radius:11px!important;
-  background:color-mix(in srgb,var(--surface-soft) 62%,transparent)!important;
+  background:color-mix(in srgb,var(--surface-soft) 72%,transparent)!important;
   color:var(--text)!important;
-  box-shadow:0 2px 3px rgba(54,48,39,.045),0 9px 20px rgba(54,48,39,.085)!important;
+  box-shadow:0 2px 3px rgba(54,48,39,.05),0 9px 20px rgba(54,48,39,.09)!important;
 }
 .app-view-current .trajectory-custom-label{
-  display:flex!important;
-  align-items:baseline!important;
-  justify-content:space-between!important;
-  gap:6px!important;
+  display:block!important;
   min-width:0!important;
   color:var(--muted)!important;
-  line-height:1.15!important;
+  line-height:1.12!important;
 }
 .app-view-current .trajectory-custom-label>strong{
   display:block!important;
-  color:var(--muted)!important;
-  font-family:var(--font-ui)!important;
-  font-size:8.5px!important;
-  font-weight:760!important;
-  letter-spacing:.01em!important;
-  line-height:1.1!important;
-}
-.app-view-current .trajectory-custom-label>small{
-  display:block!important;
-  margin:0!important;
-  color:var(--muted-2)!important;
-  font-size:7.5px!important;
-  font-weight:620!important;
-  letter-spacing:0!important;
-  line-height:1.15!important;
-  white-space:nowrap!important;
-}
-.app-view-current .trajectory-custom-overpay>strong{
-  display:flex!important;
-  align-items:baseline!important;
-  justify-content:flex-end!important;
-  gap:3px!important;
-  width:100%!important;
-  padding:7px 9px!important;
-  border:1px solid color-mix(in srgb,var(--border-soft) 84%,transparent)!important;
-  border-radius:8px!important;
-  background:var(--surface-control)!important;
   color:var(--text)!important;
   font-family:var(--font-display)!important;
   font-size:14px!important;
   font-weight:600!important;
+  letter-spacing:-.01em!important;
+  line-height:1!important;
+}
+.app-view-current .trajectory-custom-label>small{
+  display:block!important;
+  margin-top:5px!important;
+  color:var(--muted-2)!important;
+  font-size:7.5px!important;
+  font-weight:650!important;
+  letter-spacing:0!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+.app-view-current .trajectory-custom-value{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-end!important;
+  justify-content:center!important;
+  gap:4px!important;
+  min-width:54px!important;
+}
+.app-view-current .trajectory-custom-value>strong{
+  display:flex!important;
+  align-items:baseline!important;
+  justify-content:flex-end!important;
+  gap:2px!important;
+  width:auto!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:var(--text)!important;
+  font-family:var(--font-display)!important;
+  font-size:16px!important;
+  font-weight:600!important;
+  line-height:1!important;
+}
+.app-view-current .trajectory-custom-value>small{
+  color:var(--muted-2)!important;
+  font-size:8px!important;
+  font-weight:650!important;
   line-height:1!important;
 }
 .app-view-current .trajectory-custom-overpay input{
-  width:72px!important;
+  width:48px!important;
   min-width:0!important;
   margin:0!important;
   padding:0!important;
@@ -2158,7 +2169,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   color:inherit!important;
   font:inherit!important;
   font-family:var(--font-display)!important;
-  font-size:14px!important;
+  font-size:16px!important;
   font-weight:600!important;
   text-align:right!important;
   box-shadow:none!important;
@@ -2168,16 +2179,12 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   border-color:color-mix(in srgb,var(--accent) 30%,var(--border-soft))!important;
   background:color-mix(in srgb,var(--surface-control) 72%,transparent)!important;
 }
-.app-view-current .trajectory-custom-overpay:focus-within>strong{
-  border-color:color-mix(in srgb,var(--accent) 46%,var(--border-soft))!important;
-}
 .app-view-current .trajectory-custom-overpay.is-active{
   border-color:color-mix(in srgb,var(--positive) 35%,var(--border-soft))!important;
   background:color-mix(in srgb,var(--positive) 8%,var(--surface-control))!important;
 }
-.app-view-current .trajectory-custom-overpay.is-active>strong{
+.app-view-current .trajectory-custom-overpay.is-active .trajectory-custom-value>strong{
   color:var(--positive)!important;
-  border-color:color-mix(in srgb,var(--positive) 30%,var(--border-soft))!important;
 }
 
 .app-view-current .trajectory-chart-stage{
