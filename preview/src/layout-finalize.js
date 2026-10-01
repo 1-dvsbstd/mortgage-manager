@@ -141,18 +141,29 @@
 
     if(heading){
       const actions=$('.card-actions',heading)||heading;
-      let currentPlan=$('.trajectory-current-plan',heading);
-      if(!currentPlan){
-        currentPlan=document.createElement('div');
-        currentPlan.className='trajectory-current-plan';
-        actions.appendChild(currentPlan);
+      let comparison=$('.trajectory-plan-comparison',heading);
+      if(!comparison){
+        comparison=document.createElement('div');
+        comparison.className='trajectory-plan-comparison';
+        actions.appendChild(comparison);
       }
+
       const basePayment=Math.max(0,Number(state.payment)||0);
-      const summary=payoffSummary(basePayment,basePayment+regular,state);
-      currentPlan.innerHTML=`
-        <span>Current overpayment</span>
-        <strong>${money(regular)}<small>/month</small></strong>
-        <em>${regular>0&&summary.monthsSaved>0?`${summary.duration} sooner · ${money(summary.interestSaved)} less interest`:'No regular overpayment'}</em>`;
+      const currentSummary=payoffSummary(basePayment,basePayment+regular,state);
+      const whatIfSummary=payoffSummary(basePayment,basePayment+regular+extra,state);
+      const totalOverpayment=regular+extra;
+
+      comparison.innerHTML=`
+        <div class="trajectory-current-plan">
+          <span>Current overpayment</span>
+          <strong>${money(regular)}<small>/month</small></strong>
+          <em>${regular>0&&currentSummary.monthsSaved>0?`${currentSummary.duration} sooner · ${money(currentSummary.interestSaved)} less interest`:'No regular overpayment'}</em>
+        </div>
+        <div class="trajectory-whatif-plan ${extra>0?'is-active':''}">
+          <span>${extra>0?`What if +${money(extra)}/month`:'What if'}</span>
+          <strong>${extra>0?money(totalOverpayment):'—'}<small>${extra>0?'/month total':''}</small></strong>
+          <em>${extra>0&&whatIfSummary.monthsSaved>0?`${whatIfSummary.duration} sooner · ${money(whatIfSummary.interestSaved)} less interest`:'Choose an amount to compare'}</em>
+        </div>`;
     }
 
     if(legend){
