@@ -91,8 +91,8 @@
         }
       });
     }
-    if(panel.dataset.layout!=='rail-v4'){
-      panel.dataset.layout='rail-v4';
+    if(panel.dataset.layout!=='rail-v5'){
+      panel.dataset.layout='rail-v5';
       panel.innerHTML=`
         <div class="trajectory-rail-intro">
           <p class="eyebrow">What if?</p>
@@ -103,7 +103,7 @@
           <div class="trajectory-presets">
             ${scenarioExtras.map((value)=>`<button type="button" data-scenario-extra="${value}"><strong>${money(value)}</strong><small>/month</small></button>`).join('')}
           </div>
-          <label class="trajectory-custom-overpay"><span class="trajectory-custom-label"><strong>Custom</strong><small>monthly overpayment</small></span><strong>£<input id="trajectoryCustomOverpay" type="number" min="0" step="10" inputmode="decimal" value="0"></strong></label>
+          <label class="trajectory-custom-overpay"><span class="trajectory-custom-label"><strong>Custom</strong><small>monthly overpayment</small></span><span class="trajectory-custom-value"><strong>£<input id="trajectoryCustomOverpay" type="number" min="0" step="10" inputmode="decimal" value="0"></strong><small>/month</small></span></label>
         </div>`;
     }
 
