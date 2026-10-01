@@ -96,12 +96,14 @@
       panel.innerHTML=`
         <div class="trajectory-rail-intro">
           <p class="eyebrow">What if?</p>
-          <h3>Add more each month</h3>
-          <p>Extra on top of your current overpayment.</p>
+          <h3>Try a different overpayment</h3>
+          <p>Replace your current £${money(Math.max(0,Number(state.currentOverpayment)||0))}/month plan.</p>
         </div>
         <div class="trajectory-overpay-row" id="trajectoryOverpayRow">
-          ${scenarioExtras.map((value)=>`<button type="button" data-scenario-extra="${value}"><strong>${money(value)}</strong></button>`).join('')}
-          <label class="trajectory-custom-overpay"><span>Custom</span><strong>£<input id="trajectoryCustomOverpay" type="number" min="0" step="10" inputmode="decimal" value="0"></strong></label>
+          <div class="trajectory-presets">
+            ${scenarioExtras.map((value)=>`<button type="button" data-scenario-extra="${value}"><span>Overpay</span><strong>${money(value)}</strong></button>`).join('')}
+          </div>
+          <label class="trajectory-custom-overpay"><span>Custom monthly overpayment</span><strong>£<input id="trajectoryCustomOverpay" type="number" min="0" step="10" inputmode="decimal" value="0"></strong></label>
         </div>`;
     }
 
@@ -150,8 +152,7 @@
 
       const basePayment=Math.max(0,Number(state.payment)||0);
       const currentSummary=payoffSummary(basePayment,basePayment+regular,state);
-      const whatIfSummary=payoffSummary(basePayment,basePayment+regular+extra,state);
-      const totalOverpayment=regular+extra;
+      const whatIfSummary=payoffSummary(basePayment,basePayment+extra,state);
 
       comparison.innerHTML=`
         <div class="trajectory-current-plan">
@@ -160,8 +161,8 @@
           <em>${regular>0&&currentSummary.monthsSaved>0?`${currentSummary.duration} sooner · ${money(currentSummary.interestSaved)} less interest`:'No regular overpayment'}</em>
         </div>
         <div class="trajectory-whatif-plan ${extra>0?'is-active':''}">
-          <span>${extra>0?`What if +${money(extra)}/month`:'What if'}</span>
-          <strong>${extra>0?money(totalOverpayment):'—'}<small>${extra>0?'/month total':''}</small></strong>
+          <span>${extra>0?`What if ${money(extra)}/month`:'What if'}</span>
+          <strong>${extra>0?money(extra):'—'}<small>${extra>0?'/month':''}</small></strong>
           <em>${extra>0&&whatIfSummary.monthsSaved>0?`${whatIfSummary.duration} sooner · ${money(whatIfSummary.interestSaved)} less interest`:'Choose an amount to compare'}</em>
         </div>`;
     }
