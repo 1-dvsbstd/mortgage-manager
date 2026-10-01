@@ -1911,19 +1911,29 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   align-items:flex-start!important;
   justify-content:flex-end!important;
 }
-.app-view-current .trajectory-current-plan{
-  min-width:190px!important;
+.app-view-current .trajectory-plan-comparison{
+  display:grid!important;
+  grid-template-columns:auto auto!important;
+  align-items:start!important;
+  gap:22px!important;
+  min-width:390px!important;
+}
+.app-view-current .trajectory-current-plan,
+.app-view-current .trajectory-whatif-plan{
+  min-width:180px!important;
   padding:2px 0 0!important;
   text-align:right!important;
 }
-.app-view-current .trajectory-current-plan>span{
+.app-view-current .trajectory-current-plan>span,
+.app-view-current .trajectory-whatif-plan>span{
   display:block!important;
   color:var(--muted-2)!important;
   font-size:8.5px!important;
   font-weight:700!important;
   letter-spacing:.025em!important;
 }
-.app-view-current .trajectory-current-plan>strong{
+.app-view-current .trajectory-current-plan>strong,
+.app-view-current .trajectory-whatif-plan>strong{
   display:block!important;
   margin-top:3px!important;
   color:var(--theme-hero-ink)!important;
@@ -1933,7 +1943,8 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   letter-spacing:-.02em!important;
   line-height:1!important;
 }
-.app-view-current .trajectory-current-plan>strong small{
+.app-view-current .trajectory-current-plan>strong small,
+.app-view-current .trajectory-whatif-plan>strong small{
   margin-left:3px!important;
   color:var(--muted)!important;
   font-family:var(--font-ui)!important;
@@ -1941,7 +1952,8 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   font-weight:600!important;
   letter-spacing:0!important;
 }
-.app-view-current .trajectory-current-plan>em{
+.app-view-current .trajectory-current-plan>em,
+.app-view-current .trajectory-whatif-plan>em{
   display:block!important;
   margin-top:5px!important;
   color:var(--positive)!important;
@@ -1949,6 +1961,17 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   font-style:normal!important;
   font-weight:650!important;
   line-height:1.3!important;
+}
+
+.app-view-current .trajectory-whatif-plan{
+  padding-left:20px!important;
+  border-left:1px solid color-mix(in srgb,var(--border-soft) 72%,transparent)!important;
+}
+.app-view-current .trajectory-whatif-plan.is-active>span{
+  color:var(--accent-strong)!important;
+}
+.app-view-current .trajectory-whatif-plan.is-active>strong{
+  color:var(--positive)!important;
 }
 
 .app-view-current .trajectory-workspace{
@@ -2180,9 +2203,19 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
     justify-content:flex-start!important;
     margin-top:12px!important;
   }
-  .app-view-current .trajectory-current-plan{
+  .app-view-current .trajectory-plan-comparison{
+    grid-template-columns:1fr 1fr!important;
+    gap:16px!important;
+    min-width:0!important;
+    width:100%!important;
+  }
+  .app-view-current .trajectory-current-plan,
+  .app-view-current .trajectory-whatif-plan{
     min-width:0!important;
     text-align:left!important;
+  }
+  .app-view-current .trajectory-whatif-plan{
+    padding-left:16px!important;
   }
   .app-view-current .trajectory-workspace{
     grid-template-columns:1fr!important;
