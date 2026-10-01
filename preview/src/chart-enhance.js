@@ -11,14 +11,14 @@
     return value||fallback;
   };
   const palette = () => ({
-    grid:'rgba(64,54,45,.075)',
-    gridSoft:'rgba(64,54,45,.035)',
+    grid:'rgba(64,54,45,.055)',
+    gridSoft:'rgba(64,54,45,.022)',
     label:themeColour('--muted','#777d80'),
-    scheduled:'rgba(125,139,145,.58)',
+    scheduled:'rgba(125,139,145,.52)',
     current:themeColour('--theme-hero-ink','#31554d'),
     selected:themeColour('--positive','#4f806d'),
     equity:themeColour('--accent','#b58a5b'),
-    marker:'rgba(155,102,59,.32)',
+    marker:'rgba(155,102,59,.24)',
     markerText:themeColour('--accent-strong','#8b603d'),
     hover:'rgba(64,54,45,.18)',
     dotRing:themeColour('--surface','#f3ede5'),
@@ -129,10 +129,11 @@
     const yFor=(value)=>pad.top+height*(1-Math.max(0,value)/maxValue);
 
     ctx.font='11px system-ui'; ctx.textBaseline='middle';
-    for(let i=0;i<=4;i+=1){
-      const y=pad.top+(height*i)/4;
+    const ySteps=3;
+    for(let i=0;i<=ySteps;i+=1){
+      const y=pad.top+(height*i)/ySteps;
       ctx.strokeStyle=C.grid; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(pad.left+width,y); ctx.stroke();
-      ctx.fillStyle=C.label; ctx.textAlign='right'; ctx.fillText(compactMoney(maxValue*(1-i/4)),pad.left-10,y);
+      ctx.fillStyle=C.label; ctx.textAlign='right'; ctx.fillText(compactMoney(maxValue*(1-i/ySteps)),pad.left-10,y);
     }
 
     const ticks=yearTicks(maxMonths,cssWidth); ctx.textBaseline='alphabetic'; ctx.font=compact?'10px system-ui':'11px system-ui';
@@ -142,9 +143,9 @@
       ctx.fillStyle=C.label; ctx.textAlign=index===0?'left':index===ticks.length-1?'right':'center'; ctx.fillText(label,x,cssHeight-17);
     });
 
-    const drawLine=(points,colour,lineWidth,dash=[])=>{
+    const drawLine=(points,colour,lineWidth,dash=[],opacity=1)=>{
       if(!points?.length) return;
-      ctx.save(); ctx.strokeStyle=colour; ctx.lineWidth=lineWidth; ctx.lineJoin='round'; ctx.lineCap='round'; ctx.setLineDash(dash); ctx.beginPath();
+      ctx.save(); ctx.globalAlpha=opacity; ctx.strokeStyle=colour; ctx.lineWidth=lineWidth; ctx.lineJoin='round'; ctx.lineCap='round'; ctx.setLineDash(dash); ctx.beginPath();
       points.forEach((value,month)=>{ const x=xFor(Math.min(month,maxMonths)), y=yFor(value); month===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
       ctx.stroke(); ctx.restore();
     };
@@ -165,23 +166,23 @@
       ctx.fill();
       ctx.restore();
     }
-    drawLine(scheduled.monthlyPoints,C.scheduled,compact?1.35:1.5,[4,4]);
-    drawLine(current.monthlyPoints,C.current,compact?2.7:3.15);
-    if(Math.max(0,Number(v.extra)||0)>.01) drawLine(selected.monthlyPoints,C.selected,compact?2.9:3.2);
-    drawLine(equity,C.equity,compact?1.55:1.7,[7,5]);
+    const hasWhatIf=Math.max(0,Number(v.extra)||0)>.01;
+    drawLine(scheduled.monthlyPoints,C.scheduled,compact?1.15:1.25,[4,5],.72);
+    drawLine(current.monthlyPoints,C.current,compact?(hasWhatIf?1.9:2.8):(hasWhatIf?2.15:3.05),[],hasWhatIf?.72:1);
+    if(hasWhatIf) drawLine(selected.monthlyPoints,C.selected,compact?3.05:3.35,[],1);
+    drawLine(equity,C.equity,compact?1.45:1.6,[8,6],.9);
 
     const fixed=monthsUntil(v.fixedEnd);
     if(fixed!==null&&fixed>=0&&fixed<=maxMonths){
-      const x=xFor(fixed); ctx.save(); ctx.setLineDash([4,5]); ctx.strokeStyle=C.marker; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(x,pad.top+24); ctx.lineTo(x,pad.top+height); ctx.stroke(); ctx.restore();
+      const x=xFor(fixed); ctx.save(); ctx.setLineDash([3,6]); ctx.strokeStyle=C.marker; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(x,pad.top+21); ctx.lineTo(x,pad.top+height); ctx.stroke(); ctx.restore();
       const label='Fix ends';
       ctx.font=compact?'9px system-ui':'10px system-ui';
-      const tw=ctx.measureText(label).width, pillW=tw+14, pillH=20;
+      const tw=ctx.measureText(label).width, pillW=tw+12, pillH=18;
       const pillX=Math.max(pad.left+2,Math.min(pad.left+width-pillW-2,x-pillW/2));
       const pillY=pad.top+3;
       ctx.save();
-      ctx.fillStyle='rgba(255,255,255,.82)';
-      ctx.strokeStyle=C.marker; ctx.lineWidth=1;
-      ctx.beginPath(); ctx.roundRect(pillX,pillY,pillW,pillH,10); ctx.fill(); ctx.stroke();
+      ctx.fillStyle='rgba(250,247,241,.90)';
+      ctx.beginPath(); ctx.roundRect(pillX,pillY,pillW,pillH,9); ctx.fill();
       ctx.fillStyle=C.markerText; ctx.textAlign='center'; ctx.textBaseline='middle';
       ctx.fillText(label,pillX+pillW/2,pillY+pillH/2+.5);
       ctx.restore();
