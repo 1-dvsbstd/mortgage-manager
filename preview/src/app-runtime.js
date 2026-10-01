@@ -262,6 +262,9 @@
     const source = document.querySelector('.market-block .source-date');
     if (source) source.textContent = `${isOnlineMode() ? 'Online' : 'Saved'} · Moneyfacts · ${formatSourceDate(data.sourceAsOf)}`;
     renderLiveRateChoices(data, band, result, state);
+    document.dispatchEvent(new CustomEvent('mortgage-market-rates-updated',{
+      detail:{twoYear:twoRate,fiveYear:fiveRate,ltvBand:band?.ltv||null,sourceAsOf:data.sourceAsOf||null}
+    }));
   }
 
   function applyCachedMarketRates() {
