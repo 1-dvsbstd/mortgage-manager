@@ -622,7 +622,7 @@
   font-size:9px!important;
   line-height:1.35!important;
 }
-.app-view-upcoming .upcoming-position .deal-position-countdown-source{
+body[data-app-view="upcoming"] #dealPlannerSummary > .deal-position-countdown-source{
   display:none!important;
 }
 .app-view-upcoming .upcoming-position .deal-position-interest,
