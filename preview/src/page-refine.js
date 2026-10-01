@@ -306,7 +306,10 @@
     const summary=$('#dealPlannerSummary',position);
     if(summary&&state&&deal){
       const countdown=$('#dealPlannerCountdown')?.closest('div');
-      if(countdown) countdown.classList.add('deal-position-countdown-source');
+      if(countdown&&countdown.parentElement===summary){
+        countdown.hidden=true;
+        countdown.classList.add('deal-position-countdown-source');
+      }
       let equity=$('#dealPlannerEquity',summary);
       if(!equity){
         equity=document.createElement('div');
