@@ -20,9 +20,13 @@ body {
   background-position:center top,center top;
   background-size:100% var(--app-bg-art-height),min(100%,2880px) auto;
   background-repeat:no-repeat,no-repeat;
+  background-attachment:fixed,fixed;
   color:var(--text);
   font-family:var(--font-ui);
   -webkit-font-smoothing: antialiased;
+}
+@media (max-width:700px){
+  body{background-attachment:scroll,scroll}
 }
 button, input { font: inherit; -webkit-tap-highlight-color: transparent; }
 .app-shell { width: min(1180px, calc(100% - 28px)); margin: 0 auto; padding: max(18px, env(safe-area-inset-top)) 0 max(40px, env(safe-area-inset-bottom)); }
