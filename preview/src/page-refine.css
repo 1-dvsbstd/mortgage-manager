@@ -223,6 +223,11 @@
 .v15-action-card button{appearance:none;border:0;background:transparent;color:var(--accent-strong)!important;font:inherit;font-weight:800;cursor:pointer;white-space:nowrap}
 
 /* UPCOMING — remortgage-readiness view. */
+.app-view-upcoming{
+  --up-border:color-mix(in srgb,var(--theme-range-edge) 58%,var(--surface))!important;
+  --up-border-soft:color-mix(in srgb,var(--theme-range-edge) 32%,var(--surface))!important;
+  --up-divider:color-mix(in srgb,var(--theme-range-edge) 38%,var(--surface))!important;
+}
 .app-view-upcoming .upcoming-workspace,
 .app-view-upcoming .design-workspace-full,
 .app-view-upcoming .upcoming-sections{
@@ -236,21 +241,21 @@
   position:relative!important;
   margin:0!important;
   padding:26px 28px!important;
-  background:color-mix(in srgb,var(--surface) 98%,transparent)!important;
-  border:1px solid color-mix(in srgb,var(--border) 92%,transparent)!important;
+  background:var(--surface)!important;
+  border:1px solid var(--up-border)!important;
   border-radius:18px!important;
   color:var(--text)!important;
   box-shadow:0 2px 5px rgba(54,48,39,.06),0 14px 34px rgba(54,48,39,.11)!important;
 }
 .app-view-upcoming .upcoming-section:hover{
   transform:none!important;
-  border-color:color-mix(in srgb,var(--border) 88%,transparent)!important;
+  border-color:var(--up-border)!important;
   box-shadow:0 2px 5px rgba(54,48,39,.06),0 14px 34px rgba(54,48,39,.11)!important;
 }
 .app-view-upcoming .upcoming-section-heading{
   margin:0 0 18px!important;
   padding:0 0 12px!important;
-  border-bottom:1px solid var(--border-soft)!important;
+  border-bottom:1px solid var(--up-border-soft)!important;
 }
 .app-view-upcoming .upcoming-section-heading .eyebrow{
   display:block!important;
@@ -297,7 +302,7 @@
 .app-view-upcoming .upcoming-hero-meta{
   min-width:170px!important;
   padding-left:24px!important;
-  border-left:1px solid var(--border-soft)!important;
+  border-left:1px solid var(--up-border-soft)!important;
   text-align:right!important;
 }
 .app-view-upcoming .upcoming-hero-meta span,
@@ -325,7 +330,7 @@
   gap:0!important;
   margin:0 0 18px!important;
   padding:0 0 18px!important;
-  border-bottom:1px solid var(--border-soft)!important;
+  border-bottom:1px solid var(--up-border-soft)!important;
 }
 .app-view-upcoming .upcoming-hero-snapshot>div{
   min-height:58px!important;
@@ -336,7 +341,7 @@
 }
 .app-view-upcoming .upcoming-hero-snapshot>div+div{
   padding-left:22px!important;
-  border-left:1px solid var(--border-soft)!important;
+  border-left:1px solid var(--up-border-soft)!important;
 }
 .app-view-upcoming .upcoming-hero-snapshot span{
   display:block!important;
@@ -379,7 +384,7 @@
   right:10%!important;
   top:31px!important;
   height:1px!important;
-  background:color-mix(in srgb,var(--border) 80%,transparent)!important;
+  background:var(--up-divider)!important;
 }
 .app-view-upcoming .v15-journey-step{
   position:relative!important;
@@ -398,7 +403,7 @@
   width:46px!important;
   height:46px!important;
   margin:8px auto 8px!important;
-  border:1.5px solid var(--border)!important;
+  border:1.5px solid var(--up-border)!important;
   border-radius:14px!important;
   background:var(--surface)!important;
   color:var(--muted)!important;
@@ -414,7 +419,7 @@
   --icon-accent:color-mix(in srgb,var(--accent-strong) 86%,var(--theme-hero-ink));
   --icon-soft:color-mix(in srgb,var(--accent) 11%,transparent);
   background:color-mix(in srgb,var(--accent-wash) 62%,var(--surface))!important;
-  border-color:color-mix(in srgb,var(--accent) 42%,var(--border))!important;
+  border-color:color-mix(in srgb,var(--accent) 42%,var(--up-border))!important;
   color:var(--accent-strong)!important;
 }
 .app-view-upcoming .v15-journey-step.is-current .v15-journey-icon{
@@ -422,7 +427,7 @@
   --icon-accent:var(--accent-strong);
   --icon-soft:color-mix(in srgb,var(--accent) 14%,transparent);
   background:color-mix(in srgb,var(--accent-wash) 78%,var(--surface))!important;
-  border-color:color-mix(in srgb,var(--accent) 64%,var(--border))!important;
+  border-color:color-mix(in srgb,var(--accent) 64%,var(--up-border))!important;
   color:var(--accent-strong)!important;
   box-shadow:0 5px 14px rgba(54,48,39,.07)!important;
 }
@@ -471,7 +476,7 @@
   top:31px!important;
   height:2px!important;
   border-radius:999px!important;
-  background:linear-gradient(90deg,color-mix(in srgb,var(--border) 78%,var(--surface)),color-mix(in srgb,var(--accent) 44%,var(--border-soft)),color-mix(in srgb,var(--warm) 34%,var(--border-soft)))!important;
+  background:linear-gradient(90deg,var(--up-divider),color-mix(in srgb,var(--accent) 44%,var(--up-border-soft)),color-mix(in srgb,var(--warm) 34%,var(--up-border-soft)))!important;
   z-index:0!important;
 }
 .app-view-upcoming .deal-planner-rate{
@@ -496,7 +501,7 @@
   border:3px solid var(--surface)!important;
   border-radius:50%!important;
   background:var(--muted-2)!important;
-  box-shadow:0 0 0 1px var(--border-soft)!important;
+  box-shadow:0 0 0 1px var(--up-border-soft)!important;
   transform:translateX(-50%)!important;
 }
 .app-view-upcoming .deal-planner-rate:hover{
@@ -562,7 +567,7 @@
 .app-view-upcoming .deal-planner-note{
   margin:16px 0 0!important;
   padding:12px 0 0!important;
-  border-top:1px solid var(--border-soft)!important;
+  border-top:1px solid var(--up-border-soft)!important;
   color:var(--muted)!important;
   font-size:8.5px!important;
   line-height:1.45!important;
@@ -571,7 +576,7 @@
   margin:10px 0 0!important;
   padding:10px 0 0!important;
   border:0!important;
-  border-top:1px solid var(--border-soft)!important;
+  border-top:1px solid var(--up-border-soft)!important;
   border-radius:0!important;
   background:transparent!important;
   box-shadow:none!important;
@@ -606,7 +611,7 @@
   justify-content:center!important;
   min-height:112px!important;
   padding:17px 18px!important;
-  border:1px solid var(--border-soft)!important;
+  border:1px solid var(--up-border-soft)!important;
   border-radius:15px!important;
   background:color-mix(in srgb,var(--surface-control) 96%,transparent)!important;
   color:var(--text)!important;
@@ -614,7 +619,7 @@
 }
 .app-view-upcoming .upcoming-position .deal-planner-summary>div:hover{
   transform:none!important;
-  border-color:var(--border-soft)!important;
+  border-color:var(--up-border-soft)!important;
   box-shadow:0 2px 3px rgba(54,48,39,.04),0 8px 20px rgba(54,48,39,.065)!important;
 }
 .app-view-upcoming .upcoming-position .deal-planner-summary span{
@@ -656,7 +661,7 @@ body[data-app-view="upcoming"] #dealPlannerSummary > .deal-position-countdown-so
   margin:18px 0 0!important;
   padding:17px 0 0!important;
   border:0!important;
-  border-top:1px solid var(--border-soft)!important;
+  border-top:1px solid var(--up-border-soft)!important;
   border-radius:0!important;
   background:transparent!important;
   box-shadow:none!important;
@@ -677,7 +682,7 @@ body[data-app-view="upcoming"] #dealPlannerSummary > .deal-position-countdown-so
 @media(max-width:900px){
   .app-view-upcoming .deal-planner-rate-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;padding-top:0!important}
   .app-view-upcoming .deal-planner-rate-grid::before{display:none!important}
-  .app-view-upcoming .deal-planner-rate{border:1px solid var(--border-soft)!important;border-radius:14px!important;background:var(--surface-control)!important;text-align:left!important;padding:14px!important}
+  .app-view-upcoming .deal-planner-rate{border:1px solid var(--up-border-soft)!important;border-radius:14px!important;background:var(--surface-control)!important;text-align:left!important;padding:14px!important}
   .app-view-upcoming .deal-planner-rate::before{display:none!important}
   .app-view-upcoming .deal-planner-rate.is-current-rate{margin:0!important;padding:14px!important}
 }
