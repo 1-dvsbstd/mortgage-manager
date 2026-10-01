@@ -786,7 +786,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
 .app-view-future #propertyCostComparison .property-cost-card span,
 .app-view-future #propertyCostComparison .property-cost-card small{
   color:var(--muted)!important;
-  font-size:9px!important;
+  font-size:10px!important;
   line-height:1.45!important;
 }
 .app-view-future #nextHomePlanner .next-home-results strong,
@@ -2106,7 +2106,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   margin:9px 4px 0!important;
   padding:0!important;
   color:color-mix(in srgb,var(--muted) 72%,var(--text))!important;
-  font-size:10px!important;
+  font-size:9px!important;
   font-weight:650!important;
   line-height:1.3!important;
 }
