@@ -215,7 +215,7 @@
   function refineUpcoming(){
     const shell=$('.app-view-upcoming .upcoming-sections');
     if(!shell) return;
-    const timeline=$('.upcoming-timeline',shell), rates=$('.upcoming-rates',shell), position=$('.upcoming-position',shell), action=$('.upcoming-action',shell), interest=$('.upcoming-interest',shell);
+    const timeline=$('.upcoming-timeline',shell), rates=$('.upcoming-rates',shell), position=$('.upcoming-position',shell);
     if(!timeline||!rates||!position) return;
 
     document.getElementById('dealActionHint')?.remove();
@@ -284,26 +284,6 @@
     // Current-fix glance cards are superseded by the new hero snapshot.
     $('.current-fix-stats',timeline)?.remove();
 
-    if(action){
-      const milestone=$('#dealPlannerMilestone',action);
-      if(milestone){
-        milestone.classList.add('deal-position-milestone');
-        if(milestone.parentElement!==$('.upcoming-section-body',position)) $('.upcoming-section-body',position)?.appendChild(milestone);
-      }
-      action.remove();
-    }
-
-    if(interest){
-      const box=$('.interest-box',interest);
-      const summary=$('#dealPlannerSummary',position);
-      if(box&&summary){
-        box.classList.add('deal-position-interest');
-        const label=box.querySelector(':scope > span');
-        if(label) label.textContent='Interest remaining on current path';
-        if(box.parentElement!==summary) summary.appendChild(box);
-      }
-      interest.remove();
-    }
 
     const summary=$('#dealPlannerSummary',position);
     if(summary&&state&&deal){
