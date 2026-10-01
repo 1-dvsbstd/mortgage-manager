@@ -218,6 +218,8 @@
     const timeline=$('.upcoming-timeline',shell), rates=$('.upcoming-rates',shell), position=$('.upcoming-position',shell), action=$('.upcoming-action',shell), interest=$('.upcoming-interest',shell);
     if(!timeline||!rates||!position) return;
 
+    document.getElementById('dealActionHint')?.remove();
+
     const state=window.MortgageStore?.get?.();
     const deal=state?projectedDealPosition(state):null;
     const fixedMonths=state?monthsUntil(state.fixedEnd):null;
@@ -309,6 +311,7 @@
       if(countdown&&countdown.parentElement===summary){
         countdown.hidden=true;
         countdown.classList.add('deal-position-countdown-source');
+        countdown.style.setProperty('display','none','important');
       }
       let equity=$('#dealPlannerEquity',summary);
       if(!equity){
@@ -316,7 +319,12 @@
         equity.id='dealPlannerEquity';
         equity.className='deal-position-equity';
         equity.innerHTML='<span>Projected equity</span><strong>—</strong><small>Using today’s property value.</small>';
-        summary.appendChild(equity);
+        const interestCard=$('.deal-position-interest',summary);
+        if(interestCard) summary.insertBefore(equity,interestCard);
+        else summary.appendChild(equity);
+      }else{
+        const interestCard=$('.deal-position-interest',summary);
+        if(interestCard&&equity.nextElementSibling!==interestCard) summary.insertBefore(equity,interestCard);
       }
       const homeValue=Math.max(0,Number(state.homeValue)||0);
       const projectedEquity=Math.max(0,homeValue-Math.max(0,Number(deal.balance)||0));
