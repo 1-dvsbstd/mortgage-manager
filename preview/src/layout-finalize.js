@@ -101,7 +101,7 @@
         </div>
         <div class="trajectory-overpay-row" id="trajectoryOverpayRow">
           <div class="trajectory-presets">
-            ${scenarioExtras.map((value)=>`<button type="button" data-scenario-extra="${value}"><span>Overpay</span><strong>${money(value)}</strong></button>`).join('')}
+            ${scenarioExtras.map((value)=>`<button type="button" data-scenario-extra="${value}"><strong>${money(value)}</strong><small>/month</small></button>`).join('')}
           </div>
           <label class="trajectory-custom-overpay"><span>Custom monthly overpayment</span><strong>£<input id="trajectoryCustomOverpay" type="number" min="0" step="10" inputmode="decimal" value="0"></strong></label>
         </div>`;
@@ -135,7 +135,9 @@
       button.classList.toggle('active',Math.abs(value-extra)<.5);
     });
     const custom=$('#trajectoryCustomOverpay',panel);
+    const customWrap=custom?.closest('.trajectory-custom-overpay');
     const isPreset=scenarioExtras.some((value)=>Math.abs(value-extra)<.5);
+    customWrap?.classList.toggle('is-active',!isPreset&&extra>0);
     if(custom&&document.activeElement!==custom){
       if(!isPreset&&extra>0) custom.value=String(Math.round(extra*100)/100);
       else if(!custom.dataset.userValue) custom.value='0';
