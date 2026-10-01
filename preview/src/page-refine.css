@@ -1464,9 +1464,11 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   position:relative!important;
   display:grid!important;
   grid-template-columns:minmax(0,1.08fr) minmax(330px,.92fr)!important;
+  align-items:stretch!important;
+  gap:16px!important;
   height:442px!important;
   min-height:442px!important;
-  padding:0!important;
+  padding:16px!important;
   overflow:hidden!important;
   background:color-mix(in srgb,var(--surface) 98%,transparent)!important;
   border-color:color-mix(in srgb,var(--border) 88%,transparent)!important;
@@ -1486,9 +1488,9 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   display:flex!important;
   flex-direction:column!important;
   align-items:stretch!important;
-  height:442px!important;
-  min-height:442px!important;
-  padding:32px 30px 30px 32px!important;
+  height:auto!important;
+  min-height:0!important;
+  padding:16px!important;
   background:linear-gradient(90deg,var(--surface) 0%,var(--surface) 72%,color-mix(in srgb,var(--surface) 72%,transparent) 100%)!important;
 }
 .app-view-current .v15-home-copy{max-width:620px!important}
@@ -1583,12 +1585,12 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 
 .app-view-current .v15-home-visual{
   position:relative!important;
-  min-height:410px!important;
+  min-height:0!important;
   height:auto!important;
   align-self:stretch!important;
-  margin:16px 16px 16px 0!important;
+  margin:0!important;
   border:0!important;
-  border-radius:18px!important;
+  border-radius:14px!important;
   background-color:var(--theme-illustration-bg)!important;
   background-image:url('../public/current-hero-premium.svg')!important;
   background-position:center center!important;
@@ -1684,28 +1686,34 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 @media(max-width:1050px){
   .app-view-current .hero-panel.current-hero-condensed{
     grid-template-columns:1fr!important;
+    gap:14px!important;
     height:auto!important;
+    padding:14px!important;
   }
   .app-view-current .current-hero-condensed .hero-main{
     height:auto!important;
     min-height:0!important;
-    padding:28px 28px 30px!important;
+    padding:14px!important;
   }
   .app-view-current .v15-home-visual{
     min-height:300px!important;
-    margin:16px 16px 0!important;
+    margin:0!important;
     order:-1!important;
     background-position:center 47%!important;
   }
 }
 @media(max-width:700px){
+  .app-view-current .hero-panel.current-hero-condensed{
+    gap:10px!important;
+    padding:10px!important;
+  }
   .app-view-current .current-hero-condensed .hero-main{
-    padding:24px 20px 22px!important;
+    padding:10px!important;
   }
   .app-view-current .v15-home-visual{
     min-height:230px!important;
-    margin:10px 10px 0!important;
-    border-radius:18px!important;
+    margin:0!important;
+    border-radius:14px!important;
   }
   .app-view-current #mortgageExtraTiles{
     grid-template-columns:repeat(3,minmax(0,1fr))!important;
