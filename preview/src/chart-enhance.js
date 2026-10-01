@@ -97,9 +97,10 @@
 
   function pathsFor(v){
     const scheduled=MortgageMath.amortize(v.balance,v.rate,Math.max(0,Number(v.payment)||0));
-    const currentPayment=Math.max(0,Number(v.payment)||0)+Math.max(0,Number(v.regular)||0);
+    const basePayment=Math.max(0,Number(v.payment)||0);
+    const currentPayment=basePayment+Math.max(0,Number(v.regular)||0);
     const current=MortgageMath.amortize(v.balance,v.rate,currentPayment);
-    const selected=MortgageMath.amortize(v.balance,v.rate,currentPayment+Math.max(0,Number(v.extra)||0));
+    const selected=MortgageMath.amortize(v.balance,v.rate,basePayment+Math.max(0,Number(v.extra)||0));
     return {scheduled,current,selected};
   }
 
