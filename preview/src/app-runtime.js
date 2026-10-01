@@ -125,14 +125,6 @@
     });
   }
 
-  function ensureEquityLegend() {
-    const legend = document.querySelector('.chart-panel .legend');
-    if (!legend || legend.querySelector('.equity-legend-item')) return;
-    const item = document.createElement('span');
-    item.className = 'equity-legend-item';
-    item.innerHTML = '<i class="dot equity-line"></i>Projected equity';
-    legend.appendChild(item);
-  }
 
   function standardiseSetupClose() {
     const button = document.querySelector('.personal-modal .personal-close');
@@ -393,7 +385,6 @@
     refreshOptionalSections();
     renderOwnershipDonut();
     ensureCostBars();
-    ensureEquityLegend();
     standardiseSetupClose();
     keepFutureSectionsOpen();
     ensureConnectivityControl();
