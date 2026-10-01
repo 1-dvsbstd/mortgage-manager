@@ -208,7 +208,7 @@
       return `<div class="deal-planner-rate ${current?'is-current-rate':''}"><span>${rate.toFixed(2)}% · ${label}</span><strong>${money(scenarioPayment)}<small>/mo</small></strong><em>${note}</em></div>`;
     }).join('');
     const note=$('.deal-planner-note');
-    if(note) note.textContent='Payments exclude overpayments and use your projected deal-end balance and remaining term. Centre rates use your current rate and market benchmarks; outer rates are simple stress tests.';
+    if(note) note.textContent='Deal-end balance includes your regular overpayment. Payment scenarios show the scheduled mortgage payment at each rate, without assuming a future overpayment. Centre rates use your current rate and market benchmarks; outer rates are simple stress tests.';
   }
 
   function refineUpcoming(){
