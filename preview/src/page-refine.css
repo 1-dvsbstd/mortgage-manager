@@ -407,7 +407,7 @@ input,select,textarea{color:var(--text)}
 /* Custom amount is a chip, not a form block. */
 .app-view-future .future-assumption-controls label{
   box-sizing:border-box!important;
-  min-height:42px!important;
+  min-height:40px!important;
   height:40px!important;
   display:inline-flex!important;
   align-items:center!important;
@@ -2010,7 +2010,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   box-sizing:border-box!important;
   width:100%!important;
   min-width:0!important;
-  min-height:40px!important;
+  min-height:42px!important;
   margin:0!important;
   padding:7px 10px!important;
   border:0!important;
