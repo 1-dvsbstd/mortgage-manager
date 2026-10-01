@@ -131,12 +131,6 @@
     document.getElementById('dealForecast')?.setAttribute('hidden','');
 
     const timeline=makeUpcomingSection('upcoming-timeline','Remortgage readiness','Your current fix');
-    const timelineBody=$('.upcoming-section-body',timeline);
-    const eventTitle=document.getElementById('nextEventTitle');
-    const eventText=document.getElementById('nextEventText');
-    const track=$('.timeline-track',next);
-    const labels=$('.timeline-labels',next);
-    [eventTitle,eventText,track,labels].forEach((node)=>{ if(node) timelineBody.appendChild(node); });
 
     const ratesSection=makeUpcomingSection('upcoming-rates','Rate outlook','What your payment could look like');
     const ratesBody=$('.upcoming-section-body',ratesSection);
