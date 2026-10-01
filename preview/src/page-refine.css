@@ -286,32 +286,389 @@
 .v15-action-copy strong{display:block;margin-top:3px;font-size:18px;letter-spacing:-.02em;color:var(--text)!important}
 .v15-action-card button{appearance:none;border:0;background:transparent;color:var(--accent-strong)!important;font:inherit;font-weight:800;cursor:pointer;white-space:nowrap}
 
-/* UPCOMING — journey-first, entirely light except semantic accents. */
-.app-view-upcoming .upcoming-workspace,.app-view-upcoming .design-workspace-full,.app-view-upcoming .upcoming-sections{background:transparent!important;box-shadow:none!important}
-.app-view-upcoming .upcoming-sections{gap:20px!important}
-.app-view-upcoming .upcoming-section,.app-view-upcoming .upcoming-timeline,.app-view-upcoming .upcoming-position,.app-view-upcoming .upcoming-rates,.app-view-upcoming .upcoming-action,.app-view-upcoming .upcoming-interest{
-  background:var(--surface)!important;
-  border:1px solid var(--border)!important;
-  color:var(--text)!important;
+/* UPCOMING — remortgage-readiness view. */
+.app-view-upcoming .upcoming-workspace,
+.app-view-upcoming .design-workspace-full,
+.app-view-upcoming .upcoming-sections{
+  background:transparent!important;
   box-shadow:none!important;
 }
-.app-view-upcoming .upcoming-action{background:linear-gradient(90deg,var(--surface-control),#f2e6d8)!important;border-color:rgba(183,131,77,.22)!important}
-.app-view-upcoming .upcoming-section-heading{border-bottom-color:var(--border-soft)!important}
-.app-view-upcoming .upcoming-section-heading h2,.app-view-upcoming .upcoming-action h2{color:var(--text)!important}
-.v15-journey-strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:relative;margin:4px 0 24px;padding:0 4px}
-.v15-journey-strip::before{content:"";position:absolute;left:10%;right:10%;top:35px;height:2px;background:#cfd3d1}
-.v15-journey-step{position:relative;z-index:1;text-align:center;padding:0 8px}
-.v15-journey-icon{display:grid;place-items:center;width:42px;height:42px;margin:14px auto 9px;border-radius:13px;background:var(--surface-control);border:1.5px solid var(--border);color:var(--muted)}
-.v15-journey-icon svg{display:block;width:20px;height:20px}
-.v15-journey-step.is-complete .v15-journey-icon{background:var(--positive-soft);border-color:var(--positive);color:var(--positive)}
-.v15-journey-step.is-current .v15-journey-icon{width:46px;height:46px;margin-top:12px;margin-bottom:7px;border-radius:14px;background:var(--accent-soft);border-color:var(--accent);color:var(--accent-strong);box-shadow:none}
-.v15-journey-step strong{display:block;font-size:11px;line-height:1.25;color:var(--text)!important}.v15-journey-step span{display:block;margin-top:3px;color:var(--muted)!important;font-size:9px;line-height:1.3}
-.v15-journey-callout{width:max-content;max-width:100%;margin:10px auto 0;padding:7px 12px;border-radius:999px;background:var(--accent-soft);color:#7a532f;font-size:10px;font-weight:750}
-.app-view-upcoming .current-fix-stats>div,.app-view-upcoming .deal-planner-rate,.app-view-upcoming .deal-planner-summary>div,.app-view-upcoming .deal-planner-milestone{background:#f3ece3!important;border-color:var(--border-soft)!important;color:var(--text)!important}
-.app-view-upcoming .deal-planner-rate strong,.app-view-upcoming .deal-planner-summary strong,.app-view-upcoming .current-fix-stats strong{color:var(--text)!important}
-.app-view-upcoming .deal-planner-rate span,.app-view-upcoming .deal-planner-rate em,.app-view-upcoming .deal-planner-summary span,.app-view-upcoming .deal-planner-summary small,.app-view-upcoming .current-fix-stats span,.app-view-upcoming .current-fix-stats small{color:var(--muted)!important}
-.app-view-upcoming .deal-planner-rate.is-current-rate{background:var(--surface-control)!important;border-color:rgba(183,131,77,.44)!important;box-shadow:none!important}
-.app-view-upcoming .deal-planner-rate.is-current-rate span,.app-view-upcoming .deal-planner-milestone span{color:var(--accent-strong)!important}
+.app-view-upcoming .upcoming-sections{
+  gap:20px!important;
+}
+.app-view-upcoming .upcoming-section{
+  position:relative!important;
+  margin:0!important;
+  padding:26px 28px!important;
+  background:color-mix(in srgb,var(--surface) 98%,transparent)!important;
+  border:1px solid color-mix(in srgb,var(--border) 88%,transparent)!important;
+  border-radius:18px!important;
+  color:var(--text)!important;
+  box-shadow:0 2px 5px rgba(54,48,39,.06),0 14px 34px rgba(54,48,39,.11)!important;
+}
+.app-view-upcoming .upcoming-section:hover{
+  transform:none!important;
+  border-color:color-mix(in srgb,var(--border) 88%,transparent)!important;
+  box-shadow:0 2px 5px rgba(54,48,39,.06),0 14px 34px rgba(54,48,39,.11)!important;
+}
+.app-view-upcoming .upcoming-section-heading{
+  margin:0 0 18px!important;
+  padding:0 0 12px!important;
+  border-bottom:1px solid var(--border-soft)!important;
+}
+.app-view-upcoming .upcoming-section-heading .eyebrow{
+  display:block!important;
+  margin:0 0 7px!important;
+  color:var(--accent-strong)!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  letter-spacing:.10em!important;
+  text-transform:uppercase!important;
+}
+.app-view-upcoming .upcoming-section-heading h2{
+  color:var(--text)!important;
+  font-family:var(--font-display)!important;
+  font-size:24px!important;
+  font-weight:600!important;
+  letter-spacing:-.03em!important;
+  line-height:1.08!important;
+}
+
+/* Remortgage readiness hero */
+.app-view-upcoming .upcoming-hero{
+  padding:28px!important;
+}
+.app-view-upcoming .upcoming-hero>.upcoming-section-heading{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:start!important;
+  gap:28px!important;
+  margin-bottom:20px!important;
+  padding-bottom:18px!important;
+}
+.app-view-upcoming .upcoming-hero-copy h2{
+  max-width:720px!important;
+  font-size:34px!important;
+  line-height:1.02!important;
+}
+.app-view-upcoming .upcoming-hero-subtitle{
+  max-width:720px!important;
+  margin:10px 0 0!important;
+  color:var(--muted)!important;
+  font-size:11px!important;
+  line-height:1.5!important;
+}
+.app-view-upcoming .upcoming-hero-meta{
+  min-width:170px!important;
+  padding-left:24px!important;
+  border-left:1px solid var(--border-soft)!important;
+  text-align:right!important;
+}
+.app-view-upcoming .upcoming-hero-meta span,
+.app-view-upcoming .upcoming-hero-meta small{
+  display:block!important;
+  color:var(--muted-2)!important;
+  font-size:9px!important;
+  font-weight:650!important;
+}
+.app-view-upcoming .upcoming-hero-meta strong{
+  display:block!important;
+  margin-top:5px!important;
+  color:var(--theme-hero-ink)!important;
+  font-family:var(--font-display)!important;
+  font-size:20px!important;
+  font-weight:600!important;
+}
+.app-view-upcoming .upcoming-hero-meta small{
+  margin-top:5px!important;
+  color:var(--positive)!important;
+}
+.app-view-upcoming .upcoming-hero-snapshot{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:10px!important;
+  margin:0 0 18px!important;
+}
+.app-view-upcoming .upcoming-hero-snapshot>div{
+  min-height:72px!important;
+  padding:12px 14px!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:14px!important;
+  background:color-mix(in srgb,var(--surface-soft) 76%,transparent)!important;
+}
+.app-view-upcoming .upcoming-hero-snapshot span{
+  display:block!important;
+  color:var(--muted)!important;
+  font-size:9px!important;
+  font-weight:700!important;
+}
+.app-view-upcoming .upcoming-hero-snapshot strong{
+  display:block!important;
+  margin-top:5px!important;
+  color:var(--theme-hero-ink)!important;
+  font-family:var(--font-display)!important;
+  font-size:20px!important;
+  font-weight:600!important;
+}
+
+/* Journey stays visual, but secondary to the hero message. */
+.app-view-upcoming .v15-journey-shell{
+  margin-top:2px!important;
+}
+.app-view-upcoming .v15-journey-strip{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  position:relative!important;
+  margin:0 0 10px!important;
+  padding:0 4px!important;
+}
+.app-view-upcoming .v15-journey-strip::before{
+  content:""!important;
+  position:absolute!important;
+  left:10%!important;
+  right:10%!important;
+  top:31px!important;
+  height:1px!important;
+  background:color-mix(in srgb,var(--border) 80%,transparent)!important;
+}
+.app-view-upcoming .v15-journey-step{
+  position:relative!important;
+  z-index:1!important;
+  text-align:center!important;
+  padding:0 8px!important;
+}
+.app-view-upcoming .v15-journey-icon{
+  display:grid!important;
+  place-items:center!important;
+  width:40px!important;
+  height:40px!important;
+  margin:11px auto 8px!important;
+  border:1px solid var(--border)!important;
+  border-radius:13px!important;
+  background:var(--surface-control)!important;
+  color:var(--muted)!important;
+}
+.app-view-upcoming .v15-journey-icon svg{width:19px!important;height:19px!important}
+.app-view-upcoming .v15-journey-step.is-complete .v15-journey-icon{
+  background:var(--positive-soft)!important;
+  border-color:color-mix(in srgb,var(--positive) 50%,var(--border))!important;
+  color:var(--positive)!important;
+}
+.app-view-upcoming .v15-journey-step.is-current .v15-journey-icon{
+  background:var(--accent-soft)!important;
+  border-color:var(--accent)!important;
+  color:var(--accent-strong)!important;
+  box-shadow:0 5px 14px rgba(54,48,39,.07)!important;
+}
+.app-view-upcoming .v15-journey-step strong{
+  display:block!important;
+  color:var(--text)!important;
+  font-size:10px!important;
+  line-height:1.25!important;
+}
+.app-view-upcoming .v15-journey-step span{
+  display:block!important;
+  margin-top:3px!important;
+  color:var(--muted)!important;
+  font-size:8px!important;
+  line-height:1.3!important;
+}
+.app-view-upcoming .v15-journey-callout{
+  width:max-content!important;
+  max-width:100%!important;
+  margin:10px auto 0!important;
+  padding:6px 11px!important;
+  border-radius:999px!important;
+  background:var(--accent-soft)!important;
+  color:#7a532f!important;
+  font-size:9px!important;
+  font-weight:750!important;
+}
+
+/* Rate spectrum */
+.app-view-upcoming .upcoming-rates .upcoming-section-body{
+  position:relative!important;
+}
+.app-view-upcoming .deal-planner-rate-grid{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:10px!important;
+  margin:0!important;
+  padding-top:12px!important;
+}
+.app-view-upcoming .deal-planner-rate-grid::before{
+  content:""!important;
+  position:absolute!important;
+  left:7%!important;
+  right:7%!important;
+  top:50%!important;
+  height:1px!important;
+  background:color-mix(in srgb,var(--accent) 26%,var(--border-soft))!important;
+  z-index:0!important;
+}
+.app-view-upcoming .deal-planner-rate{
+  position:relative!important;
+  z-index:1!important;
+  min-height:106px!important;
+  padding:15px!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:15px!important;
+  background:color-mix(in srgb,var(--surface-control) 94%,transparent)!important;
+  color:var(--text)!important;
+  box-shadow:0 2px 3px rgba(54,48,39,.04),0 8px 20px rgba(54,48,39,.07)!important;
+}
+.app-view-upcoming .deal-planner-rate:hover{
+  transform:none!important;
+  border-color:var(--border-soft)!important;
+  box-shadow:0 2px 3px rgba(54,48,39,.04),0 8px 20px rgba(54,48,39,.07)!important;
+}
+.app-view-upcoming .deal-planner-rate>span{
+  display:block!important;
+  color:var(--muted)!important;
+  font-size:8.5px!important;
+  font-weight:750!important;
+  letter-spacing:.025em!important;
+  line-height:1.25!important;
+}
+.app-view-upcoming .deal-planner-rate>strong{
+  display:block!important;
+  margin-top:17px!important;
+  color:var(--text)!important;
+  font-family:var(--font-display)!important;
+  font-size:23px!important;
+  font-weight:600!important;
+}
+.app-view-upcoming .deal-planner-rate>strong small{
+  margin-left:2px!important;
+  color:var(--muted)!important;
+  font-family:var(--font-ui)!important;
+  font-size:8px!important;
+}
+.app-view-upcoming .deal-planner-rate>em{
+  display:block!important;
+  margin-top:7px!important;
+  color:var(--muted-2)!important;
+  font-size:8px!important;
+  font-style:normal!important;
+  font-weight:650!important;
+}
+.app-view-upcoming .deal-planner-rate.is-current-rate{
+  background:#fff7ed!important;
+  border-color:rgba(183,131,77,.40)!important;
+  box-shadow:0 3px 5px rgba(54,48,39,.05),0 12px 26px rgba(54,48,39,.09)!important;
+  transform:translateY(-5px)!important;
+}
+.app-view-upcoming .deal-planner-rate.is-current-rate:hover{
+  transform:translateY(-5px)!important;
+  border-color:rgba(183,131,77,.40)!important;
+  box-shadow:0 3px 5px rgba(54,48,39,.05),0 12px 26px rgba(54,48,39,.09)!important;
+}
+.app-view-upcoming .deal-planner-rate.is-current-rate>span{
+  color:var(--accent-strong)!important;
+}
+.app-view-upcoming .deal-planner-note{
+  margin:20px 0 0!important;
+  padding:14px 0 0!important;
+  border-top:1px solid var(--border-soft)!important;
+  color:var(--muted)!important;
+  font-size:9px!important;
+  line-height:1.45!important;
+}
+
+/* Deal-end snapshot */
+.app-view-upcoming .upcoming-position .deal-planner-summary{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:12px!important;
+  margin:0!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-summary>div{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  min-height:112px!important;
+  padding:17px 18px!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:15px!important;
+  background:color-mix(in srgb,var(--surface-control) 94%,transparent)!important;
+  color:var(--text)!important;
+  box-shadow:0 2px 3px rgba(54,48,39,.04),0 8px 20px rgba(54,48,39,.065)!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-summary>div:hover{
+  transform:none!important;
+  border-color:var(--border-soft)!important;
+  box-shadow:0 2px 3px rgba(54,48,39,.04),0 8px 20px rgba(54,48,39,.065)!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-summary span{
+  color:var(--muted)!important;
+  font-size:9px!important;
+  font-weight:750!important;
+  letter-spacing:.025em!important;
+  text-transform:uppercase!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-summary strong{
+  display:block!important;
+  margin-top:7px!important;
+  color:var(--theme-hero-ink)!important;
+  font-family:var(--font-display)!important;
+  font-size:26px!important;
+  font-weight:600!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-summary small{
+  display:block!important;
+  margin-top:7px!important;
+  color:var(--muted-2)!important;
+  font-size:9px!important;
+  line-height:1.35!important;
+}
+.app-view-upcoming .upcoming-position .deal-position-countdown-source{
+  display:none!important;
+}
+.app-view-upcoming .upcoming-position .deal-position-interest,
+.app-view-upcoming .upcoming-position .deal-position-equity{
+  display:flex!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-milestone{
+  margin:18px 0 0!important;
+  padding:17px 0 0!important;
+  border:0!important;
+  border-top:1px solid var(--border-soft)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-milestone span{
+  color:var(--accent-strong)!important;
+}
+.app-view-upcoming .deal-end-title-separator,
+.app-view-upcoming .deal-end-title-date{
+  margin-left:7px!important;
+  color:var(--muted)!important;
+  font-family:var(--font-ui)!important;
+  font-size:10px!important;
+  font-weight:650!important;
+  letter-spacing:0!important;
+}
+
+@media(max-width:900px){
+  .app-view-upcoming .deal-planner-rate-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .app-view-upcoming .deal-planner-rate-grid::before{display:none!important}
+}
+@media(max-width:700px){
+  .app-view-upcoming .upcoming-section{padding:20px!important}
+  .app-view-upcoming .upcoming-hero{padding:20px!important}
+  .app-view-upcoming .upcoming-hero>.upcoming-section-heading{grid-template-columns:1fr!important;gap:14px!important}
+  .app-view-upcoming .upcoming-hero-meta{padding:0!important;border-left:0!important;text-align:left!important}
+  .app-view-upcoming .upcoming-hero-snapshot{grid-template-columns:1fr 1fr!important}
+  .app-view-upcoming .v15-journey-strip{grid-template-columns:repeat(5,minmax(76px,1fr))!important;overflow-x:auto!important;padding-bottom:5px!important}
+  .app-view-upcoming .deal-planner-rate-grid{grid-template-columns:1fr 1fr!important}
+  .app-view-upcoming .upcoming-position .deal-planner-summary{grid-template-columns:1fr!important}
+}
+@media(max-width:520px){
+  .app-view-upcoming .deal-planner-rate-grid{grid-template-columns:1fr!important}
+  .app-view-upcoming .upcoming-hero-snapshot{grid-template-columns:1fr!important}
+}
 
 /* FUTURE */
 .app-view-future .future-overpayment-assumption,.app-view-future .future-model-range-panel,.app-view-future .future-wait-planner,.app-view-future .temporal-feature-home-projection,.app-view-future .temporal-feature-next-home,.app-view-future .temporal-feature-cost-comparison{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important;box-shadow:none!important}
