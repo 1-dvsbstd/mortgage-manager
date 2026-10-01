@@ -129,6 +129,8 @@
 
     const regular=Math.max(0,Number(state.currentOverpayment)||0);
     const extra=Math.max(0,Number(state.scenarioExtra)||0);
+    const railCopy=$('.trajectory-rail-intro>p:last-child',panel);
+    if(railCopy) railCopy.textContent=`Replace your current ${money(regular)}/month plan.`;
 
     panel.querySelectorAll('[data-scenario-extra]').forEach((button)=>{
       const value=Number(button.dataset.scenarioExtra)||0;
