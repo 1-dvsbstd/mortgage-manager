@@ -1871,7 +1871,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:none!important;
 }
 .app-view-current .trajectory-with-what-if>.panel-heading{
-  padding:26px 30px 12px!important;
+  padding:26px 28px 14px!important;
   margin:0!important;
   border-bottom:0!important;
 }
@@ -1921,7 +1921,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-current .trajectory-current-plan,
 .app-view-current .trajectory-whatif-plan{
   min-width:184px!important;
-  padding:2px 0 0!important;
+  padding:6px 0 0!important;
   text-align:right!important;
 }
 .app-view-current .trajectory-current-plan>span,
@@ -1980,21 +1980,30 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 
 .app-view-current .trajectory-workspace{
   display:grid!important;
-  grid-template-columns:188px minmax(0,1fr)!important;
+  grid-template-columns:192px minmax(0,1fr)!important;
   align-items:stretch!important;
   min-width:0!important;
 }
 .app-view-current .trajectory-scenario-controls{
+  position:relative!important;
   display:flex!important;
   flex-direction:column!important;
   min-width:0!important;
   margin:0!important;
-  padding:20px 18px 18px!important;
+  padding:18px 20px 26px 22px!important;
   border:0!important;
-  border-right:1px solid color-mix(in srgb,var(--border-soft) 58%,transparent)!important;
   border-radius:0!important;
   background:transparent!important;
   box-shadow:none!important;
+}
+.app-view-current .trajectory-scenario-controls::after{
+  content:""!important;
+  position:absolute!important;
+  top:10px!important;
+  right:0!important;
+  bottom:20px!important;
+  width:1px!important;
+  background:color-mix(in srgb,var(--border-soft) 48%,transparent)!important;
 }
 .app-view-current .trajectory-rail-intro{
   margin:0 0 12px!important;
@@ -2170,7 +2179,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:flex!important;
   flex-direction:column!important;
   min-height:100%!important;
-  padding:16px 18px 16px 22px!important;
+  padding:14px 26px 24px 26px!important;
   background:transparent!important;
 }
 .app-view-current .trajectory-chart-stage>.chart-wrap{
@@ -2196,7 +2205,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:flex!important;
   flex-wrap:wrap!important;
   gap:10px 20px!important;
-  margin:3px 4px 0!important;
+  margin:8px 2px 0!important;
   padding:0!important;
   color:color-mix(in srgb,var(--muted) 72%,var(--text))!important;
   font-size:9px!important;
@@ -2235,13 +2244,13 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 @media(max-width:900px){
   .app-view-current .trajectory-workspace{
-    grid-template-columns:176px minmax(0,1fr)!important;
+    grid-template-columns:180px minmax(0,1fr)!important;
   }
   .app-view-current .trajectory-scenario-controls{
-    padding:20px 16px!important;
+    padding:18px 18px 24px 20px!important;
   }
   .app-view-current .trajectory-chart-stage{
-    padding:14px 12px 14px 18px!important;
+    padding:14px 20px 22px!important;
   }
 }
 @media(max-width:700px){
