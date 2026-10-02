@@ -16,13 +16,7 @@
   }
 
   function currentState() {
-    return window.MortgageStore?.get?.() || {
-      balance: Math.max(0, Number($('balance')?.value) || 0),
-      rate: Math.max(0, Number($('rate')?.value) || 0),
-      payment: Math.max(0, Number($('payment')?.value) || 0),
-      currentOverpayment: Math.max(0, Number($('currentOverpayment')?.value) || 0),
-      fixedEnd: $('fixedEnd')?.value || '',
-    };
+    return window.MortgageStore?.get?.() || {};
   }
 
   function monthIndex(value) {
