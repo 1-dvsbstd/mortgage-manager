@@ -227,21 +227,6 @@
     return Number.isNaN(date.getTime()) ? value : new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric'}).format(date);
   }
 
-  function renderLiveRateChoices(data, band, result, state) {
-    const forecast = $('dealForecast');
-    if (!forecast || !state.fixedEnd || !result?.base?.monthlyPoints?.length) return;
-    let box = $('liveRateChoices');
-    if (!box) {
-      box = document.createElement('div');
-      box.id = 'liveRateChoices';
-      box.className = 'live-rate-choices';
-      forecast.appendChild(box);
-    }
-    const untilEnd = monthsUntil(state.fixedEnd);
-    if (untilEnd === null || untilEnd < 0) { box.hidden = true; return; }
-    box.hidden = false;
-    box.innerHTML = `<div class="live-rate-meta"><span>${isOnlineMode() ? 'Market benchmark' : 'Saved market benchmark'}</span><strong>${band ? `${band.ltv}% LTV` : 'Overall market'} · ${formatSourceDate(data.sourceAsOf)}</strong></div>`;
-  }
 
   function applyMarketRates(data) {
     if (!validMarketData(data)) return;
@@ -253,15 +238,20 @@
     const fiveRate = Number(band?.fiveYear || data.overall.fiveYear);
     const result = window.MortgageMath?.compare?.(state.balance, state.rate, state.payment, state.scenarioExtra);
     const termMonths = Math.max(1, Number(result?.base?.months) || 300);
-    if ($('market2yRate')) $('market2yRate').textContent = `${twoRate.toFixed(2)}%`;
-    if ($('market5yRate')) $('market5yRate').textContent = `${fiveRate.toFixed(2)}%`;
-    if ($('marketCurrentRate')) $('marketCurrentRate').textContent = `${Number(state.rate || 0).toFixed(2)}%`;
-    if ($('marketLtvBand')) $('marketLtvBand').textContent = band ? `${ltv.toFixed(1)}% current LTV · ${band.ltv}% benchmark` : `${ltv.toFixed(1)}% current LTV`;
-    if ($('market2yPayment')) $('market2yPayment').textContent = `${money(paymentFor(state.balance, twoRate, termMonths))}/month equivalent`;
-    if ($('market5yPayment')) $('market5yPayment').textContent = `${money(paymentFor(state.balance, fiveRate, termMonths))}/month equivalent`;
-    const source = document.querySelector('.market-block .source-date');
-    if (source) source.textContent = `${isOnlineMode() ? 'Online' : 'Saved'} · Moneyfacts · ${formatSourceDate(data.sourceAsOf)}`;
-    renderLiveRateChoices(data, band, result, state);
+    window.MortgageMarket={
+      twoYear:twoRate,
+      fiveYear:fiveRate,
+      currentRate:Number(state.rate||0),
+      currentLtv:ltv,
+      ltvBand:band?.ltv||null,
+      sourceAsOf:data.sourceAsOf||null,
+      sourceLabel:`${isOnlineMode() ? 'Market benchmark' : 'Saved market benchmark'}`,
+      formattedSourceDate:formatSourceDate(data.sourceAsOf)
+    };
+    const meta=document.getElementById('upcomingMarketMetaValue');
+    if(meta){
+      meta.textContent=`${band ? `${band.ltv}% LTV` : 'Overall market'} · ${formatSourceDate(data.sourceAsOf)}`;
+    }
     document.dispatchEvent(new CustomEvent('mortgage-market-rates-updated',{
       detail:{twoYear:twoRate,fiveYear:fiveRate,ltvBand:band?.ltv||null,sourceAsOf:data.sourceAsOf||null}
     }));
