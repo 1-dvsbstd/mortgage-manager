@@ -2377,10 +2377,14 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 .app-view-current .trajectory-chart-stage>.chart-wrap canvas{
   display:block!important;
-  background:transparent!important;
+  visibility:hidden!important;
+  background:color-mix(in srgb,var(--surface) 98%,transparent)!important;
   border:0!important;
   border-radius:inherit!important;
   box-shadow:none!important;
+}
+.app-view-current .trajectory-chart-stage>.chart-wrap canvas.trajectory-chart-ready{
+  visibility:visible!important;
 }
 .app-view-current .trajectory-chart-stage>.legend{
   display:flex!important;
