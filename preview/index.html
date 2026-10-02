@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="app-hydrating app-settling">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -10,19 +10,8 @@
   <meta name="description" content="A visual mortgage manager for tracking balance, equity, payoff time and overpayment impact." />
   <title>Mortgage Manager</title>
   <script>try{const t=localStorage.getItem("mortgage-manager-theme-v1");if(t)document.documentElement.dataset.theme=t;}catch(_){}</script>
-  <style>
-    html{background:#f4f1eb}
-    html.app-hydrating body,
-    html.app-settling body{visibility:hidden!important}
-  </style>
-  <script>
-    /* Emergency fallback only. Normal reveal is driven by the modern-shell
-       readiness check at the end of the document. */
-    window.__mortgageBootFallback=window.setTimeout(()=>{
-      document.documentElement.classList.remove('app-hydrating','app-settling');
-    },10000);
-  </script>
-  <link rel="icon" href="public/icon.svg?v=01518" type="image/svg+xml" />
+  <style>html{background:#f4f1eb}</style>
+<link rel="icon" href="public/icon.svg?v=01518" type="image/svg+xml" />
   <link rel="stylesheet" href="src/styles.css?v=finished-shell-002" />
 <link rel="stylesheet" href="src/deep-dive.css?v=consolidation-043" />
   <link rel="stylesheet" href="src/chart-enhance.css?v=current-clean-007" />
