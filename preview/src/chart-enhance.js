@@ -41,21 +41,16 @@
   };
 
   const values = () => {
-    const state = window.MortgageStore?.get?.();
-    if (state) return {
-      balance:state.balance, rate:state.rate, payment:state.payment,
-      regular:state.currentOverpayment, homeValue:state.homeValue,
-      ownership:state.ownership, extra:state.scenarioExtra, fixedEnd:state.fixedEnd,
-    };
+    const state = window.MortgageStore?.get?.() || {};
     return {
-      balance:+document.getElementById('balance')?.value||0,
-      rate:+document.getElementById('rate')?.value||0,
-      payment:+document.getElementById('payment')?.value||0,
-      regular:0,
-      homeValue:+document.getElementById('homeValue')?.value||0,
-      ownership:Math.min(100,Math.max(0,+document.getElementById('ownership')?.value||0)),
-      extra:Math.max(0,+document.getElementById('customExtra')?.value||0),
-      fixedEnd:document.getElementById('fixedEnd')?.value||'',
+      balance:Number(state.balance)||0,
+      rate:Number(state.rate)||0,
+      payment:Number(state.payment)||0,
+      regular:Number(state.currentOverpayment)||0,
+      homeValue:Number(state.homeValue)||0,
+      ownership:Math.min(100,Math.max(0,Number(state.ownership)||0)),
+      extra:Number(state.scenarioExtra)||0,
+      fixedEnd:state.fixedEnd||'',
     };
   };
 
