@@ -15,7 +15,7 @@
     try{ localStorage.setItem(VIEW_KEY,key); }catch(_){}
   };
 
-  function activate(key,{persist=false,scroll=false}={}){
+  function activate(key,{persist=false}={}){
     if(!valid.has(key)) key='current';
 
     document.querySelectorAll('.app-view').forEach((view)=>{
@@ -33,7 +33,6 @@
 
     document.body.dataset.appView=key;
     if(persist) save(key);
-    if(scroll) window.scrollTo({top:0,behavior:'smooth'});
 
     requestAnimationFrame(()=>window.dispatchEvent(new Event('resize')));
     document.dispatchEvent(new CustomEvent('mortgage-view-changed',{detail:{view:key}}));
@@ -43,7 +42,7 @@
     const button=event.target.closest?.('[data-app-view]');
     if(!button) return;
     event.preventDefault();
-    activate(button.dataset.appView,{persist:true,scroll:true});
+    activate(button.dataset.appView,{persist:true});
   });
 
   const start=()=>activate(readSaved());
