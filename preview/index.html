@@ -50,6 +50,7 @@
       <div class="save-status" id="saveStatus">Saved on this device</div>
     </header>
 
+    <div id="compatibilitySources" class="compatibility-sources" hidden aria-hidden="true">
     <section class="hero-panel expandable-card" data-expandable-card="mortgage" tabindex="0" aria-expanded="false">
       <div class="hero-main">
         <div class="section-topline"><div><p class="kicker">Mortgage-free in</p></div><button type="button" class="expand-card-button" data-expand-card>View details</button></div>
@@ -141,6 +142,8 @@
         <label>Current balance (£)<input id="balance" inputmode="decimal" type="number" min="0" step="100" value="180000" /></label><label>Monthly payment (£)<input id="payment" inputmode="decimal" type="number" min="0" step="10" value="1100" /></label><label>Interest rate (%)<input id="rate" inputmode="decimal" type="number" min="0" max="20" step="0.01" value="4.25" /></label><label>Fixed rate ends<input id="fixedEnd" type="month" /></label><label>Property value (£)<input id="homeValue" inputmode="decimal" type="number" min="0" step="1000" value="300000" /></label><label>Property share owned (%)<input id="ownership" inputmode="decimal" type="number" min="0" max="100" step="1" value="100" /></label>
       </div><p class="field-note">Use 100% for a normally owned home. If a government scheme or third party retains a share, enter the percentage belonging to you or your household.</p><p id="warning" class="warning"></p></div>
     </details>
+
+    </div>
 
     <footer class="footer">Illustrative planning tool only. Market rates are dated indicative averages, not mortgage offers. Home-value projections are scenarios rather than valuations. Property-share figures are simplified and may not match the legal or lender treatment of every ownership/equity scheme. Mortgage projections assume the entered rate and payment remain unchanged.</footer>
   </main>
