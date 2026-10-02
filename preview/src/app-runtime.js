@@ -84,26 +84,7 @@
   }
 
   function renderOwnershipDonut() {
-    const bar = document.querySelector('.home-panel .ownership-bar');
-    const state = window.MortgageStore?.get?.();
-    const balance = Math.max(0, Number(state?.balance ?? $('balance')?.value) || 0);
-    const homeValue = Math.max(0, Number(state?.homeValue ?? $('homeValue')?.value) || 0);
-    const ownership = Math.min(100, Math.max(0, Number(state?.ownership ?? $('ownership')?.value) || 0));
-    if (!bar || !homeValue) return;
-    const schemePct = Math.max(0, 100 - ownership);
-    const debtPct = Math.min(ownership, Math.max(0, balance / homeValue * 100));
-    const equityPctWhole = Math.max(0, ownership - debtPct);
-    const ownedValue = homeValue * ownership / 100;
-    const householdEquity = Math.max(0, ownedValue - balance);
-    const mortgageFreeShare = ownedValue > 0 ? Math.min(100, Math.max(0, householdEquity / ownedValue * 100)) : 0;
-    const svg = ensureOwnershipDonut(bar);
-    const nonZeroSegments = [debtPct, equityPctWhole, schemePct].filter((value) => value > 0.05).length;
-    const gapPct = nonZeroSegments > 1 ? 0.72 : 0;
-    setArc(svg.querySelector('.ownership-donut-debt'), 0, debtPct, gapPct);
-    setArc(svg.querySelector('.ownership-donut-equity'), debtPct, equityPctWhole, gapPct);
-    setArc(svg.querySelector('.ownership-donut-other'), debtPct + equityPctWhole, schemePct, gapPct);
-    svg.querySelector('.ownership-donut-percent').textContent = `${mortgageFreeShare.toFixed(0)}%`;
-    bar.setAttribute('aria-label', `${debtPct.toFixed(1)}% mortgage debt, ${equityPctWhole.toFixed(1)}% your equity, ${schemePct.toFixed(1)}% other share`);
+    /* Ownership is presented by the finished Current hero/stats now. */
   }
 
   function ensureCostBars() {
