@@ -181,7 +181,7 @@
           </div>
           <strong>${extra>0&&whatIfSummary.monthsSaved>0?whatIfSummary.duration:'—'}</strong>
           <em>${extra>0&&whatIfSummary.interestSaved>0?`${money(whatIfSummary.interestSaved)} less interest`:'Choose an amount to compare'}</em>
-          ${extra>0&&incrementalMonths>0?`<b class="trajectory-plan-gain">+${durationFromMonths(incrementalMonths)} sooner · +${money(incrementalInterest)} saved</b>`:''}
+          ${extra>0&&incrementalMonths>0?`<div class="trajectory-plan-gain"><span><strong>+${durationFromMonths(incrementalMonths)}</strong><small>sooner</small></span><span><strong>+${money(incrementalInterest)}</strong><small>saved</small></span></div>`:''}
         </div>`;
     }
 
