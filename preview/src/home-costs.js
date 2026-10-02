@@ -42,17 +42,7 @@
   }
 
   function currentMortgage() {
-    const state = window.MortgageStore?.get?.();
-    if (state) return state;
-    return {
-      balance:+$('balance')?.value||0,
-      rate:+$('rate')?.value||0,
-      payment:+$('payment')?.value||0,
-      currentOverpayment:+$('currentOverpayment')?.value||0,
-      scenarioExtra:+$('customExtra')?.value||0,
-      homeValue:+$('homeValue')?.value||0,
-      ownership:Math.min(100,Math.max(0,+$('ownership')?.value||0)),
-    };
+    return window.MortgageStore?.get?.() || {};
   }
 
   function ensureCostComparison() {
