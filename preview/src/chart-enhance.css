@@ -1,7 +1,7 @@
 .chart-wrap{position:relative}
 .chart-wrap canvas{cursor:default;pointer-events:none}
-.chart-readout{display:flex;flex-wrap:wrap;gap:7px 14px;align-items:center;justify-content:center;margin:0 0 10px;padding:9px 12px;border:1px solid var(--border);border-radius:12px;background:color-mix(in srgb,var(--surface-control) 96%,transparent);color:var(--muted);font-size:10px;line-height:1.35;text-align:center}.chart-readout strong{color:var(--theme-hero-ink);font-size:11px}.chart-readout b{color:var(--text);font-weight:760}.chart-readout span{white-space:normal}
+.chart-readout{position:absolute;z-index:3;left:74px;bottom:43px;display:block;max-width:320px;margin:0;padding:9px 12px;border:1px solid color-mix(in srgb,var(--border) 82%,transparent);border-radius:11px;background:color-mix(in srgb,var(--surface-control) 94%,transparent);box-shadow:0 5px 16px rgba(54,48,39,.06);color:var(--muted);font-size:9.5px;line-height:1.35;text-align:left;pointer-events:none;backdrop-filter:blur(2px)}.chart-readout strong{color:var(--theme-hero-ink);font-size:10.5px}.chart-readout b{color:var(--text);font-weight:760}.chart-readout span{white-space:normal}
 @media(max-width:650px){
-  .chart-readout{display:block;text-align:center}
+  .chart-readout{position:static;display:block;max-width:none;margin:8px 0 0;text-align:left;backdrop-filter:none}
   .chart-readout span{white-space:normal}
 }
