@@ -122,6 +122,7 @@
     const dpr=Math.min(window.devicePixelRatio||1,3);
     canvas.style.width='100%'; canvas.style.height=`${cssHeight}px`; canvas.width=Math.floor(cssWidth*dpr); canvas.height=Math.floor(cssHeight*dpr);
     const ctx=canvas.getContext('2d'); if(!ctx) return;
+    canvas.classList.add('trajectory-chart-rendering');
     ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,cssWidth,cssHeight);
 
     const pad={left:compact?52:62,right:compact?18:26,top:compact?18:12,bottom:compact?48:44};
@@ -203,6 +204,8 @@
     readout.innerHTML=hasWhatIf
       ? `<span class="trajectory-payoff-date">${selectedDate}</span><span class="trajectory-payoff-label">Mortgage-free</span><span class="trajectory-payoff-sooner"><strong>${savedDuration}</strong> earlier</span>`
       : `<span class="trajectory-payoff-date">${currentDate}</span><span class="trajectory-payoff-label">Mortgage-free on your current plan</span>`;
+    canvas.classList.remove('trajectory-chart-rendering');
+    canvas.classList.add('trajectory-chart-ready');
   }
 
   const schedule=()=>{cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(()=>requestAnimationFrame(render));};
