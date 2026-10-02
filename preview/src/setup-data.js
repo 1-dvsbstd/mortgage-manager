@@ -51,8 +51,18 @@
       payment: Math.max(0, Number(state.payment) || 0),
       currentOverpayment: Math.max(0, Number(state.currentOverpayment) || 0),
       fixedEnd: state.fixedEnd || '',
-      payoffText: $('payoffDate')?.textContent || '',
-      remainingText: $('yearsRemaining')?.textContent || '',
+      payoffText: (() => {
+        const path=window.MortgageMath?.amortize?.(balance,Math.max(0,Number(state.rate)||0),Math.max(0,Number(state.payment)||0)+Math.max(0,Number(state.currentOverpayment)||0));
+        if(!Number.isFinite(path?.months)) return '';
+        const date=new Date(); date.setMonth(date.getMonth()+path.months);
+        return `Mortgage-free around ${new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(date)}`;
+      })(),
+      remainingText: (() => {
+        const path=window.MortgageMath?.amortize?.(balance,Math.max(0,Number(state.rate)||0),Math.max(0,Number(state.payment)||0)+Math.max(0,Number(state.currentOverpayment)||0));
+        if(!Number.isFinite(path?.months)) return '';
+        const years=Math.floor(path.months/12), months=path.months%12;
+        return [years?`${years} year${years===1?'':'s'}`:'',months?`${months} month${months===1?'':'s'}`:''].filter(Boolean).join(' ');
+      })(),
     };
   }
 
