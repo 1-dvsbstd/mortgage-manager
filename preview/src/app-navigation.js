@@ -96,14 +96,11 @@
   }
 
   function relocateCurrentFeatures(){
-    const current=$('.app-view-current .app-view-content'); if(!current)return;
-    ensureCurrentOverpaymentPanel(); makeHomeGlance();
-    const scenario=$('.scenario-panel'), chart=$('.chart-panel'), progress=document.getElementById('personalProgress');
-    if(chart&&chart.parentElement!==current) current.appendChild(chart);
-    if(scenario&&scenario.parentElement!==current&&scenario.parentElement!==chart) current.appendChild(scenario);
-    mergeScenarioIntoTrajectory();
-    if(progress&&progress.parentElement!==current) current.appendChild(progress);
+    const current=$('.app-view-current .app-view-content');
+    const chart=$('.app-view-current .chart-panel');
+    if(current&&chart&&chart.parentElement!==current) current.appendChild(chart);
   }
+
 
   function makeUpcomingSection(className, eyebrow, title){
     const section=document.createElement('section');
@@ -176,11 +173,12 @@
   }
 
   function relocateUpcomingFeatures(){
-    const upcoming=$('.app-view-upcoming .app-view-content'); if(!upcoming)return;
-    const next=$('.next-panel'); if(next&&next.parentElement!==upcoming) upcoming.appendChild(next);
-    const sourceMarket=$('.hero-panel .market-block'); if(sourceMarket) sourceMarket.classList.add('market-source-only');
+    const upcoming=$('.app-view-upcoming .app-view-content');
+    if(!upcoming) return;
+    if($('.upcoming-sections',upcoming)) return;
     refineUpcomingLayout();
   }
+
 
   function mergeFuturePlanning(){
     const future=$('.app-view-future .app-view-content');
@@ -243,17 +241,31 @@
   function organiseViews(){ relocateFutureFeatures(); relocateCurrentFeatures(); relocateUpcomingFeatures(); wireSetupProfileSettings(); }
 
   function buildShell(){
-    const main=$('.app-shell'), topbar=$('.topbar',main), footer=$('.footer',main); if(!main||!topbar||!footer||$('.app-view-shell',main))return;
-    const topNav=makeNav('app-section-nav app-section-nav-top'); topbar.classList.add('topbar-with-nav');
-    const actions=$('.topbar-actions',topbar)||$('.save-status',topbar); if(actions) topbar.insertBefore(topNav,actions); else topbar.appendChild(topNav);
-    const shell=document.createElement('div'); shell.className='app-view-shell'; Object.entries(views).forEach(([key,meta])=>shell.appendChild(makeView(key,meta))); footer.insertAdjacentElement('beforebegin',shell);
-    const current=$('.app-view-current .app-view-content',shell), upcoming=$('.app-view-upcoming .app-view-content',shell);
-    const hero=$('.hero-panel',main), home=$('.home-panel',main), next=$('.next-panel',main), edit=$('.edit-panel',main), dashboardGrid=$('.dashboard-grid',main);
-    if(hero) current.appendChild(hero); if(home) current.appendChild(home); if(edit) current.appendChild(edit); if(next) upcoming.appendChild(next);
-    organiseViews(); if(dashboardGrid&&!dashboardGrid.children.length) dashboardGrid.remove();
-    const bottomNav=makeNav('app-section-nav app-section-nav-bottom'); document.body.appendChild(bottomNav);
-    document.querySelectorAll('[data-app-view]').forEach((button)=>button.addEventListener('click',()=>activateView(button.dataset.appView,true)));
-    activateView(savedView(),false); setTimeout(organiseViews,320); setTimeout(organiseViews,720);
+    const main=$('.app-shell'), topbar=$('.topbar',main), shell=$('.app-view-shell',main);
+    if(!main||!topbar||!shell) return;
+
+    if(!$('.app-section-nav-top',topbar)){
+      const topNav=makeNav('app-section-nav app-section-nav-top');
+      topbar.classList.add('topbar-with-nav');
+      const actions=$('.topbar-actions',topbar)||$('.save-status',topbar);
+      if(actions) topbar.insertBefore(topNav,actions); else topbar.appendChild(topNav);
+    }
+
+    if(!$('.app-section-nav-bottom',document.body)){
+      document.body.appendChild(makeNav('app-section-nav app-section-nav-bottom'));
+    }
+
+    if(!shell.dataset.navigationReady){
+      shell.dataset.navigationReady='true';
+      document.querySelectorAll('[data-app-view]').forEach((button)=>{
+        button.addEventListener('click',()=>activateView(button.dataset.appView,true));
+      });
+    }
+
+    organiseViews();
+    activateView(savedView(),false);
+    requestAnimationFrame(organiseViews);
+    setTimeout(organiseViews,240);
   }
 
   function activateView(key,userInitiated){
