@@ -216,7 +216,7 @@
 
     mergeFuturePlanning(); labelFutureStages();
 
-    [assumption,home,planner,model,outlook,cost].filter(Boolean).forEach((node)=>future.appendChild(node));
+    [assumption,home,model,outlook,planner,cost].filter(Boolean).forEach((node)=>future.appendChild(node));
   }
 
   function restoreProfileSettings(profileSettings,originParent,originNext){ if(!profileSettings||!originParent||originParent.contains(profileSettings))return; if(originNext&&originNext.parentElement===originParent) originParent.insertBefore(profileSettings,originNext); else originParent.appendChild(profileSettings); }
