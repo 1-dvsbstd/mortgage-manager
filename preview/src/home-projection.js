@@ -169,8 +169,7 @@
       event.stopPropagation();
       const estimate=Number($('useCurrentEstimate').dataset.value||0);
       if(!estimate) return;
-      if(window.MortgageStore){ window.MortgageStore.set({homeValue:Math.round(estimate)}); window.MortgageStore.applyToDom(['homeValue'],{dispatch:true}); }
-      else if($('homeValue')){ $('homeValue').value=Math.round(estimate); $('homeValue').dispatchEvent(new Event('input',{bubbles:true})); }
+      if(window.MortgageStore) window.MortgageStore.set({homeValue:Math.round(estimate)});
       recordValueCheckpoint(estimate,'Home profile estimate');
       $('useCurrentEstimate').textContent='Using this estimate';
       setTimeout(()=>{if($('useCurrentEstimate'))$('useCurrentEstimate').textContent='Use for dashboard';},1400);
