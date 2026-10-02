@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-offline-v1-257';
+const CACHE_NAME = 'mortgage-manager-offline-v1-258';
 const APP_SHELL = [
   './',
   './index.html',
@@ -10,14 +10,11 @@ const APP_SHELL = [
   './public/market-rates.json',
   './public/hpi-local-property-type.json',
   './src/styles.css',
-  './src/design-tokens.css',
-  './src/inline-edit.css',
   './src/deep-dive.css',
   './src/chart-enhance.css',
-  './src/mortgage-ui.css',
-  './src/deal-end-planner.css',
   './src/home-profile.css',
   './src/next-home-planner.css',
+  './src/design-tokens.css',
   './src/setup-data.css',
   './src/mortgage-history.css',
   './src/app-runtime.css',
@@ -26,17 +23,11 @@ const APP_SHELL = [
   './src/setup-tabs.css',
   './src/offline-v1-final.css',
   './src/page-refine.css',
-  './src/mortgage-layout.js',
   './src/mortgage-store.js',
   './src/mortgage.js',
-  './src/app.js',
-  './src/inline-edit.js',
-  './src/deep-dive.js',
   './src/home-projection.js',
   './src/next-home-planner.js',
   './src/chart-enhance.js',
-  './src/mortgage-detail-ui.js',
-  './src/deal-end-planner.js',
   './src/balance-projection.js',
   './src/home-costs.js',
   './src/setup-data.js',
@@ -49,10 +40,7 @@ const APP_SHELL = [
   './src/layout-finalize.js',
   './src/v15-refresh.js',
   './src/v15-polish.js',
-  './src/v15.5.js',
-  './src/v15.11.js',
-  './src/v15.15.js',
-  './src/offline-v1-final.js'
+  './src/product-polish.js'
 ];
 
 self.addEventListener('install', (event) => {
