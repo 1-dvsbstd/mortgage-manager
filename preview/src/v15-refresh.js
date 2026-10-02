@@ -146,21 +146,6 @@
     return grid;
   }
 
-  function ensureAction(grid) {
-    const current = $('.app-view-current .app-view-content');
-    if (!current || !grid) return null;
-    let card = $('.v15-action-card', current);
-    if (!card) {
-      card = document.createElement('section');
-      card.className = 'v15-action-card';
-      card.innerHTML = `
-        <div class="v15-action-copy"><div class="v15-action-icon">↗</div><div><span>See the impact of a little more</span><strong data-v15="plus100">+£100/month</strong><small data-v15="plus100-interest"></small></div></div>
-        <button type="button" data-v15-action>Try +£100 What-if →</button>`;
-      grid.insertAdjacentElement('afterend', card);
-      $('[data-v15-action]', card)?.addEventListener('click', () => window.MortgageStore?.set?.({ scenarioExtra:100 }));
-    }
-    return card;
-  }
 
   function renderCurrent() {
     const state = window.MortgageStore?.get?.();
@@ -168,8 +153,7 @@
     const c = calculations(state);
     const hero = ensureHero();
     const grid = ensureStats(hero);
-    const action = ensureAction(grid);
-    if (!hero || !grid || !action) return;
+    if (!hero || !grid) return;
 
     $('.v15-greeting', hero).textContent = greeting();
     $('.v15-equity-value', hero).textContent = `You’ve built ${money(c.equity)} in equity`;
@@ -196,11 +180,7 @@
     $('[data-v15="ltv"]', grid).textContent = `${pct(c.ltv,1)} LTV`;
     $('[data-v15="annual-overpay"]', grid).textContent = c.regular > 0 ? `${money(c.regular * 12)} extra per year` : 'No regular overpayment';
 
-    const saved = c.plus100?.monthsSaved || 0;
-    const savedInterest = c.plus100?.interestSaved || 0;
-    $('[data-v15="plus100"]', action).textContent = saved > 0 ? `+£100/month = ${compactDuration(saved)} sooner` : '+£100/month changes your payoff path';
-    const plus100Interest = $('[data-v15="plus100-interest"]', action);
-    if (plus100Interest) plus100Interest.textContent = savedInterest > 0 ? `${money(savedInterest)} less interest on the current assumptions` : 'Compare it with your current repayment path';
+
   }
 
   function journeyDates(state) {
