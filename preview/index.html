@@ -10,8 +10,18 @@
   <meta name="description" content="A visual mortgage manager for tracking balance, equity, payoff time and overpayment impact." />
   <title>Mortgage Manager</title>
   <script>try{const t=localStorage.getItem("mortgage-manager-theme-v1");if(t)document.documentElement.dataset.theme=t;}catch(_){}</script>
-  <style>html{background:#f4f1eb}html.app-hydrating body,html.app-settling body{visibility:hidden!important}</style>
-  <script>window.setTimeout(()=>document.documentElement.classList.remove('app-hydrating','app-settling'),3000);</script>
+  <style>
+    html{background:#f4f1eb}
+    html.app-hydrating body,
+    html.app-settling body{visibility:hidden!important}
+  </style>
+  <script>
+    /* Emergency fallback only. Normal reveal is driven by the modern-shell
+       readiness check at the end of the document. */
+    window.__mortgageBootFallback=window.setTimeout(()=>{
+      document.documentElement.classList.remove('app-hydrating','app-settling');
+    },10000);
+  </script>
   <link rel="icon" href="public/icon.svg?v=01518" type="image/svg+xml" />
   <link rel="stylesheet" href="src/styles.css?v=fixed-background-021" />
   <link rel="stylesheet" href="src/inline-edit.css?v=consolidation-031" />  <link rel="stylesheet" href="src/deep-dive.css?v=consolidation-043" />
@@ -161,5 +171,32 @@
   <script src="src/v15.5.js?v=015263"></script>
   <script src="src/v15.11.js?v=consolidation-047"></script>  <script src="src/v15.15.js?v=consolidation-048"></script>
   <script id="offlineV1FinalScript" src="src/offline-v1-final.js?v=upcoming-stable-006"></script>
+  <script>
+    (() => {
+      const root=document.documentElement;
+      let attempts=0;
+      const ready=()=>(
+        document.querySelector('.app-view-shell') &&
+        document.querySelector('.app-view-current .current-hero-condensed') &&
+        document.querySelector('.app-view-current .trajectory-with-what-if') &&
+        document.querySelector('.app-view-upcoming .upcoming-sections') &&
+        document.querySelector('.app-view-upcoming .upcoming-hero') &&
+        document.querySelector('.app-view-future .future-overpayment-assumption')
+      );
+      const reveal=()=>{
+        if(window.__mortgageBootFallback) clearTimeout(window.__mortgageBootFallback);
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{
+          root.classList.remove('app-hydrating','app-settling');
+          root.dataset.appReady='true';
+        }));
+      };
+      const check=()=>{
+        if(ready()) return reveal();
+        attempts+=1;
+        if(attempts<200) window.setTimeout(check,40);
+      };
+      check();
+    })();
+  </script>
 </body>
 </html>
