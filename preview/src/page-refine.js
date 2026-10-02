@@ -157,6 +157,26 @@
     if(controls) controls.innerHTML=totalCandidates(regular).map((value)=>`<button type="button" data-future-total="${value}" class="${Math.abs(value-total)<.5?'active':''}">${Math.abs(value-regular)<.5?'Current ':''}${money(value)}</button>`).join('')+`<label>Custom £<input id="futureTotalCustom" type="number" min="${regular}" step="10" value="${Math.round(total*100)/100}"></label>`;
   }
 
+  function monthlyExtraForDealTarget(state,months,targetBalance){
+    if(months<=0||!window.MortgageMath) return null;
+    const scheduled=Math.max(0,Number(state.payment)||0);
+    const regular=Math.max(0,Number(state.currentOverpayment)||0);
+    const projected=(extra)=>{
+      const path=MortgageMath.amortize(state.balance,state.rate,scheduled+regular+Math.max(0,Number(extra)||0));
+      const points=path.monthlyPoints||[];
+      return points[Math.min(Math.max(0,months),Math.max(0,points.length-1))] ?? Number(state.balance)||0;
+    };
+    if(projected(0)<=targetBalance) return 0;
+    let low=0,high=100;
+    while(high<10000&&projected(high)>targetBalance) high*=2;
+    if(high>=10000&&projected(high)>targetBalance) return null;
+    for(let i=0;i<28;i+=1){
+      const mid=(low+high)/2;
+      if(projected(mid)<=targetBalance) high=mid; else low=mid;
+    }
+    return Math.ceil(high);
+  }
+
   function projectedDealPosition(state){
     const months=monthsUntil(state.fixedEnd);
     if(months===null||months<0||!window.MortgageMath) return null;
@@ -308,10 +328,52 @@
       const homeValue=Math.max(0,Number(state.homeValue)||0);
       const projectedEquity=Math.max(0,homeValue-Math.max(0,Number(deal.balance)||0));
       $('strong',equity).textContent=homeValue>0?money(projectedEquity):'—';
+
       const balanceValue=$('#dealPlannerBalance',summary);
+      const balanceNote=$('#dealPlannerBalanceNote',summary);
       const ltvValue=$('#dealPlannerLtv',summary);
+      const projectedLtv=homeValue>0?deal.balance/homeValue*100:null;
       if(balanceValue) balanceValue.textContent=money(deal.balance);
-      if(ltvValue) ltvValue.textContent=homeValue>0?`${(deal.balance/homeValue*100).toFixed(1)}%`:'—';
+      if(balanceNote) balanceNote.textContent=deal.regularOverpayment>0
+        ? `Includes your ${money(deal.regularOverpayment)}/month regular overpayment.`
+        : 'Based on your scheduled monthly payment.';
+      if(ltvValue) ltvValue.textContent=projectedLtv===null?'—':`${projectedLtv.toFixed(1)}%`;
+
+      const currentPath=window.MortgageMath?.amortize?.(
+        Math.max(0,Number(state.balance)||0),
+        Math.max(0,Number(state.rate)||0),
+        Math.max(0,Number(state.payment)||0)+Math.max(0,Number(state.currentOverpayment)||0)
+      );
+      const interestValue=$('#interestRemaining',summary);
+      const interestNote=$('#interestWithExtraText',summary);
+      if(interestValue) interestValue.textContent=Number.isFinite(currentPath?.interest)?money(currentPath.interest):'—';
+      if(interestNote) interestNote.textContent=deal.regularOverpayment>0
+        ? `Includes your ${money(deal.regularOverpayment)}/month regular overpayment.`
+        : 'Based on your scheduled monthly payment.';
+
+      const milestone=$('#dealPlannerMilestone',position);
+      if(milestone&&projectedLtv!==null){
+        const targets=[90,85,80,75,70,65,60,50,40,30,20,10];
+        const target=targets.find((value)=>projectedLtv>value+.01);
+        if(target){
+          const targetBalance=homeValue*target/100;
+          const gap=Math.max(0,deal.balance-targetBalance);
+          const extra=monthlyExtraForDealTarget(state,deal.months,targetBalance);
+          milestone.hidden=false;
+          const targetEl=$('#dealPlannerTarget',milestone);
+          const gapEl=$('#dealPlannerGap',milestone);
+          const noteEl=$('#dealPlannerGapNote',milestone);
+          if(targetEl) targetEl.textContent=`${target}% LTV`;
+          if(gapEl) gapEl.textContent=gap>0?`${money(gap)} away`:'Already on track';
+          if(noteEl) noteEl.textContent=gap<=0
+            ? `Your current path already reaches ${target}% LTV by deal end.`
+            : extra!==null
+              ? `About ${money(extra)}/month extra until deal end would target this milestone, assuming today’s property value.`
+              : `A balance around ${money(targetBalance)} would equal ${target}% LTV at today’s property value.`;
+        }else{
+          milestone.hidden=true;
+        }
+      }
     }
 
     shell.append(timeline,rates,position);
