@@ -2126,9 +2126,9 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 .app-view-current .trajectory-plan-gain{
   display:block!important;
-  margin-top:7px!important;
+  margin-top:8px!important;
   color:var(--accent-strong)!important;
-  font-size:9px!important;
+  font-size:9.5px!important;
   font-weight:800!important;
   letter-spacing:.01em!important;
   line-height:1.2!important;
@@ -2384,7 +2384,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   border-radius:999px!important;
   flex:0 0 16px!important;
 }
-.app-view-current .dot.scheduled-line{background:var(--debt)!important}
+.app-view-current .dot.scheduled-line{background:repeating-linear-gradient(90deg,var(--debt) 0 4px,transparent 4px 7px)!important}
 .app-view-current .dot.regular-line{background:var(--theme-hero-ink)!important}
 .app-view-current .dot.selected-line{background:var(--positive)!important}
 .app-view-current .dot.equity-line{background:var(--property)!important}
