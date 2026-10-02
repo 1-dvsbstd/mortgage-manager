@@ -102,7 +102,7 @@ button.active { background:var(--accent); color:#062018; border-color:transparen
 .chart-stat strong { display:block; margin-top:4px; font-size:18px; }
 .subtle { margin:5px 0 0; color:var(--muted); font-size:13px; }
 .chart-wrap { width:100%; margin-top:14px; }
-canvas { display:block; max-width:100%; background:rgba(3,16,13,.55); border:1px solid var(--border); border-radius:18px; }
+canvas { display:block; max-width:100%; background:transparent; border:0; border-radius:0; }
 .legend { display:flex; flex-wrap:wrap; gap:18px; margin-top:10px; color:var(--muted); font-size:12px; }
 .dot.current { background:#a8b4b0; }.dot.overpay { background:var(--accent); }
 
