@@ -2,8 +2,6 @@
   const canvas = document.getElementById('chart');
   if (!canvas || !window.MortgageMath) return;
 
-  let hoverMonth = null;
-  let pinned = false;
   let resizeFrame = null;
 
   const themeColour = (name, fallback) => {
@@ -185,27 +183,18 @@
     }
 
     const readout=ensureReadout();
-    if(hoverMonth===null){ readout.innerHTML=`<span>${compact?'Tap':'Hover or tap'} the chart to compare scheduled, current and What-if paths.</span>`; return; }
-    const month=Math.max(0,Math.min(maxMonths,hoverMonth)), x=xFor(month);
-    const sb=pointAt(scheduled.monthlyPoints,month), cb=pointAt(current.monthlyPoints,month), wb=pointAt(selected.monthlyPoints,month), eq=pointAt(equity,month);
-    ctx.strokeStyle=C.hover; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(x,pad.top); ctx.lineTo(x,pad.top+height); ctx.stroke();
-    const dot=(value,colour)=>{ ctx.fillStyle=colour; ctx.beginPath(); ctx.arc(x,yFor(value),4,0,Math.PI*2); ctx.fill(); ctx.strokeStyle=C.dotRing; ctx.lineWidth=2; ctx.stroke(); };
-    dot(sb,C.scheduled); dot(cb,C.current); dot(wb,C.selected); if(equity.length) dot(eq,C.equity);
-    const home=v.homeValue>0?v.homeValue*Math.pow(1+homeTrend()/100,month/12):0, ltv=home>0?(wb/home)*100:null;
-    readout.innerHTML=`<strong>${formatPointDate(month)}</strong><span>Scheduled only ${money(sb)}</span><span>Current overpayment ${money(cb)}</span><span>Selected What-if ${money(wb)}</span><span>Projected equity ${equity.length?money(eq):'—'}${ltv===null?'':` · ${ltv.toFixed(1)}% projected LTV`}</span>`;
+    const currentPayoff=Math.max(0,current.monthlyPoints.length-1);
+    const selectedPayoff=Math.max(0,selected.monthlyPoints.length-1);
+    const currentInterest=Math.max(0,Number(current.interest)||0);
+    const selectedInterest=Math.max(0,Number(selected.interest)||0);
+    const savedMonths=Math.max(0,currentPayoff-selectedPayoff);
+    const savedInterest=Math.max(0,currentInterest-selectedInterest);
+    const savedYears=Math.floor(savedMonths/12),savedRemainder=savedMonths%12;
+    const savedDuration=savedYears&&savedRemainder?`${savedYears}y ${savedRemainder}m`:savedYears?`${savedYears}y`:`${savedRemainder}m`;
+    readout.innerHTML=hasWhatIf
+      ? `<span><strong>Selected scenario</strong> reaches mortgage-free ${savedDuration} sooner and saves ${money(savedInterest)} interest versus your current plan.</span>`
+      : '<span>Your current plan is shown against the scheduled-payment path.</span>';
   }
-
-  function monthFromPointer(event){
-    const rect=canvas.getBoundingClientRect(), compact=rect.width<520, left=compact?52:62, right=compact?18:26, usable=Math.max(1,rect.width-left-right);
-    const p=pathsFor(values()), maxMonths=Math.max(p.scheduled.monthlyPoints.length,p.current.monthlyPoints.length,p.selected.monthlyPoints.length)-1||1;
-    return Math.round(Math.min(1,Math.max(0,(event.clientX-rect.left-left)/usable))*maxMonths);
-  }
-
-  canvas.addEventListener('pointermove',(e)=>{ if(e.pointerType==='touch'||pinned)return; hoverMonth=monthFromPointer(e); render(); });
-  canvas.addEventListener('pointerleave',()=>{ if(!pinned){hoverMonth=null;render();} });
-  canvas.addEventListener('pointerup',(e)=>{ if(e.pointerType==='touch'||e.pointerType==='pen'){e.stopPropagation();hoverMonth=monthFromPointer(e);pinned=true;render();} });
-  canvas.addEventListener('click',(e)=>{e.stopPropagation();hoverMonth=monthFromPointer(e);pinned=true;render();});
-  canvas.addEventListener('dblclick',(e)=>{e.stopPropagation();pinned=false;hoverMonth=null;render();});
 
   const schedule=()=>{cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(()=>requestAnimationFrame(render));};
   if(window.MortgageStore?.subscribe) window.MortgageStore.subscribe(schedule);
