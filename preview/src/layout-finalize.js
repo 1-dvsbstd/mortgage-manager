@@ -20,6 +20,12 @@
     window.MortgageStore?.set?.({scenarioExtra:value});
   }
 
+  function durationFromMonths(value){
+    const total=Math.max(0,Math.round(Number(value)||0));
+    const years=Math.floor(total/12),months=total%12;
+    return years&&months?`${years}y ${months}m`:years?`${years}y`:`${months}m`;
+  }
+
   function payoffSummary(basePayment,comparisonPayment,state){
     const scheduled=window.MortgageMath?.amortize?.(
       Math.max(0,Number(state.balance)||0),
@@ -35,8 +41,7 @@
       ? Math.max(0,scheduled.months-compared.months):0;
     const interestSaved=Number.isFinite(scheduled?.interest)&&Number.isFinite(compared?.interest)
       ? Math.max(0,scheduled.interest-compared.interest):0;
-    const years=Math.floor(monthsSaved/12),months=Math.round(monthsSaved%12);
-    const duration=years&&months?`${years}y ${months}m`:years?`${years}y`:`${months}m`;
+    const duration=durationFromMonths(monthsSaved);
     return {monthsSaved,interestSaved,duration};
   }
 
@@ -158,6 +163,8 @@
       const currentSummary=payoffSummary(basePayment,basePayment+regular,state);
       const whatIfSummary=payoffSummary(basePayment,basePayment+extra,state);
 
+      const incrementalMonths=Math.max(0,whatIfSummary.monthsSaved-currentSummary.monthsSaved);
+      const incrementalInterest=Math.max(0,whatIfSummary.interestSaved-currentSummary.interestSaved);
       comparison.innerHTML=`
         <div class="trajectory-plan-card trajectory-plan-current">
           <div class="trajectory-plan-label">
@@ -174,6 +181,7 @@
           </div>
           <strong>${extra>0&&whatIfSummary.monthsSaved>0?whatIfSummary.duration:'—'}</strong>
           <em>${extra>0&&whatIfSummary.interestSaved>0?`${money(whatIfSummary.interestSaved)} less interest`:'Choose an amount to compare'}</em>
+          ${extra>0&&incrementalMonths>0?`<b class="trajectory-plan-gain">+${durationFromMonths(incrementalMonths)} sooner · +${money(incrementalInterest)} saved</b>`:''}
         </div>`;
     }
 
