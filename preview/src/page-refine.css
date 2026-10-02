@@ -2126,12 +2126,12 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 .app-view-current .trajectory-plan-gain{
   display:block!important;
-  margin-top:8px!important;
+  margin-top:7px!important;
   color:var(--accent-strong)!important;
-  font-size:11px!important;
+  font-size:12px!important;
   font-weight:820!important;
-  letter-spacing:.01em!important;
-  line-height:1.2!important;
+  letter-spacing:.005em!important;
+  line-height:1.15!important;
 }
 .app-view-current .trajectory-plan-whatif.is-active .trajectory-plan-label span,
 .app-view-current .trajectory-plan-whatif.is-active>strong,
@@ -2141,7 +2141,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 
 .app-view-current .trajectory-workspace{
   display:grid!important;
-  grid-template-columns:174px minmax(0,1fr)!important;
+  grid-template-columns:168px minmax(0,1fr)!important;
   align-items:stretch!important;
   min-width:0!important;
 }
@@ -2246,9 +2246,9 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   background:color-mix(in srgb,var(--surface-control) 82%,transparent)!important;
 }
 .app-view-current .trajectory-presets button.active{
-  border-color:color-mix(in srgb,var(--positive) 30%,var(--border-soft))!important;
-  background:color-mix(in srgb,var(--positive) 18%,var(--surface-control))!important;
-  box-shadow:0 7px 17px rgba(54,48,39,.09)!important;
+  border-color:color-mix(in srgb,var(--positive) 22%,var(--border-soft))!important;
+  background:color-mix(in srgb,var(--positive) 22%,var(--surface-control))!important;
+  box-shadow:0 6px 15px rgba(54,48,39,.075)!important;
 }
 .app-view-current .trajectory-presets button.active>strong{
   color:var(--positive)!important;
@@ -2366,7 +2366,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:flex!important;
   flex-wrap:wrap!important;
   gap:10px 20px!important;
-  margin:10px 2px 0!important;
+  margin:14px 2px 0!important;
   padding:8px 0 0!important;
   color:color-mix(in srgb,var(--muted) 72%,var(--text))!important;
   font-size:9px!important;
@@ -2405,7 +2405,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 @media(max-width:900px){
   .app-view-current .trajectory-workspace{
-    grid-template-columns:166px minmax(0,1fr)!important;
+    grid-template-columns:160px minmax(0,1fr)!important;
   }
   .app-view-current .trajectory-scenario-controls{
     padding:18px 18px 24px 20px!important;
