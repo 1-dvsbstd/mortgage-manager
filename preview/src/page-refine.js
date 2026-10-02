@@ -193,8 +193,9 @@
 
   function paymentScenarioRates(state){
     const current=Math.max(.1,Number(state.rate)||0);
-    const twoYear=parseRateText('market2yRate') || parseRateText('deal2yRate');
-    const fiveYear=parseRateText('market5yRate') || parseRateText('deal5yRate');
+    const market=window.MortgageMarket||{};
+    const twoYear=Number(market.twoYear)>0?Number(market.twoYear):null;
+    const fiveYear=Number(market.fiveYear)>0?Number(market.fiveYear):null;
     const known=[current,twoYear,fiveYear].filter(Number.isFinite);
     const low=Math.max(.1,Math.min(...known)-.5);
     const high=Math.max(...known)+.5;
