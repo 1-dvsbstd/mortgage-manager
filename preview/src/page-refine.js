@@ -432,6 +432,28 @@
     order.forEach((node)=>future.appendChild(node));
   }
 
+  function refineFuturePresentation(){
+    const future=$('.app-view-future');
+    if(!future) return;
+    const heading=$('.app-view-heading',future);
+    const assumption=$('#futureOverpaymentAssumption',future)||$('#futureOverpaymentAssumption');
+    if(heading&&assumption){
+      heading.classList.add('future-heading-integrated');
+      if(assumption.parentElement!==heading) heading.appendChild(assumption);
+    }
+    const wait=$('#futureWaitPlanner');
+    const waitEyebrow=$('.future-wait-heading .eyebrow',wait);
+    const waitTitle=$('.future-wait-heading h2',wait);
+    if(waitEyebrow) waitEyebrow.textContent='Looking ahead';
+    if(waitTitle) waitTitle.textContent='How your next-home budget could grow over time';
+
+    const model=$('#futureModelRange');
+    const modelEyebrow=$('.future-model-heading .eyebrow',model);
+    const modelTitle=$('.future-model-heading h2',model);
+    if(modelEyebrow) modelEyebrow.textContent='Property forecast';
+    if(modelTitle) modelTitle.textContent='Where your home value could be heading';
+  }
+
   function refineFuture(){
     const future=$('.app-view-future .app-view-content'), home=$('#homeProjection'), range=$('#homeProfileRange'), planner=$('#nextHomePlanner');
     if(!future||!home) return;
@@ -465,6 +487,7 @@
       cost.classList.remove('future-cost-inline');
     }
     organiseFutureFlow();
+    refineFuturePresentation();
   }
 
   function run(){
@@ -473,6 +496,7 @@
     refineUpcoming();
     refineFuture();
     refineFutureAssumption();
+    refineFuturePresentation();
   }
 
   if(window.MortgageStore?.subscribe){
