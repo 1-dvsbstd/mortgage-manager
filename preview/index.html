@@ -123,32 +123,6 @@
   <script src="src/v15-refresh.js?v=upcoming-border-clean-004"></script>
   <script src="src/v15-polish.js?v=illustrated-icons-001"></script>
   <script src="src/product-polish.js?v=finished-shell-003"></script>
-<script>
-    (() => {
-      const root=document.documentElement;
-      let attempts=0;
-      const ready=()=>(
-        document.querySelector('.app-view-shell') &&
-        document.querySelector('.app-view-current .current-hero-condensed') &&
-        document.querySelector('.app-view-current .trajectory-with-what-if') &&
-        document.querySelector('.app-view-upcoming .upcoming-sections') &&
-        document.querySelector('.app-view-upcoming .upcoming-hero') &&
-        document.querySelector('.app-view-future .future-overpayment-assumption')
-      );
-      const reveal=()=>{
-        if(window.__mortgageBootFallback) clearTimeout(window.__mortgageBootFallback);
-        requestAnimationFrame(()=>requestAnimationFrame(()=>{
-          root.classList.remove('app-hydrating','app-settling');
-          root.dataset.appReady='true';
-        }));
-      };
-      const check=()=>{
-        if(ready()) return reveal();
-        attempts+=1;
-        if(attempts<200) window.setTimeout(check,40);
-      };
-      check();
-    })();
-  </script>
+
 </body>
 </html>
