@@ -424,9 +424,9 @@
     const order=[
       $('#futureOverpaymentAssumption'),
       $('#homeProjection'),
-      $('#nextHomePlanner'),
       $('#futureModelRange'),
       $('#futureWaitPlanner'),
+      $('#nextHomePlanner'),
       $('#propertyCostComparison')
     ].filter(Boolean);
     order.forEach((node)=>future.appendChild(node));
@@ -459,7 +459,6 @@
     if(!future||!home) return;
     home.querySelector('.future-estimate')?.classList.add('future-remove');
     $('#homeValueHistory',home)?.classList.add('future-remove');
-    planner?.querySelector('.next-home-settings')?.classList.add('future-remove');
     future.querySelectorAll('.future-stage-label').forEach((label)=>label.remove());
 
     const heading=$('.projection-heading',home);
