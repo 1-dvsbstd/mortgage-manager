@@ -159,16 +159,21 @@
       const whatIfSummary=payoffSummary(basePayment,basePayment+extra,state);
 
       comparison.innerHTML=`
-        <div class="trajectory-impact-summary ${extra>0?'is-active':''}">
-          <div class="trajectory-impact-metric">
-            <span>Time saved</span>
-            <strong>${extra>0&&whatIfSummary.monthsSaved>0?whatIfSummary.duration:'—'}</strong>
+        <div class="trajectory-plan-card trajectory-plan-current">
+          <div class="trajectory-plan-label">
+            <span>Current plan</span>
+            <small>${money(regular)}/month</small>
           </div>
-          <div class="trajectory-impact-metric">
-            <span>Interest saved</span>
-            <strong>${extra>0&&whatIfSummary.interestSaved>0?money(whatIfSummary.interestSaved):'—'}</strong>
+          <strong>${regular>0&&currentSummary.monthsSaved>0?currentSummary.duration:'—'}</strong>
+          <em>${regular>0&&currentSummary.interestSaved>0?`${money(currentSummary.interestSaved)} less interest`:'No regular overpayment'}</em>
+        </div>
+        <div class="trajectory-plan-card trajectory-plan-whatif ${extra>0?'is-active':''}">
+          <div class="trajectory-plan-label">
+            <span>What if</span>
+            <small>${extra>0?`${money(extra)}/month`:'Choose an amount'}</small>
           </div>
-          <p>${regular>0&&currentSummary.monthsSaved>0?`Your current ${money(regular)}/month plan already saves ${currentSummary.duration} and ${money(currentSummary.interestSaved)} interest.`:'Compared with your scheduled mortgage payment.'}</p>
+          <strong>${extra>0&&whatIfSummary.monthsSaved>0?whatIfSummary.duration:'—'}</strong>
+          <em>${extra>0&&whatIfSummary.interestSaved>0?`${money(whatIfSummary.interestSaved)} less interest`:'Choose an amount to compare'}</em>
         </div>`;
     }
 
