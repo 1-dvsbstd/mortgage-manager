@@ -73,9 +73,17 @@
 
   function ensureReadout(){
     let readout=document.getElementById('chartReadout');
-    if(readout) return readout;
-    readout=document.createElement('div'); readout.id='chartReadout'; readout.className='chart-readout';
-    readout.setAttribute('aria-live','polite'); canvas.insertAdjacentElement('afterend',readout); return readout;
+    const wrap=canvas.closest('.chart-wrap');
+    const stage=canvas.closest('.trajectory-chart-stage');
+    if(!readout){
+      readout=document.createElement('div');
+      readout.id='chartReadout';
+      readout.className='chart-readout trajectory-payoff';
+      readout.setAttribute('aria-live','polite');
+    }
+    if(stage&&wrap&&readout.parentElement!==stage) stage.insertBefore(readout,wrap);
+    else if(stage&&wrap&&readout.nextElementSibling!==wrap) stage.insertBefore(readout,wrap);
+    return readout;
   }
 
   function yearTicks(maxMonths,cssWidth){
@@ -162,8 +170,8 @@
     }
     const hasWhatIf=Math.max(0,Number(v.extra)||0)>.01;
     drawLine(scheduled.monthlyPoints,C.scheduled,compact?1.05:1.15,[5,6],.58);
-    drawLine(current.monthlyPoints,C.current,compact?(hasWhatIf?2.05:2.8):(hasWhatIf?2.3:3.05),[],hasWhatIf?.80:1);
-    if(hasWhatIf) drawLine(selected.monthlyPoints,C.selected,compact?3.2:3.55,[],1);
+    drawLine(current.monthlyPoints,C.current,compact?(hasWhatIf?1.8:2.7):(hasWhatIf?2.0:3.0),[],hasWhatIf?.70:1);
+    if(hasWhatIf) drawLine(selected.monthlyPoints,C.selected,compact?3.25:3.65,[],1);
     drawLine(equity,C.equity,compact?1.45:1.6,[8,6],.88);
 
     const fixed=monthsUntil(v.fixedEnd);
