@@ -2071,70 +2071,51 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   justify-content:flex-end!important;
 }
 .app-view-current .trajectory-plan-comparison{
-  display:grid!important;
-  grid-template-columns:auto auto!important;
-  align-items:start!important;
-  gap:28px!important;
-  min-width:410px!important;
+  min-width:390px!important;
 }
-.app-view-current .trajectory-current-plan,
-.app-view-current .trajectory-whatif-plan{
-  min-width:184px!important;
-  padding:6px 0 0!important;
+.app-view-current .trajectory-impact-summary{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px 24px!important;
+  align-items:end!important;
+  min-width:390px!important;
   text-align:right!important;
 }
-.app-view-current .trajectory-current-plan>span,
-.app-view-current .trajectory-whatif-plan>span{
+.app-view-current .trajectory-impact-metric{
+  min-width:0!important;
+}
+.app-view-current .trajectory-impact-metric+ .trajectory-impact-metric{
+  padding-left:22px!important;
+  border-left:1px solid color-mix(in srgb,var(--border-soft) 72%,transparent)!important;
+}
+.app-view-current .trajectory-impact-metric>span{
   display:block!important;
   color:var(--muted-2)!important;
   font-size:9px!important;
-  font-weight:700!important;
-  letter-spacing:.025em!important;
+  font-weight:750!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
 }
-.app-view-current .trajectory-current-plan>strong,
-.app-view-current .trajectory-whatif-plan>strong{
+.app-view-current .trajectory-impact-metric>strong{
   display:block!important;
-  margin-top:4px!important;
+  margin-top:5px!important;
   color:var(--theme-hero-ink)!important;
   font-family:var(--font-display)!important;
-  font-size:20px!important;
+  font-size:29px!important;
   font-weight:600!important;
-  letter-spacing:-.02em!important;
-  line-height:1!important;
+  letter-spacing:-.035em!important;
+  line-height:.95!important;
 }
-.app-view-current .trajectory-current-plan>strong small,
-.app-view-current .trajectory-whatif-plan>strong small{
-  margin-left:3px!important;
+.app-view-current .trajectory-impact-summary.is-active .trajectory-impact-metric>strong{
+  color:var(--positive)!important;
+}
+.app-view-current .trajectory-impact-summary>p{
+  grid-column:1/-1!important;
+  margin:3px 0 0!important;
   color:var(--muted)!important;
-  font-family:var(--font-ui)!important;
-  font-size:9px!important;
+  font-size:8.5px!important;
   font-weight:600!important;
-  letter-spacing:0!important;
-}
-.app-view-current .trajectory-current-plan>em,
-.app-view-current .trajectory-whatif-plan>em{
-  display:block!important;
-  margin-top:6px!important;
-  color:color-mix(in srgb,var(--positive) 76%,var(--muted))!important;
-  font-size:9px!important;
-  font-style:normal!important;
-  font-weight:650!important;
-  line-height:1.3!important;
-}
-
-.app-view-current .trajectory-whatif-plan{
-  padding-left:24px!important;
-  border-left:1px solid color-mix(in srgb,var(--border-soft) 72%,transparent)!important;
-}
-.app-view-current .trajectory-whatif-plan.is-active>span{
-  color:var(--accent-strong)!important;
-}
-.app-view-current .trajectory-whatif-plan.is-active>strong{
-  color:var(--positive)!important;
-  font-size:23px!important;
-}
-.app-view-current .trajectory-whatif-plan.is-active>em{
-  color:var(--positive)!important;
+  line-height:1.35!important;
 }
 
 .app-view-current .trajectory-workspace{
@@ -2423,19 +2404,19 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
     justify-content:flex-start!important;
     margin-top:12px!important;
   }
-  .app-view-current .trajectory-plan-comparison{
-    grid-template-columns:1fr 1fr!important;
-    gap:16px!important;
+  .app-view-current .trajectory-plan-comparison,
+  .app-view-current .trajectory-impact-summary{
     min-width:0!important;
     width:100%!important;
   }
-  .app-view-current .trajectory-current-plan,
-  .app-view-current .trajectory-whatif-plan{
-    min-width:0!important;
+  .app-view-current .trajectory-impact-summary{
     text-align:left!important;
   }
-  .app-view-current .trajectory-whatif-plan{
+  .app-view-current .trajectory-impact-metric+ .trajectory-impact-metric{
     padding-left:16px!important;
+  }
+  .app-view-current .trajectory-impact-metric>strong{
+    font-size:25px!important;
   }
   .app-view-current .trajectory-workspace{
     grid-template-columns:1fr!important;
