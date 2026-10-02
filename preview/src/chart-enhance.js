@@ -161,14 +161,14 @@
       ctx.restore();
     }
     const hasWhatIf=Math.max(0,Number(v.extra)||0)>.01;
-    drawLine(scheduled.monthlyPoints,C.scheduled,compact?1.2:1.3,[4,5],.80);
+    drawLine(scheduled.monthlyPoints,C.scheduled,compact?1.05:1.15,[5,6],.58);
     drawLine(current.monthlyPoints,C.current,compact?(hasWhatIf?2.05:2.8):(hasWhatIf?2.3:3.05),[],hasWhatIf?.80:1);
     if(hasWhatIf) drawLine(selected.monthlyPoints,C.selected,compact?3.2:3.55,[],1);
     drawLine(equity,C.equity,compact?1.45:1.6,[8,6],.88);
 
     const fixed=monthsUntil(v.fixedEnd);
     if(fixed!==null&&fixed>=0&&fixed<=maxMonths){
-      const x=xFor(fixed); ctx.save(); ctx.setLineDash([3,6]); ctx.strokeStyle=C.marker; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(x,pad.top+17); ctx.lineTo(x,pad.top+height); ctx.stroke(); ctx.restore();
+      const x=xFor(fixed); ctx.save(); ctx.setLineDash([3,5]); ctx.strokeStyle=C.markerText; ctx.globalAlpha=.42; ctx.lineWidth=1.15; ctx.beginPath(); ctx.moveTo(x,pad.top+17); ctx.lineTo(x,pad.top+height); ctx.stroke(); ctx.restore();
       const label='Fix ends';
       ctx.font=compact?'9px system-ui':'10px system-ui';
       const tw=ctx.measureText(label).width, pillW=tw+12, pillH=18;
@@ -177,7 +177,7 @@
       ctx.save();
       ctx.fillStyle='rgba(250,247,241,.90)';
       ctx.beginPath(); ctx.roundRect(pillX,pillY,pillW,pillH,9); ctx.fill();
-      ctx.fillStyle=C.markerText; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillStyle=C.markerText; ctx.globalAlpha=1; ctx.textAlign='center'; ctx.textBaseline='middle';
       ctx.fillText(label,pillX+pillW/2,pillY+pillH/2+.5);
       ctx.restore();
     }
@@ -185,15 +185,14 @@
     const readout=ensureReadout();
     const currentPayoff=Math.max(0,current.monthlyPoints.length-1);
     const selectedPayoff=Math.max(0,selected.monthlyPoints.length-1);
-    const currentInterest=Math.max(0,Number(current.interest)||0);
-    const selectedInterest=Math.max(0,Number(selected.interest)||0);
     const savedMonths=Math.max(0,currentPayoff-selectedPayoff);
-    const savedInterest=Math.max(0,currentInterest-selectedInterest);
     const savedYears=Math.floor(savedMonths/12),savedRemainder=savedMonths%12;
     const savedDuration=savedYears&&savedRemainder?`${savedYears}y ${savedRemainder}m`:savedYears?`${savedYears}y`:`${savedRemainder}m`;
+    const selectedDate=formatPointDate(selectedPayoff);
+    const currentDate=formatPointDate(currentPayoff);
     readout.innerHTML=hasWhatIf
-      ? `<span><strong>Selected scenario</strong> reaches mortgage-free ${savedDuration} sooner and saves ${money(savedInterest)} interest versus your current plan.</span>`
-      : '<span>Your current plan is shown against the scheduled-payment path.</span>';
+      ? `<span><strong>${money(v.extra)}/month</strong> reaches mortgage-free <b>${selectedDate}</b> — ${savedDuration} earlier than your current plan.</span>`
+      : `<span>Your current plan reaches mortgage-free <b>${currentDate}</b>.</span>`;
   }
 
   const schedule=()=>{cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(()=>requestAnimationFrame(render));};
