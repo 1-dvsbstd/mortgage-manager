@@ -2125,13 +2125,33 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   line-height:1.2!important;
 }
 .app-view-current .trajectory-plan-gain{
-  display:block!important;
-  margin-top:7px!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;
+  margin-top:8px!important;
+  padding-top:7px!important;
+  border-top:1px solid color-mix(in srgb,var(--border-soft) 66%,transparent)!important;
+}
+.app-view-current .trajectory-plan-gain>span{
+  display:flex!important;
+  align-items:baseline!important;
+  justify-content:flex-end!important;
+  gap:4px!important;
+  min-width:0!important;
+}
+.app-view-current .trajectory-plan-gain strong{
   color:var(--accent-strong)!important;
-  font-size:12px!important;
+  font-size:11px!important;
   font-weight:820!important;
-  letter-spacing:.005em!important;
-  line-height:1.15!important;
+  letter-spacing:-.01em!important;
+  line-height:1!important;
+}
+.app-view-current .trajectory-plan-gain small{
+  color:var(--muted-2)!important;
+  font-size:7.5px!important;
+  font-weight:700!important;
+  letter-spacing:.015em!important;
+  line-height:1!important;
 }
 .app-view-current .trajectory-plan-whatif.is-active .trajectory-plan-label span,
 .app-view-current .trajectory-plan-whatif.is-active>strong,
