@@ -114,7 +114,7 @@
     const ctx=canvas.getContext('2d'); if(!ctx) return;
     ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,cssWidth,cssHeight);
 
-    const pad={left:compact?52:62,right:compact?18:26,top:compact?22:18,bottom:compact?54:50};
+    const pad={left:compact?52:62,right:compact?18:26,top:compact?18:12,bottom:compact?48:44};
     const width=Math.max(1,cssWidth-pad.left-pad.right), height=Math.max(1,cssHeight-pad.top-pad.bottom);
     const maxMonths=Math.max(scheduled.monthlyPoints.length,current.monthlyPoints.length,selected.monthlyPoints.length)-1||1;
     const equity=makeEquityPoints(v,selected.monthlyPoints,maxMonths);
