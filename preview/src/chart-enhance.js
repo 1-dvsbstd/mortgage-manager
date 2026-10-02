@@ -73,6 +73,8 @@
 
   function ensureReadout(){
     let readout=document.getElementById('chartReadout');
+    const workspace=canvas.closest('.trajectory-workspace');
+    const rail=workspace?.querySelector('.trajectory-scenario-controls');
     const wrap=canvas.closest('.chart-wrap');
     const stage=canvas.closest('.trajectory-chart-stage');
     if(!readout){
@@ -81,8 +83,8 @@
       readout.className='chart-readout trajectory-payoff';
       readout.setAttribute('aria-live','polite');
     }
-    if(stage&&wrap&&readout.parentElement!==stage) stage.insertBefore(readout,wrap);
-    else if(stage&&wrap&&readout.nextElementSibling!==wrap) stage.insertBefore(readout,wrap);
+    if(rail&&readout.parentElement!==rail) rail.appendChild(readout);
+    else if(!rail&&stage&&wrap&&readout.parentElement!==stage) stage.insertBefore(readout,wrap);
     return readout;
   }
 
