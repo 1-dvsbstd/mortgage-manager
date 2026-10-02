@@ -75,7 +75,7 @@
 
   function ensureUI(){
     if($('nextHomePlanner')) return;
-    const detail=document.querySelector('.home-panel .expand-detail');
+    const detail=document.getElementById('futureFeatureHost') || document.querySelector('.app-view-future .app-view-content');
     if(!detail) return;
 
     const section=document.createElement('details');
