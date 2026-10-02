@@ -164,7 +164,7 @@
     const projected=(extra)=>{
       const path=MortgageMath.amortize(state.balance,state.rate,scheduled+regular+Math.max(0,Number(extra)||0));
       const points=path.monthlyPoints||[];
-      return points[Math.min(Math.max(0,months),Math.max(0,points.length-1))] ?? Number(state.balance)||0;
+      return points[Math.min(Math.max(0,months),Math.max(0,points.length-1))] ?? (Number(state.balance)||0);
     };
     if(projected(0)<=targetBalance) return 0;
     let low=0,high=100;
