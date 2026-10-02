@@ -241,41 +241,13 @@
   function organiseViews(){ relocateFutureFeatures(); relocateCurrentFeatures(); relocateUpcomingFeatures(); wireSetupProfileSettings(); }
 
   function buildShell(){
-    const main=$('.app-shell'), topbar=$('.topbar',main), shell=$('.app-view-shell',main);
-    if(!main||!topbar||!shell) return;
-
-    if(!$('.app-section-nav-top',topbar)){
-      const topNav=makeNav('app-section-nav app-section-nav-top');
-      topbar.classList.add('topbar-with-nav');
-      const actions=$('.topbar-actions',topbar)||$('.save-status',topbar);
-      if(actions) topbar.insertBefore(topNav,actions); else topbar.appendChild(topNav);
-    }
-
-    if(!$('.app-section-nav-bottom',document.body)){
-      document.body.appendChild(makeNav('app-section-nav app-section-nav-bottom'));
-    }
-
-    if(!shell.dataset.navigationReady){
-      shell.dataset.navigationReady='true';
-      document.querySelectorAll('[data-app-view]').forEach((button)=>{
-        button.addEventListener('click',()=>activateView(button.dataset.appView,true));
-      });
-    }
-
+    const shell=$('.app-view-shell');
+    if(!shell) return;
     organiseViews();
-    activateView(savedView(),false);
     requestAnimationFrame(organiseViews);
     setTimeout(organiseViews,240);
   }
 
-  function activateView(key,userInitiated){
-    if(!views[key]) key='current'; organiseViews();
-    document.querySelectorAll('.app-view').forEach((view)=>{ const active=view.dataset.view===key; view.hidden=!active; view.classList.toggle('is-active',active); });
-    document.querySelectorAll('[data-app-view]').forEach((button)=>{ const active=button.dataset.appView===key; button.classList.toggle('is-active',active); if(active) button.setAttribute('aria-current','page'); else button.removeAttribute('aria-current'); });
-    document.body.dataset.appView=key;
-    if(userInitiated){ saveView(key); window.scrollTo({top:0,behavior:'smooth'}); }
-    requestAnimationFrame(()=>window.dispatchEvent(new Event('resize')));
-  }
 
   if(window.MortgageStore?.subscribe) MortgageStore.subscribe((next,previous)=>{ if(next.scenarioExtra!==previous.scenarioExtra) requestAnimationFrame(renderFutureAssumption); });
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>requestAnimationFrame(buildShell),{once:true}); else requestAnimationFrame(buildShell);
