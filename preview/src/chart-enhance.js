@@ -156,8 +156,8 @@
     if(equity.length){
       ctx.save();
       const fill=ctx.createLinearGradient(0,pad.top,0,pad.top+height);
-      fill.addColorStop(0,'rgba(181,138,91,.11)');
-      fill.addColorStop(1,'rgba(181,138,91,.015)');
+      fill.addColorStop(0,'rgba(181,138,91,.065)');
+      fill.addColorStop(1,'rgba(181,138,91,.008)');
       ctx.beginPath();
       equity.forEach((value,month)=>{
         const x=xFor(Math.min(month,maxMonths)),y=yFor(value);
@@ -174,7 +174,7 @@
     drawLine(scheduled.monthlyPoints,C.scheduled,compact?1.05:1.15,[5,6],.58);
     drawLine(current.monthlyPoints,C.current,compact?(hasWhatIf?1.8:2.7):(hasWhatIf?2.0:3.0),[],hasWhatIf?.70:1);
     if(hasWhatIf) drawLine(selected.monthlyPoints,C.selected,compact?3.25:3.65,[],1);
-    drawLine(equity,C.equity,compact?1.45:1.6,[8,6],.88);
+    drawLine(equity,C.equity,compact?1.25:1.4,[8,6],.68);
 
     const fixed=monthsUntil(v.fixedEnd);
     if(fixed!==null&&fixed>=0&&fixed<=maxMonths){
@@ -201,8 +201,8 @@
     const selectedDate=formatPointDate(selectedPayoff);
     const currentDate=formatPointDate(currentPayoff);
     readout.innerHTML=hasWhatIf
-      ? `<span><strong>${money(v.extra)}/month</strong> reaches mortgage-free <b>${selectedDate}</b> — ${savedDuration} earlier than your current plan.</span>`
-      : `<span>Your current plan reaches mortgage-free <b>${currentDate}</b>.</span>`;
+      ? `<span class="trajectory-payoff-date">${selectedDate}</span><span class="trajectory-payoff-label">Mortgage-free</span><span class="trajectory-payoff-sooner"><strong>${savedDuration}</strong> earlier</span>`
+      : `<span class="trajectory-payoff-date">${currentDate}</span><span class="trajectory-payoff-label">Mortgage-free on your current plan</span>`;
   }
 
   const schedule=()=>{cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(()=>requestAnimationFrame(render));};
