@@ -87,37 +87,6 @@
     return get();
   }
 
-  function fromDom() {
-    const value = (id) => document.getElementById(id)?.value;
-    return set({
-      balance: value('balance'),
-      rate: value('rate'),
-      payment: value('payment'),
-      currentOverpayment: value('currentOverpayment'),
-      fixedEnd: value('fixedEnd') || '',
-      homeValue: value('homeValue'),
-      ownership: value('ownership'),
-      scenarioExtra: value('customExtra'),
-    });
-  }
-
-  function applyToDom(fields = null, options = {}) {
-    const current = initialise();
-    const ids = fields || ['balance','rate','payment','currentOverpayment','fixedEnd','homeValue','ownership','scenarioExtra'];
-    const map = { scenarioExtra: 'customExtra' };
-    ids.forEach((field) => {
-      const element = document.getElementById(map[field] || field);
-      if (!element || current[field] === undefined) return;
-      element.value = current[field];
-      if (options.dispatch) {
-        element.dispatchEvent(new Event('input', { bubbles: true }));
-        element.dispatchEvent(new Event('change', { bubbles: true }));
-      }
-    });
-    const slider = document.getElementById('extraSlider');
-    if (slider && (!fields || fields.includes('scenarioExtra'))) slider.value = Math.min(1000, current.scenarioExtra);
-    return get();
-  }
 
   function subscribe(listener) {
     if (typeof listener !== 'function') return () => {};
@@ -130,8 +99,6 @@
     defaults: { ...defaults },
     get,
     set,
-    fromDom,
-    applyToDom,
     subscribe,
   };
 
