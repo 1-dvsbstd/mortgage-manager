@@ -73,13 +73,7 @@
     const mortgage = currentMortgage();
     if (Math.abs((Number(mortgage.balance)||0) - projected) < .5) { updateStatus(); return; }
     applyingProjection = true;
-    if (window.MortgageStore) {
-      window.MortgageStore.set({balance:Math.round(projected)});
-      window.MortgageStore.applyToDom(['balance'],{dispatch:true});
-    } else if ($('balance')) {
-      $('balance').value = Math.round(projected);
-      $('balance').dispatchEvent(new Event('input',{bubbles:true}));
-    }
+    if (window.MortgageStore) window.MortgageStore.set({balance:Math.round(projected)});
     applyingProjection = false;
     updateStatus();
   }
@@ -112,9 +106,7 @@
       }
     });
   }
-
-  simplifyCurrentMortgageView();
   ensureStatus();
   applyMonthlyBalance();
-  requestAnimationFrame(() => { simplifyCurrentMortgageView(); updateStatus(); });
+  requestAnimationFrame(updateStatus);
 })();
