@@ -32,8 +32,13 @@
 </head>
 <body>
   <main class="app-shell">
-    <header class="topbar">
+    <header class="topbar topbar-with-nav">
       <div><p class="brand">Mortgage Manager <span>V0.15.21</span></p><p class="topline">See what you owe, what you own, and how quickly you can change it.</p></div>
+      <nav class="app-section-nav app-section-nav-top" aria-label="Mortgage Manager sections">
+        <button type="button" data-app-view="current" aria-controls="view-current"><span>Current</span></button>
+        <button type="button" data-app-view="upcoming" aria-controls="view-upcoming"><span>Upcoming</span></button>
+        <button type="button" data-app-view="future" aria-controls="view-future"><span>Future</span></button>
+      </nav>
       <div class="save-status" id="saveStatus">Saved on this device</div>
     </header>
 
@@ -102,7 +107,13 @@
           <div id="futureFeatureHost"></div>
         </div>
       </section>
-    </div>    <footer class="footer">Illustrative planning tool only. Market rates are dated indicative averages, not mortgage offers. Home-value projections are scenarios rather than valuations. Property-share figures are simplified and may not match the legal or lender treatment of every ownership/equity scheme. Mortgage projections assume the entered rate and payment remain unchanged.</footer>
+    </div>    <nav class="app-section-nav app-section-nav-bottom" aria-label="Mortgage Manager sections">
+      <button type="button" data-app-view="current" aria-controls="view-current"><span>Current</span></button>
+      <button type="button" data-app-view="upcoming" aria-controls="view-upcoming"><span>Upcoming</span></button>
+      <button type="button" data-app-view="future" aria-controls="view-future"><span>Future</span></button>
+    </nav>
+
+    <footer class="footer">Illustrative planning tool only. Market rates are dated indicative averages, not mortgage offers. Home-value projections are scenarios rather than valuations. Property-share figures are simplified and may not match the legal or lender treatment of every ownership/equity scheme. Mortgage projections assume the entered rate and payment remain unchanged.</footer>
   </main>
 
   <script src="src/mortgage-store.js?v=finished-shell-002"></script>
