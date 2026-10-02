@@ -103,7 +103,7 @@
           <div class="trajectory-presets">
             ${scenarioExtras.map((value)=>`<button type="button" data-scenario-extra="${value}"><strong>${money(value)}</strong><small>/month</small></button>`).join('')}
           </div>
-          <label class="trajectory-custom-overpay"><span class="trajectory-custom-label">Custom</span><strong class="trajectory-custom-value">£<input id="trajectoryCustomOverpay" type="number" min="0" step="10" inputmode="decimal" value="0"></strong><small>/month</small></label>
+          <label class="trajectory-custom-overpay"><span class="trajectory-custom-label">Custom</span><strong class="trajectory-custom-value">£<input id="trajectoryCustomOverpay" type="text" inputmode="decimal" autocomplete="off" value="0" aria-label="Custom monthly overpayment"></strong><small>/month</small></label>
         </div>`;
     }
 
@@ -159,15 +159,16 @@
       const whatIfSummary=payoffSummary(basePayment,basePayment+extra,state);
 
       comparison.innerHTML=`
-        <div class="trajectory-current-plan">
-          <span>Current overpayment</span>
-          <strong>${money(regular)}<small>/month</small></strong>
-          <em>${regular>0&&currentSummary.monthsSaved>0?`${currentSummary.duration} sooner · ${money(currentSummary.interestSaved)} less interest`:'No regular overpayment'}</em>
-        </div>
-        <div class="trajectory-whatif-plan ${extra>0?'is-active':''}">
-          <span>${extra>0?`What if ${money(extra)}/month`:'What if'}</span>
-          <strong>${extra>0?money(extra):'—'}<small>${extra>0?'/month':''}</small></strong>
-          <em>${extra>0&&whatIfSummary.monthsSaved>0?`${whatIfSummary.duration} sooner · ${money(whatIfSummary.interestSaved)} less interest`:'Choose an amount to compare'}</em>
+        <div class="trajectory-impact-summary ${extra>0?'is-active':''}">
+          <div class="trajectory-impact-metric">
+            <span>Time saved</span>
+            <strong>${extra>0&&whatIfSummary.monthsSaved>0?whatIfSummary.duration:'—'}</strong>
+          </div>
+          <div class="trajectory-impact-metric">
+            <span>Interest saved</span>
+            <strong>${extra>0&&whatIfSummary.interestSaved>0?money(whatIfSummary.interestSaved):'—'}</strong>
+          </div>
+          <p>${regular>0&&currentSummary.monthsSaved>0?`Your current ${money(regular)}/month plan already saves ${currentSummary.duration} and ${money(currentSummary.interestSaved)} interest.`:'Compared with your scheduled mortgage payment.'}</p>
         </div>`;
     }
 
