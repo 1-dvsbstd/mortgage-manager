@@ -2161,7 +2161,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 
 .app-view-current .trajectory-workspace{
   display:grid!important;
-  grid-template-columns:168px minmax(0,1fr)!important;
+  grid-template-columns:205px minmax(0,1fr)!important;
   align-items:stretch!important;
   min-width:0!important;
 }
@@ -2171,7 +2171,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   flex-direction:column!important;
   min-width:0!important;
   margin:0!important;
-  padding:17px 16px 24px 18px!important;
+  padding:17px 18px 24px 20px!important;
   border:0!important;
   border-radius:0!important;
   background:transparent!important;
@@ -2359,14 +2359,12 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   min-width:0!important;
   display:flex!important;
   flex-direction:column!important;
-  align-items:flex-start!important;
   min-height:100%!important;
-  padding:14px 34px 24px 26px!important;
+  padding:14px 26px 24px 26px!important;
   background:transparent!important;
 }
 .app-view-current .trajectory-chart-stage>.chart-wrap{
-  width:calc(100% - 28px)!important;
-  max-width:1180px!important;
+  width:100%!important;
   margin:0!important;
   padding:0!important;
   border:0!important;
@@ -2389,7 +2387,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   visibility:visible!important;
 }
 .app-view-current .trajectory-chart-stage>.legend{
-  width:calc(100% - 28px)!important;
+  width:100%!important;
   display:flex!important;
   flex-wrap:wrap!important;
   gap:10px 20px!important;
@@ -2432,7 +2430,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 @media(max-width:900px){
   .app-view-current .trajectory-workspace{
-    grid-template-columns:160px minmax(0,1fr)!important;
+    grid-template-columns:196px minmax(0,1fr)!important;
   }
   .app-view-current .trajectory-scenario-controls{
     padding:18px 18px 24px 20px!important;
