@@ -191,7 +191,7 @@
         '<span><i class="dot scheduled-line"></i>Scheduled only</span>'+
         '<span><i class="dot regular-line"></i>Current plan</span>'+
         (showWhatIf?'<span><i class="dot selected-line"></i>What if</span>':'')+
-        '<span><i class="dot equity-line"></i>Projected equity %</span>';
+        '<span><i class="dot equity-line"></i>Your equity progress</span>';
     }
   }
 
