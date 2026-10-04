@@ -1125,3 +1125,34 @@ body .app-view-current .trajectory-scenario-copy .trajectory-current-saving{
 
 
 /* Visual audit — Current summary uses an open ruled strip, not cards. */
+
+/* Future structural cleanup — root app */
+.app-view-future #nextHomePlanner.future-source-only{display:none!important}
+.app-view-future #propertyCostComparison .cost-scale{display:none!important}
+.app-view-future #propertyCostComparison .long-term-difference-note{
+  display:grid!important;
+  justify-items:center!important;
+  gap:3px!important;
+  margin:12px 0 0!important;
+  padding:12px 16px 0!important;
+  border-top:1px solid var(--border-soft)!important;
+  text-align:center!important;
+}
+.app-view-future #propertyCostComparison .long-term-difference-note>span{
+  color:var(--muted)!important;
+  font-size:9px!important;
+  font-weight:750!important;
+  letter-spacing:.04em!important;
+  text-transform:uppercase!important;
+}
+.app-view-future #propertyCostComparison .long-term-difference-note>strong{
+  color:var(--text)!important;
+  font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
+  font-size:25px!important;
+  font-weight:500!important;
+  line-height:1!important;
+}
+.app-view-future #propertyCostComparison .long-term-difference-note>small{
+  color:var(--muted)!important;
+  font-size:9px!important;
+}
