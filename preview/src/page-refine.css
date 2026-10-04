@@ -3616,3 +3616,21 @@ body .app-view-future .v157-range-track{
 }
 
 body .future-assumption-controls button:hover{background:var(--theme-hover)!important}
+
+.app-view-upcoming .market-rate-card-direction>strong{
+  display:flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  color:var(--text)!important;
+}
+.app-view-upcoming .market-rate-direction-cue{
+  display:inline-block!important;
+  font-family:var(--font-ui)!important;
+  font-size:10px!important;
+  font-weight:800!important;
+  line-height:1!important;
+}
+.app-view-upcoming .market-rate-card-two .market-rate-direction-cue{color:var(--theme-hero-ink)!important}
+.app-view-upcoming .market-rate-card-five .market-rate-direction-cue{color:var(--accent-strong)!important}
+.app-view-upcoming .market-rate-card-direction>span,
+.app-view-upcoming .market-rate-card-direction>small{color:var(--muted-2)!important}
