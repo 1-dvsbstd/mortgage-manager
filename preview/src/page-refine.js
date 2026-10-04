@@ -232,6 +232,68 @@
     if(note) note.textContent='Deal-end balance includes your regular overpayment. Payment scenarios show the scheduled mortgage payment at each rate, without assuming a future overpayment. Centre rates use your current rate and market benchmarks; outer rates are simple stress tests.';
   }
 
+  function renderRateTrend(){
+    const rates=$('.app-view-upcoming .upcoming-rates');
+    const body=$('.upcoming-section-body',rates||document);
+    const history=window.MortgageMarket?.history;
+    const points=Array.isArray(history?.points)?history.points.filter((point)=>Number.isFinite(Number(point.rate))):[];
+    if(!body||points.length<6) return;
+
+    let panel=$('#marketRateTrend',rates);
+    if(!panel){
+      panel=document.createElement('section');
+      panel.id='marketRateTrend';
+      panel.className='market-rate-trend';
+      const note=$('.deal-planner-note',body);
+      if(note) note.insertAdjacentElement('afterend',panel); else body.appendChild(panel);
+    }
+
+    const values=points.map((point)=>Number(point.rate));
+    const latest3=values.slice(-3);
+    const previous3=values.slice(-6,-3);
+    const avg=(items)=>items.reduce((sum,value)=>sum+value,0)/items.length;
+    const latestAvg=avg(latest3), previousAvg=avg(previous3);
+    const delta=latestAvg-previousAvg;
+    const direction=Math.abs(delta)<.025?'flat':delta<0?'down':'up';
+    const directionLabel=direction==='flat'?'Broadly flat':direction==='down'?'Easing slightly':'Rising';
+    const directionSymbol=direction==='flat'?'→':direction==='down'?'↓':'↑';
+
+    const width=620,height=116,padX=10,padY=12;
+    const min=Math.min(...values),max=Math.max(...values);
+    const spread=Math.max(.35,max-min);
+    const yMin=min-spread*.18,yMax=max+spread*.18;
+    const x=(index)=>padX+(width-padX*2)*(index/Math.max(1,values.length-1));
+    const y=(value)=>padY+(height-padY*2)*(1-(value-yMin)/(yMax-yMin));
+    const path=values.map((value,index)=>`${index?'L':'M'} ${x(index).toFixed(1)} ${y(value).toFixed(1)}`).join(' ');
+    const area=`${path} L ${x(values.length-1).toFixed(1)} ${height-padY} L ${x(0).toFixed(1)} ${height-padY} Z`;
+    const firstLabel=new Intl.DateTimeFormat('en-GB',{month:'short',year:'2-digit'}).format(new Date(points[0].date+'T12:00:00Z'));
+    const lastLabel=new Intl.DateTimeFormat('en-GB',{month:'short',year:'2-digit'}).format(new Date(points.at(-1).date+'T12:00:00Z'));
+
+    panel.dataset.direction=direction;
+    panel.innerHTML=`
+      <div class="market-rate-trend-copy">
+        <div>
+          <p class="eyebrow">Historical context</p>
+          <h3>Market rate trend</h3>
+          <p>${history.label||'Mortgage benchmark'} · Bank of England</p>
+        </div>
+        <div class="market-rate-trend-metric">
+          <span>Recent 3-month average</span>
+          <strong><b>${directionSymbol}</b> ${directionLabel}</strong>
+          <small>${Math.abs(delta).toFixed(2)} pts vs previous 3 months</small>
+        </div>
+      </div>
+      <div class="market-rate-trend-chart">
+        <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Twelve month mortgage rate trend from ${firstLabel} to ${lastLabel}">
+          <path class="market-rate-trend-area" d="${area}"></path>
+          <path class="market-rate-trend-line" d="${path}"></path>
+          <circle class="market-rate-trend-dot" cx="${x(values.length-1).toFixed(1)}" cy="${y(values.at(-1)).toFixed(1)}" r="3.5"></circle>
+        </svg>
+        <div class="market-rate-trend-axis"><span>${firstLabel}</span><span>Latest ${values.at(-1).toFixed(2)}%</span><span>${lastLabel}</span></div>
+      </div>
+    `;
+  }
+
   function refineUpcoming(){
     const shell=$('.app-view-upcoming .upcoming-sections');
     if(!shell) return;
@@ -280,6 +342,7 @@
     $('.upcoming-section-heading h2',rates).textContent='What your payment could look like';
     const rateEyebrow=$('.upcoming-section-heading .eyebrow',rates);
     if(rateEyebrow) rateEyebrow.textContent='Rate outlook';
+    renderRateTrend();
 
     const positionHeading=$('.upcoming-section-heading',position);
     const positionTitle=$('h2',positionHeading||position);
@@ -506,7 +569,7 @@
   }
 
   document.addEventListener('mortgage-market-rates-updated',()=>{
-    requestAnimationFrame(()=>{ renderUpcomingRates(); refineUpcoming(); });
+    requestAnimationFrame(()=>{ renderUpcomingRates(); refineUpcoming(); renderRateTrend(); });
   });
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>{setTimeout(run,780);setTimeout(run,1300);},{once:true});
