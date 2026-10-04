@@ -53,8 +53,8 @@
     const scenario=$('.trajectory-what-if');
     if(!state||!scenario) return;
     const regular=Math.max(0,Number(state.currentOverpayment)||0);
-    const extra=Math.max(0,Number(state.scenarioExtra)||0);
-    const total=regular+extra;
+    const selectedScenario=Math.max(0,Number(state.scenarioExtra)||0);
+    const total=selectedScenario>0?selectedScenario:regular;
     const headline=$('#overpayHeadline',scenario);
     if(headline) headline.textContent=`${money(total)}/month total`;
 
@@ -71,8 +71,8 @@
     const state=window.MortgageStore?.get?.();
     if(!state) return;
     const regular=Math.max(0,Number(state.currentOverpayment)||0);
-    const nextTotal=Math.max(regular,Number(total)||0);
-    MortgageStore.set({scenarioExtra:Math.max(0,nextTotal-regular)});
+    const nextTotal=Math.max(0,Number(total)||0);
+    MortgageStore.set({scenarioExtra:Math.abs(nextTotal-regular)<.5?0:nextTotal});
   }
 
   function mergeRegularIntoWhatIf(){
@@ -134,7 +134,7 @@
     if(!panel||!state) return;
     if(panel.dataset.totalMode!=='true'){
       panel.dataset.totalMode='true';
-      panel.innerHTML='<div class="future-assumption-copy"><div><span class="future-assumption-label">Planning with</span><strong id="futureExtraSummary">—</strong></div><p>The same total overpayment used on Current.</p></div><div class="future-assumption-controls" id="futureTotalControls"></div>';
+      panel.innerHTML='<div class="future-assumption-copy"><div><span class="future-assumption-label">Planning with</span><strong id="futureExtraSummary">—</strong></div><p>The overpayment scenario currently selected on Current.</p></div><div class="future-assumption-controls" id="futureTotalControls"></div>';
       panel.addEventListener('click',(event)=>{
         const button=event.target.closest('[data-future-total]');
         if(button) applyTotalOverpayment(button.dataset.futureTotal);
@@ -143,8 +143,10 @@
         if(event.target.id==='futureTotalCustom') applyTotalOverpayment(event.target.value);
       });
     }
-    const regular=Math.max(0,Number(state.currentOverpayment)||0), total=regular+Math.max(0,Number(state.scenarioExtra)||0);
-    const summary=$('#futureExtraSummary',panel); if(summary) summary.textContent=`${money(total)}/month total`;
+    const regular=Math.max(0,Number(state.currentOverpayment)||0);
+    const selectedScenario=Math.max(0,Number(state.scenarioExtra)||0);
+    const total=selectedScenario>0?selectedScenario:regular;
+    const summary=$('#futureExtraSummary',panel); if(summary) summary.textContent=`${money(total)}/month overpayment`;
     const controls=$('#futureTotalControls',panel);
     if(controls) controls.innerHTML=totalCandidates(regular).map((value)=>`<button type="button" data-future-total="${value}" class="${Math.abs(value-total)<.5?'active':''}">${Math.abs(value-regular)<.5?'Current ':''}${money(value)}</button>`).join('')+`<label>Custom £<input id="futureTotalCustom" type="number" min="${regular}" step="10" value="${Math.round(total*100)/100}"></label>`;
   }
@@ -277,6 +279,7 @@
     if(!future||!planner) return;
     const body=$('.next-home-body',planner), timeline=$('.next-home-timeline',planner);
     if(!body||!timeline) return;
+    $('.next-home-settings',planner)?.remove();
 
     const heading=$('.next-home-heading',body);
     if(heading){
@@ -302,6 +305,7 @@
     const host=$('.future-wait-host',wait);
     $('.next-home-subhead',timeline)?.remove();
     if(timeline.parentElement!==host) host.appendChild(timeline);
+    planner.classList.add('future-source-only');
   }
 
   function organiseFutureFlow(){
@@ -310,9 +314,9 @@
     const order=[
       $('#futureOverpaymentAssumption'),
       $('#homeProjection'),
-      $('#nextHomePlanner'),
       $('#futureModelRange'),
       $('#futureWaitPlanner'),
+      $('#nextHomePlanner'),
       $('#propertyCostComparison')
     ].filter(Boolean);
     order.forEach((node)=>future.appendChild(node));
@@ -321,9 +325,9 @@
   function refineFuture(){
     const future=$('.app-view-future .app-view-content'), home=$('#homeProjection'), range=$('#homeProfileRange'), planner=$('#nextHomePlanner');
     if(!future||!home) return;
-    home.querySelector('.future-estimate')?.classList.add('future-remove');
-    $('#homeValueHistory',home)?.classList.add('future-remove');
-    planner?.querySelector('.next-home-settings')?.classList.add('future-remove');
+    home.querySelector('.future-estimate')?.remove();
+    $('#homeValueHistory',home)?.remove();
+    planner?.querySelector('.next-home-settings')?.remove();
     future.querySelectorAll('.future-stage-label').forEach((label)=>label.remove());
 
     const heading=$('.projection-heading',home);
@@ -349,6 +353,21 @@
     if(cost){
       cost.classList.add('panel','temporal-feature-card','temporal-feature-cost-comparison');
       cost.classList.remove('future-cost-inline');
+      const cards=cost.querySelectorAll('.property-cost-card');
+      if(cards.length>=2){
+        const value=Number((cards[0].querySelector('strong')?.textContent||'').replace(/[^0-9.-]/g,''))||0;
+        const costValue=Number((cards[1].querySelector('strong')?.textContent||'').replace(/[^0-9.-]/g,''))||0;
+        let result=cost.querySelector('.long-term-difference-note');
+        if(!result){
+          result=document.createElement('div');
+          result.className='long-term-difference-note';
+          cost.querySelector('.property-cost-grid')?.insertAdjacentElement('afterend',result);
+        }
+        if(value&&costValue){
+          const diff=value-costValue;
+          result.innerHTML=`<span>Projected difference</span><strong>${diff>=0?'+':'−'}£${Math.round(Math.abs(diff)).toLocaleString('en-GB')}</strong><small>${diff>=0?'Projected value above known purchase + mortgage cost':'Known purchase + mortgage cost above projected value'}</small>`;
+        }
+      }
     }
     organiseFutureFlow();
   }
