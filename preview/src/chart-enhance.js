@@ -61,12 +61,13 @@
   function formatPointDate(months){ return new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(dateAt(months)); }
   function pointAt(points,month){ if(!points?.length) return 0; return points[Math.min(Math.max(0,month),points.length-1)]??0; }
 
-  function makeEquityPoints(v,mortgagePoints,maxMonths){
+  function makeEquityPercentPoints(v,mortgagePoints,maxMonths){
     if(!v.homeValue||!v.ownership) return [];
     const trend=homeTrend(), owned=v.ownership/100, points=[];
     for(let month=0;month<=maxMonths;month+=1){
       const home=v.homeValue*Math.pow(1+trend/100,month/12);
-      points.push(Math.max(0,home*owned-pointAt(mortgagePoints,month)));
+      const personalEquity=Math.max(0,home*owned-pointAt(mortgagePoints,month));
+      points.push(home>0?Math.max(0,Math.min(v.ownership,(personalEquity/home)*100)):0);
     }
     return points;
   }
@@ -125,13 +126,15 @@
     canvas.classList.add('trajectory-chart-rendering');
     ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,cssWidth,cssHeight);
 
-    const pad={left:compact?52:62,right:compact?18:26,top:compact?18:12,bottom:compact?48:44};
+    const pad={left:compact?52:62,right:compact?42:54,top:compact?18:18,bottom:compact?48:44};
     const width=Math.max(1,cssWidth-pad.left-pad.right), height=Math.max(1,cssHeight-pad.top-pad.bottom);
     const maxMonths=Math.max(scheduled.monthlyPoints.length,current.monthlyPoints.length,selected.monthlyPoints.length)-1||1;
-    const equity=makeEquityPoints(v,selected.monthlyPoints,maxMonths);
-    const maxValue=Math.max(scheduled.monthlyPoints[0]||0,current.monthlyPoints[0]||0,selected.monthlyPoints[0]||0,equity.length?Math.max(...equity):0,1);
+    const equityPct=makeEquityPercentPoints(v,selected.monthlyPoints,maxMonths);
+    const maxValue=Math.max(scheduled.monthlyPoints[0]||0,current.monthlyPoints[0]||0,selected.monthlyPoints[0]||0,1);
+    const equityScaleMax=Math.max(20,Math.min(100,Math.ceil((Math.max(0,Number(v.ownership)||0))/20)*20||100));
     const xFor=(month)=>pad.left+width*(month/maxMonths);
     const yFor=(value)=>pad.top+height*(1-Math.max(0,value)/maxValue);
+    const yForEquity=(value)=>pad.top+height*(1-Math.max(0,Math.min(equityScaleMax,value))/equityScaleMax);
 
     ctx.font='11px system-ui'; ctx.textBaseline='middle';
     const ySteps=3;
@@ -140,6 +143,24 @@
       ctx.strokeStyle=C.grid; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(pad.left+width,y); ctx.stroke();
       ctx.fillStyle=C.label; ctx.textAlign='right'; ctx.fillText(compactMoney(maxValue*(1-i/ySteps)),pad.left-10,y);
     }
+    const equitySteps=4;
+    ctx.save();
+    ctx.font=compact?'9px system-ui':'10px system-ui';
+    ctx.fillStyle=C.equity;
+    ctx.globalAlpha=.78;
+    ctx.textAlign='left';
+    ctx.textBaseline='middle';
+    for(let i=0;i<=equitySteps;i+=1){
+      const y=pad.top+(height*i)/equitySteps;
+      const value=Math.round(equityScaleMax*(1-i/equitySteps));
+      ctx.fillText(String(value)+'%',pad.left+width+9,y);
+    }
+    ctx.globalAlpha=.86;
+    ctx.font=compact?'8px system-ui':'9px system-ui';
+    ctx.textAlign='right';
+    ctx.textBaseline='alphabetic';
+    ctx.fillText('Equity %',pad.left+width+pad.right-2,pad.top-6);
+    ctx.restore();
 
     const ticks=yearTicks(maxMonths,cssWidth); ctx.textBaseline='alphabetic'; ctx.font=compact?'10px system-ui':'11px system-ui';
     ticks.forEach(({month,label},index)=>{
@@ -148,34 +169,17 @@
       ctx.fillStyle=C.label; ctx.textAlign=index===0?'left':index===ticks.length-1?'right':'center'; ctx.fillText(label,x,cssHeight-17);
     });
 
-    const drawLine=(points,colour,lineWidth,dash=[],opacity=1)=>{
+    const drawLine=(points,colour,lineWidth,dash=[],opacity=1,yMapper=yFor)=>{
       if(!points?.length) return;
       ctx.save(); ctx.globalAlpha=opacity; ctx.strokeStyle=colour; ctx.lineWidth=lineWidth; ctx.lineJoin='round'; ctx.lineCap='round'; ctx.setLineDash(dash); ctx.beginPath();
-      points.forEach((value,month)=>{ const x=xFor(Math.min(month,maxMonths)), y=yFor(value); month===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
+      points.forEach((value,month)=>{ const x=xFor(Math.min(month,maxMonths)), y=yMapper(value); month===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
       ctx.stroke(); ctx.restore();
     };
-    if(equity.length){
-      ctx.save();
-      const fill=ctx.createLinearGradient(0,pad.top,0,pad.top+height);
-      fill.addColorStop(0,'rgba(181,138,91,.065)');
-      fill.addColorStop(1,'rgba(181,138,91,.008)');
-      ctx.beginPath();
-      equity.forEach((value,month)=>{
-        const x=xFor(Math.min(month,maxMonths)),y=yFor(value);
-        month===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-      });
-      ctx.lineTo(xFor(maxMonths),pad.top+height);
-      ctx.lineTo(xFor(0),pad.top+height);
-      ctx.closePath();
-      ctx.fillStyle=fill;
-      ctx.fill();
-      ctx.restore();
-    }
     const hasWhatIf=Math.max(0,Number(v.extra)||0)>.01;
     drawLine(scheduled.monthlyPoints,C.scheduled,compact?1.05:1.15,[5,6],.58);
     drawLine(current.monthlyPoints,C.current,compact?(hasWhatIf?1.8:2.7):(hasWhatIf?2.0:3.0),[],hasWhatIf?.70:1);
     if(hasWhatIf) drawLine(selected.monthlyPoints,C.selected,compact?3.25:3.65,[],1);
-    drawLine(equity,C.equity,compact?1.25:1.4,[8,6],.68);
+    drawLine(equityPct,C.equity,compact?1.35:1.55,[8,6],.84,yForEquity);
 
     const fixed=monthsUntil(v.fixedEnd);
     if(fixed!==null&&fixed>=0&&fixed<=maxMonths){
@@ -196,13 +200,10 @@
     const readout=ensureReadout();
     const currentPayoff=Math.max(0,current.monthlyPoints.length-1);
     const selectedPayoff=Math.max(0,selected.monthlyPoints.length-1);
-    const savedMonths=Math.max(0,currentPayoff-selectedPayoff);
-    const savedYears=Math.floor(savedMonths/12),savedRemainder=savedMonths%12;
-    const savedDuration=savedYears&&savedRemainder?`${savedYears}y ${savedRemainder}m`:savedYears?`${savedYears}y`:`${savedRemainder}m`;
     const selectedDate=formatPointDate(selectedPayoff);
     const currentDate=formatPointDate(currentPayoff);
     readout.innerHTML=hasWhatIf
-      ? `<span class="trajectory-payoff-date">${selectedDate}</span><span class="trajectory-payoff-label">Mortgage-free</span><span class="trajectory-payoff-sooner"><strong>${savedDuration}</strong> earlier</span>`
+      ? `<span class="trajectory-payoff-date">${selectedDate}</span><span class="trajectory-payoff-label">Mortgage-free</span>`
       : `<span class="trajectory-payoff-date">${currentDate}</span><span class="trajectory-payoff-label">Mortgage-free on your current plan</span>`;
     canvas.classList.remove('trajectory-chart-rendering');
     canvas.classList.add('trajectory-chart-ready');
