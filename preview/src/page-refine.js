@@ -506,6 +506,7 @@
     const host=$('.future-wait-host',wait);
     $('.next-home-subhead',timeline)?.remove();
     if(timeline.parentElement!==host) host.appendChild(timeline);
+    planner.classList.add('future-source-only');
   }
 
   function organiseFutureFlow(){
@@ -578,22 +579,21 @@
     }
     if(cost){
       const cards=cost.querySelectorAll('.property-cost-card');
+      cards.forEach((card)=>card.classList.remove('long-term-value-card','long-term-cost-card'));
       if(cards.length>=2){
-        cards[0].classList.add('long-term-value-card');
-        cards[1].classList.add('long-term-cost-card');
         const value=Number((cards[0].querySelector('strong')?.textContent||'').replace(/[^0-9.-]/g,''))||0;
         const costValue=Number((cards[1].querySelector('strong')?.textContent||'').replace(/[^0-9.-]/g,''))||0;
-        let note=cost.querySelector('.long-term-difference-note');
-        if(!note){
-          note=document.createElement('p');
-          note.className='long-term-difference-note';
-          cost.appendChild(note);
+        let result=cost.querySelector('.long-term-difference-note');
+        if(!result){
+          result=document.createElement('div');
+          result.className='long-term-difference-note';
+          cost.querySelector('.property-cost-grid')?.insertAdjacentElement('afterend',result);
         }
         if(value&&costValue){
           const diff=value-costValue;
-          note.textContent=diff>=0
-            ? `Projected value is about £${Math.round(diff).toLocaleString('en-GB')} above known purchase + mortgage cost.`
-            : `Known purchase + mortgage cost is about £${Math.round(Math.abs(diff)).toLocaleString('en-GB')} above projected value.`;
+          result.innerHTML=`<span>Projected difference</span><strong>${diff>=0?'+':'−'}£${Math.round(Math.abs(diff)).toLocaleString('en-GB')}</strong><small>${diff>=0?'Projected value above known purchase + mortgage cost':'Known purchase + mortgage cost above projected value'}</small>`;
+        }else{
+          result.innerHTML='<span>Projected difference</span><strong>—</strong><small>Add purchase and mortgage history to compare</small>';
         }
       }
     }
