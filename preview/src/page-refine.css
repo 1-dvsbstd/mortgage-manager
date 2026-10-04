@@ -2080,7 +2080,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-current .trajectory-plan-card{
   min-width:0!important;
   padding:5px 22px 2px!important;
-  text-align:right!important;
+  text-align:left!important;
 }
 .app-view-current .trajectory-plan-card:first-child{
   padding-left:0!important;
@@ -2091,7 +2091,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-current .trajectory-plan-label{
   display:flex!important;
   align-items:baseline!important;
-  justify-content:flex-end!important;
+  justify-content:flex-start!important;
   gap:7px!important;
 }
 .app-view-current .trajectory-plan-label span{
@@ -2135,7 +2135,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-current .trajectory-plan-gain>span{
   display:flex!important;
   align-items:baseline!important;
-  justify-content:flex-end!important;
+  justify-content:flex-start!important;
   gap:4px!important;
   min-width:0!important;
 }
@@ -2359,12 +2359,14 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   min-width:0!important;
   display:flex!important;
   flex-direction:column!important;
+  align-items:flex-start!important;
   min-height:100%!important;
-  padding:14px 26px 24px 26px!important;
+  padding:14px 34px 24px 26px!important;
   background:transparent!important;
 }
 .app-view-current .trajectory-chart-stage>.chart-wrap{
-  width:100%!important;
+  width:calc(100% - 28px)!important;
+  max-width:1180px!important;
   margin:0!important;
   padding:0!important;
   border:0!important;
@@ -2387,6 +2389,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   visibility:visible!important;
 }
 .app-view-current .trajectory-chart-stage>.legend{
+  width:calc(100% - 28px)!important;
   display:flex!important;
   flex-wrap:wrap!important;
   gap:10px 20px!important;
