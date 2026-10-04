@@ -381,6 +381,14 @@
     refineUpcoming();
     refineFuture();
     refineFutureAssumption();
+    const futureReady=
+      !!document.querySelector('.app-view-future .app-view-content') &&
+      !!document.querySelector('#homeProjection') &&
+      !!document.querySelector('#futureModelRange') &&
+      !!document.querySelector('#futureWaitPlanner') &&
+      !!document.querySelector('#nextHomePlanner.future-source-only') &&
+      !document.querySelector('#homeProjection #homeValueHistory');
+    if(futureReady) document.documentElement.classList.remove('future-refining');
   }
 
   if(window.MortgageStore?.subscribe){
@@ -390,6 +398,13 @@
     });
   }
 
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>{setTimeout(run,780);setTimeout(run,1300);},{once:true});
-  else {setTimeout(run,780);setTimeout(run,1300);}
+  const startRefinement=()=>{
+    run();
+    requestAnimationFrame(run);
+    setTimeout(run,120);
+    setTimeout(run,500);
+    setTimeout(run,1000);
+  };
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',startRefinement,{once:true});
+  else startRefinement();
 })();
