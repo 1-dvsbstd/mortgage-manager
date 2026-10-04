@@ -71,9 +71,10 @@
     const payment = Math.max(0,Number(mortgage.payment)||0);
     const currentOverpay = Math.max(0,Number(mortgage.currentOverpayment)||0);
     const scenarioExtra = Math.max(0,Number(mortgage.scenarioExtra)||0);
+    const selectedOverpayment = scenarioExtra > 0 ? scenarioExtra : currentOverpay;
     const home = currentEstimatedHomeValue(mortgage.homeValue);
     const ownership = Math.min(100,Math.max(0,Number(mortgage.ownership)||0));
-    const path = MortgageMath.amortize(balance, rate, payment + currentOverpay + scenarioExtra);
+    const path = MortgageMath.amortize(balance, rate, payment + selectedOverpayment);
     if (!Number.isFinite(path.months)) return;
 
     const settings = getHomeSettings();
@@ -86,7 +87,7 @@
     const payoffDate = new Date();
     payoffDate.setMonth(payoffDate.getMonth() + Math.max(0, Math.round(path.months)));
     const payoffLabel = new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(payoffDate);
-    const totalOverpayment = currentOverpay + scenarioExtra;
+    const totalOverpayment = selectedOverpayment;
     const planContext = $('costPlanContext');
     if (planContext) {
       planContext.textContent = `Mortgage-free ${payoffLabel} · ${totalOverpayment > 0 ? `${money(totalOverpayment)}/mo overpayment` : 'no overpayment'}`;
