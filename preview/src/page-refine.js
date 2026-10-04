@@ -523,23 +523,12 @@
       section=document.createElement('section');
       section.id='futurePayoffTargets';
       section.className='panel future-payoff-targets';
-      section.innerHTML='<div class="future-payoff-heading"><div><p class="eyebrow">Mortgage-free targets</p><h2>What would it take to clear the mortgage sooner?</h2><p class="future-payoff-subtitle">See the extra monthly payment needed for 3, 5 or 10 years — and how that compares with household take-home.</p></div><label class="future-income-control">Household take-home <span>£<input id="futureMonthlyTakeHome" type="number" min="0" step="50" inputmode="decimal" placeholder="per month"></span></label></div><div class="future-payoff-track" id="futurePayoffTrack"></div><p class="future-payoff-note" id="futurePayoffNote"></p>';
-      section.addEventListener('input',(event)=>{
-        if(event.target.id!=='futureMonthlyTakeHome') return;
-        let data={};
-        try{ data=JSON.parse(localStorage.getItem(plannerKey)||'{}')||{}; }catch(_){}
-        data.monthlyTakeHome=Math.max(0,Number(event.target.value)||0);
-        try{ localStorage.setItem(plannerKey,JSON.stringify(data)); }catch(_){}
-        renderFuturePayoffTargets();
-      });
+      section.innerHTML='<div class="future-payoff-heading"><div><p class="eyebrow">Mortgage-free targets</p><h2>What would it take to clear the mortgage sooner?</h2><p class="future-payoff-subtitle">See the total monthly payment needed for 3, 5 or 10 years, the extra required, and how demanding that would be against household take-home.</p></div></div><div class="future-payoff-track" id="futurePayoffTrack"></div><p class="future-payoff-note" id="futurePayoffNote"></p>';
       const wait=$('#futureWaitPlanner');
       if(wait) wait.insertAdjacentElement('afterend',section); else future.appendChild(section);
     }
 
     const monthlyTakeHome=Math.max(0,Number(plannerSettings.monthlyTakeHome)||0);
-    const incomeInput=$('#futureMonthlyTakeHome',section);
-    if(incomeInput && document.activeElement!==incomeInput) incomeInput.value=monthlyTakeHome||'';
-
     const balance=Math.max(0,Number(state.balance)||0);
     const rate=Math.max(0,Number(state.rate)||0);
     const scheduled=Math.max(0,Number(state.payment)||0);
@@ -554,11 +543,11 @@
     const pressure=(required)=>{
       if(!monthlyTakeHome) return {pct:null,label:'Add take-home income',className:'is-unknown'};
       const pct=required/monthlyTakeHome*100;
-      if(pct<=30) return {pct,label:'Comfortable range',className:'is-comfortable'};
+      if(pct<=30) return {pct,label:'Comfortable',className:'is-comfortable'};
       if(pct<=35) return {pct,label:'Typical range',className:'is-typical'};
-      if(pct<=45) return {pct,label:'Stretched',className:'is-stretched'};
-      if(pct<=60) return {pct,label:'Very stretched',className:'is-very-stretched'};
-      return {pct,label:'Extreme',className:'is-extreme'};
+      if(pct<=45) return {pct,label:'Stretch',className:'is-stretch'};
+      if(pct<=60) return {pct,label:'Aggressive',className:'is-aggressive'};
+      return {pct,label:'Very aggressive',className:'is-very-aggressive'};
     };
 
     const track=$('#futurePayoffTrack',section);
@@ -568,24 +557,23 @@
         const already=Number.isFinite(currentMonths)&&currentMonths<=years*12;
         const extra=Math.max(0,required-currentTotal);
         const context=pressure(required);
-        const extraText=already?'No increase needed':`+${money(extra)}/mo`;
-        const pctText=context.pct===null?'Set take-home income':`${context.pct.toFixed(0)}% of take-home`;
+        const extraText=already?'No extra needed':`+${money(extra)}/month extra needed`;
+        const pctText=context.pct===null?'Add take-home in Setup & Data':`${context.pct.toFixed(0)}% of take-home`;
         return `<article class="future-payoff-target ${context.className} ${already?'is-on-track':''}" data-years="${years}">
           <span class="future-payoff-year">${years} years</span>
-          <div class="future-payoff-extra"><strong>${extraText}</strong><small>${already?'current plan already reaches this target':'extra needed'}</small></div>
-          <div class="future-payoff-total"><span>${money(required)} total payment</span><b>${pctText}</b></div>
+          <div class="future-payoff-main"><strong>${money(required)}</strong><small>/month total</small></div>
+          <div class="future-payoff-extra">${extraText}</div>
+          <div class="future-payoff-context"><b>${pctText}</b><span>·</span><strong>${context.label}</strong></div>
           <div class="future-payoff-meter" aria-hidden="true"><i style="width:${context.pct===null?0:Math.min(100,context.pct)}%"></i></div>
-          <div class="future-payoff-status">${context.label}</div>
         </article>`;
       }).join('');
     }
 
     const note=$('#futurePayoffNote',section);
     if(note){
-      const incomeContext=monthlyTakeHome
-        ? ` · Pressure labels use ${money(monthlyTakeHome)}/month household take-home.`
-        : ' · Add household take-home above to contextualise the targets.';
-      note.textContent=`Based on your current balance, rate and selected ${money(selectedOverpayment)}/month overpayment.${incomeContext}`;
+      note.textContent=monthlyTakeHome
+        ? `Based on your current balance, rate and selected ${money(selectedOverpayment)}/month overpayment. Income pressure uses ${money(monthlyTakeHome)}/month household take-home from Setup & Data.`
+        : `Based on your current balance, rate and selected ${money(selectedOverpayment)}/month overpayment. Add household take-home in Setup & Data to show income pressure.`;
     }
   }
 
