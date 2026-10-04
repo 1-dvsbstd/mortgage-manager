@@ -108,7 +108,7 @@
           <div class="trajectory-presets">
             ${scenarioExtras.map((value)=>`<button type="button" data-scenario-extra="${value}"><strong>${money(value)}</strong><small>/month</small></button>`).join('')}
           </div>
-          <label class="trajectory-custom-overpay"><span class="trajectory-custom-label">Custom</span><strong class="trajectory-custom-value">£<input id="trajectoryCustomOverpay" type="text" inputmode="decimal" autocomplete="off" value="0" aria-label="Custom monthly overpayment"></strong><small>/month</small></label>
+          <label class="trajectory-custom-overpay"><span class="trajectory-custom-label">Custom</span><strong class="trajectory-custom-value">£<input id="trajectoryCustomOverpay" type="text" inputmode="decimal" autocomplete="off" value="${money(Math.max(0,Number(state.currentOverpayment)||0))}" aria-label="Custom monthly overpayment"></strong><small>/month</small></label>
         </div>`;
     }
 
@@ -147,7 +147,7 @@
     customWrap?.classList.toggle('is-active',!isPreset&&extra>0);
     if(custom&&document.activeElement!==custom){
       if(!isPreset&&extra>0) custom.value=String(Math.round(extra*100)/100);
-      else if(!custom.dataset.userValue) custom.value='0';
+      else if(!custom.dataset.userValue) custom.value=String(Math.round(regular*100)/100);
     }
 
     if(heading){
