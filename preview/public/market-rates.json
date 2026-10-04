@@ -7,9 +7,82 @@
   "licence": "UK Open Government Licence",
   "sourceNote": "Quoted household mortgage-rate benchmarks from the Bank of England Database. These are market reference rates, not personalised mortgage offers. Product fees, eligibility and lender criteria are not included.",
   "bands": [
-    { "ltv": 75, "twoYear": 4.77, "fiveYear": 4.78, "series": { "twoYear": "IUMBV34", "fiveYear": "IUMBV42" } },
-    { "ltv": 95, "twoYear": 5.52, "fiveYear": 5.36, "series": { "twoYear": "IUM2WTL", "fiveYear": "IUM5WTL" } }
+    {
+      "ltv": 75,
+      "twoYear": 4.77,
+      "fiveYear": 4.78,
+      "series": {
+        "twoYear": "IUMBV34",
+        "fiveYear": "IUMBV42"
+      }
+    },
+    {
+      "ltv": 95,
+      "twoYear": 5.52,
+      "fiveYear": 5.36,
+      "series": {
+        "twoYear": "IUM2WTL",
+        "fiveYear": "IUM5WTL"
+      }
+    }
   ],
-  "overall": { "twoYear": 4.77, "fiveYear": 4.78 },
-  "bandNote": "75% LTV benchmark is used at or below 75% LTV. Above 75%, the 95% LTV benchmark is used as a conservative planning proxy because the Bank of England publishes a directly comparable five-year quoted series at 75% and 95% LTV."
+  "overall": {
+    "twoYear": 4.77,
+    "fiveYear": 4.78
+  },
+  "bandNote": "75% LTV benchmark is used at or below 75% LTV. Above 75%, the 95% LTV benchmark is used as a conservative planning proxy because the Bank of England publishes a directly comparable five-year quoted series at 75% and 95% LTV.",
+  "history": {
+    "series": "IUMBV42",
+    "label": "5-year fixed · 75% LTV",
+    "points": [
+      {
+        "date": "2025-09-30",
+        "rate": 4.16
+      },
+      {
+        "date": "2025-10-31",
+        "rate": 4.17
+      },
+      {
+        "date": "2025-11-30",
+        "rate": 4.06
+      },
+      {
+        "date": "2025-12-31",
+        "rate": 3.99
+      },
+      {
+        "date": "2026-01-31",
+        "rate": 3.94
+      },
+      {
+        "date": "2026-02-28",
+        "rate": 4
+      },
+      {
+        "date": "2026-03-31",
+        "rate": 4.42
+      },
+      {
+        "date": "2026-04-30",
+        "rate": 4.96
+      },
+      {
+        "date": "2026-05-31",
+        "rate": 4.77
+      },
+      {
+        "date": "2026-06-30",
+        "rate": 4.62
+      },
+      {
+        "date": "2026-07-31",
+        "rate": 4.58
+      },
+      {
+        "date": "2026-08-31",
+        "rate": 4.78
+      }
+    ]
+  }
 }
