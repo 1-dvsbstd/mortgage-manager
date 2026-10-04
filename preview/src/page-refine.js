@@ -394,7 +394,7 @@
 
 
     const summary=$('#dealPlannerSummary',position);
-    $('#dealPlannerMilestone',position)?.setAttribute('hidden','');
+    $('#dealPlannerMilestone',position)?.remove();
     if(summary&&state&&deal){
       const countdown=$('#dealPlannerCountdown')?.closest('div');
       if(countdown&&countdown.parentElement===summary){
