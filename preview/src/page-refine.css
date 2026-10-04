@@ -4212,3 +4212,167 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
     border-top:0!important;
   }
 }
+
+/* Mortgage-free targets — continuous affordability spectrum. */
+.app-view-future #futurePayoffTargets{
+  overflow:hidden!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-spectrum{
+  margin-top:14px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-scale{
+  position:relative!important;
+  min-height:292px!important;
+  margin:0 18px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-scale-line{
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:145px!important;
+  height:4px!important;
+  border-radius:999px!important;
+  background:linear-gradient(90deg,rgba(69,88,78,.24) 0%,rgba(117,130,104,.28) 36%,rgba(181,144,77,.42) 68%,rgba(167,103,62,.55) 100%)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker{
+  position:absolute!important;
+  top:145px!important;
+  width:0!important;
+  transform:translateX(-50%)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker-dot{
+  position:absolute!important;
+  left:0!important;
+  top:0!important;
+  width:12px!important;
+  height:12px!important;
+  transform:translate(-50%,-4px)!important;
+  border:3px solid #fffaf4!important;
+  border-radius:50%!important;
+  background:var(--accent-strong)!important;
+  box-shadow:0 0 0 1px rgba(68,58,48,.18)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker.is-current .future-payoff-marker-dot{
+  width:14px!important;
+  height:14px!important;
+  background:var(--theme-hero-ink)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker-card{
+  position:absolute!important;
+  left:0!important;
+  width:150px!important;
+  transform:translateX(-50%)!important;
+  display:grid!important;
+  gap:2px!important;
+  text-align:center!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker.is-above .future-payoff-marker-card{
+  bottom:18px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker.is-below .future-payoff-marker-card{
+  top:20px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker-label{
+  color:var(--accent-strong)!important;
+  font-size:8px!important;
+  font-weight:850!important;
+  letter-spacing:.045em!important;
+  text-transform:uppercase!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker.is-current .future-payoff-marker-label{
+  color:var(--theme-hero-ink)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker-card>strong{
+  margin-top:2px!important;
+  color:var(--text)!important;
+  font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
+  font-size:22px!important;
+  font-weight:500!important;
+  line-height:1!important;
+  letter-spacing:-.02em!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker-card>small{
+  color:var(--muted)!important;
+  font-size:8.5px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker-card>b{
+  margin-top:5px!important;
+  color:var(--text)!important;
+  font-size:9.5px!important;
+  font-weight:800!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker-card>em{
+  color:var(--muted)!important;
+  font-size:8px!important;
+  font-style:normal!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-scale-caption{
+  display:grid!important;
+  grid-template-columns:1fr auto 1fr!important;
+  align-items:center!important;
+  gap:12px!important;
+  margin:2px 18px 0!important;
+  color:var(--muted)!important;
+  font-size:8px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-scale-caption span:last-child{
+  text-align:right!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-scale-caption strong{
+  color:var(--accent-strong)!important;
+  font-size:8px!important;
+  font-weight:800!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-empty{
+  display:grid!important;
+  gap:5px!important;
+  padding:24px!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:14px!important;
+}
+@media(max-width:980px){
+  .app-view-future #futurePayoffTargets .future-payoff-scale{
+    min-height:360px!important;
+    margin:0 8px!important;
+  }
+  .app-view-future #futurePayoffTargets .future-payoff-marker-card{
+    width:126px!important;
+  }
+}
+@media(max-width:700px){
+  .app-view-future #futurePayoffTargets .future-payoff-scale{
+    min-height:520px!important;
+    margin:0!important;
+  }
+  .app-view-future #futurePayoffTargets .future-payoff-scale-line{
+    left:50%!important;
+    right:auto!important;
+    top:18px!important;
+    bottom:18px!important;
+    width:4px!important;
+    height:auto!important;
+  }
+  .app-view-future #futurePayoffTargets .future-payoff-marker{
+    left:50%!important;
+    top:calc(42px + (var(--marker-index, 0) * 96px))!important;
+    transform:none!important;
+  }
+  .app-view-future #futurePayoffTargets .future-payoff-marker:nth-of-type(2){--marker-index:0}
+  .app-view-future #futurePayoffTargets .future-payoff-marker:nth-of-type(3){--marker-index:1}
+  .app-view-future #futurePayoffTargets .future-payoff-marker:nth-of-type(4){--marker-index:2}
+  .app-view-future #futurePayoffTargets .future-payoff-marker:nth-of-type(5){--marker-index:3}
+  .app-view-future #futurePayoffTargets .future-payoff-marker:nth-of-type(6){--marker-index:4}
+  .app-view-future #futurePayoffTargets .future-payoff-marker-card,
+  .app-view-future #futurePayoffTargets .future-payoff-marker.is-above .future-payoff-marker-card,
+  .app-view-future #futurePayoffTargets .future-payoff-marker.is-below .future-payoff-marker-card{
+    left:18px!important;
+    top:-24px!important;
+    bottom:auto!important;
+    width:150px!important;
+    transform:none!important;
+    text-align:left!important;
+  }
+  .app-view-future #futurePayoffTargets .future-payoff-scale-caption{
+    display:none!important;
+  }
+}
