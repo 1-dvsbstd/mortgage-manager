@@ -704,6 +704,10 @@
     requestAnimationFrame(()=>{ renderUpcomingRates(); refineUpcoming(); renderRateTrend(); });
   });
 
+  document.addEventListener('mortgage-next-home-updated',()=>{
+    requestAnimationFrame(()=>{ renderFuturePayoffTargets(); organiseFutureFlow(); });
+  });
+
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>{setTimeout(run,780);setTimeout(run,1300);},{once:true});
   else {setTimeout(run,780);setTimeout(run,1300);}
 })();
