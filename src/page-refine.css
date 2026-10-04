@@ -1129,30 +1129,109 @@ body .app-view-current .trajectory-scenario-copy .trajectory-current-saving{
 /* Future structural cleanup — root app */
 .app-view-future #nextHomePlanner.future-source-only{display:none!important}
 .app-view-future #propertyCostComparison .cost-scale{display:none!important}
+
+.app-view-future .future-overpayment-assumption{
+  min-height:0!important;
+  padding:10px 14px!important;
+  gap:14px!important;
+  border-radius:14px!important;
+}
+.app-view-future .future-assumption-copy{gap:6px!important}
+.app-view-future .future-assumption-copy strong{font-size:17px!important;line-height:1.1!important}
+.app-view-future .future-assumption-copy p{font-size:8.5px!important;color:var(--muted-2)!important}
+.app-view-future .future-assumption-controls{gap:6px!important}
+.app-view-future .future-assumption-controls button,
+.app-view-future .future-assumption-controls label{
+  min-height:36px!important;
+  padding:7px 11px!important;
+  border-radius:10px!important;
+  font-size:9px!important;
+}
+
+.app-view-future #homeProjection .projection-core-grid{gap:10px!important}
+.app-view-future #homeProjection .projection-core-card{
+  min-height:0!important;
+  padding:14px 16px!important;
+  border-radius:15px!important;
+}
+.app-view-future #homeProjection .projection-core-card>strong{
+  margin-top:5px!important;
+  font-size:22px!important;
+  line-height:1.05!important;
+}
+.app-view-future #homeProjection .projection-core-card>small{
+  margin-top:5px!important;
+  font-size:8.5px!important;
+  line-height:1.35!important;
+}
+.app-view-future #homeProjection .projection-use-button{
+  margin-top:8px!important;
+  min-height:30px!important;
+  padding:6px 10px!important;
+  font-size:8px!important;
+}
+
+.app-view-future #futureModelRange #homeForecast1Range,
+.app-view-future #futureModelRange #homeForecast3Range,
+.app-view-future #futureModelRange #homeForecast5Range{
+  color:var(--muted)!important;
+  font-size:8.5px!important;
+  opacity:.82!important;
+}
+
+.app-view-future #futureWaitPlanner .next-home-timeline-row{min-height:150px!important}
+.app-view-future #futureWaitPlanner .next-home-support{
+  min-height:31px!important;
+  align-content:end!important;
+}
+
+.app-view-future #propertyCostComparison .deep-heading{margin-bottom:10px!important}
 .app-view-future #propertyCostComparison .long-term-difference-note{
   display:grid!important;
-  justify-items:center!important;
-  gap:3px!important;
-  margin:12px 0 0!important;
-  padding:12px 16px 0!important;
+  justify-items:start!important;
+  gap:4px!important;
+  margin:0 0 12px!important;
+  padding:14px 0 15px!important;
   border-top:1px solid var(--border-soft)!important;
-  text-align:center!important;
+  border-bottom:1px solid var(--border-soft)!important;
+  text-align:left!important;
 }
 .app-view-future #propertyCostComparison .long-term-difference-note>span{
   color:var(--muted)!important;
-  font-size:9px!important;
-  font-weight:750!important;
-  letter-spacing:.04em!important;
+  font-size:8.5px!important;
+  font-weight:780!important;
+  letter-spacing:.055em!important;
   text-transform:uppercase!important;
 }
 .app-view-future #propertyCostComparison .long-term-difference-note>strong{
-  color:var(--text)!important;
+  color:var(--theme-hero-ink)!important;
   font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
-  font-size:25px!important;
+  font-size:34px!important;
   font-weight:500!important;
   line-height:1!important;
+  letter-spacing:-.025em!important;
 }
 .app-view-future #propertyCostComparison .long-term-difference-note>small{
   color:var(--muted)!important;
   font-size:9px!important;
+}
+.app-view-future #propertyCostComparison .property-cost-grid{gap:10px!important}
+.app-view-future #propertyCostComparison .property-cost-card{
+  min-height:0!important;
+  padding:13px 15px!important;
+  border-radius:13px!important;
+  background:var(--surface-soft)!important;
+}
+.app-view-future #propertyCostComparison .property-cost-card strong{
+  margin-top:4px!important;
+  font-size:20px!important;
+}
+.app-view-future #propertyCostComparison .property-cost-card span,
+.app-view-future #propertyCostComparison .property-cost-card small{
+  font-size:8px!important;
+  line-height:1.35!important;
+}
+@media(max-width:700px){
+  .app-view-future .future-overpayment-assumption{padding:10px 12px!important}
+  .app-view-future #propertyCostComparison .long-term-difference-note>strong{font-size:29px!important}
 }
