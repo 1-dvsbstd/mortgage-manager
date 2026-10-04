@@ -193,7 +193,10 @@
         : hasBudget(row)
           ? `<span class="next-home-change">${delta>=0?'+':'−'}${money(Math.abs(delta))} vs today</span>`
           : '<span class="next-home-change">Add assumptions to compare</span>';
-      return `<div class="next-home-timeline-row" data-years="${row.years}"><span class="next-home-period">${label}</span><strong>${hasBudget(row)?money(row.budget):'—'}</strong>${change}<div class="next-home-support"><small><b>${money(row.usableEquity)}</b> move equity</small><small><b>${money(row.futureMortgage)}</b> mortgage remaining</small></div></div>`;
+      const support=row.years===0
+        ? `<small><b>${money(row.usableEquity)}</b> move equity</small>${income?`<small><b>${money(row.borrowing)}</b> illustrative borrowing</small>`:''}${savings?`<small><b>${money(savings)}</b> savings</small>`:''}`
+        : `<small><b>${money(row.usableEquity)}</b> move equity</small><small><b>${money(row.futureMortgage)}</b> mortgage remaining</small>`;
+      return `<div class="next-home-timeline-row" data-years="${row.years}"><span class="next-home-period">${label}</span><strong>${hasBudget(row)?money(row.budget):'—'}</strong>${change}<div class="next-home-support">${support}</div></div>`;
     }).join('');
     $('nextHomeTrendNote').textContent=`Starts from your current property estimate, then uses ${now.trend.toFixed(1)}%/yr forward growth and ${money(now.selectedOverpayment)}/month overpayment${now.scenarioExtra>0?' from the selected Current scenario':' from your regular plan'}.`;
 
