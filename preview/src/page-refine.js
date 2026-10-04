@@ -298,7 +298,7 @@
             </div>
             <div class="market-rate-card-direction" data-direction="${meta.dir}">
               <strong>${meta.symbol} ${meta.label}</strong>
-              <small>${Math.abs(meta.delta).toFixed(2)} pts vs prior 6 months</small>
+              <small>${Math.abs(meta.delta).toFixed(2)}% vs prior 6 months</small>
             </div>
           </div>
           <div class="market-rate-card-chart">
