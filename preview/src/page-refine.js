@@ -478,6 +478,7 @@
     if(!future||!planner) return;
     const body=$('.next-home-body',planner), timeline=$('.next-home-timeline',planner);
     if(!body||!timeline) return;
+    $('.next-home-settings',planner)?.remove();
 
     const heading=$('.next-home-heading',body);
     if(heading){
@@ -490,7 +491,7 @@
         const copy=heading.firstElementChild;
         if(copy) copy.appendChild(explainer);
       }
-      if(explainer) explainer.textContent='Combines the equity you could take with you and illustrative borrowing from your saved assumptions.';
+      if(explainer) explainer.textContent='A quick view of what your equity and saved borrowing assumptions could support today.';
     }
 
     let wait=$('#futureWaitPlanner');
@@ -566,12 +567,35 @@
       if(host && range.parentElement!==host) host.appendChild(range);
     }
     splitNextHomePlanner();
+    $('#nextHomePlanner')?.classList.add('next-home-position-compact');
 
     const cost=$('#propertyCostComparison');
     if(cost){
       cost.classList.add('panel','temporal-feature-card','temporal-feature-cost-comparison');
       cost.classList.remove('future-cost-inline');
     }
+    if(cost){
+      const cards=cost.querySelectorAll('.property-cost-card');
+      if(cards.length>=2){
+        cards[0].classList.add('long-term-value-card');
+        cards[1].classList.add('long-term-cost-card');
+        const value=Number((cards[0].querySelector('strong')?.textContent||'').replace(/[^0-9.-]/g,''))||0;
+        const costValue=Number((cards[1].querySelector('strong')?.textContent||'').replace(/[^0-9.-]/g,''))||0;
+        let note=cost.querySelector('.long-term-difference-note');
+        if(!note){
+          note=document.createElement('p');
+          note.className='long-term-difference-note';
+          cost.appendChild(note);
+        }
+        if(value&&costValue){
+          const diff=value-costValue;
+          note.textContent=diff>=0
+            ? `Projected value is about £${Math.round(diff).toLocaleString('en-GB')} above known purchase + mortgage cost.`
+            : `Known purchase + mortgage cost is about £${Math.round(Math.abs(diff)).toLocaleString('en-GB')} above projected value.`;
+        }
+      }
+    }
+
     organiseFutureFlow();
     refineFuturePresentation();
   }
