@@ -2515,6 +2515,9 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   overflow:visible!important;
   padding:0!important;
 }
+.app-view-upcoming .v15-journey-strip{
+  padding-top:8px!important;
+}
 :is(.app-view-current .v15-current-journey-track,.app-view-upcoming .v15-journey-strip)::before{
   content:""!important;
   position:absolute!important;
@@ -2532,6 +2535,10 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
     var(--border-soft) 73.1% 100%
   )!important;
 }
+.app-view-upcoming .v15-journey-strip::before{
+  top:33px!important;
+}
+
 :is(.app-view-current .v15-current-journey-step,.app-view-upcoming .v15-journey-step){
   position:relative!important;
   z-index:1!important;
@@ -2795,7 +2802,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 .app-view-upcoming .upcoming-hero-meta small{display:none!important}
 .app-view-upcoming .upcoming-hero .v15-journey-shell{
-  margin:8px 0 0!important;
+  margin:0!important;
   padding:0!important;
   border:0!important;
   background:transparent!important;
