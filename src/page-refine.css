@@ -1238,3 +1238,8 @@ body .app-view-current .trajectory-scenario-copy .trajectory-current-saving{
 
 /* Canonical scenario labels after legacy inline Future layer removal. */
 .trajectory-scenario-controls button strong:empty{display:none!important}
+
+/* Future is assembled by page-refine.js; do not paint legacy source markup first. */
+html.future-refining .app-view-future .app-view-content{
+  visibility:hidden!important;
+}
