@@ -3900,3 +3900,71 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
     width:100%!important;
   }
 }
+
+/* Mortgage-free targets — total payment first, effort second. */
+.app-view-future #futurePayoffTargets .future-payoff-heading{
+  display:block!important;
+}
+.app-view-future #futurePayoffTargets .future-income-control{
+  display:none!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-target{
+  min-height:170px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-main{
+  display:flex!important;
+  align-items:baseline!important;
+  gap:4px!important;
+  margin:4px 0 8px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-main>strong{
+  color:var(--text)!important;
+  font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
+  font-size:31px!important;
+  font-weight:500!important;
+  line-height:1!important;
+  letter-spacing:-.025em!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-main>small{
+  color:var(--muted)!important;
+  font-size:9px!important;
+  font-weight:650!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-extra{
+  margin:0 0 14px!important;
+  color:var(--muted)!important;
+  font-size:9px!important;
+  font-weight:650!important;
+  line-height:1.35!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-context{
+  display:flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  margin-bottom:9px!important;
+  font-size:9px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-context>b{
+  color:var(--text)!important;
+  font-weight:800!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-context>span{
+  color:var(--muted-2)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-context>strong{
+  font-weight:800!important;
+}
+.app-view-future #futurePayoffTargets .is-comfortable .future-payoff-context>strong,
+.app-view-future #futurePayoffTargets .is-typical .future-payoff-context>strong{
+  color:var(--accent-strong)!important;
+}
+.app-view-future #futurePayoffTargets .is-stretch .future-payoff-context>strong{
+  color:var(--warm)!important;
+}
+.app-view-future #futurePayoffTargets .is-aggressive .future-payoff-context>strong,
+.app-view-future #futurePayoffTargets .is-very-aggressive .future-payoff-context>strong{
+  color:var(--text)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-status{
+  display:none!important;
+}
