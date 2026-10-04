@@ -236,60 +236,80 @@
     const rates=$('.app-view-upcoming .upcoming-rates');
     const body=$('.upcoming-section-body',rates||document);
     const history=window.MortgageMarket?.history;
-    const points=Array.isArray(history?.points)?history.points.filter((point)=>Number.isFinite(Number(point.rate))):[];
-    if(!body||points.length<6) return;
+    const twoPoints=history?.series?.twoYear?.points||[];
+    const fivePoints=history?.series?.fiveYear?.points||[];
+    if(!body||twoPoints.length<12||twoPoints.length!==fivePoints.length) return;
 
     let panel=$('#marketRateTrend',rates);
     if(!panel){
       panel=document.createElement('section');
       panel.id='marketRateTrend';
-      panel.className='market-rate-trend';
+      panel.className='market-rate-trend market-rate-trend-wide';
       const note=$('.deal-planner-note',body);
       if(note) note.insertAdjacentElement('afterend',panel); else body.appendChild(panel);
     }
 
-    const values=points.map((point)=>Number(point.rate));
-    const latest3=values.slice(-3);
-    const previous3=values.slice(-6,-3);
-    const avg=(items)=>items.reduce((sum,value)=>sum+value,0)/items.length;
-    const latestAvg=avg(latest3), previousAvg=avg(previous3);
-    const delta=latestAvg-previousAvg;
-    const direction=Math.abs(delta)<.025?'flat':delta<0?'down':'up';
-    const directionLabel=direction==='flat'?'Broadly flat':direction==='down'?'Easing slightly':'Rising';
-    const directionSymbol=direction==='flat'?'→':direction==='down'?'↓':'↑';
+    const two=twoPoints.map((point)=>Number(point.rate));
+    const five=fivePoints.map((point)=>Number(point.rate));
+    const movingAverage=(values,windowSize=6)=>values.map((_,index)=>{
+      const from=Math.max(0,index-windowSize+1);
+      const slice=values.slice(from,index+1);
+      return slice.reduce((sum,value)=>sum+value,0)/slice.length;
+    });
+    const twoTrend=movingAverage(two),fiveTrend=movingAverage(five);
+    const avg=(items)=>items.reduce((sum,value)=>sum+value,0)/Math.max(1,items.length);
+    const trendDelta=(values)=>avg(values.slice(-6))-avg(values.slice(-12,-6));
+    const twoDelta=trendDelta(two),fiveDelta=trendDelta(five);
+    const direction=(delta)=>Math.abs(delta)<.04?'flat':delta<0?'down':'up';
+    const directionCopy=(delta)=>{
+      const dir=direction(delta);
+      return {dir,symbol:dir==='flat'?'→':dir==='down'?'↓':'↑',label:dir==='flat'?'Broadly flat':dir==='down'?'Averaging down':'Averaging up'};
+    };
+    const twoDir=directionCopy(twoDelta),fiveDir=directionCopy(fiveDelta);
 
-    const width=620,height=116,padX=10,padY=12;
-    const min=Math.min(...values),max=Math.max(...values);
-    const spread=Math.max(.35,max-min);
-    const yMin=min-spread*.18,yMax=max+spread*.18;
-    const x=(index)=>padX+(width-padX*2)*(index/Math.max(1,values.length-1));
-    const y=(value)=>padY+(height-padY*2)*(1-(value-yMin)/(yMax-yMin));
-    const path=values.map((value,index)=>`${index?'L':'M'} ${x(index).toFixed(1)} ${y(value).toFixed(1)}`).join(' ');
-    const area=`${path} L ${x(values.length-1).toFixed(1)} ${height-padY} L ${x(0).toFixed(1)} ${height-padY} Z`;
-    const firstLabel=new Intl.DateTimeFormat('en-GB',{month:'short',year:'2-digit'}).format(new Date(points[0].date+'T12:00:00Z'));
-    const lastLabel=new Intl.DateTimeFormat('en-GB',{month:'short',year:'2-digit'}).format(new Date(points.at(-1).date+'T12:00:00Z'));
+    const width=980,height=220,pad={left:42,right:18,top:16,bottom:26};
+    const all=[...two,...five];
+    const dataMin=Math.min(...all),dataMax=Math.max(...all);
+    const yMin=Math.max(0,Math.floor((dataMin-.35)*2)/2);
+    const yMax=Math.ceil((dataMax+.35)*2)/2;
+    const x=(index)=>pad.left+(width-pad.left-pad.right)*(index/Math.max(1,two.length-1));
+    const y=(value)=>pad.top+(height-pad.top-pad.bottom)*(1-(value-yMin)/(yMax-yMin));
+    const path=(values)=>values.map((value,index)=>`${index?'L':'M'} ${x(index).toFixed(1)} ${y(value).toFixed(1)}`).join(' ');
+    const twoPath=path(two),fivePath=path(five),twoTrendPath=path(twoTrend),fiveTrendPath=path(fiveTrend);
+    const yTicks=[yMin,(yMin+yMax)/2,yMax];
+    const yearIndices=[];
+    twoPoints.forEach((point,index)=>{ if(point.date.slice(5,7)==='01') yearIndices.push(index); });
+    if(!yearIndices.includes(0)) yearIndices.unshift(0);
+    yearIndices.push(twoPoints.length-1);
 
-    panel.dataset.direction=direction;
     panel.innerHTML=`
-      <div class="market-rate-trend-copy">
+      <div class="market-rate-trend-heading">
         <div>
-          <p class="eyebrow">Historical context</p>
-          <h3>Market rate trend</h3>
-          <p>${history.label||'Mortgage benchmark'} · Bank of England</p>
+          <p class="eyebrow">Five-year history</p>
+          <h3>How fixed mortgage rates have moved</h3>
+          <p>Bank of England quoted household rates · 75% LTV · 6-month rolling trend shown dashed</p>
         </div>
-        <div class="market-rate-trend-metric">
-          <span>Recent 3-month average</span>
-          <strong><b>${directionSymbol}</b> ${directionLabel}</strong>
-          <small>${Math.abs(delta).toFixed(2)} pts vs previous 3 months</small>
+        <div class="market-rate-trend-status">
+          <div data-direction="${twoDir.dir}"><span>2-year</span><strong>${twoDir.symbol} ${twoDir.label}</strong><small>${Math.abs(twoDelta).toFixed(2)} pts</small></div>
+          <div data-direction="${fiveDir.dir}"><span>5-year</span><strong>${fiveDir.symbol} ${fiveDir.label}</strong><small>${Math.abs(fiveDelta).toFixed(2)} pts</small></div>
         </div>
       </div>
       <div class="market-rate-trend-chart">
-        <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Twelve month mortgage rate trend from ${firstLabel} to ${lastLabel}">
-          <path class="market-rate-trend-area" d="${area}"></path>
-          <path class="market-rate-trend-line" d="${path}"></path>
-          <circle class="market-rate-trend-dot" cx="${x(values.length-1).toFixed(1)}" cy="${y(values.at(-1)).toFixed(1)}" r="3.5"></circle>
+        <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Five-year history of Bank of England two-year and five-year fixed mortgage rates">
+          ${yTicks.map((tick)=>`<line class="market-rate-grid" x1="${pad.left}" x2="${width-pad.right}" y1="${y(tick).toFixed(1)}" y2="${y(tick).toFixed(1)}"></line><text class="market-rate-y-label" x="${pad.left-8}" y="${(y(tick)+3).toFixed(1)}" text-anchor="end">${tick.toFixed(1)}%</text>`).join('')}
+          ${yearIndices.map((index)=>`<text class="market-rate-x-label" x="${x(index).toFixed(1)}" y="${height-5}" text-anchor="${index===0?'start':index===two.length-1?'end':'middle'}">${new Date(twoPoints[index].date+'T12:00:00Z').getUTCFullYear()}</text>`).join('')}
+          <path class="market-rate-line market-rate-two" d="${twoPath}"></path>
+          <path class="market-rate-line market-rate-five" d="${fivePath}"></path>
+          <path class="market-rate-trendline market-rate-two-trend" d="${twoTrendPath}"></path>
+          <path class="market-rate-trendline market-rate-five-trend" d="${fiveTrendPath}"></path>
+          <circle class="market-rate-end market-rate-two-end" cx="${x(two.length-1).toFixed(1)}" cy="${y(two.at(-1)).toFixed(1)}" r="3.5"></circle>
+          <circle class="market-rate-end market-rate-five-end" cx="${x(five.length-1).toFixed(1)}" cy="${y(five.at(-1)).toFixed(1)}" r="3.5"></circle>
         </svg>
-        <div class="market-rate-trend-axis"><span>${firstLabel}</span><span>Latest ${values.at(-1).toFixed(2)}%</span><span>${lastLabel}</span></div>
+        <div class="market-rate-trend-legend">
+          <span><i class="market-rate-key two"></i>2-year fixed <strong>${two.at(-1).toFixed(2)}%</strong></span>
+          <span><i class="market-rate-key five"></i>5-year fixed <strong>${five.at(-1).toFixed(2)}%</strong></span>
+          <span class="market-rate-source">Latest: ${new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(new Date(twoPoints.at(-1).date+'T12:00:00Z'))}</span>
+        </div>
       </div>
     `;
   }
@@ -314,7 +334,7 @@
         <div class="upcoming-hero-copy">
           <p class="eyebrow">Remortgage readiness</p>
           <h2>${prepMonths===null?'Add your fixed-rate end date':prepMonths<=0?'Remortgage prep is due now':`Remortgage prep starts in ${compactDuration(prepMonths)}`}</h2>
-          <p class="upcoming-hero-subtitle">${state?.fixedEnd?`Your fixed rate ends ${formatMonth(state.fixedEnd)}. We’ll make the next steps more prominent as you get closer.`:'Set your fixed-rate end date so Mortgage Manager can build your remortgage timeline.'}</p>
+          <p class="upcoming-hero-subtitle">${state?.fixedEnd?`Your fixed rate ends ${formatMonth(state.fixedEnd)}. Start reviewing rates and affordability from ${formatMonth(new Date(new Date(state.fixedEnd+'-01T12:00:00Z').setUTCMonth(new Date(state.fixedEnd+'-01T12:00:00Z').getUTCMonth()-3)).toISOString().slice(0,7))}.`:'Set your fixed-rate end date so Mortgage Manager can build your remortgage timeline.'}</p>
         </div>
         <div class="upcoming-hero-meta">
           <span>Fixed rate ends</span>
@@ -323,21 +343,7 @@
         </div>`;
     }
 
-    let heroSnapshot=$('.upcoming-hero-snapshot',timeline);
-    if(!heroSnapshot){
-      heroSnapshot=document.createElement('div');
-      heroSnapshot.className='upcoming-hero-snapshot';
-      const body=$('.upcoming-section-body',timeline);
-      if(body) body.insertAdjacentElement('afterbegin',heroSnapshot);
-    }
-    if(heroSnapshot){
-      const projectedBalance=deal?.balance;
-      const homeValue=Math.max(0,Number(state?.homeValue)||0);
-      const projectedLtv=homeValue>0&&Number.isFinite(projectedBalance)?projectedBalance/homeValue*100:null;
-      heroSnapshot.innerHTML=`
-        <div><span>Projected balance at deal end</span><strong>${Number.isFinite(projectedBalance)?money(projectedBalance):'—'}</strong></div>
-        <div><span>Projected LTV</span><strong>${projectedLtv===null?'—':projectedLtv.toFixed(1)+'%'}</strong></div>`;
-    }
+    $('.upcoming-hero-snapshot',timeline)?.remove();
 
     $('.upcoming-section-heading h2',rates).textContent='What your payment could look like';
     const rateEyebrow=$('.upcoming-section-heading .eyebrow',rates);
@@ -369,6 +375,7 @@
 
 
     const summary=$('#dealPlannerSummary',position);
+    $('#dealPlannerMilestone',position)?.setAttribute('hidden','');
     if(summary&&state&&deal){
       const countdown=$('#dealPlannerCountdown')?.closest('div');
       if(countdown&&countdown.parentElement===summary){
