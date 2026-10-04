@@ -58,18 +58,18 @@
 
   function renderWhatIfControls(){
     const state=window.MortgageStore?.get?.();
-    const scenario=$('.trajectory-what-if');
-    if(!state||!scenario) return;
+    const scenarioPanel=$('.trajectory-what-if');
+    if(!state||!scenarioPanel) return;
     const regular=Math.max(0,Number(state.currentOverpayment)||0);
-    const scenario=Math.max(0,Number(state.scenarioExtra)||0);
-    const total=scenario>0?scenario:regular;
-    const headline=$('#overpayHeadline',scenario);
+    const selectedScenario=Math.max(0,Number(state.scenarioExtra)||0);
+    const total=selectedScenario>0?selectedScenario:regular;
+    const headline=$('#overpayHeadline',scenarioPanel);
     if(headline) headline.textContent=`${money(total)}/month total`;
 
-    const value=$('.whatif-regular-value',scenario);
+    const value=$('.whatif-regular-value',scenarioPanel);
     if(value) value.textContent=`${money(regular)}/month`;
 
-    const buttons=$('#totalOverpayButtons',scenario);
+    const buttons=$('#totalOverpayButtons',scenarioPanel);
     if(buttons){
       buttons.innerHTML=totalCandidates(regular).map((amount)=>`<button type="button" data-total-overpay="${amount}" class="${Math.abs(amount-total)<.5?'active':''}">${Math.abs(amount-regular)<.5?'Current ':''}${money(amount)}</button>`).join('') + `<label class="custom-chip total-custom-chip">Custom £<input id="totalOverpayCustom" type="number" min="${regular}" step="10" inputmode="decimal" value="${Math.round(total*100)/100}"></label>`;
     }
