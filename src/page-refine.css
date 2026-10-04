@@ -1235,3 +1235,6 @@ body .app-view-current .trajectory-scenario-copy .trajectory-current-saving{
   .app-view-future .future-overpayment-assumption{padding:10px 12px!important}
   .app-view-future #propertyCostComparison .long-term-difference-note>strong{font-size:29px!important}
 }
+
+/* Canonical scenario labels after legacy inline Future layer removal. */
+.trajectory-scenario-controls button strong:empty{display:none!important}
