@@ -153,17 +153,16 @@
     const ordered=[
       $('#futureOverpaymentAssumption'),
       $('#homeProjection'),
-      $('#nextHomePlanner'),
       $('#futureModelRange'),
       $('#futureWaitPlanner'),
+      $('#nextHomePlanner'),
       $('#propertyCostComparison')
     ].filter(Boolean);
 
-    ordered.forEach((node,index)=>{
-      const current=[...future.children].filter((child)=>ordered.includes(child));
-      if(node.parentElement!==future || current[index]!==node){
-        future.appendChild(node);
-      }
+    /* page-refine.js owns Future ordering. This legacy compatibility pass may
+       recover escaped nodes, but must not reshuffle an already-refined page. */
+    ordered.forEach((node)=>{
+      if(node.parentElement!==future) future.appendChild(node);
     });
 
     const cost=$('#propertyCostComparison');
@@ -265,7 +264,7 @@
     document.addEventListener('click',(event)=>{
       if(event.target.closest?.('[data-app-view="future"]')) setTimeout(stabiliseFuture,0);
     },true);
-    [250,700,1400,2600].forEach((delay)=>setTimeout(stabiliseFuture,delay));
+    setTimeout(stabiliseFuture,900);
   };
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start,{once:true}); else start();
 })();
