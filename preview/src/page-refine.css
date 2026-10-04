@@ -275,187 +275,82 @@
   line-height:1.08!important;
 }
 
-/* Remortgage readiness hero */
+/* Remortgage readiness — same hierarchy as Mortgage Journey */
 .app-view-upcoming .upcoming-hero{
-  padding:28px!important;
+  padding:14px 22px 15px!important;
+  border:1px solid color-mix(in srgb,var(--border) 88%,transparent)!important;
+  border-radius:18px!important;
+  background:color-mix(in srgb,var(--surface-control) 97%,transparent)!important;
+  box-shadow:0 2px 4px rgba(54,48,39,.06),0 14px 34px rgba(54,48,39,.12)!important;
 }
 .app-view-upcoming .upcoming-hero>.upcoming-section-heading{
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) auto!important;
-  align-items:start!important;
+  display:flex!important;
+  align-items:baseline!important;
+  justify-content:space-between!important;
   gap:28px!important;
-  margin-bottom:20px!important;
-  padding-bottom:18px!important;
+  margin:0 0 10px!important;
+  padding:0!important;
+  border-bottom:0!important;
+}
+.app-view-upcoming .upcoming-hero-copy .eyebrow{
+  margin:0!important;
+  color:var(--accent-strong)!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  letter-spacing:.10em!important;
+  text-transform:uppercase!important;
 }
 .app-view-upcoming .upcoming-hero-copy h2{
-  max-width:720px!important;
-  font-size:34px!important;
-  line-height:1.02!important;
+  margin:3px 0 0!important;
+  color:var(--text)!important;
+  font-family:var(--font-ui)!important;
+  font-size:14px!important;
+  font-weight:760!important;
+  letter-spacing:-.01em!important;
+  line-height:1.2!important;
 }
 .app-view-upcoming .upcoming-hero-subtitle{
-  max-width:720px!important;
-  margin:10px 0 0!important;
+  margin:4px 0 0!important;
   color:var(--muted)!important;
-  font-size:11px!important;
-  line-height:1.5!important;
+  font-size:9px!important;
+  line-height:1.35!important;
 }
 .app-view-upcoming .upcoming-hero-meta{
-  min-width:170px!important;
-  padding-left:24px!important;
-  border-left:1px solid var(--up-border-soft)!important;
+  display:flex!important;
+  align-items:baseline!important;
+  justify-content:flex-end!important;
+  gap:5px!important;
+  min-width:0!important;
+  padding:0!important;
+  border-left:0!important;
   text-align:right!important;
 }
 .app-view-upcoming .upcoming-hero-meta span,
 .app-view-upcoming .upcoming-hero-meta small{
-  display:block!important;
   color:var(--muted-2)!important;
-  font-size:9px!important;
-  font-weight:650!important;
-}
-.app-view-upcoming .upcoming-hero-meta strong{
-  display:block!important;
-  margin-top:5px!important;
-  color:var(--theme-hero-ink)!important;
-  font-family:var(--font-display)!important;
-  font-size:20px!important;
-  font-weight:600!important;
-}
-.app-view-upcoming .upcoming-hero-meta small{
-  margin-top:5px!important;
-  color:var(--accent-strong)!important;
-}
-.app-view-upcoming .upcoming-hero-snapshot{
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:0!important;
-  margin:0 0 18px!important;
-  padding:0 0 18px!important;
-  border-bottom:1px solid var(--up-border-soft)!important;
-}
-.app-view-upcoming .upcoming-hero-snapshot>div{
-  min-height:58px!important;
-  padding:2px 22px 2px 0!important;
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-}
-.app-view-upcoming .upcoming-hero-snapshot>div+div{
-  padding-left:22px!important;
-  border-left:1px solid var(--up-border-soft)!important;
-}
-.app-view-upcoming .upcoming-hero-snapshot span{
-  display:block!important;
-  color:var(--muted)!important;
   font-size:9px!important;
   font-weight:700!important;
 }
-.app-view-upcoming .upcoming-hero-snapshot strong{
-  display:block!important;
-  margin-top:6px!important;
-  color:var(--theme-hero-ink)!important;
-  font-family:var(--font-display)!important;
-  font-size:24px!important;
-  font-weight:600!important;
-  letter-spacing:-.02em!important;
-}
-
-/* Journey stays visual, but secondary to the hero message. */
-.app-view-upcoming .v15-journey-shell{
+.app-view-upcoming .upcoming-hero-meta strong{
   margin:0!important;
-  padding:2px 0 0!important;
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  background-image:none!important;
-  box-shadow:none!important;
-  overflow:visible!important;
-}
-.app-view-upcoming .v15-journey-strip{
-  display:grid!important;
-  grid-template-columns:repeat(5,minmax(0,1fr))!important;
-  position:relative!important;
-  margin:0 0 10px!important;
-  padding:0 4px!important;
-}
-.app-view-upcoming .v15-journey-strip::before{
-  content:""!important;
-  position:absolute!important;
-  left:10%!important;
-  right:10%!important;
-  top:31px!important;
-  height:1px!important;
-  background:var(--up-divider)!important;
-}
-.app-view-upcoming .v15-journey-step{
-  position:relative!important;
-  z-index:1!important;
-  text-align:center!important;
-  padding:0 8px!important;
-}
-.app-view-upcoming .v15-journey-icon{
-  --icon-ink:color-mix(in srgb,var(--theme-hero-ink) 88%,var(--muted));
-  --icon-accent:color-mix(in srgb,var(--accent-strong) 82%,var(--theme-hero-ink));
-  --icon-soft:color-mix(in srgb,var(--accent) 10%,transparent);
-  --icon-paper:color-mix(in srgb,var(--surface) 92%,var(--accent-wash));
-  --icon-positive:var(--accent-strong);
-  display:grid!important;
-  place-items:center!important;
-  width:46px!important;
-  height:46px!important;
-  margin:8px auto 8px!important;
-  border:1.5px solid var(--up-border)!important;
-  border-radius:14px!important;
-  background:var(--surface)!important;
-  color:var(--muted)!important;
-}
-.app-view-upcoming .v15-journey-icon svg{
-  display:block!important;
-  width:34px!important;
-  height:34px!important;
-  overflow:visible!important;
-}
-.app-view-upcoming .v15-journey-step.is-complete .v15-journey-icon{
-  --icon-ink:var(--theme-hero-ink);
-  --icon-accent:color-mix(in srgb,var(--accent-strong) 86%,var(--theme-hero-ink));
-  --icon-soft:color-mix(in srgb,var(--accent) 11%,transparent);
-  background:color-mix(in srgb,var(--accent-wash) 62%,var(--surface))!important;
-  border-color:color-mix(in srgb,var(--accent) 42%,var(--up-border))!important;
-  color:var(--accent-strong)!important;
-}
-.app-view-upcoming .v15-journey-step.is-current .v15-journey-icon{
-  --icon-ink:var(--theme-hero-ink);
-  --icon-accent:var(--accent-strong);
-  --icon-soft:color-mix(in srgb,var(--accent) 14%,transparent);
-  background:color-mix(in srgb,var(--accent-wash) 78%,var(--surface))!important;
-  border-color:color-mix(in srgb,var(--accent) 64%,var(--up-border))!important;
-  color:var(--accent-strong)!important;
-  box-shadow:0 5px 14px rgba(54,48,39,.07)!important;
-}
-.app-view-upcoming .v15-journey-step strong{
-  display:block!important;
   color:var(--text)!important;
-  font-size:10px!important;
-  line-height:1.25!important;
+  font-family:var(--font-ui)!important;
+  font-size:11px!important;
+  font-weight:760!important;
 }
-.app-view-upcoming .v15-journey-step span{
-  display:block!important;
-  margin-top:3px!important;
-  color:var(--muted)!important;
-  font-size:8px!important;
-  line-height:1.3!important;
+.app-view-upcoming .upcoming-hero-meta small{display:none!important}
+.app-view-upcoming .upcoming-hero .v15-journey-shell{
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
 }
-.app-view-upcoming .v15-journey-callout{
-  width:max-content!important;
-  max-width:100%!important;
-  margin:10px auto 0!important;
-  padding:6px 11px!important;
-  border-radius:999px!important;
-  background:var(--accent-soft)!important;
-  color:#7a532f!important;
-  font-size:9px!important;
-  font-weight:750!important;
+@media(max-width:700px){
+  .app-view-upcoming .upcoming-hero{padding:14px 16px 15px!important}
+  .app-view-upcoming .upcoming-hero>.upcoming-section-heading{display:grid!important;gap:6px!important}
+  .app-view-upcoming .upcoming-hero-meta{justify-content:flex-start!important;text-align:left!important}
 }
-
 /* Rate spectrum */
 .app-view-upcoming .upcoming-rates .upcoming-section-body{
   position:relative!important;
@@ -843,10 +738,6 @@ body[data-app-view="upcoming"] #dealPlannerSummary > .deal-position-countdown-so
 }
 @media(max-width:700px){
   .app-view-upcoming .upcoming-section{padding:20px!important}
-  .app-view-upcoming .upcoming-hero{padding:20px!important}
-  .app-view-upcoming .upcoming-hero>.upcoming-section-heading{grid-template-columns:1fr!important;gap:14px!important}
-  .app-view-upcoming .upcoming-hero-meta{padding:0!important;border-left:0!important;text-align:left!important}
-  .app-view-upcoming .upcoming-hero-snapshot{grid-template-columns:1fr 1fr!important}
   .app-view-upcoming .v15-journey-strip{grid-template-columns:repeat(5,minmax(76px,1fr))!important;overflow-x:auto!important;padding-bottom:5px!important}
   .app-view-upcoming .deal-planner-rate-grid{grid-template-columns:1fr 1fr!important}
   .app-view-upcoming .upcoming-position .deal-planner-summary{grid-template-columns:1fr 1fr!important}
@@ -856,7 +747,6 @@ body[data-app-view="upcoming"] #dealPlannerSummary > .deal-position-countdown-so
 }
 @media(max-width:520px){
   .app-view-upcoming .deal-planner-rate-grid{grid-template-columns:1fr!important}
-  .app-view-upcoming .upcoming-hero-snapshot{grid-template-columns:1fr!important}
 }
 
 /* FUTURE */
@@ -2695,7 +2585,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 .app-view-current .v15-current-journey-link{display:none!important}
 
-.app-view-current .v15-current-journey-track{
+:is(.app-view-current .v15-current-journey-track,.app-view-upcoming .v15-journey-strip){
   display:grid!important;
   grid-template-columns:1fr 1fr .58fr .52fr 1.2fr!important;
   gap:0!important;
@@ -2703,7 +2593,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   overflow:visible!important;
   padding:0!important;
 }
-.app-view-current .v15-current-journey-track::before{
+:is(.app-view-current .v15-current-journey-track,.app-view-upcoming .v15-journey-strip)::before{
   content:""!important;
   position:absolute!important;
   z-index:0!important;
@@ -2720,7 +2610,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
     var(--border-soft) 73.1% 100%
   )!important;
 }
-.app-view-current .v15-current-journey-step{
+:is(.app-view-current .v15-current-journey-step,.app-view-upcoming .v15-journey-step){
   position:relative!important;
   z-index:1!important;
   display:flex!important;
@@ -2731,7 +2621,26 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   padding:0 6px!important;
   text-align:center!important;
 }
-.app-view-current .v15-current-journey-icon{
+.app-view-upcoming .v15-journey-step strong{
+  display:block!important;
+  max-width:100%!important;
+  color:var(--text)!important;
+  font-size:10px!important;
+  font-weight:760!important;
+  line-height:1.22!important;
+}
+.app-view-upcoming .v15-journey-step span{
+  display:block!important;
+  margin-top:4px!important;
+  color:color-mix(in srgb,var(--text) 64%,var(--muted))!important;
+  font-size:10px!important;
+  font-weight:680!important;
+  line-height:1.2!important;
+  white-space:nowrap!important;
+}
+.app-view-upcoming .v15-journey-callout{display:none!important}
+
+:is(.app-view-current .v15-current-journey-icon,.app-view-upcoming .v15-journey-icon){
   --icon-ink:color-mix(in srgb,var(--theme-hero-ink) 88%,var(--muted));
   --icon-accent:color-mix(in srgb,var(--accent-strong) 78%,var(--theme-hero-ink));
   --icon-soft:color-mix(in srgb,var(--equity) 14%,transparent);
@@ -2750,13 +2659,13 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   color:var(--muted)!important;
   box-shadow:none!important;
 }
-.app-view-current .v15-current-journey-icon svg{
+:is(.app-view-current .v15-current-journey-icon,.app-view-upcoming .v15-journey-icon) svg{
   display:block!important;
   width:34px!important;
   height:34px!important;
   overflow:visible!important;
 }
-.app-view-current .v15-current-journey-step.is-complete .v15-current-journey-icon{
+:is(.app-view-current .v15-current-journey-step.is-complete .v15-current-journey-icon,.app-view-upcoming .v15-journey-step.is-complete .v15-journey-icon){
   --icon-ink:var(--theme-hero-ink);
   --icon-accent:color-mix(in srgb,var(--accent-strong) 84%,var(--theme-hero-ink));
   --icon-positive:var(--positive);
@@ -2765,7 +2674,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   border-color:color-mix(in srgb,var(--positive) 55%,var(--border))!important;
   color:var(--positive)!important;
 }
-.app-view-current .v15-current-journey-step.is-current .v15-current-journey-icon{
+:is(.app-view-current .v15-current-journey-step.is-current .v15-current-journey-icon,.app-view-upcoming .v15-journey-step.is-current .v15-journey-icon){
   --icon-ink:var(--theme-hero-ink);
   --icon-accent:var(--positive);
   --icon-soft:color-mix(in srgb,var(--positive) 18%,transparent);
@@ -2778,11 +2687,11 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   color:var(--positive)!important;
   box-shadow:none!important;
 }
-.app-view-current .v15-current-journey-step.is-current .v15-current-journey-icon svg{
+:is(.app-view-current .v15-current-journey-step.is-current .v15-current-journey-icon,.app-view-upcoming .v15-journey-step.is-current .v15-journey-icon) svg{
   width:39px!important;
   height:39px!important;
 }
-.app-view-current .v15-current-journey-step.is-destination .v15-current-journey-icon{
+:is(.app-view-current .v15-current-journey-step.is-destination .v15-current-journey-icon,.app-view-upcoming .v15-journey-step.is-destination .v15-journey-icon){
   --icon-ink:var(--theme-hero-ink);
   --icon-accent:var(--accent-strong);
   --icon-soft:color-mix(in srgb,var(--equity) 14%,transparent);
