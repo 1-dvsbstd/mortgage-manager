@@ -268,7 +268,6 @@
       return {
         delta,
         dir,
-        symbol:dir==='flat'?'→':dir==='down'?'↓':'↑',
         label:dir==='flat'?'Broadly flat':dir==='down'?'Averaging down':'Averaging up'
       };
     };
@@ -278,10 +277,14 @@
     const y=(value)=>pad.top+(height-pad.top-pad.bottom)*(1-(value-yMin)/(yMax-yMin));
     const path=(values)=>values.map((value,index)=>`${index?'L':'M'} ${x(index,values.length).toFixed(1)} ${y(value).toFixed(1)}`).join(' ');
     const yTicks=[yMin,(yMin+yMax)/2,yMax];
-    const yearIndices=[];
-    twoPoints.forEach((point,index)=>{ if(point.date.slice(5,7)==='01') yearIndices.push(index); });
-    if(!yearIndices.includes(0)) yearIndices.unshift(0);
-    if(!yearIndices.includes(twoPoints.length-1)) yearIndices.push(twoPoints.length-1);
+    const yearTicks=[
+      {index:0,label:'2021'},
+      {index:4,label:'2022'},
+      {index:16,label:'2023'},
+      {index:28,label:'2024'},
+      {index:40,label:'2025'},
+      {index:52,label:'2026'}
+    ].filter((tick)=>tick.index<twoPoints.length);
 
     const card=(kind,label,points,values)=>{
       const trend=movingAverage(values);
@@ -297,22 +300,22 @@
               <small>Latest quoted rate</small>
             </div>
             <div class="market-rate-card-direction" data-direction="${meta.dir}">
-              <strong>${meta.symbol} ${meta.label}</strong>
+              <span>Recent trend</span>
+              <strong>${meta.label}</strong>
               <small>${Math.abs(meta.delta).toFixed(2)}% vs prior 6 months</small>
             </div>
           </div>
           <div class="market-rate-card-chart">
             <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Five-year history of ${label.toLowerCase()} mortgage rates">
               ${yTicks.map((tick)=>`<line class="market-rate-grid" x1="${pad.left}" x2="${width-pad.right}" y1="${y(tick).toFixed(1)}" y2="${y(tick).toFixed(1)}"></line><text class="market-rate-y-label" x="${pad.left-7}" y="${(y(tick)+3).toFixed(1)}" text-anchor="end">${tick.toFixed(1)}%</text>`).join('')}
-              ${yearIndices.map((index)=>`<text class="market-rate-x-label" x="${x(index,values.length).toFixed(1)}" y="${height-5}" text-anchor="${index===0?'start':index===values.length-1?'end':'middle'}">${new Date(points[index].date+'T12:00:00Z').getUTCFullYear()}</text>`).join('')}
+              ${yearTicks.map((tick,index)=>`<text class="market-rate-x-label" x="${x(tick.index,values.length).toFixed(1)}" y="${height-5}" text-anchor="${index===0?'start':index===yearTicks.length-1?'end':'middle'}">${tick.label}</text>`).join('')}
               <path class="market-rate-line" d="${linePath}"></path>
               <path class="market-rate-trendline" d="${trendPath}"></path>
               <circle class="market-rate-end" cx="${x(values.length-1,values.length).toFixed(1)}" cy="${y(latest).toFixed(1)}" r="3.5"></circle>
             </svg>
             <div class="market-rate-card-foot">
-              <span>Actual monthly rate</span>
+              <span>Monthly rate</span>
               <span><i></i>6-month trend</span>
-              <span>Aug 2026</span>
             </div>
           </div>
         </article>`;
