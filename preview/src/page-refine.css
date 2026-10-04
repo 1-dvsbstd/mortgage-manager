@@ -275,82 +275,6 @@
   line-height:1.08!important;
 }
 
-/* Remortgage readiness — same hierarchy as Mortgage Journey */
-.app-view-upcoming .upcoming-hero{
-  padding:14px 22px 15px!important;
-  border:1px solid color-mix(in srgb,var(--border) 88%,transparent)!important;
-  border-radius:18px!important;
-  background:color-mix(in srgb,var(--surface-control) 97%,transparent)!important;
-  box-shadow:0 2px 4px rgba(54,48,39,.06),0 14px 34px rgba(54,48,39,.12)!important;
-}
-.app-view-upcoming .upcoming-hero>.upcoming-section-heading{
-  display:flex!important;
-  align-items:baseline!important;
-  justify-content:space-between!important;
-  gap:28px!important;
-  margin:0 0 10px!important;
-  padding:0!important;
-  border-bottom:0!important;
-}
-.app-view-upcoming .upcoming-hero-copy .eyebrow{
-  margin:0!important;
-  color:var(--accent-strong)!important;
-  font-size:9px!important;
-  font-weight:800!important;
-  letter-spacing:.10em!important;
-  text-transform:uppercase!important;
-}
-.app-view-upcoming .upcoming-hero-copy h2{
-  margin:3px 0 0!important;
-  color:var(--text)!important;
-  font-family:var(--font-ui)!important;
-  font-size:14px!important;
-  font-weight:760!important;
-  letter-spacing:-.01em!important;
-  line-height:1.2!important;
-}
-.app-view-upcoming .upcoming-hero-subtitle{
-  margin:4px 0 0!important;
-  color:var(--muted)!important;
-  font-size:9px!important;
-  line-height:1.35!important;
-}
-.app-view-upcoming .upcoming-hero-meta{
-  display:flex!important;
-  align-items:baseline!important;
-  justify-content:flex-end!important;
-  gap:5px!important;
-  min-width:0!important;
-  padding:0!important;
-  border-left:0!important;
-  text-align:right!important;
-}
-.app-view-upcoming .upcoming-hero-meta span,
-.app-view-upcoming .upcoming-hero-meta small{
-  color:var(--muted-2)!important;
-  font-size:9px!important;
-  font-weight:700!important;
-}
-.app-view-upcoming .upcoming-hero-meta strong{
-  margin:0!important;
-  color:var(--text)!important;
-  font-family:var(--font-ui)!important;
-  font-size:11px!important;
-  font-weight:760!important;
-}
-.app-view-upcoming .upcoming-hero-meta small{display:none!important}
-.app-view-upcoming .upcoming-hero .v15-journey-shell{
-  margin:0!important;
-  padding:0!important;
-  border:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-@media(max-width:700px){
-  .app-view-upcoming .upcoming-hero{padding:14px 16px 15px!important}
-  .app-view-upcoming .upcoming-hero>.upcoming-section-heading{display:grid!important;gap:6px!important}
-  .app-view-upcoming .upcoming-hero-meta{justify-content:flex-start!important;text-align:left!important}
-}
 /* Rate spectrum */
 .app-view-upcoming .upcoming-rates .upcoming-section-body{
   position:relative!important;
@@ -738,7 +662,6 @@ body[data-app-view="upcoming"] #dealPlannerSummary > .deal-position-countdown-so
 }
 @media(max-width:700px){
   .app-view-upcoming .upcoming-section{padding:20px!important}
-  .app-view-upcoming .v15-journey-strip{grid-template-columns:repeat(5,minmax(76px,1fr))!important;overflow-x:auto!important;padding-bottom:5px!important}
   .app-view-upcoming .deal-planner-rate-grid{grid-template-columns:1fr 1fr!important}
   .app-view-upcoming .upcoming-position .deal-planner-summary{grid-template-columns:1fr 1fr!important}
 }
@@ -766,7 +689,6 @@ input,select,textarea{color:var(--text)}
 
 @media(max-width:700px){
   .v15-action-card{align-items:flex-start;padding:16px}.v15-action-card button{padding-top:2px}
-  .v15-journey-strip{grid-template-columns:repeat(5,110px);overflow-x:auto;padding:0 6px 8px;scroll-snap-type:x proximity}.v15-journey-step{scroll-snap-align:center}.v15-journey-strip::before{left:56px;right:56px}
 }
 
 @media(max-width:480px){  .v15-action-card{display:grid;grid-template-columns:1fr}.v15-action-card button{text-align:left;margin-left:52px}
@@ -2806,6 +2728,83 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
     justify-content:flex-start!important;
     text-align:left!important;
   }
+}
+
+/* Remortgage readiness — same hierarchy as Mortgage Journey */
+.app-view-upcoming .upcoming-hero{
+  padding:14px 22px 15px!important;
+  border:1px solid color-mix(in srgb,var(--border) 88%,transparent)!important;
+  border-radius:18px!important;
+  background:color-mix(in srgb,var(--surface-control) 97%,transparent)!important;
+  box-shadow:0 2px 4px rgba(54,48,39,.06),0 14px 34px rgba(54,48,39,.12)!important;
+}
+.app-view-upcoming .upcoming-hero>.upcoming-section-heading{
+  display:flex!important;
+  align-items:baseline!important;
+  justify-content:space-between!important;
+  gap:28px!important;
+  margin:0 0 10px!important;
+  padding:0!important;
+  border-bottom:0!important;
+}
+.app-view-upcoming .upcoming-hero-copy .eyebrow{
+  margin:0!important;
+  color:var(--accent-strong)!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  letter-spacing:.10em!important;
+  text-transform:uppercase!important;
+}
+.app-view-upcoming .upcoming-hero-copy h2{
+  margin:3px 0 0!important;
+  color:var(--text)!important;
+  font-family:var(--font-ui)!important;
+  font-size:14px!important;
+  font-weight:760!important;
+  letter-spacing:-.01em!important;
+  line-height:1.2!important;
+}
+.app-view-upcoming .upcoming-hero-subtitle{
+  margin:4px 0 0!important;
+  color:var(--muted)!important;
+  font-size:9px!important;
+  line-height:1.35!important;
+}
+.app-view-upcoming .upcoming-hero-meta{
+  display:flex!important;
+  align-items:baseline!important;
+  justify-content:flex-end!important;
+  gap:5px!important;
+  min-width:0!important;
+  padding:0!important;
+  border-left:0!important;
+  text-align:right!important;
+}
+.app-view-upcoming .upcoming-hero-meta span,
+.app-view-upcoming .upcoming-hero-meta small{
+  color:var(--muted-2)!important;
+  font-size:9px!important;
+  font-weight:700!important;
+}
+.app-view-upcoming .upcoming-hero-meta strong{
+  margin:0!important;
+  color:var(--text)!important;
+  font-family:var(--font-ui)!important;
+  font-size:11px!important;
+  font-weight:760!important;
+}
+.app-view-upcoming .upcoming-hero-meta small{display:none!important}
+.app-view-upcoming .upcoming-hero .v15-journey-shell{
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+@media(max-width:700px){
+  .app-view-upcoming .upcoming-hero{padding:14px 16px 15px!important}
+  .app-view-upcoming .upcoming-hero>.upcoming-section-heading{display:grid!important;gap:6px!important}
+  .app-view-upcoming .upcoming-hero-meta{justify-content:flex-start!important;text-align:left!important}
 }
 
 /* Premium Step 4 — Future page
