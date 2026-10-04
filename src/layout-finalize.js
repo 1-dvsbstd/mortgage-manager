@@ -16,8 +16,8 @@
     const state=window.MortgageStore?.get?.();
     if(!state) return;
     const regular=Math.max(0,Number(state.currentOverpayment)||0);
-    const target=Math.max(regular,Number(total)||0);
-    window.MortgageStore.set({scenarioExtra:Math.max(0,target-regular)});
+    const target=Math.max(0,Number(total)||0);
+    window.MortgageStore.set({scenarioExtra:Math.abs(target-regular)<.5?0:target});
   }
 
   function ensureTrajectoryControls(){
@@ -91,14 +91,14 @@
     if(legend&&legend.parentElement!==stage) stage.appendChild(legend);
 
     const regular=Math.max(0,Number(state.currentOverpayment)||0);
-    const extra=Math.max(0,Number(state.scenarioExtra)||0);
-    const total=regular+extra;
+    const selectedScenario=Math.max(0,Number(state.scenarioExtra)||0);
+    const total=selectedScenario>0?selectedScenario:regular;
     const row=$('#trajectoryOverpayRow',panel);
     if(row){
       row.innerHTML=scenarioCandidates(regular).map((value)=>{
         const current=Math.abs(value-regular)<.5;
         const active=Math.abs(value-total)<.5;
-        return `<button type="button" data-total-overpay="${value}" class="${active?'active':''}"><span>${current?'Current':''}</span><strong>${money(value)}</strong></button>`;
+        return `<button type="button" data-total-overpay="${value}" class="${active?'active':''}"><span>${current?'Current':''}</span><strong>${current?'':money(value)}</strong></button>`;
       }).join('')+`<label class="trajectory-custom-overpay"><span>Custom</span><strong>£<input id="trajectoryCustomOverpay" type="number" min="${regular}" step="10" inputmode="decimal" value="${Math.round(total*100)/100}"></strong></label>`;
     }
 
