@@ -360,6 +360,7 @@
     }
 
     $('.upcoming-hero-snapshot',timeline)?.remove();
+    $('.v15-journey-callout',timeline)?.remove();
 
     $('.upcoming-section-heading h2',rates).textContent='What your payment could look like';
     const rateEyebrow=$('.upcoming-section-heading .eyebrow',rates);
