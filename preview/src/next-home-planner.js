@@ -5,6 +5,7 @@
   const HPI_KEY = 'mortgage-manager-local-hpi-v1';
   const defaults = {
     householdIncome: '',
+    monthlyTakeHome: '',
     savings: '',
     cashBuffer: '',
     saleCosts: '',
@@ -100,6 +101,7 @@
 
         <details class="next-home-settings"><summary>Budget assumptions</summary><div class="next-home-controls">
           <label>Household income (£/year)<input id="nextHomeIncome" type="number" min="0" step="1000" inputmode="decimal"></label>
+          <label>Household take-home (£/month)<input id="nextHomeTakeHome" type="number" min="0" step="50" inputmode="decimal"><span>Used only to put payoff targets in context.</span></label>
           <label>Savings available (£)<input id="nextHomeSavings" type="number" min="0" step="1000" inputmode="decimal"></label>
           <label>Cash buffer to keep (£)<input id="nextHomeBuffer" type="number" min="0" step="1000" inputmode="decimal"></label>
           <label>Estimated selling costs (£)<input id="nextHomeSaleCosts" type="number" min="0" step="500" inputmode="decimal"></label>
@@ -114,7 +116,7 @@
     if(projection) projection.insertAdjacentElement('afterend',section); else detail.appendChild(section);
 
     const fields={
-      nextHomeIncome:'householdIncome', nextHomeSavings:'savings', nextHomeBuffer:'cashBuffer',
+      nextHomeIncome:'householdIncome', nextHomeTakeHome:'monthlyTakeHome', nextHomeSavings:'savings', nextHomeBuffer:'cashBuffer',
       nextHomeSaleCosts:'saleCosts', nextHomePurchaseCosts:'purchaseCosts', nextHomeMultiple:'borrowingMultiple',
     };
     Object.entries(fields).forEach(([id,key])=>{ if($(id)) $(id).value=settings[key] ?? ''; });
