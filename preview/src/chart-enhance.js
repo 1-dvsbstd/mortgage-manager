@@ -66,8 +66,11 @@
     const trend=homeTrend(), owned=v.ownership/100, points=[];
     for(let month=0;month<=maxMonths;month+=1){
       const home=v.homeValue*Math.pow(1+trend/100,month/12);
-      const personalEquity=Math.max(0,home*owned-pointAt(mortgagePoints,month));
-      points.push(home>0?Math.max(0,Math.min(v.ownership,(personalEquity/home)*100)):0);
+      const ownedValue=home*owned;
+      const personalEquity=Math.max(0,ownedValue-pointAt(mortgagePoints,month));
+      const progress=ownedValue>0?Math.max(0,Math.min(100,(personalEquity/ownedValue)*100)):0;
+      points.push(progress);
+      if(progress>=99.999) break;
     }
     return points;
   }
@@ -131,7 +134,7 @@
     const maxMonths=Math.max(scheduled.monthlyPoints.length,current.monthlyPoints.length,selected.monthlyPoints.length)-1||1;
     const equityPct=makeEquityPercentPoints(v,selected.monthlyPoints,maxMonths);
     const maxValue=Math.max(scheduled.monthlyPoints[0]||0,current.monthlyPoints[0]||0,selected.monthlyPoints[0]||0,1);
-    const equityScaleMax=Math.max(20,Math.min(100,Math.ceil((Math.max(0,Number(v.ownership)||0))/20)*20||100));
+    const equityScaleMax=100;
     const xFor=(month)=>pad.left+width*(month/maxMonths);
     const yFor=(value)=>pad.top+height*(1-Math.max(0,value)/maxValue);
     const yForEquity=(value)=>pad.top+height*(1-Math.max(0,Math.min(equityScaleMax,value))/equityScaleMax);
@@ -159,7 +162,7 @@
     ctx.font=compact?'8px system-ui':'9px system-ui';
     ctx.textAlign='right';
     ctx.textBaseline='alphabetic';
-    ctx.fillText('Equity %',pad.left+width+pad.right-2,pad.top-6);
+    ctx.fillText('Equity progress',pad.left+width+pad.right-2,pad.top-6);
     ctx.restore();
 
     const ticks=yearTicks(maxMonths,cssWidth); ctx.textBaseline='alphabetic'; ctx.font=compact?'10px system-ui':'11px system-ui';
