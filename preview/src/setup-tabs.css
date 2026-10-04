@@ -214,3 +214,58 @@
 @media(max-width:620px){
   .setup-utility-row{margin-top:8px}
 }
+
+/* Next-home assumptions disclosure — explicit control, no native details dependency. */
+.setup-budget-section{
+  padding-top:0!important;
+}
+.setup-budget-toggle{
+  appearance:none;
+  width:100%;
+  min-height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:var(--text);
+  text-align:left;
+  cursor:pointer;
+  font:inherit;
+}
+.setup-budget-toggle>span{
+  min-width:0;
+}
+.setup-budget-toggle strong{
+  display:block;
+  color:var(--text)!important;
+  font-size:14px;
+}
+.setup-budget-toggle small{
+  display:block;
+  margin-top:4px;
+  color:var(--muted)!important;
+  font-size:10.5px;
+  line-height:1.4;
+}
+.setup-budget-toggle>i{
+  flex:0 0 auto;
+  width:9px;
+  height:9px;
+  border-right:1.5px solid currentColor;
+  border-bottom:1.5px solid currentColor;
+  color:var(--muted);
+  transform:rotate(45deg) translateY(-2px);
+  transition:transform .18s ease;
+}
+.setup-budget-toggle[aria-expanded="true"]>i{
+  transform:rotate(225deg) translate(-1px,-1px);
+}
+.setup-budget-body[hidden]{
+  display:none!important;
+}
+.setup-budget-body{
+  padding-top:14px;
+}
