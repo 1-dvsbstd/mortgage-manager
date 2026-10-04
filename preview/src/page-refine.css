@@ -3549,3 +3549,91 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
 .app-view-upcoming .market-rate-card-five .market-rate-direction-cue{color:var(--accent-strong)!important}
 .app-view-upcoming .market-rate-card-direction>span,
 .app-view-upcoming .market-rate-card-direction>small{color:var(--muted-2)!important}
+
+/* Future cleanup: assumptions are edited in Setup & Data, not on Future. */
+.app-view-future #nextHomePlanner .next-home-settings{display:none!important}
+
+/* Today buying position — compact supporting snapshot. */
+.app-view-future #nextHomePlanner.next-home-position-compact{
+  padding:20px 22px!important;
+}
+.app-view-future #nextHomePlanner.next-home-position-compact .next-home-heading{
+  margin-bottom:12px!important;
+}
+.app-view-future #nextHomePlanner.next-home-position-compact .next-home-results{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+.app-view-future #nextHomePlanner.next-home-position-compact .next-home-results>div{
+  min-height:92px!important;
+  padding:14px 16px!important;
+  border-radius:14px!important;
+  box-shadow:none!important;
+}
+.app-view-future #nextHomePlanner.next-home-position-compact .next-home-results strong{
+  font-size:22px!important;
+}
+.app-view-future #nextHomePlanner.next-home-position-compact .next-home-note{
+  margin-top:10px!important;
+  font-size:8.5px!important;
+}
+@media(max-width:760px){
+  .app-view-future #nextHomePlanner.next-home-position-compact .next-home-results{grid-template-columns:1fr!important}
+}
+
+/* Long-term outcome — comparison bars, not faux progress bars. */
+.app-view-future #propertyCostComparison .property-cost-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:12px!important;
+}
+.app-view-future #propertyCostComparison .property-cost-card{
+  position:relative!important;
+  min-height:128px!important;
+  padding:18px 18px 22px!important;
+  overflow:hidden!important;
+}
+.app-view-future #propertyCostComparison .property-cost-card::after{
+  content:""!important;
+  position:absolute!important;
+  left:18px!important;
+  right:18px!important;
+  bottom:12px!important;
+  height:6px!important;
+  border-radius:999px!important;
+  background:var(--border-soft)!important;
+}
+.app-view-future #propertyCostComparison .property-cost-card::before{
+  content:""!important;
+  position:absolute!important;
+  left:18px!important;
+  bottom:12px!important;
+  height:6px!important;
+  border-radius:999px!important;
+  z-index:1!important;
+}
+.app-view-future #propertyCostComparison .long-term-value-card::before{
+  width:100%!important;
+  max-width:calc(100% - 36px)!important;
+  background:var(--positive)!important;
+}
+.app-view-future #propertyCostComparison .long-term-cost-card::before{
+  width:94.5%!important;
+  max-width:calc(100% - 36px)!important;
+  background:var(--accent)!important;
+}
+.app-view-future #propertyCostComparison .property-cost-card .property-cost-bar,
+.app-view-future #propertyCostComparison .property-cost-card .bar,
+.app-view-future #propertyCostComparison .property-cost-card progress{
+  display:none!important;
+}
+.app-view-future #propertyCostComparison .long-term-difference-note{
+  margin:12px 0 0!important;
+  color:var(--muted)!important;
+  font-size:9px!important;
+  line-height:1.4!important;
+}
+@media(max-width:700px){
+  .app-view-future #propertyCostComparison .property-cost-grid{grid-template-columns:1fr!important}
+}
