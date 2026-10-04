@@ -523,7 +523,7 @@
       section=document.createElement('section');
       section.id='futurePayoffTargets';
       section.className='panel future-payoff-targets';
-      section.innerHTML='<div class="future-payoff-heading"><div><p class="eyebrow">Mortgage-free targets</p><h2>How much of your income would you trade for an earlier mortgage-free date?</h2><p class="future-payoff-subtitle">A simple progression from comfortable to aggressive repayment levels.</p></div></div><div class="future-payoff-journey" id="futurePayoffJourney"></div><div class="future-payoff-current" id="futurePayoffCurrent"></div><p class="future-payoff-note" id="futurePayoffNote"></p>';
+      section.innerHTML='<div class="future-payoff-heading"><div><p class="eyebrow">Mortgage-free targets</p><h2>How much of your income would you trade for an earlier mortgage-free date?</h2><p class="future-payoff-subtitle">Use household take-home to compare your current plan with more ambitious repayment levels.</p></div></div><div class="future-payoff-spectrum" id="futurePayoffSpectrum"></div><p class="future-payoff-note" id="futurePayoffNote"></p>';
       const wait=$('#futureWaitPlanner');
       if(wait) wait.insertAdjacentElement('afterend',section); else future.appendChild(section);
     }
@@ -536,13 +536,6 @@
     const scenario=Math.max(0,Number(state.scenarioExtra)||0);
     const selectedOverpayment=scenario>0?scenario:regular;
     const currentTotal=scheduled+selectedOverpayment;
-
-    const levels=[
-      {pct:30,label:'Comfortable'},
-      {pct:35,label:'Typical'},
-      {pct:45,label:'Stretch'},
-      {pct:60,label:'Aggressive'}
-    ];
 
     const payoffDuration=(months)=>{
       if(!Number.isFinite(months)) return 'Does not repay';
@@ -560,36 +553,55 @@
       return new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(date);
     };
 
-    const journey=$('#futurePayoffJourney',section);
-    const current=$('#futurePayoffCurrent',section);
-    if(journey){
+    const spectrum=$('#futurePayoffSpectrum',section);
+    if(spectrum){
       if(!monthlyTakeHome){
-        journey.innerHTML='<div class="future-payoff-empty"><strong>Add household take-home in Setup & Data</strong><span>Then this section can compare comfortable, typical, stretch and aggressive repayment levels.</span></div>';
-        if(current) current.innerHTML='';
+        spectrum.innerHTML='<div class="future-payoff-empty"><strong>Add household take-home in Setup & Data</strong><span>Then this section can compare your current plan with comfortable, typical, stretch and aggressive repayment levels.</span></div>';
       }else{
-        const rows=levels.map((level)=>{
-          const targetPayment=monthlyTakeHome*(level.pct/100);
-          const path=window.MortgageMath?.amortize?.(balance,rate,targetPayment);
+        const currentPct=Math.max(0,currentTotal/monthlyTakeHome*100);
+        const points=[
+          {label:'Current',pct:currentPct,payment:currentTotal,className:'is-current'},
+          {label:'Comfortable',pct:30,payment:monthlyTakeHome*.30,className:'is-comfortable'},
+          {label:'Typical',pct:35,payment:monthlyTakeHome*.35,className:'is-typical'},
+          {label:'Stretch',pct:45,payment:monthlyTakeHome*.45,className:'is-stretch'},
+          {label:'Aggressive',pct:60,payment:monthlyTakeHome*.60,className:'is-aggressive'}
+        ].map((point)=>{
+          const path=window.MortgageMath?.amortize?.(balance,rate,point.payment);
           const months=Number(path?.months);
-          const delta=targetPayment-currentTotal;
           return {
-            ...level,targetPayment,months,
-            duration:payoffDuration(months),
+            ...point,
+            months,
             date:payoffDate(months),
-            delta
+            duration:payoffDuration(months),
+            delta:point.payment-currentTotal
           };
         });
 
-        journey.innerHTML='<div class="future-payoff-connector" aria-hidden="true"></div>'+rows.map((row,index)=>`
-          <article class="future-payoff-step is-band-${row.pct}" data-pct="${row.pct}">
-            <div class="future-payoff-step-top"><span class="future-payoff-dot" aria-hidden="true"></span><span class="future-payoff-band">${row.label}</span></div>
-            <div class="future-payoff-date"><strong>${row.date}</strong><small>${row.duration}</small></div>
-            <div class="future-payoff-payment"><b>${money(row.targetPayment)}/mo</b><span>${row.pct}% of take-home</span></div>
-          </article>`).join('');
-
-        if(current){
-          current.innerHTML=`<div><span>Your current plan</span><strong>${money(currentTotal)}/month</strong></div><div class="future-payoff-deltas">${rows.map((row)=>`<span><b>${row.label}</b> ${row.delta>=0?'+':'−'}${money(Math.abs(row.delta))}/mo</span>`).join('')}</div>`;
-        }
+        const maxPct=Math.max(65,...points.map((point)=>point.pct+3));
+        spectrum.innerHTML=`
+          <div class="future-payoff-scale">
+            <div class="future-payoff-scale-line"></div>
+            ${points.map((point,index)=>{
+              const left=Math.max(2,Math.min(98,(point.pct/maxPct)*100));
+              const side=index%2===0?'is-below':'is-above';
+              const delta=point.className==='is-current'
+                ? `${point.pct.toFixed(0)}% of take-home`
+                : `${point.delta>=0?'+':'−'}${money(Math.abs(point.delta))}/mo`;
+              return `
+                <article class="future-payoff-marker ${point.className} ${side}" style="left:${left}%">
+                  <span class="future-payoff-marker-dot" aria-hidden="true"></span>
+                  <div class="future-payoff-marker-card">
+                    <span class="future-payoff-marker-label">${point.label}</span>
+                    <strong>${point.date}</strong>
+                    <small>${point.duration}</small>
+                    <b>${money(point.payment)}/mo</b>
+                    <em>${delta}</em>
+                  </div>
+                </article>`;
+            }).join('')}
+          </div>
+          <div class="future-payoff-scale-caption"><span>Lower monthly commitment</span><strong>Earlier payoff →</strong><span>Higher monthly commitment</span></div>
+        `;
       }
     }
 
