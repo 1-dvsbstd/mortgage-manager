@@ -181,12 +181,12 @@
       $('nextHomeBudgetNote').textContent='Enter income and any savings/cost assumptions to build a next-home budget.';
     }
 
-    const horizons=[0,3,5];
+    const horizons=[0,3,5,10];
     const rows=horizons.map((years)=>({years,...calculateAt(years)}));
     const baseline=rows[0];
     const hasBudget=(row)=>income||row.availableCash>0;
     $('nextHomeTimelineRows').innerHTML=rows.map((row)=>{
-      const label=row.years===0?'Today':row.years===3?'In 3 years':'In 5 years';
+      const label=row.years===0?'Today':`In ${row.years} years`;
       const delta=hasBudget(row)&&hasBudget(baseline)?row.budget-baseline.budget:0;
       const change=row.years===0
         ? '<span class="next-home-change is-baseline">Starting point</span>'
