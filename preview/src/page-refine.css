@@ -2795,7 +2795,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 .app-view-upcoming .upcoming-hero-meta small{display:none!important}
 .app-view-upcoming .upcoming-hero .v15-journey-shell{
-  margin:0!important;
+  margin:8px 0 0!important;
   padding:0!important;
   border:0!important;
   background:transparent!important;
