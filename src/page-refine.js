@@ -308,14 +308,63 @@
     planner.classList.add('future-source-only');
   }
 
+  function renderFuturePayoffTargets(){
+    const future=$('.app-view-future .app-view-content');
+    const state=window.MortgageStore?.get?.();
+    if(!future||!state) return;
+
+    let section=$('#futurePayoffTargets');
+    if(!section){
+      section=document.createElement('section');
+      section.id='futurePayoffTargets';
+      section.className='panel future-payoff-targets';
+      section.innerHTML='<div class="future-payoff-heading"><p class="eyebrow">Mortgage-free targets</p><h2>What would it take to clear the mortgage sooner?</h2><p class="future-payoff-subtitle">Monthly payment needed from today, using your current balance and rate assumption.</p></div><div class="future-payoff-track" id="futurePayoffTrack"></div><p class="future-payoff-note" id="futurePayoffNote"></p>';
+      const wait=$('#futureWaitPlanner');
+      if(wait) wait.insertAdjacentElement('afterend',section); else future.appendChild(section);
+    }
+
+    const balance=Math.max(0,Number(state.balance)||0);
+    const rate=Math.max(0,Number(state.rate)||0);
+    const scheduled=Math.max(0,Number(state.payment)||0);
+    const regular=Math.max(0,Number(state.currentOverpayment)||0);
+    const selectedScenario=Math.max(0,Number(state.scenarioExtra)||0);
+    const selectedOverpayment=selectedScenario>0?selectedScenario:regular;
+    const currentTotal=scheduled+selectedOverpayment;
+    const currentPath=window.MortgageMath?.amortize?.(balance,rate,currentTotal);
+    const currentMonths=Number(currentPath?.months);
+    const targets=[3,5,10];
+
+    const track=$('#futurePayoffTrack',section);
+    if(track){
+      track.innerHTML=targets.map((years)=>{
+        const months=years*12;
+        const required=paymentFor(balance,rate,months);
+        const already=Number.isFinite(currentMonths)&&currentMonths<=months;
+        const extra=Math.max(0,required-currentTotal);
+        const level=extra<=100?'is-reachable':extra<=500?'is-stretch':'is-ambitious';
+        const status=already?'Already on track':extra<=100?'Close to current plan':extra<=500?'Stretch target':'Ambitious target';
+        const secondary=already
+          ? 'No increase needed'
+          : `+${money(extra)}/month vs selected plan`;
+        return `<article class="future-payoff-target ${level} ${already?'is-on-track':''}" data-years="${years}"><span class="future-payoff-year">${years} years</span><strong>${money(required)}<small>/month</small></strong><em>${secondary}</em><div class="future-payoff-status">${status}</div></article>`;
+      }).join('');
+    }
+
+    const note=$('#futurePayoffNote',section);
+    if(note){
+      note.textContent=`Your selected plan is ${money(currentTotal)}/month in total (${money(scheduled)} scheduled + ${money(selectedOverpayment)} overpayment). Targets assume the current interest rate stays unchanged, so they are planning figures rather than a mortgage offer.`;
+    }
+  }
+
   function organiseFutureFlow(){
     const future=$('.app-view-future .app-view-content');
     if(!future) return;
     const order=[
       $('#futureOverpaymentAssumption'),
+      $('#futureWaitPlanner'),
+      $('#futurePayoffTargets'),
       $('#homeProjection'),
       $('#futureModelRange'),
-      $('#futureWaitPlanner'),
       $('#nextHomePlanner'),
       $('#propertyCostComparison')
     ].filter(Boolean);
@@ -348,6 +397,7 @@
       if(host && range.parentElement!==host) host.appendChild(range);
     }
     splitNextHomePlanner();
+    renderFuturePayoffTargets();
 
     const cost=$('#propertyCostComparison');
     if(cost){
@@ -386,6 +436,7 @@
       !!document.querySelector('#homeProjection') &&
       !!document.querySelector('#futureModelRange') &&
       !!document.querySelector('#futureWaitPlanner') &&
+      !!document.querySelector('#futurePayoffTargets') &&
       !!document.querySelector('#nextHomePlanner.future-source-only') &&
       !document.querySelector('#homeProjection #homeValueHistory');
     if(futureReady) document.documentElement.classList.remove('future-refining');
@@ -394,7 +445,7 @@
   if(window.MortgageStore?.subscribe){
     MortgageStore.subscribe((next,previous)=>{
       if(next.currentOverpayment!==previous.currentOverpayment && next.scenarioExtra!==0) MortgageStore.set({scenarioExtra:0});
-      requestAnimationFrame(()=>{ renderWhatIfControls(); refineFutureAssumption(); refineUpcoming(); renderUpcomingRates(); organiseFutureFlow(); });
+      requestAnimationFrame(()=>{ renderWhatIfControls(); refineFutureAssumption(); refineUpcoming(); renderUpcomingRates(); renderFuturePayoffTargets(); organiseFutureFlow(); });
     });
   }
 
