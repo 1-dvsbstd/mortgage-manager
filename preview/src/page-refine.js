@@ -268,6 +268,7 @@
       return {
         delta,
         dir,
+        cue:dir==='flat'?'→':dir==='down'?'↘':'↗',
         label:dir==='flat'?'Broadly flat':dir==='down'?'Averaging down':'Averaging up'
       };
     };
@@ -277,14 +278,7 @@
     const y=(value)=>pad.top+(height-pad.top-pad.bottom)*(1-(value-yMin)/(yMax-yMin));
     const path=(values)=>values.map((value,index)=>`${index?'L':'M'} ${x(index,values.length).toFixed(1)} ${y(value).toFixed(1)}`).join(' ');
     const yTicks=[yMin,(yMin+yMax)/2,yMax];
-    const yearTicks=[
-      {index:0,label:'2021'},
-      {index:4,label:'2022'},
-      {index:16,label:'2023'},
-      {index:28,label:'2024'},
-      {index:40,label:'2025'},
-      {index:52,label:'2026'}
-    ].filter((tick)=>tick.index<twoPoints.length);
+    const yearTicks=['2021','2022','2023','2024','2025','2026'];
 
     const card=(kind,label,points,values)=>{
       const trend=movingAverage(values);
@@ -301,14 +295,14 @@
             </div>
             <div class="market-rate-card-direction" data-direction="${meta.dir}">
               <span>Recent trend</span>
-              <strong>${meta.label}</strong>
+              <strong><b class="market-rate-direction-cue">${meta.cue}</b>${meta.label}</strong>
               <small>${Math.abs(meta.delta).toFixed(2)}% vs prior 6 months</small>
             </div>
           </div>
           <div class="market-rate-card-chart">
             <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Five-year history of ${label.toLowerCase()} mortgage rates">
               ${yTicks.map((tick)=>`<line class="market-rate-grid" x1="${pad.left}" x2="${width-pad.right}" y1="${y(tick).toFixed(1)}" y2="${y(tick).toFixed(1)}"></line><text class="market-rate-y-label" x="${pad.left-7}" y="${(y(tick)+3).toFixed(1)}" text-anchor="end">${tick.toFixed(1)}%</text>`).join('')}
-              ${yearTicks.map((tick,index)=>`<text class="market-rate-x-label" x="${x(tick.index,values.length).toFixed(1)}" y="${height-5}" text-anchor="${index===0?'start':index===yearTicks.length-1?'end':'middle'}">${tick.label}</text>`).join('')}
+              ${yearTicks.map((label,index)=>{ const tx=pad.left+(width-pad.left-pad.right)*(index/(yearTicks.length-1)); return `<text class="market-rate-x-label" x="${tx.toFixed(1)}" y="${height-5}" text-anchor="${index===0?'start':index===yearTicks.length-1?'end':'middle'}">${label}</text>`; }).join('')}
               <path class="market-rate-line" d="${linePath}"></path>
               <path class="market-rate-trendline" d="${trendPath}"></path>
               <circle class="market-rate-end" cx="${x(values.length-1,values.length).toFixed(1)}" cy="${y(latest).toFixed(1)}" r="3.5"></circle>
