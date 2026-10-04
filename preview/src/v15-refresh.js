@@ -210,7 +210,7 @@
     if (!strip) {
       strip = document.createElement('div');
       strip.className = 'v15-journey-shell';
-      strip.innerHTML = '<div class="v15-journey-strip"></div><div class="v15-journey-callout"></div>';
+      strip.innerHTML = '<div class="v15-journey-strip v15-current-journey-track"></div>';
       body.insertAdjacentElement('afterbegin', strip);
     }
     return strip;
@@ -241,15 +241,15 @@
     const steps = [
       ['home','Home purchased',dateLabel(dates.purchase),dates.purchase ? 'complete' : ''],
       ['today','Today',today,'current'],
-      ['switch','Remortgage prep',dates.remortgage ? `from ${monthLabel(dates.remortgage)}` : '—',''],
+      ['switch','Remortgage prep',dates.remortgage ? monthLabel(dates.remortgage) : '—',''],
       ['calendar','Fixed rate ends',monthLabel(dates.fixedEnd),''],
-      ['finish','Mortgage free',payoff,''],
+      ['finish','Mortgage free',payoff,'destination'],
     ];
     $('.v15-journey-strip', shell).innerHTML = steps.map(([icon,title,date,status]) => `
-      <div class="v15-journey-step ${status ? `is-${status}` : ''}"><div class="v15-journey-icon">${journeyIcon(icon)}</div><strong>${title}</strong><span>${date}</span></div>`).join('');
-    const left = monthsUntil(dates.fixedEnd);
-    const callout = $('.v15-journey-callout', shell);
-    if (callout) callout.textContent = left === null ? 'Add your fixed-rate end date to complete the journey' : left <= 0 ? 'Your fixed-rate end needs attention' : `${compactDuration(left)} to fixed-rate end`;
+      <div class="v15-journey-step v15-current-journey-step ${status ? `is-${status}` : ''}">
+        <div class="v15-journey-icon v15-current-journey-icon">${journeyIcon(icon)}</div>
+        <div class="v15-current-journey-copy"><strong>${title}</strong><span class="v15-current-journey-date">${date}</span>${status==='destination'?'<small>At current pace</small>':''}</div>
+      </div>`).join('');
   }
 
   function render() {
