@@ -227,7 +227,8 @@
       ltvBand:band?.ltv||null,
       sourceAsOf:data.sourceAsOf||null,
       sourceLabel:`${isOnlineMode() ? 'Market benchmark' : 'Saved market benchmark'}`,
-      formattedSourceDate:formatSourceDate(data.sourceAsOf)
+      formattedSourceDate:formatSourceDate(data.sourceAsOf),
+      history:data.history||null
     };
     const meta=document.getElementById('upcomingMarketMetaValue');
     if(meta){
