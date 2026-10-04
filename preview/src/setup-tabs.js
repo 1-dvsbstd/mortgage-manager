@@ -7,7 +7,7 @@
     {id:'warm',name:'Warm',note:'Friendly, approachable and inviting.'},
     {id:'dusk',name:'Dusk',note:'Richer contrast with more character.'},
   ];
-  const nextHomeDefaults={householdIncome:'',savings:'',cashBuffer:'',saleCosts:'',purchaseCosts:'',borrowingMultiple:4.5};
+  const nextHomeDefaults={householdIncome:'',monthlyTakeHome:'',savings:'',cashBuffer:'',saleCosts:'',purchaseCosts:'',borrowingMultiple:4.5};
   const $=(selector,root=document)=>root.querySelector(selector);
   const money=(value)=>new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP',maximumFractionDigits:0}).format(Math.max(0,Number(value)||0));
   const monthKey=(date=new Date())=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}`;
@@ -19,7 +19,7 @@
   function saveNextHome(settings){
     try{localStorage.setItem(NEXT_HOME_KEY,JSON.stringify(settings));}catch(_){}
     const bridge={
-      nextHomeIncome:settings.householdIncome,nextHomeSavings:settings.savings,nextHomeBuffer:settings.cashBuffer,
+      nextHomeIncome:settings.householdIncome,nextHomeTakeHome:settings.monthlyTakeHome,nextHomeSavings:settings.savings,nextHomeBuffer:settings.cashBuffer,
       nextHomeSaleCosts:settings.saleCosts,nextHomePurchaseCosts:settings.purchaseCosts,nextHomeMultiple:settings.borrowingMultiple,
     };
     Object.entries(bridge).forEach(([id,value])=>{
@@ -48,25 +48,45 @@
   function addBudgetSection(futurePane,modal){
     if($('.setup-budget-section',futurePane)) return;
     const settings=loadNextHome();
-    const section=document.createElement('details');
+    const section=document.createElement('section');
     section.className='personal-section setup-budget-section';
-    section.innerHTML=`<summary><span><strong>Next-home budget assumptions</strong><small>Income, savings, costs and borrowing multiple used for move-budget estimates.</small></span></summary><div class="setup-budget-body"><div class="setup-future-grid">
-      <label>Household income (£/year)<input data-budget-field="householdIncome" type="number" min="0" step="1000" inputmode="decimal"></label>
-      <label>Savings available (£)<input data-budget-field="savings" type="number" min="0" step="1000" inputmode="decimal"></label>
-      <label>Cash buffer to keep (£)<input data-budget-field="cashBuffer" type="number" min="0" step="1000" inputmode="decimal"></label>
-      <label>Estimated selling costs (£)<input data-budget-field="saleCosts" type="number" min="0" step="500" inputmode="decimal"></label>
-      <label>Estimated purchase costs (£)<input data-budget-field="purchaseCosts" type="number" min="0" step="500" inputmode="decimal"></label>
-      <label>Borrowing multiple<input data-budget-field="borrowingMultiple" type="number" min="0" max="10" step="0.1" inputmode="decimal"><span>Planning only; actual lender affordability can differ.</span></label>
-    </div></div>`;
+    section.innerHTML=`
+      <button type="button" class="setup-budget-toggle" aria-expanded="false" aria-controls="setupBudgetBody">
+        <span><strong>Next-home budget assumptions</strong><small>Income, take-home pay, savings, costs and borrowing multiple used for Future planning.</small></span>
+        <i aria-hidden="true"></i>
+      </button>
+      <div id="setupBudgetBody" class="setup-budget-body" hidden>
+        <div class="setup-future-grid">
+          <label>Household income (£/year)<input data-budget-field="householdIncome" type="number" min="0" step="1000" inputmode="decimal"></label>
+          <label>Household take-home (£/month)<input data-budget-field="monthlyTakeHome" type="number" min="0" step="50" inputmode="decimal"><span>Used to put mortgage-free targets in context.</span></label>
+          <label>Savings available (£)<input data-budget-field="savings" type="number" min="0" step="1000" inputmode="decimal"></label>
+          <label>Cash buffer to keep (£)<input data-budget-field="cashBuffer" type="number" min="0" step="1000" inputmode="decimal"></label>
+          <label>Estimated selling costs (£)<input data-budget-field="saleCosts" type="number" min="0" step="500" inputmode="decimal"></label>
+          <label>Estimated purchase costs (£)<input data-budget-field="purchaseCosts" type="number" min="0" step="500" inputmode="decimal"></label>
+          <label>Borrowing multiple<input data-budget-field="borrowingMultiple" type="number" min="0" max="10" step="0.1" inputmode="decimal"><span>Planning only; actual lender affordability can differ.</span></label>
+        </div>
+      </div>`;
     futurePane.appendChild(section);
-    section.querySelectorAll('[data-budget-field]').forEach((input)=>{input.value=settings[input.dataset.budgetField]??'';});
+
+    section.querySelectorAll('[data-budget-field]').forEach((input)=>{
+      input.value=settings[input.dataset.budgetField]??'';
+    });
+
+    const toggle=$('.setup-budget-toggle',section);
+    const body=$('.setup-budget-body',section);
+    toggle?.addEventListener('click',()=>{
+      const open=toggle.getAttribute('aria-expanded')==='true';
+      toggle.setAttribute('aria-expanded',String(!open));
+      if(body) body.hidden=open;
+    });
+
     modal.querySelector('[data-action="save"]')?.addEventListener('click',()=>{
       const next={...nextHomeDefaults};
       section.querySelectorAll('[data-budget-field]').forEach((input)=>{next[input.dataset.budgetField]=input.value;});
       saveNextHome(next);
+      document.dispatchEvent(new CustomEvent('mortgage-next-home-updated',{detail:{...next}}));
     });
   }
-
   function addValueHistorySection(futurePane){
     if($('.setup-value-history-section',futurePane)) return;
     const section=document.createElement('section');
