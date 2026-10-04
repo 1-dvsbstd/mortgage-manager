@@ -523,7 +523,7 @@
       section=document.createElement('section');
       section.id='futurePayoffTargets';
       section.className='panel future-payoff-targets';
-      section.innerHTML='<div class="future-payoff-heading"><div><p class="eyebrow">Mortgage-free targets</p><h2>How quickly could you clear the mortgage at different income levels?</h2><p class="future-payoff-subtitle">Instead of forcing an arbitrary payoff date, compare repayment levels that use a realistic share of household take-home.</p></div></div><div class="future-payoff-track" id="futurePayoffTrack"></div><p class="future-payoff-note" id="futurePayoffNote"></p>';
+      section.innerHTML='<div class="future-payoff-heading"><div><p class="eyebrow">Mortgage-free targets</p><h2>How much of your income would you trade for an earlier mortgage-free date?</h2><p class="future-payoff-subtitle">A simple progression from comfortable to aggressive repayment levels.</p></div></div><div class="future-payoff-journey" id="futurePayoffJourney"></div><div class="future-payoff-current" id="futurePayoffCurrent"></div><p class="future-payoff-note" id="futurePayoffNote"></p>';
       const wait=$('#futureWaitPlanner');
       if(wait) wait.insertAdjacentElement('afterend',section); else future.appendChild(section);
     }
@@ -539,12 +539,12 @@
 
     const levels=[
       {pct:30,label:'Comfortable'},
-      {pct:35,label:'Typical upper range'},
+      {pct:35,label:'Typical'},
       {pct:45,label:'Stretch'},
       {pct:60,label:'Aggressive'}
     ];
 
-    const payoffText=(months)=>{
+    const payoffDuration=(months)=>{
       if(!Number.isFinite(months)) return 'Does not repay';
       const years=Math.floor(months/12);
       const rem=months%12;
@@ -560,35 +560,43 @@
       return new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(date);
     };
 
-    const track=$('#futurePayoffTrack',section);
-    if(track){
+    const journey=$('#futurePayoffJourney',section);
+    const current=$('#futurePayoffCurrent',section);
+    if(journey){
       if(!monthlyTakeHome){
-        track.innerHTML='<div class="future-payoff-empty"><strong>Add household take-home in Setup & Data</strong><span>Then this section can show what comfortable, typical, stretch and aggressive repayment levels mean for your payoff time.</span></div>';
+        journey.innerHTML='<div class="future-payoff-empty"><strong>Add household take-home in Setup & Data</strong><span>Then this section can compare comfortable, typical, stretch and aggressive repayment levels.</span></div>';
+        if(current) current.innerHTML='';
       }else{
-        track.innerHTML=levels.map((level)=>{
+        const rows=levels.map((level)=>{
           const targetPayment=monthlyTakeHome*(level.pct/100);
           const path=window.MortgageMath?.amortize?.(balance,rate,targetPayment);
           const months=Number(path?.months);
-          const extra=Math.max(0,targetPayment-currentTotal);
-          const belowCurrent=targetPayment<=currentTotal;
-          const extraText=belowCurrent
-            ? `${money(Math.max(0,currentTotal-targetPayment))}/mo below selected plan`
-            : `+${money(extra)}/mo above selected plan`;
-          return `<article class="future-payoff-target is-band-${level.pct}" data-pct="${level.pct}">
-            <span class="future-payoff-band">${level.label}</span>
-            <div class="future-payoff-main"><strong>${money(targetPayment)}</strong><small>/month</small></div>
-            <div class="future-payoff-share">${level.pct}% of take-home</div>
-            <div class="future-payoff-result"><span>Mortgage-free in</span><strong>${payoffText(months)}</strong><small>${payoffDate(months)}</small></div>
-            <div class="future-payoff-extra">${extraText}</div>
-          </article>`;
-        }).join('');
+          const delta=targetPayment-currentTotal;
+          return {
+            ...level,targetPayment,months,
+            duration:payoffDuration(months),
+            date:payoffDate(months),
+            delta
+          };
+        });
+
+        journey.innerHTML='<div class="future-payoff-connector" aria-hidden="true"></div>'+rows.map((row,index)=>`
+          <article class="future-payoff-step is-band-${row.pct}" data-pct="${row.pct}">
+            <div class="future-payoff-step-top"><span class="future-payoff-dot" aria-hidden="true"></span><span class="future-payoff-band">${row.label}</span></div>
+            <div class="future-payoff-date"><strong>${row.date}</strong><small>${row.duration}</small></div>
+            <div class="future-payoff-payment"><b>${money(row.targetPayment)}/mo</b><span>${row.pct}% of take-home</span></div>
+          </article>`).join('');
+
+        if(current){
+          current.innerHTML=`<div><span>Your current plan</span><strong>${money(currentTotal)}/month</strong></div><div class="future-payoff-deltas">${rows.map((row)=>`<span><b>${row.label}</b> ${row.delta>=0?'+':'−'}${money(Math.abs(row.delta))}/mo</span>`).join('')}</div>`;
+        }
       }
     }
 
     const note=$('#futurePayoffNote',section);
     if(note){
       note.textContent=monthlyTakeHome
-        ? `Based on ${money(monthlyTakeHome)}/month household take-home, your current balance and rate. Your selected plan is ${money(currentTotal)}/month in total.`
+        ? 'More monthly commitment brings the mortgage-free date forward. Figures use your current balance and rate and do not include lender overpayment limits or fees.'
         : 'Add household take-home in Setup & Data to compare repayment levels.';
     }
   }
