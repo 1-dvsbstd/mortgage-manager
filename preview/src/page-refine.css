@@ -4057,3 +4057,158 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
     grid-template-columns:1fr!important;
   }
 }
+
+/* Mortgage-free journey — one connected progression, minimal repetition. */
+.app-view-future #futurePayoffTargets .future-payoff-journey{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:0!important;
+  margin-top:4px!important;
+  padding:20px 0 6px!important;
+  overflow:hidden!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-connector{
+  position:absolute!important;
+  left:12.5%!important;
+  right:12.5%!important;
+  top:34px!important;
+  height:2px!important;
+  background:linear-gradient(90deg,rgba(68,58,48,.12),rgba(197,138,86,.55))!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-step{
+  position:relative!important;
+  z-index:1!important;
+  padding:0 18px 18px!important;
+  border-left:1px solid rgba(68,58,48,.06)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-step:first-of-type{
+  border-left:0!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-step-top{
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  margin-bottom:18px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-dot{
+  width:10px!important;
+  height:10px!important;
+  flex:0 0 auto!important;
+  border:2px solid #fffaf4!important;
+  border-radius:50%!important;
+  background:var(--accent-strong)!important;
+  box-shadow:0 0 0 1px rgba(68,58,48,.14)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-band{
+  min-height:0!important;
+  color:var(--accent-strong)!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  letter-spacing:.025em!important;
+  text-transform:uppercase!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-date{
+  display:grid!important;
+  gap:2px!important;
+  margin-bottom:14px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-date>strong{
+  color:var(--text)!important;
+  font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
+  font-size:27px!important;
+  font-weight:500!important;
+  line-height:1!important;
+  letter-spacing:-.025em!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-date>small{
+  color:var(--muted)!important;
+  font-size:9px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-payment{
+  display:grid!important;
+  gap:2px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-payment>b{
+  color:var(--text)!important;
+  font-size:11px!important;
+  font-weight:800!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-payment>span{
+  color:var(--muted)!important;
+  font-size:8.5px!important;
+}
+.app-view-future #futurePayoffTargets .is-band-45{
+  background:rgba(197,138,86,.028)!important;
+}
+.app-view-future #futurePayoffTargets .is-band-60{
+  background:rgba(197,138,86,.06)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-current{
+  display:grid!important;
+  grid-template-columns:auto 1fr!important;
+  align-items:center!important;
+  gap:18px!important;
+  margin-top:10px!important;
+  padding:13px 15px!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:13px!important;
+  background:rgba(255,250,244,.42)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-current>div:first-child{
+  display:grid!important;
+  gap:2px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-current span{
+  color:var(--muted)!important;
+  font-size:8.5px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-current strong{
+  color:var(--text)!important;
+  font-size:12px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-deltas{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  justify-content:flex-end!important;
+  gap:6px 14px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-deltas span{
+  white-space:nowrap!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-deltas b{
+  color:var(--text)!important;
+  font-weight:800!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-note{
+  margin-top:10px!important;
+  max-width:none!important;
+}
+@media(max-width:980px){
+  .app-view-future #futurePayoffTargets .future-payoff-journey{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    row-gap:18px!important;
+  }
+  .app-view-future #futurePayoffTargets .future-payoff-connector{
+    display:none!important;
+  }
+  .app-view-future #futurePayoffTargets .future-payoff-current{
+    grid-template-columns:1fr!important;
+  }
+  .app-view-future #futurePayoffTargets .future-payoff-deltas{
+    justify-content:flex-start!important;
+  }
+}
+@media(max-width:700px){
+  .app-view-future #futurePayoffTargets .future-payoff-journey{
+    grid-template-columns:1fr!important;
+  }
+  .app-view-future #futurePayoffTargets .future-payoff-step{
+    padding:14px 0!important;
+    border-left:0!important;
+    border-top:1px solid rgba(68,58,48,.07)!important;
+  }
+  .app-view-future #futurePayoffTargets .future-payoff-step:first-of-type{
+    border-top:0!important;
+  }
+}
