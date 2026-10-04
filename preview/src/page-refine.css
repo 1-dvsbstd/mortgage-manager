@@ -3763,3 +3763,140 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
     padding:18px!important;
   }
 }
+
+/* Mortgage-free targets — income-contextual decision hierarchy. */
+.app-view-future #futurePayoffTargets .future-payoff-heading{
+  display:flex!important;
+  align-items:flex-end!important;
+  justify-content:space-between!important;
+  gap:24px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-heading>div{
+  min-width:0!important;
+}
+.app-view-future #futurePayoffTargets .future-income-control{
+  display:grid!important;
+  flex:0 0 auto!important;
+  gap:4px!important;
+  color:var(--muted)!important;
+  font-size:8.5px!important;
+  font-weight:700!important;
+}
+.app-view-future #futurePayoffTargets .future-income-control>span{
+  display:flex!important;
+  align-items:center!important;
+  gap:4px!important;
+  min-width:128px!important;
+  padding:6px 9px!important;
+  border:1px solid var(--border-soft)!important;
+  border-radius:10px!important;
+  background:#fffaf4!important;
+  color:var(--text)!important;
+  font-size:11px!important;
+}
+.app-view-future #futurePayoffTargets .future-income-control input{
+  width:86px!important;
+  min-width:0!important;
+  padding:0!important;
+  border:0!important;
+  outline:0!important;
+  background:transparent!important;
+  color:var(--text)!important;
+  font:inherit!important;
+}
+
+.app-view-future #futurePayoffTargets .future-payoff-target{
+  min-height:178px!important;
+  padding:20px 22px 18px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-extra{
+  margin:3px 0 12px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-extra>strong{
+  display:block!important;
+  color:var(--text)!important;
+  font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
+  font-size:29px!important;
+  font-weight:500!important;
+  line-height:1!important;
+  letter-spacing:-.025em!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-extra>small{
+  display:block!important;
+  margin-top:4px!important;
+  color:var(--muted)!important;
+  font-size:8.5px!important;
+  line-height:1.3!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-total{
+  display:flex!important;
+  align-items:baseline!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  color:var(--muted)!important;
+  font-size:8.5px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-total span{
+  color:var(--muted)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-total b{
+  color:var(--text)!important;
+  font-weight:750!important;
+  white-space:nowrap!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-meter{
+  height:4px!important;
+  margin:10px 0 9px!important;
+  overflow:hidden!important;
+  border-radius:999px!important;
+  background:rgba(68,58,48,.08)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-meter i{
+  display:block!important;
+  height:100%!important;
+  border-radius:inherit!important;
+  background:var(--accent-strong)!important;
+  opacity:.72!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-status{
+  margin-top:0!important;
+}
+.app-view-future #futurePayoffTargets .is-comfortable .future-payoff-status,
+.app-view-future #futurePayoffTargets .is-typical .future-payoff-status,
+.app-view-future #futurePayoffTargets .is-on-track .future-payoff-status{
+  background:rgba(65,107,85,.10)!important;
+  color:var(--accent-strong)!important;
+}
+.app-view-future #futurePayoffTargets .is-stretched .future-payoff-status{
+  background:rgba(197,138,86,.11)!important;
+  color:var(--accent-strong)!important;
+}
+.app-view-future #futurePayoffTargets .is-very-stretched,
+.app-view-future #futurePayoffTargets .is-extreme{
+  background:#f1e5d7!important;
+}
+.app-view-future #futurePayoffTargets .is-extreme .future-payoff-status{
+  background:rgba(145,91,61,.10)!important;
+  color:var(--text)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-note{
+  margin-top:11px!important;
+  max-width:760px!important;
+  font-size:8.5px!important;
+}
+@media(max-width:700px){
+  .app-view-future #futurePayoffTargets .future-payoff-heading{
+    align-items:flex-start!important;
+    flex-direction:column!important;
+    gap:12px!important;
+  }
+  .app-view-future #futurePayoffTargets .future-income-control{
+    width:100%!important;
+  }
+  .app-view-future #futurePayoffTargets .future-income-control>span{
+    width:100%!important;
+  }
+  .app-view-future #futurePayoffTargets .future-income-control input{
+    width:100%!important;
+  }
+}
