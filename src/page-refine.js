@@ -63,7 +63,7 @@
 
     const buttons=$('#totalOverpayButtons',scenario);
     if(buttons){
-      buttons.innerHTML=totalCandidates(regular).map((amount)=>`<button type="button" data-total-overpay="${amount}" class="${Math.abs(amount-total)<.5?'active':''}">${Math.abs(amount-regular)<.5?'Current ':''}${money(amount)}</button>`).join('') + `<label class="custom-chip total-custom-chip">Custom £<input id="totalOverpayCustom" type="number" min="${regular}" step="10" inputmode="decimal" value="${Math.round(total*100)/100}"></label>`;
+      buttons.innerHTML=totalCandidates(regular).map((amount)=>`<button type="button" data-total-overpay="${amount}" class="${Math.abs(amount-total)<.5?'active':''}">${Math.abs(amount-regular)<.5?'Current':money(amount)}</button>`).join('') + `<label class="custom-chip total-custom-chip">Custom £<input id="totalOverpayCustom" type="number" min="${regular}" step="10" inputmode="decimal" value="${Math.round(total*100)/100}"></label>`;
     }
   }
 
@@ -148,7 +148,7 @@
     const total=selectedScenario>0?selectedScenario:regular;
     const summary=$('#futureExtraSummary',panel); if(summary) summary.textContent=`${money(total)}/month overpayment`;
     const controls=$('#futureTotalControls',panel);
-    if(controls) controls.innerHTML=totalCandidates(regular).map((value)=>`<button type="button" data-future-total="${value}" class="${Math.abs(value-total)<.5?'active':''}">${Math.abs(value-regular)<.5?'Current ':''}${money(value)}</button>`).join('')+`<label>Custom £<input id="futureTotalCustom" type="number" min="${regular}" step="10" value="${Math.round(total*100)/100}"></label>`;
+    if(controls) controls.innerHTML=totalCandidates(regular).map((value)=>`<button type="button" data-future-total="${value}" class="${Math.abs(value-total)<.5?'active':''}">${Math.abs(value-regular)<.5?'Current':money(value)}</button>`).join('')+`<label>Custom £<input id="futureTotalCustom" type="number" min="${regular}" step="10" value="${Math.round(total*100)/100}"></label>`;
   }
 
   function projectedDealPosition(state){
@@ -353,16 +353,19 @@
     if(cost){
       cost.classList.add('panel','temporal-feature-card','temporal-feature-cost-comparison');
       cost.classList.remove('future-cost-inline');
+      const heading=$('.deep-heading h2',cost);
+      if(heading) heading.textContent='What the home could be worth versus what it cost you';
       const cards=cost.querySelectorAll('.property-cost-card');
       if(cards.length>=2){
         const value=Number((cards[0].querySelector('strong')?.textContent||'').replace(/[^0-9.-]/g,''))||0;
         const costValue=Number((cards[1].querySelector('strong')?.textContent||'').replace(/[^0-9.-]/g,''))||0;
         let result=cost.querySelector('.long-term-difference-note');
+        const grid=cost.querySelector('.property-cost-grid');
         if(!result){
           result=document.createElement('div');
           result.className='long-term-difference-note';
-          cost.querySelector('.property-cost-grid')?.insertAdjacentElement('afterend',result);
         }
+        if(grid && result.nextElementSibling!==grid) grid.insertAdjacentElement('beforebegin',result);
         if(value&&costValue){
           const diff=value-costValue;
           result.innerHTML=`<span>Projected difference</span><strong>${diff>=0?'+':'−'}£${Math.round(Math.abs(diff)).toLocaleString('en-GB')}</strong><small>${diff>=0?'Projected value above known purchase + mortgage cost':'Known purchase + mortgage cost above projected value'}</small>`;
