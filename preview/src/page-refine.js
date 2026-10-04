@@ -244,72 +244,91 @@
     if(!panel){
       panel=document.createElement('section');
       panel.id='marketRateTrend';
-      panel.className='market-rate-trend market-rate-trend-wide';
+      panel.className='market-rate-trend market-rate-trend-split';
       const note=$('.deal-planner-note',body);
       if(note) note.insertAdjacentElement('afterend',panel); else body.appendChild(panel);
     }
 
     const two=twoPoints.map((point)=>Number(point.rate));
     const five=fivePoints.map((point)=>Number(point.rate));
+    const all=[...two,...five];
+    const dataMin=Math.min(...all),dataMax=Math.max(...all);
+    const yMin=Math.max(0,Math.floor((dataMin-.35)*2)/2);
+    const yMax=Math.ceil((dataMax+.35)*2)/2;
+
     const movingAverage=(values,windowSize=6)=>values.map((_,index)=>{
       const from=Math.max(0,index-windowSize+1);
       const slice=values.slice(from,index+1);
       return slice.reduce((sum,value)=>sum+value,0)/slice.length;
     });
-    const twoTrend=movingAverage(two),fiveTrend=movingAverage(five);
     const avg=(items)=>items.reduce((sum,value)=>sum+value,0)/Math.max(1,items.length);
-    const trendDelta=(values)=>avg(values.slice(-6))-avg(values.slice(-12,-6));
-    const twoDelta=trendDelta(two),fiveDelta=trendDelta(five);
-    const direction=(delta)=>Math.abs(delta)<.04?'flat':delta<0?'down':'up';
-    const directionCopy=(delta)=>{
-      const dir=direction(delta);
-      return {dir,symbol:dir==='flat'?'→':dir==='down'?'↓':'↑',label:dir==='flat'?'Broadly flat':dir==='down'?'Averaging down':'Averaging up'};
+    const directionMeta=(values)=>{
+      const delta=avg(values.slice(-6))-avg(values.slice(-12,-6));
+      const dir=Math.abs(delta)<.04?'flat':delta<0?'down':'up';
+      return {
+        delta,
+        dir,
+        symbol:dir==='flat'?'→':dir==='down'?'↓':'↑',
+        label:dir==='flat'?'Broadly flat':dir==='down'?'Averaging down':'Averaging up'
+      };
     };
-    const twoDir=directionCopy(twoDelta),fiveDir=directionCopy(fiveDelta);
 
-    const width=980,height=220,pad={left:42,right:18,top:16,bottom:26};
-    const all=[...two,...five];
-    const dataMin=Math.min(...all),dataMax=Math.max(...all);
-    const yMin=Math.max(0,Math.floor((dataMin-.35)*2)/2);
-    const yMax=Math.ceil((dataMax+.35)*2)/2;
-    const x=(index)=>pad.left+(width-pad.left-pad.right)*(index/Math.max(1,two.length-1));
+    const width=520,height=190,pad={left:38,right:14,top:12,bottom:24};
+    const x=(index,count)=>pad.left+(width-pad.left-pad.right)*(index/Math.max(1,count-1));
     const y=(value)=>pad.top+(height-pad.top-pad.bottom)*(1-(value-yMin)/(yMax-yMin));
-    const path=(values)=>values.map((value,index)=>`${index?'L':'M'} ${x(index).toFixed(1)} ${y(value).toFixed(1)}`).join(' ');
-    const twoPath=path(two),fivePath=path(five),twoTrendPath=path(twoTrend),fiveTrendPath=path(fiveTrend);
+    const path=(values)=>values.map((value,index)=>`${index?'L':'M'} ${x(index,values.length).toFixed(1)} ${y(value).toFixed(1)}`).join(' ');
     const yTicks=[yMin,(yMin+yMax)/2,yMax];
     const yearIndices=[];
     twoPoints.forEach((point,index)=>{ if(point.date.slice(5,7)==='01') yearIndices.push(index); });
     if(!yearIndices.includes(0)) yearIndices.unshift(0);
-    yearIndices.push(twoPoints.length-1);
+    if(!yearIndices.includes(twoPoints.length-1)) yearIndices.push(twoPoints.length-1);
+
+    const card=(kind,label,points,values)=>{
+      const trend=movingAverage(values);
+      const meta=directionMeta(values);
+      const linePath=path(values),trendPath=path(trend);
+      const latest=values.at(-1);
+      return `
+        <article class="market-rate-card market-rate-card-${kind}">
+          <div class="market-rate-card-head">
+            <div>
+              <span>${label}</span>
+              <strong>${latest.toFixed(2)}%</strong>
+              <small>Latest quoted rate</small>
+            </div>
+            <div class="market-rate-card-direction" data-direction="${meta.dir}">
+              <strong>${meta.symbol} ${meta.label}</strong>
+              <small>${Math.abs(meta.delta).toFixed(2)} pts vs prior 6 months</small>
+            </div>
+          </div>
+          <div class="market-rate-card-chart">
+            <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Five-year history of ${label.toLowerCase()} mortgage rates">
+              ${yTicks.map((tick)=>`<line class="market-rate-grid" x1="${pad.left}" x2="${width-pad.right}" y1="${y(tick).toFixed(1)}" y2="${y(tick).toFixed(1)}"></line><text class="market-rate-y-label" x="${pad.left-7}" y="${(y(tick)+3).toFixed(1)}" text-anchor="end">${tick.toFixed(1)}%</text>`).join('')}
+              ${yearIndices.map((index)=>`<text class="market-rate-x-label" x="${x(index,values.length).toFixed(1)}" y="${height-5}" text-anchor="${index===0?'start':index===values.length-1?'end':'middle'}">${new Date(points[index].date+'T12:00:00Z').getUTCFullYear()}</text>`).join('')}
+              <path class="market-rate-line" d="${linePath}"></path>
+              <path class="market-rate-trendline" d="${trendPath}"></path>
+              <circle class="market-rate-end" cx="${x(values.length-1,values.length).toFixed(1)}" cy="${y(latest).toFixed(1)}" r="3.5"></circle>
+            </svg>
+            <div class="market-rate-card-foot">
+              <span>Actual monthly rate</span>
+              <span><i></i>6-month trend</span>
+              <span>Aug 2026</span>
+            </div>
+          </div>
+        </article>`;
+    };
 
     panel.innerHTML=`
       <div class="market-rate-trend-heading">
         <div>
           <p class="eyebrow">Five-year history</p>
           <h3>How fixed mortgage rates have moved</h3>
-          <p>Bank of England quoted household rates · 75% LTV · 6-month rolling trend shown dashed</p>
-        </div>
-        <div class="market-rate-trend-status">
-          <div data-direction="${twoDir.dir}"><span>2-year</span><strong>${twoDir.symbol} ${twoDir.label}</strong><small>${Math.abs(twoDelta).toFixed(2)} pts</small></div>
-          <div data-direction="${fiveDir.dir}"><span>5-year</span><strong>${fiveDir.symbol} ${fiveDir.label}</strong><small>${Math.abs(fiveDelta).toFixed(2)} pts</small></div>
+          <p>Bank of England quoted household rates · 75% LTV</p>
         </div>
       </div>
-      <div class="market-rate-trend-chart">
-        <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Five-year history of Bank of England two-year and five-year fixed mortgage rates">
-          ${yTicks.map((tick)=>`<line class="market-rate-grid" x1="${pad.left}" x2="${width-pad.right}" y1="${y(tick).toFixed(1)}" y2="${y(tick).toFixed(1)}"></line><text class="market-rate-y-label" x="${pad.left-8}" y="${(y(tick)+3).toFixed(1)}" text-anchor="end">${tick.toFixed(1)}%</text>`).join('')}
-          ${yearIndices.map((index)=>`<text class="market-rate-x-label" x="${x(index).toFixed(1)}" y="${height-5}" text-anchor="${index===0?'start':index===two.length-1?'end':'middle'}">${new Date(twoPoints[index].date+'T12:00:00Z').getUTCFullYear()}</text>`).join('')}
-          <path class="market-rate-line market-rate-two" d="${twoPath}"></path>
-          <path class="market-rate-line market-rate-five" d="${fivePath}"></path>
-          <path class="market-rate-trendline market-rate-two-trend" d="${twoTrendPath}"></path>
-          <path class="market-rate-trendline market-rate-five-trend" d="${fiveTrendPath}"></path>
-          <circle class="market-rate-end market-rate-two-end" cx="${x(two.length-1).toFixed(1)}" cy="${y(two.at(-1)).toFixed(1)}" r="3.5"></circle>
-          <circle class="market-rate-end market-rate-five-end" cx="${x(five.length-1).toFixed(1)}" cy="${y(five.at(-1)).toFixed(1)}" r="3.5"></circle>
-        </svg>
-        <div class="market-rate-trend-legend">
-          <span><i class="market-rate-key two"></i>2-year fixed <strong>${two.at(-1).toFixed(2)}%</strong></span>
-          <span><i class="market-rate-key five"></i>5-year fixed <strong>${five.at(-1).toFixed(2)}%</strong></span>
-          <span class="market-rate-source">Latest: ${new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(new Date(twoPoints.at(-1).date+'T12:00:00Z'))}</span>
-        </div>
+      <div class="market-rate-trend-grid">
+        ${card('two','2-year fixed',twoPoints,two)}
+        ${card('five','5-year fixed',fivePoints,five)}
       </div>
     `;
   }
