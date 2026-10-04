@@ -88,24 +88,8 @@
   }
 
   function ensureCostBars() {
-    const cards = Array.from(document.querySelectorAll('#propertyCostComparison .property-cost-card'));
-    if (!cards.length) return;
-    const values = cards.map((card) => moneyNumber(card.querySelector('strong')?.textContent));
-    const max = Math.max(...values, 1);
-    cards.forEach((card, index) => {
-      let scale = card.querySelector('.cost-scale');
-      if (!scale) {
-        scale = document.createElement('div');
-        scale.className = 'cost-scale';
-        scale.setAttribute('aria-hidden', 'true');
-        scale.innerHTML = '<i></i>';
-        card.appendChild(scale);
-      }
-      const width = Math.max(0, Math.min(100, values[index] / max * 100));
-      scale.style.setProperty('--cost-width', `${width.toFixed(1)}%`);
-    });
+    document.querySelectorAll('#propertyCostComparison .cost-scale').forEach((scale)=>scale.remove());
   }
-
 
   function standardiseSetupClose() {
     const button = document.querySelector('.personal-modal .personal-close');
@@ -115,10 +99,8 @@
   }
 
   function keepFutureSectionsOpen() {
-    ['homeValueHistory','nextHomePlanner','nextHomeSettings'].forEach((id) => {
-      const el = $(id);
-      if (el?.tagName === 'DETAILS') el.open = true;
-    });
+    const history = $('homeValueHistory');
+    if (history?.tagName === 'DETAILS') history.open = false;
   }
 
   function isOnlineMode() {
