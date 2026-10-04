@@ -598,6 +598,119 @@
   font-size:9px!important;
   font-weight:600!important;
 }
+/* Historical mortgage-rate trend */
+.app-view-upcoming .market-rate-trend{
+  display:grid!important;
+  grid-template-columns:minmax(230px,.72fr) minmax(0,1.28fr)!important;
+  gap:26px!important;
+  align-items:center!important;
+  margin:16px 0 0!important;
+  padding:18px 0 4px!important;
+  border-top:1px solid var(--up-border-soft)!important;
+}
+.app-view-upcoming .market-rate-trend-copy{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:15px!important;
+}
+.app-view-upcoming .market-rate-trend-copy .eyebrow{
+  margin:0!important;
+  font-size:8px!important;
+}
+.app-view-upcoming .market-rate-trend-copy h3{
+  margin:5px 0 0!important;
+  color:var(--text)!important;
+  font-family:var(--font-display)!important;
+  font-size:18px!important;
+  font-weight:600!important;
+  letter-spacing:-.025em!important;
+}
+.app-view-upcoming .market-rate-trend-copy p:last-child{
+  margin:4px 0 0!important;
+  color:var(--muted-2)!important;
+  font-size:8.5px!important;
+}
+.app-view-upcoming .market-rate-trend-metric{
+  padding-left:12px!important;
+  border-left:2px solid color-mix(in srgb,var(--positive) 36%,var(--up-border-soft))!important;
+}
+.app-view-upcoming .market-rate-trend[data-direction="up"] .market-rate-trend-metric{
+  border-left-color:color-mix(in srgb,var(--accent) 52%,var(--up-border-soft))!important;
+}
+.app-view-upcoming .market-rate-trend-metric>span{
+  display:block!important;
+  color:var(--muted)!important;
+  font-size:8px!important;
+  font-weight:700!important;
+}
+.app-view-upcoming .market-rate-trend-metric>strong{
+  display:block!important;
+  margin-top:4px!important;
+  color:var(--theme-hero-ink)!important;
+  font-family:var(--font-display)!important;
+  font-size:20px!important;
+  font-weight:600!important;
+}
+.app-view-upcoming .market-rate-trend-metric>strong b{
+  color:var(--positive)!important;
+  font-family:var(--font-ui)!important;
+  font-size:15px!important;
+}
+.app-view-upcoming .market-rate-trend[data-direction="up"] .market-rate-trend-metric>strong b{color:var(--accent-strong)!important}
+.app-view-upcoming .market-rate-trend-metric>small{
+  display:block!important;
+  margin-top:4px!important;
+  color:var(--muted-2)!important;
+  font-size:8px!important;
+}
+.app-view-upcoming .market-rate-trend-chart{
+  min-width:0!important;
+  padding:7px 10px 0!important;
+  border-radius:13px!important;
+  background:color-mix(in srgb,var(--surface-control) 60%,transparent)!important;
+}
+.app-view-upcoming .market-rate-trend-chart svg{
+  display:block!important;
+  width:100%!important;
+  height:112px!important;
+  overflow:visible!important;
+}
+.app-view-upcoming .market-rate-trend-area{
+  fill:color-mix(in srgb,var(--accent) 8%,transparent)!important;
+}
+.app-view-upcoming .market-rate-trend-line{
+  fill:none!important;
+  stroke:var(--accent)!important;
+  stroke-width:2!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+}
+.app-view-upcoming .market-rate-trend-dot{
+  fill:var(--accent)!important;
+  stroke:var(--surface)!important;
+  stroke-width:2!important;
+}
+.app-view-upcoming .market-rate-trend-axis{
+  display:grid!important;
+  grid-template-columns:1fr auto 1fr!important;
+  gap:10px!important;
+  margin-top:-1px!important;
+  padding:0 2px 8px!important;
+  color:var(--muted-2)!important;
+  font-size:7.5px!important;
+  font-weight:650!important;
+}
+.app-view-upcoming .market-rate-trend-axis span:nth-child(2){color:var(--accent-strong)!important;text-align:center!important}
+.app-view-upcoming .market-rate-trend-axis span:last-child{text-align:right!important}
+@media(max-width:800px){
+  .app-view-upcoming .market-rate-trend{grid-template-columns:1fr!important;gap:14px!important}
+  .app-view-upcoming .market-rate-trend-copy{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:560px){
+  .app-view-upcoming .market-rate-trend-copy{grid-template-columns:1fr!important}
+  .app-view-upcoming .market-rate-trend-chart svg{height:92px!important}
+}
+
 /* Deal-end snapshot */
 .app-view-upcoming .upcoming-position .deal-planner-summary{
   display:grid!important;
