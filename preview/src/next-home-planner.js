@@ -134,8 +134,8 @@
     const rate=Math.max(0,Number(mortgage.rate)||0);
     const payment=Math.max(0,Number(mortgage.payment)||0);
     const regular=Math.max(0,Number(mortgage.currentOverpayment)||0);
-    const scenarioExtra=Math.max(0,Number(mortgage.scenarioExtra)||0);
-    const selectedOverpayment=scenarioExtra>0?scenarioExtra:regular;
+    const scenarioExtra=0;
+    const selectedOverpayment=regular;
     const trend=trendRate();
     const path=window.MortgageMath?.amortize(balance,rate,payment+selectedOverpayment);
     const futureHome=projectedHomeValue(home,trend,years);
@@ -200,7 +200,7 @@
         : `<small><b>${money(row.usableEquity)}</b> move equity</small><small><b>${money(row.futureMortgage)}</b> mortgage remaining</small>`;
       return `<div class="next-home-timeline-row" data-years="${row.years}"><span class="next-home-period">${label}</span><strong>${hasBudget(row)?money(row.budget):'—'}</strong>${change}<div class="next-home-support">${support}</div></div>`;
     }).join('');
-    $('nextHomeTrendNote').textContent=`Starts from your current property estimate, then uses ${now.trend.toFixed(1)}%/yr forward growth and ${money(now.selectedOverpayment)}/month overpayment${now.scenarioExtra>0?' from the selected Current scenario':' from your regular plan'}.`;
+    $('nextHomeTrendNote').textContent=`Starts from your current property estimate, then uses ${now.trend.toFixed(1)}%/yr forward growth and ${money(now.selectedOverpayment)}/month overpayment from your regular plan.`;
 
     const ownership=Math.min(100,Math.max(0,Number(mortgage.ownership)||0));
     $('nextHomeNote').textContent=ownership<100
