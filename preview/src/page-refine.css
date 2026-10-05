@@ -4376,3 +4376,131 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
     display:none!important;
   }
 }
+
+/* Future v32 — outcome-led page: mortgage-free, next home, then supporting drivers. */
+.app-view-future #futureOverpaymentAssumption.future-source-only,
+.app-view-future #homeProjection.future-source-only,
+.app-view-future #futureModelRange.future-source-only,
+.app-view-future #nextHomePlanner.future-source-only,
+.app-view-future #propertyCostComparison.future-source-only{
+  display:none!important;
+}
+.app-view-future #futurePayoffTargets{
+  margin-top:8px!important;
+}
+.app-view-future #futureWaitPlanner{
+  margin-top:18px!important;
+}
+.app-view-future #futureWaitPlanner .future-wait-heading .eyebrow{
+  color:var(--accent-strong)!important;
+}
+.app-view-future #futureDrivers{
+  margin-top:18px!important;
+  padding:24px 26px!important;
+}
+.app-view-future .future-drivers-heading{
+  max-width:720px!important;
+  margin-bottom:18px!important;
+}
+.app-view-future .future-drivers-heading .eyebrow{
+  margin:0 0 4px!important;
+}
+.app-view-future .future-drivers-heading h2{
+  margin:0!important;
+  color:var(--text)!important;
+  font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
+  font-size:23px!important;
+  font-weight:500!important;
+  letter-spacing:-.025em!important;
+}
+.app-view-future .future-drivers-heading>p:last-child{
+  margin:6px 0 0!important;
+  color:var(--muted)!important;
+  font-size:9px!important;
+  line-height:1.45!important;
+}
+.app-view-future .future-drivers-grid{
+  display:grid!important;
+  grid-template-columns:.9fr 1.15fr 1.15fr!important;
+  gap:10px!important;
+}
+.app-view-future .future-driver-card{
+  min-width:0!important;
+  padding:17px 18px!important;
+  border:1px solid rgba(68,58,48,.08)!important;
+  border-radius:14px!important;
+  background:rgba(255,250,244,.4)!important;
+}
+.app-view-future .future-driver-label{
+  display:block!important;
+  margin-bottom:9px!important;
+  color:var(--muted)!important;
+  font-size:8px!important;
+  font-weight:800!important;
+  letter-spacing:.04em!important;
+  text-transform:uppercase!important;
+}
+.app-view-future .future-driver-card>strong{
+  display:block!important;
+  color:var(--text)!important;
+  font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
+  font-size:25px!important;
+  font-weight:500!important;
+  letter-spacing:-.025em!important;
+}
+.app-view-future .future-driver-card>small{
+  display:block!important;
+  margin-top:3px!important;
+  color:var(--muted)!important;
+  font-size:8px!important;
+  line-height:1.35!important;
+}
+.app-view-future .future-driver-secondary{
+  display:flex!important;
+  align-items:baseline!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  margin-top:16px!important;
+  padding-top:11px!important;
+  border-top:1px solid rgba(68,58,48,.07)!important;
+}
+.app-view-future .future-driver-secondary span{
+  color:var(--muted)!important;
+  font-size:8px!important;
+}
+.app-view-future .future-driver-secondary b{
+  color:var(--text)!important;
+  font-size:11px!important;
+}
+.app-view-future .future-driver-mini-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:7px!important;
+}
+.app-view-future .future-driver-mini-grid>div{
+  min-width:0!important;
+}
+.app-view-future .future-driver-mini-grid span{
+  display:block!important;
+  margin-bottom:3px!important;
+  color:var(--muted)!important;
+  font-size:8px!important;
+}
+.app-view-future .future-driver-mini-grid strong{
+  display:block!important;
+  color:var(--text)!important;
+  font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
+  font-size:17px!important;
+  font-weight:500!important;
+  line-height:1.1!important;
+  letter-spacing:-.02em!important;
+}
+.app-view-future .future-driver-forecast>small,
+.app-view-future .future-driver-balance>small{
+  margin-top:13px!important;
+}
+@media(max-width:900px){
+  .app-view-future .future-drivers-grid{
+    grid-template-columns:1fr!important;
+  }
+}
