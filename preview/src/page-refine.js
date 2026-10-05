@@ -490,19 +490,26 @@
       wait.innerHTML=`
         <div class="future-wait-heading">
           <p class="eyebrow">Next-home planning</p>
-          <h2>What you could afford next — today, or later</h2>
-          <p class="future-wait-subtitle">See how move equity and borrowing power could combine into a future home budget.</p>
+          <h2>What you could afford next</h2>
+          <p class="future-wait-subtitle">See how your future equity and borrowing power could combine into a larger home budget.</p>
         </div>
         <div class="future-next-home-controls" role="tablist" aria-label="Next-home planning horizon"></div>
-        <div class="future-next-home-result">
+        <div class="future-next-home-dashboard">
           <div class="future-next-home-main">
-            <span class="future-next-home-kicker">Illustrative next-home budget</span>
+            <span class="future-next-home-kicker">Illustrative budget</span>
             <strong id="futureNextHomeBudget">—</strong>
             <div class="future-next-home-meta"><span id="futureNextHomePeriod">—</span><b id="futureNextHomeDelta">—</b></div>
           </div>
-          <div class="future-next-home-breakdown" id="futureNextHomeBreakdown"></div>
+          <div class="future-next-home-build">
+            <div class="future-next-home-build-heading"><span>How the budget is built</span><strong id="futureNextHomeBuildTotal">—</strong></div>
+            <div class="future-next-home-composition" id="futureNextHomeComposition" aria-hidden="true"></div>
+            <div class="future-next-home-breakdown" id="futureNextHomeBreakdown"></div>
+          </div>
         </div>
-        <div class="future-next-home-progress" id="futureNextHomeProgress" aria-label="Budget progression"></div>
+        <div class="future-next-home-growth">
+          <div class="future-next-home-growth-heading"><span>Budget over time</span><small>Choose a point to compare</small></div>
+          <div class="future-next-home-progress" id="futureNextHomeProgress" aria-label="Budget progression"></div>
+        </div>
         <p class="future-next-home-note" id="futureNextHomeNote"></p>
         <div class="future-wait-source" hidden></div>`;
       planner.insertAdjacentElement('afterend',wait);
@@ -511,6 +518,7 @@
     if(timeline.parentElement!==source) source.appendChild(timeline);
     planner.classList.add('future-source-only');
 
+    const parseMoney=(text)=>Number(String(text||'').replace(/[^0-9.-]/g,''))||0;
     const renderHero=()=>{
       const rows=[...timeline.querySelectorAll('.next-home-timeline-row')];
       if(!rows.length) return;
@@ -519,9 +527,14 @@
         const period=row.querySelector('.next-home-period')?.textContent?.trim()||(years===0?'Today':`In ${years} years`);
         const budget=row.querySelector(':scope > strong')?.textContent?.trim()||'—';
         const change=row.querySelector('.next-home-change')?.textContent?.trim()||'';
-        const supports=[...row.querySelectorAll('.next-home-support small')].map((item)=>item.textContent.trim()).filter(Boolean);
-        return {years,period,budget,change,supports};
+        const supports=[...row.querySelectorAll('.next-home-support small')].map((item)=>{
+          const text=item.textContent.trim();
+          const b=item.querySelector('b')?.textContent?.trim()||'';
+          return {text,value:parseMoney(b),valueText:b,label:text.replace(b,'').trim()};
+        }).filter((item)=>item.text);
+        return {years,period,budget,budgetValue:parseMoney(budget),change,supports};
       });
+
       let selected=Number(wait.dataset.selectedYears);
       if(!data.some((item)=>item.years===selected)) selected=data.some((item)=>item.years===5)?5:data[0].years;
       wait.dataset.selectedYears=String(selected);
@@ -530,33 +543,49 @@
       const controls=$('.future-next-home-controls',wait);
       if(controls) controls.innerHTML=data.map((item)=>`<button type="button" role="tab" aria-selected="${item.years===selected?'true':'false'}" data-next-home-years="${item.years}">${item.years===0?'Today':`${item.years} years`}</button>`).join('');
 
-      const budget=$('#futureNextHomeBudget',wait);
-      const period=$('#futureNextHomePeriod',wait);
+      $('#futureNextHomeBudget',wait).textContent=active.budget;
+      $('#futureNextHomePeriod',wait).textContent=active.period;
       const delta=$('#futureNextHomeDelta',wait);
-      if(budget) budget.textContent=active.budget;
-      if(period) period.textContent=active.period;
       if(delta){
         delta.textContent=active.years===0?'Starting point':active.change.replace(/\s+vs today$/i,' vs today');
         delta.classList.toggle('is-baseline',active.years===0);
       }
+      const buildTotal=$('#futureNextHomeBuildTotal',wait);
+      if(buildTotal) buildTotal.textContent=active.budget;
 
-      const breakdown=$('#futureNextHomeBreakdown',wait);
-      if(breakdown){
-        breakdown.innerHTML=active.supports.map((text)=>{
-          const match=text.match(/^([^a-zA-Z]*£?[\d,]+)\s+(.*)$/);
-          if(match) return `<div><span>${match[2]}</span><strong>${match[1]}</strong></div>`;
-          return `<div><span>${text}</span></div>`;
+      const items=active.supports.filter((item)=>item.value>0);
+      const totalParts=items.reduce((sum,item)=>sum+item.value,0)||1;
+      const composition=$('#futureNextHomeComposition',wait);
+      if(composition){
+        composition.innerHTML=items.map((item,index)=>{
+          const share=Math.max(3,item.value/totalParts*100);
+          return `<i style="width:${share}%" data-index="${index}"></i>`;
         }).join('');
       }
 
+      const breakdown=$('#futureNextHomeBreakdown',wait);
+      if(breakdown){
+        breakdown.innerHTML=items.map((item,index)=>{
+          const share=Math.round(item.value/totalParts*100);
+          return `<div data-index="${index}"><span><i></i>${item.label}</span><strong>${item.valueText}</strong><small>${share}% of total</small></div>`;
+        }).join('');
+      }
+
+      const minBudget=Math.min(...data.map((item)=>item.budgetValue).filter(Boolean));
+      const maxBudget=Math.max(...data.map((item)=>item.budgetValue).filter(Boolean));
+      const range=Math.max(1,maxBudget-minBudget);
       const progress=$('#futureNextHomeProgress',wait);
       if(progress){
-        progress.innerHTML=`<div class="future-next-home-progress-line"></div>`+data.map((item)=>`
-          <button type="button" class="${item.years===selected?'is-active':''}" data-next-home-years="${item.years}">
+        progress.innerHTML=`<div class="future-next-home-progress-line"></div>`+data.map((item)=>{
+          const lift=item.budgetValue?((item.budgetValue-minBudget)/range)*34:0;
+          return `
+          <button type="button" class="${item.years===selected?'is-active':''}" data-next-home-years="${item.years}" style="--budget-lift:${lift}px">
             <i aria-hidden="true"></i>
             <span>${item.years===0?'Today':`${item.years}y`}</span>
             <strong>${item.budget}</strong>
-          </button>`).join('');
+            ${item.years===0?'':`<small>${item.change.replace(/\s+vs today$/i,'')}</small>`}
+          </button>`;
+        }).join('');
       }
 
       const note=$('#futureNextHomeNote',wait);
@@ -768,8 +797,9 @@
     ].filter(Boolean);
     sources.forEach((node)=>node.classList.add('future-source-only'));
 
+    const primary=$('#futureWaitPlanner');
+    if(primary) future.prepend(primary);
     const order=[
-      $('#futureWaitPlanner'),
       $('#futurePayoffTargets'),
       $('#futureDrivers')
     ].filter(Boolean);
