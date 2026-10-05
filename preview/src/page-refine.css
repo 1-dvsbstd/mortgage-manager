@@ -5220,3 +5220,62 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
     font-size:31px!important;
   }
 }
+
+/* Future v47 — hero emphasis and tooltip polish. */
+.app-view-future .future-budget-chart-shell{
+  border-radius:50%!important;
+}
+.app-view-future .future-budget-chart-shell::before{
+  content:""!important;
+  position:absolute!important;
+  inset:9%!important;
+  border-radius:50%!important;
+  background:radial-gradient(circle at 50% 48%,rgba(255,250,244,.88) 0%,rgba(255,250,244,.62) 44%,rgba(168,132,89,.055) 70%,rgba(168,132,89,0) 100%)!important;
+  box-shadow:0 0 0 1px rgba(68,58,48,.025) inset,0 18px 42px rgba(68,58,48,.035)!important;
+  pointer-events:none!important;
+  z-index:0!important;
+}
+.app-view-future .future-budget-chart{
+  position:relative!important;
+  z-index:1!important;
+}
+.app-view-future .future-budget-chart-centre{
+  z-index:2!important;
+}
+.app-view-future .future-budget-chart-centre b{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:max-content!important;
+  max-width:100%!important;
+  margin:9px auto 0!important;
+  padding:5px 8px!important;
+  border:1px solid rgba(168,132,89,.18)!important;
+  border-radius:999px!important;
+  background:rgba(239,229,213,.72)!important;
+  color:var(--accent-strong)!important;
+  font-size:7.5px!important;
+  font-weight:850!important;
+  line-height:1!important;
+}
+.app-view-future .future-next-home-c-labels{
+  gap:0!important;
+}
+.app-view-future .future-next-home-c-callout{
+  padding:13px 0!important;
+}
+.app-view-future .future-next-home-c-callout.is-repayment{
+  margin-top:6px!important;
+  padding:16px 0 4px!important;
+  border-top:1px solid rgba(68,58,48,.12)!important;
+}
+.app-view-future .future-next-home-c-callout.is-repayment .future-callout-title span{
+  color:var(--text)!important;
+}
+.app-view-future .future-next-home-c-callout.is-repayment>strong{
+  font-size:23px!important;
+}
+.app-view-future .future-next-home-c-callout.is-repayment>small{
+  max-width:220px!important;
+  line-height:1.45!important;
+}
