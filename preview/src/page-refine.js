@@ -494,12 +494,13 @@
             <h2>Your next-home budget</h2>
             <p class="future-wait-subtitle">See how your equity, savings and borrowing power could shape your next move — today or over time.</p>
           </div>
-          <div class="future-next-home-controls" role="tablist" aria-label="Next-home planning horizon"></div>
         </div>
 
         <div class="future-next-home-c-stage">
-          <div class="future-next-home-c-callout callout-equity" id="futureCalloutEquity"></div>
-          <div class="future-next-home-c-callout callout-borrowing" id="futureCalloutBorrowing"></div>
+          <div class="future-next-home-time-rail">
+            <span>Plan for</span>
+            <div class="future-next-home-controls" role="tablist" aria-label="Next-home planning horizon"></div>
+          </div>
 
           <div class="future-budget-donut-wrap">
             <svg class="future-budget-donut" viewBox="0 0 320 320" role="img" aria-labelledby="futureBudgetDonutTitle futureBudgetDonutDesc">
@@ -524,8 +525,12 @@
             </svg>
           </div>
 
-          <div class="future-next-home-c-callout callout-savings" id="futureCalloutSavings"></div>
-          <div class="future-next-home-c-callout callout-repayment" id="futureCalloutRepayment"></div>
+          <div class="future-next-home-c-labels">
+            <div class="future-next-home-c-callout callout-equity" id="futureCalloutEquity"></div>
+            <div class="future-next-home-c-callout callout-borrowing" id="futureCalloutBorrowing"></div>
+            <div class="future-next-home-c-callout callout-savings" id="futureCalloutSavings"></div>
+            <div class="future-next-home-c-callout callout-repayment" id="futureCalloutRepayment"></div>
+          </div>
         </div>
 
         <details class="future-next-home-method">
