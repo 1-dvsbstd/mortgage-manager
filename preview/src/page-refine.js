@@ -491,37 +491,75 @@
         <div class="future-wait-heading">
           <p class="eyebrow">Next-home planning</p>
           <h2>What you could afford next</h2>
-          <p class="future-wait-subtitle">See how your future equity and borrowing power could combine into a larger home budget.</p>
+          <p class="future-wait-subtitle">See how future equity and borrowing power could combine into a larger home budget.</p>
         </div>
+
         <div class="future-next-home-controls" role="tablist" aria-label="Next-home planning horizon"></div>
-        <div class="future-next-home-dashboard">
-          <div class="future-next-home-main">
-            <span class="future-next-home-kicker">Illustrative budget</span>
+
+        <div class="future-next-home-summary">
+          <div class="future-next-home-primary">
+            <span class="future-next-home-kicker">Estimated next-home budget</span>
             <strong id="futureNextHomeBudget">—</strong>
             <div class="future-next-home-meta"><span id="futureNextHomePeriod">—</span><b id="futureNextHomeDelta">—</b></div>
           </div>
-          <div class="future-next-home-build">
-            <div class="future-next-home-build-heading"><span>How the budget is built</span><strong id="futureNextHomeBuildTotal">—</strong></div>
-            <div class="future-next-home-composition" id="futureNextHomeComposition" aria-hidden="true"></div>
-            <div class="future-next-home-breakdown" id="futureNextHomeBreakdown"></div>
+          <div class="future-next-home-payment">
+            <span>Illustrative monthly repayment</span>
+            <strong id="futureNextHomePayment">—</strong>
+            <small id="futureNextHomePaymentNote">—</small>
           </div>
         </div>
-        <div class="future-next-home-growth">
-          <div class="future-next-home-growth-heading"><span>Budget over time</span><small>Choose a point to compare</small></div>
-          <div class="future-next-home-progress" id="futureNextHomeProgress" aria-label="Budget progression"></div>
+
+        <div class="future-next-home-visual">
+          <div class="future-budget-donut-wrap">
+            <svg class="future-budget-donut" viewBox="0 0 240 240" role="img" aria-labelledby="futureBudgetDonutTitle futureBudgetDonutDesc">
+              <title id="futureBudgetDonutTitle">Next-home budget composition</title>
+              <desc id="futureBudgetDonutDesc">Move equity, illustrative borrowing and savings combine to create the selected next-home budget.</desc>
+              <defs>
+                <filter id="futureBudgetSoftShadow" x="-25%" y="-25%" width="150%" height="150%">
+                  <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="currentColor" flood-opacity=".08"/>
+                </filter>
+              </defs>
+              <circle class="future-budget-donut-soft" cx="120" cy="120" r="88"/>
+              <circle class="future-budget-donut-track" cx="120" cy="120" r="77"/>
+              <g id="futureBudgetDonutSegments" transform="rotate(-90 120 120)" filter="url(#futureBudgetSoftShadow)"></g>
+              <circle class="future-budget-donut-inner" cx="120" cy="120" r="55"/>
+              <path class="future-budget-donut-detail" d="M79 72c11-13 25-22 42-26M164 69c8 6 15 13 20 22M72 163c8 12 19 21 32 27"/>
+              <g class="future-budget-donut-centre">
+                <text x="120" y="105" text-anchor="middle">NEXT-HOME BUDGET</text>
+                <text id="futureBudgetDonutValue" x="120" y="132" text-anchor="middle">—</text>
+                <text id="futureBudgetDonutPeriod" x="120" y="153" text-anchor="middle">—</text>
+              </g>
+            </svg>
+          </div>
+
+          <div class="future-next-home-breakdown" id="futureNextHomeBreakdown"></div>
         </div>
+
+        <div class="future-next-home-comparison" id="futureNextHomeComparison"></div>
         <p class="future-next-home-note" id="futureNextHomeNote"></p>
         <div class="future-wait-source" hidden></div>`;
       planner.insertAdjacentElement('afterend',wait);
     }
+
     const source=$('.future-wait-source',wait);
     if(timeline.parentElement!==source) source.appendChild(timeline);
     planner.classList.add('future-source-only');
 
     const parseMoney=(text)=>Number(String(text||'').replace(/[^0-9.-]/g,''))||0;
+    const monthlyPayment=(principal,annualRate,months)=>{
+      const p=Math.max(0,Number(principal)||0);
+      const n=Math.max(1,Number(months)||360);
+      const monthly=Math.max(0,Number(annualRate)||0)/1200;
+      if(!p) return 0;
+      if(!monthly) return p/n;
+      return p*monthly/(1-Math.pow(1+monthly,-n));
+    };
+    const moneyShort=(value)=>money(Math.round(Math.max(0,Number(value)||0)));
+
     const renderHero=()=>{
       const rows=[...timeline.querySelectorAll('.next-home-timeline-row')];
       if(!rows.length) return;
+
       const data=rows.map((row)=>{
         const years=Number(row.dataset.years)||0;
         const period=row.querySelector('.next-home-period')?.textContent?.trim()||(years===0?'Today':`In ${years} years`);
@@ -529,9 +567,10 @@
         const change=row.querySelector('.next-home-change')?.textContent?.trim()||'';
         const supports=[...row.querySelectorAll('.next-home-support small')].map((item)=>{
           const text=item.textContent.trim();
-          const b=item.querySelector('b')?.textContent?.trim()||'';
-          return {text,value:parseMoney(b),valueText:b,label:text.replace(b,'').trim()};
-        }).filter((item)=>item.text);
+          const valueText=item.querySelector('b')?.textContent?.trim()||'';
+          const label=text.replace(valueText,'').trim();
+          return {label,valueText,value:parseMoney(valueText)};
+        }).filter((item)=>item.value>0);
         return {years,period,budget,budgetValue:parseMoney(budget),change,supports};
       });
 
@@ -545,52 +584,68 @@
 
       $('#futureNextHomeBudget',wait).textContent=active.budget;
       $('#futureNextHomePeriod',wait).textContent=active.period;
+      $('#futureBudgetDonutValue',wait).textContent=active.budget;
+      $('#futureBudgetDonutPeriod',wait).textContent=active.period;
+
       const delta=$('#futureNextHomeDelta',wait);
       if(delta){
         delta.textContent=active.years===0?'Starting point':active.change.replace(/\s+vs today$/i,' vs today');
         delta.classList.toggle('is-baseline',active.years===0);
       }
-      const buildTotal=$('#futureNextHomeBuildTotal',wait);
-      if(buildTotal) buildTotal.textContent=active.budget;
 
-      const items=active.supports.filter((item)=>item.value>0);
-      const totalParts=items.reduce((sum,item)=>sum+item.value,0)||1;
-      const composition=$('#futureNextHomeComposition',wait);
-      if(composition){
-        composition.innerHTML=items.map((item,index)=>{
-          const share=Math.max(3,item.value/totalParts*100);
-          return `<i style="width:${share}%" data-index="${index}"></i>`;
+      const borrowingItem=active.supports.find((item)=>/borrowing/i.test(item.label));
+      const mortgageState=window.MortgageStore?.get?.()||{};
+      const planningRate=Math.max(.1,Number(mortgageState.rate)||4.25);
+      const planningTermYears=30;
+      const repayment=monthlyPayment(borrowingItem?.value||0,planningRate,planningTermYears*12);
+      const repaymentEl=$('#futureNextHomePayment',wait);
+      const repaymentNote=$('#futureNextHomePaymentNote',wait);
+      if(repaymentEl) repaymentEl.textContent=borrowingItem?moneyShort(repayment)+'/mo':'—';
+      if(repaymentNote) repaymentNote.textContent=borrowingItem
+        ? `${moneyShort(borrowingItem.value)} borrowing · ${planningRate.toFixed(2)}% · ${planningTermYears}-year repayment`
+        : 'Add household income in Setup & Data to estimate borrowing repayments.';
+
+      const totalParts=active.supports.reduce((sum,item)=>sum+item.value,0)||1;
+      const circumference=2*Math.PI*77;
+      let offset=0;
+      const segmentClasses=['is-equity','is-borrowing','is-savings'];
+      const segments=$('#futureBudgetDonutSegments',wait);
+      if(segments){
+        segments.innerHTML=active.supports.map((item,index)=>{
+          const ratio=Math.max(0,item.value/totalParts);
+          const length=Math.max(0,circumference*ratio);
+          const gap=Math.min(5,length*.08);
+          const dash=Math.max(0,length-gap);
+          const circle=`<circle class="future-budget-donut-segment ${segmentClasses[index]||''}" cx="120" cy="120" r="77" pathLength="${circumference}" stroke-dasharray="${dash} ${circumference-dash}" stroke-dashoffset="${-offset}"></circle>`;
+          offset+=length;
+          return circle;
         }).join('');
       }
 
       const breakdown=$('#futureNextHomeBreakdown',wait);
       if(breakdown){
-        breakdown.innerHTML=items.map((item,index)=>{
+        breakdown.innerHTML=active.supports.map((item,index)=>{
           const share=Math.round(item.value/totalParts*100);
-          return `<div data-index="${index}"><span><i></i>${item.label}</span><strong>${item.valueText}</strong><small>${share}% of total</small></div>`;
+          const cleanLabel=item.label.replace(/^illustrative\s+/i,'');
+          return `<details class="future-budget-row" data-index="${index}">
+            <summary><span><i></i><b>${cleanLabel}</b><small>${share}% of budget</small></span><strong>${item.valueText}</strong></summary>
+            <p>${/equity/i.test(cleanLabel)
+              ? 'Projected value available from your share of the home after the remaining mortgage and saved selling costs.'
+              : /borrowing/i.test(cleanLabel)
+                ? 'Illustrative borrowing based on household income and the borrowing multiple saved in Setup & Data.'
+                : 'Cash savings included in the move after your saved buffer and purchase-cost assumptions.'}</p>
+          </details>`;
         }).join('');
       }
 
-      const minBudget=Math.min(...data.map((item)=>item.budgetValue).filter(Boolean));
-      const maxBudget=Math.max(...data.map((item)=>item.budgetValue).filter(Boolean));
-      const range=Math.max(1,maxBudget-minBudget);
-      const progress=$('#futureNextHomeProgress',wait);
-      if(progress){
-        progress.innerHTML=`<div class="future-next-home-progress-line"></div>`+data.map((item)=>{
-          const lift=item.budgetValue?((item.budgetValue-minBudget)/range)*34:0;
-          return `
-          <button type="button" class="${item.years===selected?'is-active':''}" data-next-home-years="${item.years}" style="--budget-lift:${lift}px">
-            <i aria-hidden="true"></i>
-            <span>${item.years===0?'Today':`${item.years}y`}</span>
-            <strong>${item.budget}</strong>
-            ${item.years===0?'':`<small>${item.change.replace(/\s+vs today$/i,'')}</small>`}
-          </button>`;
-        }).join('');
+      const comparison=$('#futureNextHomeComparison',wait);
+      if(comparison){
+        comparison.innerHTML=data.map((item)=>`<button type="button" class="${item.years===selected?'is-active':''}" data-next-home-years="${item.years}"><span>${item.years===0?'Today':`${item.years}y`}</span><strong>${item.budget}</strong></button>`).join('');
       }
 
       const note=$('#futureNextHomeNote',wait);
       const sourceNote=$('#nextHomeTrendNote',timeline)?.textContent?.trim();
-      if(note) note.textContent=sourceNote||'Planning estimate using your saved property, mortgage and borrowing assumptions.';
+      if(note) note.textContent=(sourceNote||'Planning estimate using your saved property, mortgage and borrowing assumptions.')+' Monthly repayment is illustrative and uses your saved mortgage rate over 30 years.';
     };
 
     if(!wait.dataset.heroBound){
