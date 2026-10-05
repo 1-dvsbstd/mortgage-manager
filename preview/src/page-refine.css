@@ -5044,3 +5044,70 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
   .app-view-future .future-next-home-c-callout:nth-child(2){border-top:1px solid rgba(68,58,48,.07)!important}
   .app-view-future .future-next-home-method-grid{grid-template-columns:1fr 1fr!important}
 }
+
+/* Future v43 — refine horizon rail. */
+.app-view-future .future-next-home-time-rail{
+  width:112px!important;
+}
+.app-view-future .future-next-home-time-rail>span{
+  margin:0 0 6px 3px!important;
+  font-size:6.8px!important;
+  letter-spacing:.07em!important;
+}
+.app-view-future .future-next-home-controls{
+  gap:2px!important;
+  padding:3px!important;
+  border-color:rgba(68,58,48,.065)!important;
+  border-radius:14px!important;
+  background:rgba(68,58,48,.018)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)!important;
+}
+.app-view-future .future-next-home-controls button{
+  position:relative!important;
+  min-height:34px!important;
+  padding:7px 10px 7px 12px!important;
+  border-radius:10px!important;
+  color:color-mix(in srgb,var(--muted) 88%,var(--text))!important;
+  font-size:7.8px!important;
+  font-weight:720!important;
+  letter-spacing:-.005em!important;
+  transition:background .16s ease,color .16s ease,box-shadow .16s ease,transform .16s ease!important;
+}
+.app-view-future .future-next-home-controls button::before{
+  content:""!important;
+  position:absolute!important;
+  left:5px!important;
+  top:50%!important;
+  width:2px!important;
+  height:12px!important;
+  border-radius:999px!important;
+  background:transparent!important;
+  transform:translateY(-50%)!important;
+  transition:background .16s ease!important;
+}
+.app-view-future .future-next-home-controls button:hover{
+  background:rgba(255,250,244,.52)!important;
+  color:var(--text)!important;
+}
+.app-view-future .future-next-home-controls button[aria-selected="true"]{
+  background:rgba(255,250,244,.9)!important;
+  color:var(--text)!important;
+  box-shadow:0 1px 0 rgba(68,58,48,.04),0 3px 10px rgba(68,58,48,.025)!important;
+}
+.app-view-future .future-next-home-controls button[aria-selected="true"]::before{
+  background:var(--accent-strong)!important;
+}
+@media(max-width:700px){
+  .app-view-future .future-next-home-time-rail{width:100%!important}
+  .app-view-future .future-next-home-controls{
+    grid-template-columns:repeat(4,1fr)!important;
+    gap:3px!important;
+    border-radius:13px!important;
+  }
+  .app-view-future .future-next-home-controls button{
+    min-height:32px!important;
+    padding:7px 6px!important;
+    text-align:center!important;
+  }
+  .app-view-future .future-next-home-controls button::before{display:none!important}
+}
