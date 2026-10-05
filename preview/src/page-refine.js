@@ -894,7 +894,7 @@
     sources.forEach((node)=>node.classList.add('future-source-only'));
 
     const primary=$('#futureWaitPlanner');
-    if(primary) future.prepend(primary);
+    if(primary && future.firstElementChild!==primary) future.prepend(primary);
     const order=[
       $('#futurePayoffTargets'),
       $('#futureDrivers')
