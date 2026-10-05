@@ -4729,7 +4729,7 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
   }
 }
 
-/* Future v35 — Option A: premium affordability hero with handcrafted SVG composition ring. */
+/* Future v36 — refine Option A before evaluating alternate layout. */
 .app-view-future #futureWaitPlanner.future-next-home-hero{
   margin-top:0!important;
   padding:28px 32px 24px!important;
@@ -4756,7 +4756,7 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
 .app-view-future .future-next-home-controls{
   display:inline-flex!important;
   gap:3px!important;
-  margin-top:18px!important;
+  margin-top:17px!important;
   padding:3px!important;
   border:1px solid rgba(68,58,48,.08)!important;
   border-radius:999px!important;
@@ -4781,15 +4781,14 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
 }
 .app-view-future .future-next-home-summary{
   display:grid!important;
-  grid-template-columns:minmax(0,1fr) minmax(260px,.55fr)!important;
-  gap:34px!important;
+  grid-template-columns:minmax(0,1fr) minmax(240px,.48fr)!important;
+  gap:36px!important;
   align-items:end!important;
   margin-top:18px!important;
-  padding:25px 0 22px!important;
+  padding:24px 0 20px!important;
   border-top:1px solid rgba(68,58,48,.07)!important;
 }
-.app-view-future .future-next-home-kicker,
-.app-view-future .future-next-home-payment>span{
+.app-view-future .future-next-home-kicker{
   display:block!important;
   margin-bottom:6px!important;
   color:var(--muted)!important;
@@ -4830,97 +4829,66 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
   background:rgba(68,58,48,.055)!important;
   color:var(--muted)!important;
 }
-.app-view-future .future-next-home-payment{
-  padding:18px 19px!important;
-  border:1px solid rgba(68,58,48,.08)!important;
-  border-radius:15px!important;
-  background:rgba(255,250,244,.42)!important;
+.app-view-future .future-next-home-payment-inline{
+  display:grid!important;
+  grid-template-columns:auto auto!important;
+  grid-template-areas:"label value" "note note"!important;
+  align-items:baseline!important;
+  justify-content:start!important;
+  column-gap:12px!important;
+  row-gap:4px!important;
+  margin-top:20px!important;
+  padding-top:14px!important;
+  border-top:1px solid rgba(68,58,48,.07)!important;
+}
+.app-view-future .future-next-home-payment-inline>span{
+  grid-area:label!important;
+  color:var(--muted)!important;
+  font-size:8px!important;
+  font-weight:800!important;
+  letter-spacing:.04em!important;
+  text-transform:uppercase!important;
 }
 .app-view-future #futureNextHomePayment{
-  display:block!important;
+  grid-area:value!important;
   color:var(--text)!important;
   font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
-  font-size:31px!important;
+  font-size:27px!important;
   font-weight:500!important;
   line-height:1!important;
   letter-spacing:-.025em!important;
 }
 .app-view-future #futureNextHomePaymentNote{
-  display:block!important;
-  margin-top:7px!important;
+  grid-area:note!important;
   color:var(--muted)!important;
   font-size:8px!important;
   line-height:1.4!important;
 }
+.app-view-future .future-next-home-summary-copy{
+  align-self:center!important;
+  padding-left:20px!important;
+  border-left:1px solid rgba(68,58,48,.07)!important;
+}
+.app-view-future .future-next-home-summary-copy>span{
+  display:block!important;
+  color:var(--text)!important;
+  font-size:9px!important;
+  font-weight:800!important;
+}
+.app-view-future .future-next-home-summary-copy>p{
+  margin:5px 0 0!important;
+  color:var(--muted)!important;
+  font-size:8.5px!important;
+  line-height:1.5!important;
+}
 .app-view-future .future-next-home-visual{
   display:grid!important;
-  grid-template-columns:minmax(300px,.9fr) minmax(360px,1.1fr)!important;
-  gap:38px!important;
+  grid-template-columns:minmax(360px,1.1fr) minmax(300px,.9fr)!important;
+  gap:44px!important;
   align-items:center!important;
   padding:20px 0 18px!important;
   border-top:1px solid rgba(68,58,48,.07)!important;
   border-bottom:1px solid rgba(68,58,48,.07)!important;
-}
-.app-view-future .future-budget-donut-wrap{
-  display:flex!important;
-  justify-content:center!important;
-  align-items:center!important;
-  min-height:270px!important;
-}
-.app-view-future .future-budget-donut{
-  width:min(270px,100%)!important;
-  height:auto!important;
-  overflow:visible!important;
-  color:var(--text)!important;
-}
-.app-view-future .future-budget-donut-soft{
-  fill:rgba(65,107,85,.035)!important;
-  stroke:rgba(65,107,85,.08)!important;
-  stroke-width:1!important;
-}
-.app-view-future .future-budget-donut-track{
-  fill:none!important;
-  stroke:rgba(68,58,48,.075)!important;
-  stroke-width:22!important;
-}
-.app-view-future .future-budget-donut-segment{
-  fill:none!important;
-  stroke-width:22!important;
-  stroke-linecap:round!important;
-}
-.app-view-future .future-budget-donut-segment.is-equity{stroke:var(--accent-strong)!important}
-.app-view-future .future-budget-donut-segment.is-borrowing{stroke:#a88459!important}
-.app-view-future .future-budget-donut-segment.is-savings{stroke:#c7bca8!important}
-.app-view-future .future-budget-donut-inner{
-  fill:#fffaf4!important;
-  stroke:rgba(68,58,48,.08)!important;
-  stroke-width:1!important;
-}
-.app-view-future .future-budget-donut-detail{
-  fill:none!important;
-  stroke:rgba(65,107,85,.18)!important;
-  stroke-width:1.5!important;
-  stroke-linecap:round!important;
-}
-.app-view-future .future-budget-donut-centre text:first-child{
-  fill:var(--muted)!important;
-  font-family:inherit!important;
-  font-size:7px!important;
-  font-weight:800!important;
-  letter-spacing:1px!important;
-}
-.app-view-future #futureBudgetDonutValue{
-  fill:var(--text)!important;
-  font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
-  font-size:20px!important;
-  font-weight:500!important;
-  letter-spacing:-.6px!important;
-}
-.app-view-future #futureBudgetDonutPeriod{
-  fill:var(--muted)!important;
-  font-family:inherit!important;
-  font-size:8px!important;
-  font-weight:650!important;
 }
 .app-view-future .future-next-home-breakdown{
   display:grid!important;
@@ -4929,15 +4897,13 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
 .app-view-future .future-budget-row{
   border-top:1px solid rgba(68,58,48,.075)!important;
 }
-.app-view-future .future-budget-row:first-child{
-  border-top:0!important;
-}
+.app-view-future .future-budget-row:first-child{border-top:0!important}
 .app-view-future .future-budget-row summary{
-  display:flex!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
   align-items:center!important;
-  justify-content:space-between!important;
-  gap:18px!important;
-  padding:15px 2px!important;
+  gap:20px!important;
+  padding:16px 2px!important;
   list-style:none!important;
   cursor:pointer!important;
 }
@@ -4946,7 +4912,7 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
   display:grid!important;
   grid-template-columns:8px auto!important;
   grid-template-areas:"dot title" "dot note"!important;
-  column-gap:8px!important;
+  column-gap:9px!important;
   align-items:center!important;
 }
 .app-view-future .future-budget-row summary i{
@@ -4973,21 +4939,83 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
 .app-view-future .future-budget-row summary>strong{
   color:var(--text)!important;
   font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
-  font-size:19px!important;
+  font-size:21px!important;
   font-weight:500!important;
+  white-space:nowrap!important;
 }
 .app-view-future .future-budget-row p{
-  margin:-5px 0 14px 23px!important;
-  max-width:480px!important;
+  margin:-4px 0 14px 24px!important;
+  max-width:500px!important;
   color:var(--muted)!important;
   font-size:8px!important;
   line-height:1.45!important;
 }
+.app-view-future .future-budget-donut-wrap{
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  min-height:250px!important;
+}
+.app-view-future .future-budget-donut{
+  width:min(250px,100%)!important;
+  height:auto!important;
+  overflow:visible!important;
+  color:var(--text)!important;
+}
+.app-view-future .future-budget-donut-soft{
+  fill:rgba(65,107,85,.025)!important;
+  stroke:rgba(65,107,85,.07)!important;
+  stroke-width:1!important;
+}
+.app-view-future .future-budget-donut-track{
+  fill:none!important;
+  stroke:rgba(68,58,48,.065)!important;
+  stroke-width:16!important;
+}
+.app-view-future .future-budget-donut-segment{
+  fill:none!important;
+  stroke-width:16!important;
+  stroke-linecap:round!important;
+}
+.app-view-future .future-budget-donut-segment.is-equity{stroke:var(--accent-strong)!important}
+.app-view-future .future-budget-donut-segment.is-borrowing{stroke:#a88459!important}
+.app-view-future .future-budget-donut-segment.is-savings{stroke:#c7bca8!important}
+.app-view-future .future-budget-donut-inner{
+  fill:#fffaf4!important;
+  stroke:rgba(68,58,48,.07)!important;
+  stroke-width:1!important;
+}
+.app-view-future .future-budget-donut-detail{
+  fill:none!important;
+  stroke:rgba(65,107,85,.12)!important;
+  stroke-width:1.2!important;
+  stroke-linecap:round!important;
+}
+.app-view-future .future-budget-donut-centre text:first-child{
+  fill:var(--muted)!important;
+  font-family:inherit!important;
+  font-size:7px!important;
+  font-weight:800!important;
+  letter-spacing:1px!important;
+}
+.app-view-future #futureBudgetDonutValue{
+  fill:var(--text)!important;
+  font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
+  font-size:19px!important;
+  font-weight:500!important;
+  letter-spacing:-.5px!important;
+}
+.app-view-future #futureBudgetDonutPeriod{
+  fill:var(--muted)!important;
+  font-family:inherit!important;
+  font-size:8px!important;
+  font-weight:650!important;
+}
 .app-view-future .future-next-home-comparison{
   display:flex!important;
   justify-content:center!important;
-  gap:6px!important;
-  margin-top:14px!important;
+  gap:5px!important;
+  margin-top:13px!important;
 }
 .app-view-future .future-next-home-comparison button{
   display:flex!important;
@@ -5005,17 +5033,10 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
   background:rgba(65,107,85,.07)!important;
   color:var(--text)!important;
 }
-.app-view-future .future-next-home-comparison span{
-  font-size:7.5px!important;
-  font-weight:750!important;
-}
-.app-view-future .future-next-home-comparison strong{
-  color:inherit!important;
-  font-size:9px!important;
-  font-weight:800!important;
-}
+.app-view-future .future-next-home-comparison span{font-size:7.5px!important;font-weight:750!important}
+.app-view-future .future-next-home-comparison strong{color:inherit!important;font-size:9px!important;font-weight:800!important}
 .app-view-future .future-next-home-note{
-  margin:10px 0 0!important;
+  margin:9px 0 0!important;
   color:var(--muted)!important;
   font-size:8px!important;
   line-height:1.45!important;
@@ -5025,9 +5046,12 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
   .app-view-future .future-next-home-visual{
     grid-template-columns:1fr!important;
   }
-  .app-view-future .future-next-home-payment{
-    max-width:420px!important;
+  .app-view-future .future-next-home-summary-copy{
+    padding:0!important;
+    border-left:0!important;
   }
+  .app-view-future .future-next-home-breakdown{order:2!important}
+  .app-view-future .future-budget-donut-wrap{order:1!important}
 }
 @media(max-width:700px){
   .app-view-future #futureWaitPlanner.future-next-home-hero{padding:20px!important}
@@ -5039,8 +5063,12 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
   }
   .app-view-future .future-next-home-controls button{min-width:0!important}
   .app-view-future #futureNextHomeBudget{font-size:48px!important}
-  .app-view-future .future-budget-donut-wrap{min-height:230px!important}
-  .app-view-future .future-budget-donut{width:225px!important}
+  .app-view-future .future-next-home-payment-inline{
+    grid-template-columns:1fr!important;
+    grid-template-areas:"label" "value" "note"!important;
+  }
+  .app-view-future .future-budget-donut-wrap{min-height:225px!important}
+  .app-view-future .future-budget-donut{width:220px!important}
   .app-view-future .future-next-home-comparison{
     display:grid!important;
     grid-template-columns:repeat(2,1fr)!important;
