@@ -213,10 +213,7 @@
     const future=$('.app-view-future .app-view-content');
     const wait=$('#futureWaitPlanner');
     if(!future||!wait) return;
-    const range=$('#futureModelRange');
-    const home=$('#homeProjection');
-    const anchor=range||home;
-    if(anchor&&wait.previousElementSibling!==anchor) anchor.insertAdjacentElement('afterend',wait);
+    if(future.firstElementChild!==wait) future.prepend(wait);
   }
 
   function disableDeadExpansion(){
