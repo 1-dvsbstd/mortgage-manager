@@ -4729,18 +4729,14 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
   }
 }
 
-/* Future v41 — true-centred donut with balanced side columns. */
+/* Future v42 — proper Chart.js doughnut with balanced layout. */
 .app-view-future #futureWaitPlanner.future-next-home-hero.option-c{
   margin-top:0!important;
   padding:28px 34px 22px!important;
   overflow:hidden!important;
 }
-.app-view-future .future-next-home-c-header{
-  display:block!important;
-}
-.app-view-future .future-next-home-c-header>div:first-child{
-  max-width:620px!important;
-}
+.app-view-future .future-next-home-c-header{display:block!important}
+.app-view-future .future-next-home-c-header>div:first-child{max-width:620px!important}
 .app-view-future .future-next-home-c-header h2{
   margin:0!important;
   color:var(--text)!important;
@@ -4756,7 +4752,6 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
   font-size:8.5px!important;
   line-height:1.45!important;
 }
-
 .app-view-future .future-next-home-c-stage{
   display:grid!important;
   grid-template-columns:minmax(0,1fr) 390px minmax(0,1fr)!important;
@@ -4767,8 +4762,6 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
   border-top:1px solid rgba(68,58,48,.07)!important;
   border-bottom:1px solid rgba(68,58,48,.07)!important;
 }
-
-/* Left planning rail */
 .app-view-future .future-next-home-time-rail{
   width:122px!important;
   justify-self:end!important;
@@ -4813,7 +4806,7 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
   box-shadow:0 1px 0 rgba(68,58,48,.05),0 4px 12px rgba(68,58,48,.035)!important;
 }
 
-/* Truly centred hero */
+/* Chart.js owns the ring geometry; this shell owns composition and typography. */
 .app-view-future .future-budget-donut-wrap{
   grid-column:2!important;
   display:flex!important;
@@ -4821,66 +4814,56 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
   align-items:center!important;
   min-height:350px!important;
 }
-.app-view-future .future-budget-donut{
+.app-view-future .future-budget-chart-shell{
+  position:relative!important;
   width:350px!important;
   height:350px!important;
   max-width:100%!important;
-  overflow:visible!important;
-  color:var(--text)!important;
 }
-.app-view-future .future-budget-donut-soft{
-  fill:rgba(65,107,85,.022)!important;
-  stroke:rgba(65,107,85,.05)!important;
-  stroke-width:1!important;
+.app-view-future .future-budget-chart{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
 }
-.app-view-future .future-budget-donut-track{
-  fill:none!important;
-  stroke:rgba(68,58,48,.05)!important;
-  stroke-width:15!important;
+.app-view-future .future-budget-chart-centre{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  width:190px!important;
+  transform:translate(-50%,-50%)!important;
+  text-align:center!important;
+  pointer-events:none!important;
 }
-.app-view-future .future-budget-donut-segment{
-  fill:none!important;
-  stroke-width:15!important;
-  stroke-linecap:round!important;
-}
-.app-view-future .future-budget-donut-segment.is-equity{stroke:var(--accent-strong)!important}
-.app-view-future .future-budget-donut-segment.is-borrowing{stroke:#a88459!important}
-.app-view-future .future-budget-donut-segment.is-savings{stroke:#c7bca8!important}
-.app-view-future .future-budget-donut-inner{
-  fill:#fffaf4!important;
-  stroke:rgba(68,58,48,.06)!important;
-  stroke-width:1!important;
-}
-.app-view-future .future-budget-donut-detail{
-  fill:none!important;
-  stroke:rgba(65,107,85,.095)!important;
-  stroke-width:1.05!important;
-  stroke-linecap:round!important;
-}
-.app-view-future .future-budget-donut-centre text:first-child{
-  fill:var(--muted)!important;
-  font-family:inherit!important;
-  font-size:6.6px!important;
+.app-view-future .future-budget-chart-centre span{
+  display:block!important;
+  color:var(--muted)!important;
+  font-size:7px!important;
   font-weight:800!important;
-  letter-spacing:.9px!important;
+  letter-spacing:.08em!important;
+  text-transform:uppercase!important;
 }
-.app-view-future #futureBudgetDonutValue{
-  fill:var(--text)!important;
+.app-view-future .future-budget-chart-centre strong{
+  display:block!important;
+  margin-top:11px!important;
+  color:var(--text)!important;
   font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif!important;
-  font-size:23px!important;
+  font-size:28px!important;
   font-weight:500!important;
-  letter-spacing:-.65px!important;
+  line-height:1!important;
+  letter-spacing:-.035em!important;
 }
-.app-view-future #futureBudgetDonutPeriod{
-  fill:var(--muted)!important;
-  font-family:inherit!important;
-  font-size:7.5px!important;
+.app-view-future .future-budget-chart-centre small{
+  display:block!important;
+  margin-top:10px!important;
+  color:var(--muted)!important;
+  font-size:8px!important;
   font-weight:700!important;
 }
-.app-view-future #futureBudgetDonutDelta{
-  fill:var(--accent-strong)!important;
-  font-family:inherit!important;
-  font-size:7px!important;
+.app-view-future .future-budget-chart-centre b{
+  display:block!important;
+  margin-top:8px!important;
+  color:var(--accent-strong)!important;
+  font-size:7.5px!important;
   font-weight:800!important;
 }
 
@@ -4898,9 +4881,7 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
   border-top:1px solid rgba(68,58,48,.07)!important;
   text-align:left!important;
 }
-.app-view-future .future-next-home-c-callout:first-child{
-  border-top:0!important;
-}
+.app-view-future .future-next-home-c-callout:first-child{border-top:0!important}
 .app-view-future .future-callout-title{
   display:flex!important;
   align-items:center!important;
@@ -4940,8 +4921,6 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
   font-size:7.2px!important;
   line-height:1.35!important;
 }
-
-/* Calculation disclosure */
 .app-view-future .future-next-home-method{
   width:min(620px,100%)!important;
   margin:12px auto 0!important;
@@ -5003,7 +4982,6 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
   line-height:1.4!important;
   text-align:center!important;
 }
-
 @media(max-width:980px){
   .app-view-future .future-next-home-c-stage{
     grid-template-columns:120px minmax(300px,1fr)!important;
@@ -5020,7 +4998,7 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
     grid-row:1!important;
     min-height:320px!important;
   }
-  .app-view-future .future-budget-donut{
+  .app-view-future .future-budget-chart-shell{
     width:315px!important;
     height:315px!important;
   }
@@ -5050,15 +5028,15 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
     width:100%!important;
     justify-self:stretch!important;
   }
-  .app-view-future .future-next-home-controls{
-    grid-template-columns:repeat(2,1fr)!important;
-  }
+  .app-view-future .future-next-home-controls{grid-template-columns:repeat(2,1fr)!important}
   .app-view-future .future-next-home-controls button{text-align:center!important}
   .app-view-future .future-budget-donut-wrap{min-height:270px!important}
-  .app-view-future .future-budget-donut{
+  .app-view-future .future-budget-chart-shell{
     width:270px!important;
     height:270px!important;
   }
+  .app-view-future .future-budget-chart-centre{width:155px!important}
+  .app-view-future .future-budget-chart-centre strong{font-size:23px!important}
   .app-view-future .future-next-home-c-labels{
     width:100%!important;
     grid-template-columns:1fr!important;
