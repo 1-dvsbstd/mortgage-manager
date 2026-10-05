@@ -533,9 +533,7 @@
     const rate=Math.max(0,Number(state.rate)||0);
     const scheduled=Math.max(0,Number(state.payment)||0);
     const regular=Math.max(0,Number(state.currentOverpayment)||0);
-    const scenario=Math.max(0,Number(state.scenarioExtra)||0);
-    const selectedOverpayment=scenario>0?scenario:regular;
-    const currentTotal=scheduled+selectedOverpayment;
+    const currentTotal=scheduled+regular;
 
     const payoffDuration=(months)=>{
       if(!Number.isFinite(months)) return 'Does not repay';
@@ -613,35 +611,116 @@
     }
   }
 
+  function renderFutureDrivers(){
+    const future=$('.app-view-future .app-view-content');
+    const state=window.MortgageStore?.get?.();
+    if(!future||!state) return;
+
+    let section=$('#futureDrivers');
+    if(!section){
+      section=document.createElement('section');
+      section.id='futureDrivers';
+      section.className='panel future-drivers';
+      section.innerHTML=`
+        <div class="future-drivers-heading">
+          <p class="eyebrow">What drives the plan</p>
+          <h2>The numbers behind your future position</h2>
+          <p>Property growth and your falling mortgage balance are the main engines behind both future equity and next-home budget.</p>
+        </div>
+        <div class="future-drivers-grid">
+          <article class="future-driver-card">
+            <span class="future-driver-label">Home position today</span>
+            <strong id="futureDriverHomeValue">—</strong>
+            <small>Estimated property value</small>
+            <div class="future-driver-secondary"><span>Current equity</span><b id="futureDriverEquity">—</b></div>
+          </article>
+          <article class="future-driver-card future-driver-forecast">
+            <span class="future-driver-label">Property forecast</span>
+            <div class="future-driver-mini-grid">
+              <div><span>1 year</span><strong id="futureDriverValue1">—</strong></div>
+              <div><span>3 years</span><strong id="futureDriverValue3">—</strong></div>
+              <div><span>5 years</span><strong id="futureDriverValue5">—</strong></div>
+            </div>
+            <small>Based on the saved local HPI model.</small>
+          </article>
+          <article class="future-driver-card future-driver-balance">
+            <span class="future-driver-label">Mortgage balance</span>
+            <div class="future-driver-mini-grid">
+              <div><span>3 years</span><strong id="futureDriverBalance3">—</strong></div>
+              <div><span>5 years</span><strong id="futureDriverBalance5">—</strong></div>
+              <div><span>10 years</span><strong id="futureDriverBalance10">—</strong></div>
+            </div>
+            <small>Uses your saved regular payment plan.</small>
+          </article>
+        </div>`;
+      future.appendChild(section);
+    }
+
+    const copyText=(sourceId,targetId)=>{
+      const source=$(sourceId);
+      const target=$(targetId);
+      if(target) target.textContent=source?.textContent?.trim()||'—';
+    };
+    copyText('#projectionCurrentEstimate','#futureDriverHomeValue');
+    copyText('#projectionShareValue','#futureDriverEquity');
+    copyText('#homeForecast1','#futureDriverValue1');
+    copyText('#homeForecast3','#futureDriverValue3');
+    copyText('#homeForecast5','#futureDriverValue5');
+
+    const scheduled=Math.max(0,Number(state.payment)||0);
+    const regular=Math.max(0,Number(state.currentOverpayment)||0);
+    const path=window.MortgageMath?.amortize?.(Math.max(0,Number(state.balance)||0),Math.max(0,Number(state.rate)||0),scheduled+regular);
+    const points=path?.monthlyPoints||[];
+    const balanceAt=(months)=>{
+      if(!points.length) return null;
+      const index=Math.min(Math.max(0,months),Math.max(0,points.length-1));
+      return Number(points[index]);
+    };
+    [[36,'#futureDriverBalance3'],[60,'#futureDriverBalance5'],[120,'#futureDriverBalance10']].forEach(([months,id])=>{
+      const el=$(id);
+      const value=balanceAt(months);
+      if(el) el.textContent=Number.isFinite(value)?money(value):'—';
+    });
+  }
+
   function organiseFutureFlow(){
     const future=$('.app-view-future .app-view-content');
     if(!future) return;
-    const order=[
-      $('#futureOverpaymentAssumption'),
-      $('#futureWaitPlanner'),
-      $('#futurePayoffTargets'),
+
+    const assumption=$('#futureOverpaymentAssumption');
+    if(assumption) assumption.classList.add('future-source-only');
+
+    const sources=[
       $('#homeProjection'),
       $('#futureModelRange'),
       $('#nextHomePlanner'),
       $('#propertyCostComparison')
     ].filter(Boolean);
+    sources.forEach((node)=>node.classList.add('future-source-only'));
+
+    const order=[
+      $('#futurePayoffTargets'),
+      $('#futureWaitPlanner'),
+      $('#futureDrivers')
+    ].filter(Boolean);
     order.forEach((node)=>future.appendChild(node));
+
+    sources.forEach((node)=>future.appendChild(node));
+    if(assumption) future.appendChild(assumption);
   }
 
   function refineFuturePresentation(){
     const future=$('.app-view-future');
     if(!future) return;
     const heading=$('.app-view-heading',future);
+    heading?.classList.remove('future-heading-integrated');
     const assumption=$('#futureOverpaymentAssumption',future)||$('#futureOverpaymentAssumption');
-    if(heading&&assumption){
-      heading.classList.add('future-heading-integrated');
-      if(assumption.parentElement!==heading) heading.appendChild(assumption);
-    }
+    assumption?.classList.add('future-source-only');
     const wait=$('#futureWaitPlanner');
     const waitEyebrow=$('.future-wait-heading .eyebrow',wait);
     const waitTitle=$('.future-wait-heading h2',wait);
-    if(waitEyebrow) waitEyebrow.textContent='Looking ahead';
-    if(waitTitle) waitTitle.textContent='How your next-home budget could grow over time';
+    if(waitEyebrow) waitEyebrow.textContent='Next-home planning';
+    if(waitTitle) waitTitle.textContent='What you could afford next — today, or later';
 
     const model=$('#futureModelRange');
     const modelEyebrow=$('.future-model-heading .eyebrow',model);
@@ -704,6 +783,7 @@
       }
     }
 
+    renderFutureDrivers();
     organiseFutureFlow();
     refineFuturePresentation();
   }
@@ -720,7 +800,7 @@
   if(window.MortgageStore?.subscribe){
     MortgageStore.subscribe((next,previous)=>{
       if(next.currentOverpayment!==previous.currentOverpayment && next.scenarioExtra!==0) MortgageStore.set({scenarioExtra:0});
-      requestAnimationFrame(()=>{ renderWhatIfControls(); refineFutureAssumption(); refineUpcoming(); renderUpcomingRates(); renderFuturePayoffTargets(); organiseFutureFlow(); });
+      requestAnimationFrame(()=>{ renderWhatIfControls(); refineFutureAssumption(); refineUpcoming(); renderUpcomingRates(); renderFuturePayoffTargets(); renderFutureDrivers(); organiseFutureFlow(); });
     });
   }
 
@@ -729,7 +809,7 @@
   });
 
   document.addEventListener('mortgage-next-home-updated',()=>{
-    requestAnimationFrame(()=>{ renderFuturePayoffTargets(); organiseFutureFlow(); });
+    requestAnimationFrame(()=>{ renderFuturePayoffTargets(); renderFutureDrivers(); organiseFutureFlow(); });
   });
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>{setTimeout(run,780);setTimeout(run,1300);},{once:true});
