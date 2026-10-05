@@ -491,8 +491,8 @@
         <div class="future-next-home-c-header">
           <div>
             <p class="eyebrow">Next-home planning</p>
-            <h2>What you could afford next</h2>
-            <p class="future-wait-subtitle">See how your future equity and borrowing power could combine into a larger home budget.</p>
+            <h2>Your next-home budget</h2>
+            <p class="future-wait-subtitle">See how your equity, savings and borrowing power could shape your next move — today or over time.</p>
           </div>
           <div class="future-next-home-controls" role="tablist" aria-label="Next-home planning horizon"></div>
         </div>
@@ -528,6 +528,15 @@
           <div class="future-next-home-c-callout callout-repayment" id="futureCalloutRepayment"></div>
         </div>
 
+        <details class="future-next-home-method">
+          <summary>How this is calculated</summary>
+          <div class="future-next-home-method-grid">
+            <p><span>Home growth</span><strong id="futureMethodGrowth">—</strong></p>
+            <p><span>Regular overpayment</span><strong id="futureMethodOverpay">—</strong></p>
+            <p><span>Borrowing basis</span><strong id="futureMethodBorrowing">—</strong></p>
+            <p><span>Repayment assumption</span><strong id="futureMethodRepayment">—</strong></p>
+          </div>
+        </details>
         <p class="future-next-home-note" id="futureNextHomeNote"></p>
         <div class="future-wait-source" hidden></div>`;
       planner.insertAdjacentElement('afterend',wait);
@@ -584,7 +593,7 @@
 
       $('#futureBudgetDonutValue',wait).textContent=active.budget;
       $('#futureBudgetDonutPeriod',wait).textContent=active.period;
-      const deltaText=active.years===0?'Starting point':active.change.replace(/\s+vs today$/i,' vs today');
+      const deltaText=active.years===0?'Available today':active.change.replace(/\s+vs today$/i,' vs today');
       $('#futureBudgetDonutDelta',wait).textContent=deltaText;
 
       const totalParts=active.supports.reduce((sum,item)=>sum+item.value,0)||1;
@@ -622,13 +631,27 @@
         'Illustrative monthly repayment',
         borrowing?moneyShort(repayment)+'/mo':'—',
         null,
-        borrowing?`${moneyShort(borrowing.value)} borrowing · ${planningRate.toFixed(2)}% · ${planningTermYears} years`:'Add income in Setup & Data',
+        borrowing?`Based on ${moneyShort(borrowing.value)} borrowed at ${planningRate.toFixed(2)}% over ${planningTermYears} years`:'Add income in Setup & Data',
         3
       );
 
+      const plannerSettings=(()=>{
+        try{return JSON.parse(localStorage.getItem('mortgage-manager-next-home-v1')||'{}')||{};}catch(_){return {};}
+      })();
+      const sourceNote=$('#nextHomeTrendNote',timeline)?.textContent?.trim()||'';
+      const growthMatch=sourceNote.match(/uses\s+([0-9.]+)%\/yr/i);
+      const growthEl=$('#futureMethodGrowth',wait);
+      const overpayEl=$('#futureMethodOverpay',wait);
+      const borrowingEl=$('#futureMethodBorrowing',wait);
+      const repaymentMethodEl=$('#futureMethodRepayment',wait);
+      if(growthEl) growthEl.textContent=growthMatch?growthMatch[1]+'% per year':'Saved property-growth assumption';
+      if(overpayEl) overpayEl.textContent=moneyShort(mortgageState.currentOverpayment||0)+'/month';
+      const multiple=Math.max(0,Number(plannerSettings.borrowingMultiple)||0);
+      if(borrowingEl) borrowingEl.textContent=multiple?('Household income × '+multiple.toFixed(1)):'Saved household-income assumptions';
+      if(repaymentMethodEl) repaymentMethodEl.textContent=planningRate.toFixed(2)+'% over '+planningTermYears+' years';
+
       const note=$('#futureNextHomeNote',wait);
-      const sourceNote=$('#nextHomeTrendNote',timeline)?.textContent?.trim();
-      if(note) note.textContent=(sourceNote||'Planning estimate using your saved property, mortgage and borrowing assumptions.')+' Monthly repayment is illustrative and uses your saved mortgage rate over 30 years.';
+      if(note) note.textContent='Planning estimate only. Actual lender affordability, purchase costs and eligibility can differ.';
     };
 
     if(!wait.dataset.heroBound){
