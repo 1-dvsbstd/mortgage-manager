@@ -819,34 +819,54 @@
       section.innerHTML=`
         <div class="future-drivers-heading">
           <p class="eyebrow">What drives the plan</p>
-          <h2>The numbers behind your future position</h2>
-          <p>Property growth and your falling mortgage balance are the main engines behind both future equity and next-home budget.</p>
+          <h2>The numbers behind the projections</h2>
+          <p>Two things do most of the work over time: your home value changes, while the mortgage balance falls.</p>
         </div>
-        <div class="future-drivers-grid">
-          <article class="future-driver-card">
-            <span class="future-driver-label">Home position today</span>
-            <strong id="futureDriverHomeValue">—</strong>
-            <small>Estimated property value</small>
-            <div class="future-driver-secondary"><span>Current equity</span><b id="futureDriverEquity">—</b></div>
-          </article>
-          <article class="future-driver-card future-driver-forecast">
-            <span class="future-driver-label">Property forecast</span>
-            <div class="future-driver-mini-grid">
-              <div><span>1 year</span><strong id="futureDriverValue1">—</strong></div>
-              <div><span>3 years</span><strong id="futureDriverValue3">—</strong></div>
-              <div><span>5 years</span><strong id="futureDriverValue5">—</strong></div>
+
+        <div class="future-driver-readout">
+          <aside class="future-driver-today">
+            <span>Today</span>
+            <div>
+              <small>Estimated home value</small>
+              <strong id="futureDriverHomeValue">—</strong>
             </div>
-            <small>Based on the saved local HPI model.</small>
-          </article>
-          <article class="future-driver-card future-driver-balance">
-            <span class="future-driver-label">Mortgage balance</span>
-            <div class="future-driver-mini-grid">
-              <div><span>3 years</span><strong id="futureDriverBalance3">—</strong></div>
-              <div><span>5 years</span><strong id="futureDriverBalance5">—</strong></div>
-              <div><span>10 years</span><strong id="futureDriverBalance10">—</strong></div>
+            <div>
+              <small>Current equity</small>
+              <strong id="futureDriverEquity">—</strong>
             </div>
-            <small>Uses your saved regular payment plan.</small>
-          </article>
+          </aside>
+
+          <div class="future-driver-paths">
+            <div class="future-driver-path future-driver-path-home">
+              <div class="future-driver-path-title">
+                <span>Property value</span>
+                <small>Saved local HPI model</small>
+              </div>
+              <div class="future-driver-path-points">
+                <div><span>1 year</span><strong id="futureDriverValue1">—</strong></div>
+                <i aria-hidden="true">→</i>
+                <div><span>3 years</span><strong id="futureDriverValue3">—</strong></div>
+                <i aria-hidden="true">→</i>
+                <div><span>5 years</span><strong id="futureDriverValue5">—</strong></div>
+              </div>
+            </div>
+
+            <div class="future-driver-path future-driver-path-balance">
+              <div class="future-driver-path-title">
+                <span>Mortgage balance</span>
+                <small>Saved regular payment plan</small>
+              </div>
+              <div class="future-driver-path-points">
+                <div><span>Today</span><strong id="futureDriverBalanceNow">—</strong></div>
+                <i aria-hidden="true">→</i>
+                <div><span>3 years</span><strong id="futureDriverBalance3">—</strong></div>
+                <i aria-hidden="true">→</i>
+                <div><span>5 years</span><strong id="futureDriverBalance5">—</strong></div>
+                <i aria-hidden="true">→</i>
+                <div><span>10 years</span><strong id="futureDriverBalance10">—</strong></div>
+              </div>
+            </div>
+          </div>
         </div>`;
       future.appendChild(section);
     }
@@ -861,6 +881,9 @@
     copyText('#homeForecast1','#futureDriverValue1');
     copyText('#homeForecast3','#futureDriverValue3');
     copyText('#homeForecast5','#futureDriverValue5');
+
+    const nowBalance=$('#futureDriverBalanceNow');
+    if(nowBalance) nowBalance.textContent=money(Math.max(0,Number(state.balance)||0));
 
     const scheduled=Math.max(0,Number(state.payment)||0);
     const regular=Math.max(0,Number(state.currentOverpayment)||0);
@@ -877,6 +900,7 @@
       if(el) el.textContent=Number.isFinite(value)?money(value):'—';
     });
   }
+
 
   function organiseFutureFlow(){
     const future=$('.app-view-future .app-view-content');
