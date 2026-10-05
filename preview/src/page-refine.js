@@ -503,26 +503,15 @@
           </div>
 
           <div class="future-budget-donut-wrap">
-            <svg class="future-budget-donut" viewBox="0 0 320 320" role="img" aria-labelledby="futureBudgetDonutTitle futureBudgetDonutDesc">
-              <title id="futureBudgetDonutTitle">Next-home budget composition</title>
-              <desc id="futureBudgetDonutDesc">Move equity, illustrative borrowing and savings combine to create the selected next-home budget.</desc>
-              <defs>
-                <filter id="futureBudgetSoftShadow" x="-35%" y="-35%" width="170%" height="170%">
-                  <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="currentColor" flood-opacity=".07"/>
-                </filter>
-              </defs>
-              <circle class="future-budget-donut-soft" cx="160" cy="160" r="126"/>
-              <circle class="future-budget-donut-track" cx="160" cy="160" r="105"/>
-              <g id="futureBudgetDonutSegments" transform="rotate(-90 160 160)" filter="url(#futureBudgetSoftShadow)"></g>
-              <circle class="future-budget-donut-inner" cx="160" cy="160" r="77"/>
-              <path class="future-budget-donut-detail" d="M104 95c15-18 34-30 56-35M220 94c11 8 20 19 27 31M95 217c11 17 26 30 45 38"/>
-              <g class="future-budget-donut-centre">
-                <text x="160" y="136" text-anchor="middle">ESTIMATED NEXT-HOME BUDGET</text>
-                <text id="futureBudgetDonutValue" x="160" y="170" text-anchor="middle">—</text>
-                <text id="futureBudgetDonutPeriod" x="160" y="194" text-anchor="middle">—</text>
-                <text id="futureBudgetDonutDelta" x="160" y="214" text-anchor="middle">—</text>
-              </g>
-            </svg>
+            <div class="future-budget-chart-shell">
+              <canvas id="futureBudgetChart" class="future-budget-chart" aria-label="Next-home budget composition"></canvas>
+              <div class="future-budget-chart-centre" aria-hidden="true">
+                <span>Estimated next-home budget</span>
+                <strong id="futureBudgetDonutValue">—</strong>
+                <small id="futureBudgetDonutPeriod">—</small>
+                <b id="futureBudgetDonutDelta">—</b>
+              </div>
+            </div>
           </div>
 
           <div class="future-next-home-c-labels">
@@ -602,22 +591,58 @@
       $('#futureBudgetDonutDelta',wait).textContent=deltaText;
 
       const totalParts=active.supports.reduce((sum,item)=>sum+item.value,0)||1;
-      const circumference=2*Math.PI*105;
-      let offset=0;
-      const segmentClasses=['is-equity','is-borrowing','is-savings'];
-      const segments=$('#futureBudgetDonutSegments',wait);
-      if(segments){
-        segments.innerHTML=active.supports.map((item,index)=>{
-          const ratio=Math.max(0,item.value/totalParts);
-          const length=Math.max(0,circumference*ratio);
-          const gap=Math.min(8,length*.08);
-          const dash=Math.max(0,length-gap);
-          const circle=`<circle class="future-budget-donut-segment ${segmentClasses[index]||''}" cx="160" cy="160" r="105" pathLength="${circumference}" stroke-dasharray="${dash} ${circumference-dash}" stroke-dashoffset="${-offset}"></circle>`;
-          offset+=length;
-          return circle;
-        }).join('');
+      const chartCanvas=$('#futureBudgetChart',wait);
+      const chartValues=active.supports.map((item)=>item.value);
+      const chartLabels=active.supports.map((item)=>item.label.replace(/^illustrative\s+/i,''));
+      const styles=getComputedStyle(document.documentElement);
+      const equityColour=(styles.getPropertyValue('--accent-strong')||'#617663').trim();
+      const chartColours=[equityColour,'#a88459','#c7bca8'];
+      if(chartCanvas && window.Chart){
+        if(wait._futureBudgetChart){
+          wait._futureBudgetChart.data.labels=chartLabels;
+          wait._futureBudgetChart.data.datasets[0].data=chartValues;
+          wait._futureBudgetChart.data.datasets[0].backgroundColor=chartColours.slice(0,chartValues.length);
+          wait._futureBudgetChart.update();
+        }else{
+          wait._futureBudgetChart=new Chart(chartCanvas.getContext('2d'),{
+            type:'doughnut',
+            data:{
+              labels:chartLabels,
+              datasets:[{
+                data:chartValues,
+                backgroundColor:chartColours.slice(0,chartValues.length),
+                borderColor:'#fbf8f2',
+                borderWidth:3,
+                hoverBorderWidth:3,
+                hoverOffset:4,
+                spacing:2
+              }]
+            },
+            options:{
+              responsive:true,
+              maintainAspectRatio:false,
+              cutout:'73%',
+              rotation:-90,
+              circumference:360,
+              animation:{duration:420,easing:'easeOutQuart'},
+              plugins:{
+                legend:{display:false},
+                tooltip:{
+                  displayColors:false,
+                  padding:10,
+                  callbacks:{
+                    label:(context)=>{
+                      const value=Number(context.raw)||0;
+                      const pct=Math.round(value/totalParts*100);
+                      return context.label+': '+moneyShort(value)+' · '+pct+'%';
+                    }
+                  }
+                }
+              }
+            }
+          });
+        }
       }
-
       const equity=active.supports.find((item)=>/equity/i.test(item.label));
       const borrowing=active.supports.find((item)=>/borrowing/i.test(item.label));
       const savings=active.supports.find((item)=>/savings/i.test(item.label));
