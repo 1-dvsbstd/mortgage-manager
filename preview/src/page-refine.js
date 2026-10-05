@@ -478,67 +478,68 @@
   function splitNextHomePlanner(){
     const future=$('.app-view-future .app-view-content'), planner=$('#nextHomePlanner');
     if(!future||!planner) return;
-    const body=$('.next-home-body',planner), timeline=$('.next-home-timeline',planner);
-    if(!body||!timeline) return;
+    const timeline=$('.next-home-timeline',planner);
+    if(!timeline) return;
     $('.next-home-settings',planner)?.remove();
 
     let wait=$('#futureWaitPlanner');
     if(!wait){
       wait=document.createElement('section');
       wait.id='futureWaitPlanner';
-      wait.className='panel future-wait-planner future-next-home-hero';
+      wait.className='panel future-wait-planner future-next-home-hero option-b';
       wait.innerHTML=`
-        <div class="future-wait-heading">
-          <p class="eyebrow">Next-home planning</p>
-          <h2>What you could afford next</h2>
-          <p class="future-wait-subtitle">See how future equity and borrowing power could combine into a larger home budget.</p>
+        <div class="future-next-home-b-header">
+          <div>
+            <p class="eyebrow">Next-home planning</p>
+            <h2>What you could afford next</h2>
+            <p class="future-wait-subtitle">See how your future equity and borrowing power could combine into a larger home budget.</p>
+          </div>
+          <div class="future-next-home-controls" role="tablist" aria-label="Next-home planning horizon"></div>
         </div>
 
-        <div class="future-next-home-controls" role="tablist" aria-label="Next-home planning horizon"></div>
-
-        <div class="future-next-home-summary">
-          <div class="future-next-home-primary">
+        <div class="future-next-home-b-grid">
+          <div class="future-next-home-b-outcome">
             <span class="future-next-home-kicker">Estimated next-home budget</span>
             <strong id="futureNextHomeBudget">—</strong>
-            <div class="future-next-home-meta"><span id="futureNextHomePeriod">—</span><b id="futureNextHomeDelta">—</b></div>
-            <div class="future-next-home-payment-inline">
+            <div class="future-next-home-meta">
+              <span id="futureNextHomePeriod">—</span>
+              <b id="futureNextHomeDelta">—</b>
+            </div>
+
+            <div class="future-next-home-payment-b">
               <span>Illustrative monthly repayment</span>
               <strong id="futureNextHomePayment">—</strong>
               <small id="futureNextHomePaymentNote">—</small>
             </div>
           </div>
-          <div class="future-next-home-summary-copy">
-            <span>Budget composition</span>
-            <p>Your projected move equity, borrowing capacity and savings combine to form the selected budget.</p>
+
+          <div class="future-next-home-b-visual">
+            <div class="future-budget-donut-wrap">
+              <svg class="future-budget-donut" viewBox="0 0 280 280" role="img" aria-labelledby="futureBudgetDonutTitle futureBudgetDonutDesc">
+                <title id="futureBudgetDonutTitle">Next-home budget composition</title>
+                <desc id="futureBudgetDonutDesc">Move equity, illustrative borrowing and savings combine to create the selected next-home budget.</desc>
+                <defs>
+                  <filter id="futureBudgetSoftShadow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="currentColor" flood-opacity=".07"/>
+                  </filter>
+                </defs>
+                <circle class="future-budget-donut-soft" cx="140" cy="140" r="108"/>
+                <circle class="future-budget-donut-track" cx="140" cy="140" r="91"/>
+                <g id="futureBudgetDonutSegments" transform="rotate(-90 140 140)" filter="url(#futureBudgetSoftShadow)"></g>
+                <circle class="future-budget-donut-inner" cx="140" cy="140" r="66"/>
+                <path class="future-budget-donut-detail" d="M92 85c13-15 29-25 48-30M192 83c9 7 17 16 23 27M84 190c9 14 22 25 38 32"/>
+                <g class="future-budget-donut-centre">
+                  <text x="140" y="123" text-anchor="middle">NEXT-HOME BUDGET</text>
+                  <text id="futureBudgetDonutValue" x="140" y="151" text-anchor="middle">—</text>
+                  <text id="futureBudgetDonutPeriod" x="140" y="174" text-anchor="middle">—</text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="future-next-home-b-callouts" id="futureNextHomeBreakdown"></div>
           </div>
         </div>
 
-        <div class="future-next-home-visual">
-          <div class="future-next-home-breakdown" id="futureNextHomeBreakdown"></div>
-          <div class="future-budget-donut-wrap">
-            <svg class="future-budget-donut" viewBox="0 0 240 240" role="img" aria-labelledby="futureBudgetDonutTitle futureBudgetDonutDesc">
-              <title id="futureBudgetDonutTitle">Next-home budget composition</title>
-              <desc id="futureBudgetDonutDesc">Move equity, illustrative borrowing and savings combine to create the selected next-home budget.</desc>
-              <defs>
-                <filter id="futureBudgetSoftShadow" x="-25%" y="-25%" width="150%" height="150%">
-                  <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="currentColor" flood-opacity=".08"/>
-                </filter>
-              </defs>
-              <circle class="future-budget-donut-soft" cx="120" cy="120" r="88"/>
-              <circle class="future-budget-donut-track" cx="120" cy="120" r="77"/>
-              <g id="futureBudgetDonutSegments" transform="rotate(-90 120 120)" filter="url(#futureBudgetSoftShadow)"></g>
-              <circle class="future-budget-donut-inner" cx="120" cy="120" r="55"/>
-              <path class="future-budget-donut-detail" d="M79 72c11-13 25-22 42-26M164 69c8 6 15 13 20 22M72 163c8 12 19 21 32 27"/>
-              <g class="future-budget-donut-centre">
-                <text x="120" y="105" text-anchor="middle">NEXT-HOME BUDGET</text>
-                <text id="futureBudgetDonutValue" x="120" y="132" text-anchor="middle">—</text>
-                <text id="futureBudgetDonutPeriod" x="120" y="153" text-anchor="middle">—</text>
-              </g>
-            </svg>
-          </div>
-        </div>
-
-        <div class="future-next-home-comparison" id="futureNextHomeComparison"></div>
         <p class="future-next-home-note" id="futureNextHomeNote"></p>
         <div class="future-wait-source" hidden></div>`;
       planner.insertAdjacentElement('afterend',wait);
@@ -609,7 +610,7 @@
         : 'Add household income in Setup & Data to estimate borrowing repayments.';
 
       const totalParts=active.supports.reduce((sum,item)=>sum+item.value,0)||1;
-      const circumference=2*Math.PI*77;
+      const circumference=2*Math.PI*91;
       let offset=0;
       const segmentClasses=['is-equity','is-borrowing','is-savings'];
       const segments=$('#futureBudgetDonutSegments',wait);
@@ -617,9 +618,9 @@
         segments.innerHTML=active.supports.map((item,index)=>{
           const ratio=Math.max(0,item.value/totalParts);
           const length=Math.max(0,circumference*ratio);
-          const gap=Math.min(5,length*.08);
+          const gap=Math.min(7,length*.08);
           const dash=Math.max(0,length-gap);
-          const circle=`<circle class="future-budget-donut-segment ${segmentClasses[index]||''}" cx="120" cy="120" r="77" pathLength="${circumference}" stroke-dasharray="${dash} ${circumference-dash}" stroke-dashoffset="${-offset}"></circle>`;
+          const circle=`<circle class="future-budget-donut-segment ${segmentClasses[index]||''}" cx="140" cy="140" r="91" pathLength="${circumference}" stroke-dasharray="${dash} ${circumference-dash}" stroke-dashoffset="${-offset}"></circle>`;
           offset+=length;
           return circle;
         }).join('');
@@ -630,20 +631,11 @@
         breakdown.innerHTML=active.supports.map((item,index)=>{
           const share=Math.round(item.value/totalParts*100);
           const cleanLabel=item.label.replace(/^illustrative\s+/i,'');
-          return `<details class="future-budget-row" data-index="${index}">
-            <summary><span><i></i><b>${cleanLabel}</b><small>${share}% of budget</small></span><strong>${item.valueText}</strong></summary>
-            <p>${/equity/i.test(cleanLabel)
-              ? 'Projected value available from your share of the home after the remaining mortgage and saved selling costs.'
-              : /borrowing/i.test(cleanLabel)
-                ? 'Illustrative borrowing based on household income and the borrowing multiple saved in Setup & Data.'
-                : 'Cash savings included in the move after your saved buffer and purchase-cost assumptions.'}</p>
-          </details>`;
+          return `<button type="button" class="future-next-home-b-callout" data-index="${index}">
+            <span><i></i><b>${cleanLabel}</b><small>${share}% of budget</small></span>
+            <strong>${item.valueText}</strong>
+          </button>`;
         }).join('');
-      }
-
-      const comparison=$('#futureNextHomeComparison',wait);
-      if(comparison){
-        comparison.innerHTML=data.map((item)=>`<button type="button" class="${item.years===selected?'is-active':''}" data-next-home-years="${item.years}"><span>${item.years===0?'Today':`${item.years}y`}</span><strong>${item.budget}</strong></button>`).join('');
       }
 
       const note=$('#futureNextHomeNote',wait);
