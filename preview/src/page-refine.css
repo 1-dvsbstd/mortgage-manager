@@ -5205,3 +5205,18 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
   background:var(--accent-strong)!important;
   transform:translateY(-50%)!important;
 }
+
+/* Future v46 — strengthen central budget hierarchy. */
+.app-view-future .future-budget-chart-centre strong{
+  font-size:39px!important;
+  line-height:.94!important;
+  letter-spacing:-.045em!important;
+}
+.app-view-future .future-next-home-c-callout>strong{
+  font-size:21px!important;
+}
+@media(max-width:700px){
+  .app-view-future .future-budget-chart-centre strong{
+    font-size:31px!important;
+  }
+}
