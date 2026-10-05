@@ -518,7 +518,7 @@
             <div class="future-next-home-c-callout callout-equity" id="futureCalloutEquity"></div>
             <div class="future-next-home-c-callout callout-borrowing" id="futureCalloutBorrowing"></div>
             <div class="future-next-home-c-callout callout-savings" id="futureCalloutSavings"></div>
-            <div class="future-next-home-c-callout callout-repayment" id="futureCalloutRepayment"></div>
+            <div class="future-next-home-c-callout callout-repayment is-repayment" id="futureCalloutRepayment"></div>
           </div>
         </div>
 
@@ -625,15 +625,20 @@
               rotation:-90,
               circumference:360,
               animation:{duration:420,easing:'easeOutQuart'},
+              interaction:{mode:'nearest',intersect:true},
               plugins:{
                 legend:{display:false},
                 tooltip:{
+                  enabled:true,
                   displayColors:false,
                   padding:10,
+                  caretSize:6,
                   callbacks:{
+                    title:()=> '',
                     label:(context)=>{
                       const value=Number(context.raw)||0;
-                      const pct=Math.round(value/totalParts*100);
+                      const total=(context.dataset.data||[]).reduce((sum,item)=>sum+(Number(item)||0),0)||1;
+                      const pct=Math.round(value/total*100);
                       return context.label+': '+moneyShort(value)+' · '+pct+'%';
                     }
                   }
