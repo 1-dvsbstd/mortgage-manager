@@ -482,32 +482,102 @@
     if(!body||!timeline) return;
     $('.next-home-settings',planner)?.remove();
 
-    const heading=$('.next-home-heading',body);
-    if(heading){
-      const eyebrow=$('.eyebrow',heading); if(eyebrow) eyebrow.textContent='Next-home position';
-      const title=$('h2',heading); if(title) title.textContent='What your equity could give you today';
-      let explainer=$('.next-home-heading-note',heading);
-      if(!explainer){
-        explainer=document.createElement('p');
-        explainer.className='next-home-heading-note';
-        const copy=heading.firstElementChild;
-        if(copy) copy.appendChild(explainer);
-      }
-      if(explainer) explainer.textContent='A quick view of what your equity and saved borrowing assumptions could support today.';
-    }
-
     let wait=$('#futureWaitPlanner');
     if(!wait){
       wait=document.createElement('section');
-      wait.id='futureWaitPlanner'; wait.className='panel future-wait-planner';
-      wait.innerHTML='<div class="future-wait-heading"><p class="eyebrow">Looking ahead</p><h2>How your next-home budget could grow over time</h2><p class="future-wait-subtitle">Combines projected home value, your falling mortgage balance and your saved borrowing assumptions.</p></div><div class="future-wait-host"></div>';
+      wait.id='futureWaitPlanner';
+      wait.className='panel future-wait-planner future-next-home-hero';
+      wait.innerHTML=`
+        <div class="future-wait-heading">
+          <p class="eyebrow">Next-home planning</p>
+          <h2>What you could afford next — today, or later</h2>
+          <p class="future-wait-subtitle">See how move equity and borrowing power could combine into a future home budget.</p>
+        </div>
+        <div class="future-next-home-controls" role="tablist" aria-label="Next-home planning horizon"></div>
+        <div class="future-next-home-result">
+          <div class="future-next-home-main">
+            <span class="future-next-home-kicker">Illustrative next-home budget</span>
+            <strong id="futureNextHomeBudget">—</strong>
+            <div class="future-next-home-meta"><span id="futureNextHomePeriod">—</span><b id="futureNextHomeDelta">—</b></div>
+          </div>
+          <div class="future-next-home-breakdown" id="futureNextHomeBreakdown"></div>
+        </div>
+        <div class="future-next-home-progress" id="futureNextHomeProgress" aria-label="Budget progression"></div>
+        <p class="future-next-home-note" id="futureNextHomeNote"></p>
+        <div class="future-wait-source" hidden></div>`;
       planner.insertAdjacentElement('afterend',wait);
     }
-    const host=$('.future-wait-host',wait);
-    $('.next-home-subhead',timeline)?.remove();
-    if(timeline.parentElement!==host) host.appendChild(timeline);
+    const source=$('.future-wait-source',wait);
+    if(timeline.parentElement!==source) source.appendChild(timeline);
     planner.classList.add('future-source-only');
+
+    const renderHero=()=>{
+      const rows=[...timeline.querySelectorAll('.next-home-timeline-row')];
+      if(!rows.length) return;
+      const data=rows.map((row)=>{
+        const years=Number(row.dataset.years)||0;
+        const period=row.querySelector('.next-home-period')?.textContent?.trim()||(years===0?'Today':`In ${years} years`);
+        const budget=row.querySelector(':scope > strong')?.textContent?.trim()||'—';
+        const change=row.querySelector('.next-home-change')?.textContent?.trim()||'';
+        const supports=[...row.querySelectorAll('.next-home-support small')].map((item)=>item.textContent.trim()).filter(Boolean);
+        return {years,period,budget,change,supports};
+      });
+      let selected=Number(wait.dataset.selectedYears);
+      if(!data.some((item)=>item.years===selected)) selected=data.some((item)=>item.years===5)?5:data[0].years;
+      wait.dataset.selectedYears=String(selected);
+      const active=data.find((item)=>item.years===selected)||data[0];
+
+      const controls=$('.future-next-home-controls',wait);
+      if(controls) controls.innerHTML=data.map((item)=>`<button type="button" role="tab" aria-selected="${item.years===selected?'true':'false'}" data-next-home-years="${item.years}">${item.years===0?'Today':`${item.years} years`}</button>`).join('');
+
+      const budget=$('#futureNextHomeBudget',wait);
+      const period=$('#futureNextHomePeriod',wait);
+      const delta=$('#futureNextHomeDelta',wait);
+      if(budget) budget.textContent=active.budget;
+      if(period) period.textContent=active.period;
+      if(delta){
+        delta.textContent=active.years===0?'Starting point':active.change.replace(/\s+vs today$/i,' vs today');
+        delta.classList.toggle('is-baseline',active.years===0);
+      }
+
+      const breakdown=$('#futureNextHomeBreakdown',wait);
+      if(breakdown){
+        breakdown.innerHTML=active.supports.map((text)=>{
+          const match=text.match(/^([^a-zA-Z]*£?[\d,]+)\s+(.*)$/);
+          if(match) return `<div><span>${match[2]}</span><strong>${match[1]}</strong></div>`;
+          return `<div><span>${text}</span></div>`;
+        }).join('');
+      }
+
+      const progress=$('#futureNextHomeProgress',wait);
+      if(progress){
+        progress.innerHTML=`<div class="future-next-home-progress-line"></div>`+data.map((item)=>`
+          <button type="button" class="${item.years===selected?'is-active':''}" data-next-home-years="${item.years}">
+            <i aria-hidden="true"></i>
+            <span>${item.years===0?'Today':`${item.years}y`}</span>
+            <strong>${item.budget}</strong>
+          </button>`).join('');
+      }
+
+      const note=$('#futureNextHomeNote',wait);
+      const sourceNote=$('#nextHomeTrendNote',timeline)?.textContent?.trim();
+      if(note) note.textContent=sourceNote||'Planning estimate using your saved property, mortgage and borrowing assumptions.';
+    };
+
+    if(!wait.dataset.heroBound){
+      wait.dataset.heroBound='true';
+      wait.addEventListener('click',(event)=>{
+        const button=event.target.closest('[data-next-home-years]');
+        if(!button) return;
+        wait.dataset.selectedYears=button.dataset.nextHomeYears;
+        renderHero();
+      });
+      const observer=new MutationObserver(()=>requestAnimationFrame(renderHero));
+      observer.observe(timeline,{subtree:true,childList:true,characterData:true});
+    }
+    renderHero();
   }
+
 
   function renderFuturePayoffTargets(){
     const future=$('.app-view-future .app-view-content');
@@ -699,8 +769,8 @@
     sources.forEach((node)=>node.classList.add('future-source-only'));
 
     const order=[
-      $('#futurePayoffTargets'),
       $('#futureWaitPlanner'),
+      $('#futurePayoffTargets'),
       $('#futureDrivers')
     ].filter(Boolean);
     order.forEach((node)=>future.appendChild(node));
