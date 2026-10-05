@@ -486,9 +486,9 @@
     if(!wait){
       wait=document.createElement('section');
       wait.id='futureWaitPlanner';
-      wait.className='panel future-wait-planner future-next-home-hero option-b';
+      wait.className='panel future-wait-planner future-next-home-hero option-c';
       wait.innerHTML=`
-        <div class="future-next-home-b-header">
+        <div class="future-next-home-c-header">
           <div>
             <p class="eyebrow">Next-home planning</p>
             <h2>What you could afford next</h2>
@@ -497,47 +497,35 @@
           <div class="future-next-home-controls" role="tablist" aria-label="Next-home planning horizon"></div>
         </div>
 
-        <div class="future-next-home-b-grid">
-          <div class="future-next-home-b-outcome">
-            <span class="future-next-home-kicker">Estimated next-home budget</span>
-            <strong id="futureNextHomeBudget">—</strong>
-            <div class="future-next-home-meta">
-              <span id="futureNextHomePeriod">—</span>
-              <b id="futureNextHomeDelta">—</b>
-            </div>
+        <div class="future-next-home-c-stage">
+          <div class="future-next-home-c-callout callout-equity" id="futureCalloutEquity"></div>
+          <div class="future-next-home-c-callout callout-borrowing" id="futureCalloutBorrowing"></div>
 
-            <div class="future-next-home-payment-b">
-              <span>Illustrative monthly repayment</span>
-              <strong id="futureNextHomePayment">—</strong>
-              <small id="futureNextHomePaymentNote">—</small>
-            </div>
+          <div class="future-budget-donut-wrap">
+            <svg class="future-budget-donut" viewBox="0 0 320 320" role="img" aria-labelledby="futureBudgetDonutTitle futureBudgetDonutDesc">
+              <title id="futureBudgetDonutTitle">Next-home budget composition</title>
+              <desc id="futureBudgetDonutDesc">Move equity, illustrative borrowing and savings combine to create the selected next-home budget.</desc>
+              <defs>
+                <filter id="futureBudgetSoftShadow" x="-35%" y="-35%" width="170%" height="170%">
+                  <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="currentColor" flood-opacity=".07"/>
+                </filter>
+              </defs>
+              <circle class="future-budget-donut-soft" cx="160" cy="160" r="126"/>
+              <circle class="future-budget-donut-track" cx="160" cy="160" r="105"/>
+              <g id="futureBudgetDonutSegments" transform="rotate(-90 160 160)" filter="url(#futureBudgetSoftShadow)"></g>
+              <circle class="future-budget-donut-inner" cx="160" cy="160" r="77"/>
+              <path class="future-budget-donut-detail" d="M104 95c15-18 34-30 56-35M220 94c11 8 20 19 27 31M95 217c11 17 26 30 45 38"/>
+              <g class="future-budget-donut-centre">
+                <text x="160" y="136" text-anchor="middle">ESTIMATED NEXT-HOME BUDGET</text>
+                <text id="futureBudgetDonutValue" x="160" y="170" text-anchor="middle">—</text>
+                <text id="futureBudgetDonutPeriod" x="160" y="194" text-anchor="middle">—</text>
+                <text id="futureBudgetDonutDelta" x="160" y="214" text-anchor="middle">—</text>
+              </g>
+            </svg>
           </div>
 
-          <div class="future-next-home-b-visual">
-            <div class="future-budget-donut-wrap">
-              <svg class="future-budget-donut" viewBox="0 0 280 280" role="img" aria-labelledby="futureBudgetDonutTitle futureBudgetDonutDesc">
-                <title id="futureBudgetDonutTitle">Next-home budget composition</title>
-                <desc id="futureBudgetDonutDesc">Move equity, illustrative borrowing and savings combine to create the selected next-home budget.</desc>
-                <defs>
-                  <filter id="futureBudgetSoftShadow" x="-30%" y="-30%" width="160%" height="160%">
-                    <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="currentColor" flood-opacity=".07"/>
-                  </filter>
-                </defs>
-                <circle class="future-budget-donut-soft" cx="140" cy="140" r="108"/>
-                <circle class="future-budget-donut-track" cx="140" cy="140" r="91"/>
-                <g id="futureBudgetDonutSegments" transform="rotate(-90 140 140)" filter="url(#futureBudgetSoftShadow)"></g>
-                <circle class="future-budget-donut-inner" cx="140" cy="140" r="66"/>
-                <path class="future-budget-donut-detail" d="M92 85c13-15 29-25 48-30M192 83c9 7 17 16 23 27M84 190c9 14 22 25 38 32"/>
-                <g class="future-budget-donut-centre">
-                  <text x="140" y="123" text-anchor="middle">NEXT-HOME BUDGET</text>
-                  <text id="futureBudgetDonutValue" x="140" y="151" text-anchor="middle">—</text>
-                  <text id="futureBudgetDonutPeriod" x="140" y="174" text-anchor="middle">—</text>
-                </g>
-              </svg>
-            </div>
-
-            <div class="future-next-home-b-callouts" id="futureNextHomeBreakdown"></div>
-          </div>
+          <div class="future-next-home-c-callout callout-savings" id="futureCalloutSavings"></div>
+          <div class="future-next-home-c-callout callout-repayment" id="futureCalloutRepayment"></div>
         </div>
 
         <p class="future-next-home-note" id="futureNextHomeNote"></p>
@@ -559,6 +547,14 @@
       return p*monthly/(1-Math.pow(1+monthly,-n));
     };
     const moneyShort=(value)=>money(Math.round(Math.max(0,Number(value)||0)));
+
+    const renderCallout=(root,label,valueText,share,note,index)=>{
+      if(!root) return;
+      root.innerHTML=`
+        <div class="future-callout-title"><i data-index="${index}"></i><span>${label}</span></div>
+        <strong>${valueText}</strong>
+        <small>${share!==null?`${share}% of budget`:note}</small>`;
+    };
 
     const renderHero=()=>{
       const rows=[...timeline.querySelectorAll('.next-home-timeline-row')];
@@ -586,31 +582,13 @@
       const controls=$('.future-next-home-controls',wait);
       if(controls) controls.innerHTML=data.map((item)=>`<button type="button" role="tab" aria-selected="${item.years===selected?'true':'false'}" data-next-home-years="${item.years}">${item.years===0?'Today':`${item.years} years`}</button>`).join('');
 
-      $('#futureNextHomeBudget',wait).textContent=active.budget;
-      $('#futureNextHomePeriod',wait).textContent=active.period;
       $('#futureBudgetDonutValue',wait).textContent=active.budget;
       $('#futureBudgetDonutPeriod',wait).textContent=active.period;
-
-      const delta=$('#futureNextHomeDelta',wait);
-      if(delta){
-        delta.textContent=active.years===0?'Starting point':active.change.replace(/\s+vs today$/i,' vs today');
-        delta.classList.toggle('is-baseline',active.years===0);
-      }
-
-      const borrowingItem=active.supports.find((item)=>/borrowing/i.test(item.label));
-      const mortgageState=window.MortgageStore?.get?.()||{};
-      const planningRate=Math.max(.1,Number(mortgageState.rate)||4.25);
-      const planningTermYears=30;
-      const repayment=monthlyPayment(borrowingItem?.value||0,planningRate,planningTermYears*12);
-      const repaymentEl=$('#futureNextHomePayment',wait);
-      const repaymentNote=$('#futureNextHomePaymentNote',wait);
-      if(repaymentEl) repaymentEl.textContent=borrowingItem?moneyShort(repayment)+'/mo':'—';
-      if(repaymentNote) repaymentNote.textContent=borrowingItem
-        ? `${moneyShort(borrowingItem.value)} borrowing · ${planningRate.toFixed(2)}% · ${planningTermYears}-year repayment`
-        : 'Add household income in Setup & Data to estimate borrowing repayments.';
+      const deltaText=active.years===0?'Starting point':active.change.replace(/\s+vs today$/i,' vs today');
+      $('#futureBudgetDonutDelta',wait).textContent=deltaText;
 
       const totalParts=active.supports.reduce((sum,item)=>sum+item.value,0)||1;
-      const circumference=2*Math.PI*91;
+      const circumference=2*Math.PI*105;
       let offset=0;
       const segmentClasses=['is-equity','is-borrowing','is-savings'];
       const segments=$('#futureBudgetDonutSegments',wait);
@@ -618,25 +596,35 @@
         segments.innerHTML=active.supports.map((item,index)=>{
           const ratio=Math.max(0,item.value/totalParts);
           const length=Math.max(0,circumference*ratio);
-          const gap=Math.min(7,length*.08);
+          const gap=Math.min(8,length*.08);
           const dash=Math.max(0,length-gap);
-          const circle=`<circle class="future-budget-donut-segment ${segmentClasses[index]||''}" cx="140" cy="140" r="91" pathLength="${circumference}" stroke-dasharray="${dash} ${circumference-dash}" stroke-dashoffset="${-offset}"></circle>`;
+          const circle=`<circle class="future-budget-donut-segment ${segmentClasses[index]||''}" cx="160" cy="160" r="105" pathLength="${circumference}" stroke-dasharray="${dash} ${circumference-dash}" stroke-dashoffset="${-offset}"></circle>`;
           offset+=length;
           return circle;
         }).join('');
       }
 
-      const breakdown=$('#futureNextHomeBreakdown',wait);
-      if(breakdown){
-        breakdown.innerHTML=active.supports.map((item,index)=>{
-          const share=Math.round(item.value/totalParts*100);
-          const cleanLabel=item.label.replace(/^illustrative\s+/i,'');
-          return `<button type="button" class="future-next-home-b-callout" data-index="${index}">
-            <span><i></i><b>${cleanLabel}</b><small>${share}% of budget</small></span>
-            <strong>${item.valueText}</strong>
-          </button>`;
-        }).join('');
-      }
+      const equity=active.supports.find((item)=>/equity/i.test(item.label));
+      const borrowing=active.supports.find((item)=>/borrowing/i.test(item.label));
+      const savings=active.supports.find((item)=>/savings/i.test(item.label));
+      const share=(item)=>item?Math.round(item.value/totalParts*100):null;
+
+      renderCallout($('#futureCalloutEquity',wait),'Move equity',equity?.valueText||'—',share(equity),null,0);
+      renderCallout($('#futureCalloutBorrowing',wait),'Borrowing',borrowing?.valueText||'—',share(borrowing),null,1);
+      renderCallout($('#futureCalloutSavings',wait),'Savings',savings?.valueText||'—',share(savings),null,2);
+
+      const mortgageState=window.MortgageStore?.get?.()||{};
+      const planningRate=Math.max(.1,Number(mortgageState.rate)||4.25);
+      const planningTermYears=30;
+      const repayment=monthlyPayment(borrowing?.value||0,planningRate,planningTermYears*12);
+      renderCallout(
+        $('#futureCalloutRepayment',wait),
+        'Illustrative monthly repayment',
+        borrowing?moneyShort(repayment)+'/mo':'—',
+        null,
+        borrowing?`${moneyShort(borrowing.value)} borrowing · ${planningRate.toFixed(2)}% · ${planningTermYears} years`:'Add income in Setup & Data',
+        3
+      );
 
       const note=$('#futureNextHomeNote',wait);
       const sourceNote=$('#nextHomeTrendNote',timeline)?.textContent?.trim();
