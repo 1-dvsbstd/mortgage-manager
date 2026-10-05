@@ -501,15 +501,20 @@
             <span class="future-next-home-kicker">Estimated next-home budget</span>
             <strong id="futureNextHomeBudget">—</strong>
             <div class="future-next-home-meta"><span id="futureNextHomePeriod">—</span><b id="futureNextHomeDelta">—</b></div>
+            <div class="future-next-home-payment-inline">
+              <span>Illustrative monthly repayment</span>
+              <strong id="futureNextHomePayment">—</strong>
+              <small id="futureNextHomePaymentNote">—</small>
+            </div>
           </div>
-          <div class="future-next-home-payment">
-            <span>Illustrative monthly repayment</span>
-            <strong id="futureNextHomePayment">—</strong>
-            <small id="futureNextHomePaymentNote">—</small>
+          <div class="future-next-home-summary-copy">
+            <span>Budget composition</span>
+            <p>Your projected move equity, borrowing capacity and savings combine to form the selected budget.</p>
           </div>
         </div>
 
         <div class="future-next-home-visual">
+          <div class="future-next-home-breakdown" id="futureNextHomeBreakdown"></div>
           <div class="future-budget-donut-wrap">
             <svg class="future-budget-donut" viewBox="0 0 240 240" role="img" aria-labelledby="futureBudgetDonutTitle futureBudgetDonutDesc">
               <title id="futureBudgetDonutTitle">Next-home budget composition</title>
@@ -531,8 +536,6 @@
               </g>
             </svg>
           </div>
-
-          <div class="future-next-home-breakdown" id="futureNextHomeBreakdown"></div>
         </div>
 
         <div class="future-next-home-comparison" id="futureNextHomeComparison"></div>
