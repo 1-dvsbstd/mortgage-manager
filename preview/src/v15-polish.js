@@ -139,16 +139,8 @@
 
   function run() { renderCurrentJourney(); }
 
-  document.addEventListener('click', (event) => {
-    if (event.target.closest('[data-app-view="current"]')) setTimeout(run, 80);
-  });
   if (window.MortgageStore?.subscribe) MortgageStore.subscribe(() => requestAnimationFrame(run));
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => {
-    run();
-    [180,700].forEach((delay) => setTimeout(run, delay));
-  }, { once:true });
-  else {
-    run();
-    [180,700].forEach((delay) => setTimeout(run, delay));
-  }
+  document.addEventListener('mortgage-history-updated', () => requestAnimationFrame(run));
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run, { once:true });
+  else run();
 })();
