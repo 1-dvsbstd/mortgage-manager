@@ -219,6 +219,21 @@
         <div class="personal-footer-actions"><button type="button" class="personal-button" data-action="cancel">Cancel</button><button type="button" class="personal-button primary" data-action="save">Save changes</button></div>
       </section>`;
     document.body.appendChild(backdrop);
+
+    backdrop.addEventListener('click', (event) => {
+      const field = event.target.closest?.('input[type="month"]');
+      if (!field || typeof field.showPicker !== 'function') return;
+      try {
+        field.focus({ preventScroll:true });
+        field.showPicker();
+      } catch (_) {}
+    });
+
+    backdrop.addEventListener('wheel', (event) => {
+      const field = event.target.closest?.('input[type="number"]');
+      if (field && document.activeElement === field) field.blur();
+    }, { passive:true });
+
     const close = () => backdrop.remove();
     backdrop.addEventListener('click', (event) => { if (event.target === backdrop) close(); });
     backdrop.querySelector('.personal-close')?.addEventListener('click', close);
