@@ -260,9 +260,6 @@
   function start() {
     render();
     requestAnimationFrame(render);
-    setTimeout(render,180);
-    setTimeout(render,650);
-    setTimeout(render,1300);
     if (window.MortgageStore?.subscribe) MortgageStore.subscribe(() => requestAnimationFrame(render));
     window.addEventListener('pageshow', render);
   }
