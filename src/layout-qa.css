@@ -36,7 +36,7 @@ body{
 }
 
 .panel,.hero-panel,.app-view-upcoming .upcoming-section,
-.future-overpayment-assumption,.future-model-range-panel,.future-wait-planner,
+.future-model-range-panel,.future-wait-planner,
 .temporal-feature-home-projection,.temporal-feature-next-home{
   background:
     linear-gradient(145deg,rgba(18,37,30,.965),rgba(9,24,20,.97))!important;
@@ -80,7 +80,7 @@ body{
   color:var(--lux-muted)!important;
 }
 
-.kicker,.eyebrow,.future-assumption-label{
+.kicker,.eyebrow{
   color:var(--lux-mint)!important;
   letter-spacing:.15em!important;
 }
@@ -147,19 +147,18 @@ body{
 }
 
 /* Controls: satin rather than chunky */
-.trajectory-overpay-row button,.trajectory-custom-overpay,
-.future-assumption-controls button,.future-assumption-controls label{
+.trajectory-overpay-row button,.trajectory-custom-overpay{
   min-height:38px!important;
   border-radius:11px!important;
   background:rgba(244,240,229,.035)!important;
   border-color:var(--lux-line)!important;
   box-shadow:0 1px 0 rgba(255,255,255,.018) inset!important;
 }
-.trajectory-overpay-row button:hover,.future-assumption-controls button:hover{
+.trajectory-overpay-row button:hover:hover{
   background:rgba(244,240,229,.06)!important;
   border-color:rgba(161,222,201,.22)!important;
 }
-.trajectory-overpay-row button.active,.future-assumption-controls button.active{
+.trajectory-overpay-row button.active.active{
   background:linear-gradient(180deg,#79d2b4,#66bea1)!important;
   color:#071610!important;
   box-shadow:0 10px 24px rgba(73,159,130,.18)!important;
