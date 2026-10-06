@@ -441,7 +441,7 @@ body .personal-backdrop .personal-modal #dataBackupSection{
 }
 .setup-month-popover-head{
   display:grid;
-  grid-template-columns:36px 1fr 36px;
+  grid-template-columns:36px 1fr 36px 28px;
   align-items:center;
   gap:8px;
   margin-bottom:12px;
@@ -615,4 +615,17 @@ body .personal-modal .deal-term-menu button:focus-visible{
 body .personal-modal .deal-term-field [data-deal-calendar]{
   pointer-events:auto;
   cursor:pointer;
+}
+
+
+/* Month picker close control */
+.setup-month-popover-head .setup-month-close{
+  width:28px;
+  height:28px;
+  min-height:28px;
+  align-self:center;
+  justify-self:end;
+  border-radius:8px;
+  font-size:16px;
+  line-height:1;
 }
