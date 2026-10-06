@@ -103,7 +103,7 @@
   function migrateLegacyMarketCache(){
     try{
       const cached=JSON.parse(localStorage.getItem(MARKET_CACHE_KEY)||'null');
-      if(cached&&(Number(cached.schema||0)<2||/Moneyfacts/i.test(String(cached.source||'')))){
+      if(cached&&Number(cached.schema||0)<3){
         localStorage.removeItem(MARKET_CACHE_KEY);
       }
     }catch(_){}
