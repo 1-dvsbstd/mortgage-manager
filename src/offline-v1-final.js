@@ -151,7 +151,6 @@
     if(!future) return;
 
     const ordered=[
-      $('#futureOverpaymentAssumption'),
       $('#homeProjection'),
       $('#futureModelRange'),
       $('#futureWaitPlanner'),
@@ -261,10 +260,6 @@
     };
     const observer=new MutationObserver(queueFuture);
     observer.observe(document.body,{childList:true,subtree:true});
-    document.addEventListener('click',(event)=>{
-      if(event.target.closest?.('[data-app-view="future"]')) setTimeout(stabiliseFuture,0);
-    },true);
-    setTimeout(stabiliseFuture,900);
   };
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start,{once:true}); else start();
 })();
