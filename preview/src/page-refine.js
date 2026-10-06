@@ -648,15 +648,48 @@
       renderCallout($('#futureCalloutSavings',wait),'Savings',savings?.valueText||'—',share(savings),null,2);
 
       const mortgageState=window.MortgageStore?.get?.()||{};
-      const planningRate=Math.max(.1,Number(mortgageState.rate)||4.25);
+      const totalBorrowing=Math.max(0,Number(borrowing?.value)||0);
+      const currentBalance=Math.max(0,Number(mortgageState.balance)||0);
+      const currentRate=Math.max(.1,Number(mortgageState.rate)||0);
+      const currentScheduled=Math.max(0,Number(mortgageState.payment)||0);
+      const marketRate=(()=>{
+        const live=Number(window.MortgageMarket?.fiveYear);
+        if(Number.isFinite(live)&&live>0) return live;
+        try{
+          const cached=JSON.parse(localStorage.getItem('mortgage-manager-market-cache-v1')||'null');
+          const rate=Number(cached?.live?.fiveYear);
+          if(Number.isFinite(rate)&&rate>0) return rate;
+        }catch(_){}
+        return 6.00;
+      })();
       const planningTermYears=30;
-      const repayment=monthlyPayment(borrowing?.value||0,planningRate,planningTermYears*12);
+
+      let repayment=0;
+      let repaymentNote='Add income in Setup & Data';
+      if(totalBorrowing>0){
+        if(active.years===0){
+          const portedAmount=Math.min(totalBorrowing,currentBalance);
+          const extraBorrowing=Math.max(0,totalBorrowing-portedAmount);
+          const currentPath=window.MortgageMath?.amortize?.(currentBalance,currentRate,currentScheduled);
+          const remainingMonths=Math.max(1,Number(currentPath?.months)||planningTermYears*12);
+          const portedPayment=monthlyPayment(portedAmount,currentRate,remainingMonths);
+          const extraPayment=monthlyPayment(extraBorrowing,marketRate,planningTermYears*12);
+          repayment=portedPayment+extraPayment;
+          repaymentNote=extraBorrowing>0
+            ? `${moneyShort(portedAmount)} potentially ported at ${currentRate.toFixed(2)}% + ${moneyShort(extraBorrowing)} additional borrowing at ${marketRate.toFixed(2)}%`
+            : `${moneyShort(portedAmount)} potentially ported at your current ${currentRate.toFixed(2)}% rate`;
+        }else{
+          repayment=monthlyPayment(totalBorrowing,marketRate,planningTermYears*12);
+          repaymentNote=`${moneyShort(totalBorrowing)} borrowed at today's ${marketRate.toFixed(2)}% 5-year market average over ${planningTermYears} years · planning assumption, not a forecast`;
+        }
+      }
+
       renderCallout(
         $('#futureCalloutRepayment',wait),
         'Illustrative monthly repayment',
-        borrowing?moneyShort(repayment)+'/mo':'—',
+        totalBorrowing?moneyShort(repayment)+'/mo':'—',
         null,
-        borrowing?`Based on ${moneyShort(borrowing.value)} borrowed at ${planningRate.toFixed(2)}% over ${planningTermYears} years`:'Add income in Setup & Data',
+        repaymentNote,
         3
       );
 
@@ -1127,7 +1160,7 @@
   }
 
   document.addEventListener('mortgage-market-rates-updated',()=>{
-    requestAnimationFrame(()=>{ renderUpcomingRates(); refineUpcoming(); renderRateTrend(); });
+    requestAnimationFrame(()=>{ renderUpcomingRates(); refineUpcoming(); renderRateTrend(); splitNextHomePlanner(); });
   });
 
   document.addEventListener('mortgage-next-home-updated',()=>{
