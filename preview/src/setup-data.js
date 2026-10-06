@@ -291,12 +291,15 @@
     if(document.documentElement.dataset.setupMonthInputs==='true') return;
     document.documentElement.dataset.setupMonthInputs='true';
 
-    document.addEventListener('pointerdown',(event)=>{
+    document.addEventListener('click',(event)=>{
       const input=event.target.closest?.('.personal-modal input[type="month"]');
-      if(!input) return;
-      event.preventDefault();
-      input.blur();
-      openSetupMonthPicker(input);
+      if(input){
+        event.preventDefault();
+        openSetupMonthPicker(input);
+        return;
+      }
+      if(event.target.closest?.('.setup-month-popover')) return;
+      closeSetupMonthPicker();
     },true);
 
     document.addEventListener('keydown',(event)=>{
@@ -307,12 +310,6 @@
         return;
       }
       if(event.key==='Escape') closeSetupMonthPicker();
-    });
-
-    document.addEventListener('pointerdown',(event)=>{
-      if(event.target.closest?.('.setup-month-popover')) return;
-      if(event.target.closest?.('.personal-modal input[type="month"]')) return;
-      closeSetupMonthPicker();
     });
 
     window.addEventListener('resize',closeSetupMonthPicker);
