@@ -3,14 +3,7 @@
 /* Shared page-intro/banner language */
 body .v15-journey-shell,
 body .deal-action-hint,
-body #futureOverpaymentAssumption{
-  border:1px solid rgba(157,102,57,.16)!important;
-  border-radius:20px!important;
-  background:linear-gradient(135deg,rgba(255,250,244,.96),rgba(244,233,220,.9))!important;
-  box-shadow:none!important;
-}
 body .deal-action-hint,
-body #futureOverpaymentAssumption{padding:16px 18px!important}
 body .app-view-upcoming .deal-action-hint{margin:12px 0 16px!important}
 
 /* Setup & data — rounded sections with breathing room */
@@ -299,7 +292,6 @@ body .app-view-future #homeProjection:hover{
   body .v15-journey-step strong,body .v15-journey-step span{align-self:center!important}
 }
 
-
 /* V0.15.25 — Upcoming empty-state colour cleanup + interest-card overflow fix */
 /* Empty planner prompts are informational, not success states: keep them in the warm ivory/copper system. */
 body .app-view-upcoming .deal-planner-empty{
@@ -483,7 +475,6 @@ body .personal-modal .summary-plus,
 body .personal-modal .methodology-chevron{
   display:none!important;
 }
-
 
 /* v0.15.21 — authoritative Future progression and final section order */
 .app-view-future #futureWaitPlanner .next-home-timeline-rows{
