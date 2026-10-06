@@ -248,6 +248,7 @@
           <button type="button" data-month-prev aria-label="Previous year">‹</button>
           <strong>${year}</strong>
           <button type="button" data-month-next aria-label="Next year">›</button>
+          <button type="button" class="setup-month-close" data-month-close aria-label="Close calendar">×</button>
         </div>
         <div class="setup-month-grid">
           ${monthNames.map((name,index)=>{
@@ -277,11 +278,29 @@
       popover.style.width=`${Math.round(width)}px`;
     };
 
+    popover.addEventListener('pointerdown',(event)=>{
+      const target=event.target.closest('button');
+      if(!target) return;
+      if(target.matches('[data-month-prev]')){
+        event.preventDefault();
+        event.stopPropagation();
+        year-=1;
+        render();
+        return;
+      }
+      if(target.matches('[data-month-next]')){
+        event.preventDefault();
+        event.stopPropagation();
+        year+=1;
+        render();
+      }
+    });
+
     popover.addEventListener('click',(event)=>{
       const target=event.target.closest('button');
       if(!target) return;
-      if(target.matches('[data-month-prev]')){year-=1;render();return;}
-      if(target.matches('[data-month-next]')){year+=1;render();return;}
+      if(target.matches('[data-month-prev],[data-month-next]')) return;
+      if(target.matches('[data-month-close]')){ closeSetupMonthPicker(); return; }
       if(target.matches('[data-month-clear]')){
         input.value='';
       }else if(target.matches('[data-month-current]')){
@@ -304,12 +323,6 @@
   function wireSetupMonthInputs(){
     if(document.documentElement.dataset.setupMonthInputs==='true') return;
     document.documentElement.dataset.setupMonthInputs='true';
-
-    document.addEventListener('click',(event)=>{
-      if(event.target.closest?.('.setup-month-popover')) return;
-      if(event.target.closest?.('.personal-backdrop')) return;
-      closeSetupMonthPicker();
-    });
 
     document.addEventListener('keydown',(event)=>{
       if(event.key==='Escape') closeSetupMonthPicker();
