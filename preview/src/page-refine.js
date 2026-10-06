@@ -962,90 +962,42 @@
     const future=$('.app-view-future .app-view-content');
     if(!future) return;
 
-    const assumption=$('#futureOverpaymentAssumption');
-    if(assumption) assumption.classList.add('future-source-only');
-
     const sources=[
       $('#homeProjection'),
-      $('#futureModelRange'),
       $('#nextHomePlanner')
     ].filter(Boolean);
     sources.forEach((node)=>node.classList.add('future-source-only'));
 
     const primary=$('#futureWaitPlanner');
     if(primary && future.firstElementChild!==primary) future.prepend(primary);
-    const order=[
+
+    [
       $('#futurePayoffTargets'),
       $('#futureLifetimeCost'),
       $('#futureLongTermOutcome')
-    ].filter(Boolean);
-    order.forEach((node)=>future.appendChild(node));
+    ].filter(Boolean).forEach((node)=>future.appendChild(node));
 
     sources.forEach((node)=>future.appendChild(node));
-    if(assumption) future.appendChild(assumption);
   }
 
-  function refineFuturePresentation(){
-    const future=$('.app-view-future');
-    if(!future) return;
-    const heading=$('.app-view-heading',future);
-    heading?.classList.remove('future-heading-integrated');
-    const assumption=$('#futureOverpaymentAssumption',future)||$('#futureOverpaymentAssumption');
-    assumption?.classList.add('future-source-only');
-    const wait=$('#futureWaitPlanner');
-    const waitEyebrow=$('.future-wait-heading .eyebrow',wait);
-    const waitTitle=$('.future-wait-heading h2',wait);
-    if(waitEyebrow) waitEyebrow.textContent='Next-home planning';
-    if(waitTitle) waitTitle.textContent='What you could afford next — today, or later';
 
-    const model=$('#futureModelRange');
-    const modelEyebrow=$('.future-model-heading .eyebrow',model);
-    const modelTitle=$('.future-model-heading h2',model);
-    if(modelEyebrow) modelEyebrow.textContent='Property forecast';
-    if(modelTitle) modelTitle.textContent='Where your home value could be heading';
-  }
 
   function refineFuture(){
-    const future=$('.app-view-future .app-view-content'), home=$('#homeProjection'), range=$('#homeProfileRange'), planner=$('#nextHomePlanner');
-    if(!future||!home) return;
-    home.querySelector('.future-estimate')?.classList.add('future-remove');
-    $('#homeValueHistory',home)?.classList.add('future-remove');
-    future.querySelectorAll('.future-stage-label').forEach((label)=>label.remove());
+    const future=$('.app-view-future .app-view-content');
+    const planner=$('#nextHomePlanner');
+    if(!future||!planner) return;
 
-    const heading=$('.projection-heading',home);
-    if(heading){
-      const eyebrow=$('.eyebrow',heading); if(eyebrow) eyebrow.textContent='Property value';
-      const title=$('h2',heading); if(title) title.textContent='What your home may be worth today';
-    }
-
-    if(range){
-      let rangePanel=$('#futureModelRange');
-      if(!rangePanel){
-        rangePanel=document.createElement('section');
-        rangePanel.id='futureModelRange'; rangePanel.className='panel future-model-range-panel future-source-only';
-        rangePanel.innerHTML='<div class="future-model-heading"><p class="eyebrow">Property forecast</p><h2>Where your home value could be heading</h2><p class="future-model-subtitle">Property value only · based on local HPI history</p></div><div class="future-model-range-host"></div>';
-        home.insertAdjacentElement('afterend',rangePanel);
-      }
-      const host=$('.future-model-range-host',rangePanel);
-      if(host && range.parentElement!==host) host.appendChild(range);
-    }
     splitNextHomePlanner();
     renderFuturePayoffTargets();
-    $('#nextHomePlanner')?.classList.add('next-home-position-compact');
-
-
-
     $('#futureDrivers')?.remove();
     renderFutureLifetimeCost();
     renderFutureLongTermOutcome();
     organiseFutureFlow();
-    refineFuturePresentation();
   }
 
   function run(){
     refineUpcoming();
     refineFuture();
-    refineFuturePresentation();
   }
 
   if(window.MortgageStore?.subscribe){
@@ -1059,22 +1011,16 @@
     requestAnimationFrame(()=>{ renderUpcomingRates(); refineUpcoming(); renderRateTrend(); splitNextHomePlanner(); });
   });
 
-  document.addEventListener('mortgage-next-home-updated',()=>{
-    requestAnimationFrame(()=>{ renderFuturePayoffTargets(); renderFutureLifetimeCost(); renderFutureLongTermOutcome(); organiseFutureFlow(); });
-  });
-
   document.addEventListener('mortgage-history-updated',()=>{
     requestAnimationFrame(()=>{ renderFutureLifetimeCost(); renderFutureLongTermOutcome(); organiseFutureFlow(); });
   });
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>{
     run();
-    setTimeout(run,180);
-    setTimeout(run,700);
+    requestAnimationFrame(run);
   },{once:true});
   else {
     run();
-    setTimeout(run,180);
-    setTimeout(run,700);
+    requestAnimationFrame(run);
   }
 })();
