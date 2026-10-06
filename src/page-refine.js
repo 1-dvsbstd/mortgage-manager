@@ -128,29 +128,6 @@
     renderWhatIfControls();
   }
 
-  function refineFutureAssumption(){
-    const panel=$('#futureOverpaymentAssumption');
-    const state=window.MortgageStore?.get?.();
-    if(!panel||!state) return;
-    if(panel.dataset.totalMode!=='true'){
-      panel.dataset.totalMode='true';
-      panel.innerHTML='<div class="future-assumption-copy"><div><span class="future-assumption-label">Planning with</span><strong id="futureExtraSummary">—</strong></div><p>The overpayment scenario currently selected on Current.</p></div><div class="future-assumption-controls" id="futureTotalControls"></div>';
-      panel.addEventListener('click',(event)=>{
-        const button=event.target.closest('[data-future-total]');
-        if(button) applyTotalOverpayment(button.dataset.futureTotal);
-      });
-      panel.addEventListener('input',(event)=>{
-        if(event.target.id==='futureTotalCustom') applyTotalOverpayment(event.target.value);
-      });
-    }
-    const regular=Math.max(0,Number(state.currentOverpayment)||0);
-    const selectedScenario=Math.max(0,Number(state.scenarioExtra)||0);
-    const total=selectedScenario>0?selectedScenario:regular;
-    const summary=$('#futureExtraSummary',panel); if(summary) summary.textContent=`${money(total)}/month overpayment`;
-    const controls=$('#futureTotalControls',panel);
-    if(controls) controls.innerHTML=totalCandidates(regular).map((value)=>`<button type="button" data-future-total="${value}" class="${Math.abs(value-total)<.5?'active':''}">${Math.abs(value-regular)<.5?'Current':money(value)}</button>`).join('')+`<label>Custom £<input id="futureTotalCustom" type="number" min="${regular}" step="10" value="${Math.round(total*100)/100}"></label>`;
-  }
-
   function projectedDealPosition(state){
     const months=monthsUntil(state.fixedEnd);
     if(months===null||months<0||!window.MortgageMath) return null;
@@ -360,7 +337,6 @@
     const future=$('.app-view-future .app-view-content');
     if(!future) return;
     const order=[
-      $('#futureOverpaymentAssumption'),
       $('#futureWaitPlanner'),
       $('#futurePayoffTargets'),
       $('#homeProjection'),
@@ -430,7 +406,6 @@
     mergeRegularIntoWhatIf();
     refineUpcoming();
     refineFuture();
-    refineFutureAssumption();
     const futureReady=
       !!document.querySelector('.app-view-future .app-view-content') &&
       !!document.querySelector('#homeProjection') &&
@@ -445,16 +420,13 @@
   if(window.MortgageStore?.subscribe){
     MortgageStore.subscribe((next,previous)=>{
       if(next.currentOverpayment!==previous.currentOverpayment && next.scenarioExtra!==0) MortgageStore.set({scenarioExtra:0});
-      requestAnimationFrame(()=>{ renderWhatIfControls(); refineFutureAssumption(); refineUpcoming(); renderUpcomingRates(); renderFuturePayoffTargets(); organiseFutureFlow(); });
+      requestAnimationFrame(()=>{ renderWhatIfControls(); refineUpcoming(); renderUpcomingRates(); renderFuturePayoffTargets(); organiseFutureFlow(); });
     });
   }
 
   const startRefinement=()=>{
     run();
     requestAnimationFrame(run);
-    setTimeout(run,120);
-    setTimeout(run,500);
-    setTimeout(run,1000);
   };
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',startRefinement,{once:true});
   else startRefinement();
