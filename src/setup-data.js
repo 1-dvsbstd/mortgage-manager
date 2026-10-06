@@ -195,20 +195,8 @@
 
   function inputMarkup(id, label, type='number', step='1') {
     const value = currentState()[id] ?? '';
-    return `<label>${label}<input data-personal-field="${id}" type="${type}" ${type==='number' ? `step="${step}" inputmode="decimal"` : ''} value="${String(value).replace(/"/g,'&quot;')}" /></label>`;
-  }
-
-  function wireSetupInputBehaviour() {
-    if (document.documentElement.dataset.setupInputBehaviour === 'true') return;
-    document.documentElement.dataset.setupInputBehaviour = 'true';
-
-    document.addEventListener('wheel', (event) => {
-      const field = event.target.closest?.('.personal-modal input[type="number"]');
-      if (!field) return;
-      event.preventDefault();
-      field.blur();
-      field.closest('.personal-modal')?.scrollBy({ top:event.deltaY, left:0, behavior:'auto' });
-    }, { passive:false, capture:true });
+    const numeric = type === 'number';
+    return `<label>${label}<input data-personal-field="${id}" type="${numeric?'text':type}" ${numeric ? 'inputmode="decimal"' : ''} value="${String(value).replace(/"/g,'&quot;')}" /></label>`;
   }
 
   function openSetup() {
@@ -354,5 +342,4 @@
     const history = loadHistory();
     if (history.some((row) => row.month === monthKey())) recordSnapshot(false);
   }, 700);
-  wireSetupInputBehaviour();
 })();
