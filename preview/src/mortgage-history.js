@@ -192,36 +192,39 @@
     return months%12===0 ? String(months/12) : '';
   }
 
-  function dealLengthSelect(deal={}) {
+  function dealLengthOptions(deal={}) {
     const years=dealYears(deal.start,deal.end);
     const options=[1,2,3,4,5,10];
-    const custom=years && !options.includes(Number(years));
-    return `<select data-deal-years aria-label="Deal length">
-      <option value="">Choose length</option>
-      ${options.map(value=>`<option value="${value}" ${years===String(value)?'selected':''}>${value} year${value===1?'':'s'}</option>`).join('')}
-      ${custom?`<option value="${escape(years)}" selected>${escape(years)} years</option>`:''}
-    </select>`;
+    return options.map(value=>`<button type="button" data-deal-years-choice="${value}">${value} year${value===1?'':'s'}</button>`).join('');
   }
 
-  function syncDealEnd(row) {
+  function syncDealEnd(row, yearsOverride=null) {
     const start=row.querySelector('[data-history="start"]')?.value || '';
-    const select=row.querySelector('[data-deal-years]');
     const end=row.querySelector('[data-history="end"]');
-    if(!select||!end) return;
-    const years=Math.max(0,Number(select.value)||0);
-    end.value=start&&years ? addMonths(start,years*12) : '';
-    const display=end.closest('label')?.querySelector('[data-month-field] span');
-    if(display) display.textContent=formatMonthValue(end.value);
+    const chooser=row.querySelector('[data-deal-term]');
+    if(!end||!chooser) return;
+    const years=yearsOverride ?? Number(chooser.dataset.years||0);
+    if(start&&years){
+      end.value=addMonths(start,years*12);
+      chooser.dataset.years=String(years);
+      chooser.querySelector('span').textContent=formatMonthValue(end.value);
+      chooser.classList.add('has-date');
+    }else if(!end.value){
+      chooser.dataset.years='';
+      chooser.querySelector('span').textContent='Choose length';
+      chooser.classList.remove('has-date');
+    }
   }
 
-  function syncDealLengthFromEnd(row) {
+  function syncDealTermFromEnd(row) {
     const start=row.querySelector('[data-history="start"]')?.value || '';
     const end=row.querySelector('[data-history="end"]')?.value || '';
-    const select=row.querySelector('[data-deal-years]');
-    if(!select) return;
+    const chooser=row.querySelector('[data-deal-term]');
+    if(!chooser) return;
     const years=dealYears(start,end);
-    if(years && [...select.options].some(option=>option.value===years)) select.value=years;
-    else if(end) select.value='';
+    chooser.dataset.years=years||'';
+    chooser.querySelector('span').textContent=end?formatMonthValue(end):'Choose length';
+    chooser.classList.toggle('has-date',Boolean(end));
   }
 
   function seedFollowingDealStarts(section) {
@@ -235,16 +238,22 @@
         const display=start.closest('label')?.querySelector('[data-month-field] span');
         if(display) display.textContent=formatMonthValue(previousEnd);
       }
-      syncDealEnd(row);
+      syncDealTermFromEnd(row);
     });
   }
 
 
   function dealRow(deal = {}) {
+    const years=dealYears(deal.start,deal.end);
     return `<div class="history-row history-deal-row" data-history-deal>
       <label>From${monthField('data-history="start"',deal.start)}</label>
-      <label>Deal length${dealLengthSelect(deal)}</label>
-      <label>To${monthField('data-history="end"',deal.end)}</label>
+      <label>To
+        <input type="hidden" data-history="end" value="${escape(deal.end)}">
+        <div class="deal-term-control">
+          <button type="button" class="setup-month-field deal-term-field ${deal.end?'has-date':''}" data-deal-term data-years="${escape(years)}"><span>${deal.end?formatMonthValue(deal.end):'Choose length'}</span><i aria-hidden="true"></i></button>
+          <div class="deal-term-menu" hidden>${dealLengthOptions(deal)}</div>
+        </div>
+      </label>
       <label>Rate (%)<input type="text" inputmode="decimal" data-history="rate" value="${escape(deal.rate)}"></label>
       <label>Payment (£/mo)<input type="text" inputmode="decimal" data-history="payment" value="${escape(deal.payment)}"></label>
       <label>Overpay (£/mo)<input type="text" inputmode="decimal" data-history="overpayment" value="${escape(deal.overpayment)}"></label>
@@ -330,11 +339,7 @@
         if(display) display.textContent=formatMonthValue(field.value);
         if(key==='end'){
           const start=row.querySelector('[data-history="start"]')?.value || '';
-          const years=dealYears(start,field.value);
-          const select=row.querySelector('[data-deal-years]');
-          if(select && years) select.value=years;
-          const endDisplay=field.closest('label')?.querySelector('[data-month-field] span');
-          if(endDisplay) endDisplay.textContent=formatMonthValue(field.value);
+          syncDealTermFromEnd(row);
         }
       }
     });
@@ -370,7 +375,7 @@
     if (monthlySection) monthlySection.insertAdjacentElement('beforebegin', section); else modal.querySelector('.personal-footer-actions')?.insertAdjacentElement('beforebegin', section);
 
     seedFollowingDealStarts(section);
-    section.querySelectorAll('[data-history-deal]').forEach(syncDealEnd);
+    section.querySelectorAll('[data-history-deal]').forEach(syncDealTermFromEnd);
 
     let autosaveTimer = null;
     const scheduleAutosave = () => {
@@ -380,6 +385,29 @@
 
     section.addEventListener('click', (event) => {
       event.stopPropagation();
+
+      const termButton=event.target.closest('[data-deal-term]');
+      if(termButton){
+        const menu=termButton.parentElement?.querySelector('.deal-term-menu');
+        if(menu) menu.hidden=!menu.hidden;
+        return;
+      }
+
+      const termChoice=event.target.closest('[data-deal-years-choice]');
+      if(termChoice){
+        const row=termChoice.closest('[data-history-deal]');
+        if(row){
+          const years=Number(termChoice.dataset.dealYearsChoice)||0;
+          const chooser=row.querySelector('[data-deal-term]');
+          if(chooser) chooser.dataset.years=String(years);
+          syncDealEnd(row,years);
+          termChoice.closest('.deal-term-menu').hidden=true;
+          seedFollowingDealStarts(section);
+          persistSection(section,false);
+        }
+        return;
+      }
+
       if (event.target.closest('[data-add-deal]')) {
         const list=section.querySelector('[data-deal-list]');
         const previous=list?.lastElementChild;
@@ -403,11 +431,11 @@
 
     section.addEventListener('input', (event) => {
       const row=event.target.closest?.('[data-history-deal]');
-      if(row && (event.target.matches('[data-history="start"]') || event.target.matches('[data-deal-years]'))){
+      if(row && event.target.matches('[data-history="start"]')){
         syncDealEnd(row);
         seedFollowingDealStarts(section);
       }else if(row && event.target.matches('[data-history="end"]')){
-        syncDealLengthFromEnd(row);
+        syncDealTermFromEnd(row);
         seedFollowingDealStarts(section);
       }
       const current = readFromSection(section);
@@ -418,11 +446,11 @@
     });
     section.addEventListener('change', (event) => {
       const row=event.target.closest?.('[data-history-deal]');
-      if(row && (event.target.matches('[data-history="start"]') || event.target.matches('[data-deal-years]'))){
+      if(row && event.target.matches('[data-history="start"]')){
         syncDealEnd(row);
         seedFollowingDealStarts(section);
       }else if(row && event.target.matches('[data-history="end"]')){
-        syncDealLengthFromEnd(row);
+        syncDealTermFromEnd(row);
         seedFollowingDealStarts(section);
       }
       persistSection(section, false);
