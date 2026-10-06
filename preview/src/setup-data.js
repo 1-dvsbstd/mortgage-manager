@@ -211,12 +211,6 @@
     return `<label>${label}${input}</label>`;
   }
 
-  function monthLabel(value){
-    if(!/^\d{4}-\d{2}$/.test(String(value||''))) return '';
-    const [year,month]=String(value).split('-').map(Number);
-    return new Intl.DateTimeFormat('en-GB',{month:'long',year:'numeric'}).format(new Date(year,month-1,1));
-  }
-
   function closeSetupMonthPicker(){
     document.querySelector('.setup-month-popover')?.remove();
   }
