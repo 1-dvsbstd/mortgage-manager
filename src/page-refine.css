@@ -119,7 +119,6 @@
   }
 }
 
-
 /* Future next-home progression — authoritative final layout */
 .app-view-future #futureWaitPlanner{
   padding:24px!important;
@@ -226,7 +225,6 @@
     font-size:22px!important;
   }
 }
-
 
 /* Next-home planner has no visible summary row, so its body needs no top divider. */
 .app-view-future #nextHomePlanner .next-home-body{
@@ -951,7 +949,6 @@ body .app-view-current .trajectory-scenario-copy .trajectory-current-saving{
   }
 }
 
-
 /* Future progression v2 — one connected journey rather than three equal cards. */
 .app-view-future #futureWaitPlanner .next-home-timeline-rows{
   position:relative!important;
@@ -1103,7 +1100,6 @@ body .app-view-current .trajectory-scenario-copy .trajectory-current-saving{
   }
 }
 
-
 /* Current-equity section explainer */
 .app-view-future #nextHomePlanner .next-home-heading-note{
   margin:6px 0 0!important;
@@ -1112,7 +1108,6 @@ body .app-view-current .trajectory-scenario-copy .trajectory-current-saving{
   font-size:10px!important;
   line-height:1.45!important;
 }
-
 
 /* Future section explainers */
 .app-view-future #futureWaitPlanner .future-wait-subtitle{
@@ -1123,30 +1118,11 @@ body .app-view-current .trajectory-scenario-copy .trajectory-current-saving{
   line-height:1.4!important;
 }
 
-
 /* Visual audit — Current summary uses an open ruled strip, not cards. */
 
 /* Future structural cleanup — root app */
 .app-view-future #nextHomePlanner.future-source-only{display:none!important}
 .app-view-future #propertyCostComparison .cost-scale{display:none!important}
-
-.app-view-future .future-overpayment-assumption{
-  min-height:0!important;
-  padding:10px 14px!important;
-  gap:14px!important;
-  border-radius:14px!important;
-}
-.app-view-future .future-assumption-copy{gap:6px!important}
-.app-view-future .future-assumption-copy strong{font-size:17px!important;line-height:1.1!important}
-.app-view-future .future-assumption-copy p{font-size:8.5px!important;color:var(--muted-2)!important}
-.app-view-future .future-assumption-controls{gap:6px!important}
-.app-view-future .future-assumption-controls button,
-.app-view-future .future-assumption-controls label{
-  min-height:36px!important;
-  padding:7px 11px!important;
-  border-radius:10px!important;
-  font-size:9px!important;
-}
 
 .app-view-future #homeProjection .projection-core-grid{gap:10px!important}
 .app-view-future #homeProjection .projection-core-card{
@@ -1232,7 +1208,6 @@ body .app-view-current .trajectory-scenario-copy .trajectory-current-saving{
   line-height:1.35!important;
 }
 @media(max-width:700px){
-  .app-view-future .future-overpayment-assumption{padding:10px 12px!important}
   .app-view-future #propertyCostComparison .long-term-difference-note>strong{font-size:29px!important}
 }
 
