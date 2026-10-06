@@ -51,9 +51,6 @@
     const state=window.MortgageStore?.get?.();
     if(!state) return;
 
-    const legacy=$('.trajectory-what-if',chart);
-    if(legacy) legacy.hidden=true;
-    $('#currentOverpaymentPanel')?.remove();
 
     const heading=$(':scope > .panel-heading',chart);
     if(heading){
@@ -112,25 +109,11 @@
         </div>`;
     }
 
-    let workspace=$('.trajectory-workspace',chart);
-    if(!workspace){
-      workspace=document.createElement('div');
-      workspace.className='trajectory-workspace';
-      if(heading) heading.insertAdjacentElement('afterend',workspace); else chart.prepend(workspace);
-    }
-
-    let stage=$('.trajectory-chart-stage',workspace);
-    if(!stage){
-      stage=document.createElement('div');
-      stage.className='trajectory-chart-stage';
-      workspace.appendChild(stage);
-    }
-
-    const chartWrap=$(':scope > .chart-wrap',chart)||$('.chart-wrap',chart);
-    const legend=$(':scope > .legend',chart)||$('.legend',chart);
+    const workspace=$('.trajectory-workspace',chart);
+    const stage=$('.trajectory-chart-stage',workspace||chart);
+    const legend=$('.legend',stage||chart);
+    if(!workspace||!stage) return;
     if(panel.parentElement!==workspace) workspace.insertBefore(panel,stage);
-    if(chartWrap&&chartWrap.parentElement!==stage) stage.appendChild(chartWrap);
-    if(legend&&legend.parentElement!==stage) stage.appendChild(legend);
 
     const regular=Math.max(0,Number(state.currentOverpayment)||0);
     const extra=Math.max(0,Number(state.scenarioExtra)||0);
@@ -209,13 +192,6 @@
     if(workspace) workspace.classList.add('design-workspace-full');
   }
 
-  function finalizeFuture(){
-    const future=$('.app-view-future .app-view-content');
-    const wait=$('#futureWaitPlanner');
-    if(!future||!wait) return;
-    if(future.firstElementChild!==wait) future.prepend(wait);
-  }
-
   function disableDeadExpansion(){
     document.querySelectorAll('.app-view [data-expandable-card]').forEach((card)=>{
       card.classList.remove('expandable-card','is-expanded');
@@ -231,7 +207,6 @@
   function run(){
     finalizeCurrent();
     finalizeUpcoming();
-    finalizeFuture();
     disableDeadExpansion();
   }
 
@@ -241,12 +216,6 @@
 
   if(window.MortgageStore?.subscribe) MortgageStore.subscribe(()=>requestAnimationFrame(run));
 
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>{
-    run();
-    [180,700,1400].forEach((delay)=>setTimeout(run,delay));
-  },{once:true});
-  else {
-    run();
-    [180,700].forEach((delay)=>setTimeout(run,delay));
-  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run,{once:true});
+  else run();
 })();
