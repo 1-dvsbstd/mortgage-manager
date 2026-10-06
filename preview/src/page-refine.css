@@ -1,7 +1,6 @@
 /* Consolidated former layout-finalize.css layer. Kept before all page refinements to preserve cascade. */
 .panel,.hero-panel{background:var(--surface)!important;border:1px solid var(--border)!important;border-radius:18px!important;box-shadow:none!important}
 .hero-panel{background:linear-gradient(145deg,#102019,#14271f)!important}
-.kicker,.eyebrow,.future-assumption-label{color:var(--accent)!important}
 .subtle,.field-note,.deep-note,.source-date,.next-event-text,.timeline-labels,.app-view-heading>p{color:var(--muted)!important}
 .design-source-only{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;white-space:nowrap!important}
 
@@ -42,13 +41,8 @@
 
 /* Future remains the reference */
 .app-view-future .app-view-content{gap:var(--space-page)!important}
-.future-overpayment-assumption,.future-model-range-panel,.future-wait-planner,.temporal-feature-home-projection,.temporal-feature-next-home{background:var(--surface)!important;border-color:var(--border)!important;border-radius:18px!important}
 .temporal-feature-home-projection{padding:var(--space-card)!important}
 .temporal-feature-next-home .next-home-body{padding:var(--space-card)!important}
-.future-overpayment-assumption{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 18px!important}
-.future-assumption-copy{display:flex;align-items:baseline;gap:14px;min-width:0}.future-assumption-copy>div{display:flex;align-items:baseline;gap:8px}.future-assumption-copy strong{color:var(--warm);font-size:18px;white-space:nowrap}.future-assumption-copy p{margin:0;color:var(--muted)!important;font-size:11px}
-.future-assumption-controls{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}.future-assumption-controls button{min-width:52px;padding:7px 10px;cursor:pointer}.future-assumption-controls label{display:flex;align-items:center;gap:4px;padding:7px 10px;color:var(--muted)!important}.future-assumption-controls input{width:68px;border:0;background:transparent;color:var(--text);font:inherit;font-weight:750;outline:none}
-.future-model-range-panel .home-profile-range,.next-home-summary-card,.future-wait-host,.future-cost-inline{background:transparent!important}
 .future-wait-planner{margin-top:0!important}
 
 /* Remove dead expansion behaviour visually */
@@ -66,7 +60,6 @@
   :root{--space-page:16px;--space-card:18px;--radius-card:19px}
   .app-view-heading{display:none!important}
   .current-fix-stats,.upcoming-rates .deal-planner-rate-grid{grid-template-columns:1fr 1fr!important}
-  .future-overpayment-assumption{display:grid;gap:10px}.future-assumption-copy{display:grid;gap:4px}.future-assumption-copy>div{justify-content:space-between}.future-assumption-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));justify-content:stretch}.future-assumption-controls button{min-width:0}.future-assumption-controls label{grid-column:1/-1}.future-assumption-controls input{flex:1;width:auto}
 }
 
 @media(max-width:560px){
@@ -82,17 +75,6 @@
 .app-view-future .panel{
   padding-top:24px!important;
   padding-bottom:24px!important;
-}
-
-.panel,.hero-panel,.app-view-upcoming .upcoming-section,
-.future-overpayment-assumption,.future-model-range-panel,.future-wait-planner,
-.temporal-feature-home-projection,.temporal-feature-next-home{
-  background:
-    linear-gradient(145deg,rgba(18,37,30,.965),rgba(9,24,20,.97))!important;
-  border-color:var(--border-soft)!important;
-  box-shadow:
-    0 1px 0 rgba(255,255,255,.025) inset,
-    var(--shadow-card)!important;
 }
 
 .hero-panel{
@@ -128,11 +110,6 @@
 .next-home-summary-card span,.next-home-timeline-row span{
   color:var(--muted)!important;
 }
-
-.kicker,.eyebrow,.future-assumption-label{
-  color:var(--accent)!important;
-  letter-spacing:.15em!important;
-}
 .subtle,.field-note,.deep-note,.source-date,.next-event-text,.timeline-labels,.app-view-heading>p{color:var(--muted)!important}
 
 /* Editorial heading hierarchy */
@@ -151,17 +128,9 @@
 .app-view .panel-heading h2,.app-view .upcoming-section-heading h2,
 .app-view .projection-heading h2,.app-view .future-model-heading h2,
 .app-view .future-wait-heading h2,.app-view .next-home-heading h2{font-size:22px!important}
-
-/* Future: keep density, add quieter hierarchy */
-.app-view-future .temporal-feature-home-projection,
-.app-view-future .next-home-body,
-.app-view-future .future-model-range-panel,
-.app-view-future .future-wait-planner{padding-top:24px!important;padding-bottom:24px!important}
 .app-view-future .home-profile-range,
 .app-view-future .next-home-summary,
 .app-view-future .next-home-timeline{gap:12px!important}
-.future-model-range-panel .home-profile-range,
-.future-wait-host,.future-cost-inline{border-color:var(--border-soft)!important}
 
 /* Setup: same material language */
 .personal-modal{
@@ -202,17 +171,10 @@
 /* Consolidated former v15-refresh.css layer. Kept before all final page refinements to preserve cascade. */
 /* Make the light V15 palette authoritative over the legacy dark layers. */
 .app-view,.app-view-content,.upcoming-workspace,.upcoming-sections{background:transparent!important;color:var(--text)!important}
-.panel,.hero-panel,.upcoming-section,.future-overpayment-assumption,.future-model-range-panel,.future-wait-planner,.temporal-feature-home-projection,.temporal-feature-next-home,.temporal-feature-cost-comparison{
-  background:rgba(251,248,243,.96)!important;
-  border-color:var(--border)!important;
-  color:var(--text)!important;
-  box-shadow:none!important;
-}
 
 .app-view h1,.app-view h2,.app-view h3,.app-view h4,.app-view strong,
 .upcoming-section-heading h2,.deal-planner-heading h2,.deal-planner-subhead strong,
 .home-profile-heading h2,.next-home-heading h2,.cost-heading h2{color:var(--text)!important}
-.kicker,.eyebrow,.future-assumption-label{color:var(--accent-strong)!important}
 .subtle,.field-note,.deep-note,.source-date,.next-event-text,.timeline-labels,.app-view-heading>p{color:var(--muted)!important}
 
 .v15-action-card{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0;padding:18px 20px;border:1px solid rgba(183,131,77,.24);border-radius:18px;background:linear-gradient(90deg,var(--surface-control),var(--accent-soft));box-shadow:0 12px 34px rgba(85,58,36,.055)}
@@ -671,13 +633,7 @@ body[data-app-view="upcoming"] #dealPlannerSummary > .deal-position-countdown-so
 @media(max-width:520px){
   .app-view-upcoming .deal-planner-rate-grid{grid-template-columns:1fr!important}
 }
-
-/* FUTURE */
-.app-view-future .future-overpayment-assumption,.app-view-future .future-model-range-panel,.app-view-future .future-wait-planner,.app-view-future .temporal-feature-home-projection,.app-view-future .temporal-feature-next-home,.app-view-future .temporal-feature-cost-comparison{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important;box-shadow:none!important}
-.app-view-future .future-overpayment-assumption{background:var(--surface-warm)!important;box-shadow:none!important}
-.future-assumption-copy strong{color:var(--accent-strong)!important}
 .app-view-future h2,.app-view-future h3,.app-view-future .home-profile-heading h2,.app-view-future .next-home-heading h2,.app-view-future .cost-heading h2{color:var(--text)!important}
-.app-view-future .home-profile-range>div,.app-view-future .next-home-summary-card,.app-view-future .next-home-timeline-row,.app-view-future .property-cost-card,.app-view-future .future-model-range-panel .model-range-summary,.app-view-future .future-wait-host{background:#f3ece3!important;border-color:var(--border-soft)!important;color:var(--text)!important}
 .app-view-future .home-profile-range strong,.app-view-future .next-home-summary-card strong,.app-view-future .next-home-timeline-row strong,.app-view-future .property-cost-card strong{color:var(--text)!important}
 
 /* Inputs / setup / modal surfaces */
@@ -702,18 +658,9 @@ input,select,textarea{color:var(--text)}
 .app-view h1,.app-view h2,.app-view h3,.app-view h4,.app-view strong{color:var(--text)!important}
 .app-view .subtle,.app-view small,.app-view .field-note,.app-view .deep-note,.app-view .source-date,.app-view .next-event-text,.app-view .timeline-labels{color:var(--muted)!important}
 
-.panel,.hero-panel,.upcoming-section,.future-overpayment-assumption,.future-model-range-panel,.future-wait-planner,.temporal-feature-home-projection,.temporal-feature-next-home{
-  background:var(--surface)!important;
-  border-color:var(--border)!important;
-  box-shadow:none!important;
-}
-
 /* FUTURE — reduce oversized whitespace and harmonise nested cards. */
 .app-view-future .app-view-content{gap:20px!important}
-.app-view-future .future-overpayment-assumption{padding:14px 18px!important;background:#efe3d5!important;box-shadow:none!important}
-.app-view-future .future-model-range-panel,.app-view-future .future-wait-planner,.app-view-future .temporal-feature-home-projection,.app-view-future .temporal-feature-next-home{padding:22px 24px!important;border-radius:18px!important}
 .app-view-future .home-profile-heading,.app-view-future .next-home-heading,.app-view-future .cost-heading{margin-bottom:14px!important}
-.app-view-future .home-profile-heading h2,.app-view-future .next-home-heading h2,.app-view-future .cost-heading h2,.app-view-future .future-model-range-panel h2{color:var(--text)!important;font-size:19px!important}
 .app-view-future .home-profile-range,.app-view-future .next-home-summary,.app-view-future .next-home-timeline{gap:10px!important}
 .app-view-future .property-cost-card{
   background:var(--surface-soft)!important;
@@ -730,97 +677,11 @@ input,select,textarea{color:var(--text)}
 .v15-stat.is-positive strong,.v15-stat.is-positive small,.app-view-future .is-positive strong{color:var(--positive)!important}
 
 @media(max-width:700px){
-  .app-view-future .future-model-range-panel,.app-view-future .future-wait-planner,.app-view-future .temporal-feature-home-projection,.app-view-future .temporal-feature-next-home{padding:18px!important;border-radius:19px!important}
 }
 
 /* Consolidated former V15.5 planning/control layer. Kept at the top so later page refinements retain their existing precedence. */
 /* The What-if controls already do this job; remove the duplicate recommendation row. */
 .app-view-current .v15-action-card{display:none!important}
-
-/* Custom amount is a chip, not a form block. */
-.app-view-future .future-assumption-controls label{
-  box-sizing:border-box!important;
-  min-height:40px!important;
-  height:40px!important;
-  display:inline-flex!important;
-  align-items:center!important;
-  gap:5px!important;
-  padding:8px 14px!important;
-  border:1px solid color-mix(in srgb,var(--border) 86%,transparent)!important;
-  border-radius:11px!important;
-  background:color-mix(in srgb,var(--surface) 92%,var(--surface-soft))!important;
-  color:var(--text)!important;
-  box-shadow:none!important;
-  font-size:12px!important;
-  font-weight:750!important;
-  line-height:1!important;
-}
-.app-view-future .future-assumption-controls label input{
-  width:66px!important;
-  min-width:0!important;
-  margin:0!important;
-  padding:0!important;
-  border:0!important;
-  outline:0!important;
-  background:transparent!important;
-  color:var(--text)!important;
-  font:inherit!important;
-  font-weight:750!important;
-  line-height:1!important;
-}
-
-/* Future: make the planning assumption part of the page heading, not a separate banner. */
-.app-view-future .app-view-heading.future-heading-integrated{
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) auto!important;
-  grid-template-areas:"title subtitle" "assumption assumption"!important;
-  gap:7px 22px!important;
-  align-items:end!important;
-  margin-bottom:16px!important;
-  padding:0 2px 12px!important;
-  border-bottom:1px solid var(--border-soft)!important;
-}
-.app-view-future .app-view-heading.future-heading-integrated>div:first-child{grid-area:title}
-.app-view-future .app-view-heading.future-heading-integrated>p{grid-area:subtitle;margin:0!important;text-align:right!important}
-.app-view-future .app-view-heading.future-heading-integrated>#futureOverpaymentAssumption{
-  grid-area:assumption;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  gap:18px!important;
-  margin:7px 0 0!important;
-  padding:10px 0 0!important;
-  border:0!important;
-  border-top:1px solid var(--border-soft)!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-.app-view-future #futureOverpaymentAssumption .future-assumption-copy{gap:10px!important}
-.app-view-future #futureOverpaymentAssumption .future-assumption-copy p{font-size:10px!important}
-.app-view-future #futureOverpaymentAssumption .future-assumption-controls{gap:7px!important}
-.app-view-future #futureOverpaymentAssumption .future-assumption-controls button{
-  min-height:40px!important;
-  height:40px!important;
-  padding:8px 13px!important;
-  border:1px solid var(--border)!important;
-  border-radius:12px!important;
-  background:var(--surface-control)!important;
-  color:var(--text)!important;
-  box-shadow:none!important;
-}
-.app-view-future #futureOverpaymentAssumption .future-assumption-controls button:hover{
-  background:#f4e6d7!important;
-  border-color:rgba(183,131,77,.36)!important;
-}
-.app-view-future #futureOverpaymentAssumption .future-assumption-controls button.active{
-  background:var(--ink-active)!important;
-  color:var(--ink-on-active)!important;
-  border-color:var(--ink-active)!important;
-}
-
-/* Home-value model range: one readable range, not a badge plus three stacked boxes. */
-.app-view-future .future-model-range-panel{padding:24px!important}
 .app-view-future .future-model-heading{margin-bottom:16px!important}
 .app-view-future .future-model-heading h2{color:var(--text)!important}
 .app-view-future #homeProfileRange{
@@ -917,14 +778,11 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
 }
 
 @media(max-width:700px){
-  .app-view-future .app-view-heading.future-heading-integrated{display:block!important;padding-bottom:10px!important}
-  .app-view-future .app-view-heading.future-heading-integrated>p{text-align:left!important;margin-top:4px!important}
-  .app-view-future .app-view-heading.future-heading-integrated>#futureOverpaymentAssumption{display:grid!important;gap:10px!important;margin-top:10px!important}
 }
 
-.future-remove{display:none!important}.future-model-range-panel,.future-wait-planner{padding:24px;margin:0!important}.future-model-heading,.future-wait-heading{margin-bottom:16px}.future-model-heading h2,.future-wait-heading h2{margin-top:3px;font-size:19px}.future-model-range-panel .home-profile-range{margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}.temporal-feature-home-projection .projection-core-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.future-stage-label{display:none!important}
+.future-remove{display:none!important}.future-model-heading,.future-wait-heading{margin-bottom:16px}.future-model-heading h2,.future-wait-heading h2{margin-top:3px;font-size:19px}.temporal-feature-home-projection .projection-core-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.future-stage-label{display:none!important}
 @media(max-width:1050px){.temporal-feature-home-projection .projection-core-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:700px){.temporal-feature-home-projection .projection-core-grid{grid-template-columns:1fr}.future-model-range-panel{padding:18px}}
+@media(max-width:700px){.temporal-feature-home-projection .projection-core-grid{grid-template-columns:1fr}}
 /* Next-home planner has no visible summary row, so its body needs no top divider. */
 .app-view-future #nextHomePlanner .next-home-body{
   border-top:0!important;
@@ -1420,22 +1278,6 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 
 /* A consistent, premium hover lift across the product. */
 @media (hover:hover) and (pointer:fine){
-  .app-view-future #homeProjection,
-  .app-view-future .future-model-range-panel,
-  .app-view-future #futureWaitPlanner,
-  .app-view-future #nextHomePlanner,
-  .personal-modal .personal-section{
-    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease!important;
-  }
-  .app-view-future #homeProjection:hover,
-  .app-view-future .future-model-range-panel:hover,
-  .app-view-future #futureWaitPlanner:hover,
-  .app-view-future #nextHomePlanner:hover,
-  .personal-modal .personal-section:hover{
-    transform:none!important;
-    box-shadow:none!important;
-    border-color:#d3b99f!important;
-  }
 }
 
 /* Future: no pale blue/green selected cards or mint bars. */
@@ -2792,51 +2634,6 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   background:var(--surface-control)!important;
   box-shadow:none!important;
   overflow:hidden!important;
-}
-
-/* Planning strip — useful context, not a competing hero. */
-.app-view-future .future-overpayment-assumption{
-  min-height:64px!important;
-  padding:12px 16px!important;
-  border:1px solid rgba(183,131,77,.16)!important;
-  border-radius:18px!important;
-  background:var(--accent-wash)!important;
-  box-shadow:none!important;
-}
-.app-view-future .future-assumption-copy{
-  gap:12px!important;
-}
-.app-view-future .future-assumption-label{
-  color:var(--accent-strong)!important;
-  font-size:8px!important;
-  font-weight:800!important;
-  letter-spacing:.07em!important;
-  text-transform:uppercase!important;
-}
-.app-view-future .future-assumption-copy strong{
-  color:var(--text)!important;
-  font-family:var(--font-display)!important;
-  font-size:18px!important;
-  font-weight:600!important;
-}
-.app-view-future .future-assumption-copy p{
-  color:var(--muted)!important;
-  font-size:10px!important;
-}
-.app-view-future .future-assumption-controls button,
-.app-view-future .future-assumption-controls label{
-  min-height:36px!important;
-  padding:7px 10px!important;
-  border:1px solid var(--border-soft)!important;
-  border-radius:10px!important;
-  background:var(--surface-control)!important;
-  color:var(--text)!important;
-  box-shadow:none!important;
-}
-.app-view-future .future-assumption-controls button.active{
-  border-color:var(--ink-active)!important;
-  background:var(--ink-active)!important;
-  color:var(--ink-on-active)!important;
 }
 
 /* Shared Future section headings. */
