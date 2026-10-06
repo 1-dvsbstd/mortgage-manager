@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-preview-input-010';
+const CACHE_NAME = 'mortgage-manager-preview-deal-term-001';
 const APP_SHELL = [
   './',
   './index.html',
