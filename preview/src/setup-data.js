@@ -264,7 +264,7 @@
     };
 
     const position=()=>{
-      const anchor=input.closest('label')?.querySelector('[data-month-field]')||input;
+      const anchor=input.closest('label')?.querySelector('[data-month-field],[data-deal-term]')||input;
       const rect=anchor.getBoundingClientRect();
       const width=Math.min(292,window.innerWidth-24);
       let left=Math.min(rect.left,window.innerWidth-width-12);
@@ -289,7 +289,7 @@
       }else if(target.dataset.month){
         input.value=`${year}-${String(target.dataset.month).padStart(2,'0')}`;
       }else return;
-      const display=input.closest('label')?.querySelector('[data-month-field] span');
+      const display=input.closest('label')?.querySelector('[data-month-field] span,[data-deal-term] span');
       if(display) display.textContent=formatMonthValue(input.value);
       input.dispatchEvent(new Event('input',{bubbles:true}));
       input.dispatchEvent(new Event('change',{bubbles:true}));
@@ -315,12 +315,17 @@
       if(event.key==='Escape') closeSetupMonthPicker();
     });
 
+    document.addEventListener('mortgage-open-month-picker',(event)=>{
+      const input=event.detail?.input;
+      if(input?.isConnected) openSetupMonthPicker(input);
+    });
+
     window.addEventListener('resize',closeSetupMonthPicker);
     document.addEventListener('scroll',()=>{
       const popover=document.querySelector('.setup-month-popover');
       const input=popover?._monthInput;
       if(!popover||!input?.isConnected) return;
-      const anchor=input.closest('label')?.querySelector('[data-month-field]')||input;
+      const anchor=input.closest('label')?.querySelector('[data-month-field],[data-deal-term]')||input;
       const rect=anchor.getBoundingClientRect();
       const width=Math.min(292,window.innerWidth-24);
       let left=Math.min(rect.left,window.innerWidth-width-12);
