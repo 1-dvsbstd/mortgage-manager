@@ -218,7 +218,6 @@
   function markSharedBanners(){
     $('.v15-journey-shell')?.classList.add('v1-page-banner');
     $('.deal-action-hint')?.classList.add('v1-page-banner');
-    $('#futureOverpaymentAssumption')?.classList.add('v1-page-banner');
   }
 
   function run(){
