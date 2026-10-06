@@ -50,7 +50,7 @@
     if (!projection || $('propertyCostComparison')) return;
     const section = document.createElement('section');
     section.id = 'propertyCostComparison';
-    section.className = 'property-cost-comparison';
+    section.className = 'property-cost-comparison future-source-only';
     section.innerHTML = `
       <div class="deep-heading"><div><p class="eyebrow">Long-term outcome</p><h2>Projected value vs known purchase and mortgage cost</h2></div><span class="source-date" id="costPlanContext">—</span></div>
       <div class="property-cost-grid property-cost-grid-two">
