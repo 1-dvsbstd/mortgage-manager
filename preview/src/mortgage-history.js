@@ -174,21 +174,25 @@
     return String(value ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
+  function monthControl(attributes=''){
+    return `<span class="setup-month-control"><input type="month" ${attributes}><button type="button" class="setup-month-picker" data-month-picker aria-label="Open month picker">▦</button></span>`;
+  }
+
   function dealRow(deal = {}) {
     return `<div class="history-row history-deal-row" data-history-deal>
-      <label>From<input type="month" data-history="start" value="${escape(deal.start)}"></label>
-      <label>To<input type="month" data-history="end" value="${escape(deal.end)}"></label>
-      <label>Rate (%)<input type="number" inputmode="decimal" step="0.01" data-history="rate" value="${escape(deal.rate)}"></label>
-      <label>Payment (£/mo)<input type="number" inputmode="decimal" step="0.01" data-history="payment" value="${escape(deal.payment)}"></label>
-      <label>Overpay (£/mo)<input type="number" inputmode="decimal" step="0.01" data-history="overpayment" value="${escape(deal.overpayment)}"></label>
+      <label>From${monthControl(`data-history="start" value="${escape(deal.start)}"`)}</label>
+      <label>To${monthControl(`data-history="end" value="${escape(deal.end)}"`)}</label>
+      <label>Rate (%)<input type="text" inputmode="decimal" data-history="rate" value="${escape(deal.rate)}"></label>
+      <label>Payment (£/mo)<input type="text" inputmode="decimal" data-history="payment" value="${escape(deal.payment)}"></label>
+      <label>Overpay (£/mo)<input type="text" inputmode="decimal" data-history="overpayment" value="${escape(deal.overpayment)}"></label>
       <button type="button" class="history-remove" data-remove-history aria-label="Remove deal">Remove</button>
     </div>`;
   }
 
   function lumpRow(item = {}) {
     return `<div class="history-row history-lump-row" data-history-lump>
-      <label>Date<input type="month" data-history="date" value="${escape((item.date || '').slice(0,7))}"></label>
-      <label>Amount (£)<input type="number" inputmode="decimal" step="0.01" data-history="amount" value="${escape(item.amount)}"></label>
+      <label>Date${monthControl(`data-history="date" value="${escape((item.date || '').slice(0,7))}"`)}</label>
+      <label>Amount (£)<input type="text" inputmode="decimal" data-history="amount" value="${escape(item.amount)}"></label>
       <label class="history-note-label">Note<input type="text" data-history="note" value="${escape(item.note)}" placeholder="Optional"></label>
       <button type="button" class="history-remove" data-remove-history aria-label="Remove lump sum">Remove</button>
     </div>`;
@@ -276,10 +280,10 @@
       <div class="mortgage-history-body">
         <p class="history-intro">Use the actual completion price rather than the estate-agent listing price. For each deal, Payment is the lender's normal required payment and Overpay is the extra paid on top. “To” is treated as the month the next deal starts.</p>
         <div class="history-purchase-grid">
-          <label>Purchase / completion date<input type="month" data-history-root="purchaseDate" value="${escape((data.purchaseDate || '').slice(0,7))}"></label>
-          <label>Actual purchase price (£)<input type="number" inputmode="decimal" step="100" data-history-root="purchasePrice" value="${escape(data.purchasePrice)}"></label>
-          <label>Original mortgage (£)<input type="number" inputmode="decimal" step="100" data-history-root="originalMortgage" value="${escape(data.originalMortgage)}"></label>
-          <label>Share owned at purchase (%)<input type="number" inputmode="decimal" step="1" min="0" max="100" data-history-root="ownership" value="${escape(data.ownership)}"></label>
+          <label>Purchase / completion date${monthControl(`data-history-root="purchaseDate" value="${escape((data.purchaseDate || '').slice(0,7))}"`)}</label>
+          <label>Actual purchase price (£)<input type="text" inputmode="decimal" data-history-root="purchasePrice" value="${escape(data.purchasePrice)}"></label>
+          <label>Original mortgage (£)<input type="text" inputmode="decimal" data-history-root="originalMortgage" value="${escape(data.originalMortgage)}"></label>
+          <label>Share owned at purchase (%)<input type="text" inputmode="decimal" data-history-root="ownership" value="${escape(data.ownership)}"></label>
         </div>
         <div class="history-subsection"><div class="history-subhead"><div><strong>Mortgage deals</strong><small>Add each fixed/variable period you can reconstruct.</small></div><button type="button" class="personal-button" data-add-deal>Add deal</button></div><div data-deal-list>${data.deals.map(dealRow).join('') || dealRow()}</div></div>
         <div class="history-subsection"><div class="history-subhead"><div><strong>One-off overpayments</strong><small>Optional — regular monthly overpayments belong on the relevant deal.</small></div><button type="button" class="personal-button" data-add-lump>Add lump sum</button></div><div data-lump-list>${data.lumpSums.map(lumpRow).join('')}</div></div>
