@@ -103,7 +103,7 @@
     const detail=document.getElementById('futureFeatureHost') || document.querySelector('.app-view-future .app-view-content');
     if(!detail) return;
     const section=document.createElement('section');
-    section.id='homeProjection'; section.className='home-projection simplified home-profile';
+    section.id='homeProjection'; section.className='home-projection simplified home-profile future-source-only';
     section.innerHTML=`
       <div class="deep-heading projection-heading"><div><p class="eyebrow">Home profile</p><h2>Your property value and equity, five years from now</h2></div><span class="source-date">Estimate, not a valuation</span></div>
       <div class="projection-core-grid">
