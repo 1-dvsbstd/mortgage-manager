@@ -211,17 +211,119 @@
     return `<label>${label}${input}</label>`;
   }
 
+  function monthLabel(value){
+    if(!/^\d{4}-\d{2}$/.test(String(value||''))) return '';
+    const [year,month]=String(value).split('-').map(Number);
+    return new Intl.DateTimeFormat('en-GB',{month:'long',year:'numeric'}).format(new Date(year,month-1,1));
+  }
+
+  function closeSetupMonthPicker(){
+    document.querySelector('.setup-month-popover')?.remove();
+  }
+
+  function openSetupMonthPicker(input){
+    closeSetupMonthPicker();
+
+    const now=new Date();
+    const match=/^(\d{4})-(\d{2})$/.exec(input.value||'');
+    let year=match?Number(match[1]):now.getFullYear();
+    const selectedMonth=match?Number(match[2]):null;
+    const monthNames=Array.from({length:12},(_,index)=>
+      new Intl.DateTimeFormat('en-GB',{month:'short'}).format(new Date(2020,index,1))
+    );
+
+    const popover=document.createElement('div');
+    popover.className='setup-month-popover';
+    popover.setAttribute('role','dialog');
+    popover.setAttribute('aria-label','Choose month');
+
+    const render=()=>{
+      popover.innerHTML=`
+        <div class="setup-month-popover-head">
+          <button type="button" data-month-prev aria-label="Previous year">‹</button>
+          <strong>${year}</strong>
+          <button type="button" data-month-next aria-label="Next year">›</button>
+        </div>
+        <div class="setup-month-grid">
+          ${monthNames.map((name,index)=>{
+            const month=index+1;
+            const selected=year===Number(match?.[1])&&month===selectedMonth;
+            const current=year===now.getFullYear()&&month===now.getMonth()+1;
+            return `<button type="button" data-month="${month}" class="${selected?'is-selected ':''}${current?'is-current':''}">${name}</button>`;
+          }).join('')}
+        </div>
+        <div class="setup-month-popover-foot">
+          <button type="button" data-month-clear>Clear</button>
+          <button type="button" data-month-current>This month</button>
+        </div>`;
+    };
+
+    const position=()=>{
+      const rect=input.getBoundingClientRect();
+      const width=Math.min(292,window.innerWidth-24);
+      let left=Math.min(rect.left,window.innerWidth-width-12);
+      left=Math.max(12,left);
+      let top=rect.bottom+7;
+      const estimatedHeight=250;
+      if(top+estimatedHeight>window.innerHeight-12) top=Math.max(12,rect.top-estimatedHeight-7);
+      popover.style.left=`${Math.round(left)}px`;
+      popover.style.top=`${Math.round(top)}px`;
+      popover.style.width=`${Math.round(width)}px`;
+    };
+
+    popover.addEventListener('click',(event)=>{
+      const target=event.target.closest('button');
+      if(!target) return;
+      if(target.matches('[data-month-prev]')){year-=1;render();return;}
+      if(target.matches('[data-month-next]')){year+=1;render();return;}
+      if(target.matches('[data-month-clear]')){
+        input.value='';
+      }else if(target.matches('[data-month-current]')){
+        input.value=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+      }else if(target.dataset.month){
+        input.value=`${year}-${String(target.dataset.month).padStart(2,'0')}`;
+      }else return;
+      input.dispatchEvent(new Event('input',{bubbles:true}));
+      input.dispatchEvent(new Event('change',{bubbles:true}));
+      closeSetupMonthPicker();
+    });
+
+    render();
+    document.body.appendChild(popover);
+    position();
+  }
+
   function wireSetupMonthInputs(){
     if(document.documentElement.dataset.setupMonthInputs==='true') return;
     document.documentElement.dataset.setupMonthInputs='true';
-    document.addEventListener('click',(event)=>{
+
+    document.addEventListener('pointerdown',(event)=>{
       const input=event.target.closest?.('.personal-modal input[type="month"]');
-      if(!input || typeof input.showPicker!=='function') return;
+      if(!input) return;
       event.preventDefault();
-      try{
-        input.focus({preventScroll:true});
-        input.showPicker();
-      }catch(_){}
+      input.blur();
+      openSetupMonthPicker(input);
+    },true);
+
+    document.addEventListener('keydown',(event)=>{
+      const input=event.target.closest?.('.personal-modal input[type="month"]');
+      if(input&&(event.key==='Enter'||event.key===' ')){
+        event.preventDefault();
+        openSetupMonthPicker(input);
+        return;
+      }
+      if(event.key==='Escape') closeSetupMonthPicker();
+    });
+
+    document.addEventListener('pointerdown',(event)=>{
+      if(event.target.closest?.('.setup-month-popover')) return;
+      if(event.target.closest?.('.personal-modal input[type="month"]')) return;
+      closeSetupMonthPicker();
+    });
+
+    window.addEventListener('resize',closeSetupMonthPicker);
+    document.addEventListener('scroll',(event)=>{
+      if(event.target.closest?.('.personal-modal')) closeSetupMonthPicker();
     },true);
   }
 
