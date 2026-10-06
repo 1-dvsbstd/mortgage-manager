@@ -87,9 +87,7 @@
     /* Ownership is presented by the finished Current hero/stats now. */
   }
 
-  function ensureCostBars() {
-    document.querySelectorAll('#propertyCostComparison .cost-scale').forEach((scale)=>scale.remove());
-  }
+
 
   function standardiseSetupClose() {
     const button = document.querySelector('.personal-modal .personal-close');
@@ -334,7 +332,6 @@
     removeStandaloneEquityProgress();
     refreshOptionalSections();
     renderOwnershipDonut();
-    ensureCostBars();
     standardiseSetupClose();
     keepFutureSectionsOpen();
     ensureConnectivityControl();
@@ -369,7 +366,6 @@
     if (event.target.matches('#projectionTrendRate,#projectionPurchasePrice,#projectionImprovements')) schedule(20);
   });
   document.addEventListener('mortgage-history-updated', () => schedule(35));
-  document.addEventListener('home-cost-comparison-updated', () => schedule());
   document.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
     const button = document.querySelector('.personal-modal .personal-close');
