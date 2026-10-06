@@ -195,7 +195,7 @@
   function dealLengthOptions(deal={}) {
     const years=dealYears(deal.start,deal.end);
     const options=[1,2,3,4,5,10];
-    return options.map(value=>`<button type="button" data-deal-years-choice="${value}">${value} year${value===1?'':'s'}</button>`).join('');
+    return `${options.map(value=>`<button type="button" data-deal-years-choice="${value}">${value} year${value===1?'':'s'}</button>`).join('')}<button type="button" data-deal-exact-month>Choose exact month…</button>`;
   }
 
   function syncDealEnd(row, yearsOverride=null) {
@@ -404,6 +404,17 @@
           termChoice.closest('.deal-term-menu').hidden=true;
           seedFollowingDealStarts(section);
           persistSection(section,false);
+        }
+        return;
+      }
+
+      const exactMonth=event.target.closest('[data-deal-exact-month]');
+      if(exactMonth){
+        const row=exactMonth.closest('[data-history-deal]');
+        const end=row?.querySelector('[data-history="end"]');
+        exactMonth.closest('.deal-term-menu').hidden=true;
+        if(end){
+          document.dispatchEvent(new CustomEvent('mortgage-open-month-picker',{detail:{input:end}}));
         }
         return;
       }
