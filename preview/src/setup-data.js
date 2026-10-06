@@ -211,6 +211,20 @@
     return `<label>${label}${input}</label>`;
   }
 
+  function wireSetupMonthInputs(){
+    if(document.documentElement.dataset.setupMonthInputs==='true') return;
+    document.documentElement.dataset.setupMonthInputs='true';
+    document.addEventListener('click',(event)=>{
+      const input=event.target.closest?.('.personal-modal input[type="month"]');
+      if(!input || typeof input.showPicker!=='function') return;
+      event.preventDefault();
+      try{
+        input.focus({preventScroll:true});
+        input.showPicker();
+      }catch(_){}
+    },true);
+  }
+
   function openSetup() {
     document.querySelector('.personal-backdrop')?.remove();
     const backdrop = document.createElement('div');
@@ -324,6 +338,7 @@
     if (!hasSetup && !hasLegacyMortgage) setTimeout(openSetup, 450);
   }
 
+  wireSetupMonthInputs();
   setupButton();
   ensureProgressCard();
   ensureDealGuidance();
