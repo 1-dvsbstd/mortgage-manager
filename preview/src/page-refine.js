@@ -1117,7 +1117,7 @@
       let rangePanel=$('#futureModelRange');
       if(!rangePanel){
         rangePanel=document.createElement('section');
-        rangePanel.id='futureModelRange'; rangePanel.className='panel future-model-range-panel';
+        rangePanel.id='futureModelRange'; rangePanel.className='panel future-model-range-panel future-source-only';
         rangePanel.innerHTML='<div class="future-model-heading"><p class="eyebrow">Property forecast</p><h2>Where your home value could be heading</h2><p class="future-model-subtitle">Property value only · based on local HPI history</p></div><div class="future-model-range-host"></div>';
         home.insertAdjacentElement('afterend',rangePanel);
       }
