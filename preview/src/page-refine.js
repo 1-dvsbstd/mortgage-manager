@@ -841,9 +841,35 @@
     catch(_){return {};}
   }
 
-  function futureMoneyFromText(selector){
-    const text=$(selector)?.textContent||'';
-    return Math.max(0,Number(String(text).replace(/[^0-9.-]/g,''))||0);
+  function futureRegionSlug(value){
+    return String(value||'')
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g,'')
+      .toLowerCase()
+      .replace(/&/g,' and ')
+      .replace(/['’]/g,'')
+      .replace(/[^a-z0-9]+/g,'-')
+      .replace(/^-|-$/g,'');
+  }
+
+  function futureCurrentHomeValue(fallback){
+    const settings=futureHomeSettings();
+    const recent=Math.max(0,Number(settings.recentValue)||0);
+    if(recent) return recent;
+
+    const purchasePrice=Math.max(0,Number(settings.purchasePrice)||0);
+    const purchaseMonth=String(settings.purchaseMonth||'').slice(0,7);
+    const slug=futureRegionSlug(settings.localAuthority||'');
+    if(purchasePrice&&purchaseMonth&&slug&&settings.propertyType){
+      try{
+        const cache=JSON.parse(localStorage.getItem('mortgage-manager-local-hpi-v1')||'{}')||{};
+        const model=cache[`${slug}|${settings.propertyType}|${purchaseMonth}`];
+        if(model?.multiplier>0){
+          return purchasePrice*Number(model.multiplier)+Math.max(0,Number(settings.improvements)||0);
+        }
+      }catch(_){}
+    }
+    return Math.max(0,Number(fallback)||0);
   }
 
   function futurePayoffLabel(months){
@@ -1012,7 +1038,7 @@
 
     const history=futureHistorySummary();
     const settings=futureHomeSettings();
-    const currentHome=futureMoneyFromText('#projectionCurrentEstimate')||Math.max(0,Number(state.homeValue)||0);
+    const currentHome=futureCurrentHomeValue(state.homeValue);
     const trend=Number.isFinite(Number(settings.trend))?Number(settings.trend):2.5;
     const years=path.months/12;
     const projectedWhole=currentHome*Math.pow(1+trend/100,years);
