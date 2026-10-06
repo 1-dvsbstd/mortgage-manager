@@ -137,9 +137,14 @@
   function run() { renderCurrentJourney(); }
 
   document.addEventListener('click', (event) => {
-    if (event.target.closest('[data-app-view="current"]')) setTimeout(run, 80);
+    if (event.target.closest('[data-app-view="current"]')) requestAnimationFrame(run);
   });
   if (window.MortgageStore?.subscribe) MortgageStore.subscribe(() => requestAnimationFrame(run));
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => [250,700,1200].forEach((delay) => setTimeout(run, delay)), { once:true });
-  else [0,350,850].forEach((delay) => setTimeout(run, delay));
+
+  const start=()=>{
+    run();
+    requestAnimationFrame(run);
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once:true });
+  else start();
 })();
