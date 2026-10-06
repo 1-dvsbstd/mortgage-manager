@@ -334,6 +334,7 @@
     if (!hasSetup && !hasLegacyMortgage) setTimeout(openSetup, 450);
   }
 
+  wireSetupMonthPickers();
   setupButton();
   ensureProgressCard();
   ensureDealGuidance();
