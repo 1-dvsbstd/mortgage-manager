@@ -204,8 +204,8 @@
     const raw=[
       {rate:low,label:'Lower test'},
       {rate:current,label:'Current rate'},
-      ...(twoYear?[{rate:twoYear,label:'Avg 2-year'}]:[]),
-      ...(fiveYear?[{rate:fiveYear,label:'Avg 5-year'}]:[]),
+      ...(twoYear?[{rate:twoYear,label:'Market avg 2-year'}]:[]),
+      ...(fiveYear?[{rate:fiveYear,label:'Market avg 5-year'}]:[]),
       {rate:high,label:'Higher test'},
     ];
     const seen=new Set();
@@ -231,7 +231,7 @@
       return `<div class="deal-planner-rate ${current?'is-current-rate':''}"><span>${rate.toFixed(2)}% · ${label}</span><strong>${money(scenarioPayment)}<small>/mo</small></strong><em>${note}</em></div>`;
     }).join('');
     const note=$('.deal-planner-note');
-    if(note) note.textContent='Deal-end balance includes your regular overpayment. Payment scenarios show the scheduled mortgage payment at each rate, without assuming a future overpayment. Centre rates use your current rate and market benchmarks; outer rates are simple stress tests.';
+    if(note) note.textContent='Deal-end balance includes your regular overpayment. Payment scenarios use your current rate plus current UK market-average 2- and 5-year fixes; outer rates are simple stress tests. Historical charts below use the Bank of England 75% LTV benchmark.';
   }
 
   function renderRateTrend(){
@@ -293,7 +293,7 @@
             <div>
               <span>${label}</span>
               <strong>${latest.toFixed(2)}%</strong>
-              <small>Latest quoted rate</small>
+              <small>Latest BoE 75% LTV benchmark</small>
             </div>
             <div class="market-rate-card-direction" data-direction="${meta.dir}">
               <span>Recent trend</span>
