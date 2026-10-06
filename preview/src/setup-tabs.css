@@ -269,3 +269,63 @@
 .setup-budget-body{
   padding-top:14px;
 }
+
+/* Setup methodology disclosure — explicit toggle, matching the Future assumptions control. */
+body .personal-modal #methodologySection{
+  padding-top:0!important;
+}
+body .personal-modal .methodology-toggle{
+  appearance:none!important;
+  width:100%!important;
+  min-height:52px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:16px!important;
+  padding:4px 0!important;
+  border:0!important;
+  background:transparent!important;
+  color:var(--text)!important;
+  text-align:left!important;
+  cursor:pointer!important;
+  font:inherit!important;
+}
+body .personal-modal .methodology-toggle>span{
+  display:grid!important;
+  gap:3px!important;
+  min-width:0!important;
+}
+body .personal-modal .methodology-toggle strong{
+  display:block!important;
+  margin:0!important;
+  color:var(--text)!important;
+  font-size:14px!important;
+  line-height:1.25!important;
+}
+body .personal-modal .methodology-toggle small{
+  display:block!important;
+  margin:0!important;
+  color:var(--muted)!important;
+  font-size:10px!important;
+  font-weight:500!important;
+  line-height:1.25!important;
+}
+body .personal-modal .methodology-toggle>i{
+  flex:0 0 auto!important;
+  width:8px!important;
+  height:8px!important;
+  margin-right:3px!important;
+  border-right:1.5px solid #8b6849!important;
+  border-bottom:1.5px solid #8b6849!important;
+  transform:rotate(45deg) translateY(-2px)!important;
+  transition:transform .15s ease!important;
+}
+body .personal-modal .methodology-toggle[aria-expanded="true"]>i{
+  transform:rotate(225deg) translate(-1px,-1px)!important;
+}
+body .personal-modal #methodologyBody[hidden]{
+  display:none!important;
+}
+body .personal-modal #methodologyBody{
+  padding-top:14px!important;
+}
