@@ -1566,12 +1566,6 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   }
 }
 
-/* Current hidden compatibility sources — retained for existing data wiring only. */
-.app-view-current .current-home-inline,
-.app-view-current>.app-view-content>#currentOverpaymentPanel{
-  display:none!important;
-}
-
 /* Current hero — canonical source */
 .app-view-current .hero-panel.current-hero-condensed{
   position:relative!important;
@@ -2383,13 +2377,6 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-current .dot.regular-line{background:var(--theme-hero-ink)!important}
 .app-view-current .dot.selected-line{background:var(--positive)!important}
 .app-view-current .dot.equity-line{background:var(--property)!important}
-
-.app-view-current .whatif-source-only,
-.app-view-current .trajectory-what-if #compactWhatIf,
-.app-view-current .whatif-regular-inline,
-.app-view-current .total-overpay-buttons{
-  display:none!important;
-}
 
 @media(hover:hover) and (pointer:fine){
   .app-view-current .chart-panel.trajectory-with-what-if:hover{
