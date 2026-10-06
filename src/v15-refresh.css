@@ -32,7 +32,7 @@ body{
 
 /* Make the light V15 palette authoritative over the legacy dark layers. */
 .app-view,.app-view-content,.upcoming-workspace,.upcoming-sections{background:transparent!important;color:var(--text)!important}
-.panel,.hero-panel,.upcoming-section,.future-overpayment-assumption,.future-model-range-panel,.future-wait-planner,.temporal-feature-home-projection,.temporal-feature-next-home,.temporal-feature-cost-comparison{
+.panel,.hero-panel,.upcoming-section,.future-model-range-panel,.future-wait-planner,.temporal-feature-home-projection,.temporal-feature-next-home,.temporal-feature-cost-comparison{
   background:rgba(251,248,243,.96)!important;
   border-color:var(--border)!important;
   color:var(--text)!important;
@@ -42,7 +42,7 @@ body{
 .app-view h1,.app-view h2,.app-view h3,.app-view h4,.app-view strong,
 .upcoming-section-heading h2,.deal-planner-heading h2,.deal-planner-subhead strong,
 .home-profile-heading h2,.next-home-heading h2,.cost-heading h2{color:var(--text)!important}
-.kicker,.eyebrow,.future-assumption-label{color:var(--accent-strong)!important}
+.kicker,.eyebrow{color:var(--accent-strong)!important}
 .subtle,.field-note,.deep-note,.source-date,.next-event-text,.timeline-labels,.app-view-heading>p{color:var(--muted)!important}
 
 .topbar{border-color:transparent!important}
@@ -112,7 +112,6 @@ body{
   color:var(--text)!important;
   box-shadow:0 18px 52px rgba(64,50,38,.08)!important;
 }
-.trajectory-with-what-if .trajectory-what-if{display:none!important}
 .app-view-current .trajectory-with-what-if>.panel-heading{padding:26px 26px 16px!important;margin:0!important;border-bottom:1px solid var(--border-soft)!important}
 .app-view-current .trajectory-with-what-if>.panel-heading h2{color:var(--text)!important}
 .app-view-current .trajectory-scenario-controls{margin:0 26px!important;padding:18px 0 20px!important;border:0!important;border-bottom:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
@@ -162,15 +161,10 @@ body{
 .app-view-upcoming .deal-planner-rate.is-current-rate span,.app-view-upcoming .deal-planner-milestone span{color:var(--accent-strong)!important}
 
 /* FUTURE */
-.app-view-future .future-overpayment-assumption,.app-view-future .future-model-range-panel,.app-view-future .future-wait-planner,.app-view-future .temporal-feature-home-projection,.app-view-future .temporal-feature-next-home,.app-view-future .temporal-feature-cost-comparison{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important;box-shadow:0 16px 44px rgba(62,49,38,.065)!important}
-.app-view-future .future-overpayment-assumption{background:#efe4d7!important;box-shadow:none!important}
-.future-assumption-copy strong{color:var(--accent-strong)!important}
+.app-view-future .app-view-future .future-model-range-panel,.app-view-future .future-wait-planner,.app-view-future .temporal-feature-home-projection,.app-view-future .temporal-feature-next-home,.app-view-future .temporal-feature-cost-comparison{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important;box-shadow:0 16px 44px rgba(62,49,38,.065)!important}
 .app-view-future h2,.app-view-future h3,.app-view-future .home-profile-heading h2,.app-view-future .next-home-heading h2,.app-view-future .cost-heading h2{color:var(--text)!important}
 .app-view-future .home-profile-range>div,.app-view-future .next-home-summary-card,.app-view-future .next-home-timeline-row,.app-view-future .property-cost-card,.app-view-future .future-model-range-panel .model-range-summary,.app-view-future .future-wait-host{background:#f3ece3!important;border-color:var(--border-soft)!important;color:var(--text)!important}
 .app-view-future .home-profile-range strong,.app-view-future .next-home-summary-card strong,.app-view-future .next-home-timeline-row strong,.app-view-future .property-cost-card strong{color:var(--text)!important}
-.future-assumption-controls button,.future-assumption-controls label{background:#fffaf4!important;border-color:var(--border)!important;color:var(--text)!important}
-.future-assumption-controls button:hover{background:#f4e6d7!important;border-color:rgba(200,142,92,.36)!important}
-.future-assumption-controls button.active{background:#252d36!important;color:#fffaf3!important;border-color:#252d36!important}
 
 /* Inputs / setup / modal surfaces */
 input,select,textarea{color:var(--text)}
