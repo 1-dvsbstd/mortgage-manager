@@ -1457,3 +1457,30 @@ html.future-refining .app-view-future .app-view-content{
   }
   .app-view-future #futurePayoffTargets{padding:18px!important}
 }
+
+
+/* Setup numeric inputs — authoritative no-spinner behaviour. */
+body .personal-backdrop .personal-modal input[type="number"]{
+  appearance:textfield!important;
+  -moz-appearance:textfield!important;
+}
+body .personal-backdrop .personal-modal input[type="number"]::-webkit-outer-spin-button,
+body .personal-backdrop .personal-modal input[type="number"]::-webkit-inner-spin-button{
+  -webkit-appearance:none!important;
+  appearance:none!important;
+  display:none!important;
+  margin:0!important;
+}
+body .personal-backdrop .personal-modal input[type="month"]{
+  -webkit-appearance:auto!important;
+  appearance:auto!important;
+  color-scheme:light!important;
+}
+body .personal-backdrop .personal-modal input[type="month"]::-webkit-calendar-picker-indicator{
+  -webkit-appearance:auto!important;
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  pointer-events:auto!important;
+  cursor:pointer!important;
+}
