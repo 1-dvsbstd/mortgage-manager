@@ -43,7 +43,16 @@
     legacy.style.display = 'none';
   }
 
+  function formatMonthValue(value){
+    const match=/^(\d{4})-(\d{2})$/.exec(String(value||''));
+    if(!match) return 'Choose month';
+    return new Intl.DateTimeFormat('en-GB',{month:'long',year:'numeric'}).format(new Date(Number(match[1]),Number(match[2])-1,1));
+  }
+
   function field(id,label,type='number',step='1',note=''){
+    if(type==='month'){
+      return `<label>${label}<input id="${id}" type="hidden"><button type="button" class="setup-month-field" data-month-field><span>Choose month</span><i aria-hidden="true"></i></button>${note?`<span>${note}</span>`:''}</label>`;
+    }
     const numeric=type==='number';
     const input=`<input id="${id}" type="${numeric?'text':type}" ${numeric?'inputmode="decimal"':''}>`;
     return `<label>${label}${input}${note?`<span>${note}</span>`:''}</label>`;
@@ -81,7 +90,14 @@
       improvements: section.querySelector('#setupHomeImprovements'),
       recentValue: section.querySelector('#setupHomeRecentValue'),
     };
-    Object.entries(refs).forEach(([key,input]) => { if(input) input.value = settings[key] ?? ''; });
+    Object.entries(refs).forEach(([key,input]) => {
+      if(!input) return;
+      input.value = settings[key] ?? '';
+      if(key==='purchaseMonth'){
+        const display=input.closest('label')?.querySelector('[data-month-field] span');
+        if(display) display.textContent=formatMonthValue(input.value);
+      }
+    });
     const postcodeNote=section.querySelector('#setupHomePostcodeNote');
     let resolvedAuthority=settings.localAuthority || '';
     let resolvedAuthorityCode=settings.localAuthorityCode || '';
