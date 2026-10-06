@@ -26,13 +26,6 @@
     const state=window.MortgageStore?.get?.();
     if(!state) return;
 
-    const legacy=$('.scenario-panel');
-    if(legacy){
-      legacy.hidden=true;
-      legacy.classList.add('trajectory-source-only');
-    }
-    $('#currentOverpaymentPanel')?.remove();
-
     const heading=$(':scope > .panel-heading',chart);
     const headingStat=$('.chart-stat',heading||chart);
     if(headingStat) headingStat.classList.add('trajectory-source-stat');
