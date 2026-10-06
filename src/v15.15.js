@@ -229,26 +229,20 @@
     });
     window.addEventListener('online',refreshPolish);
     window.addEventListener('offline',refreshPolish);
-    const observer=new MutationObserver(()=>window.requestAnimationFrame(refreshPolish));
-    observer.observe(document.body,{childList:true,subtree:true});
-    window.MortgageStore?.subscribe?.(()=>window.setTimeout(decorateMarketChoices,20));
+    window.MortgageStore?.subscribe?.(()=>window.requestAnimationFrame(decorateMarketChoices));
     refreshPolish();
-    window.setTimeout(refreshPolish,650);
-    window.setTimeout(refreshPolish,1500);
   }
 
   const settle=()=>{
     migrateLegacyMarketCache();
     isolateEnhancedChart();
     wireOfflineV1Polish();
-    window.setTimeout(()=>{
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
       window.dispatchEvent(new Event('resize'));
-      requestAnimationFrame(()=>requestAnimationFrame(()=>{
-        document.documentElement.classList.remove('app-hydrating','app-settling');
-        document.documentElement.classList.add('app-ready');
-        refreshPolish();
-      }));
-    },1360);
+      document.documentElement.classList.remove('app-hydrating','app-settling');
+      document.documentElement.classList.add('app-ready');
+      refreshPolish();
+    }));
   };
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',settle,{once:true});
