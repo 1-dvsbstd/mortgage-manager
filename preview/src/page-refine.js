@@ -652,6 +652,7 @@
       const currentBalance=Math.max(0,Number(mortgageState.balance)||0);
       const currentRate=Math.max(.1,Number(mortgageState.rate)||0);
       const currentScheduled=Math.max(0,Number(mortgageState.payment)||0);
+      const regularOverpayment=Math.max(0,Number(mortgageState.currentOverpayment)||0);
       const marketRate=(()=>{
         const live=Number(window.MortgageMarket?.fiveYear);
         if(Number.isFinite(live)&&live>0) return live;
@@ -662,25 +663,42 @@
         }catch(_){}
         return 6.00;
       })();
-      const planningTermYears=30;
+      const planningMonths=360;
+      const horizonMonths=Math.max(0,Math.round(active.years*12));
+      const fixedMonthsNow=Math.max(0,Number(monthsUntil(mortgageState.fixedEnd))||0);
+      const fixedMonthsRemaining=Math.max(0,Math.min(planningMonths,fixedMonthsNow-horizonMonths));
 
-      let repayment=0;
+      const existingPath=window.MortgageMath?.amortize?.(
+        currentBalance,
+        currentRate,
+        currentScheduled+regularOverpayment
+      );
+      const projectedExistingBalance=existingPath?.monthlyPoints?.length
+        ? Math.max(0,Number(existingPath.monthlyPoints[Math.min(horizonMonths,existingPath.monthlyPoints.length-1)])||0)
+        : currentBalance;
+
+      const portedAmount=Math.min(totalBorrowing,projectedExistingBalance);
+      const extraBorrowing=Math.max(0,totalBorrowing-portedAmount);
+      const blendedPortRate=fixedMonthsRemaining>0
+        ? ((currentRate*fixedMonthsRemaining)+(marketRate*(planningMonths-fixedMonthsRemaining)))/planningMonths
+        : marketRate;
+
+      const portedPayment=monthlyPayment(portedAmount,blendedPortRate,planningMonths);
+      const extraPayment=monthlyPayment(extraBorrowing,marketRate,planningMonths);
+      const repayment=portedPayment+extraPayment;
+
+      const fixedYears=(fixedMonthsRemaining/12);
+      const marketYears=((planningMonths-fixedMonthsRemaining)/12);
       let repaymentNote='Add income in Setup & Data';
       if(totalBorrowing>0){
-        if(active.years===0){
-          const portedAmount=Math.min(totalBorrowing,currentBalance);
-          const extraBorrowing=Math.max(0,totalBorrowing-portedAmount);
-          const currentPath=window.MortgageMath?.amortize?.(currentBalance,currentRate,currentScheduled);
-          const remainingMonths=Math.max(1,Number(currentPath?.months)||planningTermYears*12);
-          const portedPayment=monthlyPayment(portedAmount,currentRate,remainingMonths);
-          const extraPayment=monthlyPayment(extraBorrowing,marketRate,planningTermYears*12);
-          repayment=portedPayment+extraPayment;
+        if(fixedMonthsRemaining>0&&portedAmount>0){
+          const fixedLabel=fixedYears%1===0?fixedYears.toFixed(0):fixedYears.toFixed(1);
+          const marketLabel=marketYears%1===0?marketYears.toFixed(0):marketYears.toFixed(1);
           repaymentNote=extraBorrowing>0
-            ? `${moneyShort(portedAmount)} potentially ported at ${currentRate.toFixed(2)}% + ${moneyShort(extraBorrowing)} additional borrowing at ${marketRate.toFixed(2)}%`
-            : `${moneyShort(portedAmount)} potentially ported at your current ${currentRate.toFixed(2)}% rate`;
+            ? `${moneyShort(portedAmount)} potentially ported · ${fixedLabel}y at ${currentRate.toFixed(2)}%, then ${marketLabel}y at ${marketRate.toFixed(2)}% · ${moneyShort(extraBorrowing)} extra at ${marketRate.toFixed(2)}%`
+            : `${moneyShort(portedAmount)} potentially ported · ${fixedLabel}y at ${currentRate.toFixed(2)}%, then ${marketLabel}y at ${marketRate.toFixed(2)}%`;
         }else{
-          repayment=monthlyPayment(totalBorrowing,marketRate,planningTermYears*12);
-          repaymentNote=`${moneyShort(totalBorrowing)} borrowed at today's ${marketRate.toFixed(2)}% 5-year market average over ${planningTermYears} years · planning assumption, not a forecast`;
+          repaymentNote=`${moneyShort(totalBorrowing)} over 30 years at today's ${marketRate.toFixed(2)}% 5-year market average · planning assumption, not a forecast`;
         }
       }
 
