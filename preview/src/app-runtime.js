@@ -145,7 +145,9 @@
   }
 
   function validMarketData(data) {
-    return !!(data && Array.isArray(data.bands) && data.bands.length && Number(data.overall?.twoYear) > 0 && Number(data.overall?.fiveYear) > 0);
+    const historic=Array.isArray(data?.bands) && data.bands.length && Number(data.overall?.twoYear)>0 && Number(data.overall?.fiveYear)>0;
+    const live=Number(data?.live?.twoYear)>0 && Number(data?.live?.fiveYear)>0;
+    return !!(historic && live);
   }
 
   async function fetchMarketData() {
@@ -197,29 +199,32 @@
     if (!state) return;
     const ltv = state.homeValue > 0 ? state.balance / state.homeValue * 100 : 100;
     const band = ltvBandFor(data, ltv);
-    const twoRate = Number(band?.twoYear || data.overall.twoYear);
-    const fiveRate = Number(band?.fiveYear || data.overall.fiveYear);
-    const result = window.MortgageMath?.compare?.(state.balance, state.rate, state.payment, state.scenarioExtra);
-    const termMonths = Math.max(1, Number(result?.base?.months) || 300);
+    const twoRate = Number(data.live.twoYear);
+    const fiveRate = Number(data.live.fiveYear);
+    const liveSourceAsOf=data.live.sourceAsOf||null;
     window.MortgageMarket={
       twoYear:twoRate,
       fiveYear:fiveRate,
       currentRate:Number(state.rate||0),
       currentLtv:ltv,
       ltvBand:band?.ltv||null,
-      sourceAsOf:data.sourceAsOf||null,
-      sourceLabel:`${isOnlineMode() ? 'Market benchmark' : 'Saved market benchmark'}`,
-      formattedSourceDate:formatSourceDate(data.sourceAsOf),
-      history:data.history||null
+      sourceAsOf:liveSourceAsOf,
+      sourceLabel:data.live.source||'Market average',
+      formattedSourceDate:formatSourceDate(liveSourceAsOf),
+      history:data.history||null,
+      historySource:data.sourceShort||data.source||'Bank of England',
+      historySourceAsOf:data.sourceAsOf||null,
+      historyLtv:data.history?.ltv||band?.ltv||null
     };
     const meta=document.getElementById('upcomingMarketMetaValue');
     if(meta){
-      meta.textContent=`${band ? `${band.ltv}% LTV` : 'Overall market'} · ${formatSourceDate(data.sourceAsOf)}`;
+      meta.textContent=(data.live.source||'Market average')+' · '+formatSourceDate(liveSourceAsOf);
     }
     document.dispatchEvent(new CustomEvent('mortgage-market-rates-updated',{
-      detail:{twoYear:twoRate,fiveYear:fiveRate,ltvBand:band?.ltv||null,sourceAsOf:data.sourceAsOf||null}
+      detail:{twoYear:twoRate,fiveYear:fiveRate,source:data.live.source||'Market average',sourceAsOf:liveSourceAsOf}
     }));
   }
+
 
   function applyCachedMarketRates() {
     const cached = readMarketCache();
