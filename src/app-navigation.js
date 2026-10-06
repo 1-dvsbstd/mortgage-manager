@@ -56,7 +56,11 @@
     const progress=document.getElementById('personalProgress');
 
     if(chart&&chart.parentElement!==current) current.appendChild(chart);
-    if(scenario&&scenario.parentElement!==current&&scenario.parentElement!==chart) current.appendChild(scenario);
+    if(scenario){
+      scenario.hidden=true;
+      scenario.classList.add('trajectory-source-only');
+      if(scenario.parentElement!==current&&scenario.parentElement!==chart) current.appendChild(scenario);
+    }
     if(progress&&progress.parentElement!==current) current.appendChild(progress);
   }
 
