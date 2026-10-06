@@ -55,12 +55,6 @@ body .personal-modal .personal-section[open]>summary::after{transform:translateY
 body .personal-modal .history-summary-chevron,
 body .personal-modal .summary-plus{display:none!important}
 body .personal-modal .mortgage-history-body{padding-top:14px!important}
-body .personal-modal input[type='month']{color-scheme:light!important;padding-right:12px!important}
-body .personal-modal input[type='month']::-webkit-calendar-picker-indicator{
-  opacity:.9!important;
-  cursor:pointer!important;
-  filter:contrast(1.25)!important;
-}
 
 /* Variable-height disclosure panels must not lift/animate while opening. */
 body details,
