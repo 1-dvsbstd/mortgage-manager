@@ -185,10 +185,55 @@
   }
 
 
+  function dealYears(start,end) {
+    const a=monthIndex(start), b=monthIndex(end);
+    if(a===null||b===null||b<=a) return '';
+    const months=b-a;
+    return months%12===0 ? String(months/12) : '';
+  }
+
+  function dealLengthSelect(deal={}) {
+    const years=dealYears(deal.start,deal.end);
+    const options=[1,2,3,4,5,10];
+    const custom=years && !options.includes(Number(years));
+    return `<select data-deal-years aria-label="Deal length">
+      <option value="">Choose length</option>
+      ${options.map(value=>`<option value="${value}" ${years===String(value)?'selected':''}>${value} year${value===1?'':'s'}</option>`).join('')}
+      ${custom?`<option value="${escape(years)}" selected>${escape(years)} years</option>`:''}
+    </select>`;
+  }
+
+  function syncDealEnd(row) {
+    const start=row.querySelector('[data-history="start"]')?.value || '';
+    const select=row.querySelector('[data-deal-years]');
+    const end=row.querySelector('[data-history="end"]');
+    const output=row.querySelector('[data-deal-end-label]');
+    if(!select||!end) return;
+    const years=Math.max(0,Number(select.value)||0);
+    end.value=start&&years ? addMonths(start,years*12) : '';
+    if(output) output.textContent=end.value ? `Ends ${formatMonthValue(end.value)}` : 'Choose a start month and deal length';
+  }
+
+  function seedFollowingDealStarts(section) {
+    const rows=[...section.querySelectorAll('[data-history-deal]')];
+    rows.forEach((row,index)=>{
+      if(index===0) return;
+      const start=row.querySelector('[data-history="start"]');
+      const previousEnd=rows[index-1].querySelector('[data-history="end"]')?.value || '';
+      if(start && !start.value && previousEnd){
+        start.value=previousEnd;
+        const display=start.closest('label')?.querySelector('[data-month-field] span');
+        if(display) display.textContent=formatMonthValue(previousEnd);
+      }
+      syncDealEnd(row);
+    });
+  }
+
+
   function dealRow(deal = {}) {
     return `<div class="history-row history-deal-row" data-history-deal>
       <label>From${monthField('data-history="start"',deal.start)}</label>
-      <label>To${monthField('data-history="end"',deal.end)}</label>
+      <label>Deal length${dealLengthSelect(deal)}<small data-deal-end-label>${deal.end?`Ends ${formatMonthValue(deal.end)}`:'Choose a start month and deal length'}</small><input type="hidden" data-history="end" value="${escape(deal.end)}"></label>
       <label>Rate (%)<input type="text" inputmode="decimal" data-history="rate" value="${escape(deal.rate)}"></label>
       <label>Payment (£/mo)<input type="text" inputmode="decimal" data-history="payment" value="${escape(deal.payment)}"></label>
       <label>Overpay (£/mo)<input type="text" inputmode="decimal" data-history="overpayment" value="${escape(deal.overpayment)}"></label>
@@ -272,6 +317,14 @@
         field.value = value ?? '';
         const display=field.closest('label')?.querySelector('[data-month-field] span');
         if(display) display.textContent=formatMonthValue(field.value);
+        if(key==='end'){
+          const start=row.querySelector('[data-history="start"]')?.value || '';
+          const years=dealYears(start,field.value);
+          const select=row.querySelector('[data-deal-years]');
+          if(select && years) select.value=years;
+          const output=row.querySelector('[data-deal-end-label]');
+          if(output) output.textContent=field.value?`Ends ${formatMonthValue(field.value)}`:'Choose a start month and deal length';
+        }
       }
     });
     const synced = readFromSection(section);
@@ -305,6 +358,9 @@
     const monthlySection = [...modal.querySelectorAll('.personal-section')].find((node) => node.querySelector('h3')?.textContent.trim() === 'Monthly history');
     if (monthlySection) monthlySection.insertAdjacentElement('beforebegin', section); else modal.querySelector('.personal-footer-actions')?.insertAdjacentElement('beforebegin', section);
 
+    seedFollowingDealStarts(section);
+    section.querySelectorAll('[data-history-deal]').forEach(syncDealEnd);
+
     let autosaveTimer = null;
     const scheduleAutosave = () => {
       clearTimeout(autosaveTimer);
@@ -314,7 +370,12 @@
     section.addEventListener('click', (event) => {
       event.stopPropagation();
       if (event.target.closest('[data-add-deal]')) {
-        section.querySelector('[data-deal-list]')?.insertAdjacentHTML('beforeend', dealRow());
+        const list=section.querySelector('[data-deal-list]');
+        const previous=list?.lastElementChild;
+        const start=previous?.querySelector('[data-history="end"]')?.value || '';
+        list?.insertAdjacentHTML('beforeend', dealRow({start}));
+        const row=list?.lastElementChild;
+        if(row) syncDealEnd(row);
         scheduleAutosave();
       }
       if (event.target.closest('[data-add-lump]')) {
@@ -329,14 +390,26 @@
       if (event.target.closest('[data-save-history]')) persistSection(section, true);
     });
 
-    section.addEventListener('input', () => {
+    section.addEventListener('input', (event) => {
+      const row=event.target.closest?.('[data-history-deal]');
+      if(row && (event.target.matches('[data-history="start"]') || event.target.matches('[data-deal-years]'))){
+        syncDealEnd(row);
+        seedFollowingDealStarts(section);
+      }
       const current = readFromSection(section);
       renderSummary(section, current);
       const state = section.querySelector('[data-history-save-state]');
       if (state) state.textContent = 'Saving…';
       scheduleAutosave();
     });
-    section.addEventListener('change', () => persistSection(section, false));
+    section.addEventListener('change', (event) => {
+      const row=event.target.closest?.('[data-history-deal]');
+      if(row && (event.target.matches('[data-history="start"]') || event.target.matches('[data-deal-years]'))){
+        syncDealEnd(row);
+        seedFollowingDealStarts(section);
+      }
+      persistSection(section, false);
+    });
 
     modal.addEventListener('click', (event) => {
       if (event.target.closest('[data-action="save"]')) persistSection(section, true);
