@@ -119,7 +119,7 @@ body{background:linear-gradient(180deg,#09110f 0%,#0d1713 46%,#09120f 100%)!impo
 .app-view-future .app-view-content{gap:var(--space-page)!important}
 .future-model-range-panel,.future-wait-planner,.temporal-feature-home-projection,.temporal-feature-next-home{background:var(--surface)!important;border-color:var(--border)!important;border-radius:var(--radius-card)!important}
 .temporal-feature-home-projection{padding:var(--space-card)!important}
-.temporal-feature-next-home .next-home-body{padding:var(--space-card)!important}.future-assumption-copy>div{display:flex;align-items:baseline;gap:8px}.future-assumption-copy strong{color:var(--warm);font-size:18px;white-space:nowrap}.future-assumption-copy p{margin:0;color:var(--muted)!important;font-size:11px}.future-assumption-controls button{min-width:52px;padding:7px 10px;cursor:pointer}.future-assumption-controls label{display:flex;align-items:center;gap:4px;padding:7px 10px;color:var(--muted)!important}.future-assumption-controls input{width:68px;border:0;background:transparent;color:var(--text);font:inherit;font-weight:750;outline:none}
+.temporal-feature-next-home .next-home-body{padding:var(--space-card)!important}
 .future-model-range-panel .home-profile-range,.next-home-summary-card,.future-wait-host,.future-cost-inline{background:transparent!important}
 .future-wait-planner{margin-top:0!important}
 
@@ -147,7 +147,7 @@ body{background:linear-gradient(180deg,#09110f 0%,#0d1713 46%,#09120f 100%)!impo
   .current-fix-stats,.upcoming-rates .deal-planner-rate-grid{grid-template-columns:1fr 1fr!important}
   .trajectory-scenario-copy{display:block}.trajectory-current-saving{min-width:0;margin-top:10px;text-align:left}
   .trajectory-overpay-row button,.trajectory-custom-overpay{flex:1 1 auto;justify-content:center}
-  .trajectory-custom-overpay input{width:62px}.future-assumption-copy{display:grid;gap:4px}.future-assumption-copy>div{justify-content:space-between}.future-assumption-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));justify-content:stretch}.future-assumption-controls button{min-width:0}.future-assumption-controls label{grid-column:1/-1}.future-assumption-controls input{flex:1;width:auto}
+  .trajectory-custom-overpay input{width:62px}.future-assumption-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));justify-content:stretch}
 }
 
 @media(max-width:560px){
