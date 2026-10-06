@@ -67,7 +67,7 @@ body{background:linear-gradient(180deg,#09110f 0%,#0d1713 46%,#09120f 100%)!impo
 .current-hero-condensed .current-home-inline .ownership-bar{grid-area:donut;display:grid!important;place-items:center!important;width:124px!important;height:124px!important;margin:0 auto!important;background:transparent!important;border:0!important}
 .current-hero-condensed .current-home-inline .ownership-segment{display:none!important}
 .current-hero-condensed .current-home-inline .ownership-donut{display:block!important;width:124px!important;height:124px!important}
-.current-hero-condensed #currentOverpaymentPanel{display:none!important}
+
 
 /* Trajectory */
 .trajectory-with-what-if{padding:0!important;overflow:hidden;cursor:default!important}
@@ -147,7 +147,7 @@ body{background:linear-gradient(180deg,#09110f 0%,#0d1713 46%,#09120f 100%)!impo
   .current-fix-stats,.upcoming-rates .deal-planner-rate-grid{grid-template-columns:1fr 1fr!important}
   .trajectory-scenario-copy{display:block}.trajectory-current-saving{min-width:0;margin-top:10px;text-align:left}
   .trajectory-overpay-row button,.trajectory-custom-overpay{flex:1 1 auto;justify-content:center}
-  .trajectory-custom-overpay input{width:62px}.future-assumption-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));justify-content:stretch}
+  .trajectory-custom-overpay input{width:62px}
 }
 
 @media(max-width:560px){
