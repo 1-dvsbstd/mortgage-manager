@@ -5502,3 +5502,11 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
     padding-bottom:24px!important;
   }
 }
+
+/* First-paint guard — raw trajectory canvas must never show before final layout ownership. */
+.app-view-current .trajectory-with-what-if > .chart-wrap{
+  visibility:hidden!important;
+}
+.app-view-current .trajectory-with-what-if .trajectory-chart-stage > .chart-wrap{
+  visibility:visible!important;
+}
