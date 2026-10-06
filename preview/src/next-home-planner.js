@@ -81,7 +81,7 @@
 
     const section=document.createElement('details');
     section.id='nextHomePlanner';
-    section.className='next-home-planner';
+    section.className='next-home-planner future-source-only';
     section.innerHTML=`
       <summary><span><strong>Next-home planner</strong><small>What your current plan could mean if you moved</small></span></summary>
       <div class="next-home-body">
