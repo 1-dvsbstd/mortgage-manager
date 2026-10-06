@@ -198,6 +198,30 @@
     return `<label>${label}<input data-personal-field="${id}" type="${type}" ${type==='number' ? `step="${step}" inputmode="decimal"` : ''} value="${String(value).replace(/"/g,'&quot;')}" /></label>`;
   }
 
+  function wireSetupInputBehaviour() {
+    if (document.documentElement.dataset.setupInputBehaviour === 'true') return;
+    document.documentElement.dataset.setupInputBehaviour = 'true';
+
+    document.addEventListener('pointerdown', (event) => {
+      const field = event.target.closest?.('.personal-modal input[type="month"]');
+      if (!field || typeof field.showPicker !== 'function') return;
+      event.preventDefault();
+      try {
+        field.focus({ preventScroll:true });
+        field.showPicker();
+      } catch (_) {}
+    }, true);
+
+    document.addEventListener('wheel', (event) => {
+      const field = event.target.closest?.('.personal-modal input[type="number"]');
+      if (!field) return;
+      event.preventDefault();
+      field.blur();
+      const scroller = field.closest('.personal-modal');
+      if (scroller) scroller.scrollTop += event.deltaY;
+    }, { passive:false, capture:true });
+  }
+
   function openSetup() {
     document.querySelector('.personal-backdrop')?.remove();
     const backdrop = document.createElement('div');
@@ -220,19 +244,6 @@
       </section>`;
     document.body.appendChild(backdrop);
 
-    backdrop.addEventListener('click', (event) => {
-      const field = event.target.closest?.('input[type="month"]');
-      if (!field || typeof field.showPicker !== 'function') return;
-      try {
-        field.focus({ preventScroll:true });
-        field.showPicker();
-      } catch (_) {}
-    });
-
-    backdrop.addEventListener('wheel', (event) => {
-      const field = event.target.closest?.('input[type="number"]');
-      if (field && document.activeElement === field) field.blur();
-    }, { passive:true });
 
     const close = () => backdrop.remove();
     backdrop.addEventListener('click', (event) => { if (event.target === backdrop) close(); });
@@ -354,4 +365,5 @@
     const history = loadHistory();
     if (history.some((row) => row.month === monthKey())) recordSnapshot(false);
   }, 700);
+  wireSetupInputBehaviour();
 })();
