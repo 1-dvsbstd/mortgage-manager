@@ -847,28 +847,42 @@
           </div>
           <div class="future-cost-date"><span>Mortgage-free</span><strong id="futureLifetimePayoff">—</strong></div>
         </div>
-        <div class="future-lifetime-grid">
+        <div class="future-lifetime-ledger">
           <article class="future-lifetime-primary">
             <span>Estimated lifetime mortgage payments</span>
             <strong id="futureLifetimePayments">—</strong>
             <small id="futureLifetimePaymentsNote">—</small>
           </article>
-          <article>
-            <span>Total interest</span>
-            <strong id="futureLifetimeInterest">—</strong>
-            <small id="futureLifetimeInterestNote">—</small>
-          </article>
-          <article>
-            <span>Interest still to pay</span>
-            <strong id="futureFutureInterest">—</strong>
-            <small>From today on your saved regular plan.</small>
-          </article>
-          <article>
-            <span>Remaining mortgage payments</span>
-            <strong id="futureRemainingPayments">—</strong>
-            <small>Capital + interest from today.</small>
-          </article>
+
+          <div class="future-lifetime-support">
+            <article>
+              <span>Total interest</span>
+              <strong id="futureLifetimeInterest">—</strong>
+              <small id="futureLifetimeInterestNote">—</small>
+            </article>
+            <article>
+              <span>Interest still to pay</span>
+              <strong id="futureFutureInterest">—</strong>
+              <small>From today on your saved regular plan.</small>
+            </article>
+            <article>
+              <span>Remaining mortgage payments</span>
+              <strong id="futureRemainingPayments">—</strong>
+              <small>Capital + interest from today.</small>
+            </article>
+          </div>
         </div>
+
+        <div class="future-lifetime-split">
+          <div class="future-lifetime-split-labels">
+            <span>Estimated paid so far <b id="futurePaidSoFar">—</b></span>
+            <span>Projected from today <b id="futureProjectedFromToday">—</b></span>
+          </div>
+          <div class="future-lifetime-split-bar" aria-hidden="true">
+            <i id="futurePaidSoFarBar"></i><b id="futureProjectedFromTodayBar"></b>
+          </div>
+        </div>
+
         <p class="future-lifetime-note" id="futureLifetimeNote"></p>`;
       future.appendChild(section);
     }
@@ -893,6 +907,16 @@
     const hasHistory=historicalPayments>0||historicalInterest>0;
     $('#futureLifetimePayments',section).textContent=hasHistory?money(lifetimePayments):money(remainingPayments);
     $('#futureLifetimeInterest',section).textContent=hasHistory?money(lifetimeInterest):money(futureInterest);
+
+    const paidSoFar=hasHistory?historicalPayments:0;
+    const projectedFromToday=remainingPayments;
+    const splitTotal=Math.max(1,paidSoFar+projectedFromToday);
+    $('#futurePaidSoFar',section).textContent=money(paidSoFar);
+    $('#futureProjectedFromToday',section).textContent=money(projectedFromToday);
+    const paidBar=$('#futurePaidSoFarBar',section);
+    const projectedBar=$('#futureProjectedFromTodayBar',section);
+    if(paidBar) paidBar.style.width=(paidSoFar/splitTotal*100)+'%';
+    if(projectedBar) projectedBar.style.width=(projectedFromToday/splitTotal*100)+'%';
     $('#futureLifetimePaymentsNote',section).textContent=hasHistory
       ? money(historicalPayments)+' estimated paid so far + '+money(remainingPayments)+' projected from today.'
       : 'Currently showing projected payments from today; add mortgage history for a lifetime estimate.';
@@ -928,7 +952,7 @@
             <p>Compares a projected property value with the known purchase price and mortgage interest we can account for.</p>
           </div>
         </div>
-        <div class="future-outcome-grid">
+        <div class="future-outcome-comparison">
           <article class="future-outcome-value">
             <span>Projected value when mortgage-free</span>
             <strong id="futureOutcomeValue">—</strong>
@@ -940,11 +964,14 @@
             <strong id="futureOutcomeCost">—</strong>
             <small id="futureOutcomeCostNote">—</small>
           </article>
-          <article class="future-outcome-difference">
+        </div>
+
+        <div class="future-outcome-result">
+          <div>
             <span>Projected value above known cost</span>
             <strong id="futureOutcomeDifference">—</strong>
-            <small>This is not profit: maintenance, insurance, taxes, fees and other ownership costs are excluded.</small>
-          </article>
+          </div>
+          <small>This is not profit: maintenance, insurance, taxes, fees and other ownership costs are excluded.</small>
         </div>
       `;
       future.appendChild(section);
