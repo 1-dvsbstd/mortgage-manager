@@ -86,6 +86,9 @@
           <div class="v15-current-journey-next"><span>Next</span><strong data-journey-next>—</strong></div>
         </div>
         <div class="v15-current-journey-track"></div>`;
+    }
+    if (!card.dataset.bound) {
+      card.dataset.bound='true';
       card.addEventListener('click', (event) => {
         if (event.target.closest('[data-journey-action="rates"]')) goToUpcomingRates();
       });
