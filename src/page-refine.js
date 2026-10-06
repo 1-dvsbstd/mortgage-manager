@@ -1,7 +1,6 @@
 (() => {
   const $ = (selector, root = document) => root.querySelector(selector);
   const money = (value) => new Intl.NumberFormat('en-GB', { style:'currency', currency:'GBP', maximumFractionDigits:0 }).format(Math.max(0, Number(value)||0));
-  const WHATIF_MIGRATION_KEY = 'mortgage-manager-whatif-total-v1';
 
   function paymentFor(principal, annualRate, months){
     const balance=Math.max(0,Number(principal)||0), term=Math.max(1,Math.round(Number(months)||1));
@@ -39,93 +38,6 @@
     home.classList.remove('panel');
     home.classList.add('current-home-inline');
     if(anchor) anchor.insertAdjacentElement('afterend',home); else (main||hero).appendChild(home);
-  }
-
-  function totalCandidates(regular){
-    const rounded=Math.round(regular*100)/100;
-    const presets=[rounded,100,250,500].filter((value)=>value>=rounded-.01);
-    const candidates=presets.length>=3?presets:[rounded,rounded+100,rounded+250,rounded+500];
-    return [...new Set(candidates.map((value)=>Math.round(value*100)/100))];
-  }
-
-  function renderWhatIfControls(){
-    const state=window.MortgageStore?.get?.();
-    const scenario=$('.trajectory-what-if');
-    if(!state||!scenario) return;
-    const regular=Math.max(0,Number(state.currentOverpayment)||0);
-    const selectedScenario=Math.max(0,Number(state.scenarioExtra)||0);
-    const total=selectedScenario>0?selectedScenario:regular;
-    const headline=$('#overpayHeadline',scenario);
-    if(headline) headline.textContent=`${money(total)}/month total`;
-
-    const value=$('.whatif-regular-value',scenario);
-    if(value) value.textContent=`${money(regular)}/month`;
-
-    const buttons=$('#totalOverpayButtons',scenario);
-    if(buttons){
-      buttons.innerHTML=totalCandidates(regular).map((amount)=>`<button type="button" data-total-overpay="${amount}" class="${Math.abs(amount-total)<.5?'active':''}">${Math.abs(amount-regular)<.5?'Current':money(amount)}</button>`).join('') + `<label class="custom-chip total-custom-chip">Custom £<input id="totalOverpayCustom" type="number" min="${regular}" step="10" inputmode="decimal" value="${Math.round(total*100)/100}"></label>`;
-    }
-  }
-
-  function applyTotalOverpayment(total){
-    const state=window.MortgageStore?.get?.();
-    if(!state) return;
-    const regular=Math.max(0,Number(state.currentOverpayment)||0);
-    const nextTotal=Math.max(0,Number(total)||0);
-    MortgageStore.set({scenarioExtra:Math.abs(nextTotal-regular)<.5?0:nextTotal});
-  }
-
-  function mergeRegularIntoWhatIf(){
-    const scenario=$('.trajectory-what-if');
-    if(!scenario) return;
-    const regularControl=$('.current-overpay-control');
-    const savings=$('#currentSavingsSummary');
-    const oldPanel=$('#currentOverpaymentPanel');
-    $('#compactWhatIf')?.remove();
-    $('.whatif-current-baseline',scenario)?.remove();
-
-    let inline=$('.whatif-regular-inline',scenario);
-    if(!inline){
-      inline=document.createElement('div');
-      inline.className='whatif-regular-inline';
-      inline.innerHTML='<div class="whatif-regular-label"><span>Current regular overpayment</span><strong class="whatif-regular-value">—</strong></div><div class="whatif-regular-live"></div>';
-      const range=$('#extraSlider',scenario);
-      if(range) range.insertAdjacentElement('beforebegin',inline); else scenario.appendChild(inline);
-    }
-    const host=$('.whatif-regular-live',inline);
-    if(savings&&savings.parentElement!==host) host.appendChild(savings);
-    if(regularControl&&regularControl.parentElement!==host){
-      regularControl.classList.remove('source-fields-only');
-      host.appendChild(regularControl);
-    }
-    if(oldPanel) oldPanel.remove();
-
-    const oldRange=$('#extraSlider',scenario), oldButtons=$('#overpayButtons',scenario);
-    if(oldRange) oldRange.classList.add('whatif-source-only');
-    if(oldButtons) oldButtons.classList.add('whatif-source-only');
-
-    let totalButtons=$('#totalOverpayButtons',scenario);
-    if(!totalButtons){
-      totalButtons=document.createElement('div');
-      totalButtons.id='totalOverpayButtons';
-      totalButtons.className='scenario-chips total-overpay-buttons';
-      if(oldButtons) oldButtons.insertAdjacentElement('afterend',totalButtons); else scenario.appendChild(totalButtons);
-      totalButtons.addEventListener('click',(event)=>{
-        const button=event.target.closest('[data-total-overpay]');
-        if(button) applyTotalOverpayment(button.dataset.totalOverpay);
-      });
-      totalButtons.addEventListener('input',(event)=>{
-        if(event.target.id==='totalOverpayCustom') applyTotalOverpayment(event.target.value);
-      });
-    }
-
-    try{
-      if(!localStorage.getItem(WHATIF_MIGRATION_KEY)){
-        localStorage.setItem(WHATIF_MIGRATION_KEY,'1');
-        MortgageStore.set({scenarioExtra:0});
-      }
-    }catch(_){}
-    renderWhatIfControls();
   }
 
   function projectedDealPosition(state){
@@ -403,7 +315,6 @@
 
   function run(){
     mergeHomeIntoMortgage();
-    mergeRegularIntoWhatIf();
     refineUpcoming();
     refineFuture();
     const futureReady=
@@ -420,7 +331,7 @@
   if(window.MortgageStore?.subscribe){
     MortgageStore.subscribe((next,previous)=>{
       if(next.currentOverpayment!==previous.currentOverpayment && next.scenarioExtra!==0) MortgageStore.set({scenarioExtra:0});
-      requestAnimationFrame(()=>{ renderWhatIfControls(); refineUpcoming(); renderUpcomingRates(); renderFuturePayoffTargets(); organiseFutureFlow(); });
+      requestAnimationFrame(()=>{ refineUpcoming(); renderUpcomingRates(); renderFuturePayoffTargets(); organiseFutureFlow(); });
     });
   }
 
