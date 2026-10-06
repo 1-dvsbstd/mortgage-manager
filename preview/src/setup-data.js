@@ -418,55 +418,6 @@
         toast('History reset');
       }
     });
-    backdrop.querySelector('[data-action="export"]')?.addEventListener('click', exportBackup);
-    const fileInput = backdrop.querySelector('.personal-import-input');
-    backdrop.querySelector('[data-action="import"]')?.addEventListener('click', () => fileInput?.click());
-    fileInput?.addEventListener('change', (event) => importBackup(event.target.files?.[0]));
-  }
-
-  function exportBackup() {
-    const data = {};
-    for (let i = 0; i < localStorage.length; i += 1) {
-      const key = localStorage.key(i);
-      if (key?.startsWith(STORAGE_PREFIX)) data[key] = localStorage.getItem(key);
-    }
-    const blob = new Blob([JSON.stringify({ exportedAt:new Date().toISOString(), version:BACKUP_VERSION, data }, null, 2)], { type:'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `mortgage-manager-backup-${monthKey()}.json`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 500);
-    toast('Backup exported');
-  }
-
-  function importBackup(file) {
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        const payload = JSON.parse(reader.result);
-        if (!payload?.data || typeof payload.data !== 'object' || Array.isArray(payload.data)) throw new Error('Invalid backup');
-        const incoming = Object.entries(payload.data).filter(([key]) => key.startsWith(STORAGE_PREFIX));
-        if (!incoming.length) throw new Error('No Mortgage Manager data');
-
-        const existingKeys = [];
-        for (let i = 0; i < localStorage.length; i += 1) {
-          const key = localStorage.key(i);
-          if (key?.startsWith(STORAGE_PREFIX)) existingKeys.push(key);
-        }
-        existingKeys.forEach((key) => localStorage.removeItem(key));
-        incoming.forEach(([key,value]) => localStorage.setItem(key, String(value)));
-
-        toast('Backup restored · reloading');
-        setTimeout(() => location.reload(), 600);
-      } catch (_) {
-        toast('Could not import that backup');
-      }
-    };
-    reader.readAsText(file);
   }
 
   function maybeFirstRun() {
