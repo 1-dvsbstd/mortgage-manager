@@ -197,3 +197,25 @@
   opacity:1!important;
   text-shadow:none!important;
 }
+
+
+/* Setup input behaviour: keep native month pickers, remove numeric steppers. */
+.personal-modal input[type="number"]{
+  appearance:textfield!important;
+  -moz-appearance:textfield!important;
+}
+.personal-modal input[type="number"]::-webkit-outer-spin-button,
+.personal-modal input[type="number"]::-webkit-inner-spin-button{
+  -webkit-appearance:none!important;
+  margin:0!important;
+}
+.personal-modal input[type="month"]{
+  color-scheme:light!important;
+}
+.personal-modal input[type="month"]::-webkit-calendar-picker-indicator{
+  display:block!important;
+  opacity:1!important;
+  visibility:visible!important;
+  cursor:pointer!important;
+  pointer-events:auto!important;
+}
