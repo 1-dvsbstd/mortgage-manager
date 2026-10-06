@@ -5476,3 +5476,9 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
     border-top:1px solid rgba(68,58,48,.07)!important;
   }
 }
+
+/* Future v53 — remove redundant next-home methodology footer. */
+.app-view-future .future-next-home-method,
+.app-view-future .future-next-home-note{
+  display:none!important;
+}
