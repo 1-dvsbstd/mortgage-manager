@@ -242,7 +242,11 @@
   if(window.MortgageStore?.subscribe) MortgageStore.subscribe(()=>requestAnimationFrame(run));
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>{
-    [250,700,1200,2000].forEach((delay)=>setTimeout(run,delay));
+    run();
+    [180,700,1400].forEach((delay)=>setTimeout(run,delay));
   },{once:true});
-  else [0,400,900].forEach((delay)=>setTimeout(run,delay));
+  else {
+    run();
+    [180,700].forEach((delay)=>setTimeout(run,delay));
+  }
 })();
