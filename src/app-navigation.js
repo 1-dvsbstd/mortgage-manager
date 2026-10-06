@@ -26,27 +26,6 @@
 
   function cardifyFeature(element,kind){ if(!element)return; element.classList.add('panel','temporal-feature-card',`temporal-feature-${kind}`); }
 
-  function ensureFutureAssumption(){
-    const future=$('.app-view-future .app-view-content'); if(!future)return;
-    let panel=document.getElementById('futureOverpaymentAssumption');
-    if(!panel){
-      panel=document.createElement('section'); panel.id='futureOverpaymentAssumption'; panel.className='future-overpayment-assumption';
-      panel.innerHTML=`<div class="future-assumption-copy"><div><span class="future-assumption-label">Planning with</span><strong id="futureExtraSummary">£0/month extra</strong></div><p>Future projections follow the What-if amount from Current.</p></div><div class="future-assumption-controls" aria-label="Future extra overpayment assumption"><button type="button" data-future-extra="0">£0</button><button type="button" data-future-extra="50">£50</button><button type="button" data-future-extra="100">£100</button><button type="button" data-future-extra="250">£250</button><button type="button" data-future-extra="500">£500</button><label>Custom £<input id="futureExtraInput" type="number" min="0" step="10" inputmode="decimal"></label></div>`;
-      future.insertAdjacentElement('afterbegin',panel);
-      panel.addEventListener('click',(event)=>{ const button=event.target.closest('[data-future-extra]'); if(!button||!window.MortgageStore)return; MortgageStore.set({scenarioExtra:Math.max(0,Number(button.dataset.futureExtra)||0)}); });
-      $('#futureExtraInput',panel)?.addEventListener('input',(event)=>{ if(window.MortgageStore) MortgageStore.set({scenarioExtra:Math.max(0,Number(event.target.value)||0)}); });
-    }
-    renderFutureAssumption();
-  }
-
-  function renderFutureAssumption(){
-    const panel=document.getElementById('futureOverpaymentAssumption'); if(!panel)return;
-    const extra=Math.max(0,Number(window.MortgageStore?.get?.().scenarioExtra)||0), summary=document.getElementById('futureExtraSummary'), input=document.getElementById('futureExtraInput');
-    if(summary) summary.textContent=`${money(extra)}/month extra`;
-    if(input&&document.activeElement!==input) input.value=String(extra);
-    panel.querySelectorAll('[data-future-extra]').forEach((button)=>button.classList.toggle('active',Number(button.dataset.futureExtra)===extra));
-  }
-
   function ensureCurrentOverpaymentPanel(){
     const current=$('.app-view-current .app-view-content'); if(!current)return;
     let panel=document.getElementById('currentOverpaymentPanel');
@@ -212,8 +191,7 @@
   }
 
   function relocateFutureFeatures(){
-    const future=$('.app-view-future .app-view-content'); if(!future)return; ensureFutureAssumption();
-    const assumption=document.getElementById('futureOverpaymentAssumption');
+    const future=$('.app-view-future .app-view-content'); if(!future)return;
     const home=document.getElementById('homeProjection');
     const model=document.getElementById('futureModelRange');
     const outlook=document.getElementById('futureWaitPlanner');
@@ -230,7 +208,7 @@
        value, show what today's equity enables, then move into forecasts and
        the longer-term outcome. Append is intentional: it also repairs ordering
        after legacy modules have moved nodes. */
-    [assumption,home,planner,model,outlook,cost].forEach((node)=>{
+    [home,planner,model,outlook,cost].forEach((node)=>{
       if(node && node.parentElement!==future) future.appendChild(node);
       else if(node) future.appendChild(node);
     });
@@ -252,7 +230,6 @@
   function wireSetupProfileSettings(){
     const button=document.getElementById('personalDataButton');
     if(button&&!button.dataset.profileSettingsWired){ button.dataset.profileSettingsWired='true'; button.addEventListener('click',()=>requestAnimationFrame(mountProfileSettingsInSetup)); }
-    setTimeout(mountProfileSettingsInSetup,520);
   }
 
   function organiseViews(){ relocateFutureFeatures(); relocateCurrentFeatures(); relocateUpcomingFeatures(); refineExpandableCues(); wireSetupProfileSettings(); }
@@ -268,7 +245,7 @@
     organiseViews(); if(dashboardGrid&&!dashboardGrid.children.length) dashboardGrid.remove();
     const bottomNav=makeNav('app-section-nav app-section-nav-bottom'); document.body.appendChild(bottomNav);
     document.querySelectorAll('[data-app-view]').forEach((button)=>button.addEventListener('click',()=>activateView(button.dataset.appView,true)));
-    activateView(savedView(),false); setTimeout(organiseViews,320); setTimeout(organiseViews,720);
+    activateView(savedView(),false); requestAnimationFrame(organiseViews);
   }
 
   function closeExpandedCards(){ document.querySelectorAll('.expandable-card.is-expanded').forEach((card)=>{ card.classList.remove('is-expanded'); card.setAttribute('aria-expanded','false'); }); document.body.classList.remove('card-open'); document.querySelector('.card-backdrop')?.remove(); }
@@ -282,6 +259,5 @@
     requestAnimationFrame(()=>window.dispatchEvent(new Event('resize')));
   }
 
-  if(window.MortgageStore?.subscribe) MortgageStore.subscribe((next,previous)=>{ if(next.scenarioExtra!==previous.scenarioExtra) requestAnimationFrame(renderFutureAssumption); });
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>requestAnimationFrame(buildShell),{once:true}); else requestAnimationFrame(buildShell);
 })();
