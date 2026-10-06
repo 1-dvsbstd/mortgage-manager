@@ -44,7 +44,12 @@
   }
 
   function field(id,label,type='number',step='1',note=''){
-    return `<label>${label}<input id="${id}" type="${type}" ${type==='number'?`step="${step}" inputmode="decimal"`:''}>${note?`<span>${note}</span>`:''}</label>`;
+    const numeric=type==='number';
+    const input=`<input id="${id}" type="${numeric?'text':type}" ${numeric?'inputmode="decimal"':''}>`;
+    const control=type==='month'
+      ? `<span class="setup-month-control">${input}<button type="button" class="setup-month-picker" data-month-picker aria-label="Open month picker">▦</button></span>`
+      : input;
+    return `<label>${label}${control}${note?`<span>${note}</span>`:''}</label>`;
   }
 
   function mount(){
