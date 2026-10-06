@@ -26,19 +26,6 @@
 
   function cardifyFeature(element,kind){ if(!element)return; element.classList.add('panel','temporal-feature-card',`temporal-feature-${kind}`); }
 
-  function ensureCurrentOverpaymentPanel(){
-    const current=$('.app-view-current .app-view-content'); if(!current)return;
-    let panel=document.getElementById('currentOverpaymentPanel');
-    if(!panel){
-      panel=document.createElement('section'); panel.id='currentOverpaymentPanel'; panel.className='panel current-overpayment-panel';
-      panel.innerHTML=`<div class="current-overpayment-heading"><div><p class="eyebrow">Regular overpayment</p><h2>What you already pay extra</h2><p>Your saved monthly overpayment and the benefit it is already creating.</p></div></div><div class="current-overpayment-body"></div>`;
-      const home=$('.home-panel',current); if(home) home.insertAdjacentElement('afterend',panel); else current.appendChild(panel);
-    }
-    const body=$('.current-overpayment-body',panel), savings=document.getElementById('currentSavingsSummary'), control=document.querySelector('.current-overpay-control');
-    if(savings&&savings.parentElement!==body) body.appendChild(savings);
-    if(control){ control.classList.remove('source-fields-only'); if(control.parentElement!==body) body.appendChild(control); }
-  }
-
   function makeHomeGlance(){
     const home=$('.home-panel'); if(!home||home.dataset.glanceReady==='true') return;
     home.dataset.glanceReady='true'; home.dataset.expandableDisabled='true'; home.classList.add('home-glance-card'); home.classList.remove('expandable-card'); home.removeAttribute('tabindex'); home.removeAttribute('aria-expanded');
@@ -47,31 +34,6 @@
     if(stats && value) value.insertAdjacentElement('afterend',stats);
     if(legend && stats) stats.insertAdjacentElement('afterend',legend);
     if(detail) detail.classList.add('home-glance-source');
-  }
-
-  function mergeScenarioIntoTrajectory(){
-    const scenario=$('.scenario-panel'), chart=$('.chart-panel');
-    if(!scenario||!chart||chart.dataset.whatIfMerged==='true') return;
-    chart.dataset.whatIfMerged='true';
-    chart.classList.add('trajectory-with-what-if');
-
-    scenario.classList.remove('panel','expandable-card');
-    scenario.classList.add('trajectory-what-if');
-    scenario.removeAttribute('tabindex');
-    scenario.removeAttribute('aria-expanded');
-    scenario.querySelector('[data-expand-card]')?.remove();
-    scenario.querySelector('.expand-hint')?.remove();
-
-    const scenarioDetail=$('.expand-detail',scenario);
-    const trajectoryDetail=$('.trajectory-details',chart);
-    if(scenarioDetail && trajectoryDetail){
-      scenarioDetail.classList.add('trajectory-scenario-detail');
-      trajectoryDetail.appendChild(scenarioDetail);
-    }
-
-    const chartWrap=$('.chart-wrap',chart);
-    if(chartWrap) chart.insertBefore(scenario,chartWrap);
-    else chart.appendChild(scenario);
   }
 
   function refineExpandableCues(){
@@ -84,12 +46,17 @@
   }
 
   function relocateCurrentFeatures(){
-    const current=$('.app-view-current .app-view-content'); if(!current)return;
-    ensureCurrentOverpaymentPanel(); makeHomeGlance();
-    const scenario=$('.scenario-panel'), chart=$('.chart-panel'), progress=document.getElementById('personalProgress');
+    const current=$('.app-view-current .app-view-content');
+    if(!current) return;
+
+    makeHomeGlance();
+
+    const chart=$('.chart-panel');
+    const scenario=$('.scenario-panel');
+    const progress=document.getElementById('personalProgress');
+
     if(chart&&chart.parentElement!==current) current.appendChild(chart);
     if(scenario&&scenario.parentElement!==current&&scenario.parentElement!==chart) current.appendChild(scenario);
-    mergeScenarioIntoTrajectory();
     if(progress&&progress.parentElement!==current) current.appendChild(progress);
   }
 
