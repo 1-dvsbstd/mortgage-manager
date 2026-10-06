@@ -238,6 +238,7 @@
 
     const popover=document.createElement('div');
     popover.className='setup-month-popover';
+    popover._monthInput=input;
     popover.setAttribute('role','dialog');
     popover.setAttribute('aria-label','Choose month');
 
@@ -321,8 +322,21 @@
     });
 
     window.addEventListener('resize',closeSetupMonthPicker);
-    document.addEventListener('scroll',(event)=>{
-      if(event.target.closest?.('.personal-modal')) closeSetupMonthPicker();
+    document.addEventListener('scroll',()=>{
+      const popover=document.querySelector('.setup-month-popover');
+      const input=popover?._monthInput;
+      if(!popover||!input?.isConnected) return;
+      const anchor=input.closest('label')?.querySelector('[data-month-field]')||input;
+      const rect=anchor.getBoundingClientRect();
+      const width=Math.min(292,window.innerWidth-24);
+      let left=Math.min(rect.left,window.innerWidth-width-12);
+      left=Math.max(12,left);
+      let top=rect.bottom+7;
+      const estimatedHeight=250;
+      if(top+estimatedHeight>window.innerHeight-12) top=Math.max(12,rect.top-estimatedHeight-7);
+      popover.style.left=`${Math.round(left)}px`;
+      popover.style.top=`${Math.round(top)}px`;
+      popover.style.width=`${Math.round(width)}px`;
     },true);
   }
 
