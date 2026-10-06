@@ -174,11 +174,21 @@
     return String(value ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
+  function formatMonthValue(value) {
+    const match=/^(\d{4})-(\d{2})$/.exec(String(value||''));
+    if(!match) return 'Choose month';
+    return new Intl.DateTimeFormat('en-GB',{month:'long',year:'numeric'}).format(new Date(Number(match[1]),Number(match[2])-1,1));
+  }
+
+  function monthField(attributes,value='') {
+    return `<input type="hidden" ${attributes} value="${escape(value)}"><button type="button" class="setup-month-field" data-month-field><span>${formatMonthValue(value)}</span><i aria-hidden="true"></i></button>`;
+  }
+
 
   function dealRow(deal = {}) {
     return `<div class="history-row history-deal-row" data-history-deal>
-      <label>From<input type="month" data-history="start" value="${escape(deal.start)}"></label>
-      <label>To<input type="month" data-history="end" value="${escape(deal.end)}"></label>
+      <label>From${monthField('data-history="start"',deal.start)}</label>
+      <label>To${monthField('data-history="end"',deal.end)}</label>
       <label>Rate (%)<input type="text" inputmode="decimal" data-history="rate" value="${escape(deal.rate)}"></label>
       <label>Payment (£/mo)<input type="text" inputmode="decimal" data-history="payment" value="${escape(deal.payment)}"></label>
       <label>Overpay (£/mo)<input type="text" inputmode="decimal" data-history="overpayment" value="${escape(deal.overpayment)}"></label>
@@ -188,7 +198,7 @@
 
   function lumpRow(item = {}) {
     return `<div class="history-row history-lump-row" data-history-lump>
-      <label>Date<input type="month" data-history="date" value="${escape((item.date || '').slice(0,7))}"></label>
+      <label>Date${monthField('data-history="date"',(item.date || '').slice(0,7))}</label>
       <label>Amount (£)<input type="text" inputmode="decimal" data-history="amount" value="${escape(item.amount)}"></label>
       <label class="history-note-label">Note<input type="text" data-history="note" value="${escape(item.note)}" placeholder="Optional"></label>
       <button type="button" class="history-remove" data-remove-history aria-label="Remove lump sum">Remove</button>
@@ -258,7 +268,11 @@
     const values = { rate:state.rate, payment:state.payment, overpayment:state.currentOverpayment, end:state.fixedEnd };
     Object.entries(values).forEach(([key,value]) => {
       const field = row.querySelector(`[data-history="${key}"]`);
-      if (field && document.activeElement !== field) field.value = value ?? '';
+      if (field && document.activeElement !== field) {
+        field.value = value ?? '';
+        const display=field.closest('label')?.querySelector('[data-month-field] span');
+        if(display) display.textContent=formatMonthValue(field.value);
+      }
     });
     const synced = readFromSection(section);
     save(synced, { storeToHistory:true });
@@ -277,7 +291,7 @@
       <div class="mortgage-history-body">
         <p class="history-intro">Use the actual completion price rather than the estate-agent listing price. For each deal, Payment is the lender's normal required payment and Overpay is the extra paid on top. “To” is treated as the month the next deal starts.</p>
         <div class="history-purchase-grid">
-          <label>Purchase / completion date<input type="month" data-history-root="purchaseDate" value="${escape((data.purchaseDate || '').slice(0,7))}"></label>
+          <label>Purchase / completion date${monthField('data-history-root="purchaseDate"',(data.purchaseDate || '').slice(0,7))}</label>
           <label>Actual purchase price (£)<input type="text" inputmode="decimal" data-history-root="purchasePrice" value="${escape(data.purchasePrice)}"></label>
           <label>Original mortgage (£)<input type="text" inputmode="decimal" data-history-root="originalMortgage" value="${escape(data.originalMortgage)}"></label>
           <label>Share owned at purchase (%)<input type="text" inputmode="decimal" data-history-root="ownership" value="${escape(data.ownership)}"></label>
