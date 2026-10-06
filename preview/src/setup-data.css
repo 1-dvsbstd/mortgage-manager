@@ -611,3 +611,8 @@ body .personal-modal .deal-term-menu button:focus-visible{
   color:#6f4a2d;
   outline:none;
 }
+
+body .personal-modal .deal-term-field [data-deal-calendar]{
+  pointer-events:auto;
+  cursor:pointer;
+}
