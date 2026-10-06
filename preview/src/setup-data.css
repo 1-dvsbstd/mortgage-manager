@@ -430,6 +430,11 @@ body .personal-backdrop .personal-modal #dataBackupSection{
 body .personal-modal input[type="month"]{
   cursor:pointer;
   user-select:none;
+  padding-right:42px!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Crect x='2.25' y='3.5' width='11.5' height='10.25' rx='2' stroke='%238b6849' stroke-width='1.25'/%3E%3Cpath d='M5 2.25v2.5M11 2.25v2.5M2.75 6.5h10.5' stroke='%238b6849' stroke-width='1.25' stroke-linecap='round'/%3E%3Cpath d='M5 9h1M7.5 9h1M10 9h1M5 11.25h1M7.5 11.25h1M10 11.25h1' stroke='%238b6849' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E")!important;
+  background-repeat:no-repeat!important;
+  background-position:right 13px center!important;
+  background-size:16px 16px!important;
 }
 body .personal-modal input[type="month"]::-webkit-calendar-picker-indicator{
   display:none;
