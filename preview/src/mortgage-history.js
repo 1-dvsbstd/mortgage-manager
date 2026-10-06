@@ -250,7 +250,7 @@
       <label>To
         <input type="hidden" data-history="end" value="${escape(deal.end)}">
         <div class="deal-term-control">
-          <button type="button" class="setup-month-field deal-term-field ${deal.end?'has-date':''}" data-deal-term data-years="${escape(years)}"><span>${deal.end?formatMonthValue(deal.end):'Choose length'}</span><i aria-hidden="true"></i></button>
+          <button type="button" class="setup-month-field deal-term-field ${deal.end?'has-date':''}" data-deal-term data-years="${escape(years)}"><span>${deal.end?formatMonthValue(deal.end):'Choose length'}</span><i data-deal-calendar aria-label="Choose exact month"></i></button>
           <div class="deal-term-menu" hidden>${dealLengthOptions(deal)}</div>
         </div>
       </label>
@@ -385,6 +385,14 @@
 
     section.addEventListener('click', (event) => {
       event.stopPropagation();
+
+      const calendar=event.target.closest('[data-deal-calendar]');
+      if(calendar){
+        const row=calendar.closest('[data-history-deal]');
+        const end=row?.querySelector('[data-history="end"]');
+        if(end) document.dispatchEvent(new CustomEvent('mortgage-open-month-picker',{detail:{input:end}}));
+        return;
+      }
 
       const termButton=event.target.closest('[data-deal-term]');
       if(termButton){
