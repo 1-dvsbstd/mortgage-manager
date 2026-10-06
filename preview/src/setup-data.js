@@ -231,7 +231,8 @@
     document.body.appendChild(backdrop);
     document.dispatchEvent(new CustomEvent('mortgage-setup-opened', { detail:{ firstRun:!localStorage.getItem(SETUP_KEY) } }));
     const close = () => backdrop.remove();
-    backdrop.addEventListener('click', (event) => { if (event.target === backdrop) close(); });
+    // Setup contains editable data: require an explicit close action so a drag/text
+    // selection that ends on the backdrop cannot accidentally discard the modal.
     backdrop.querySelector('.personal-close')?.addEventListener('click', close);
     backdrop.querySelector('[data-action="cancel"]')?.addEventListener('click', close);
     backdrop.querySelector('[data-action="save"]')?.addEventListener('click', () => {
