@@ -57,13 +57,13 @@
       </button>
       <div id="setupBudgetBody" class="setup-budget-body" hidden>
         <div class="setup-future-grid">
-          <label>Household income (£/year)<input data-budget-field="householdIncome" type="number" min="0" step="1000" inputmode="decimal"></label>
-          <label>Household take-home (£/month)<input data-budget-field="monthlyTakeHome" type="number" min="0" step="50" inputmode="decimal"><span>Used to put mortgage-free targets in context.</span></label>
-          <label>Savings available (£)<input data-budget-field="savings" type="number" min="0" step="1000" inputmode="decimal"></label>
-          <label>Cash buffer to keep (£)<input data-budget-field="cashBuffer" type="number" min="0" step="1000" inputmode="decimal"></label>
-          <label>Estimated selling costs (£)<input data-budget-field="saleCosts" type="number" min="0" step="500" inputmode="decimal"></label>
-          <label>Estimated purchase costs (£)<input data-budget-field="purchaseCosts" type="number" min="0" step="500" inputmode="decimal"></label>
-          <label>Borrowing multiple<input data-budget-field="borrowingMultiple" type="number" min="0" max="10" step="0.1" inputmode="decimal"><span>Planning only; actual lender affordability can differ.</span></label>
+          <label>Household income (£/year)<input data-budget-field="householdIncome" type="text" inputmode="decimal"></label>
+          <label>Household take-home (£/month)<input data-budget-field="monthlyTakeHome" type="text" inputmode="decimal"><span>Used to put mortgage-free targets in context.</span></label>
+          <label>Savings available (£)<input data-budget-field="savings" type="text" inputmode="decimal"></label>
+          <label>Cash buffer to keep (£)<input data-budget-field="cashBuffer" type="text" inputmode="decimal"></label>
+          <label>Estimated selling costs (£)<input data-budget-field="saleCosts" type="text" inputmode="decimal"></label>
+          <label>Estimated purchase costs (£)<input data-budget-field="purchaseCosts" type="text" inputmode="decimal"></label>
+          <label>Borrowing multiple<input data-budget-field="borrowingMultiple" type="text" inputmode="decimal"><span>Planning only; actual lender affordability can differ.</span></label>
         </div>
       </div>`;
     futurePane.appendChild(section);
