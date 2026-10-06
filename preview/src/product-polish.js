@@ -20,12 +20,15 @@
 
   function ensureMethodologySection(modal){
     if(!modal||modal.querySelector('#methodologySection')) return;
-    const section=document.createElement('details');
+    const section=document.createElement('section');
     section.id='methodologySection';
     section.className='personal-section methodology-section';
     section.innerHTML=`
-      <summary><span><strong>How Mortgage Manager calculates</strong><small>See how projections, valuations and planning estimates are worked out.</small></span></summary>
-      <div class="mortgage-history-body methodology-body">
+      <button type="button" class="methodology-toggle" aria-expanded="false" aria-controls="methodologyBody">
+        <span><strong>How Mortgage Manager calculates</strong><small>See how projections, valuations and planning estimates are worked out.</small></span>
+        <i aria-hidden="true"></i>
+      </button>
+      <div id="methodologyBody" class="mortgage-history-body methodology-body" hidden>
         <div class="methodology-grid">
           <div class="methodology-item"><strong>Mortgage projection</strong><p>Uses your balance, rate, payment and selected overpayment. Interest is modelled monthly.</p></div>
           <div class="methodology-item"><strong>Overpayments</strong><p>Compares the selected repayment path with the same mortgage without that extra payment.</p></div>
@@ -37,6 +40,14 @@
         <p class="methodology-disclaimer"><strong>Planning estimates only.</strong> Actual valuations, lender affordability, fees, taxes and mortgage terms can differ.</p>
       </div>`;
 
+    const toggle=section.querySelector('.methodology-toggle');
+    const body=section.querySelector('.methodology-body');
+    toggle?.addEventListener('click',()=>{
+      const open=toggle.getAttribute('aria-expanded')==='true';
+      toggle.setAttribute('aria-expanded',String(!open));
+      if(body) body.hidden=open;
+    });
+
     const currentPane=modal.querySelector('[data-setup-pane="current"]');
     const sections=[...modal.querySelectorAll('.personal-section')];
     const backup=sections.find((item)=>['Backup','Backup & restore'].includes(item.querySelector('h3,strong')?.textContent?.trim()));
@@ -45,6 +56,7 @@
     else if(backup) backup.insertAdjacentElement('beforebegin',section);
     else modal.appendChild(section);
   }
+
 
   function polishSetupModal(){
     const modal=document.querySelector('.personal-modal');
