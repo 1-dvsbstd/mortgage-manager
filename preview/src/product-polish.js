@@ -60,19 +60,19 @@
 
     const sections=[...modal.querySelectorAll('.personal-section')];
     const backup=sections.find((section)=>['Backup','Backup & restore'].includes(section.querySelector('h3')?.textContent?.trim()));
-    if(backup){
-      setText(backup.querySelector('h3'),'Backup & restore');
-      setText(backup.querySelector('p'),'Export a portable copy of everything saved by Mortgage Manager before changing device, clearing browser data or resetting the app.');
+    const footer=modal.querySelector('.personal-footer-actions');
+    if(backup&&footer){
       const actions=backup.querySelector('.personal-actions');
-      if(actions&&!actions.querySelector('.clear-local-data')){
-        const clear=document.createElement('button');
-        clear.type='button';
-        clear.className='personal-button danger clear-local-data';
-        clear.textContent='Clear all local data';
-        clear.addEventListener('click',clearAllMortgageData);
-        actions.appendChild(clear);
+      if(actions){
+        actions.classList.add('setup-backup-actions');
+        actions.querySelector('.clear-local-data')?.remove();
+        if(actions.parentElement!==footer) footer.prepend(actions);
       }
+      backup.remove();
     }
+
+    const duplicateBackup=modal.querySelector('#dataBackupSection');
+    duplicateBackup?.remove();
 
     ensureMethodologySection(modal);
   }
