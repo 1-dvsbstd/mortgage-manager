@@ -140,6 +140,12 @@
     if (event.target.closest('[data-app-view="current"]')) setTimeout(run, 80);
   });
   if (window.MortgageStore?.subscribe) MortgageStore.subscribe(() => requestAnimationFrame(run));
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => [250,700,1200].forEach((delay) => setTimeout(run, delay)), { once:true });
-  else [0,350,850].forEach((delay) => setTimeout(run, delay));
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => {
+    run();
+    [180,700].forEach((delay) => setTimeout(run, delay));
+  }, { once:true });
+  else {
+    run();
+    [180,700].forEach((delay) => setTimeout(run, delay));
+  }
 })();
