@@ -204,8 +204,18 @@
   }
 
 
+  function formatMonthValue(value){
+    const match=/^(\d{4})-(\d{2})$/.exec(String(value||''));
+    if(!match) return 'Choose month';
+    return new Intl.DateTimeFormat('en-GB',{month:'long',year:'numeric'}).format(new Date(Number(match[1]),Number(match[2])-1,1));
+  }
+
   function inputMarkup(id, label, type='number', step='1') {
     const value = currentState()[id] ?? '';
+    if(type==='month'){
+      const escaped=String(value).replace(/"/g,'&quot;');
+      return `<label>${label}<input data-personal-field="${id}" type="hidden" value="${escaped}" /><button type="button" class="setup-month-field" data-month-field><span>${formatMonthValue(value)}</span><i aria-hidden="true"></i></button></label>`;
+    }
     const numeric = type === 'number';
     const input = `<input data-personal-field="${id}" type="${numeric?'text':type}" ${numeric ? 'inputmode="decimal"' : ''} value="${String(value).replace(/"/g,'&quot;')}" />`;
     return `<label>${label}${input}</label>`;
@@ -253,7 +263,8 @@
     };
 
     const position=()=>{
-      const rect=input.getBoundingClientRect();
+      const anchor=input.closest('label')?.querySelector('[data-month-field]')||input;
+      const rect=anchor.getBoundingClientRect();
       const width=Math.min(292,window.innerWidth-24);
       let left=Math.min(rect.left,window.innerWidth-width-12);
       left=Math.max(12,left);
@@ -277,6 +288,8 @@
       }else if(target.dataset.month){
         input.value=`${year}-${String(target.dataset.month).padStart(2,'0')}`;
       }else return;
+      const display=input.closest('label')?.querySelector('[data-month-field] span');
+      if(display) display.textContent=formatMonthValue(input.value);
       input.dispatchEvent(new Event('input',{bubbles:true}));
       input.dispatchEvent(new Event('change',{bubbles:true}));
       closeSetupMonthPicker();
@@ -292,10 +305,11 @@
     document.documentElement.dataset.setupMonthInputs='true';
 
     document.addEventListener('click',(event)=>{
-      const input=event.target.closest?.('.personal-modal input[type="month"]');
-      if(input){
+      const button=event.target.closest?.('.personal-modal [data-month-field]');
+      if(button){
         event.preventDefault();
-        openSetupMonthPicker(input);
+        const input=button.closest('label')?.querySelector('input[type="hidden"]');
+        if(input) openSetupMonthPicker(input);
         return;
       }
       if(event.target.closest?.('.setup-month-popover')) return;
@@ -303,12 +317,6 @@
     },true);
 
     document.addEventListener('keydown',(event)=>{
-      const input=event.target.closest?.('.personal-modal input[type="month"]');
-      if(input&&(event.key==='Enter'||event.key===' ')){
-        event.preventDefault();
-        openSetupMonthPicker(input);
-        return;
-      }
       if(event.key==='Escape') closeSetupMonthPicker();
     });
 
