@@ -360,8 +360,44 @@
   }
 
   document.addEventListener('click', (event) => {
+    const exportButton=event.target.closest('[data-action="export"]');
+    if(exportButton){
+      event.preventDefault();
+      event.stopPropagation();
+      downloadBackup();
+      return;
+    }
+
+    const importButton=event.target.closest('[data-action="import"]');
+    if(importButton){
+      event.preventDefault();
+      event.stopPropagation();
+      const modal=importButton.closest('.personal-modal');
+      const input=modal?.querySelector('.personal-import-input');
+      if(input){
+        input.value='';
+        input.click();
+      }
+      return;
+    }
+
     if (event.target.closest('#personalDataButton,#propertyCostComparison,#recordSnapshot,[data-action="snapshot"],[data-action="save"],[data-action="reset-history"]')) schedule(35);
   });
+
+  document.addEventListener('change', async (event) => {
+    const input=event.target.closest?.('.personal-import-input');
+    if(!input) return;
+    const file=input.files?.[0];
+    if(!file) return;
+    try{
+      await importBackup(file);
+    }catch(error){
+      window.alert(error?.message || 'Could not restore that Mortgage Manager backup.');
+    }finally{
+      input.value='';
+    }
+  });
+
   document.addEventListener('input', (event) => {
     if (event.target.matches('#projectionTrendRate,#projectionPurchasePrice,#projectionImprovements')) schedule(20);
   });
