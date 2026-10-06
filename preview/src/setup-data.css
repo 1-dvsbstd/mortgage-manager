@@ -422,3 +422,39 @@ body .personal-backdrop .personal-modal #dataBackupSection{
     margin:0 0 8px!important;
   }
 }
+
+
+/* Setup month control */
+.personal-modal .setup-month-control{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 40px;
+  gap:6px;
+  align-items:stretch;
+  width:100%;
+}
+.personal-modal .setup-month-control input[type="month"]{
+  min-width:0;
+  margin:0;
+}
+.personal-modal .setup-month-picker{
+  display:grid;
+  place-items:center;
+  min-width:40px;
+  min-height:42px;
+  margin:0;
+  padding:0;
+  border:1px solid #ddd2c6;
+  border-radius:10px;
+  background:#fffaf4;
+  color:#7e5837;
+  font:inherit;
+  font-size:16px;
+  line-height:1;
+  cursor:pointer;
+}
+.personal-modal .setup-month-picker:hover,
+.personal-modal .setup-month-picker:focus-visible{
+  border-color:#c9986e;
+  background:#f2e7da;
+  outline:none;
+}
