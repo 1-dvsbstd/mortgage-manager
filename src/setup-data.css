@@ -200,16 +200,3 @@
 
 
 
-/* Setup inputs: native month picker, no numeric steppers. */
-.personal-modal input[type="number"]{
-  -moz-appearance:textfield;
-  appearance:textfield;
-}
-.personal-modal input[type="number"]::-webkit-outer-spin-button,
-.personal-modal input[type="number"]::-webkit-inner-spin-button{
-  -webkit-appearance:none;
-  margin:0;
-}
-.personal-modal input[type="month"]{
-  color-scheme:light;
-}
