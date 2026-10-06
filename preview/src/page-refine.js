@@ -806,99 +806,197 @@
     }
   }
 
-  function renderFutureDrivers(){
+  function futureHistorySummary(){
+    try{return JSON.parse(localStorage.getItem('mortgage-manager-mortgage-history-summary-v1')||'{}')||{};}
+    catch(_){return {};}
+  }
+
+  function futureHomeSettings(){
+    try{return JSON.parse(localStorage.getItem('mortgage-manager-home-projection-v4')||'{}')||{};}
+    catch(_){return {};}
+  }
+
+  function futureMoneyFromText(selector){
+    const text=$(selector)?.textContent||'';
+    return Math.max(0,Number(String(text).replace(/[^0-9.-]/g,''))||0);
+  }
+
+  function futurePayoffLabel(months){
+    if(!Number.isFinite(months)) return '—';
+    const date=new Date();
+    date.setMonth(date.getMonth()+Math.max(0,Math.round(months)));
+    return new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric'}).format(date);
+  }
+
+  function renderFutureLifetimeCost(){
     const future=$('.app-view-future .app-view-content');
     const state=window.MortgageStore?.get?.();
-    if(!future||!state) return;
+    if(!future||!state||!window.MortgageMath) return;
 
-    let section=$('#futureDrivers');
+    let section=$('#futureLifetimeCost');
     if(!section){
       section=document.createElement('section');
-      section.id='futureDrivers';
-      section.className='panel future-drivers';
+      section.id='futureLifetimeCost';
+      section.className='panel future-lifetime-cost';
       section.innerHTML=`
-        <div class="future-drivers-heading">
-          <p class="eyebrow">What drives the plan</p>
-          <h2>The numbers behind the projections</h2>
-          <p>Two things do most of the work over time: your home value changes, while the mortgage balance falls.</p>
-        </div>
-
-        <div class="future-driver-readout">
-          <aside class="future-driver-today">
-            <span>Today</span>
-            <div>
-              <small>Estimated home value</small>
-              <strong id="futureDriverHomeValue">—</strong>
-            </div>
-            <div>
-              <small>Current equity</small>
-              <strong id="futureDriverEquity">—</strong>
-            </div>
-          </aside>
-
-          <div class="future-driver-paths">
-            <div class="future-driver-path future-driver-path-home">
-              <div class="future-driver-path-title">
-                <span>Property value</span>
-                <small>Saved local HPI model</small>
-              </div>
-              <div class="future-driver-path-points">
-                <div><span>1 year</span><strong id="futureDriverValue1">—</strong></div>
-                <i aria-hidden="true">→</i>
-                <div><span>3 years</span><strong id="futureDriverValue3">—</strong></div>
-                <i aria-hidden="true">→</i>
-                <div><span>5 years</span><strong id="futureDriverValue5">—</strong></div>
-              </div>
-            </div>
-
-            <div class="future-driver-path future-driver-path-balance">
-              <div class="future-driver-path-title">
-                <span>Mortgage balance</span>
-                <small>Saved regular payment plan</small>
-              </div>
-              <div class="future-driver-path-points">
-                <div><span>Today</span><strong id="futureDriverBalanceNow">—</strong></div>
-                <i aria-hidden="true">→</i>
-                <div><span>3 years</span><strong id="futureDriverBalance3">—</strong></div>
-                <i aria-hidden="true">→</i>
-                <div><span>5 years</span><strong id="futureDriverBalance5">—</strong></div>
-                <i aria-hidden="true">→</i>
-                <div><span>10 years</span><strong id="futureDriverBalance10">—</strong></div>
-              </div>
-            </div>
+        <div class="future-cost-heading">
+          <div>
+            <p class="eyebrow">Lifetime mortgage cost</p>
+            <h2>What the mortgage is likely to cost you</h2>
+            <p>Combines the mortgage history you have entered with your saved repayment plan from today.</p>
           </div>
-        </div>`;
+          <div class="future-cost-date"><span>Mortgage-free</span><strong id="futureLifetimePayoff">—</strong></div>
+        </div>
+        <div class="future-lifetime-grid">
+          <article class="future-lifetime-primary">
+            <span>Estimated lifetime mortgage payments</span>
+            <strong id="futureLifetimePayments">—</strong>
+            <small id="futureLifetimePaymentsNote">—</small>
+          </article>
+          <article>
+            <span>Total interest</span>
+            <strong id="futureLifetimeInterest">—</strong>
+            <small id="futureLifetimeInterestNote">—</small>
+          </article>
+          <article>
+            <span>Interest still to pay</span>
+            <strong id="futureFutureInterest">—</strong>
+            <small>From today on your saved regular plan.</small>
+          </article>
+          <article>
+            <span>Remaining mortgage payments</span>
+            <strong id="futureRemainingPayments">—</strong>
+            <small>Capital + interest from today.</small>
+          </article>
+        </div>
+        <p class="future-lifetime-note" id="futureLifetimeNote"></p>`;
       future.appendChild(section);
     }
 
-    const copyText=(sourceId,targetId)=>{
-      const source=$(sourceId);
-      const target=$(targetId);
-      if(target) target.textContent=source?.textContent?.trim()||'—';
-    };
-    copyText('#projectionCurrentEstimate','#futureDriverHomeValue');
-    copyText('#projectionShareValue','#futureDriverEquity');
-    copyText('#homeForecast1','#futureDriverValue1');
-    copyText('#homeForecast3','#futureDriverValue3');
-    copyText('#homeForecast5','#futureDriverValue5');
-
-    const nowBalance=$('#futureDriverBalanceNow');
-    if(nowBalance) nowBalance.textContent=money(Math.max(0,Number(state.balance)||0));
-
-    const scheduled=Math.max(0,Number(state.payment)||0);
+    const balance=Math.max(0,Number(state.balance)||0);
+    const rate=Math.max(0,Number(state.rate)||0);
+    const payment=Math.max(0,Number(state.payment)||0);
     const regular=Math.max(0,Number(state.currentOverpayment)||0);
-    const path=window.MortgageMath?.amortize?.(Math.max(0,Number(state.balance)||0),Math.max(0,Number(state.rate)||0),scheduled+regular);
-    const points=path?.monthlyPoints||[];
-    const balanceAt=(months)=>{
-      if(!points.length) return null;
-      const index=Math.min(Math.max(0,months),Math.max(0,points.length-1));
-      return Number(points[index]);
-    };
-    [[36,'#futureDriverBalance3'],[60,'#futureDriverBalance5'],[120,'#futureDriverBalance10']].forEach(([months,id])=>{
-      const el=$(id);
-      const value=balanceAt(months);
-      if(el) el.textContent=Number.isFinite(value)?money(value):'—';
-    });
+    const path=MortgageMath.amortize(balance,rate,payment+regular);
+    const history=futureHistorySummary();
+    const historicalInterest=Math.max(0,Number(history.historicalInterest)||0);
+    const historicalPayments=Math.max(0,Number(history.historicalPayments)||0);
+    const futureInterest=Number.isFinite(path.interest)?Math.max(0,path.interest):0;
+    const remainingPayments=Number.isFinite(path.totalPaid)?Math.max(0,path.totalPaid):0;
+    const lifetimeInterest=historicalInterest+futureInterest;
+    const lifetimePayments=historicalPayments+remainingPayments;
+
+    $('#futureLifetimePayoff',section).textContent=futurePayoffLabel(path.months);
+    $('#futureFutureInterest',section).textContent=money(futureInterest);
+    $('#futureRemainingPayments',section).textContent=money(remainingPayments);
+
+    const hasHistory=historicalPayments>0||historicalInterest>0;
+    $('#futureLifetimePayments',section).textContent=hasHistory?money(lifetimePayments):money(remainingPayments);
+    $('#futureLifetimeInterest',section).textContent=hasHistory?money(lifetimeInterest):money(futureInterest);
+    $('#futureLifetimePaymentsNote',section).textContent=hasHistory
+      ? money(historicalPayments)+' estimated paid so far + '+money(remainingPayments)+' projected from today.'
+      : 'Currently showing projected payments from today; add mortgage history for a lifetime estimate.';
+    $('#futureLifetimeInterestNote',section).textContent=hasHistory
+      ? money(historicalInterest)+' estimated past interest + '+money(futureInterest)+' projected future interest.'
+      : 'Currently showing projected future interest only.';
+
+    const note=$('#futureLifetimeNote',section);
+    if(note){
+      note.textContent=hasHistory
+        ? (history.complete
+          ? 'Historical figures use the mortgage periods you entered. Future figures assume today’s rate and your saved regular payment plan continue.'
+          : 'Mortgage history is only partially complete, so lifetime totals are an estimate. Future figures assume today’s rate and your saved regular payment plan continue.')
+        : 'Add your previous mortgage deals in Setup & Data to include what you have already paid.';
+    }
+  }
+
+  function renderFutureLongTermOutcome(){
+    const future=$('.app-view-future .app-view-content');
+    const state=window.MortgageStore?.get?.();
+    if(!future||!state||!window.MortgageMath) return;
+
+    let section=$('#futureLongTermOutcome');
+    if(!section){
+      section=document.createElement('section');
+      section.id='futureLongTermOutcome';
+      section.className='panel future-long-term-outcome';
+      section.innerHTML=`
+        <div class="future-outcome-heading">
+          <div>
+            <p class="eyebrow">Long-term outcome</p>
+            <h2>What the home could be worth by the time the mortgage is gone</h2>
+            <p>Compares a projected property value with the known purchase price and mortgage interest we can account for.</p>
+          </div>
+        </div>
+        <div class="future-outcome-grid">
+          <article class="future-outcome-value">
+            <span>Projected value when mortgage-free</span>
+            <strong id="futureOutcomeValue">—</strong>
+            <small id="futureOutcomeValueNote">—</small>
+          </article>
+          <div class="future-outcome-vs">vs</div>
+          <article class="future-outcome-cost">
+            <span>Known lifetime home + mortgage cost</span>
+            <strong id="futureOutcomeCost">—</strong>
+            <small id="futureOutcomeCostNote">—</small>
+          </article>
+          <article class="future-outcome-difference">
+            <span>Projected value above known cost</span>
+            <strong id="futureOutcomeDifference">—</strong>
+            <small>This is not profit: maintenance, insurance, taxes, fees and other ownership costs are excluded.</small>
+          </article>
+        </div>
+      `;
+      future.appendChild(section);
+    }
+
+    const balance=Math.max(0,Number(state.balance)||0);
+    const rate=Math.max(0,Number(state.rate)||0);
+    const payment=Math.max(0,Number(state.payment)||0);
+    const regular=Math.max(0,Number(state.currentOverpayment)||0);
+    const ownership=Math.min(100,Math.max(0,Number(state.ownership)||0));
+    const path=MortgageMath.amortize(balance,rate,payment+regular);
+    if(!Number.isFinite(path.months)) return;
+
+    const history=futureHistorySummary();
+    const settings=futureHomeSettings();
+    const currentHome=futureMoneyFromText('#projectionCurrentEstimate')||Math.max(0,Number(state.homeValue)||0);
+    const trend=Number.isFinite(Number(settings.trend))?Number(settings.trend):2.5;
+    const years=path.months/12;
+    const projectedWhole=currentHome*Math.pow(1+trend/100,years);
+    const projectedShare=projectedWhole*(ownership/100);
+    const purchasePrice=Math.max(0,Number(history.purchasePrice)||Number(settings.purchasePrice)||0);
+    const improvements=Math.max(0,Number(settings.improvements)||0);
+    const historicalInterest=Math.max(0,Number(history.historicalInterest)||0);
+    const futureInterest=Math.max(0,Number(path.interest)||0);
+    const knownCost=purchasePrice?purchasePrice+improvements+historicalInterest+futureInterest:0;
+    const projectedValue=ownership<100?projectedShare:projectedWhole;
+    const difference=knownCost?projectedValue-knownCost:0;
+    const payoff=futurePayoffLabel(path.months);
+
+    $('#futureOutcomeValue',section).textContent=money(projectedValue);
+    $('#futureOutcomeValueNote',section).textContent=ownership<100
+      ? ownership.toFixed(ownership%1?1:0)+'% share of the projected whole-property value in '+payoff+'.'
+      : 'Projected to '+payoff+' using '+trend.toFixed(1)+'% annual home growth.';
+
+    const costEl=$('#futureOutcomeCost',section);
+    const costNote=$('#futureOutcomeCostNote',section);
+    const diffEl=$('#futureOutcomeDifference',section);
+    if(knownCost){
+      costEl.textContent=money(knownCost);
+      const parts=[money(purchasePrice)+' purchase price'];
+      if(improvements) parts.push(money(improvements)+' improvements');
+      if(historicalInterest) parts.push(money(historicalInterest)+' estimated past interest');
+      parts.push(money(futureInterest)+' projected future interest');
+      costNote.textContent=parts.join(' + ')+'.';
+      diffEl.textContent=(difference>=0?'+':'−')+money(Math.abs(difference));
+      section.classList.toggle('is-negative',difference<0);
+    }else{
+      costEl.textContent='Add purchase price';
+      costNote.textContent='Purchase details and mortgage history are managed in Setup & Data.';
+      diffEl.textContent='—';
+      section.classList.remove('is-negative');
+    }
   }
 
 
@@ -921,7 +1019,8 @@
     if(primary && future.firstElementChild!==primary) future.prepend(primary);
     const order=[
       $('#futurePayoffTargets'),
-      $('#futureDrivers')
+      $('#futureLifetimeCost'),
+      $('#futureLongTermOutcome')
     ].filter(Boolean);
     order.forEach((node)=>future.appendChild(node));
 
@@ -1003,7 +1102,9 @@
       }
     }
 
-    renderFutureDrivers();
+    $('#futureDrivers')?.remove();
+    renderFutureLifetimeCost();
+    renderFutureLongTermOutcome();
     organiseFutureFlow();
     refineFuturePresentation();
   }
@@ -1020,7 +1121,7 @@
   if(window.MortgageStore?.subscribe){
     MortgageStore.subscribe((next,previous)=>{
       if(next.currentOverpayment!==previous.currentOverpayment && next.scenarioExtra!==0) MortgageStore.set({scenarioExtra:0});
-      requestAnimationFrame(()=>{ renderWhatIfControls(); refineFutureAssumption(); refineUpcoming(); renderUpcomingRates(); renderFuturePayoffTargets(); renderFutureDrivers(); organiseFutureFlow(); });
+      requestAnimationFrame(()=>{ renderWhatIfControls(); refineFutureAssumption(); refineUpcoming(); renderUpcomingRates(); renderFuturePayoffTargets(); renderFutureLifetimeCost(); renderFutureLongTermOutcome(); organiseFutureFlow(); });
     });
   }
 
@@ -1029,7 +1130,11 @@
   });
 
   document.addEventListener('mortgage-next-home-updated',()=>{
-    requestAnimationFrame(()=>{ renderFuturePayoffTargets(); renderFutureDrivers(); organiseFutureFlow(); });
+    requestAnimationFrame(()=>{ renderFuturePayoffTargets(); renderFutureLifetimeCost(); renderFutureLongTermOutcome(); organiseFutureFlow(); });
+  });
+
+  document.addEventListener('mortgage-history-updated',()=>{
+    requestAnimationFrame(()=>{ renderFutureLifetimeCost(); renderFutureLongTermOutcome(); organiseFutureFlow(); });
   });
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>{setTimeout(run,780);setTimeout(run,1300);},{once:true});
