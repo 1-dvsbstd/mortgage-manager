@@ -44,7 +44,8 @@
   }
 
   function field(id,label,type='number',step='1',note=''){
-    return `<label>${label}<input id="${id}" type="${type}" ${type==='number'?`step="${step}" inputmode="decimal"`:''}>${note?`<span>${note}</span>`:''}</label>`;
+    const numeric=type==='number';
+    return `<label>${label}<input id="${id}" type="${numeric?'text':type}" ${numeric?'inputmode="decimal"':''}>${note?`<span>${note}</span>`:''}</label>`;
   }
 
   function mount(){
