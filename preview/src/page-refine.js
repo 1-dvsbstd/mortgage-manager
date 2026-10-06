@@ -522,16 +522,6 @@
           </div>
         </div>
 
-        <details class="future-next-home-method">
-          <summary>How this is calculated</summary>
-          <div class="future-next-home-method-grid">
-            <p><span>Home growth</span><strong id="futureMethodGrowth">—</strong></p>
-            <p><span>Regular overpayment</span><strong id="futureMethodOverpay">—</strong></p>
-            <p><span>Borrowing basis</span><strong id="futureMethodBorrowing">—</strong></p>
-            <p><span>Repayment assumption</span><strong id="futureMethodRepayment">—</strong></p>
-          </div>
-        </details>
-        <p class="future-next-home-note" id="futureNextHomeNote"></p>
         <div class="future-wait-source" hidden></div>`;
       planner.insertAdjacentElement('afterend',wait);
     }
@@ -670,23 +660,7 @@
         3
       );
 
-      const plannerSettings=(()=>{
-        try{return JSON.parse(localStorage.getItem('mortgage-manager-next-home-v1')||'{}')||{};}catch(_){return {};}
-      })();
-      const sourceNote=$('#nextHomeTrendNote',timeline)?.textContent?.trim()||'';
-      const growthMatch=sourceNote.match(/uses\s+([0-9.]+)%\/yr/i);
-      const growthEl=$('#futureMethodGrowth',wait);
-      const overpayEl=$('#futureMethodOverpay',wait);
-      const borrowingEl=$('#futureMethodBorrowing',wait);
-      const repaymentMethodEl=$('#futureMethodRepayment',wait);
-      if(growthEl) growthEl.textContent=growthMatch?growthMatch[1]+'% per year':'Saved property-growth assumption';
-      if(overpayEl) overpayEl.textContent=moneyShort(mortgageState.currentOverpayment||0)+'/month';
-      const multiple=Math.max(0,Number(plannerSettings.borrowingMultiple)||0);
-      if(borrowingEl) borrowingEl.textContent=multiple?('Household income × '+multiple.toFixed(1)):'Saved household-income assumptions';
-      if(repaymentMethodEl) repaymentMethodEl.textContent=planningRate.toFixed(2)+'% over '+planningTermYears+' years';
 
-      const note=$('#futureNextHomeNote',wait);
-      if(note) note.textContent='Planning estimate only. Actual lender affordability, purchase costs and eligibility can differ.';
     };
 
     if(!wait.dataset.heroBound){
