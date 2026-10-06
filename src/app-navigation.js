@@ -169,49 +169,28 @@
     refineUpcomingLayout();
   }
 
-  function mergeFuturePlanning(){
-    const future=$('.app-view-future .app-view-content');
-    const planner=document.getElementById('nextHomePlanner'), cost=document.getElementById('propertyCostComparison');
-    if(!planner) return;
-    if(planner.tagName==='DETAILS') planner.open=true;
-    if(cost && future){
-      cost.classList.add('panel','temporal-feature-card','temporal-feature-cost-comparison');
-      cost.classList.remove('future-cost-inline');
-      if(cost.parentElement!==future) future.appendChild(cost);
-    }
-    const settings=$('.next-home-settings',planner); if(settings?.tagName==='DETAILS') settings.open=true;
-    const history=document.getElementById('homeValueHistory'); if(history?.tagName==='DETAILS') history.open=true;
-  }
-
-  function labelFutureStages(){
-    const home=document.getElementById('homeProjection'), planner=document.getElementById('nextHomePlanner');
-    if(home&&!home.querySelector('.future-stage-label')) home.insertAdjacentHTML('afterbegin','<div class="future-stage-label"><span>1</span><strong>Home outlook</strong></div>');
-    const body=$('.next-home-body',planner);
-    if(body&&!body.querySelector('.future-stage-label')) body.insertAdjacentHTML('afterbegin','<div class="future-stage-label"><span>2</span><strong>Next-home planning</strong></div>');
-  }
-
   function relocateFutureFeatures(){
-    const future=$('.app-view-future .app-view-content'); if(!future)return;
+    const future=$('.app-view-future .app-view-content');
+    if(!future) return;
+
     const home=document.getElementById('homeProjection');
-    const model=document.getElementById('futureModelRange');
-    const outlook=document.getElementById('futureWaitPlanner');
     const planner=document.getElementById('nextHomePlanner');
     const cost=document.getElementById('propertyCostComparison');
 
-    if(home) cardifyFeature(home,'home-projection');
-    if(planner){ cardifyFeature(planner,'next-home'); planner.open=true; }
-    if(cost) cardifyFeature(cost,'cost-comparison');
-
-    mergeFuturePlanning(); labelFutureStages();
-
-    /* Future tells one story: set the scenario, establish today's property
-       value, show what today's equity enables, then move into forecasts and
-       the longer-term outcome. Append is intentional: it also repairs ordering
-       after legacy modules have moved nodes. */
-    [home,planner,model,outlook,cost].forEach((node)=>{
-      if(node && node.parentElement!==future) future.appendChild(node);
-      else if(node) future.appendChild(node);
-    });
+    if(home){
+      cardifyFeature(home,'home-projection');
+      if(home.parentElement!==future) future.appendChild(home);
+    }
+    if(planner){
+      cardifyFeature(planner,'next-home');
+      if(planner.tagName==='DETAILS') planner.open=true;
+      if(planner.parentElement!==future) future.appendChild(planner);
+    }
+    if(cost){
+      cardifyFeature(cost,'cost-comparison');
+      cost.classList.remove('future-cost-inline');
+      if(cost.parentElement!==future) future.appendChild(cost);
+    }
   }
 
   function restoreProfileSettings(profileSettings,originParent,originNext){ if(!profileSettings||!originParent||originParent.contains(profileSettings))return; if(originNext&&originNext.parentElement===originParent) originParent.insertBefore(profileSettings,originNext); else originParent.appendChild(profileSettings); }
