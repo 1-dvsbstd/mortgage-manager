@@ -203,32 +203,12 @@
     button.addEventListener('click', openSetup);
   }
 
-  function monthControl(inputMarkup){
-    return `<span class="setup-month-control">${inputMarkup}<button type="button" class="setup-month-picker" data-month-picker aria-label="Open month picker">▦</button></span>`;
-  }
 
   function inputMarkup(id, label, type='number', step='1') {
     const value = currentState()[id] ?? '';
     const numeric = type === 'number';
     const input = `<input data-personal-field="${id}" type="${numeric?'text':type}" ${numeric ? 'inputmode="decimal"' : ''} value="${String(value).replace(/"/g,'&quot;')}" />`;
-    return `<label>${label}${type==='month'?monthControl(input):input}</label>`;
-  }
-
-  function wireSetupMonthPickers(){
-    if(document.documentElement.dataset.setupMonthPickers==='true') return;
-    document.documentElement.dataset.setupMonthPickers='true';
-    document.addEventListener('click',(event)=>{
-      const button=event.target.closest?.('.personal-modal [data-month-picker]');
-      if(!button) return;
-      const input=button.closest('.setup-month-control')?.querySelector('input[type="month"]');
-      if(!input) return;
-      input.focus({preventScroll:true});
-      if(typeof input.showPicker==='function'){
-        try{ input.showPicker(); }catch(_){}
-      }else{
-        input.click();
-      }
-    });
+    return `<label>${label}${input}</label>`;
   }
 
   function openSetup() {
@@ -344,7 +324,6 @@
     if (!hasSetup && !hasLegacyMortgage) setTimeout(openSetup, 450);
   }
 
-  wireSetupMonthPickers();
   setupButton();
   ensureProgressCard();
   ensureDealGuidance();
