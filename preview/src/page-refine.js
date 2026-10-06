@@ -968,8 +968,7 @@
     const sources=[
       $('#homeProjection'),
       $('#futureModelRange'),
-      $('#nextHomePlanner'),
-      $('#propertyCostComparison')
+      $('#nextHomePlanner')
     ].filter(Boolean);
     sources.forEach((node)=>node.classList.add('future-source-only'));
 
@@ -1034,31 +1033,7 @@
     renderFuturePayoffTargets();
     $('#nextHomePlanner')?.classList.add('next-home-position-compact');
 
-    const cost=$('#propertyCostComparison');
-    if(cost){
-      cost.classList.add('panel','temporal-feature-card','temporal-feature-cost-comparison');
-      cost.classList.remove('future-cost-inline');
-    }
-    if(cost){
-      const cards=cost.querySelectorAll('.property-cost-card');
-      cards.forEach((card)=>card.classList.remove('long-term-value-card','long-term-cost-card'));
-      if(cards.length>=2){
-        const value=Number((cards[0].querySelector('strong')?.textContent||'').replace(/[^0-9.-]/g,''))||0;
-        const costValue=Number((cards[1].querySelector('strong')?.textContent||'').replace(/[^0-9.-]/g,''))||0;
-        let result=cost.querySelector('.long-term-difference-note');
-        if(!result){
-          result=document.createElement('div');
-          result.className='long-term-difference-note';
-          cost.querySelector('.property-cost-grid')?.insertAdjacentElement('afterend',result);
-        }
-        if(value&&costValue){
-          const diff=value-costValue;
-          result.innerHTML=`<span>Projected difference</span><strong>${diff>=0?'+':'−'}£${Math.round(Math.abs(diff)).toLocaleString('en-GB')}</strong><small>${diff>=0?'Projected value above known purchase + mortgage cost':'Known purchase + mortgage cost above projected value'}</small>`;
-        }else{
-          result.innerHTML='<span>Projected difference</span><strong>—</strong><small>Add purchase and mortgage history to compare</small>';
-        }
-      }
-    }
+
 
     $('#futureDrivers')?.remove();
     renderFutureLifetimeCost();
