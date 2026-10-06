@@ -24,29 +24,6 @@
     return section;
   }
 
-  function cardifyFeature(element,kind){ if(!element)return; element.classList.add('panel','temporal-feature-card',`temporal-feature-${kind}`); }
-
-  function ensureFutureAssumption(){
-    const future=$('.app-view-future .app-view-content'); if(!future)return;
-    let panel=document.getElementById('futureOverpaymentAssumption');
-    if(!panel){
-      panel=document.createElement('section'); panel.id='futureOverpaymentAssumption'; panel.className='future-overpayment-assumption';
-      panel.innerHTML=`<div class="future-assumption-copy"><div><span class="future-assumption-label">Planning with</span><strong id="futureExtraSummary">£0/month extra</strong></div><p>Future projections follow the What-if amount from Current.</p></div><div class="future-assumption-controls" aria-label="Future extra overpayment assumption"><button type="button" data-future-extra="0">£0</button><button type="button" data-future-extra="50">£50</button><button type="button" data-future-extra="100">£100</button><button type="button" data-future-extra="250">£250</button><button type="button" data-future-extra="500">£500</button><label>Custom £<input id="futureExtraInput" type="number" min="0" step="10" inputmode="decimal"></label></div>`;
-      future.insertAdjacentElement('afterbegin',panel);
-      panel.addEventListener('click',(event)=>{ const button=event.target.closest('[data-future-extra]'); if(!button||!window.MortgageStore)return; MortgageStore.set({scenarioExtra:Math.max(0,Number(button.dataset.futureExtra)||0)}); });
-      $('#futureExtraInput',panel)?.addEventListener('input',(event)=>{ if(window.MortgageStore) MortgageStore.set({scenarioExtra:Math.max(0,Number(event.target.value)||0)}); });
-    }
-    renderFutureAssumption();
-  }
-
-  function renderFutureAssumption(){
-    const panel=document.getElementById('futureOverpaymentAssumption'); if(!panel)return;
-    const extra=Math.max(0,Number(window.MortgageStore?.get?.().scenarioExtra)||0), summary=document.getElementById('futureExtraSummary'), input=document.getElementById('futureExtraInput');
-    if(summary) summary.textContent=`${money(extra)}/month extra`;
-    if(input&&document.activeElement!==input) input.value=String(extra);
-    panel.querySelectorAll('[data-future-extra]').forEach((button)=>button.classList.toggle('active',Number(button.dataset.futureExtra)===extra));
-  }
-
   function ensureCurrentOverpaymentPanel(){
     const current=$('.app-view-current .app-view-content'); if(!current)return;
     let panel=document.getElementById('currentOverpaymentPanel');
@@ -180,45 +157,6 @@
   }
 
 
-  function mergeFuturePlanning(){
-    const future=$('.app-view-future .app-view-content');
-    const planner=document.getElementById('nextHomePlanner'), cost=document.getElementById('propertyCostComparison');
-    if(!planner) return;
-    if(planner.tagName==='DETAILS') planner.open=true;
-    if(cost && future){
-      cost.classList.add('panel','temporal-feature-card','temporal-feature-cost-comparison');
-      cost.classList.remove('future-cost-inline');
-      if(cost.parentElement!==future) future.appendChild(cost);
-    }
-    const settings=$('.next-home-settings',planner); if(settings?.tagName==='DETAILS') settings.open=true;
-    const history=document.getElementById('homeValueHistory'); if(history?.tagName==='DETAILS') history.open=true;
-  }
-
-  function labelFutureStages(){
-    const home=document.getElementById('homeProjection'), planner=document.getElementById('nextHomePlanner');
-    if(home&&!home.querySelector('.future-stage-label')) home.insertAdjacentHTML('afterbegin','<div class="future-stage-label"><span>1</span><strong>Home outlook</strong></div>');
-    const body=$('.next-home-body',planner);
-    if(body&&!body.querySelector('.future-stage-label')) body.insertAdjacentHTML('afterbegin','<div class="future-stage-label"><span>2</span><strong>Next-home planning</strong></div>');
-  }
-
-  function relocateFutureFeatures(){
-    const future=$('.app-view-future .app-view-content'); if(!future)return; ensureFutureAssumption();
-    const assumption=document.getElementById('futureOverpaymentAssumption');
-    const home=document.getElementById('homeProjection');
-    const model=document.getElementById('futureModelRange');
-    const outlook=document.getElementById('futureWaitPlanner');
-    const planner=document.getElementById('nextHomePlanner');
-    const cost=document.getElementById('propertyCostComparison');
-
-    if(home) cardifyFeature(home,'home-projection');
-    if(planner){ cardifyFeature(planner,'next-home'); planner.open=true; }
-    if(cost) cardifyFeature(cost,'cost-comparison');
-
-    mergeFuturePlanning(); labelFutureStages();
-
-    [assumption,home,model,outlook,planner,cost].filter(Boolean).forEach((node)=>future.appendChild(node));
-  }
-
   function restoreProfileSettings(profileSettings,originParent,originNext){ if(!profileSettings||!originParent||originParent.contains(profileSettings))return; if(originNext&&originNext.parentElement===originParent) originParent.insertBefore(profileSettings,originNext); else originParent.appendChild(profileSettings); }
 
   function mountProfileSettingsInSetup(){
@@ -238,7 +176,7 @@
     setTimeout(mountProfileSettingsInSetup,520);
   }
 
-  function organiseViews(){ relocateFutureFeatures(); relocateCurrentFeatures(); relocateUpcomingFeatures(); wireSetupProfileSettings(); }
+  function organiseViews(){ relocateCurrentFeatures(); relocateUpcomingFeatures(); wireSetupProfileSettings(); }
 
   function buildShell(){
     const shell=$('.app-view-shell');
@@ -248,7 +186,5 @@
     setTimeout(organiseViews,240);
   }
 
-
-  if(window.MortgageStore?.subscribe) MortgageStore.subscribe((next,previous)=>{ if(next.scenarioExtra!==previous.scenarioExtra) requestAnimationFrame(renderFutureAssumption); });
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>requestAnimationFrame(buildShell),{once:true}); else requestAnimationFrame(buildShell);
 })();
