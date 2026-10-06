@@ -169,16 +169,6 @@
     if(workspace) workspace.classList.add('design-workspace-full');
   }
 
-  function finalizeFuture(){
-    const future=$('.app-view-future .app-view-content');
-    const wait=$('#futureWaitPlanner');
-    if(!future||!wait) return;
-    const range=$('#futureModelRange');
-    const home=$('#homeProjection');
-    const anchor=range||home;
-    if(anchor&&wait.previousElementSibling!==anchor) anchor.insertAdjacentElement('afterend',wait);
-  }
-
   function disableDeadExpansion(){
     document.querySelectorAll('.app-view [data-expandable-card]').forEach((card)=>{
       card.classList.remove('expandable-card','is-expanded');
@@ -194,7 +184,6 @@
   function run(){
     finalizeCurrent();
     finalizeUpcoming();
-    finalizeFuture();
     disableDeadExpansion();
   }
 
