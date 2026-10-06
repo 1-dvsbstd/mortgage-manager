@@ -5482,3 +5482,23 @@ body .future-assumption-controls button:hover{background:var(--theme-hover)!impo
 .app-view-future .future-next-home-note{
   display:none!important;
 }
+
+/* Future v54 — open up the next-home hero and remove redundant dividers. */
+.app-view-future .future-next-home-c-stage{
+  margin-top:24px!important;
+  padding:20px 0 34px!important;
+  border-top:0!important;
+  border-bottom:0!important;
+}
+.app-view-future #futureWaitPlanner.future-next-home-hero.option-c{
+  padding-bottom:30px!important;
+}
+.app-view-future .future-budget-donut-wrap{
+  align-self:center!important;
+  padding-bottom:4px!important;
+}
+@media(max-width:700px){
+  .app-view-future .future-next-home-c-stage{
+    padding-bottom:24px!important;
+  }
+}
