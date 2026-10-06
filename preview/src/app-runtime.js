@@ -298,22 +298,10 @@
 
   function ensureBackupSection() {
     const modal = document.querySelector('.personal-modal');
-    if (!modal || $('dataBackupSection')) return;
-    const section = document.createElement('details');
-    section.id = 'dataBackupSection';
-    section.className = 'personal-section data-backup-section';
-    section.innerHTML = `<summary><span><strong>Backup & restore</strong><small>Keep a portable copy of everything saved on this device</small></span><span class="history-summary-chevron">+</span></summary><div class="mortgage-history-body"><p class="history-intro">Your mortgage data is stored locally. Export a backup before changing browser, clearing site data or moving to another device.</p><div class="backup-actions"><button type="button" class="personal-button" data-backup-export>Export backup</button><button type="button" class="personal-button" data-backup-import>Restore backup</button><input class="backup-file" type="file" accept="application/json,.json" data-backup-file></div><p class="backup-status" data-backup-status>No account or cloud storage required.</p></div>`;
-    modal.appendChild(section);
-    const status = section.querySelector('[data-backup-status]');
-    const input = section.querySelector('[data-backup-file]');
-    section.querySelector('[data-backup-export]').addEventListener('click', () => { downloadBackup(); status.textContent = 'Backup downloaded.'; });
-    section.querySelector('[data-backup-import]').addEventListener('click', () => input.click());
-    input.addEventListener('change', async () => {
-      const file = input.files?.[0];
-      if (!file) return;
-      try { await importBackup(file, status); }
-      catch (error) { status.textContent = error?.message || 'Could not restore this backup.'; input.value = ''; }
-    });
+    if (!modal) return;
+    // Backup actions are owned by the Setup & Data footer.
+    // Remove the legacy duplicate section if an older cached DOM created it.
+    $('dataBackupSection')?.remove();
   }
 
   function ensureQuickLumpSumAction() {
