@@ -1189,6 +1189,14 @@
     requestAnimationFrame(()=>{ renderFutureLifetimeCost(); renderFutureLongTermOutcome(); organiseFutureFlow(); });
   });
 
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>{setTimeout(run,780);setTimeout(run,1300);},{once:true});
-  else {setTimeout(run,780);setTimeout(run,1300);}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>{
+    run();
+    setTimeout(run,180);
+    setTimeout(run,700);
+  },{once:true});
+  else {
+    run();
+    setTimeout(run,180);
+    setTimeout(run,700);
+  }
 })();
