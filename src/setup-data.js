@@ -202,23 +202,12 @@
     if (document.documentElement.dataset.setupInputBehaviour === 'true') return;
     document.documentElement.dataset.setupInputBehaviour = 'true';
 
-    document.addEventListener('pointerdown', (event) => {
-      const field = event.target.closest?.('.personal-modal input[type="month"]');
-      if (!field || typeof field.showPicker !== 'function') return;
-      event.preventDefault();
-      try {
-        field.focus({ preventScroll:true });
-        field.showPicker();
-      } catch (_) {}
-    }, true);
-
     document.addEventListener('wheel', (event) => {
       const field = event.target.closest?.('.personal-modal input[type="number"]');
       if (!field) return;
       event.preventDefault();
       field.blur();
-      const scroller = field.closest('.personal-modal');
-      if (scroller) scroller.scrollTop += event.deltaY;
+      field.closest('.personal-modal')?.scrollBy({ top:event.deltaY, left:0, behavior:'auto' });
     }, { passive:false, capture:true });
   }
 
