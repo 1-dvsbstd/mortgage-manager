@@ -306,16 +306,10 @@
     document.documentElement.dataset.setupMonthInputs='true';
 
     document.addEventListener('click',(event)=>{
-      const button=event.target.closest?.('.personal-modal [data-month-field]');
-      if(button){
-        event.preventDefault();
-        const input=button.closest('label')?.querySelector('input[type="hidden"]');
-        if(input) openSetupMonthPicker(input);
-        return;
-      }
       if(event.target.closest?.('.setup-month-popover')) return;
+      if(event.target.closest?.('.personal-backdrop')) return;
       closeSetupMonthPicker();
-    },true);
+    });
 
     document.addEventListener('keydown',(event)=>{
       if(event.key==='Escape') closeSetupMonthPicker();
@@ -361,6 +355,16 @@
         <div class="personal-footer-actions"><button type="button" class="personal-button" data-action="cancel">Cancel</button><button type="button" class="personal-button primary" data-action="save">Save changes</button></div>
       </section>`;
     document.body.appendChild(backdrop);
+
+    backdrop.addEventListener('click',(event)=>{
+      const button=event.target.closest?.('[data-month-field]');
+      if(!button) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const input=button.closest('label')?.querySelector('input[type="hidden"]');
+      if(input) openSetupMonthPicker(input);
+    },true);
+
     document.dispatchEvent(new CustomEvent('mortgage-setup-opened', { detail:{ firstRun:!localStorage.getItem(SETUP_KEY) } }));
     const close = () => backdrop.remove();
     // Setup contains editable data: require an explicit close action so a drag/text
