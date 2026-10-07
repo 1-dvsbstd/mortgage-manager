@@ -87,10 +87,7 @@
           const input=customWrap.querySelector('#trajectoryCustomOverpay');
           if(!input) return;
 
-          const wasActive=customWrap.classList.contains('is-active');
-          if(!wasActive) setScenarioExtra(input.value);
-
-          if(event.target!==input || !wasActive){
+          if(event.target!==input){
             requestAnimationFrame(()=>{
               input.focus({preventScroll:true});
               input.select();
