@@ -63,7 +63,7 @@
 }
 
 @media(max-width:560px){
-  .chart-panel .legend{font-size:10px!important}
+  .chart-panel .legend{font-size:11px!important}
 }
 
 /* Consolidated former layout-qa.css layer */
@@ -180,7 +180,7 @@
 .v15-action-card{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0;padding:18px 20px;border:1px solid rgba(183,131,77,.24);border-radius:18px;background:linear-gradient(90deg,var(--surface-control),var(--accent-soft));box-shadow:0 12px 34px rgba(85,58,36,.055)}
 .v15-action-copy{display:flex;align-items:center;gap:14px;min-width:0}
 .v15-action-icon{display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border-radius:12px;background:var(--ink-active);color:#f4bd88;font-size:19px}
-.v15-action-copy span{display:block;color:var(--muted)!important;font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:800}
+.v15-action-copy span{display:block;color:var(--muted)!important;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:800}
 .v15-action-copy strong{display:block;margin-top:3px;font-size:18px;letter-spacing:-.02em;color:var(--text)!important}
 .v15-action-card button{appearance:none;border:0;background:transparent;color:var(--accent-strong)!important;font:inherit;font-weight:800;cursor:pointer;white-space:nowrap}
 
@@ -223,7 +223,7 @@
   display:block!important;
   margin:0 0 7px!important;
   color:var(--accent-strong)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   font-weight:800!important;
   letter-spacing:.10em!important;
   text-transform:uppercase!important;
@@ -293,7 +293,7 @@
 .app-view-upcoming .deal-planner-rate>span{
   display:block!important;
   color:var(--muted)!important;
-  font-size:8px!important;
+  font-size:11px!important;
   font-weight:750!important;
   letter-spacing:.02em!important;
   line-height:1.25!important;
@@ -311,13 +311,13 @@
   margin-left:2px!important;
   color:var(--muted)!important;
   font-family:var(--font-ui)!important;
-  font-size:8px!important;
+  font-size:11px!important;
 }
 .app-view-upcoming .deal-planner-rate>em{
   display:block!important;
   margin-top:7px!important;
   color:var(--muted-2)!important;
-  font-size:8px!important;
+  font-size:11px!important;
   font-style:normal!important;
   font-weight:650!important;
 }
@@ -350,7 +350,7 @@
   padding:12px 0 0!important;
   border-top:1px solid var(--up-border-soft)!important;
   color:var(--muted)!important;
-  font-size:8.5px!important;
+  font-size:11px!important;
   line-height:1.45!important;
 }
 .app-view-upcoming .upcoming-rates .live-rate-choices{
@@ -368,7 +368,7 @@
   justify-content:space-between!important;
   gap:14px!important;
   color:var(--muted)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   line-height:1.35!important;
 }
 .app-view-upcoming .upcoming-rates .live-rate-meta span{
@@ -376,7 +376,7 @@
 }
 .app-view-upcoming .upcoming-rates .live-rate-meta strong{
   color:var(--muted)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   font-weight:600!important;
 }
 /* Historical mortgage-rate trend */
@@ -385,7 +385,7 @@
   padding:18px 0 0!important;
   border-top:1px solid var(--up-border-soft)!important;
 }
-.app-view-upcoming .market-rate-trend-heading .eyebrow{margin:0!important;font-size:8px!important}
+.app-view-upcoming .market-rate-trend-heading .eyebrow{margin:0!important;font-size:11px!important}
 .app-view-upcoming .market-rate-trend-heading h3{
   margin:5px 0 0!important;
   color:var(--text)!important;
@@ -397,7 +397,7 @@
 .app-view-upcoming .market-rate-trend-heading p:last-child{
   margin:4px 0 0!important;
   color:var(--muted-2)!important;
-  font-size:8.5px!important;
+  font-size:11px!important;
 }
 .app-view-upcoming .market-rate-trend-grid{
   display:grid!important;
@@ -422,7 +422,7 @@
 .app-view-upcoming .market-rate-card-head>div:first-child>span{
   display:block!important;
   color:var(--muted)!important;
-  font-size:8px!important;
+  font-size:11px!important;
   font-weight:750!important;
   letter-spacing:.025em!important;
   text-transform:uppercase!important;
@@ -440,7 +440,7 @@
   display:block!important;
   margin-top:4px!important;
   color:var(--muted-2)!important;
-  font-size:7.5px!important;
+  font-size:11px!important;
   line-height:1.35!important;
 }
 .app-view-upcoming .market-rate-card-direction{
@@ -452,7 +452,7 @@
 .app-view-upcoming .market-rate-card-direction>span{
   display:block!important;
   color:var(--muted-2)!important;
-  font-size:7.5px!important;
+  font-size:11px!important;
   font-weight:700!important;
   text-transform:uppercase!important;
   letter-spacing:.025em!important;
@@ -461,7 +461,7 @@
   display:block!important;
   margin-top:4px!important;
   color:var(--text)!important;
-  font-size:10px!important;
+  font-size:11px!important;
   font-weight:800!important;
 }
 .app-view-upcoming .market-rate-card-direction>small{
@@ -469,7 +469,7 @@
   max-width:180px!important;
   margin-top:4px!important;
   color:var(--muted-2)!important;
-  font-size:7.5px!important;
+  font-size:11px!important;
   line-height:1.35!important;
 }
 .app-view-upcoming .market-rate-card-chart{
@@ -511,7 +511,7 @@
   align-items:center!important;
   margin-top:-2px!important;
   color:var(--muted-2)!important;
-  font-size:7px!important;
+  font-size:11px!important;
 }
 .app-view-upcoming .market-rate-card-foot span:nth-child(2){
   display:inline-flex!important;
@@ -563,7 +563,7 @@
 }
 .app-view-upcoming .upcoming-position .deal-planner-summary span{
   color:var(--muted)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   font-weight:750!important;
   letter-spacing:.025em!important;
   text-transform:uppercase!important;
@@ -580,7 +580,7 @@
   display:block!important;
   margin-top:6px!important;
   color:var(--muted-2)!important;
-  font-size:8px!important;
+  font-size:11px!important;
   line-height:1.3!important;
 }
 .app-view-upcoming .upcoming-position #dealPlannerLtv{
@@ -610,7 +610,7 @@ body[data-app-view="upcoming"] #dealPlannerSummary > .deal-position-countdown-so
   margin-left:7px!important;
   color:var(--muted)!important;
   font-family:var(--font-ui)!important;
-  font-size:10px!important;
+  font-size:11px!important;
   font-weight:650!important;
   letter-spacing:0!important;
 }
@@ -700,7 +700,7 @@ input,select,textarea{color:var(--text)}
   box-shadow:none!important;
 }
 .app-view-future .v157-range-copy>span{
-  display:block;color:var(--accent-strong)!important;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  display:block;color:var(--accent-strong)!important;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
 }
 .app-view-future .v157-range-copy>strong{
   display:block;margin-top:5px;color:var(--text)!important;font-family:var(--font-display);font-size:25px;font-weight:600;letter-spacing:-.025em;
@@ -709,7 +709,7 @@ input,select,textarea{color:var(--text)}
   margin:0 5px;color:var(--muted)!important;font-family:inherit;font-size:13px;font-style:normal;font-weight:500;
 }
 .app-view-future .v157-range-copy>small{
-  display:block;margin-top:8px;max-width:420px;color:var(--muted)!important;font-size:10px;line-height:1.5;
+  display:block;margin-top:8px;max-width:420px;color:var(--muted)!important;font-size:11px;line-height:1.5;
 }
 .app-view-future .v157-range-line{
   position:relative;height:6px;margin:12px 8px 11px;border-radius:999px;background:linear-gradient(90deg,#d8c7b5 0%,#c88e5c 50%,#d8c7b5 100%);
@@ -726,7 +726,7 @@ input,select,textarea{color:var(--text)}
 .app-view-future .v157-range-labels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start}
 .app-view-future .v157-range-labels>div:nth-child(2){text-align:center}
 .app-view-future .v157-range-labels>div:nth-child(3){text-align:right}
-.app-view-future .v157-range-labels span{display:block;color:var(--muted)!important;font-size:9px}
+.app-view-future .v157-range-labels span{display:block;color:var(--muted)!important;font-size:11px}
 .app-view-future .v157-range-labels strong{display:block;margin-top:3px;color:var(--text)!important;font-size:15px}
 .app-view-future .v157-range-labels .is-centre strong{color:var(--accent-strong)!important;font-size:17px}
 
@@ -829,7 +829,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
 .app-view-future #nextHomePlanner .next-home-note{
   margin-top:11px!important;
   color:color-mix(in srgb,var(--muted) 88%,var(--text))!important;
-  font-size:10px!important;
+  font-size:11px!important;
   line-height:1.45!important;
 }
 
@@ -838,7 +838,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
 .app-view-future #futureModelRange .future-model-subtitle{
   margin:5px 0 0!important;
   color:var(--muted)!important;
-  font-size:10px!important;
+  font-size:11px!important;
   line-height:1.4!important;
 }
 .app-view-future #futureModelRange .home-forecast-note{display:none!important}
@@ -874,7 +874,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
 .app-view-future #futureModelRange .home-forecast-card>span{
   display:block!important;
   color:var(--muted)!important;
-  font-size:9.5px!important;
+  font-size:11px!important;
   font-weight:700!important;
   line-height:1.3!important;
   letter-spacing:.025em!important;
@@ -896,7 +896,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   padding-top:9px!important;
   border-top:1px solid rgba(68,58,48,.08)!important;
   color:var(--muted)!important;
-  font-size:9.5px!important;
+  font-size:11px!important;
   line-height:1.35!important;
 }
 .app-view-future #futureModelRange .home-forecast-card>small::before{
@@ -909,7 +909,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   margin-top:11px!important;
   padding-left:2px!important;
   color:var(--muted)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   line-height:1.35!important;
 }
 @media(max-width:700px){
@@ -946,7 +946,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
 }
 .app-view-future #futureModelRange .home-forecast-growth>b{
   color:var(--accent-strong)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   font-weight:750!important;
   line-height:1!important;
   white-space:nowrap!important;
@@ -1012,7 +1012,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   background:var(--accent-strong)!important;
 }
 .app-view-future #futureModelRange .home-forecast-card>span{
-  font-size:10px!important;
+  font-size:11px!important;
   font-weight:700!important;
 }
 .app-view-future #futureModelRange .home-forecast-card>strong{
@@ -1023,7 +1023,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   margin:0!important;
   padding:0!important;
   border:0!important;
-  font-size:9px!important;
+  font-size:11px!important;
 }
 .app-view-future #futureModelRange .home-forecast-card>small::before{
   content:""!important;
@@ -1036,7 +1036,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   display:none!important;
 }
 .app-view-future #futureModelRange .home-forecast-growth>b{
-  font-size:9px!important;
+  font-size:11px!important;
   font-weight:750!important;
 }
 .app-view-future #futureModelRange .home-profile-range-source{
@@ -1080,7 +1080,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   border:0!important;
   background:transparent!important;
   color:var(--muted)!important;
-  font-size:9.5px!important;
+  font-size:11px!important;
   line-height:1.45!important;
 }
 
@@ -1115,7 +1115,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   display:block!important;
   margin-bottom:6px!important;
   color:var(--muted)!important;
-  font-size:9.5px!important;
+  font-size:11px!important;
   font-weight:700!important;
 }
 .app-view-future #futureWaitPlanner .next-home-timeline-row>strong{
@@ -1130,7 +1130,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   display:block!important;
   margin-top:3px!important;
   color:var(--muted)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   line-height:1.45!important;
 }
 .app-view-future #futureWaitPlanner .next-home-timeline-row>small b{
@@ -1318,7 +1318,7 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 
 /* Offline V1 final polish — formerly injected by v15.15.js. */
 .clear-local-data{margin-left:auto}.clear-local-data.danger{border-color:rgba(232,124,124,.24);color:#e9b3b3}
-      .methodology-body{display:grid;gap:12px}.methodology-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.methodology-item{padding:12px 13px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(255,255,255,.018)}.methodology-item strong{display:block;margin-bottom:4px;color:var(--text);font-size:11px}.methodology-item p{margin:0;color:var(--muted);font-size:10px;line-height:1.45}.methodology-disclaimer{margin:0;padding:12px 13px;border:1px solid rgba(232,217,188,.12);border-radius:12px;background:rgba(232,217,188,.035);color:var(--muted);font-size:10px;line-height:1.5}.methodology-disclaimer strong{color:var(--warm)}
+      .methodology-body{display:grid;gap:12px}.methodology-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.methodology-item{padding:12px 13px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(255,255,255,.018)}.methodology-item strong{display:block;margin-bottom:4px;color:var(--text);font-size:11px}.methodology-item p{margin:0;color:var(--muted);font-size:11px;line-height:1.45}.methodology-disclaimer{margin:0;padding:12px 13px;border:1px solid rgba(232,217,188,.12);border-radius:12px;background:rgba(232,217,188,.035);color:var(--muted);font-size:11px;line-height:1.5}.methodology-disclaimer strong{color:var(--warm)}
       @media(max-width:700px){.live-rate-card{min-height:86px}.clear-local-data{margin-left:0}.topbar-with-nav>.topbar-actions{display:grid!important;grid-template-columns:auto auto;align-items:center!important;justify-content:end;gap:6px!important;margin-left:auto}.topbar-actions .connectivity-mode{grid-column:1/-1;justify-content:flex-end}.topbar-actions .save-status{display:none}.topbar-actions .personal-data-button{justify-self:end}.connectivity-copy small{display:block!important;max-width:150px;white-space:normal;line-height:1.2}.live-rate-selected-summary{display:grid;gap:3px}.live-rate-selected-summary strong{text-align:left}.methodology-grid{grid-template-columns:1fr}}
       @media(max-width:420px){.connectivity-copy small{display:none!important}.connectivity-mode{gap:6px}.personal-data-button{padding-inline:9px}}
 
@@ -1461,7 +1461,7 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 }
 .app-view-current .v15-hero-progress-head span{
   color:var(--muted)!important;
-  font-size:10px!important;
+  font-size:11px!important;
   font-weight:700!important;
   letter-spacing:.03em!important;
 }
@@ -1503,7 +1503,7 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   gap:14px!important;
   margin-top:7px!important;
   color:var(--muted-2)!important;
-  font-size:10px!important;
+  font-size:11px!important;
 }
 .app-view-current .v15-hero-progress-foot span{
   color:color-mix(in srgb,var(--muted) 82%,var(--theme-hero-ink))!important;
@@ -1558,7 +1558,7 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
   background:var(--border-soft)!important;
 }
 .app-view-current #mortgageExtraTiles .mortgage-edit-tile span{
-  font-size:9px!important;
+  font-size:11px!important;
   font-weight:700!important;
   letter-spacing:.035em!important;
   text-transform:uppercase!important;
@@ -1744,7 +1744,7 @@ body .app-view-current .v15-current-stats .v15-stat small{
   display:block!important;
   margin-top:5px!important;
   color:var(--muted-2)!important;
-  font-size:10px!important;
+  font-size:11px!important;
   line-height:1.35!important;
   white-space:normal!important;
   overflow-wrap:break-word!important;
@@ -1830,14 +1830,14 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   max-width:520px!important;
   margin-top:6px!important;
   color:var(--muted)!important;
-  font-size:10px!important;
+  font-size:11px!important;
   line-height:1.4!important;
 }
 .app-view-current .trajectory-with-what-if>.panel-heading .trajectory-assumption-note{
   display:block!important;
   margin-top:5px!important;
   color:var(--muted-2)!important;
-  font-size:8.5px!important;
+  font-size:11px!important;
   font-weight:560!important;
   letter-spacing:.005em!important;
   line-height:1.35!important;
@@ -1879,13 +1879,13 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 .app-view-current .trajectory-plan-label span{
   color:var(--muted-2)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   font-weight:750!important;
   letter-spacing:.025em!important;
 }
 .app-view-current .trajectory-plan-label small{
   color:var(--theme-hero-ink)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   font-weight:700!important;
 }
 .app-view-current .trajectory-plan-card>strong{
@@ -1902,7 +1902,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:block!important;
   margin-top:6px!important;
   color:color-mix(in srgb,var(--positive) 84%,var(--muted))!important;
-  font-size:10px!important;
+  font-size:11px!important;
   font-style:normal!important;
   font-weight:700!important;
   line-height:1.2!important;
@@ -1931,7 +1931,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 .app-view-current .trajectory-plan-gain small{
   color:var(--muted-2)!important;
-  font-size:7.5px!important;
+  font-size:11px!important;
   font-weight:700!important;
   letter-spacing:.015em!important;
   line-height:1!important;
@@ -1975,7 +1975,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-current .trajectory-rail-intro .eyebrow{
   margin:0!important;
   color:var(--accent-strong)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   font-weight:800!important;
   letter-spacing:.09em!important;
   text-transform:uppercase!important;
@@ -1992,7 +1992,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-current .trajectory-rail-intro>p:last-child{
   margin:6px 0 0!important;
   color:var(--muted-2)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   line-height:1.4!important;
 }
 
@@ -2040,7 +2040,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:block!important;
   margin-top:5px!important;
   color:var(--muted-2)!important;
-  font-size:8px!important;
+  font-size:11px!important;
   font-weight:650!important;
   line-height:1!important;
 }
@@ -2084,7 +2084,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:block!important;
   min-width:0!important;
   color:var(--muted-2)!important;
-  font-size:7.5px!important;
+  font-size:11px!important;
   font-weight:700!important;
   letter-spacing:.02em!important;
   line-height:1!important;
@@ -2105,7 +2105,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   grid-column:3!important;
   align-self:end!important;
   color:var(--muted-2)!important;
-  font-size:8px!important;
+  font-size:11px!important;
   font-weight:650!important;
   line-height:1!important;
 }
@@ -2177,7 +2177,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   margin:14px 2px 0!important;
   padding:8px 0 0!important;
   color:color-mix(in srgb,var(--muted) 72%,var(--text))!important;
-  font-size:9px!important;
+  font-size:11px!important;
   font-weight:650!important;
   line-height:1.3!important;
 }
@@ -2276,7 +2276,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 .app-view-current .v15-current-journey-head>div:first-child>span{
   color:var(--accent-strong)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   font-weight:800!important;
   letter-spacing:.10em!important;
   text-transform:uppercase!important;
@@ -2300,7 +2300,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 .app-view-current .v15-current-journey-next span{
   color:var(--muted-2)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   font-weight:700!important;
   letter-spacing:0!important;
   text-transform:none!important;
@@ -2360,7 +2360,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:block!important;
   max-width:100%!important;
   color:var(--text)!important;
-  font-size:10px!important;
+  font-size:11px!important;
   font-weight:760!important;
   line-height:1.22!important;
 }
@@ -2368,7 +2368,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:block!important;
   margin-top:4px!important;
   color:color-mix(in srgb,var(--text) 64%,var(--muted))!important;
-  font-size:10px!important;
+  font-size:11px!important;
   font-weight:680!important;
   line-height:1.2!important;
   white-space:nowrap!important;
@@ -2458,7 +2458,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:block!important;
   margin-top:4px!important;
   color:color-mix(in srgb,var(--text) 64%,var(--muted))!important;
-  font-size:10px!important;
+  font-size:11px!important;
   font-weight:680!important;
   line-height:1.2!important;
   white-space:nowrap!important;
@@ -2467,7 +2467,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:block!important;
   margin-top:3px!important;
   color:var(--muted-2)!important;
-  font-size:8.5px!important;
+  font-size:11px!important;
   font-weight:600!important;
   line-height:1.2!important;
   white-space:nowrap!important;
@@ -2563,7 +2563,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-upcoming .upcoming-hero-copy .eyebrow{
   margin:0!important;
   color:var(--accent-strong)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   font-weight:800!important;
   letter-spacing:.10em!important;
   text-transform:uppercase!important;
@@ -2580,7 +2580,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-upcoming .upcoming-hero-subtitle{
   margin:4px 0 0!important;
   color:var(--muted)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   line-height:1.35!important;
 }
 .app-view-upcoming .upcoming-hero-meta{
@@ -2596,7 +2596,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-upcoming .upcoming-hero-meta span,
 .app-view-upcoming .upcoming-hero-meta small{
   color:var(--muted-2)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   font-weight:700!important;
 }
 .app-view-upcoming .upcoming-hero-meta strong{
@@ -2665,12 +2665,12 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-future #futureWaitPlanner .future-wait-heading .eyebrow{
   margin-bottom:5px!important;
   color:var(--accent-strong)!important;
-  font-size:8px!important;
+  font-size:11px!important;
   letter-spacing:.075em!important;
 }
 .app-view-future #homeProjection .projection-heading .source-date{
   color:var(--muted-2)!important;
-  font-size:9px!important;
+  font-size:11px!important;
 }
 
 /* Future section explainers */
@@ -2678,7 +2678,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   margin:5px 0 0!important;
   max-width:680px!important;
   color:var(--muted)!important;
-  font-size:10px!important;
+  font-size:11px!important;
   line-height:1.4!important;
 }
 
@@ -2692,7 +2692,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-upcoming .market-rate-direction-cue{
   display:inline-block!important;
   font-family:var(--font-ui)!important;
-  font-size:10px!important;
+  font-size:11px!important;
   font-weight:800!important;
   line-height:1!important;
 }
@@ -2765,7 +2765,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 .app-view-future #futurePayoffTargets .future-payoff-marker-label{
   color:var(--accent-strong)!important;
-  font-size:8px!important;
+  font-size:11px!important;
   font-weight:850!important;
   letter-spacing:.045em!important;
   text-transform:uppercase!important;
@@ -2784,17 +2784,17 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 .app-view-future #futurePayoffTargets .future-payoff-marker-card>small{
   color:var(--muted)!important;
-  font-size:8.5px!important;
+  font-size:11px!important;
 }
 .app-view-future #futurePayoffTargets .future-payoff-marker-card>b{
   margin-top:5px!important;
   color:var(--text)!important;
-  font-size:9.5px!important;
+  font-size:11px!important;
   font-weight:800!important;
 }
 .app-view-future #futurePayoffTargets .future-payoff-marker-card>em{
   color:var(--muted)!important;
-  font-size:8px!important;
+  font-size:11px!important;
   font-style:normal!important;
 }
 .app-view-future #futurePayoffTargets .future-payoff-scale-caption{
@@ -2804,14 +2804,14 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   gap:12px!important;
   margin:2px 18px 0!important;
   color:var(--muted)!important;
-  font-size:8px!important;
+  font-size:11px!important;
 }
 .app-view-future #futurePayoffTargets .future-payoff-scale-caption span:last-child{
   text-align:right!important;
 }
 .app-view-future #futurePayoffTargets .future-payoff-scale-caption strong{
   color:var(--accent-strong)!important;
-  font-size:8px!important;
+  font-size:11px!important;
   font-weight:800!important;
 }
 .app-view-future #futurePayoffTargets .future-payoff-empty{
@@ -2888,7 +2888,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-future .future-next-home-c-header .future-wait-subtitle{
   margin:6px 0 0!important;
   color:var(--muted)!important;
-  font-size:8.5px!important;
+  font-size:11px!important;
   line-height:1.45!important;
 }
 .app-view-future .future-next-home-c-stage{
@@ -2910,7 +2910,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:block!important;
   margin:0 0 7px 2px!important;
   color:var(--muted)!important;
-  font-size:7px!important;
+  font-size:11px!important;
   font-weight:800!important;
   letter-spacing:.055em!important;
   text-transform:uppercase!important;
@@ -2934,7 +2934,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   background:transparent!important;
   color:var(--muted)!important;
   font:inherit!important;
-  font-size:8px!important;
+  font-size:11px!important;
   font-weight:750!important;
   text-align:left!important;
   cursor:pointer!important;
@@ -2976,7 +2976,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-future .future-budget-chart-centre span{
   display:block!important;
   color:var(--muted)!important;
-  font-size:7px!important;
+  font-size:11px!important;
   font-weight:800!important;
   letter-spacing:.08em!important;
   text-transform:uppercase!important;
@@ -2995,14 +2995,14 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:block!important;
   margin-top:10px!important;
   color:var(--muted)!important;
-  font-size:8px!important;
+  font-size:11px!important;
   font-weight:700!important;
 }
 .app-view-future .future-budget-chart-centre b{
   display:block!important;
   margin-top:8px!important;
   color:var(--accent-strong)!important;
-  font-size:7.5px!important;
+  font-size:11px!important;
   font-weight:800!important;
 }
 
@@ -3038,7 +3038,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-future .future-callout-title i[data-index="3"]{background:var(--text)!important;opacity:.32!important}
 .app-view-future .future-callout-title span{
   color:var(--muted)!important;
-  font-size:7.3px!important;
+  font-size:11px!important;
   font-weight:800!important;
   letter-spacing:.035em!important;
   text-transform:uppercase!important;
@@ -3057,7 +3057,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:block!important;
   margin-top:4px!important;
   color:var(--muted)!important;
-  font-size:7.2px!important;
+  font-size:11px!important;
   line-height:1.35!important;
 }
 .app-view-future .future-next-home-method{
@@ -3071,7 +3071,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   margin:0 auto!important;
   padding:10px 17px 5px 0!important;
   color:var(--muted)!important;
-  font-size:7.5px!important;
+  font-size:11px!important;
   font-weight:800!important;
   cursor:pointer!important;
   list-style:none!important;
@@ -3083,7 +3083,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   right:0!important;
   top:9px!important;
   color:var(--accent-strong)!important;
-  font-size:9px!important;
+  font-size:11px!important;
   font-weight:500!important;
 }
 .app-view-future .future-next-home-method[open] summary::after{content:"−"!important}
@@ -3104,20 +3104,20 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-future .future-next-home-method-grid strong{display:block!important}
 .app-view-future .future-next-home-method-grid span{
   color:var(--muted)!important;
-  font-size:6.7px!important;
+  font-size:11px!important;
   font-weight:700!important;
 }
 .app-view-future .future-next-home-method-grid strong{
   margin-top:3px!important;
   color:var(--text)!important;
-  font-size:8px!important;
+  font-size:11px!important;
   font-weight:800!important;
   line-height:1.3!important;
 }
 .app-view-future .future-next-home-note{
   margin:9px 0 0!important;
   color:var(--muted)!important;
-  font-size:7.4px!important;
+  font-size:11px!important;
   line-height:1.4!important;
   text-align:center!important;
 }
@@ -3190,7 +3190,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 .app-view-future .future-next-home-time-rail>span{
   margin:0 0 6px 3px!important;
-  font-size:6.8px!important;
+  font-size:11px!important;
   letter-spacing:.07em!important;
 }
 .app-view-future .future-next-home-controls{
@@ -3207,7 +3207,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   padding:7px 10px 7px 12px!important;
   border-radius:10px!important;
   color:color-mix(in srgb,var(--muted) 88%,var(--text))!important;
-  font-size:7.8px!important;
+  font-size:11px!important;
   font-weight:720!important;
   letter-spacing:-.005em!important;
   transition:background .16s ease,color .16s ease,box-shadow .16s ease,transform .16s ease!important;
@@ -3276,7 +3276,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   border-radius:12px!important;
   background:rgba(242,234,222,.34)!important;
   color:color-mix(in srgb,var(--muted) 86%,var(--text))!important;
-  font-size:7.8px!important;
+  font-size:11px!important;
   font-weight:730!important;
   text-align:left!important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.42)!important;
@@ -3393,7 +3393,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   border-radius:999px!important;
   background:rgba(239,229,213,.72)!important;
   color:var(--accent-strong)!important;
-  font-size:7.5px!important;
+  font-size:11px!important;
   font-weight:850!important;
   line-height:1!important;
 }
@@ -3456,7 +3456,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-future .future-outcome-heading p:last-child{
   margin:6px 0 0!important;
   color:var(--muted)!important;
-  font-size:8.5px!important;
+  font-size:11px!important;
   line-height:1.45!important;
 }
 .app-view-future .future-cost-date{
@@ -3467,7 +3467,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-future .future-cost-date span{
   display:block!important;
   color:var(--muted)!important;
-  font-size:7px!important;
+  font-size:11px!important;
   font-weight:800!important;
   letter-spacing:.04em!important;
   text-transform:uppercase!important;
@@ -3495,7 +3495,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-future .future-lifetime-support article>span{
   display:block!important;
   color:var(--muted)!important;
-  font-size:7.5px!important;
+  font-size:11px!important;
   font-weight:800!important;
   letter-spacing:.03em!important;
   text-transform:uppercase!important;
@@ -3515,7 +3515,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:block!important;
   margin-top:7px!important;
   color:var(--muted)!important;
-  font-size:7.2px!important;
+  font-size:11px!important;
   line-height:1.42!important;
 }
 .app-view-future .future-lifetime-support{
@@ -3549,7 +3549,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   justify-content:space-between!important;
   gap:18px!important;
   color:var(--muted)!important;
-  font-size:7.3px!important;
+  font-size:11px!important;
 }
 .app-view-future .future-lifetime-split-labels b{
   color:var(--text)!important;
@@ -3578,7 +3578,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-future .future-lifetime-note{
   margin:10px 0 0!important;
   color:var(--muted)!important;
-  font-size:7.4px!important;
+  font-size:11px!important;
   line-height:1.45!important;
 }
 
@@ -3603,7 +3603,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-future .future-outcome-result span{
   display:block!important;
   color:var(--muted)!important;
-  font-size:7.5px!important;
+  font-size:11px!important;
   font-weight:800!important;
   letter-spacing:.03em!important;
   text-transform:uppercase!important;
@@ -3625,7 +3625,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   display:block!important;
   margin-top:8px!important;
   color:var(--muted)!important;
-  font-size:7.3px!important;
+  font-size:11px!important;
   line-height:1.45!important;
 }
 .app-view-future .future-outcome-vs{
@@ -3659,7 +3659,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 .app-view-future .future-outcome-result>small{
   color:var(--muted)!important;
-  font-size:7.4px!important;
+  font-size:11px!important;
   line-height:1.5!important;
 }
 .app-view-future .future-long-term-outcome.is-negative .future-outcome-result{
@@ -3757,7 +3757,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   padding-top:10px!important;
   border-top:1px solid var(--up-border-soft)!important;
   color:var(--muted)!important;
-  font-size:8.5px!important;
+  font-size:11px!important;
   line-height:1.35!important;
 }
 .app-view-upcoming .market-rate-history-source span{
@@ -3765,6 +3765,6 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 }
 .app-view-upcoming .market-rate-history-source strong{
   color:var(--muted)!important;
-  font-size:8.5px!important;
+  font-size:11px!important;
   font-weight:600!important;
 }
