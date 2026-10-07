@@ -171,7 +171,10 @@
       const latestMonth=latestPoint?.date ? formatMonth(String(latestPoint.date).slice(0,7)) : 'Latest historical point';
       const seriesMin=Math.min(...values);
       const seriesMax=Math.max(...values);
-      const rangePosition=seriesMax>seriesMin ? Math.round((latest-seriesMin)/(seriesMax-seriesMin)*100) : 50;
+      const rangePosition=seriesMax>seriesMin ? (latest-seriesMin)/(seriesMax-seriesMin) : .5;
+      const fromLow=Math.round(rangePosition*100);
+      const belowHigh=Math.round((1-rangePosition)*100);
+      const rangeLabel=belowHigh<=fromLow ? `${belowHigh}% below 5-year high` : `${fromLow}% above 5-year low`;
       return `
         <article class="market-rate-card market-rate-card-${kind}">
           <div class="market-rate-card-head">
@@ -183,7 +186,7 @@
             <div class="market-rate-card-direction" data-direction="${meta.dir}">
               <span>Recent trend</span>
               <strong><b class="market-rate-direction-cue">${meta.cue}</b>${meta.label}</strong>
-              <small>${Math.abs(meta.delta).toFixed(2)}pp vs prior 6 months · ${rangePosition}% of 5-year range</small>
+              <small>${Math.abs(meta.delta).toFixed(2)}pp vs prior 6 months · ${rangeLabel}</small>
             </div>
           </div>
           <div class="market-rate-card-chart">
