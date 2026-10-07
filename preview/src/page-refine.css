@@ -3776,3 +3776,16 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   font-size:11px!important;
   line-height:1.5!important;
 }
+
+
+/* Custom overpayment active state — match preset selection */
+.app-view-current .trajectory-custom-overpay.is-active{
+  border-color:color-mix(in srgb,var(--positive) 24%,var(--border-soft))!important;
+  background:color-mix(in srgb,var(--positive) 18%,var(--surface-control))!important;
+  box-shadow:0 6px 15px rgba(54,48,39,.075)!important;
+}
+.app-view-current .trajectory-custom-overpay.is-active .trajectory-custom-value,
+.app-view-current .trajectory-custom-overpay.is-active .trajectory-custom-label,
+.app-view-current .trajectory-custom-overpay.is-active>small{
+  color:var(--positive)!important;
+}
