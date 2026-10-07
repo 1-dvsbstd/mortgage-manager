@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-preview-next-home-default-001';
+const CACHE_NAME = 'mortgage-manager-preview-text-floor-001';
 const APP_SHELL = [
   './',
   './index.html',
