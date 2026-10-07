@@ -2077,7 +2077,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   background:color-mix(in srgb,var(--surface-soft) 72%,transparent)!important;
   color:var(--text)!important;
   box-shadow:0 2px 3px rgba(54,48,39,.05),0 8px 18px rgba(54,48,39,.08)!important;
-  cursor:text!important;
+  cursor:pointer!important;
 }
 .app-view-current .trajectory-custom-label{
   grid-column:1 / -1!important;
@@ -2110,6 +2110,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   line-height:1!important;
 }
 .app-view-current .trajectory-custom-overpay input{
+  cursor:pointer!important;
   width:64px!important;
   min-width:0!important;
   margin:0!important;
