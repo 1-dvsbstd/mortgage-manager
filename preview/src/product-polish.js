@@ -49,6 +49,31 @@
     });
 
     const currentPane=modal.querySelector('[data-setup-pane="current"]');
+    const sections=[...modal.querySelectorAll('.personal-section')];
+    const backup=sections.find((item)=>['Backup','Backup & restore'].includes(item.querySelector('h3,strong')?.textContent?.trim()));
+    if(backup&&currentPane?.contains(backup)) backup.insertAdjacentElement('beforebegin',section);
+    else if(currentPane) currentPane.appendChild(section);
+    else if(backup) backup.insertAdjacentElement('beforebegin',section);
+    else modal.appendChild(section);
+  }
+
+
+  function polishSetupModal(){
+    const modal=document.querySelector('.personal-modal');
+    if(!modal) return;
+
+    const firstRun=!localStorage.getItem(SETUP_KEY);
+    const title=modal.querySelector('#personalModalTitle');
+    const intro=modal.querySelector('.personal-modal-head p:last-of-type');
+    if(firstRun){
+      setText(title,'Set up your mortgage');
+      setText(intro,'Enter the figures from your latest mortgage statement. Everything is saved only on this device.');
+    }
+
+    const backup=[...modal.querySelectorAll('.personal-section')]
+      .find((section)=>['Backup','Backup & restore'].includes(section.querySelector('h3')?.textContent?.trim()));
+    backup?.querySelector('.clear-local-data')?.remove();
+
     const duplicateBackup=modal.querySelector('#dataBackupSection');
     duplicateBackup?.remove();
 
