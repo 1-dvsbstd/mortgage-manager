@@ -130,21 +130,19 @@
   function ensureThemeControl(modal=document.querySelector('.personal-modal')){
     if(!modal || modal.querySelector('#themeMenuButton')) return;
     const head=modal.querySelector('.personal-modal-head');
-    if(!head) return;
+    const footer=modal.querySelector('.personal-footer-actions');
+    if(!head || !footer) return;
 
-    const utility=document.createElement('div');
-    utility.className='setup-utility-row';
     const control=document.createElement('div');
     control.className='theme-menu';
     control.innerHTML=`
       <button type="button" id="themeMenuButton" class="theme-menu-button" aria-haspopup="menu" aria-expanded="false">
-        <span class="theme-menu-label">Theme</span><span class="theme-menu-chevron" aria-hidden="true"></span>
+        <span class="theme-menu-label">Theme</span>
       </button>
       <div class="theme-menu-popover" role="menu" hidden>
         ${themes.map((theme)=>`<button type="button" role="menuitemradio" data-theme-choice="${theme.id}" aria-checked="false"><span class="theme-menu-swatch ${theme.id}" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>${theme.name}</strong><small>${theme.note}</small></span></button>`).join('')}
       </div>`;
-    utility.appendChild(control);
-    head.insertAdjacentElement('afterend',utility);
+    footer.prepend(control);
 
     const button=control.querySelector('#themeMenuButton');
     const popover=control.querySelector('.theme-menu-popover');
@@ -185,8 +183,7 @@
     current.dataset.setupPane='current'; upcoming.dataset.setupPane='upcoming'; future.dataset.setupPane='future';
     const head=$('.personal-modal-head',modal);
     ensureThemeControl(modal);
-    const utility=$('.setup-utility-row',modal);
-    (utility||head).insertAdjacentElement('afterend',nav);
+    head.insertAdjacentElement('afterend',nav);
     nav.after(current,upcoming,future);
 
     current.appendChild(form);
@@ -224,6 +221,9 @@
       const upcoming=modal?.querySelector('[data-setup-pane="upcoming"]');
       const future=modal?.querySelector('[data-setup-pane="future"]');
       const methodology=modal?.querySelector('#methodologySection');
+      const backupActions=modal?.querySelector('.setup-backup-actions');
+      const theme=modal?.querySelector('.theme-menu');
+      if(backupActions&&theme&&theme.parentElement!==backupActions) backupActions.appendChild(theme);
       const profile=modal?.querySelector('.personal-home-profile-section');
       if(upcoming&&methodology&&!upcoming.contains(methodology)) upcoming.appendChild(methodology);
       if(future&&profile&&!future.contains(profile)) future.insertBefore(profile,future.querySelector('.setup-budget-section'));
