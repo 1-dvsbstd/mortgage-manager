@@ -463,7 +463,7 @@
       });
 
       let selected=Number(wait.dataset.selectedYears);
-      if(!data.some((item)=>item.years===selected)) selected=data.some((item)=>item.years===5)?5:data[0].years;
+      if(!data.some((item)=>item.years===selected)) selected=data.some((item)=>item.years===0)?0:data[0].years;
       wait.dataset.selectedYears=String(selected);
       const active=data.find((item)=>item.years===selected)||data[0];
 
