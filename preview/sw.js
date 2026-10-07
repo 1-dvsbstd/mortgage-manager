@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-preview-custom-overpay-003';
+const CACHE_NAME = 'mortgage-manager-preview-country-cottage-003';
 const APP_SHELL = [
   './',
   './index.html',
