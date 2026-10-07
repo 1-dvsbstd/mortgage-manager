@@ -2805,6 +2805,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   margin:2px 18px 0!important;
   color:var(--muted)!important;
   font-size:11px!important;
+  font-weight:750!important;
 }
 .app-view-future #futurePayoffTargets .future-payoff-scale-caption span:last-child{
   text-align:right!important;
@@ -2813,6 +2814,10 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   color:var(--accent-strong)!important;
   font-size:11px!important;
   font-weight:800!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-scale-caption span{
+  color:var(--muted)!important;
+  font-weight:750!important;
 }
 .app-view-future #futurePayoffTargets .future-payoff-empty{
   display:grid!important;
