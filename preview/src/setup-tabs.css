@@ -122,17 +122,6 @@
   display:block;
   line-height:1;
 }
-.theme-menu-chevron{
-  display:block;
-  align-self:center;
-  width:12px;
-  height:8px;
-  flex:0 0 12px;
-  margin:0;
-  font-size:0;
-  line-height:0;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M2 2l4 4 4-4' stroke='%238b6849' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px 8px no-repeat;
-}
 .theme-menu-popover{
   position:absolute;
   z-index:2200;
@@ -212,17 +201,6 @@
   .theme-menu-popover{right:-2px;width:min(260px,calc(100vw - 24px))}
 }
 
-.setup-utility-row{
-  display:flex;
-  justify-content:flex-end;
-  align-items:center;
-  margin:10px 0 6px;
-}
-.setup-utility-row .theme-menu-popover{
-  right:0;
-}
-@media(max-width:620px){
-  .setup-utility-row{margin-top:8px}
 }
 
 /* Next-home assumptions disclosure — explicit control, no native details dependency. */
@@ -337,4 +315,26 @@ body .personal-modal #methodologyBody[hidden]{
 }
 body .personal-modal #methodologyBody{
   padding-top:14px!important;
+}
+
+
+/* Theme control in persistent Setup footer */
+body .personal-modal .setup-backup-actions .theme-menu{
+  margin:0;
+}
+body .personal-modal .setup-backup-actions .theme-menu-button{
+  min-height:34px;
+  padding:8px 11px;
+  gap:0;
+  box-shadow:none!important;
+}
+body .personal-modal .setup-backup-actions .theme-menu-label{
+  display:block;
+  line-height:1.2;
+}
+body .personal-modal .setup-backup-actions .theme-menu-popover{
+  top:auto;
+  right:auto;
+  bottom:calc(100% + 8px);
+  left:0;
 }
