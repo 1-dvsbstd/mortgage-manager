@@ -113,7 +113,7 @@
     const note=$('.deal-planner-note');
     if(note) note.textContent='Deal-end balance includes your regular overpayment. Payment scenarios use your current rate plus current UK market-average 2- and 5-year fixes; outer rates are simple stress tests. Historical charts below use the Bank of England 75% LTV benchmark.';
 
-    const marketMeta=$('#upcomingMarketMeta',rates);
+    const marketMeta=$('#upcomingMarketMeta');
     if(marketMeta && grid.nextElementSibling!==marketMeta) grid.insertAdjacentElement('afterend',marketMeta);
   }
 
