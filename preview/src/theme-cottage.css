@@ -25,7 +25,7 @@ html[data-theme="cottage"]{
   --warm:#a97852;
   --debt:#858b84;
   --equity:#72856c;
-  --property:#b59a78;
+  --property:#94889a;
   --upcoming:#b78b55;
   --scheme:#aaa398;
   --ink-active:#35463a;
@@ -156,4 +156,48 @@ html[data-theme="cottage"] .personal-modal .setup-month-field{
 
 @media(max-width:700px){
   html[data-theme="cottage"] body{background-attachment:scroll,scroll,scroll!important}
+}
+
+
+/* Cottage semantic accents — garden / stone / lavender */
+html[data-theme="cottage"] .ownership-segment.equity,
+html[data-theme="cottage"] .progress-fill{
+  background:linear-gradient(90deg,#72856c,#82947a)!important;
+}
+html[data-theme="cottage"] .ownership-segment.debt{
+  background:#858b84!important;
+}
+html[data-theme="cottage"] .ownership-segment.scheme{
+  background:#b7aa98!important;
+}
+
+/* Property/value lines pick up the lavender-grey from the cottage garden. */
+html[data-theme="cottage"] .dot.equity-line,
+html[data-theme="cottage"] .market-rate-card-five .market-rate-trendline{
+  filter:saturate(.78)!important;
+}
+
+/* Warm finance emphasis without Dusk's stronger amber. */
+html[data-theme="cottage"] .deal-planner-rate.is-current-rate,
+html[data-theme="cottage"] .future-next-home-c-years button.is-active{
+  border-color:rgba(183,139,85,.28)!important;
+  box-shadow:0 3px 5px rgba(78,62,42,.035),0 9px 22px rgba(78,62,42,.06)!important;
+}
+html[data-theme="cottage"] .deal-planner-rate.is-current-rate::before{
+  background:#b78b55!important;
+  box-shadow:0 0 0 4px rgba(183,139,85,.11)!important;
+}
+
+/* Give the larger Future graphics a softer cream canvas. */
+html[data-theme="cottage"] .future-next-home-c-main,
+html[data-theme="cottage"] .future-payoff-scale,
+html[data-theme="cottage"] .market-rate-card{
+  background:color-mix(in srgb,var(--surface-control) 82%,var(--surface-soft))!important;
+}
+
+/* Keep controls tactile but quiet. */
+html[data-theme="cottage"] button:focus-visible,
+html[data-theme="cottage"] input:focus-visible,
+html[data-theme="cottage"] select:focus-visible{
+  outline-color:var(--focus-ring)!important;
 }
