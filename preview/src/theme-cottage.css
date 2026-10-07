@@ -72,7 +72,7 @@ html[data-theme="cottage"] body{
       #c8c1a8 100%
     ),
     linear-gradient(90deg,rgba(117,134,109,.06),transparent 26%,transparent 74%,rgba(148,136,154,.05)),
-    url('../public/app-background-hybrid.webp')!important;
+    url('../public/country-cottage-background.webp')!important;
   background-position:center top,center top,center top!important;
   background-size:100% var(--app-bg-art-height),100% var(--app-bg-art-height),min(100%,2880px) auto!important;
   background-repeat:no-repeat,no-repeat,no-repeat!important;
@@ -109,6 +109,10 @@ html[data-theme="cottage"] .app-view-current .v15-hero{
 }
 html[data-theme="cottage"] .app-view-current .v15-home-visual{
   background-color:#e7dfcf!important;
+  background-image:url('../public/country-cottage-hero.webp')!important;
+  background-position:center center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
 }
 html[data-theme="cottage"] .app-view-current .v15-home-visual::after{
   background:
