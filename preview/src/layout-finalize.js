@@ -78,6 +78,7 @@
       panel.addEventListener('click',(event)=>{
         const button=event.target.closest('[data-scenario-extra]');
         if(button){
+          panel.dataset.scenarioMode='preset';
           setScenarioExtra(button.dataset.scenarioExtra);
           return;
         }
@@ -86,6 +87,10 @@
         if(customWrap){
           const input=customWrap.querySelector('#trajectoryCustomOverpay');
           if(!input) return;
+
+          panel.dataset.scenarioMode='custom';
+          panel.querySelectorAll('[data-scenario-extra]').forEach((preset)=>preset.classList.remove('active'));
+          customWrap.classList.add('is-active');
 
           if(event.target!==input){
             requestAnimationFrame(()=>{
@@ -97,7 +102,12 @@
         }
       });
       panel.addEventListener('input',(event)=>{
-        if(event.target.id==='trajectoryCustomOverpay') event.target.dataset.userValue=event.target.value;
+        if(event.target.id==='trajectoryCustomOverpay'){
+          panel.dataset.scenarioMode='custom';
+          event.target.dataset.userValue=event.target.value;
+          panel.querySelectorAll('[data-scenario-extra]').forEach((preset)=>preset.classList.remove('active'));
+          event.target.closest('.trajectory-custom-overpay')?.classList.add('is-active');
+        }
       });
       panel.addEventListener('change',(event)=>{
         if(event.target.id==='trajectoryCustomOverpay') setScenarioExtra(event.target.value);
@@ -137,14 +147,18 @@
     const railCopy=$('.trajectory-rail-intro>p:last-child',panel);
     if(railCopy) railCopy.textContent=`Replace your current ${money(regular)}/month plan.`;
 
+    const matchedPreset=scenarioExtras.some((value)=>Math.abs(value-extra)<.5);
+    if(!panel.dataset.scenarioMode) panel.dataset.scenarioMode=matchedPreset?'preset':'custom';
+    const customMode=panel.dataset.scenarioMode==='custom';
+
     panel.querySelectorAll('[data-scenario-extra]').forEach((button)=>{
       const value=Number(button.dataset.scenarioExtra)||0;
-      button.classList.toggle('active',Math.abs(value-extra)<.5);
+      button.classList.toggle('active',!customMode&&Math.abs(value-extra)<.5);
     });
     const custom=$('#trajectoryCustomOverpay',panel);
     const customWrap=custom?.closest('.trajectory-custom-overpay');
-    const isPreset=scenarioExtras.some((value)=>Math.abs(value-extra)<.5);
-    customWrap?.classList.toggle('is-active',!isPreset&&extra>0);
+    const isPreset=matchedPreset;
+    customWrap?.classList.toggle('is-active',customMode);
     if(custom&&document.activeElement!==custom){
       if(!isPreset&&extra>0) custom.value=String(Math.round(extra*100)/100);
       else if(!custom.dataset.userValue) custom.value=String(Math.round(regular*100)/100);
