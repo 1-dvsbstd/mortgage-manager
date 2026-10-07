@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-preview-methodology-spacing-001';
+const CACHE_NAME = 'mortgage-manager-preview-methodology-spacing-002';
 const APP_SHELL = [
   './',
   './index.html',
