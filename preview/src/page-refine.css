@@ -1202,7 +1202,6 @@ body details>summary::after{
   transition:none!important;
 }
 body details[open]>summary::after{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M2 6l4-4 4 4' stroke='%238b6849' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")!important;
   transform:translateY(-50%)!important;
 }
 body details>summary .summary-plus,
