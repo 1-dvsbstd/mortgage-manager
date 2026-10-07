@@ -426,7 +426,13 @@
     const importInput=backdrop.querySelector('.personal-import-input');
     importButton?.addEventListener('click',(event)=>{
       event.preventDefault();
-      importInput?.click();
+      if(!importInput) return;
+      try{
+        if(typeof importInput.showPicker==='function') importInput.showPicker();
+        else importInput.click();
+      }catch(_){
+        importInput.click();
+      }
     });
     importInput?.addEventListener('change',async()=>{
       const file=importInput.files?.[0];
