@@ -72,7 +72,17 @@
 
     const backup=[...modal.querySelectorAll('.personal-section')]
       .find((section)=>['Backup','Backup & restore'].includes(section.querySelector('h3')?.textContent?.trim()));
-    backup?.querySelector('.clear-local-data')?.remove();
+    const footer=modal.querySelector('.personal-footer-actions');
+
+    if(backup&&footer){
+      const actions=backup.querySelector('.personal-actions');
+      if(actions){
+        actions.classList.add('setup-backup-actions');
+        actions.querySelector('.clear-local-data')?.remove();
+        if(actions.parentElement!==footer) footer.prepend(actions);
+      }
+      backup.remove();
+    }
 
     const duplicateBackup=modal.querySelector('#dataBackupSection');
     duplicateBackup?.remove();
