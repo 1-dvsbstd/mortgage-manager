@@ -138,7 +138,7 @@
     control.className='theme-menu';
     control.innerHTML=`
       <button type="button" id="themeMenuButton" class="theme-menu-button" aria-haspopup="menu" aria-expanded="false">
-        <span class="theme-menu-label">Theme</span><span class="theme-menu-chevron" aria-hidden="true">⌄</span>
+        <span class="theme-menu-label">Theme</span><span class="theme-menu-chevron" aria-hidden="true"></span>
       </button>
       <div class="theme-menu-popover" role="menu" hidden>
         ${themes.map((theme)=>`<button type="button" role="menuitemradio" data-theme-choice="${theme.id}" aria-checked="false"><span class="theme-menu-swatch ${theme.id}" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>${theme.name}</strong><small>${theme.note}</small></span></button>`).join('')}
