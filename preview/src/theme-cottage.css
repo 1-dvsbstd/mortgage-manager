@@ -122,7 +122,7 @@ html[data-theme="cottage"] .app-view-current .v15-home-visual{
   background-color:#f3eee5!important;
   background-image:
     linear-gradient(rgba(238,247,246,.16),rgba(255,248,236,.08)),
-    url('../public/country-cottage-hero.webp')!important;
+    url('../public/country-cottage-hero.webp?v=daytime-001')!important;
   background-position:center center,center center!important;
   background-size:cover,cover!important;
   background-repeat:no-repeat,no-repeat!important;
