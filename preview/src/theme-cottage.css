@@ -1,0 +1,157 @@
+/* Country Cottage — image-led theme
+   Inspired by the selected English country cottage: warm stone, sage planting,
+   soft cream render, lavender garden accents and golden-hour window light. */
+
+html[data-theme="cottage"]{
+  --bg:#f3eee4;
+  --surface:#fbf7ef;
+  --surface-soft:#f2eadf;
+  --surface-muted:#e8dfd2;
+  --surface-raised:#f7f0e6;
+  --surface-control:#fffaf2;
+  --surface-warm:#ead8bb;
+  --surface-input:#fffaf2;
+
+  --text:#263029;
+  --muted:#687066;
+  --muted-2:#858a80;
+
+  --border:rgba(87,76,59,.15);
+  --border-soft:rgba(110,94,70,.10);
+
+  --accent:#b78b55;
+  --accent-strong:#7b6441;
+  --accent-soft:#ead9bd;
+  --warm:#a97852;
+  --debt:#858b84;
+  --equity:#72856c;
+  --property:#b59a78;
+  --upcoming:#b78b55;
+  --scheme:#aaa398;
+  --ink-active:#35463a;
+  --ink-on-active:#fffaf2;
+  --positive:#72856c;
+  --positive-soft:rgba(114,133,108,.12);
+  --accent-wash:rgba(183,139,85,.10);
+
+  --focus-ring:#87977c;
+  --focus-ring-soft:rgba(135,151,124,.34);
+
+  --shadow-card:0 18px 48px rgba(78,62,42,.08);
+  --shadow-soft:0 12px 34px rgba(78,62,42,.055);
+
+  --theme-hero-ink:#35463a;
+  --theme-greeting:#61735f;
+  --theme-illustration-bg:#e8dfcf;
+  --theme-progress-track:#e5ded2;
+  --theme-highlight:#f0e7da;
+  --theme-highlight-strong:#eadcc9;
+  --theme-hover:#f2e7d8;
+  --theme-rate-current:#fff5e8;
+  --theme-milestone:#f1e8dc;
+  --theme-action:#eee2d3;
+  --theme-range-edge:#cdbca7;
+  --theme-range-mid:#b78b55;
+
+  --theme-cottage-sage:#75866d;
+  --theme-cottage-stone:#b28a5c;
+  --theme-cottage-lavender:#94889a;
+  --up-border-soft:rgba(110,94,70,.12);
+}
+
+html[data-theme="cottage"] body{
+  background-color:#c8c1a8!important;
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(248,242,232,.08) 0%,
+      rgba(248,242,232,.12) 36%,
+      rgba(241,234,220,.32) 54%,
+      rgba(226,218,199,.66) 72%,
+      rgba(203,196,171,.92) 90%,
+      #c8c1a8 100%
+    ),
+    linear-gradient(90deg,rgba(117,134,109,.06),transparent 26%,transparent 74%,rgba(148,136,154,.05)),
+    url('../public/app-background-hybrid.webp')!important;
+  background-position:center top,center top,center top!important;
+  background-size:100% var(--app-bg-art-height),100% var(--app-bg-art-height),min(100%,2880px) auto!important;
+  background-repeat:no-repeat,no-repeat,no-repeat!important;
+  background-attachment:fixed,fixed,fixed!important;
+}
+
+/* Lighter, warmer card material than Dusk. */
+html[data-theme="cottage"] .panel,
+html[data-theme="cottage"] .chart-panel,
+html[data-theme="cottage"] .upcoming-section{
+  background:color-mix(in srgb,var(--surface) 94%,transparent)!important;
+  border-color:var(--border)!important;
+}
+html[data-theme="cottage"] .hero-balance-row>div,
+html[data-theme="cottage"] .home-stats>div,
+html[data-theme="cottage"] .deal-planner-summary>div,
+html[data-theme="cottage"] .next-home-summary-card,
+html[data-theme="cottage"] .next-home-timeline-row,
+html[data-theme="cottage"] .property-cost-card,
+html[data-theme="cottage"] .home-profile-range>div{
+  background:color-mix(in srgb,var(--surface-control) 78%,var(--surface-soft))!important;
+  border-color:var(--border-soft)!important;
+}
+
+/* Current hero: garden-light rather than the deeper Dusk mood. */
+html[data-theme="cottage"] .app-view-current .v15-hero{
+  background:
+    radial-gradient(560px 300px at 88% 32%,rgba(117,134,109,.08),transparent 68%),
+    radial-gradient(430px 250px at 4% -2%,rgba(183,139,85,.09),transparent 70%),
+    linear-gradient(140deg,#f9f3e9,#eee6d8 74%)!important;
+  border-color:rgba(110,94,70,.13)!important;
+}
+html[data-theme="cottage"] .app-view-current .v15-home-visual{
+  background-color:#e7dfcf!important;
+}
+html[data-theme="cottage"] .app-view-current .v15-home-visual::after{
+  background:
+    linear-gradient(180deg,rgba(255,247,231,.04),transparent 52%,rgba(83,92,75,.10)),
+    linear-gradient(90deg,rgba(183,139,85,.05),transparent 45%,rgba(117,134,109,.05))!important;
+}
+
+/* Sage is the planning/action colour; stone stays the warm financial accent. */
+html[data-theme="cottage"] .app-section-nav-top button.is-active,
+html[data-theme="cottage"] .app-section-nav-bottom button.is-active{
+  background:var(--theme-hero-ink)!important;
+  color:var(--ink-on-active)!important;
+}
+html[data-theme="cottage"] .trajectory-presets button.active,
+html[data-theme="cottage"] .future-next-home-c-years button.is-active{
+  background:color-mix(in srgb,var(--positive) 18%,var(--surface-control))!important;
+  border-color:color-mix(in srgb,var(--positive) 32%,var(--border-soft))!important;
+}
+html[data-theme="cottage"] .eyebrow,
+html[data-theme="cottage"] .kicker{
+  color:var(--accent-strong)!important;
+}
+
+/* Setup should feel like the same cottage material, not a separate dark layer. */
+html[data-theme="cottage"] .personal-modal{
+  background:
+    radial-gradient(420px 220px at 88% 0%,rgba(117,134,109,.055),transparent 68%),
+    linear-gradient(180deg,#fbf6ed,#f2eadf)!important;
+  border-color:var(--border)!important;
+  box-shadow:0 34px 90px rgba(75,60,42,.24)!important;
+}
+html[data-theme="cottage"] .personal-modal input,
+html[data-theme="cottage"] .personal-modal select,
+html[data-theme="cottage"] .personal-modal textarea,
+html[data-theme="cottage"] .personal-modal .setup-month-field{
+  background:var(--surface-control)!important;
+  border-color:rgba(126,105,77,.20)!important;
+}
+
+/* Theme menu preview. */
+.theme-menu-swatch.cottage{background:#f3eee4}
+.theme-menu-swatch.cottage i:nth-child(1){background:#75866d}
+.theme-menu-swatch.cottage i:nth-child(2){background:#b78b55}
+.theme-menu-swatch.cottage i:nth-child(3){background:#94889a}
+
+@media(max-width:700px){
+  html[data-theme="cottage"] body{background-attachment:scroll,scroll,scroll!important}
+}
