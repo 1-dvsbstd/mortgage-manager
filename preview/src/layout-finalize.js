@@ -77,7 +77,26 @@
       panel.className='trajectory-scenario-controls';
       panel.addEventListener('click',(event)=>{
         const button=event.target.closest('[data-scenario-extra]');
-        if(button) setScenarioExtra(button.dataset.scenarioExtra);
+        if(button){
+          setScenarioExtra(button.dataset.scenarioExtra);
+          return;
+        }
+
+        const customWrap=event.target.closest('.trajectory-custom-overpay');
+        if(customWrap){
+          const input=customWrap.querySelector('#trajectoryCustomOverpay');
+          if(!input) return;
+
+          const wasActive=customWrap.classList.contains('is-active');
+          if(!wasActive) setScenarioExtra(input.value);
+
+          if(event.target!==input || !wasActive){
+            requestAnimationFrame(()=>{
+              input.focus({preventScroll:true});
+              input.select();
+            });
+          }
+        }
       });
       panel.addEventListener('input',(event)=>{
         if(event.target.id==='trajectoryCustomOverpay') event.target.dataset.userValue=event.target.value;
