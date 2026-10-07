@@ -167,18 +167,23 @@
       const meta=directionMeta(values);
       const linePath=path(values),trendPath=path(trend);
       const latest=values.at(-1);
+      const latestPoint=points.at(-1);
+      const latestMonth=latestPoint?.date ? formatMonth(String(latestPoint.date).slice(0,7)) : 'Latest historical point';
+      const seriesMin=Math.min(...values);
+      const seriesMax=Math.max(...values);
+      const rangePosition=seriesMax>seriesMin ? Math.round((latest-seriesMin)/(seriesMax-seriesMin)*100) : 50;
       return `
         <article class="market-rate-card market-rate-card-${kind}">
           <div class="market-rate-card-head">
-            <div>
+            <div class="market-rate-card-history">
               <span>${label}</span>
-              <strong>${latest.toFixed(2)}%</strong>
-              <small>Latest BoE 75% LTV benchmark</small>
+              <strong>${latestMonth}</strong>
+              <small>Historical benchmark · ${latest.toFixed(2)}%</small>
             </div>
             <div class="market-rate-card-direction" data-direction="${meta.dir}">
               <span>Recent trend</span>
               <strong><b class="market-rate-direction-cue">${meta.cue}</b>${meta.label}</strong>
-              <small>${Math.abs(meta.delta).toFixed(2)}% vs prior 6 months</small>
+              <small>${Math.abs(meta.delta).toFixed(2)}pp vs prior 6 months · ${rangePosition}% of 5-year range</small>
             </div>
           </div>
           <div class="market-rate-card-chart">
@@ -200,9 +205,9 @@
     panel.innerHTML=`
       <div class="market-rate-trend-heading">
         <div>
-          <p class="eyebrow">Five-year history</p>
+          <p class="eyebrow">Historical context</p>
           <h3>How fixed mortgage rates have moved</h3>
-          <p>Bank of England quoted household rates · 75% LTV</p>
+          <p>Bank of England quoted household rates · 75% LTV · latest historical point ${formatMonth(String(twoPoints.at(-1)?.date||'').slice(0,7))}. Current scenarios above use Moneyfacts.</p>
         </div>
       </div>
       <div class="market-rate-trend-grid">
