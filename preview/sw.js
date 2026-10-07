@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-preview-rate-history-context-001';
+const CACHE_NAME = 'mortgage-manager-preview-rate-history-context-002';
 const APP_SHELL = [
   './',
   './index.html',
