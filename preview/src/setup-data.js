@@ -418,6 +418,77 @@
         toast('History reset');
       }
     });
+    backdrop.querySelector('[data-action="export"]')?.addEventListener('click',(event)=>{
+      event.preventDefault();
+      exportBackup();
+    });
+    const importButton=backdrop.querySelector('[data-action="import"]');
+    const importInput=backdrop.querySelector('.personal-import-input');
+    importButton?.addEventListener('click',(event)=>{
+      event.preventDefault();
+      importInput?.click();
+    });
+    importInput?.addEventListener('change',async()=>{
+      const file=importInput.files?.[0];
+      if(!file) return;
+      try{
+        await importBackup(file);
+      }catch(error){
+        window.alert(error?.message || 'Could not restore that Mortgage Manager backup.');
+      }finally{
+        importInput.value='';
+      }
+    });
+  }
+
+  function exportBackup() {
+    const data = {};
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(STORAGE_PREFIX)) data[key] = localStorage.getItem(key);
+    }
+    const payload = {
+      product:'Mortgage Manager',
+      backupVersion:1,
+      exportedAt:new Date().toISOString(),
+      data,
+    };
+    const blob = new Blob([JSON.stringify(payload,null,2)], { type:'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `mortgage-manager-backup-${new Date().toISOString().slice(0,10)}.json`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 500);
+    toast('Backup exported');
+  }
+
+  async function importBackup(file) {
+    if (!file) return;
+    const text = await file.text();
+    const parsed = JSON.parse(text);
+    if (!parsed?.data || typeof parsed.data !== 'object' || Array.isArray(parsed.data)) {
+      throw new Error('This is not a Mortgage Manager backup.');
+    }
+    const entries = Object.entries(parsed.data)
+      .filter(([key,value]) => key.startsWith(STORAGE_PREFIX) && typeof value === 'string');
+    if (!entries.length) throw new Error('No Mortgage Manager data was found in this backup.');
+
+    const confirmed = window.confirm('Restore this backup? This replaces the Mortgage Manager data currently saved on this device.');
+    if (!confirmed) return;
+
+    const existing = [];
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(STORAGE_PREFIX)) existing.push(key);
+    }
+    existing.forEach((key) => localStorage.removeItem(key));
+    entries.forEach(([key,value]) => localStorage.setItem(key,String(value)));
+
+    toast('Backup restored · reloading');
+    setTimeout(() => location.reload(), 500);
   }
 
   function maybeFirstRun() {
