@@ -629,3 +629,12 @@ body .personal-modal .deal-term-field [data-deal-calendar]{
   font-size:16px;
   line-height:1;
 }
+
+
+/* Setup month field value size */
+body .personal-modal .setup-month-field > span{
+  font-size:16px!important;
+  font-weight:500!important;
+  line-height:1.25!important;
+  color:var(--text)!important;
+}
