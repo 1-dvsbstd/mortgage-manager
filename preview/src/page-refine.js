@@ -713,7 +713,7 @@
                 </article>`;
             }).join('')}
           </div>
-          <div class="future-payoff-scale-caption"><span>Lower monthly commitment</span><strong>Earlier payoff →</strong><span>Higher monthly commitment</span></div>
+          <div class="future-payoff-scale-caption"><span>Lower commitment</span><strong>Earlier payoff →</strong><span>Higher commitment</span></div>
         `;
       }
     }
