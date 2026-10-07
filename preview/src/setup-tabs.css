@@ -265,12 +265,12 @@ body .personal-modal #methodologySection{
 body .personal-modal .methodology-toggle{
   appearance:none!important;
   width:100%!important;
-  min-height:56px!important;
+  min-height:60px!important;
   display:flex!important;
   align-items:center!important;
   justify-content:space-between!important;
   gap:16px!important;
-  padding:8px 0!important;
+  padding:11px 0 8px!important;
   border:0!important;
   background:transparent!important;
   color:var(--text)!important;
