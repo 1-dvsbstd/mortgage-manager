@@ -62,30 +62,31 @@ html[data-theme="cottage"]{
 /* Landscape extension: visible near the top, then deliberately fades into
    a light neutral field so the app never feels like it sits on a dark photo. */
 html[data-theme="cottage"] body{
-  background-color:#efe8dc!important;
+  background-color:#f1ece3!important;
   background-image:
     linear-gradient(
       to bottom,
-      rgba(253,249,242,.06) 0%,
-      rgba(253,249,242,.12) 28%,
-      rgba(248,243,234,.38) 48%,
-      rgba(244,238,228,.72) 64%,
-      rgba(239,232,220,.94) 78%,
-      #efe8dc 92%,
-      #efe8dc 100%
+      rgba(247,251,250,.18) 0%,
+      rgba(248,250,246,.24) 24%,
+      rgba(250,247,240,.46) 44%,
+      rgba(246,241,232,.78) 62%,
+      rgba(241,235,224,.96) 78%,
+      #f1ece3 92%,
+      #f1ece3 100%
     ),
     linear-gradient(
-      90deg,
-      rgba(117,134,109,.035),
-      transparent 28%,
-      transparent 72%,
-      rgba(148,136,154,.03)
+      180deg,
+      rgba(218,235,240,.16) 0%,
+      rgba(239,244,237,.08) 38%,
+      rgba(255,249,239,.10) 72%,
+      transparent 100%
     ),
     url('../public/country-cottage-background.webp')!important;
   background-position:center top,center top,center top!important;
   background-size:100% var(--app-bg-art-height),100% var(--app-bg-art-height),min(100%,2880px) auto!important;
   background-repeat:no-repeat,no-repeat,no-repeat!important;
   background-attachment:fixed,fixed,fixed!important;
+  background-blend-mode:normal,screen,normal!important;
 }
 
 /* Light, clean card material. */
@@ -119,11 +120,14 @@ html[data-theme="cottage"] .app-view-current .v15-hero{
 
 /* Full selected cottage image: no crop, centred. */
 html[data-theme="cottage"] .app-view-current .v15-home-visual{
-  background-color:#f1e9dd!important;
-  background-image:url('../public/country-cottage-hero.webp')!important;
-  background-position:center center!important;
-  background-size:contain!important;
-  background-repeat:no-repeat!important;
+  background-color:#f3eee5!important;
+  background-image:
+    linear-gradient(rgba(238,247,246,.16),rgba(255,248,236,.08)),
+    url('../public/country-cottage-hero.webp')!important;
+  background-position:center center,center center!important;
+  background-size:cover,cover!important;
+  background-repeat:no-repeat,no-repeat!important;
+  background-blend-mode:screen,normal!important;
 }
 
 /* The selected source image includes a tiny sun near the far-right horizon.
@@ -131,14 +135,14 @@ html[data-theme="cottage"] .app-view-current .v15-home-visual{
 html[data-theme="cottage"] .app-view-current .v15-home-visual::after{
   background:
     radial-gradient(
-      ellipse at 91% 36%,
-      rgba(248,238,222,.98) 0%,
-      rgba(248,238,222,.90) 4%,
-      rgba(248,238,222,.58) 8%,
-      rgba(248,238,222,.20) 12%,
-      transparent 18%
+      ellipse at 91% 35%,
+      rgba(231,241,242,.98) 0%,
+      rgba(235,243,241,.94) 5%,
+      rgba(242,246,239,.72) 10%,
+      rgba(248,246,235,.34) 15%,
+      transparent 23%
     ),
-    linear-gradient(180deg,rgba(255,250,242,.055),transparent 58%,rgba(87,96,80,.035))!important;
+    linear-gradient(180deg,rgba(227,239,242,.10),rgba(255,250,240,.02) 50%,rgba(255,248,236,.08))!important;
 }
 
 /* Sage = planning/equity. Honey stone = financial emphasis. */
