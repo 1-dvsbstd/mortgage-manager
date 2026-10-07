@@ -259,17 +259,18 @@
 
 /* Setup methodology disclosure — explicit toggle, matching the Future assumptions control. */
 body .personal-modal #methodologySection{
+  margin-top:0!important;
   padding-top:0!important;
 }
 body .personal-modal .methodology-toggle{
   appearance:none!important;
   width:100%!important;
-  min-height:52px!important;
+  min-height:56px!important;
   display:flex!important;
   align-items:center!important;
   justify-content:space-between!important;
   gap:16px!important;
-  padding:4px 0!important;
+  padding:8px 0!important;
   border:0!important;
   background:transparent!important;
   color:var(--text)!important;
