@@ -431,16 +431,17 @@
   display:block!important;
   margin-top:5px!important;
   color:var(--theme-hero-ink)!important;
-  font-family:var(--font-display)!important;
-  font-size:26px!important;
-  font-weight:600!important;
-  letter-spacing:-.03em!important;
+  font-family:var(--font-ui)!important;
+  font-size:15px!important;
+  font-weight:800!important;
+  letter-spacing:-.01em!important;
 }
 .app-view-upcoming .market-rate-card-head>div:first-child>small{
   display:block!important;
-  margin-top:3px!important;
+  margin-top:4px!important;
   color:var(--muted-2)!important;
   font-size:7.5px!important;
+  line-height:1.35!important;
 }
 .app-view-upcoming .market-rate-card-direction{
   min-width:132px!important;
@@ -465,9 +466,11 @@
 }
 .app-view-upcoming .market-rate-card-direction>small{
   display:block!important;
+  max-width:180px!important;
   margin-top:4px!important;
   color:var(--muted-2)!important;
   font-size:7.5px!important;
+  line-height:1.35!important;
 }
 .app-view-upcoming .market-rate-card-chart{
   margin-top:10px!important;
