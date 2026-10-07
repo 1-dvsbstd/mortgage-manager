@@ -80,6 +80,8 @@
         actions.classList.add('setup-backup-actions');
         actions.querySelector('.clear-local-data')?.remove();
         if(actions.parentElement!==footer) footer.prepend(actions);
+        const theme=modal.querySelector('.theme-menu');
+        if(theme&&theme.parentElement!==actions) actions.appendChild(theme);
       }
       backup.remove();
     }
