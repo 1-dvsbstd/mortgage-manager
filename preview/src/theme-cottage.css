@@ -132,16 +132,8 @@ html[data-theme="cottage"] .app-view-current .v15-home-visual{
 /* The selected source image includes a tiny sun near the far-right horizon.
    Keep the full image and softly wash that sky area rather than cropping it. */
 html[data-theme="cottage"] .app-view-current .v15-home-visual::after{
-  background:
-    radial-gradient(
-      ellipse at 91% 35%,
-      rgba(231,241,242,.98) 0%,
-      rgba(235,243,241,.94) 5%,
-      rgba(242,246,239,.72) 10%,
-      rgba(248,246,235,.34) 15%,
-      transparent 23%
-    ),
-    linear-gradient(180deg,rgba(227,239,242,.10),rgba(255,250,240,.02) 50%,rgba(255,248,236,.08))!important;
+  background:none!important;
+  opacity:0!important;
 }
 
 /* Sage = planning/equity. Honey stone = financial emphasis. */
