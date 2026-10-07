@@ -7,7 +7,6 @@
   const HOME_KEY = 'mortgage-manager-home-projection-v4';
   const ONLINE_MODE_KEY = 'mortgage-manager-online-mode-v1';
   const MARKET_CACHE_KEY = 'mortgage-manager-market-cache-v1';
-  const BACKUP_VERSION = 1;
   const MARKET_URLS = [
     'public/market-rates.json',
     'https://raw.githubusercontent.com/1-dvsbstd/mortgage-manager/main/public/market-rates.json',
@@ -248,116 +247,7 @@
     }
   }
 
-  function collectBackup() {
-    const data = {};
-    for (let i = 0; i < localStorage.length; i += 1) {
-      const key = localStorage.key(i);
-      if (key?.startsWith('mortgage-manager-')) data[key] = localStorage.getItem(key);
-    }
-    return { product:'Mortgage Manager', backupVersion:BACKUP_VERSION, exportedAt:new Date().toISOString(), data };
-  }
 
-  function downloadBackup() {
-    const payload = JSON.stringify(collectBackup(), null, 2);
-    const blob = new Blob([payload], { type:'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `mortgage-manager-backup-${new Date().toISOString().slice(0,10)}.json`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 500);
-  }
-
-  function mortgageManagerKeys() {
-    const keys = [];
-    for (let i = 0; i < localStorage.length; i += 1) {
-      const key = localStorage.key(i);
-      if (key?.startsWith('mortgage-manager-')) keys.push(key);
-    }
-    return keys;
-  }
-
-  async function importBackup(file, status) {
-    const text = await file.text();
-    const parsed = JSON.parse(text);
-    if (!parsed || !parsed.data || typeof parsed.data !== 'object' || Array.isArray(parsed.data)) throw new Error('This is not a Mortgage Manager backup.');
-
-    const isCurrentFormat = parsed.product === 'Mortgage Manager';
-    const isLegacyFormat = !parsed.product && parsed.version;
-    if (!isCurrentFormat && !isLegacyFormat) throw new Error('This is not a Mortgage Manager backup.');
-
-    if (isCurrentFormat) {
-      const version = Number(parsed.backupVersion || 0);
-      if (!Number.isFinite(version) || version < 1) throw new Error('This backup is missing a supported version.');
-      if (version > BACKUP_VERSION) throw new Error('This backup was created by a newer version of Mortgage Manager. Update the app before restoring it.');
-    }
-
-    const entries = Object.entries(parsed.data).filter(([key,value]) => key.startsWith('mortgage-manager-') && typeof value === 'string');
-    if (!entries.length) throw new Error('No Mortgage Manager data was found in this backup.');
-    const confirmed = window.confirm(`Restore this backup from ${parsed.exportedAt ? new Date(parsed.exportedAt).toLocaleString('en-GB') : 'an earlier session'}? This replaces the Mortgage Manager data currently saved on this device.`);
-    if (!confirmed) {
-      if (status) status.textContent = 'Restore cancelled. Your current data was not changed.';
-      return;
-    }
-    mortgageManagerKeys().forEach((key) => localStorage.removeItem(key));
-    entries.forEach(([key,value]) => localStorage.setItem(key, value));
-    if (status) status.textContent = `Restored ${entries.length} saved items. Reloading…`;
-    setTimeout(() => location.reload(), 350);
-  }
-
-  function ensureBackupSection() {
-    const modal = document.querySelector('.personal-modal');
-    if (!modal) return;
-    // Backup actions are owned by the Setup & Data footer.
-    // Remove the legacy duplicate section if an older cached DOM created it.
-    $('dataBackupSection')?.remove();
-  }
-
-  function wireBackupActions() {
-    const modal=document.querySelector('.personal-modal');
-    if(!modal) return;
-
-    const exportButton=modal.querySelector('[data-action="export"]');
-    if(exportButton && exportButton.dataset.backupWired!=='true'){
-      exportButton.dataset.backupWired='true';
-      exportButton.addEventListener('click',(event)=>{
-        event.preventDefault();
-        event.stopPropagation();
-        downloadBackup();
-      });
-    }
-
-    const importButton=modal.querySelector('[data-action="import"]');
-    const input=modal.querySelector('.personal-import-input');
-
-    if(importButton && importButton.dataset.backupWired!=='true'){
-      importButton.dataset.backupWired='true';
-      importButton.addEventListener('click',(event)=>{
-        event.preventDefault();
-        event.stopPropagation();
-        if(!input) return;
-        input.value='';
-        input.click();
-      });
-    }
-
-    if(input && input.dataset.backupWired!=='true'){
-      input.dataset.backupWired='true';
-      input.addEventListener('change',async()=>{
-        const file=input.files?.[0];
-        if(!file) return;
-        try{
-          await importBackup(file);
-        }catch(error){
-          window.alert(error?.message || 'Could not restore that Mortgage Manager backup.');
-        }finally{
-          input.value='';
-        }
-      });
-    }
-  }
 
   function ensureQuickLumpSumAction() {
     const section = $('mortgageHistorySection');
@@ -387,8 +277,6 @@
     standardiseSetupClose();
     keepFutureSectionsOpen();
     ensureConnectivityControl();
-    ensureBackupSection();
-    wireBackupActions();
     ensureQuickLumpSumAction();
     applyCachedMarketRates();
   }
