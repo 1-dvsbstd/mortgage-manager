@@ -418,9 +418,14 @@
         toast('History reset');
       }
     });
-    backdrop.querySelector('[data-action="export"]')?.addEventListener('click',(event)=>{
+    backdrop.querySelector('[data-action="export"]')?.addEventListener('click',async(event)=>{
       event.preventDefault();
-      exportBackup();
+      try{
+        await exportBackup();
+      }catch(error){
+        if(error?.name==='AbortError') return;
+        window.alert(error?.message || 'Could not export the Mortgage Manager backup.');
+      }
     });
     const importButton=backdrop.querySelector('[data-action="import"]');
     const importInput=backdrop.querySelector('.personal-import-input');
@@ -447,28 +452,54 @@
     });
   }
 
-  function exportBackup() {
+  async function exportBackup() {
     const data = {};
     for (let i = 0; i < localStorage.length; i += 1) {
       const key = localStorage.key(i);
       if (key?.startsWith(STORAGE_PREFIX)) data[key] = localStorage.getItem(key);
     }
+
+    const itemCount=Object.keys(data).length;
+    if(!itemCount) throw new Error('There is no Mortgage Manager data to export yet.');
+
+    const filename=`mortgage-manager-backup-${new Date().toISOString().slice(0,10)}.json`;
     const payload = {
       product:'Mortgage Manager',
       backupVersion:1,
       exportedAt:new Date().toISOString(),
+      itemCount,
       data,
     };
-    const blob = new Blob([JSON.stringify(payload,null,2)], { type:'application/json' });
+    const json=JSON.stringify(payload,null,2);
+    const blob = new Blob([json], { type:'application/json' });
+
+    if(typeof window.showSaveFilePicker==='function'){
+      const handle=await window.showSaveFilePicker({
+        suggestedName:filename,
+        types:[{
+          description:'Mortgage Manager backup',
+          accept:{'application/json':['.json']},
+        }],
+      });
+      const writable=await handle.createWritable();
+      await writable.write(blob);
+      await writable.close();
+      toast(`Backup saved · ${itemCount} item${itemCount===1?'':'s'}`);
+      return;
+    }
+
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `mortgage-manager-backup-${new Date().toISOString().slice(0,10)}.json`;
+    link.download = filename;
+    link.style.display='none';
     document.body.appendChild(link);
     link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 500);
-    toast('Backup exported');
+    setTimeout(()=>{
+      link.remove();
+      URL.revokeObjectURL(url);
+    },5000);
+    toast(`Backup download started · ${itemCount} item${itemCount===1?'':'s'}`);
   }
 
   async function importBackup(file) {
