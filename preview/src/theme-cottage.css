@@ -13,8 +13,8 @@ html[data-theme="cottage"]{
   --surface-input:#fffaf2;
 
   --text:#263029;
-  --muted:#687066;
-  --muted-2:#858a80;
+  --muted:#596359;
+  --muted-2:#747b72;
 
   --border:rgba(87,76,59,.15);
   --border-soft:rgba(110,94,70,.10);
@@ -83,8 +83,10 @@ html[data-theme="cottage"] body{
 html[data-theme="cottage"] .panel,
 html[data-theme="cottage"] .chart-panel,
 html[data-theme="cottage"] .upcoming-section{
-  background:color-mix(in srgb,var(--surface) 94%,transparent)!important;
+  background:var(--surface)!important;
   border-color:var(--border)!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
 }
 html[data-theme="cottage"] .hero-balance-row>div,
 html[data-theme="cottage"] .home-stats>div,
@@ -93,7 +95,7 @@ html[data-theme="cottage"] .next-home-summary-card,
 html[data-theme="cottage"] .next-home-timeline-row,
 html[data-theme="cottage"] .property-cost-card,
 html[data-theme="cottage"] .home-profile-range>div{
-  background:color-mix(in srgb,var(--surface-control) 78%,var(--surface-soft))!important;
+  background:var(--surface-control)!important;
   border-color:var(--border-soft)!important;
 }
 
