@@ -23,7 +23,7 @@
 .progress-history-empty{color:var(--muted);font-size:12px;line-height:1.5}
 
 .deal-action-hint{margin:12px 0 0;padding:12px 13px;border:1px solid rgba(104,222,185,.12);border-radius:13px;background:rgba(104,222,185,.035)}
-.deal-action-hint span{display:block;color:var(--accent);font-size:10px;font-weight:850;letter-spacing:.11em;text-transform:uppercase}
+.deal-action-hint span{display:block;color:var(--accent);font-size:11px;font-weight:850;letter-spacing:.11em;text-transform:uppercase}
 .deal-action-hint strong{display:block;margin-top:5px;font-size:14px}
 .deal-action-hint small{display:block;margin-top:5px;color:var(--muted);font-size:11px;line-height:1.45}
 
@@ -256,7 +256,7 @@ body .personal-backdrop .personal-modal button.personal-close:focus-visible{
 }
 .personal-modal .setup-value-history-list .setup-history-row span{
   color:var(--muted)!important;
-  font-size:9.5px!important;
+  font-size:11px!important;
   font-weight:600!important;
 }
 .personal-modal .setup-value-history-list .setup-history-row strong{
@@ -268,7 +268,7 @@ body .personal-backdrop .personal-modal button.personal-close:focus-visible{
 .personal-modal .setup-value-history-list .setup-history-row small{
   justify-self:end!important;
   color:var(--muted)!important;
-  font-size:9.5px!important;
+  font-size:11px!important;
   font-weight:500!important;
 }
 .personal-modal .setup-value-history-section .setup-save-value{
@@ -278,7 +278,7 @@ body .personal-backdrop .personal-modal button.personal-close:focus-visible{
   background:var(--surface-control)!important;
   color:#7e5837!important;
   box-shadow:none!important;
-  font-size:10px!important;
+  font-size:11px!important;
 }
 .personal-modal .setup-value-history-section .setup-save-value:hover,
 .personal-modal .setup-value-history-section .setup-save-value:focus-visible{
@@ -515,7 +515,7 @@ body .personal-backdrop .personal-modal #dataBackupSection{
   padding:6px 8px;
   border-radius:8px;
   color:#8b6849;
-  font-size:10.5px;
+  font-size:11px;
   font-weight:750;
 }
 
