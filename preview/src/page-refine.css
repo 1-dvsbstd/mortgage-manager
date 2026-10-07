@@ -354,8 +354,8 @@
   line-height:1.45!important;
 }
 .app-view-upcoming .upcoming-rates .live-rate-choices{
-  margin:10px 0 0!important;
-  padding:10px 0 0!important;
+  margin:7px 0 0!important;
+  padding:7px 0 0!important;
   border:0!important;
   border-top:1px solid var(--up-border-soft)!important;
   border-radius:0!important;
@@ -3744,4 +3744,27 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   .app-view-future .future-next-home-c-stage{
     padding-bottom:24px!important;
   }
+}
+
+
+/* Historical rate source footer */
+.app-view-upcoming .market-rate-history-source{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:14px!important;
+  margin-top:10px!important;
+  padding-top:10px!important;
+  border-top:1px solid var(--up-border-soft)!important;
+  color:var(--muted)!important;
+  font-size:8.5px!important;
+  line-height:1.35!important;
+}
+.app-view-upcoming .market-rate-history-source span{
+  font-weight:650!important;
+}
+.app-view-upcoming .market-rate-history-source strong{
+  color:var(--muted)!important;
+  font-size:8.5px!important;
+  font-weight:600!important;
 }
