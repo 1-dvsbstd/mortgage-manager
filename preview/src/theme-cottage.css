@@ -3,24 +3,24 @@
    and soft lavender. Dusk remains the moodier evening alternative. */
 
 html[data-theme="cottage"]{
-  --bg:#f5f0e7;
-  --surface:#fdf9f2;
-  --surface-soft:#f4ede3;
-  --surface-muted:#ebe2d6;
+  --bg:#f3eee4;
+  --surface:#fdfaf4;
+  --surface-soft:#f5efe6;
+  --surface-muted:#ece5da;
   --surface-raised:#f8f2e9;
   --surface-control:#fffaf4;
   --surface-warm:#ecdcc1;
   --surface-input:#fffaf4;
 
-  --text:#29332c;
-  --muted:#626c62;
+  --text:#2b342d;
+  --muted:#657063;
   --muted-2:#7d847c;
 
   --border:rgba(88,77,61,.14);
   --border-soft:rgba(105,91,70,.09);
   --up-border-soft:rgba(105,91,70,.11);
 
-  --accent:#b58b58;
+  --accent:#b79261;
   --accent-strong:#7c6443;
   --accent-soft:#ead9bd;
   --warm:#aa7d57;
@@ -31,7 +31,7 @@ html[data-theme="cottage"]{
   --scheme:#aaa398;
   --ink-active:#384a3d;
   --ink-on-active:#fffaf4;
-  --positive:#74866f;
+  --positive:#72876e;
   --positive-soft:rgba(116,134,111,.12);
   --accent-wash:rgba(181,139,88,.09);
 
@@ -62,39 +62,38 @@ html[data-theme="cottage"]{
 /* Landscape extension: visible near the top, then deliberately fades into
    a light neutral field so the app never feels like it sits on a dark photo. */
 html[data-theme="cottage"] body{
-  background-color:#f1ece3!important;
+  background-color:#f3eee4!important;
   background-image:
     linear-gradient(
       to bottom,
-      rgba(247,251,250,.18) 0%,
-      rgba(248,250,246,.24) 24%,
-      rgba(250,247,240,.46) 44%,
-      rgba(246,241,232,.78) 62%,
-      rgba(241,235,224,.96) 78%,
-      #f1ece3 92%,
-      #f1ece3 100%
+      rgba(250,248,243,.04) 0%,
+      rgba(250,248,243,.08) 20%,
+      rgba(245,241,233,.24) 38%,
+      rgba(242,237,228,.52) 54%,
+      rgba(240,234,224,.78) 68%,
+      rgba(239,232,220,.94) 84%,
+      #f3eee4 100%
     ),
     linear-gradient(
-      180deg,
-      rgba(218,235,240,.16) 0%,
-      rgba(239,244,237,.08) 38%,
-      rgba(255,249,239,.10) 72%,
-      transparent 100%
+      90deg,
+      rgba(120,146,118,.025),
+      transparent 28%,
+      transparent 72%,
+      rgba(150,165,185,.02)
     ),
     url('../public/country-cottage-background.webp')!important;
   background-position:center top,center top,center top!important;
   background-size:100% var(--app-bg-art-height),100% var(--app-bg-art-height),min(100%,2880px) auto!important;
   background-repeat:no-repeat,no-repeat,no-repeat!important;
   background-attachment:fixed,fixed,fixed!important;
-  background-blend-mode:normal,screen,normal!important;
 }
 
 /* Light, clean card material. */
 html[data-theme="cottage"] .panel,
 html[data-theme="cottage"] .chart-panel,
 html[data-theme="cottage"] .upcoming-section{
-  background:rgba(253,249,242,.97)!important;
-  border-color:var(--border)!important;
+  background:rgba(253,250,245,.975)!important;
+  border-color:rgba(88,77,61,.12)!important;
   backdrop-filter:none!important;
   -webkit-backdrop-filter:none!important;
 }
@@ -112,10 +111,10 @@ html[data-theme="cottage"] .home-profile-range>div{
 /* Current hero stays airy. */
 html[data-theme="cottage"] .app-view-current .v15-hero{
   background:
-    radial-gradient(540px 280px at 90% 26%,rgba(117,134,109,.06),transparent 70%),
-    radial-gradient(420px 240px at 4% -4%,rgba(181,139,88,.07),transparent 72%),
-    linear-gradient(140deg,#fcf8f1,#f1e9dd 76%)!important;
-  border-color:rgba(105,91,70,.12)!important;
+    radial-gradient(540px 280px at 90% 24%,rgba(132,160,128,.05),transparent 70%),
+    radial-gradient(420px 240px at 4% -4%,rgba(201,178,138,.05),transparent 72%),
+    linear-gradient(140deg,#fdfaf4,#f4ede2 76%)!important;
+  border-color:rgba(105,91,70,.10)!important;
 }
 
 /* Full selected cottage image: no crop, centred. */
