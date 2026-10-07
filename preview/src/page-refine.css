@@ -2130,13 +2130,6 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   border-color:color-mix(in srgb,var(--accent) 30%,var(--border-soft))!important;
   background:color-mix(in srgb,var(--surface-control) 72%,transparent)!important;
 }
-.app-view-current .trajectory-custom-overpay.is-active{
-  border-color:color-mix(in srgb,var(--positive) 35%,var(--border-soft))!important;
-  background:color-mix(in srgb,var(--positive) 8%,var(--surface-control))!important;
-}
-.app-view-current .trajectory-custom-overpay.is-active .trajectory-custom-value{
-  color:var(--positive)!important;
-}
 
 .app-view-current .trajectory-chart-stage{
   min-width:0!important;
