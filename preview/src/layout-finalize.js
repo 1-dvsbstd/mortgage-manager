@@ -90,7 +90,8 @@
           if(event.target!==input){
             requestAnimationFrame(()=>{
               input.focus({preventScroll:true});
-              input.select();
+              const end=input.value.length;
+              input.setSelectionRange?.(end,end);
             });
           }
         }
