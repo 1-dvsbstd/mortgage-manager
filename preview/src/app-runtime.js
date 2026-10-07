@@ -282,10 +282,18 @@
   async function importBackup(file, status) {
     const text = await file.text();
     const parsed = JSON.parse(text);
-    if (!parsed || parsed.product !== 'Mortgage Manager' || !parsed.data || typeof parsed.data !== 'object') throw new Error('This is not a Mortgage Manager backup.');
-    const version = Number(parsed.backupVersion || 0);
-    if (!Number.isFinite(version) || version < 1) throw new Error('This backup is missing a supported version.');
-    if (version > BACKUP_VERSION) throw new Error('This backup was created by a newer version of Mortgage Manager. Update the app before restoring it.');
+    if (!parsed || !parsed.data || typeof parsed.data !== 'object' || Array.isArray(parsed.data)) throw new Error('This is not a Mortgage Manager backup.');
+
+    const isCurrentFormat = parsed.product === 'Mortgage Manager';
+    const isLegacyFormat = !parsed.product && parsed.version;
+    if (!isCurrentFormat && !isLegacyFormat) throw new Error('This is not a Mortgage Manager backup.');
+
+    if (isCurrentFormat) {
+      const version = Number(parsed.backupVersion || 0);
+      if (!Number.isFinite(version) || version < 1) throw new Error('This backup is missing a supported version.');
+      if (version > BACKUP_VERSION) throw new Error('This backup was created by a newer version of Mortgage Manager. Update the app before restoring it.');
+    }
+
     const entries = Object.entries(parsed.data).filter(([key,value]) => key.startsWith('mortgage-manager-') && typeof value === 'string');
     if (!entries.length) throw new Error('No Mortgage Manager data was found in this backup.');
     const confirmed = window.confirm(`Restore this backup from ${parsed.exportedAt ? new Date(parsed.exportedAt).toLocaleString('en-GB') : 'an earlier session'}? This replaces the Mortgage Manager data currently saved on this device.`);
