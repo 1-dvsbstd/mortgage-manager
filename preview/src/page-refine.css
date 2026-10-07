@@ -1197,12 +1197,13 @@ body details>summary::after{
   color:transparent!important;
   font-size:0!important;
   line-height:0!important;
-  transform:translateY(-50%) rotate(0deg)!important;
+  transform:translateY(-50%)!important;
   transform-origin:center!important;
-  transition:transform .15s ease!important;
+  transition:none!important;
 }
 body details[open]>summary::after{
-  transform:translateY(-50%) rotate(180deg)!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M2 6l4-4 4 4' stroke='%238b6849' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")!important;
+  transform:translateY(-50%)!important;
 }
 body details>summary .summary-plus,
 body details>summary .history-summary-chevron,
