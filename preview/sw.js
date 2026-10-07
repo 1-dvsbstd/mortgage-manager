@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-preview-month-text-001';
+const CACHE_NAME = 'mortgage-manager-preview-chevron-clean-001';
 const APP_SHELL = [
   './',
   './index.html',
