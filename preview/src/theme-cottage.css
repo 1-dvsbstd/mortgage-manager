@@ -406,75 +406,10 @@ html[data-theme="cottage"] .app-view-upcoming .market-rate-x-label{
   fill:var(--chart-guide)!important;
 }
 
-/* Contemporary Country: colour roles, not colour-filled cards.
-   Applied to the same components across the dashboard. */
+/* Theme colours for shared, selective data emphasis. */
 html[data-theme="cottage"]{
-  --cottage-equity:#5f8c7b;
-  --cottage-comparison:#729bab;
-  --cottage-savings:#b58d6f;
-  --cottage-accent-wash:rgba(95,140,123,.10);
-  --cottage-blue-wash:rgba(114,155,171,.10);
-}
-html[data-theme="cottage"] .app-view-current .v15-current-journey{
-  background:var(--surface-control)!important;
-}
-html[data-theme="cottage"] body .app-view-current .v15-current-stats .v15-stat strong{
-  color:var(--text)!important;
-}
-html[data-theme="cottage"] body .app-view-current .v15-current-stats .v15-stat:first-child strong{
-  color:var(--cottage-equity)!important;
-}
-html[data-theme="cottage"] body .app-view-current .v15-current-stats .v15-stat:nth-child(2) .v15-stat-icon,
-html[data-theme="cottage"] body .app-view-current .v15-current-stats .v15-stat:nth-child(2) [class*="icon"]{
-  color:var(--cottage-comparison)!important;
-}
-html[data-theme="cottage"] body .app-view-current .v15-current-stats .v15-stat:nth-child(4) small,
-html[data-theme="cottage"] body .app-view-current .v15-current-stats .v15-stat:nth-child(4) [class*="extra"]{
-  color:var(--cottage-equity)!important;
-}
-html[data-theme="cottage"] .app-view-current .trajectory-with-what-if .trajectory-current-saving,
-html[data-theme="cottage"] .app-view-current .trajectory-with-what-if [class*="saving"] strong{
-  color:var(--cottage-equity)!important;
-}
-html[data-theme="cottage"] .app-view-current .trajectory-with-what-if .trajectory-what-if-summary strong,
-html[data-theme="cottage"] .app-view-current .trajectory-with-what-if [class*="what-if"] [class*="value"]{
-  color:var(--cottage-comparison)!important;
-}
-html[data-theme="cottage"] .app-view-future .future-next-home-c-callout:nth-child(1)>strong{
-  color:var(--cottage-equity)!important;
-}
-html[data-theme="cottage"] .app-view-future .future-next-home-c-callout:nth-child(2)>strong{
-  color:var(--cottage-comparison)!important;
-}
-html[data-theme="cottage"] .app-view-future .future-next-home-c-callout:nth-child(3)>strong{
-  color:var(--cottage-savings)!important;
-}
-html[data-theme="cottage"] .app-view-future .future-next-home-c-callout.is-repayment>strong{
-  color:var(--text)!important;
-}
-html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-marker.is-current .future-payoff-marker-label{
-  color:var(--cottage-equity)!important;
-}
-html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-marker:not(.is-current) .future-payoff-marker-label{
-  color:var(--muted)!important;
-}
-html[data-theme="cottage"] .app-view-future .cost-scale>i{
-  background:var(--cottage-equity)!important;
-}
-html[data-theme="cottage"] .app-view-upcoming .market-rate-card-two .market-rate-trendline,
-html[data-theme="cottage"] .app-view-upcoming .market-rate-card-five .market-rate-trendline{
-  stroke:var(--cottage-equity)!important;
-}
-html[data-theme="cottage"] .app-view-upcoming .market-rate-card-two .market-rate-line,
-html[data-theme="cottage"] .app-view-upcoming .market-rate-card-five .market-rate-line{
-  stroke:var(--cottage-comparison)!important;
-}
-html[data-theme="cottage"] .app-view-upcoming .upcoming-position .deal-planner-summary>div:nth-child(2) strong{
-  color:var(--cottage-comparison)!important;
-}
-html[data-theme="cottage"] .app-view-upcoming .upcoming-position .deal-planner-summary>div:nth-child(3) strong{
-  color:var(--cottage-equity)!important;
-}
-html[data-theme="cottage"] .app-view-upcoming .upcoming-position .deal-planner-summary>div:nth-child(4) strong{
-  color:var(--text)!important;
+  --data-positive:#5f8c7b;
+  --data-comparison:#729bab;
+  --data-savings:#b58d6f;
+  --data-secondary:#91a8b2;
 }
