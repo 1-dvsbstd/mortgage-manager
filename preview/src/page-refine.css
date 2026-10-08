@@ -2472,7 +2472,7 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   padding-inline:3px!important;
 }
 .app-view-current .v15-current-journey-step:nth-child(3) .v15-current-journey-icon{
-  --icon-accent:var(--positive);
+  --icon-accent:var(--data-comparison);
   --icon-soft:color-mix(in srgb,var(--positive) 13%,transparent);
   background:color-mix(in srgb,var(--positive) 6%,var(--surface))!important;
 }
