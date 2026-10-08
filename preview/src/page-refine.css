@@ -3935,12 +3935,13 @@ body .app-view-current .v15-current-stats .v15-stat [class*="icon"]{
   color:var(--text)!important;
 }
 .app-view-upcoming .market-rate-card .market-rate-line{
-  stroke:var(--data-secondary)!important;
-  opacity:.68!important;
+  stroke:var(--chart-monthly)!important;
+  stroke-width:1.8!important;
+  opacity:.92!important;
 }
 .app-view-upcoming .market-rate-card .market-rate-trendline,
 .app-view-upcoming .market-rate-card .market-rate-end{
-  stroke:var(--data-positive)!important;
+  stroke:var(--chart-trend)!important;
 }
 .app-view-upcoming .upcoming-position .deal-planner-summary strong{
   color:var(--text)!important;
@@ -3973,3 +3974,9 @@ body .app-view-current .v15-current-stats .v15-stat [class*="icon"]{
   box-shadow:none!important;
   filter:none!important;
 }
+
+/* Trajectory legend reflects the canvas semantic series. */
+.app-view-current .dot.current{background:var(--chart-current)!important}
+.app-view-current .dot.overpay{background:var(--chart-selected)!important}
+.app-view-current .dot.scheduled-line{background:repeating-linear-gradient(90deg,var(--chart-scheduled) 0 5px,transparent 5px 9px)!important}
+.app-view-current .dot.equity-line{background:repeating-linear-gradient(90deg,var(--chart-equity-progress) 0 6px,transparent 6px 10px)!important}
