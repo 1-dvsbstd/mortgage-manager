@@ -61,6 +61,14 @@
     return data;
   }
 
+  function syncOpenSetupFixedEnd(value) {
+    const field=document.querySelector('.personal-modal [data-personal-field="fixedEnd"]');
+    if(!field) return;
+    field.value=value || '';
+    const display=field.closest('label')?.querySelector('[data-month-field] span');
+    if(display) display.textContent=formatMonthValue(field.value);
+  }
+
   function applyActiveDealToStore(data) {
     if (!window.MortgageStore) return;
     const deal = activeDeal(data.deals, currentMonthKey());
@@ -71,6 +79,7 @@
     patch.currentOverpayment = Math.max(0, Number(deal.overpayment) || 0);
     if (deal.end) patch.fixedEnd = deal.end;
     window.MortgageStore.set(patch);
+    if('fixedEnd' in patch) syncOpenSetupFixedEnd(patch.fixedEnd);
   }
 
   function addMonths(month, amount) {
@@ -496,6 +505,29 @@
     if(!event.target.closest('[data-deal-term]') && !event.target.closest('.deal-term-menu')){
       closeDealTermMenus(document);
     }
+  });
+
+  document.addEventListener('mortgage-fixed-end-edited',(event)=>{
+    const value=String(event.detail?.value||'');
+    const section=document.querySelector('#mortgageHistorySection');
+    if(!section?.isConnected) return;
+
+    const data=readFromSection(section);
+    const index=activeDealIndex(data.deals);
+    if(index<0) return;
+
+    const rows=[...section.querySelectorAll('[data-history-deal]')];
+    const row=rows[index];
+    const end=row?.querySelector('[data-history="end"]');
+    if(!end) return;
+
+    end.value=value;
+    syncDealTermFromEnd(row);
+    seedFollowingDealStarts(section);
+
+    const updated=readFromSection(section);
+    save(updated);
+    renderSummary(section,updated);
   });
   setTimeout(mount, 550);
 
