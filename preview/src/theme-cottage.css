@@ -54,12 +54,12 @@ html[data-theme="cottage"]{
   --theme-range-edge:#c9c6b9;
   --theme-range-mid:#7899a4;
 
-  --theme-cottage-sage:#6d856b;
-  --theme-cottage-stone:#ba9e82;
-  --theme-cottage-sky:#7899a4;
-  --chart-equity:#6d856b;
-  --chart-borrowing:#7899a4;
-  --chart-savings:#c5a185;
+  --theme-cottage-sage:#718e72;
+  --theme-cottage-stone:#bd9277;
+  --theme-cottage-sky:#91afbd;
+  --chart-equity:#718e72;
+  --chart-borrowing:#91afbd;
+  --chart-savings:#bd9277;
 
   /* Shared semantic roles for the daytime Cottage theme. */
   --semantic-heading-accent:#4b6350;
@@ -79,9 +79,9 @@ html[data-theme="cottage"]{
   --semantic-forecast-track-muted:#e2e8df;
   --semantic-feature-card:#f2ede4;
   --semantic-timeline-card:#eee8dc;
-  --semantic-chart-equity:#6d856b;
-  --semantic-chart-borrowing:#7899a4;
-  --semantic-chart-savings:#c5a185;
+  --semantic-chart-equity:#718e72;
+  --semantic-chart-borrowing:#91afbd;
+  --semantic-chart-savings:#bd9277;
   --semantic-lifetime-secondary:#7899a4;
 }
 
@@ -369,4 +369,32 @@ html[data-theme="cottage"]{
   --scale-projected-stripe:#faf7f0;
   --scale-paid:#78927a;
   --scale-divider:#fffdf9;
+}
+
+/* Cottage chart language: distinct olive for primary data and slate for comparison.
+   Ink remains reserved for headings and selected states, not graph series. */
+html[data-theme="cottage"]{
+  --chart-primary:#718e72;
+  --chart-comparison:#91afbd;
+  --chart-grid:#e1ded6;
+  --chart-guide:#a4aba5;
+}
+html[data-theme="cottage"] .app-view-upcoming .market-rate-card .market-rate-line{
+  stroke:var(--chart-comparison)!important;
+  stroke-width:1.7!important;
+  opacity:.7!important;
+}
+html[data-theme="cottage"] .app-view-upcoming .market-rate-card .market-rate-trendline{
+  stroke:var(--chart-primary)!important;
+  stroke-width:2.8!important;
+}
+html[data-theme="cottage"] .app-view-upcoming .market-rate-card .market-rate-end{
+  stroke:var(--chart-primary)!important;
+}
+html[data-theme="cottage"] .app-view-upcoming .market-rate-grid{
+  stroke:var(--chart-grid)!important;
+}
+html[data-theme="cottage"] .app-view-upcoming .market-rate-y-label,
+html[data-theme="cottage"] .app-view-upcoming .market-rate-x-label{
+  fill:var(--chart-guide)!important;
 }
