@@ -2767,6 +2767,20 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 .app-view-future #futurePayoffTargets .future-payoff-marker.is-current .future-payoff-marker-label{
   color:var(--theme-hero-ink)!important;
 }
+
+/* Payoff target take-home share */
+.app-view-future #futurePayoffTargets .future-payoff-marker-label{
+  display:grid!important;
+  gap:1px!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker-label>small{
+  color:var(--muted)!important;
+  font-size:10px!important;
+  font-weight:700!important;
+  letter-spacing:0!important;
+  line-height:1.15!important;
+  text-transform:none!important;
+}
 .app-view-future #futurePayoffTargets .future-payoff-marker-card>strong{
   margin-top:2px!important;
   color:var(--text)!important;
