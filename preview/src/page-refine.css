@@ -2422,12 +2422,12 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   height:39px!important;
 }
 :is(.app-view-current .v15-current-journey-step.is-destination .v15-current-journey-icon,.app-view-upcoming .v15-journey-step.is-destination .v15-journey-icon){
-  --icon-ink:var(--theme-hero-ink);
-  --icon-accent:var(--accent-strong);
-  --icon-soft:color-mix(in srgb,var(--equity) 14%,transparent);
-  border-color:color-mix(in srgb,var(--accent) 24%,var(--border))!important;
-  background:color-mix(in srgb,var(--equity) 8%,var(--surface))!important;
-  color:color-mix(in srgb,var(--accent-strong) 78%,var(--muted))!important;
+  --icon-ink:var(--data-savings);
+  --icon-accent:var(--data-savings);
+  --icon-soft:color-mix(in srgb,var(--data-savings) 14%,transparent);
+  border-color:color-mix(in srgb,var(--data-savings) 30%,var(--border))!important;
+  background:color-mix(in srgb,var(--data-savings) 9%,var(--surface))!important;
+  color:var(--data-savings)!important;
 }
 .app-view-current .v15-current-journey-copy{
   display:grid!important;
