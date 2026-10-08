@@ -3836,3 +3836,29 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
     text-shadow:0 0 8px color-mix(in srgb,var(--accent) 12%,transparent)!important;
   }
 }
+
+/* Information-scale component styling shared by all themes.
+   Shape and meaning remain constant; palette comes from design tokens. */
+.app-view-future #futurePayoffTargets .future-payoff-scale-line{
+  background:var(--scale-track)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker-dot{
+  background:var(--scale-marker)!important;
+  border-color:var(--surface)!important;
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--scale-current) 35%,transparent)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker.is-current .future-payoff-marker-dot{
+  background:var(--scale-current)!important;
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--scale-current) 25%,transparent)!important;
+}
+.app-view-future .cost-scale{
+  position:relative!important;
+  background:repeating-linear-gradient(135deg,var(--scale-projected-bg) 0px,var(--scale-projected-bg) 5px,var(--scale-projected-stripe) 5px,var(--scale-projected-stripe) 10px)!important;
+  border-radius:999px!important;
+  overflow:hidden!important;
+}
+.app-view-future .cost-scale>i{
+  background:var(--scale-paid)!important;
+  border-radius:999px 0 0 999px!important;
+  box-shadow:2px 0 0 var(--scale-divider)!important;
+}
