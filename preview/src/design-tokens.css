@@ -204,6 +204,10 @@ html[data-theme="dusk"]{
   --hierarchy-accent:var(--accent);
   --hierarchy-secondary:var(--property);
   --hierarchy-highlight:var(--positive);
+  --data-positive:var(--positive);
+  --data-comparison:var(--property);
+  --data-savings:var(--warm);
+  --data-secondary:var(--debt);
   --hierarchy-support-shadow:0 2px 7px rgba(40,39,33,.035);
   --hierarchy-feature-shadow:0 8px 26px rgba(40,39,33,.075);
 }
