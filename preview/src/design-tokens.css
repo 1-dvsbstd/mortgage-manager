@@ -248,3 +248,32 @@ html[data-theme="dusk"]{
   --semantic-chart-savings:#9b988d;
   --semantic-lifetime-secondary:#c9a26a;
 }
+
+/* Theme-aware information-scale roles (shared by every visual theme). */
+:root{
+  --scale-track:#cfc6ba;
+  --scale-marker:#8d9890;
+  --scale-current:#435d50;
+  --scale-projected-bg:#eee6db;
+  --scale-projected-stripe:#faf7f1;
+  --scale-paid:#557e73;
+  --scale-divider:#fffdf8;
+}
+html[data-theme="warm"]{
+  --scale-track:#d9bda9;
+  --scale-marker:#ce8e6f;
+  --scale-current:#8f4735;
+  --scale-projected-bg:#f0d8ca;
+  --scale-projected-stripe:#fff8f1;
+  --scale-paid:#b96e4f;
+  --scale-divider:#fff8f1;
+}
+html[data-theme="dusk"]{
+  --scale-track:#c5bc9d;
+  --scale-marker:#a7a78c;
+  --scale-current:#235f52;
+  --scale-projected-bg:#e1d8bc;
+  --scale-projected-stripe:#fff8e8;
+  --scale-paid:#235f52;
+  --scale-divider:#fff8e8;
+}
