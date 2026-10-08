@@ -3,37 +3,37 @@
    and soft lavender. Dusk remains the moodier evening alternative. */
 
 html[data-theme="cottage"]{
-  --bg:#f3f0e8;
-  --surface:#fdfbf6;
-  --surface-soft:#f3f1e9;
+  --bg:#f8f6f0;
+  --surface:#fbf9f4;
+  --surface-soft:#f3f1eb;
   --surface-muted:#e8e9df;
-  --surface-raised:#f8f7f1;
-  --surface-control:#fffdf8;
+  --surface-raised:#f8f6f0;
+  --surface-control:#fbfaf6;
   --surface-warm:#e7dcc8;
-  --surface-input:#fffdf8;
+  --surface-input:#fbfaf6;
 
   --text:#29352d;
-  --muted:#667266;
-  --muted-2:#7b857d;
+  --muted:#59685c;
+  --muted-2:#69786e;
 
   --border:rgba(69,85,72,.14);
   --border-soft:rgba(78,96,81,.09);
   --up-border-soft:rgba(78,96,81,.11);
 
-  --accent:#7f9974;
-  --accent-strong:#4f6853;
+  --accent:#708866;
+  --accent-strong:#4b6350;
   --accent-soft:#dfe9da;
   --warm:#b79568;
   --debt:#87918a;
-  --equity:#6d875f;
-  --property:#8fa095;
-  --upcoming:#8fa095;
-  --scheme:#c3baa8;
+  --equity:#708866;
+  --property:#84998e;
+  --upcoming:#84998e;
+  --scheme:#b9ae99;
   --ink-active:#405946;
-  --ink-on-active:#fffdf8;
-  --positive:#6d875f;
-  --positive-soft:rgba(109,135,95,.12);
-  --accent-wash:rgba(127,153,116,.10);
+  --ink-on-active:#fbfaf6;
+  --positive:#708866;
+  --positive-soft:rgba(112,136,102,.12);
+  --accent-wash:rgba(112,136,102,.10);
 
   --focus-ring:#7d9576;
   --focus-ring-soft:rgba(125,149,118,.30);
@@ -45,44 +45,44 @@ html[data-theme="cottage"]{
   --theme-greeting:#64805f;
   --theme-illustration-bg:#edf0e7;
   --theme-progress-track:#e5e8df;
-  --theme-highlight:#eef3e9;
-  --theme-highlight-strong:#e3eadf;
-  --theme-hover:#eef3e9;
+  --theme-highlight:#edf2e9;
+  --theme-highlight-strong:#e2eadd;
+  --theme-hover:#edf2e9;
   --theme-rate-current:#fbf4e8;
   --theme-milestone:#eef2e8;
   --theme-action:#e9efe5;
-  --theme-range-edge:#bac8b5;
-  --theme-range-mid:#8fa095;
+  --theme-range-edge:#b9c8bb;
+  --theme-range-mid:#84998e;
 
-  --theme-cottage-sage:#6d875f;
+  --theme-cottage-sage:#708866;
   --theme-cottage-stone:#b79568;
-  --theme-cottage-sky:#8fa095;
-  --chart-equity:#6d875f;
-  --chart-borrowing:#8fa095;
-  --chart-savings:#c3baa8;
+  --theme-cottage-sky:#84998e;
+  --chart-equity:#708866;
+  --chart-borrowing:#84998e;
+  --chart-savings:#b9ae99;
 
   /* Shared semantic roles for the daytime Cottage theme. */
-  --semantic-heading-accent:#4f6853;
-  --semantic-highlight-bg:#eef3e9;
-  --semantic-highlight-border:rgba(109,135,95,.22);
-  --semantic-highlight-border-strong:rgba(109,135,95,.35);
-  --semantic-scale-track:#e2e7dd;
-  --semantic-progress-start:#8fa095;
-  --semantic-progress-end:#6d875f;
-  --semantic-range-edge:#bac8b5;
-  --semantic-range-mid:#8fa095;
-  --semantic-range-border:#9eae9a;
-  --semantic-range-ring:rgba(109,135,95,.28);
-  --semantic-forecast-track:#cdd8c8;
-  --semantic-forecast-node:#7f9974;
-  --semantic-forecast-node-ring:#aab9a5;
-  --semantic-forecast-track-muted:#e2e7dd;
-  --semantic-feature-card:#eef3e9;
-  --semantic-timeline-card:#e3eadf;
-  --semantic-chart-equity:#6d875f;
-  --semantic-chart-borrowing:#8fa095;
-  --semantic-chart-savings:#c3baa8;
-  --semantic-lifetime-secondary:#8fa095;
+  --semantic-heading-accent:#4b6350;
+  --semantic-highlight-bg:#edf2e9;
+  --semantic-highlight-border:rgba(112,136,102,.22);
+  --semantic-highlight-border-strong:rgba(112,136,102,.35);
+  --semantic-scale-track:#e2e8df;
+  --semantic-progress-start:#84998e;
+  --semantic-progress-end:#708866;
+  --semantic-range-edge:#b9c8bb;
+  --semantic-range-mid:#84998e;
+  --semantic-range-border:#98ac9c;
+  --semantic-range-ring:rgba(112,136,102,.28);
+  --semantic-forecast-track:#ccd8ce;
+  --semantic-forecast-node:#708866;
+  --semantic-forecast-node-ring:#adbdaf;
+  --semantic-forecast-track-muted:#e2e8df;
+  --semantic-feature-card:#edf2e9;
+  --semantic-timeline-card:#e2eadd;
+  --semantic-chart-equity:#708866;
+  --semantic-chart-borrowing:#84998e;
+  --semantic-chart-savings:#b9ae99;
+  --semantic-lifetime-secondary:#84998e;
 }
 
 /* Country Cottage page atmosphere — neutral page with one finite artwork layer.
@@ -90,7 +90,7 @@ html[data-theme="cottage"]{
    reappear lower down after the fade. */
 html[data-theme="cottage"] body{
   position:relative!important;
-  background:#f4efe6!important;
+  background:#f8f6f0!important;
   background-image:none!important;
 }
 
@@ -106,15 +106,15 @@ html[data-theme="cottage"] body::before{
   background:
     linear-gradient(
       to bottom,
-      rgba(244,239,230,0) 0%,
-      rgba(244,239,230,.03) 18%,
-      rgba(244,239,230,.12) 30%,
-      rgba(244,239,230,.32) 43%,
-      rgba(244,239,230,.60) 56%,
-      rgba(244,239,230,.82) 67%,
-      rgba(244,239,230,.96) 78%,
-      #f4efe6 90%,
-      #f4efe6 100%
+      rgba(248,246,240,0) 0%,
+      rgba(248,246,240,.03) 18%,
+      rgba(248,246,240,.12) 30%,
+      rgba(248,246,240,.32) 43%,
+      rgba(248,246,240,.60) 56%,
+      rgba(248,246,240,.82) 67%,
+      rgba(248,246,240,.96) 78%,
+      #f8f6f0 90%,
+      #f8f6f0 100%
     ),
     url('../public/country-cottage-background-day.webp?v=day-001') center top / cover no-repeat!important;
 }
@@ -128,8 +128,8 @@ html[data-theme="cottage"] .app-shell{
 html[data-theme="cottage"] .panel,
 html[data-theme="cottage"] .chart-panel,
 html[data-theme="cottage"] .upcoming-section{
-  background:rgba(253,250,245,.975)!important;
-  border-color:rgba(88,77,61,.12)!important;
+  background:rgba(251,249,244,.975)!important;
+  border-color:rgba(74,90,77,.14)!important;
   backdrop-filter:none!important;
   -webkit-backdrop-filter:none!important;
 }
@@ -184,8 +184,8 @@ html[data-theme="cottage"] .app-section-nav-bottom button.is-active{
 }
 html[data-theme="cottage"] .trajectory-presets button.active,
 html[data-theme="cottage"] .future-next-home-c-years button.is-active{
-  background:color-mix(in srgb,var(--positive) 18%,var(--surface-control))!important;
-  border-color:color-mix(in srgb,var(--positive) 30%,var(--border-soft))!important;
+  background:color-mix(in srgb,var(--positive) 12%,var(--surface-control))!important;
+  border-color:color-mix(in srgb,var(--positive) 45%,var(--border-soft))!important;
 }
 html[data-theme="cottage"] .eyebrow,
 html[data-theme="cottage"] .kicker{
@@ -197,6 +197,33 @@ html[data-theme="cottage"] .progress-fill{
 }
 html[data-theme="cottage"] .ownership-segment.debt{background:#858b84!important}
 html[data-theme="cottage"] .ownership-segment.scheme{background:#b7aa98!important}
+
+/* Cottage-specific controls and captions: readable but quiet. */
+html[data-theme="cottage"] .app-view-future .future-next-home-controls button{
+  color:var(--muted)!important;
+  border-color:rgba(75,99,80,.18)!important;
+  background:color-mix(in srgb,var(--surface-control) 86%,var(--surface-soft))!important;
+}
+html[data-theme="cottage"] .app-view-future .future-next-home-controls button:hover{
+  color:var(--text)!important;
+  border-color:rgba(75,99,80,.34)!important;
+  background:var(--theme-hover)!important;
+}
+html[data-theme="cottage"] .app-view-future .future-next-home-controls button[aria-selected="true"]{
+  color:var(--text)!important;
+  border-color:var(--accent-strong)!important;
+  background:color-mix(in srgb,var(--accent) 12%,var(--surface-control))!important;
+}
+html[data-theme="cottage"] .app-view-future .future-next-home-c-callout>small,
+html[data-theme="cottage"] .app-view-future .future-next-home-c-callout .future-callout-title,
+html[data-theme="cottage"] .app-view-future .future-next-home-c-callout.is-repayment>small{
+  color:var(--muted)!important;
+}
+html[data-theme="cottage"] .app-view-future .future-budget-chart-centre b{
+  color:var(--accent-strong)!important;
+  border-color:rgba(112,136,102,.22)!important;
+  background:color-mix(in srgb,var(--accent) 10%,var(--surface-control))!important;
+}
 
 /* Warm rate/current-state emphasis. */
 html[data-theme="cottage"] .deal-planner-rate.is-current-rate{
@@ -238,10 +265,10 @@ html[data-theme="cottage"] select:focus-visible{
 }
 
 /* Theme menu preview. */
-.theme-menu-swatch.cottage{background:#f3f0e8}
-.theme-menu-swatch.cottage i:nth-child(1){background:#6d875f}
-.theme-menu-swatch.cottage i:nth-child(2){background:#8fa095}
-.theme-menu-swatch.cottage i:nth-child(3){background:#c3baa8}
+.theme-menu-swatch.cottage{background:#f8f6f0}
+.theme-menu-swatch.cottage i:nth-child(1){background:#708866}
+.theme-menu-swatch.cottage i:nth-child(2){background:#84998e}
+.theme-menu-swatch.cottage i:nth-child(3){background:#b9ae99}
 
 
 
