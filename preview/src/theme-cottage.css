@@ -220,3 +220,15 @@ html[data-theme="cottage"] select:focus-visible{
 .theme-menu-swatch.cottage i:nth-child(3){background:#94889a}
 
 
+
+
+/* Cottage semantic chart colours */
+html[data-theme="cottage"] .app-view-future .future-callout-title i[data-index="0"]{
+  background:var(--chart-equity)!important;
+}
+html[data-theme="cottage"] .app-view-future .future-callout-title i[data-index="1"]{
+  background:var(--chart-borrowing)!important;
+}
+html[data-theme="cottage"] .app-view-future .future-callout-title i[data-index="2"]{
+  background:var(--chart-savings)!important;
+}
