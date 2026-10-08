@@ -4,11 +4,11 @@
 
 html[data-theme="cottage"]{
   --bg:#f8f6f0;
-  --surface:#fbf9f4;
+  --surface:#fffdfa;
   --surface-soft:#f3f1eb;
   --surface-muted:#e8e9df;
   --surface-raised:#f8f6f0;
-  --surface-control:#fbfaf6;
+  --surface-control:#fffdfa;
   --surface-warm:#e7dcc8;
   --surface-input:#fbfaf6;
 
@@ -128,8 +128,8 @@ html[data-theme="cottage"] .app-shell{
 html[data-theme="cottage"] .panel,
 html[data-theme="cottage"] .chart-panel,
 html[data-theme="cottage"] .upcoming-section{
-  background:rgba(251,249,244,.975)!important;
-  border-color:rgba(74,90,77,.14)!important;
+  background:rgba(255,253,249,.985)!important;
+  border-color:rgba(70,88,73,.17)!important;
   backdrop-filter:none!important;
   -webkit-backdrop-filter:none!important;
 }
@@ -282,4 +282,42 @@ html[data-theme="cottage"] .app-view-future .future-callout-title i[data-index="
 }
 html[data-theme="cottage"] .app-view-future .future-callout-title i[data-index="2"]{
   background:var(--chart-savings)!important;
+}
+
+/* Cottage card separation and consistent payoff spectrum.
+   These selectors live with the Cottage theme, not in shared legacy styles. */
+html[data-theme="cottage"] .app-view-future .future-next-home-hero,
+html[data-theme="cottage"] .app-view-future #futurePayoffTargets,
+html[data-theme="cottage"] .app-view-future #propertyCostComparison,
+html[data-theme="cottage"] .app-view-future #futureModelRange,
+html[data-theme="cottage"] .app-view-upcoming .upcoming-section,
+html[data-theme="cottage"] .app-view-upcoming .deal-position-milestone,
+html[data-theme="cottage"] .app-view-upcoming .deal-position-interest{
+  background:#fffdfa!important;
+  border-color:rgba(70,88,73,.17)!important;
+  box-shadow:0 6px 22px rgba(48,65,51,.075),0 1px 2px rgba(48,65,51,.035)!important;
+}
+html[data-theme="cottage"] .app-view-upcoming .market-rate-card,
+html[data-theme="cottage"] .app-view-upcoming .deal-planner-rate,
+html[data-theme="cottage"] .app-view-future .future-payoff-scale,
+html[data-theme="cottage"] .app-view-future .cost-scale{
+  background:#f5f5ef!important;
+  border-color:rgba(70,88,73,.15)!important;
+}
+html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-scale-line{
+  background:linear-gradient(90deg,#bdcabe 0%,#8fa99b 52%,#708866 100%)!important;
+}
+html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-marker-dot{
+  background:#84998e!important;
+  border-color:#fffdfa!important;
+  box-shadow:0 0 0 1px rgba(65,91,69,.23)!important;
+}
+html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-marker.is-current .future-payoff-marker-dot{
+  background:#405946!important;
+}
+html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-marker-label{
+  color:#4b6350!important;
+}
+html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-scale-caption strong{
+  color:#4b6350!important;
 }
