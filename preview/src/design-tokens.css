@@ -196,3 +196,19 @@ html[data-theme="dusk"]{
   --scale-paid:#235f52;
   --scale-divider:#fff8e8;
 }
+
+/* Information hierarchy — themed surfaces, shared component roles. */
+:root{
+  --hierarchy-support:color-mix(in srgb,var(--surface-soft) 52%,var(--surface));
+  --hierarchy-focus:var(--surface-control);
+  --hierarchy-accent:var(--accent);
+  --hierarchy-secondary:var(--property);
+  --hierarchy-highlight:var(--positive);
+  --hierarchy-support-shadow:0 2px 7px rgba(40,39,33,.035);
+  --hierarchy-feature-shadow:0 8px 26px rgba(40,39,33,.075);
+}
+html[data-theme="dusk"]{
+  --hierarchy-support:#f0eadb;
+  --hierarchy-focus:#fffaf0;
+  --hierarchy-feature-shadow:0 8px 28px rgba(26,55,48,.08);
+}
