@@ -300,15 +300,15 @@ html[data-theme="cottage"] .app-view-upcoming .market-rate-card,
 html[data-theme="cottage"] .app-view-upcoming .deal-planner-rate,
 html[data-theme="cottage"] .app-view-upcoming .deal-planner-rate-grid,
 html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-scale{
-  background:#faf7f0!important;
-  border-color:var(--border-soft)!important;
+  background:transparent!important;
+  border-color:transparent!important;
 }
 html[data-theme="cottage"] .app-view-upcoming .deal-planner-rate.is-current-rate{
   background:#f2ecdf!important;
   border-color:rgba(109,133,107,.35)!important;
 }
 html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-scale-line{
-  background:linear-gradient(90deg,#d2cbbd 0%,#b2b9a8 52%,#7a9277 100%)!important;
+  background:linear-gradient(90deg,#b9aa93 0%,#b9aa93 48%,#7492a2 49%,#7492a2 73%,#536e55 74%,#536e55 100%)!important;
 }
 html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-marker-dot{
   background:var(--equity)!important;
@@ -336,4 +336,25 @@ html[data-theme="cottage"] .app-view-upcoming .upcoming-position .deal-planner-s
 }
 html[data-theme="cottage"] .app-view-upcoming .upcoming-position .deal-position-interest{
   border-color:var(--border-soft)!important;
+}
+
+/* Warm Stone: let the rate and payoff content breathe inside their cards. */
+html[data-theme="cottage"] .app-view-upcoming .deal-planner-rate-grid{
+  border-radius:16px!important;
+  box-shadow:none!important;
+}
+html[data-theme="cottage"] .app-view-upcoming .deal-planner-rate:not(.is-current-rate){
+  background:transparent!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+}
+html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-scale{
+  box-shadow:none!important;
+  border-radius:16px!important;
+}
+html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-marker-dot{
+  background:#7492a2!important;
+}
+html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-marker.is-current .future-payoff-marker-dot{
+  background:#536e55!important;
 }
