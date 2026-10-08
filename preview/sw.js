@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-preview-donut-hover-001';
+const CACHE_NAME = 'mortgage-manager-preview-country-cottage-010';
 const APP_SHELL = [
   './',
   './index.html',
