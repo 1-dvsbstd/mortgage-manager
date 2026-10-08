@@ -3862,3 +3862,38 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   border-radius:999px 0 0 999px!important;
   box-shadow:2px 0 0 var(--scale-divider)!important;
 }
+
+/* Consistent information hierarchy.
+   Support sections are quiet, facts are neutral, planning is foreground. */
+.app-view-current .v15-current-journey,
+.app-view-upcoming .upcoming-hero{
+  background:var(--hierarchy-support)!important;
+  box-shadow:var(--hierarchy-support-shadow)!important;
+  border-color:var(--border-soft)!important;
+}
+body .app-view-current .v15-current-stats .v15-stat{
+  background:var(--surface-control)!important;
+  border-color:var(--border-soft)!important;
+  box-shadow:var(--hierarchy-support-shadow)!important;
+}
+body .app-view-current .v15-current-stats .v15-stat strong,
+body .app-view-current .v15-current-stats .v15-stat [class*="value"]{
+  color:var(--text)!important;
+}
+body .app-view-current .v15-current-stats .v15-stat:first-child strong,
+body .app-view-current .v15-current-stats .v15-stat:nth-child(2) strong{
+  color:var(--text)!important;
+}
+body .app-view-current .v15-current-stats .v15-stat .v15-stat-icon,
+body .app-view-current .v15-current-stats .v15-stat [class*="icon"]{
+  color:var(--hierarchy-highlight)!important;
+}
+.app-view-current .chart-panel.trajectory-with-what-if{
+  background:var(--hierarchy-focus)!important;
+  border-color:var(--border)!important;
+  box-shadow:var(--hierarchy-feature-shadow)!important;
+}
+.app-view-current .trajectory-with-what-if .trajectory-current-saving,
+.app-view-current .trajectory-with-what-if [class*="saving"] strong{
+  color:var(--hierarchy-highlight)!important;
+}
