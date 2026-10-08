@@ -321,3 +321,40 @@ html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-
 html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-scale-caption strong{
   color:#4b6350!important;
 }
+
+/* Cottage surface hierarchy: warm-white cards over ivory ground.
+   Avoid large grey-green fills on timelines and mortgage-rate selections. */
+html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-scale,
+html[data-theme="cottage"] .app-view-upcoming .deal-planner-rate-grid,
+html[data-theme="cottage"] .app-view-upcoming .deal-planner-rate,
+html[data-theme="cottage"] .app-view-upcoming .market-rate-card{
+  background:#faf8f3!important;
+}
+html[data-theme="cottage"] .app-view-upcoming .deal-planner-rate.is-current-rate{
+  background:#f2f3ea!important;
+  border-color:rgba(75,99,80,.24)!important;
+}
+html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-scale-line{
+  background:linear-gradient(90deg,#c9d2c8 0%,#a4b7a8 50%,#728f79 100%)!important;
+}
+/* Deal-end cards must remain stationary under the pointer. */
+html[data-theme="cottage"] .app-view-upcoming .upcoming-position .deal-planner-summary>div,
+html[data-theme="cottage"] .app-view-upcoming .upcoming-position .deal-planner-summary>div:hover,
+html[data-theme="cottage"] .app-view-upcoming .upcoming-position .deal-planner-summary>div:focus-within{
+  transform:none!important;
+  translate:none!important;
+  scale:1!important;
+  transition:none!important;
+  animation:none!important;
+}
+html[data-theme="cottage"] .app-view-upcoming .upcoming-position .deal-planner-summary>div:hover{
+  background:var(--surface-control)!important;
+  box-shadow:none!important;
+}
+/* Preserve stable surface treatment and avoid highlight flicker on the interest tile. */
+html[data-theme="cottage"] .app-view-upcoming .upcoming-position .deal-position-interest,
+html[data-theme="cottage"] .app-view-upcoming .upcoming-position .deal-position-interest:hover{
+  background:var(--surface-control)!important;
+  border-color:var(--border-soft)!important;
+  transform:none!important;
+}
