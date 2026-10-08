@@ -1711,6 +1711,23 @@ body .app-view-current .v15-current-stats .v15-stat-icon{
   color:var(--theme-hero-ink)!important;
   font-style:normal!important;
 }
+/* Financial icon accents convey categories; ordinary numbers stay neutral. */
+body .app-view-current .v15-current-stats .v15-stat:nth-child(1) .v15-stat-icon,
+body .app-view-current .v15-current-stats .v15-stat:nth-child(4) .v15-stat-icon{
+  --icon-ink:var(--data-positive);
+  --icon-accent:var(--data-positive);
+  --icon-soft:color-mix(in srgb,var(--data-positive) 17%,transparent);
+  background:color-mix(in srgb,var(--data-positive) 10%,var(--surface))!important;
+  color:var(--data-positive)!important;
+}
+body .app-view-current .v15-current-stats .v15-stat:nth-child(2) .v15-stat-icon,
+body .app-view-current .v15-current-stats .v15-stat:nth-child(3) .v15-stat-icon{
+  --icon-ink:var(--data-comparison);
+  --icon-accent:var(--data-comparison);
+  --icon-soft:color-mix(in srgb,var(--data-comparison) 17%,transparent);
+  background:color-mix(in srgb,var(--data-comparison) 10%,var(--surface))!important;
+  color:var(--data-comparison)!important;
+}
 body .app-view-current .v15-current-stats .v15-stat-icon svg{
   display:block!important;
   width:34px!important;
