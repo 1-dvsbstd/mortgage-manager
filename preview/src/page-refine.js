@@ -499,7 +499,7 @@
                 borderColor:'#fbf8f2',
                 borderWidth:3,
                 hoverBorderWidth:3,
-                hoverOffset:4,
+                hoverOffset:0,
                 spacing:2
               }]
             },
@@ -513,21 +513,7 @@
               interaction:{mode:'nearest',intersect:true},
               plugins:{
                 legend:{display:false},
-                tooltip:{
-                  enabled:true,
-                  displayColors:false,
-                  padding:10,
-                  caretSize:6,
-                  callbacks:{
-                    title:()=> '',
-                    label:(context)=>{
-                      const value=Number(context.raw)||0;
-                      const total=(context.dataset.data||[]).reduce((sum,item)=>sum+(Number(item)||0),0)||1;
-                      const pct=Math.round(value/total*100);
-                      return context.label+': '+moneyShort(value)+' · '+pct+'%';
-                    }
-                  }
-                }
+                tooltip:{enabled:false}
               }
             }
           });
@@ -560,7 +546,17 @@
       })();
       const planningMonths=360;
       const horizonMonths=Math.max(0,Math.round(active.years*12));
-      const fixedMonthsNow=Math.max(0,Number(monthsUntil(mortgageState.fixedEnd))||0);
+      const historyFixedEnd=(()=>{
+        try{
+          const history=window.MortgageHistory?.load?.();
+          if(!history?.deals?.length) return '';
+          const now=new Date();
+          const month=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+          return window.MortgageHistory?.activeDeal?.(history.deals,month)?.end || '';
+        }catch(_){ return ''; }
+      })();
+      const currentFixedEnd=historyFixedEnd || mortgageState.fixedEnd || '';
+      const fixedMonthsNow=Math.max(0,Number(monthsUntil(currentFixedEnd))||0);
       const fixedMonthsRemaining=Math.max(0,Math.min(planningMonths,fixedMonthsNow-horizonMonths));
 
       const existingPath=window.MortgageMath?.amortize?.(
@@ -698,13 +694,13 @@
               const left=Math.max(2,Math.min(98,(point.pct/maxPct)*100));
               const side=index%2===0?'is-below':'is-above';
               const delta=point.className==='is-current'
-                ? `${point.pct.toFixed(0)}% of take-home`
+                ? 'Current plan'
                 : `${point.delta>=0?'+':'−'}${money(Math.abs(point.delta))}/mo`;
               return `
                 <article class="future-payoff-marker ${point.className} ${side}" style="left:${left}%">
                   <span class="future-payoff-marker-dot" aria-hidden="true"></span>
                   <div class="future-payoff-marker-card">
-                    <span class="future-payoff-marker-label">${point.label}</span>
+                    <span class="future-payoff-marker-label">${point.label}<small>${point.pct.toFixed(0)}% of take-home</small></span>
                     <strong>${point.date}</strong>
                     <small>${point.duration}</small>
                     <b>${money(point.payment)}/mo</b>
