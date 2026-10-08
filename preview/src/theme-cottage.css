@@ -10,8 +10,8 @@ html[data-theme="cottage"]{
   --surface-warm:#ede7de;
   --surface-input:#ffffff;
 
-  --text:#313b39;
-  --muted:#65736f;
+  --text:#333b39;
+  --muted:#687571;
   --muted-2:#7c8986;
 
   --border:rgba(64,91,82,.15);
@@ -58,6 +58,15 @@ html[data-theme="cottage"]{
   --chart-equity:#5f8c7b;
   --chart-borrowing:#91a8b2;
   --chart-savings:#d1b89b;
+
+  /* Contemporary Country hierarchy: quiet limestone, crisp financial cards. */
+  --hierarchy-support:#eef1eb;
+  --hierarchy-focus:#ffffff;
+  --hierarchy-accent:#5f8c7b;
+  --hierarchy-secondary:#91a8b2;
+  --hierarchy-highlight:#587e6e;
+  --hierarchy-support-shadow:0 2px 8px rgba(45,65,57,.035);
+  --hierarchy-feature-shadow:0 10px 28px rgba(45,65,57,.075);
 
   /* Shared semantic roles for the daytime Cottage theme. */
   --semantic-heading-accent:#4b6350;
