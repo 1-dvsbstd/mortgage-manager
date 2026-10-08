@@ -3890,7 +3890,7 @@ body .app-view-current .v15-current-stats .v15-stat:nth-child(2) strong{
 }
 body .app-view-current .v15-current-stats .v15-stat .v15-stat-icon,
 body .app-view-current .v15-current-stats .v15-stat [class*="icon"]{
-  color:var(--hierarchy-highlight)!important;
+  color:var(--muted)!important;
 }
 .app-view-current .chart-panel.trajectory-with-what-if{
   background:var(--hierarchy-focus)!important;
@@ -3902,6 +3902,51 @@ body .app-view-current .v15-current-stats .v15-stat [class*="icon"]{
   color:var(--hierarchy-highlight)!important;
 }
 
+
+/* Selective emphasis: only progress, interactive selection and comparison carry colour. */
+.app-view-current .trajectory-presets button.active{
+  border-color:color-mix(in srgb,var(--data-positive) 45%,var(--border-soft))!important;
+  background:color-mix(in srgb,var(--data-positive) 11%,var(--surface-control))!important;
+}
+.app-view-current .trajectory-presets button.active>strong{
+  color:var(--data-positive)!important;
+}
+.app-view-current .trajectory-with-what-if .trajectory-current-saving,
+.app-view-current .trajectory-with-what-if [class*="saving"] strong{
+  color:var(--data-positive)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker:not(.is-current) .future-payoff-marker-label{
+  color:var(--muted)!important;
+}
+.app-view-future #futurePayoffTargets .future-payoff-marker.is-current .future-payoff-marker-label{
+  color:var(--data-positive)!important;
+}
+.app-view-future .future-next-home-c-callout:nth-child(1)>strong{
+  color:var(--data-positive)!important;
+}
+.app-view-future .future-next-home-c-callout:nth-child(2)>strong{
+  color:var(--data-comparison)!important;
+}
+.app-view-future .future-next-home-c-callout:nth-child(3)>strong{
+  color:var(--data-savings)!important;
+}
+.app-view-future .future-next-home-c-callout.is-repayment>strong{
+  color:var(--text)!important;
+}
+.app-view-upcoming .market-rate-card .market-rate-line{
+  stroke:var(--data-secondary)!important;
+  opacity:.68!important;
+}
+.app-view-upcoming .market-rate-card .market-rate-trendline,
+.app-view-upcoming .market-rate-card .market-rate-end{
+  stroke:var(--data-positive)!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-summary strong{
+  color:var(--text)!important;
+}
+.app-view-upcoming .upcoming-position .deal-planner-summary>div:nth-child(3) strong{
+  color:var(--data-positive)!important;
+}
 /* The same hierarchy applies to future planning and rate explanations. */
 .app-view-future #futureWaitPlanner,
 .app-view-future #futurePayoffTargets,
