@@ -412,4 +412,10 @@ html[data-theme="cottage"]{
   --data-comparison:#729bab;
   --data-savings:#b58d6f;
   --data-secondary:#91a8b2;
+  --chart-current:#739cad;
+  --chart-selected:#4e9278;
+  --chart-scheduled:#b9b5ae;
+  --chart-equity-progress:#c3a77f;
+  --chart-monthly:#84aabf;
+  --chart-trend:#488b75;
 }
