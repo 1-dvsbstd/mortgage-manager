@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-preview-deal-menu-dismiss-001';
+const CACHE_NAME = 'mortgage-manager-preview-fixed-end-sync-001';
 const APP_SHELL = [
   './',
   './index.html',
