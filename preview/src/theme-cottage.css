@@ -160,8 +160,9 @@ html[data-theme="cottage"] .app-view-current .v15-home-visual{
   background-position:center center!important;
   background-size:cover!important;
   background-repeat:no-repeat!important;
-  border-radius:30px!important;
+  border-radius:38px!important;
   overflow:hidden!important;
+  clip-path:inset(0 round 38px)!important;
   box-shadow:0 10px 28px rgba(70,58,40,.07)!important;
   filter:none!important;
   background-blend-mode:normal!important;
