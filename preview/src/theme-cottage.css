@@ -59,28 +59,43 @@ html[data-theme="cottage"]{
   --theme-cottage-lavender:#94889a;
 }
 
-/* Country Cottage page atmosphere — one canonical background owner.
-   Daytime countryside lives only at the top and fades into the neutral page. */
+/* Country Cottage page atmosphere — neutral page with one finite artwork layer.
+   The countryside and its fade share the same 760px box, so the image cannot
+   reappear lower down after the fade. */
 html[data-theme="cottage"] body{
-  background-color:#f4efe6!important;
-  background-image:
+  position:relative!important;
+  background:#f4efe6!important;
+  background-image:none!important;
+}
+
+html[data-theme="cottage"] body::before{
+  content:""!important;
+  position:absolute!important;
+  z-index:0!important;
+  top:0!important;
+  left:0!important;
+  width:100%!important;
+  height:760px!important;
+  pointer-events:none!important;
+  background:
     linear-gradient(
       to bottom,
       rgba(244,239,230,0) 0%,
-      rgba(244,239,230,.02) 18%,
-      rgba(244,239,230,.10) 30%,
-      rgba(244,239,230,.28) 42%,
-      rgba(244,239,230,.56) 55%,
-      rgba(244,239,230,.80) 66%,
-      rgba(244,239,230,.95) 76%,
-      #f4efe6 86%,
+      rgba(244,239,230,.03) 18%,
+      rgba(244,239,230,.12) 30%,
+      rgba(244,239,230,.32) 43%,
+      rgba(244,239,230,.60) 56%,
+      rgba(244,239,230,.82) 67%,
+      rgba(244,239,230,.96) 78%,
+      #f4efe6 90%,
       #f4efe6 100%
     ),
-    url('../public/country-cottage-background-day.webp?v=day-001')!important;
-  background-position:center top,center top!important;
-  background-size:100% 760px,100% auto!important;
-  background-repeat:no-repeat,no-repeat!important;
-  background-attachment:scroll,scroll!important;
+    url('../public/country-cottage-background-day.webp?v=day-001') center top / cover no-repeat!important;
+}
+
+html[data-theme="cottage"] .app-shell{
+  position:relative!important;
+  z-index:1!important;
 }
 
 /* Light, clean card material. */
@@ -201,8 +216,4 @@ html[data-theme="cottage"] select:focus-visible{
 .theme-menu-swatch.cottage i:nth-child(2){background:#b58b58}
 .theme-menu-swatch.cottage i:nth-child(3){background:#94889a}
 
-@media(max-width:700px){
-  html[data-theme="cottage"] body{
-    background-attachment:scroll,scroll,scroll!important;
-  }
-}
+
