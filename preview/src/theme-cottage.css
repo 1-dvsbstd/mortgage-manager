@@ -308,7 +308,7 @@ html[data-theme="cottage"] .app-view-upcoming .deal-planner-rate.is-current-rate
   border-color:rgba(109,133,107,.35)!important;
 }
 html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-scale-line{
-  background:linear-gradient(90deg,#b9aa93 0%,#b9aa93 48%,#7492a2 49%,#7492a2 73%,#536e55 74%,#536e55 100%)!important;
+  background:#c8c0b1!important;
 }
 html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-marker-dot{
   background:var(--equity)!important;
@@ -353,8 +353,33 @@ html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-
   border-radius:16px!important;
 }
 html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-marker-dot{
-  background:#7492a2!important;
+  background:#8e988d!important;
 }
 html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-marker.is-current .future-payoff-marker-dot{
   background:#536e55!important;
+}
+
+/* Cottage information scales: use distinct fills, not a low-contrast gradient. */
+html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-scale-line{
+  background:#c4bbae!important;
+}
+html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-marker-dot{
+  background:#8a968e!important;
+  border-color:#fffdf9!important;
+  box-shadow:0 0 0 1px rgba(64,80,65,.34)!important;
+}
+html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-marker.is-current .future-payoff-marker-dot{
+  background:#405d46!important;
+  box-shadow:0 0 0 2px rgba(64,93,70,.3)!important;
+}
+html[data-theme="cottage"] .app-view-future .cost-scale{
+  position:relative!important;
+  background:repeating-linear-gradient(135deg,#ece5d8 0px,#ece5d8 5px,#faf7f0 5px,#faf7f0 10px)!important;
+  border-radius:999px!important;
+  overflow:hidden!important;
+}
+html[data-theme="cottage"] .app-view-future .cost-scale>i{
+  background:#66806a!important;
+  border-radius:999px 0 0 999px!important;
+  box-shadow:2px 0 0 #fffdf9!important;
 }
