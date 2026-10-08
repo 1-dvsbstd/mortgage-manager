@@ -207,13 +207,13 @@
   border:1px solid var(--up-border)!important;
   border-radius:18px!important;
   color:var(--text)!important;
-  box-shadow:0 2px 5px rgba(54,48,39,.06),0 14px 34px rgba(54,48,39,.11)!important;
+  box-shadow:none!important;
 }
 .app-view-upcoming .upcoming-section:hover{
   transform:none!important;
   border-color:var(--up-border)!important;
   /* Hover never adds elevation or changes the resting shadow. */
-  box-shadow:inherit!important;
+  box-shadow:none!important;
 }
 .app-view-upcoming .upcoming-section-heading{
   margin:0 0 18px!important;
