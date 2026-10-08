@@ -436,14 +436,25 @@
     };
     const moneyShort=(value)=>money(Math.round(Math.max(0,Number(value)||0)));
 
-    const setBudgetHover=(index)=>{
+    let budgetHoverTimer=0;
+    let budgetHoverIndex=null;
+
+    const applyBudgetHover=(index,{syncChart=true}={})=>{
+      budgetHoverIndex=Number.isInteger(index)?index:null;
       const chart=wait._futureBudgetChart;
       const callouts=[$('#futureCalloutEquity',wait),$('#futureCalloutBorrowing',wait),$('#futureCalloutSavings',wait)];
-      callouts.forEach((item,itemIndex)=>item?.classList.toggle('is-chart-hover',itemIndex===index));
-      if(chart){
-        chart.setActiveElements(index===null?[]:[{datasetIndex:0,index}]);
+      callouts.forEach((item,itemIndex)=>item?.classList.toggle('is-chart-hover',itemIndex===budgetHoverIndex));
+      if(syncChart&&chart){
+        chart.setActiveElements(budgetHoverIndex===null?[]:[{datasetIndex:0,index:budgetHoverIndex}]);
         chart.update('none');
       }
+    };
+
+    const setBudgetHover=(index,{syncChart=true,delay=120}={})=>{
+      clearTimeout(budgetHoverTimer);
+      const next=Number.isInteger(index)?index:null;
+      if(next===budgetHoverIndex) return;
+      budgetHoverTimer=setTimeout(()=>applyBudgetHover(next,{syncChart}),delay);
     };
 
     const renderCallout=(root,label,valueText,share,note,index)=>{
@@ -455,8 +466,8 @@
         <small>${share!==null?`${share}% of budget`:note}</small>`;
       if(index<3 && !root.dataset.chartHoverBound){
         root.dataset.chartHoverBound='true';
-        root.addEventListener('mouseenter',()=>setBudgetHover(index));
-        root.addEventListener('mouseleave',()=>setBudgetHover(null));
+        root.addEventListener('mouseenter',()=>setBudgetHover(index,{syncChart:true,delay:130}));
+        root.addEventListener('mouseleave',()=>setBudgetHover(null,{syncChart:true,delay:80}));
       }
     };
 
@@ -507,7 +518,7 @@
           wait._futureBudgetChart.data.labels=chartLabels;
           wait._futureBudgetChart.data.datasets[0].data=chartValues;
           wait._futureBudgetChart.data.datasets[0].backgroundColor=chartColours.slice(0,chartValues.length);
-          wait._futureBudgetChart.data.datasets[0].hoverOffset=6;
+          wait._futureBudgetChart.data.datasets[0].hoverOffset=3;
           wait._futureBudgetChart.update();
         }else{
           wait._futureBudgetChart=new Chart(chartCanvas.getContext('2d'),{
@@ -520,7 +531,7 @@
                 borderColor:'#fbf8f2',
                 borderWidth:3,
                 hoverBorderWidth:3,
-                hoverOffset:6,
+                hoverOffset:3,
                 spacing:2
               }]
             },
@@ -533,9 +544,11 @@
               animation:{duration:420,easing:'easeOutQuart'},
               interaction:{mode:'nearest',intersect:true},
               onHover:(event,elements)=>{
-                const index=elements?.[0]?.index;
-                const callouts=[$('#futureCalloutEquity',wait),$('#futureCalloutBorrowing',wait),$('#futureCalloutSavings',wait)];
-                callouts.forEach((item,itemIndex)=>item?.classList.toggle('is-chart-hover',Number.isInteger(index)&&itemIndex===index));
+                const index=Number.isInteger(elements?.[0]?.index)?elements[0].index:null;
+                setBudgetHover(index,{syncChart:false,delay:index===null?75:105});
+              },
+              transitions:{
+                active:{animation:{duration:220,easing:'easeOutCubic'}}
               },
               plugins:{
                 legend:{display:false},
