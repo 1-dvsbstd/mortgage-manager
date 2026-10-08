@@ -59,25 +59,26 @@ html[data-theme="cottage"]{
   --theme-cottage-lavender:#94889a;
 }
 
-/* Landscape extension: visible near the top, then deliberately fades into
-   a light neutral field so the app never feels like it sits on a dark photo. */
+/* Country Cottage page atmosphere — one canonical background owner.
+   Daytime countryside lives only at the top and fades into the neutral page. */
 html[data-theme="cottage"] body{
   background-color:#f4efe6!important;
   background-image:
     linear-gradient(
       to bottom,
-      rgba(249,251,248,.04) 0%,
-      rgba(249,248,242,.08) 14%,
-      rgba(246,242,234,.24) 26%,
-      rgba(243,238,229,.54) 40%,
-      rgba(241,235,225,.82) 54%,
-      rgba(240,233,222,.96) 66%,
-      #f4efe6 78%,
+      rgba(244,239,230,0) 0%,
+      rgba(244,239,230,.02) 18%,
+      rgba(244,239,230,.10) 30%,
+      rgba(244,239,230,.28) 42%,
+      rgba(244,239,230,.56) 55%,
+      rgba(244,239,230,.80) 66%,
+      rgba(244,239,230,.95) 76%,
+      #f4efe6 86%,
       #f4efe6 100%
     ),
-    url('../public/country-cottage-background.webp')!important;
+    url('../public/country-cottage-background-day.webp?v=day-001')!important;
   background-position:center top,center top!important;
-  background-size:100% 620px,min(100%,2400px) auto!important;
+  background-size:100% 760px,100% auto!important;
   background-repeat:no-repeat,no-repeat!important;
   background-attachment:scroll,scroll!important;
 }
