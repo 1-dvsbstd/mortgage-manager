@@ -3,60 +3,63 @@
    and soft lavender. Dusk remains the moodier evening alternative. */
 
 html[data-theme="cottage"]{
-  --bg:#f3eee4;
-  --surface:#fdfaf4;
-  --surface-soft:#f5efe6;
-  --surface-muted:#ece5da;
-  --surface-raised:#f8f2e9;
-  --surface-control:#fffaf4;
-  --surface-warm:#ecdcc1;
-  --surface-input:#fffaf4;
+  --bg:#f3f0e8;
+  --surface:#fdfbf6;
+  --surface-soft:#f3f1e9;
+  --surface-muted:#e8e9df;
+  --surface-raised:#f8f7f1;
+  --surface-control:#fffdf8;
+  --surface-warm:#e7dcc8;
+  --surface-input:#fffdf8;
 
-  --text:#2b342d;
-  --muted:#657063;
-  --muted-2:#7d847c;
+  --text:#29352d;
+  --muted:#667266;
+  --muted-2:#7b857d;
 
-  --border:rgba(88,77,61,.14);
-  --border-soft:rgba(105,91,70,.09);
-  --up-border-soft:rgba(105,91,70,.11);
+  --border:rgba(69,85,72,.14);
+  --border-soft:rgba(78,96,81,.09);
+  --up-border-soft:rgba(78,96,81,.11);
 
-  --accent:#b08a5c;
-  --accent-strong:#806447;
-  --accent-soft:#e9dcc5;
-  --warm:#aa7d57;
-  --debt:#858b84;
-  --equity:#6f866c;
-  --property:#8399a6;
-  --upcoming:#b58b58;
-  --scheme:#aaa398;
-  --ink-active:#384a3d;
-  --ink-on-active:#fffaf4;
-  --positive:#6f866c;
-  --positive-soft:rgba(111,134,108,.12);
-  --accent-wash:rgba(181,139,88,.09);
+  --accent:#7f9974;
+  --accent-strong:#4f6853;
+  --accent-soft:#dfe9da;
+  --warm:#b79568;
+  --debt:#87918a;
+  --equity:#6d875f;
+  --property:#8faabd;
+  --upcoming:#8faabd;
+  --scheme:#c3baa8;
+  --ink-active:#405946;
+  --ink-on-active:#fffdf8;
+  --positive:#6d875f;
+  --positive-soft:rgba(109,135,95,.12);
+  --accent-wash:rgba(127,153,116,.10);
 
-  --focus-ring:#82947d;
-  --focus-ring-soft:rgba(130,148,125,.32);
+  --focus-ring:#7d9576;
+  --focus-ring-soft:rgba(125,149,118,.30);
 
   --shadow-card:0 18px 48px rgba(77,62,43,.065);
   --shadow-soft:0 12px 32px rgba(77,62,43,.045);
 
-  --theme-hero-ink:#384a3d;
-  --theme-greeting:#60775f;
-  --theme-illustration-bg:#eee5d7;
-  --theme-progress-track:#e8e1d7;
-  --theme-highlight:#f3ebdf;
-  --theme-highlight-strong:#ede0ce;
-  --theme-hover:#f4e9dc;
-  --theme-rate-current:#fff5e9;
-  --theme-milestone:#f4ebe0;
-  --theme-action:#f0e4d6;
-  --theme-range-edge:#cdbca7;
-  --theme-range-mid:#b58b58;
+  --theme-hero-ink:#405946;
+  --theme-greeting:#64805f;
+  --theme-illustration-bg:#edf0e7;
+  --theme-progress-track:#e5e8df;
+  --theme-highlight:#eef3e9;
+  --theme-highlight-strong:#e3eadf;
+  --theme-hover:#eef3e9;
+  --theme-rate-current:#fbf4e8;
+  --theme-milestone:#eef2e8;
+  --theme-action:#e9efe5;
+  --theme-range-edge:#bac8b5;
+  --theme-range-mid:#8faabd;
 
-  --theme-cottage-sage:#6f866c;
-  --theme-cottage-stone:#b08a5c;
-  --theme-cottage-sky:#8399a6;
+  --theme-cottage-sage:#6d875f;
+  --theme-cottage-stone:#b79568;
+  --theme-cottage-sky:#8faabd;
+  --chart-equity:#6d875f;
+  --chart-borrowing:#8faabd;
+  --chart-savings:#c3baa8;
 }
 
 /* Country Cottage page atmosphere — neutral page with one finite artwork layer.
@@ -166,7 +169,7 @@ html[data-theme="cottage"] .kicker{
 }
 html[data-theme="cottage"] .ownership-segment.equity,
 html[data-theme="cottage"] .progress-fill{
-  background:linear-gradient(90deg,#6f866c,#82947d)!important;
+  background:linear-gradient(90deg,var(--equity),var(--focus-ring))!important;
 }
 html[data-theme="cottage"] .ownership-segment.debt{background:#858b84!important}
 html[data-theme="cottage"] .ownership-segment.scheme{background:#b7aa98!important}
