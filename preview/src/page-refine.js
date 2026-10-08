@@ -496,8 +496,12 @@
       const chartValues=active.supports.map((item)=>item.value);
       const chartLabels=active.supports.map((item)=>item.label.replace(/^illustrative\s+/i,''));
       const styles=getComputedStyle(document.documentElement);
-      const equityColour=(styles.getPropertyValue('--accent-strong')||'#617663').trim();
-      const chartColours=[equityColour,'#a88459','#c7bca8'];
+      const readThemeColour=(name,fallback)=>(styles.getPropertyValue(name)||fallback).trim()||fallback;
+      const chartColours=[
+        readThemeColour('--chart-equity',readThemeColour('--equity','#617663')),
+        readThemeColour('--chart-borrowing',readThemeColour('--property','#a88459')),
+        readThemeColour('--chart-savings',readThemeColour('--scheme','#c7bca8'))
+      ];
       if(chartCanvas && window.Chart){
         if(wait._futureBudgetChart){
           wait._futureBudgetChart.data.labels=chartLabels;
