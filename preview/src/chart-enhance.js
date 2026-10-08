@@ -12,10 +12,10 @@
     grid:'rgba(64,54,45,.055)',
     gridSoft:'rgba(64,54,45,.022)',
     label:themeColour('--muted','#777d80'),
-    scheduled:'rgba(125,139,145,.60)',
-    current:themeColour('--theme-hero-ink','#31554d'),
-    selected:themeColour('--positive','#4f806d'),
-    equity:themeColour('--accent','#b58a5b'),
+    scheduled:themeColour('--chart-scheduled','#aeb7b4'),
+    current:themeColour('--chart-current','#739cad'),
+    selected:themeColour('--chart-selected','#4e9278'),
+    equity:themeColour('--chart-equity-progress','#c29c72'),
     marker:'rgba(155,102,59,.24)',
     markerText:themeColour('--accent-strong','#8b603d'),
     hover:'rgba(64,54,45,.18)',
@@ -180,9 +180,9 @@
     };
     const hasWhatIf=Math.max(0,Number(v.extra)||0)>.01;
     drawLine(scheduled.monthlyPoints,C.scheduled,compact?1.05:1.15,[5,6],.58);
-    drawLine(current.monthlyPoints,C.current,compact?(hasWhatIf?1.8:2.7):(hasWhatIf?2.0:3.0),[],hasWhatIf?.70:1);
+    drawLine(current.monthlyPoints,C.current,compact?(hasWhatIf?2.1:2.7):(hasWhatIf?2.35:3.0),[],hasWhatIf?.95:1);
     if(hasWhatIf) drawLine(selected.monthlyPoints,C.selected,compact?3.25:3.65,[],1);
-    drawLine(equityPct,C.equity,compact?1.35:1.55,[8,6],.84,yForEquity);
+    drawLine(equityPct,C.equity,compact?1.35:1.55,[8,6],.75,yForEquity);
 
     const fixed=monthsUntil(v.fixedEnd);
     if(fixed!==null&&fixed>=0&&fixed<=maxMonths){
