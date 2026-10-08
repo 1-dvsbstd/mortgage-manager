@@ -3865,7 +3865,11 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 
 /* Consistent information hierarchy.
    Support sections are quiet, facts are neutral, planning is foreground. */
-.app-view-current .v15-current-journey,
+.app-view-current .v15-current-journey{
+  background:var(--surface-control)!important;
+  box-shadow:var(--hierarchy-support-shadow)!important;
+  border-color:var(--border-soft)!important;
+}
 .app-view-upcoming .upcoming-hero{
   background:var(--hierarchy-support)!important;
   box-shadow:var(--hierarchy-support-shadow)!important;
