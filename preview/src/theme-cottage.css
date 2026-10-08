@@ -12,9 +12,9 @@ html[data-theme="cottage"]{
   --surface-warm:#e8dac5;
   --surface-input:#fffdf9;
 
-  --text:#302f2a;
-  --muted:#67685f;
-  --muted-2:#777970;
+  --text:#3d413d;
+  --muted:#777b75;
+  --muted-2:#818781;
 
   --border:rgba(83,72,58,.17);
   --border-soft:rgba(83,72,58,.11);
@@ -24,11 +24,11 @@ html[data-theme="cottage"]{
   --accent-strong:#4d614e;
   --accent-soft:#e4e9db;
   --warm:#a58a68;
-  --debt:#87918a;
+  --debt:#7893a0;
   --equity:#6d856b;
-  --property:#8c9c90;
-  --upcoming:#8c9c90;
-  --scheme:#b9aa93;
+  --property:#7899a4;
+  --upcoming:#7899a4;
+  --scheme:#ba9e82;
   --ink-active:#4d614e;
   --ink-on-active:#fffdf9;
   --positive:#6d856b;
@@ -52,14 +52,14 @@ html[data-theme="cottage"]{
   --theme-milestone:#f1ebdf;
   --theme-action:#f0ebe1;
   --theme-range-edge:#c9c6b9;
-  --theme-range-mid:#8c9c90;
+  --theme-range-mid:#7899a4;
 
   --theme-cottage-sage:#6d856b;
-  --theme-cottage-stone:#a58a68;
-  --theme-cottage-sky:#8c9c90;
+  --theme-cottage-stone:#ba9e82;
+  --theme-cottage-sky:#7899a4;
   --chart-equity:#6d856b;
-  --chart-borrowing:#8c9c90;
-  --chart-savings:#b9aa93;
+  --chart-borrowing:#7899a4;
+  --chart-savings:#c5a185;
 
   /* Shared semantic roles for the daytime Cottage theme. */
   --semantic-heading-accent:#4b6350;
@@ -67,10 +67,10 @@ html[data-theme="cottage"]{
   --semantic-highlight-border:rgba(112,136,102,.22);
   --semantic-highlight-border-strong:rgba(112,136,102,.35);
   --semantic-scale-track:#e7dfd1;
-  --semantic-progress-start:#b3b5a3;
+  --semantic-progress-start:#b6af9e;
   --semantic-progress-end:#6d856b;
   --semantic-range-edge:#c9c6b9;
-  --semantic-range-mid:#8c9c90;
+  --semantic-range-mid:#7899a4;
   --semantic-range-border:#98ac9c;
   --semantic-range-ring:rgba(112,136,102,.28);
   --semantic-forecast-track:#ccd8ce;
@@ -80,9 +80,9 @@ html[data-theme="cottage"]{
   --semantic-feature-card:#f2ede4;
   --semantic-timeline-card:#eee8dc;
   --semantic-chart-equity:#6d856b;
-  --semantic-chart-borrowing:#8c9c90;
-  --semantic-chart-savings:#b9aa93;
-  --semantic-lifetime-secondary:#8c9c90;
+  --semantic-chart-borrowing:#7899a4;
+  --semantic-chart-savings:#c5a185;
+  --semantic-lifetime-secondary:#7899a4;
 }
 
 /* Country Cottage page atmosphere — neutral page with one finite artwork layer.
@@ -268,7 +268,7 @@ html[data-theme="cottage"] select:focus-visible{
 .theme-menu-swatch.cottage{background:#f5f1e9}
 .theme-menu-swatch.cottage i:nth-child(1){background:#6d856b}
 .theme-menu-swatch.cottage i:nth-child(2){background:#fffdf9}
-.theme-menu-swatch.cottage i:nth-child(3){background:#b9aa93}
+.theme-menu-swatch.cottage i:nth-child(3){background:#7899a4}
 
 
 
@@ -363,10 +363,10 @@ html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-
 /* Warm Stone supplies colours; the shared information-scale component owns the styling. */
 html[data-theme="cottage"]{
   --scale-track:#bfb6a6;
-  --scale-marker:#8b988d;
+  --scale-marker:#7899a4;
   --scale-current:#405d46;
   --scale-projected-bg:#eae3d7;
   --scale-projected-stripe:#faf7f0;
-  --scale-paid:#66806a;
+  --scale-paid:#78927a;
   --scale-divider:#fffdf9;
 }
