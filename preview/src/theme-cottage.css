@@ -26,8 +26,8 @@ html[data-theme="cottage"]{
   --warm:#b79568;
   --debt:#87918a;
   --equity:#6d875f;
-  --property:#8faabd;
-  --upcoming:#8faabd;
+  --property:#8fa095;
+  --upcoming:#8fa095;
   --scheme:#c3baa8;
   --ink-active:#405946;
   --ink-on-active:#fffdf8;
@@ -52,13 +52,13 @@ html[data-theme="cottage"]{
   --theme-milestone:#eef2e8;
   --theme-action:#e9efe5;
   --theme-range-edge:#bac8b5;
-  --theme-range-mid:#8faabd;
+  --theme-range-mid:#8fa095;
 
   --theme-cottage-sage:#6d875f;
   --theme-cottage-stone:#b79568;
-  --theme-cottage-sky:#8faabd;
+  --theme-cottage-sky:#8fa095;
   --chart-equity:#6d875f;
-  --chart-borrowing:#8faabd;
+  --chart-borrowing:#8fa095;
   --chart-savings:#c3baa8;
 
   /* Shared semantic roles for the daytime Cottage theme. */
@@ -67,10 +67,10 @@ html[data-theme="cottage"]{
   --semantic-highlight-border:rgba(109,135,95,.22);
   --semantic-highlight-border-strong:rgba(109,135,95,.35);
   --semantic-scale-track:#e2e7dd;
-  --semantic-progress-start:#8faabd;
+  --semantic-progress-start:#8fa095;
   --semantic-progress-end:#6d875f;
   --semantic-range-edge:#bac8b5;
-  --semantic-range-mid:#8faabd;
+  --semantic-range-mid:#8fa095;
   --semantic-range-border:#9eae9a;
   --semantic-range-ring:rgba(109,135,95,.28);
   --semantic-forecast-track:#cdd8c8;
@@ -80,9 +80,9 @@ html[data-theme="cottage"]{
   --semantic-feature-card:#eef3e9;
   --semantic-timeline-card:#e3eadf;
   --semantic-chart-equity:#6d875f;
-  --semantic-chart-borrowing:#8faabd;
+  --semantic-chart-borrowing:#8fa095;
   --semantic-chart-savings:#c3baa8;
-  --semantic-lifetime-secondary:#8faabd;
+  --semantic-lifetime-secondary:#8fa095;
 }
 
 /* Country Cottage page atmosphere — neutral page with one finite artwork layer.
@@ -239,7 +239,7 @@ html[data-theme="cottage"] select:focus-visible{
 /* Theme menu preview. */
 .theme-menu-swatch.cottage{background:#f3f0e8}
 .theme-menu-swatch.cottage i:nth-child(1){background:#6d875f}
-.theme-menu-swatch.cottage i:nth-child(2){background:#8faabd}
+.theme-menu-swatch.cottage i:nth-child(2){background:#8fa095}
 .theme-menu-swatch.cottage i:nth-child(3){background:#c3baa8}
 
 
