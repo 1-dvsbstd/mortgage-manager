@@ -351,8 +351,9 @@
   function mount() {
     const modal = document.querySelector('.personal-modal');
     if (!modal || modal.querySelector('#mortgageHistorySection')) return;
-    const data = applyStoreToActiveDeal(load());
-    save(data, { storeToHistory:true });
+    const data = load();
+    if(activeDeal(data.deals,currentMonthKey())) applyActiveDealToStore(data);
+    save(data);
     const section = document.createElement('details');
     section.id = 'mortgageHistorySection';
     section.className = 'personal-section mortgage-history-section';
