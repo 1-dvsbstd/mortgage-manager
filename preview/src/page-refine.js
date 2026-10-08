@@ -436,12 +436,28 @@
     };
     const moneyShort=(value)=>money(Math.round(Math.max(0,Number(value)||0)));
 
+    const setBudgetHover=(index)=>{
+      const chart=wait._futureBudgetChart;
+      const callouts=[$('#futureCalloutEquity',wait),$('#futureCalloutBorrowing',wait),$('#futureCalloutSavings',wait)];
+      callouts.forEach((item,itemIndex)=>item?.classList.toggle('is-chart-hover',itemIndex===index));
+      if(chart){
+        chart.setActiveElements(index===null?[]:[{datasetIndex:0,index}]);
+        chart.update('none');
+      }
+    };
+
     const renderCallout=(root,label,valueText,share,note,index)=>{
       if(!root) return;
+      root.dataset.chartIndex=String(index);
       root.innerHTML=`
         <div class="future-callout-title"><i data-index="${index}"></i><span>${label}</span></div>
         <strong>${valueText}</strong>
         <small>${share!==null?`${share}% of budget`:note}</small>`;
+      if(index<3 && !root.dataset.chartHoverBound){
+        root.dataset.chartHoverBound='true';
+        root.addEventListener('mouseenter',()=>setBudgetHover(index));
+        root.addEventListener('mouseleave',()=>setBudgetHover(null));
+      }
     };
 
     const renderHero=()=>{
@@ -487,6 +503,7 @@
           wait._futureBudgetChart.data.labels=chartLabels;
           wait._futureBudgetChart.data.datasets[0].data=chartValues;
           wait._futureBudgetChart.data.datasets[0].backgroundColor=chartColours.slice(0,chartValues.length);
+          wait._futureBudgetChart.data.datasets[0].hoverOffset=6;
           wait._futureBudgetChart.update();
         }else{
           wait._futureBudgetChart=new Chart(chartCanvas.getContext('2d'),{
@@ -499,7 +516,7 @@
                 borderColor:'#fbf8f2',
                 borderWidth:3,
                 hoverBorderWidth:3,
-                hoverOffset:0,
+                hoverOffset:6,
                 spacing:2
               }]
             },
@@ -511,6 +528,11 @@
               circumference:360,
               animation:{duration:420,easing:'easeOutQuart'},
               interaction:{mode:'nearest',intersect:true},
+              onHover:(event,elements)=>{
+                const index=elements?.[0]?.index;
+                const callouts=[$('#futureCalloutEquity',wait),$('#futureCalloutBorrowing',wait),$('#futureCalloutSavings',wait)];
+                callouts.forEach((item,itemIndex)=>item?.classList.toggle('is-chart-hover',Number.isInteger(index)&&itemIndex===index));
+              },
               plugins:{
                 legend:{display:false},
                 tooltip:{enabled:false}
