@@ -387,16 +387,16 @@ html[data-theme="cottage"]{
   --chart-guide:#899791;
 }
 html[data-theme="cottage"] .app-view-upcoming .market-rate-card .market-rate-line{
-  stroke:var(--chart-comparison)!important;
-  stroke-width:1.7!important;
-  opacity:.7!important;
+  stroke:var(--chart-monthly)!important;
+  stroke-width:1.8!important;
+  opacity:.92!important;
 }
 html[data-theme="cottage"] .app-view-upcoming .market-rate-card .market-rate-trendline{
-  stroke:var(--chart-primary)!important;
+  stroke:var(--chart-trend)!important;
   stroke-width:2.8!important;
 }
 html[data-theme="cottage"] .app-view-upcoming .market-rate-card .market-rate-end{
-  stroke:var(--chart-primary)!important;
+  stroke:var(--chart-trend)!important;
 }
 html[data-theme="cottage"] .app-view-upcoming .market-rate-grid{
   stroke:var(--chart-grid)!important;
