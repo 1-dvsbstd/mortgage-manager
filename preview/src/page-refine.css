@@ -3808,31 +3808,31 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
 /* Future donut ↔ callout hover link */
 @media (hover:hover) and (pointer:fine){
   .app-view-future .future-next-home-c-callout:not(.is-repayment){
-    transition:filter .16s ease!important;
+    transition:filter .26s ease!important;
     cursor:default!important;
   }
   .app-view-future .future-next-home-c-callout:not(.is-repayment) .future-callout-title i{
-    transition:transform .16s ease,box-shadow .16s ease!important;
+    transition:transform .26s ease,box-shadow .26s ease!important;
   }
   .app-view-future .future-next-home-c-callout:not(.is-repayment) .future-callout-title span,
   .app-view-future .future-next-home-c-callout:not(.is-repayment)>strong,
   .app-view-future .future-next-home-c-callout:not(.is-repayment)>small{
-    transition:color .16s ease,text-shadow .16s ease!important;
+    transition:color .26s ease,text-shadow .26s ease!important;
   }
   .app-view-future .future-next-home-c-callout.is-chart-hover{
-    filter:brightness(1.035)!important;
+    filter:brightness(1.015)!important;
   }
   .app-view-future .future-next-home-c-callout.is-chart-hover .future-callout-title i{
-    transform:scale(1.35)!important;
-    box-shadow:0 0 0 4px color-mix(in srgb,currentColor 10%,transparent),0 0 14px color-mix(in srgb,var(--accent) 30%,transparent)!important;
+    transform:scale(1.18)!important;
+    box-shadow:0 0 0 3px color-mix(in srgb,currentColor 8%,transparent),0 0 9px color-mix(in srgb,var(--accent) 18%,transparent)!important;
   }
   .app-view-future .future-next-home-c-callout.is-chart-hover .future-callout-title span,
   .app-view-future .future-next-home-c-callout.is-chart-hover>strong{
     color:var(--text)!important;
-    text-shadow:0 0 16px color-mix(in srgb,var(--accent) 30%,transparent)!important;
+    text-shadow:0 0 10px color-mix(in srgb,var(--accent) 16%,transparent)!important;
   }
   .app-view-future .future-next-home-c-callout.is-chart-hover>small{
     color:color-mix(in srgb,var(--muted) 72%,var(--text))!important;
-    text-shadow:0 0 14px color-mix(in srgb,var(--accent) 20%,transparent)!important;
+    text-shadow:0 0 8px color-mix(in srgb,var(--accent) 12%,transparent)!important;
   }
 }
