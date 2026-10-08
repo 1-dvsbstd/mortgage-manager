@@ -312,6 +312,9 @@
       if(display) display.textContent=formatMonthValue(input.value);
       input.dispatchEvent(new Event('input',{bubbles:true}));
       input.dispatchEvent(new Event('change',{bubbles:true}));
+      if(input.dataset.personalField==='fixedEnd'){
+        document.dispatchEvent(new CustomEvent('mortgage-fixed-end-edited',{detail:{value:input.value}}));
+      }
       closeSetupMonthPicker();
     });
 
