@@ -1,37 +1,35 @@
-/* Country Cottage — canonical theme owner
-   Bright, aspirational English-cottage mood: warm ivory, sage, honey stone
-   and soft lavender. Dusk remains the moodier evening alternative. */
+/* Country Cottage — canonical theme owner. Contemporary Country: clean whites, eucalyptus green, muted slate and pale oak. */
 
 html[data-theme="cottage"]{
-  --bg:#f5f1e9;
-  --surface:#fffdf9;
-  --surface-soft:#eee8dc;
-  --surface-muted:#e9e1d4;
-  --surface-raised:#faf7f0;
-  --surface-control:#fffdf9;
-  --surface-warm:#e8dac5;
-  --surface-input:#fffdf9;
+  --bg:#f6f5f0;
+  --surface:#ffffff;
+  --surface-soft:#f0f2ed;
+  --surface-muted:#e8ece7;
+  --surface-raised:#fafbf8;
+  --surface-control:#ffffff;
+  --surface-warm:#ede7de;
+  --surface-input:#ffffff;
 
-  --text:#3d413d;
-  --muted:#777b75;
-  --muted-2:#818781;
+  --text:#313b39;
+  --muted:#65736f;
+  --muted-2:#7c8986;
 
-  --border:rgba(83,72,58,.17);
-  --border-soft:rgba(83,72,58,.11);
+  --border:rgba(64,91,82,.15);
+  --border-soft:rgba(64,91,82,.09);
   --up-border-soft:rgba(83,72,58,.12);
 
-  --accent:#738469;
-  --accent-strong:#4d614e;
-  --accent-soft:#e4e9db;
+  --accent:#64887a;
+  --accent-strong:#45695c;
+  --accent-soft:#e4eee9;
   --warm:#a58a68;
-  --debt:#7893a0;
-  --equity:#6d856b;
-  --property:#7899a4;
+  --debt:#91a8b2;
+  --equity:#5f8c7b;
+  --property:#91a8b2;
   --upcoming:#7899a4;
-  --scheme:#ba9e82;
+  --scheme:#d1b89b;
   --ink-active:#4d614e;
   --ink-on-active:#fffdf9;
-  --positive:#6d856b;
+  --positive:#5f8c7b;
   --positive-soft:rgba(112,136,102,.12);
   --accent-wash:rgba(112,136,102,.10);
 
@@ -41,29 +39,29 @@ html[data-theme="cottage"]{
   --shadow-card:0 18px 48px rgba(77,62,43,.065);
   --shadow-soft:0 12px 32px rgba(77,62,43,.045);
 
-  --theme-hero-ink:#435b49;
+  --theme-hero-ink:#41675c;
   --theme-greeting:#65795d;
   --theme-illustration-bg:#f0ede5;
   --theme-progress-track:#e8e1d6;
-  --theme-highlight:#f1eee4;
+  --theme-highlight:#edf4ef;
   --theme-highlight-strong:#ebe6d9;
-  --theme-hover:#f2eee5;
+  --theme-hover:#edf4ef;
   --theme-rate-current:#f5f0e6;
-  --theme-milestone:#f1ebdf;
+  --theme-milestone:#edf3ee;
   --theme-action:#f0ebe1;
   --theme-range-edge:#c9c6b9;
   --theme-range-mid:#7899a4;
 
-  --theme-cottage-sage:#718e72;
+  --theme-cottage-sage:#5f8c7b;
   --theme-cottage-stone:#bd9277;
-  --theme-cottage-sky:#91afbd;
-  --chart-equity:#718e72;
-  --chart-borrowing:#91afbd;
-  --chart-savings:#bd9277;
+  --theme-cottage-sky:#91a8b2;
+  --chart-equity:#5f8c7b;
+  --chart-borrowing:#91a8b2;
+  --chart-savings:#d1b89b;
 
   /* Shared semantic roles for the daytime Cottage theme. */
   --semantic-heading-accent:#4b6350;
-  --semantic-highlight-bg:#f1eee5;
+  --semantic-highlight-bg:#edf4ef;
   --semantic-highlight-border:rgba(112,136,102,.22);
   --semantic-highlight-border-strong:rgba(112,136,102,.35);
   --semantic-scale-track:#e7dfd1;
@@ -79,9 +77,9 @@ html[data-theme="cottage"]{
   --semantic-forecast-track-muted:#e2e8df;
   --semantic-feature-card:#f2ede4;
   --semantic-timeline-card:#eee8dc;
-  --semantic-chart-equity:#718e72;
-  --semantic-chart-borrowing:#91afbd;
-  --semantic-chart-savings:#bd9277;
+  --semantic-chart-equity:#5f8c7b;
+  --semantic-chart-borrowing:#91a8b2;
+  --semantic-chart-savings:#d1b89b;
   --semantic-lifetime-secondary:#7899a4;
 }
 
@@ -90,7 +88,7 @@ html[data-theme="cottage"]{
    reappear lower down after the fade. */
 html[data-theme="cottage"] body{
   position:relative!important;
-  background:#f5f1e9!important;
+  background:#f6f5f0!important;
   background-image:none!important;
 }
 
@@ -106,15 +104,15 @@ html[data-theme="cottage"] body::before{
   background:
     linear-gradient(
       to bottom,
-      rgba(245,241,233,0) 0%,
-      rgba(245,241,233,.03) 18%,
-      rgba(245,241,233,.12) 30%,
-      rgba(245,241,233,.32) 43%,
-      rgba(245,241,233,.60) 56%,
-      rgba(245,241,233,.82) 67%,
-      rgba(245,241,233,.96) 78%,
-      #f5f1e9 90%,
-      #f5f1e9 100%
+      rgba(246,245,240,0) 0%,
+      rgba(246,245,240,.03) 18%,
+      rgba(246,245,240,.12) 30%,
+      rgba(246,245,240,.32) 43%,
+      rgba(246,245,240,.60) 56%,
+      rgba(246,245,240,.82) 67%,
+      rgba(246,245,240,.96) 78%,
+      #f6f5f0 90%,
+      #f6f5f0 100%
     ),
     url('../public/country-cottage-background-day.webp?v=day-001') center top / cover no-repeat!important;
 }
@@ -128,7 +126,7 @@ html[data-theme="cottage"] .app-shell{
 html[data-theme="cottage"] .panel,
 html[data-theme="cottage"] .chart-panel,
 html[data-theme="cottage"] .upcoming-section{
-  background:#fffdf9!important;
+  background:#ffffff!important;
   border-color:rgba(83,72,58,.16)!important;
   backdrop-filter:none!important;
   -webkit-backdrop-filter:none!important;
@@ -265,10 +263,10 @@ html[data-theme="cottage"] select:focus-visible{
 }
 
 /* Theme menu preview. */
-.theme-menu-swatch.cottage{background:#f5f1e9}
-.theme-menu-swatch.cottage i:nth-child(1){background:#6d856b}
-.theme-menu-swatch.cottage i:nth-child(2){background:#fffdf9}
-.theme-menu-swatch.cottage i:nth-child(3){background:#7899a4}
+.theme-menu-swatch.cottage{background:#f6f5f0}
+.theme-menu-swatch.cottage i:nth-child(1){background:#5f8c7b}
+.theme-menu-swatch.cottage i:nth-child(2){background:#ffffff}
+.theme-menu-swatch.cottage i:nth-child(3){background:#91a8b2}
 
 
 
@@ -362,22 +360,22 @@ html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-
 
 /* Warm Stone supplies colours; the shared information-scale component owns the styling. */
 html[data-theme="cottage"]{
-  --scale-track:#bfb6a6;
-  --scale-marker:#7899a4;
+  --scale-track:#c9d5ce;
+  --scale-marker:#91a8b2;
   --scale-current:#405d46;
   --scale-projected-bg:#eae3d7;
   --scale-projected-stripe:#faf7f0;
-  --scale-paid:#78927a;
+  --scale-paid:#5f8c7b;
   --scale-divider:#fffdf9;
 }
 
 /* Cottage chart language: distinct olive for primary data and slate for comparison.
    Ink remains reserved for headings and selected states, not graph series. */
 html[data-theme="cottage"]{
-  --chart-primary:#718e72;
-  --chart-comparison:#91afbd;
-  --chart-grid:#e1ded6;
-  --chart-guide:#a4aba5;
+  --chart-primary:#5f8c7b;
+  --chart-comparison:#91a8b2;
+  --chart-grid:#e2e9e5;
+  --chart-guide:#899791;
 }
 html[data-theme="cottage"] .app-view-upcoming .market-rate-card .market-rate-line{
   stroke:var(--chart-comparison)!important;
