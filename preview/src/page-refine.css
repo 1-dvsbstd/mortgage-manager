@@ -212,7 +212,8 @@
 .app-view-upcoming .upcoming-section:hover{
   transform:none!important;
   border-color:var(--up-border)!important;
-  box-shadow:0 2px 5px rgba(54,48,39,.06),0 14px 34px rgba(54,48,39,.11)!important;
+  /* Hover never adds elevation or changes the resting shadow. */
+  box-shadow:inherit!important;
 }
 .app-view-upcoming .upcoming-section-heading{
   margin:0 0 18px!important;
@@ -340,7 +341,7 @@
 .app-view-upcoming .deal-planner-rate.is-current-rate:hover{
   transform:none!important;
   border-color:rgba(183,131,77,.32)!important;
-  box-shadow:0 3px 5px rgba(54,48,39,.05),0 10px 24px rgba(54,48,39,.08)!important;
+  box-shadow:none!important;
 }
 .app-view-upcoming .deal-planner-rate.is-current-rate>span{
   color:var(--accent-strong)!important;
@@ -3964,4 +3965,11 @@ body .app-view-current .v15-current-stats .v15-stat [class*="icon"]{
 }
 .app-view-upcoming .market-rate-card{
   background:var(--hierarchy-focus)!important;
+}
+
+/* Upcoming deal-end facts are static, not elevated hover targets. */
+.app-view-upcoming .upcoming-position .deal-planner-summary>div:is(:hover,:focus-within){
+  transform:none!important;
+  box-shadow:none!important;
+  filter:none!important;
 }
