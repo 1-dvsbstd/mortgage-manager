@@ -546,17 +546,7 @@
       })();
       const planningMonths=360;
       const horizonMonths=Math.max(0,Math.round(active.years*12));
-      const historyFixedEnd=(()=>{
-        try{
-          const history=window.MortgageHistory?.load?.();
-          if(!history?.deals?.length) return '';
-          const now=new Date();
-          const month=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
-          return window.MortgageHistory?.activeDeal?.(history.deals,month)?.end || '';
-        }catch(_){ return ''; }
-      })();
-      const currentFixedEnd=historyFixedEnd || mortgageState.fixedEnd || '';
-      const fixedMonthsNow=Math.max(0,Number(monthsUntil(currentFixedEnd))||0);
+      const fixedMonthsNow=Math.max(0,Number(monthsUntil(mortgageState.fixedEnd))||0);
       const fixedMonthsRemaining=Math.max(0,Math.min(planningMonths,fixedMonthsNow-horizonMonths));
 
       const existingPath=window.MortgageMath?.amortize?.(
