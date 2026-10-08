@@ -65,42 +65,6 @@
 }
 
 
-/* Theme: Warm — approachable, friendly and less finance-formal. */
-html[data-theme="warm"]{
-  --bg:#f7eee5;
-  --surface:#fff8f1;
-  --surface-soft:#f4e4d4;
-  --surface-muted:#ecd8c6;
-  --surface-raised:#f8e9dc;
-  --surface-control:#fffaf6;
-  --surface-warm:#f4d2b9;
-  --surface-input:#fffaf7;
-  --text:#3b241d;
-  --muted:#805f53;
-  --muted-2:#a07f72;
-  --border:rgba(85,48,36,.14);
-  --border-soft:rgba(85,48,36,.08);
-  --accent:#df6a3b;
-  --accent-strong:#9d3d25;
-  --accent-soft:#f7c8b1;
-  --warm:#dc7b49;
-  --debt:#8e7770;
-  --equity:#5f9270;
-  --property:#dfa957;
-  --upcoming:#e59b40;
-  --scheme:#a9a29c;
-  --ink-active:#6f2d1e;
-  --ink-on-active:#fff8f1;
-  --positive:#5f9270;
-  --positive-soft:rgba(95,146,112,.12);
-  --accent-wash:rgba(223,106,59,.10);
-  --focus-ring:#df6a3b;
-  --focus-ring-soft:rgba(223,106,59,.32);
-  --shadow-card:0 19px 52px rgba(100,56,38,.075);
-  --shadow-soft:0 14px 38px rgba(100,56,38,.055);
-  --font-display:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-}
-
 /* Theme: Dusk — richer contrast with deep green and amber accents. */
 html[data-theme="dusk"]{
   --bg:#e7e1d4;
@@ -176,42 +140,6 @@ html[data-theme="dusk"]{
   --semantic-chart-savings:#c7bca8;
   --semantic-lifetime-secondary:#a88459;
 }
-html[data-theme="warm"]{
-  --theme-hero-ink:#6d3224;
-  --theme-greeting:#a34c32;
-  --theme-illustration-bg:#f0d7c8;
-  --theme-progress-track:#ecd5c8;
-  --theme-highlight:#f8e1d5;
-  --theme-highlight-strong:#f4d3c0;
-  --theme-hover:#f7d8c7;
-  --theme-rate-current:#fff0e6;
-  --theme-milestone:#fae4d8;
-  --theme-action:#f7d7c6;
-  --theme-range-edge:#e7bca6;
-  --theme-range-mid:#df6a3b;
-
-  --semantic-heading-accent:#9d3d25;
-  --semantic-highlight-bg:#f8e1d5;
-  --semantic-highlight-border:rgba(223,106,59,.22);
-  --semantic-highlight-border-strong:rgba(223,106,59,.35);
-  --semantic-scale-track:#ecd8c6;
-  --semantic-progress-start:#e7bca6;
-  --semantic-progress-end:#df6a3b;
-  --semantic-range-edge:#e7bca6;
-  --semantic-range-mid:#df6a3b;
-  --semantic-range-border:#d79f84;
-  --semantic-range-ring:rgba(223,106,59,.30);
-  --semantic-forecast-track:#e7c3ae;
-  --semantic-forecast-node:#df8a62;
-  --semantic-forecast-node-ring:#cf9d82;
-  --semantic-forecast-track-muted:#ecd8c6;
-  --semantic-feature-card:#f8e1d5;
-  --semantic-timeline-card:#f4d3c0;
-  --semantic-chart-equity:#5f9270;
-  --semantic-chart-borrowing:#dfa957;
-  --semantic-chart-savings:#a9a29c;
-  --semantic-lifetime-secondary:#dfa957;
-}
 html[data-theme="dusk"]{
   --theme-hero-ink:#173f37;
   --theme-greeting:#326a5e;
@@ -258,15 +186,6 @@ html[data-theme="dusk"]{
   --scale-projected-stripe:#faf7f1;
   --scale-paid:#557e73;
   --scale-divider:#fffdf8;
-}
-html[data-theme="warm"]{
-  --scale-track:#d9bda9;
-  --scale-marker:#ce8e6f;
-  --scale-current:#8f4735;
-  --scale-projected-bg:#f0d8ca;
-  --scale-projected-stripe:#fff8f1;
-  --scale-paid:#b96e4f;
-  --scale-divider:#fff8f1;
 }
 html[data-theme="dusk"]{
   --scale-track:#c5bc9d;
