@@ -227,6 +227,10 @@
     chooser.classList.toggle('has-date',Boolean(end));
   }
 
+  function closeDealTermMenus(root=document) {
+    root.querySelectorAll?.('.deal-term-menu:not([hidden])').forEach((menu)=>{ menu.hidden=true; });
+  }
+
   function seedFollowingDealStarts(section) {
     const rows=[...section.querySelectorAll('[data-history-deal]')];
     rows.forEach((row,index)=>{
@@ -397,7 +401,11 @@
       const termButton=event.target.closest('[data-deal-term]');
       if(termButton){
         const menu=termButton.parentElement?.querySelector('.deal-term-menu');
-        if(menu) menu.hidden=!menu.hidden;
+        if(menu){
+          const willOpen=menu.hidden;
+          closeDealTermMenus(section);
+          menu.hidden=!willOpen;
+        }
         return;
       }
 
@@ -484,6 +492,10 @@
 
   document.addEventListener('click', (event) => {
     if (event.target.closest('#personalDataButton')) setTimeout(mount, 0);
+
+    if(!event.target.closest('[data-deal-term]') && !event.target.closest('.deal-term-menu')){
+      closeDealTermMenus(document);
+    }
   });
   setTimeout(mount, 550);
 
