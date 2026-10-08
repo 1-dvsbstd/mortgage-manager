@@ -712,16 +712,16 @@ input,select,textarea{color:var(--text)}
   display:block;margin-top:8px;max-width:420px;color:var(--muted)!important;font-size:11px;line-height:1.5;
 }
 .app-view-future .v157-range-line{
-  position:relative;height:6px;margin:12px 8px 11px;border-radius:999px;background:linear-gradient(90deg,#d8c7b5 0%,#c88e5c 50%,#d8c7b5 100%);
+  position:relative;height:6px;margin:12px 8px 11px;border-radius:999px;background:linear-gradient(90deg,var(--semantic-range-edge) 0%,var(--semantic-range-mid) 50%,var(--semantic-range-edge) 100%);
 }
 .app-view-future .v157-range-line::before,
 .app-view-future .v157-range-line::after{
-  content:"";position:absolute;top:50%;width:10px;height:10px;border-radius:50%;background:var(--surface-control);border:2px solid #bca58e;transform:translateY(-50%);
+  content:"";position:absolute;top:50%;width:10px;height:10px;border-radius:50%;background:var(--surface-control);border:2px solid var(--semantic-range-border);transform:translateY(-50%);
 }
 .app-view-future .v157-range-line::before{left:-2px}
 .app-view-future .v157-range-line::after{right:-2px}
 .app-view-future .v157-centre-marker{
-  position:absolute;left:50%;top:50%;width:14px;height:14px;border-radius:50%;background:var(--ink-active);border:3px solid var(--surface-control);box-shadow:0 0 0 2px rgba(183,131,77,.34);transform:translate(-50%,-50%);
+  position:absolute;left:50%;top:50%;width:14px;height:14px;border-radius:50%;background:var(--ink-active);border:3px solid var(--surface-control);box-shadow:0 0 0 2px var(--semantic-range-ring);transform:translate(-50%,-50%);
 }
 .app-view-future .v157-range-labels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start}
 .app-view-future .v157-range-labels>div:nth-child(2){text-align:center}
@@ -741,9 +741,9 @@ body[data-app-view="future"] #propertyCostComparison .deep-heading h2{
 body[data-app-view="future"] #homeProjection .projection-heading .eyebrow,
 body[data-app-view="future"] #futureModelRange .future-model-heading .eyebrow,
 body[data-app-view="future"] #propertyCostComparison .deep-heading .eyebrow{
-  color:#9d6639!important;
+  color:var(--semantic-heading-accent)!important;
   opacity:1!important;
-  -webkit-text-fill-color:#9d6639!important;
+  -webkit-text-fill-color:var(--semantic-heading-accent)!important;
 }
 body[data-app-view="future"] #homeProjection .projection-heading .source-date{
   color:#6d7278!important;
@@ -759,8 +759,8 @@ body[data-app-view="future"] #propertyCostComparison .property-cost-card>strong{
   -webkit-text-fill-color:var(--text)!important;
 }
 body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre strong{
-  color:#9d6639!important;
-  -webkit-text-fill-color:#9d6639!important;
+  color:var(--semantic-heading-accent)!important;
+  -webkit-text-fill-color:var(--semantic-heading-accent)!important;
 }
 body[data-app-view="future"] #futureModelRange .v157-range-copy>strong i,
 body[data-app-view="future"] #futureModelRange .v157-range-copy>small,
@@ -820,7 +820,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
 }
 .app-view-future #nextHomePlanner .next-home-results>div.primary{
   background:var(--surface-warm)!important;
-  border-color:rgba(197,138,86,.22)!important;
+  border-color:var(--semantic-highlight-border)!important;
 }
 .app-view-future #nextHomePlanner .next-home-results span,
 .app-view-future #nextHomePlanner .next-home-results small,
@@ -868,8 +868,8 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   box-shadow:none!important;
 }
 .app-view-future #futureModelRange .home-forecast-card:nth-child(3){
-  background:#f3e7d9!important;
-  border-color:rgba(197,138,86,.26)!important;
+  background:var(--semantic-feature-card)!important;
+  border-color:color-mix(in srgb,var(--semantic-heading-accent) 26%,transparent)!important;
 }
 .app-view-future #futureModelRange .home-forecast-card>span{
   display:block!important;
@@ -931,14 +931,14 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   height:5px!important;
   overflow:hidden!important;
   border-radius:999px!important;
-  background:#e5ddd3!important;
+  background:var(--semantic-forecast-track-muted)!important;
 }
 .app-view-future #futureModelRange .home-forecast-growth-track>i{
   display:block!important;
   height:100%!important;
   width:0;
   border-radius:inherit!important;
-  background:#b9875f!important;
+  background:var(--semantic-forecast-node)!important;
   transition:width .25s ease!important;
 }
 .app-view-future #futureModelRange .home-forecast-card:nth-child(3) .home-forecast-growth-track>i{
@@ -975,7 +975,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   top:15px!important;
   height:2px!important;
   border-radius:999px!important;
-  background:#d8c5b2!important;
+  background:var(--semantic-forecast-track)!important;
 }
 .app-view-future #futureModelRange .home-forecast-card{
   position:relative!important;
@@ -996,8 +996,8 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   height:11px!important;
   border:3px solid var(--surface-control)!important;
   border-radius:50%!important;
-  background:#b9875f!important;
-  box-shadow:0 0 0 1px #c9ab90!important;
+  background:var(--semantic-forecast-node)!important;
+  box-shadow:0 0 0 1px var(--semantic-forecast-node-ring)!important;
   transform:translateX(-50%)!important;
   z-index:2!important;
 }
@@ -1108,7 +1108,7 @@ body[data-app-view="future"] #propertyCostComparison .deep-note{
   border-left:1px solid rgba(68,58,48,.09)!important;
 }
 .app-view-future #futureWaitPlanner .next-home-timeline-row:nth-child(3){
-  background:#f1e5d7!important;
+  background:var(--semantic-timeline-card)!important;
   border-color:rgba(68,58,48,.09)!important;
 }
 .app-view-future #futureWaitPlanner .next-home-timeline-row>span{
@@ -1247,9 +1247,9 @@ body[data-app-view="future"] #futureModelRange .future-model-heading h2{
 body[data-app-view="future"] #propertyCostComparison .deep-heading .eyebrow,
 body[data-app-view="future"] #homeProjection .projection-heading .eyebrow,
 body[data-app-view="future"] #futureModelRange .future-model-heading .eyebrow{
-  color:#9d6639!important;
+  color:var(--semantic-heading-accent)!important;
   opacity:1!important;
-  -webkit-text-fill-color:#9d6639!important;
+  -webkit-text-fill-color:var(--semantic-heading-accent)!important;
 }
 
 body[data-app-view="future"] #propertyCostComparison .property-cost-card>strong,
@@ -1275,8 +1275,8 @@ body[data-app-view="future"] #futureModelRange .v157-range-copy>strong{
 }
 
 body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre strong{
-  color:#9d6639!important;
-  -webkit-text-fill-color:#9d6639!important;
+  color:var(--semantic-heading-accent)!important;
+  -webkit-text-fill-color:var(--semantic-heading-accent)!important;
 }
 
 /* A consistent, premium hover lift across the product. */
@@ -1288,18 +1288,18 @@ body[data-app-view="future"] #futureModelRange .v157-range-labels .is-centre str
 .app-view-future .next-home-summary-card:last-child,
 .app-view-future .is-highlighted,
 .app-view-future .is-current{
-  background:#f4ede4!important;
-  border-color:rgba(197,138,86,.22)!important;
+  background:var(--semantic-highlight-bg)!important;
+  border-color:var(--semantic-highlight-border)!important;
 }
-.app-view-future .cost-scale{background:#ddd4c9!important}
-.app-view-future .cost-scale>i{background:linear-gradient(90deg,#d3b18e,#b77f4e)!important}
+.app-view-future .cost-scale{background:var(--semantic-scale-track)!important}
+.app-view-future .cost-scale>i{background:linear-gradient(90deg,var(--semantic-progress-start),var(--semantic-progress-end))!important}
 .app-view-future .projection-use-button,
-.app-view-future button.active{border-color:rgba(197,138,86,.35)!important}
+.app-view-future button.active{border-color:var(--semantic-highlight-border-strong)!important}
 
 /* Global legacy mint progress bars: warm neutral/copper unless semantically equity. */
 .app-view-future .progress-fill,
 .app-view-future .timeline-fill,
-.app-view-future .equity-progress-track i{background:linear-gradient(90deg,#d3b18e,#b77f4e)!important}
+.app-view-future .equity-progress-track i{background:linear-gradient(90deg,var(--semantic-progress-start),var(--semantic-progress-end))!important}
 
 /* Main app: cards are glance-first, not tap-to-open. */
 .app-view-current [data-expandable-card],
@@ -3046,8 +3046,8 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   border-radius:50%!important;
   background:var(--accent-strong)!important;
 }
-.app-view-future .future-callout-title i[data-index="1"]{background:#a88459!important}
-.app-view-future .future-callout-title i[data-index="2"]{background:#c7bca8!important}
+.app-view-future .future-callout-title i[data-index="1"]{background:var(--semantic-chart-borrowing)!important}
+.app-view-future .future-callout-title i[data-index="2"]{background:var(--semantic-chart-savings)!important}
 .app-view-future .future-callout-title i[data-index="3"]{background:var(--text)!important;opacity:.32!important}
 .app-view-future .future-callout-title span{
   color:var(--muted)!important;
@@ -3583,10 +3583,10 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   height:100%!important;
 }
 .app-view-future .future-lifetime-split-bar i{
-  background:rgba(65,107,85,.55)!important;
+  background:color-mix(in srgb,var(--semantic-chart-equity) 68%,transparent)!important;
 }
 .app-view-future .future-lifetime-split-bar b{
-  background:#a88459!important;
+  background:var(--semantic-chart-borrowing)!important;
 }
 .app-view-future .future-lifetime-note{
   margin:10px 0 0!important;
