@@ -20,29 +20,29 @@ html[data-theme="cottage"]{
   --border-soft:rgba(105,91,70,.09);
   --up-border-soft:rgba(105,91,70,.11);
 
-  --accent:#b79261;
-  --accent-strong:#7c6443;
-  --accent-soft:#ead9bd;
+  --accent:#b08a5c;
+  --accent-strong:#806447;
+  --accent-soft:#e9dcc5;
   --warm:#aa7d57;
   --debt:#858b84;
-  --equity:#74866f;
-  --property:#94889a;
+  --equity:#6f866c;
+  --property:#8399a6;
   --upcoming:#b58b58;
   --scheme:#aaa398;
   --ink-active:#384a3d;
   --ink-on-active:#fffaf4;
-  --positive:#72876e;
-  --positive-soft:rgba(116,134,111,.12);
+  --positive:#6f866c;
+  --positive-soft:rgba(111,134,108,.12);
   --accent-wash:rgba(181,139,88,.09);
 
-  --focus-ring:#87977c;
-  --focus-ring-soft:rgba(135,151,124,.32);
+  --focus-ring:#82947d;
+  --focus-ring-soft:rgba(130,148,125,.32);
 
   --shadow-card:0 18px 48px rgba(77,62,43,.065);
   --shadow-soft:0 12px 32px rgba(77,62,43,.045);
 
   --theme-hero-ink:#384a3d;
-  --theme-greeting:#637563;
+  --theme-greeting:#60775f;
   --theme-illustration-bg:#eee5d7;
   --theme-progress-track:#e8e1d7;
   --theme-highlight:#f3ebdf;
@@ -54,9 +54,9 @@ html[data-theme="cottage"]{
   --theme-range-edge:#cdbca7;
   --theme-range-mid:#b58b58;
 
-  --theme-cottage-sage:#75866d;
-  --theme-cottage-stone:#b28a5c;
-  --theme-cottage-lavender:#94889a;
+  --theme-cottage-sage:#6f866c;
+  --theme-cottage-stone:#b08a5c;
+  --theme-cottage-sky:#8399a6;
 }
 
 /* Country Cottage page atmosphere — neutral page with one finite artwork layer.
@@ -134,7 +134,7 @@ html[data-theme="cottage"] .app-view-current .v15-home-visual{
   background-position:center center!important;
   background-size:cover!important;
   background-repeat:no-repeat!important;
-  border-radius:24px!important;
+  border-radius:30px!important;
   overflow:hidden!important;
   box-shadow:0 10px 28px rgba(70,58,40,.07)!important;
   filter:none!important;
@@ -166,7 +166,7 @@ html[data-theme="cottage"] .kicker{
 }
 html[data-theme="cottage"] .ownership-segment.equity,
 html[data-theme="cottage"] .progress-fill{
-  background:linear-gradient(90deg,#74866f,#87977f)!important;
+  background:linear-gradient(90deg,#6f866c,#82947d)!important;
 }
 html[data-theme="cottage"] .ownership-segment.debt{background:#858b84!important}
 html[data-theme="cottage"] .ownership-segment.scheme{background:#b7aa98!important}
