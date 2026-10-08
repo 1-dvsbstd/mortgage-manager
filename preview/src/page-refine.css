@@ -2494,10 +2494,10 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   background:color-mix(in srgb,var(--positive) 6%,var(--surface))!important;
 }
 .app-view-current .v15-current-journey-step:nth-child(4) .v15-current-journey-icon{
-  --icon-ink:color-mix(in srgb,var(--accent-strong) 88%,var(--theme-hero-ink));
-  --icon-accent:color-mix(in srgb,var(--accent-strong) 92%,var(--theme-hero-ink));
-  --icon-soft:color-mix(in srgb,var(--accent) 15%,transparent);
-  background:color-mix(in srgb,var(--accent) 7%,var(--surface))!important;
+  --icon-ink:var(--data-comparison);
+  --icon-accent:var(--data-comparison);
+  --icon-soft:color-mix(in srgb,var(--data-comparison) 15%,transparent);
+  background:color-mix(in srgb,var(--data-comparison) 7%,var(--surface))!important;
 }
 .app-view-current .v15-current-journey-step.is-actionable{
   cursor:pointer!important;
