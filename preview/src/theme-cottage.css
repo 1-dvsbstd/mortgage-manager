@@ -316,7 +316,7 @@ html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-
   box-shadow:0 0 0 1px rgba(76,88,70,.24)!important;
 }
 html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-marker.is-current .future-payoff-marker-dot{
-  background:var(--theme-hero-ink)!important;
+  background:var(--scale-current)!important;
 }
 html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-marker-label,
 html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-scale-caption strong{
@@ -356,7 +356,7 @@ html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-
   background:var(--scale-marker)!important;
 }
 html[data-theme="cottage"] .app-view-future #futurePayoffTargets .future-payoff-marker.is-current .future-payoff-marker-dot{
-  background:#536e55!important;
+  background:var(--scale-current)!important;
 }
 
 
