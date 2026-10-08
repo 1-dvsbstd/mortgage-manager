@@ -498,9 +498,9 @@
       const styles=getComputedStyle(document.documentElement);
       const readThemeColour=(name,fallback)=>(styles.getPropertyValue(name)||fallback).trim()||fallback;
       const chartColours=[
-        readThemeColour('--chart-equity',readThemeColour('--equity','#617663')),
-        readThemeColour('--chart-borrowing',readThemeColour('--property','#a88459')),
-        readThemeColour('--chart-savings',readThemeColour('--scheme','#c7bca8'))
+        readThemeColour('--semantic-chart-equity',readThemeColour('--equity','#617663')),
+        readThemeColour('--semantic-chart-borrowing',readThemeColour('--property','#a88459')),
+        readThemeColour('--semantic-chart-savings',readThemeColour('--scheme','#c7bca8'))
       ];
       if(chartCanvas && window.Chart){
         if(wait._futureBudgetChart){
