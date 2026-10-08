@@ -208,6 +208,12 @@ html[data-theme="dusk"]{
   --data-comparison:var(--property);
   --data-savings:var(--warm);
   --data-secondary:var(--debt);
+  --chart-current:var(--property);
+  --chart-selected:var(--positive);
+  --chart-scheduled:#aab0b1;
+  --chart-equity-progress:var(--scheme);
+  --chart-monthly:var(--property);
+  --chart-trend:var(--positive);
   --hierarchy-support-shadow:0 2px 7px rgba(40,39,33,.035);
   --hierarchy-feature-shadow:0 8px 26px rgba(40,39,33,.075);
 }
