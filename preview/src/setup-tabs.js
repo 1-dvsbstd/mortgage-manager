@@ -4,7 +4,6 @@
   const THEME_KEY='mortgage-manager-theme-v1';
   const themes=[
     {id:'parchment',name:'Parchment',note:'Premium, distinctive and calm.'},
-    {id:'warm',name:'Warm',note:'Friendly, approachable and inviting.'},
     {id:'dusk',name:'Dusk',note:'Richer contrast with more character.'},
     {id:'cottage',name:'Country Cottage',note:'Warm stone, sage and garden light.'},
   ];
@@ -109,11 +108,11 @@
     document.documentElement.dataset.theme=id;
     try{localStorage.setItem(THEME_KEY,id);}catch(_){}
     const meta=document.querySelector('meta[name="theme-color"]');
-    if(meta) meta.content=id==='warm'?'#f7eee5':id==='dusk'?'#e7e1d4':id==='cottage'?'#f3eee4':'#f0ece5';
+    if(meta) meta.content=id==='dusk'?'#e7e1d4':id==='cottage'?'#f3eee4':'#f0ece5';
   }
 
   function currentTheme(){
-    try{return localStorage.getItem(THEME_KEY)||document.documentElement.dataset.theme||'parchment';}catch(_){return document.documentElement.dataset.theme||'parchment';}
+    try{const saved=localStorage.getItem(THEME_KEY)||document.documentElement.dataset.theme;return themes.some(item=>item.id===saved)?saved:'parchment';}catch(_){return 'parchment';}
   }
 
   function syncThemeControl(){
