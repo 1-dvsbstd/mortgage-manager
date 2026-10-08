@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-preview-country-cottage-011';
+const CACHE_NAME = 'mortgage-manager-preview-country-cottage-012';
 const APP_SHELL = [
   './',
   './index.html',
