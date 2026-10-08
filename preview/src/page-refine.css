@@ -3897,3 +3897,22 @@ body .app-view-current .v15-current-stats .v15-stat [class*="icon"]{
 .app-view-current .trajectory-with-what-if [class*="saving"] strong{
   color:var(--hierarchy-highlight)!important;
 }
+
+/* The same hierarchy applies to future planning and rate explanations. */
+.app-view-future #futureWaitPlanner,
+.app-view-future #futurePayoffTargets,
+.app-view-future #propertyCostComparison{
+  background:var(--hierarchy-focus)!important;
+  border-color:var(--border)!important;
+}
+.app-view-future #futureWaitPlanner,
+.app-view-future #futurePayoffTargets{
+  box-shadow:var(--hierarchy-feature-shadow)!important;
+}
+.app-view-future #propertyCostComparison,
+.app-view-upcoming .market-rate-trend{
+  box-shadow:var(--hierarchy-support-shadow)!important;
+}
+.app-view-upcoming .market-rate-card{
+  background:var(--hierarchy-focus)!important;
+}
