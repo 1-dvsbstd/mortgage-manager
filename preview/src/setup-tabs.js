@@ -177,7 +177,7 @@
     modal.dataset.tabbedSetup='true';
 
     const nav=document.createElement('div'); nav.className='setup-tab-nav'; nav.setAttribute('role','tablist');
-    nav.innerHTML='<button type="button" data-setup-tab="current">Current</button><button type="button" data-setup-tab="upcoming">Upcoming</button><button type="button" data-setup-tab="future">Future</button>';
+    nav.innerHTML='<button type="button" role="tab" aria-label="Current" data-setup-tab="current">Current</button><button type="button" role="tab" aria-label="Upcoming" data-setup-tab="upcoming">Upcoming</button><button type="button" role="tab" aria-label="Future" data-setup-tab="future">Future</button>';
     const current=document.createElement('div'), upcoming=document.createElement('div'), future=document.createElement('div');
     current.className='setup-pane'; upcoming.className='setup-pane'; future.className='setup-pane';
     current.dataset.setupPane='current'; upcoming.dataset.setupPane='upcoming'; future.dataset.setupPane='future';

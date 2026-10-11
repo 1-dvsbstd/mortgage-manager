@@ -119,6 +119,8 @@
 
   function renderProgress() {
     ensureProgressCard();
+    // The current layout can omit the legacy progress card.
+    if (!$('personalProgress')) return;
     const history = loadHistory();
     const current = currentSnapshot();
     if (!history.length) {
