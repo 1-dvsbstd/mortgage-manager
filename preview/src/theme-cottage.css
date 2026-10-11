@@ -160,23 +160,29 @@ html[data-theme="cottage"] .app-view-current .v15-hero{
   border-color:rgba(105,91,70,.10)!important;
 }
 
-/* Full selected cottage image: no crop, centred. */
+/* Retain the selected cottage photograph; shared rules own its frame. */
 html[data-theme="cottage"] .app-view-current .v15-home-visual{
-  background-color:#f1e9dd!important;
+  background-color:var(--theme-illustration-bg)!important;
   background-image:url('../public/country-cottage-hero.webp?v=exact-daytime-001')!important;
   background-position:center center!important;
   background-size:cover!important;
   background-repeat:no-repeat!important;
-  border-radius:38px!important;
   overflow:hidden!important;
-  clip-path:inset(0 round 38px)!important;
-  box-shadow:0 10px 28px rgba(70,58,40,.07)!important;
+  box-shadow:inset 0 0 0 1px var(--border-soft)!important;
   filter:none!important;
   background-blend-mode:normal!important;
 }
 
-/* The selected source image includes a tiny sun near the far-right horizon.
-   Keep the full image and softly wash that sky area rather than cropping it. */
+/* The original photo has a baked-in cream frame. Hide it within the desktop
+   crop, keeping the front door centred and the chimneys and garden visible. */
+@media(min-width:1051px){
+  html[data-theme="cottage"] .app-view-current .v15-home-visual{
+    background-size:auto 112%!important;
+    background-position:63% 50%!important;
+  }
+}
+
+/* Preserve the photograph's daylight colours without the shared dusk wash. */
 html[data-theme="cottage"] .app-view-current .v15-home-visual::after{
   border-radius:inherit!important;
   background:none!important;
