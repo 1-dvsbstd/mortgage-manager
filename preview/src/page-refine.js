@@ -891,7 +891,17 @@
     $('#futureProjectedFromToday',section).textContent=money(projectedFromToday);
     const paidBar=$('#futurePaidSoFarBar',section);
     const projectedBar=$('#futureProjectedFromTodayBar',section);
-    if(paidBar) paidBar.style.width=(paidSoFar/splitTotal*100)+'%';
+    const paidShare=paidSoFar/splitTotal*100;
+    const splitBar=paidBar?.parentElement;
+    if(splitBar){
+      splitBar.style.setProperty('--paid-share',paidShare+'%');
+      // A missing past/future segment must not leave a misleading colour sliver.
+      splitBar.style.removeProperty('--lifetime-paid');
+      splitBar.style.removeProperty('--lifetime-projected');
+      if(paidShare===0) splitBar.style.setProperty('--lifetime-paid','var(--semantic-chart-borrowing)');
+      if(paidShare===100) splitBar.style.setProperty('--lifetime-projected','var(--lifetime-paid)');
+    }
+    if(paidBar) paidBar.style.width=paidShare+'%';
     if(projectedBar) projectedBar.style.width=(projectedFromToday/splitTotal*100)+'%';
     $('#futureLifetimePaymentsNote',section).textContent=hasHistory
       ? money(historicalPayments)+' estimated paid so far + '+money(remainingPayments)+' projected from today.'

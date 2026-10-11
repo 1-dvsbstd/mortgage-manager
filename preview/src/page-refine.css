@@ -3593,7 +3593,13 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   margin-top:7px!important;
   overflow:hidden!important;
   border-radius:999px!important;
-  background:rgba(68,58,48,.055)!important;
+  --lifetime-paid:color-mix(in srgb,var(--semantic-chart-equity) 68%,var(--surface));
+  --lifetime-projected:var(--semantic-chart-borrowing);
+  background:linear-gradient(90deg,
+    var(--lifetime-paid) 0%,
+    var(--lifetime-paid) max(0%,calc(var(--paid-share,0%) - 4%)),
+    var(--lifetime-projected) min(100%,calc(var(--paid-share,0%) + 4%)),
+    var(--lifetime-projected) 100%)!important;
 }
 .app-view-future .future-lifetime-split-bar i,
 .app-view-future .future-lifetime-split-bar b{
@@ -3601,10 +3607,10 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   height:100%!important;
 }
 .app-view-future .future-lifetime-split-bar i{
-  background:color-mix(in srgb,var(--semantic-chart-equity) 68%,transparent)!important;
+  background:transparent!important;
 }
 .app-view-future .future-lifetime-split-bar b{
-  background:var(--semantic-chart-borrowing)!important;
+  background:transparent!important;
 }
 .app-view-future .future-lifetime-note{
   margin:10px 0 0!important;

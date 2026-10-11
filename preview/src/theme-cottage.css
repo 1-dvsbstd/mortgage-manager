@@ -419,3 +419,11 @@ html[data-theme="cottage"]{
   --chart-monthly:#84aabf;
   --chart-trend:#488b75;
 }
+
+/* Match shared data-emphasis locations, including the lifetime-cost split. */
+html[data-theme="cottage"]{
+  --semantic-chart-equity:var(--data-positive);
+  --semantic-chart-borrowing:var(--data-comparison);
+  --semantic-chart-savings:var(--data-savings);
+  --semantic-lifetime-secondary:var(--data-comparison);
+}
