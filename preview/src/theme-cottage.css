@@ -163,7 +163,7 @@ html[data-theme="cottage"] .app-view-current .v15-hero{
 /* Retain the selected cottage photograph; shared rules own its frame. */
 html[data-theme="cottage"] .app-view-current .v15-home-visual{
   background-color:var(--theme-illustration-bg)!important;
-  background-image:url('../public/country-cottage-hero-v2.webp')!important;
+  background-image:url('../public/country-cottage-hero-lights-off.webp')!important;
   background-position:center center!important;
   background-size:cover!important;
   background-repeat:no-repeat!important;
