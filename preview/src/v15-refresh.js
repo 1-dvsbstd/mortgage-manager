@@ -101,7 +101,7 @@
       const visual = document.createElement('div');
       visual.className = 'v15-home-visual';
       visual.setAttribute('role','img');
-      visual.setAttribute('aria-label','Editorial illustration of a home and countryside');
+      visual.setAttribute('aria-label','Dream home and its surrounding landscape');
       const main = $('.hero-main', hero);
       if (main) main.insertAdjacentElement('afterend', visual);
       else hero.appendChild(visual);

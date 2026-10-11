@@ -4,7 +4,7 @@
   const THEME_KEY='mortgage-manager-theme-v1';
   const themes=[
     {id:'parchment',name:'Parchment',note:'Premium, distinctive and calm.'},
-    {id:'dusk',name:'Dusk',note:'Richer contrast with more character.'},
+    {id:'dusk',name:'Coastal',note:'Sunlit stone, deep greens and sea views.'},
     {id:'cottage',name:'Country Cottage',note:'Warm stone, sage and garden light.'},
   ];
   const nextHomeDefaults={householdIncome:'',monthlyTakeHome:'',savings:'',cashBuffer:'',saleCosts:'',purchaseCosts:'',borrowingMultiple:4.5};
