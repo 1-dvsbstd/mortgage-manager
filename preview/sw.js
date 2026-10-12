@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-preview-suburban-001';
+const CACHE_NAME = 'mortgage-manager-preview-suburban-002';
 const APP_SHELL = [
   './',
   './index.html',
@@ -10,6 +10,7 @@ const APP_SHELL = [
   './public/coastal-home-hero.webp',
   './public/coastal-background.webp',
   './public/suburban-home-hero.webp',
+  './public/suburban-background.webp',
   './public/country-cottage-hero.webp',
   './public/country-cottage-garden-hero.webp',
   './public/country-cottage-background-day.webp',

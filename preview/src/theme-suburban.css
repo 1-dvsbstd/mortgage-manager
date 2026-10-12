@@ -74,9 +74,23 @@ html[data-theme="suburban"]{
   --scale-divider:#fffdfa;
 }
 html[data-theme="suburban"] body{
-  background:radial-gradient(ellipse at 85% 0%,#e6edf3,transparent 65%),var(--bg)!important;
+  position:relative!important;
+  background:var(--bg)!important;
 }
-html[data-theme="suburban"] body::before{background:none!important;}
+html[data-theme="suburban"] body::before{
+  content:""!important;
+  position:absolute!important;
+  z-index:0!important;
+  inset:0 0 auto!important;
+  width:100%!important;
+  height:760px!important;
+  pointer-events:none!important;
+  background:
+    linear-gradient(to bottom,rgba(245,241,233,.65) 0%,rgba(245,241,233,.35) 18%,rgba(245,241,233,.24) 35%,rgba(245,241,233,.60) 58%,rgba(245,241,233,.92) 78%,#f5f1e9 100%),
+    url('../public/suburban-background.webp') center top / cover no-repeat!important;
+}
+html[data-theme="suburban"] .app-shell{position:relative!important;z-index:1!important;}
+@media(max-width:700px){html[data-theme="suburban"] body::before{height:560px!important;}}
 html[data-theme="suburban"] .app-view-current .v15-home-visual{
   background-image:url('../public/suburban-home-hero.webp')!important;
   background-size:cover!important;
