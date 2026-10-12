@@ -173,12 +173,12 @@ html[data-theme="cottage"] .app-view-current .v15-home-visual{
   background-blend-mode:normal!important;
 }
 
-/* Preserve the previous on-page house scale and garden margins in the 3:2
-   desktop frame. The new photograph has no baked-in border to mask. */
+/* Match Coastal's approximately 73% house-width proportion in the shared 3:2
+   desktop frame, retaining the full roof and foreground garden. */
 @media(min-width:1051px){
   html[data-theme="cottage"] .app-view-current .v15-home-visual{
-    background-size:120% auto!important;
-    background-position:66% 50%!important;
+    background-size:138% auto!important;
+    background-position:63% 50%!important;
   }
 }
 
