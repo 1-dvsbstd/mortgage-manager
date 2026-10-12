@@ -163,7 +163,7 @@ html[data-theme="cottage"] .app-view-current .v15-hero{
 /* Retain the selected cottage photograph; shared rules own its frame. */
 html[data-theme="cottage"] .app-view-current .v15-home-visual{
   background-color:var(--theme-illustration-bg)!important;
-  background-image:url('../public/country-cottage-hero-lights-off.webp')!important;
+  background-image:url('../public/country-cottage-garden-hero.webp')!important;
   background-position:center center!important;
   background-size:cover!important;
   background-repeat:no-repeat!important;
@@ -173,14 +173,8 @@ html[data-theme="cottage"] .app-view-current .v15-home-visual{
   background-blend-mode:normal!important;
 }
 
-/* Match Coastal's approximately 73% house-width proportion in the shared 3:2
-   desktop frame, retaining the full roof and foreground garden. */
-@media(min-width:1051px){
-  html[data-theme="cottage"] .app-view-current .v15-home-visual{
-    background-size:138% auto!important;
-    background-position:63% 50%!important;
-  }
-}
+/* The garden is part of the focal scene. Use the full photograph in the shared
+   3:2 desktop frame without extra zoom. */
 
 /* Preserve the photograph's daylight colours without the shared dusk wash. */
 html[data-theme="cottage"] .app-view-current .v15-home-visual::after{
