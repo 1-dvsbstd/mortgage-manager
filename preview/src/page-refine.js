@@ -101,7 +101,12 @@
     const grid=$('#dealPlannerRateGrid');
     if(!state||!grid) return;
     const position=projectedDealPosition(state);
-    if(!position) return;
+    if(!position){
+      grid.innerHTML='<p class="deal-planner-empty">Add a current or future fixed-rate end date in Setup &amp; data → Upcoming to see payment scenarios.</p>';
+      const note=$('.deal-planner-note');
+      if(note) note.textContent='Your deal-end balance and payment estimates will appear once that date is set.';
+      return;
+    }
     const rates=paymentScenarioRates(state);
     grid.innerHTML=rates.map(({rate,label})=>{
       const scenarioPayment=paymentFor(position.balance,rate,position.remainingMonths);
@@ -463,7 +468,7 @@
       root.innerHTML=`
         <div class="future-callout-title"><i data-index="${index}"></i><span>${label}</span></div>
         <strong>${valueText}</strong>
-        <small>${share!==null?`${share}% of budget`:note}</small>`;
+        <small>${share!==null?`${share}% of budget`:(note|| (index===1?'Add household income in Setup &amp; data':index===2?'Add savings in Setup &amp; data':'Add your mortgage and home figures'))}</small>`;
       if(index<3 && !root.dataset.chartHoverBound){
         root.dataset.chartHoverBound='true';
         root.addEventListener('mouseenter',()=>setBudgetHover(index,{syncChart:true,delay:130}));
@@ -886,7 +891,17 @@
     $('#futureProjectedFromToday',section).textContent=money(projectedFromToday);
     const paidBar=$('#futurePaidSoFarBar',section);
     const projectedBar=$('#futureProjectedFromTodayBar',section);
-    if(paidBar) paidBar.style.width=(paidSoFar/splitTotal*100)+'%';
+    const paidShare=paidSoFar/splitTotal*100;
+    const splitBar=paidBar?.parentElement;
+    if(splitBar){
+      splitBar.style.setProperty('--paid-share',paidShare+'%');
+      // A missing past/future segment must not leave a misleading colour sliver.
+      splitBar.style.removeProperty('--lifetime-paid');
+      splitBar.style.removeProperty('--lifetime-projected');
+      if(paidShare===0) splitBar.style.setProperty('--lifetime-paid','var(--semantic-chart-borrowing)');
+      if(paidShare===100) splitBar.style.setProperty('--lifetime-projected','var(--lifetime-paid)');
+    }
+    if(paidBar) paidBar.style.width=paidShare+'%';
     if(projectedBar) projectedBar.style.width=(projectedFromToday/splitTotal*100)+'%';
     $('#futureLifetimePaymentsNote',section).textContent=hasHistory
       ? money(historicalPayments)+' estimated paid so far + '+money(remainingPayments)+' projected from today.'

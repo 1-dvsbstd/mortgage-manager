@@ -195,7 +195,7 @@
           </div>
           <strong>${extra>0&&whatIfSummary.monthsSaved>0?whatIfSummary.duration:'—'}</strong>
           <em>${extra>0&&whatIfSummary.interestSaved>0?`${money(whatIfSummary.interestSaved)} less interest`:'Choose an amount to compare'}</em>
-          ${extra>0&&incrementalMonths>0?`<div class="trajectory-plan-gain"><span><strong>+${durationFromMonths(incrementalMonths)}</strong><small>sooner</small></span><span><strong>+${money(incrementalInterest)}</strong><small>saved</small></span></div>`:''}
+          ${regular>0&&extra>0&&incrementalMonths>0?`<div class="trajectory-plan-gain"><span><strong>+${durationFromMonths(incrementalMonths)}</strong><small>sooner than current plan</small></span><span><strong>+${money(incrementalInterest)}</strong><small>saved</small></span></div>`:''}
         </div>`;
     }
 

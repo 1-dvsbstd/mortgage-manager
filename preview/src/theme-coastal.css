@@ -1,0 +1,37 @@
+/* Coastal retains the saved dusk theme key and its green/amber palette. */
+html[data-theme="dusk"] body{
+  position:relative!important;
+  background:var(--bg)!important;
+}
+html[data-theme="dusk"] body::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  inset:0 0 auto;
+  height:760px;
+  pointer-events:none;
+  background:
+    linear-gradient(to bottom,
+      rgba(231,225,212,.24) 0%,
+      rgba(231,225,212,.12) 25%,
+      rgba(231,225,212,.30) 43%,
+      rgba(231,225,212,.60) 60%,
+      rgba(231,225,212,.90) 78%,
+      var(--bg) 100%),
+    url('../public/coastal-background.webp') center center / cover no-repeat;
+}
+html[data-theme="dusk"] .app-shell{
+  position:relative!important;
+  z-index:1!important;
+}
+html[data-theme="dusk"] .app-view-current .v15-home-visual{
+  background-image:url('../public/coastal-home-hero.webp')!important;
+  background-position:center!important;
+  background-size:cover!important;
+}
+html[data-theme="dusk"] .app-view-current .v15-home-visual::after{
+  background:none!important;
+}
+@media(max-width:700px){
+  html[data-theme="dusk"] body::before{height:560px;}
+}

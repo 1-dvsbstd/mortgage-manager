@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-preview-calm-donut-001';
+const CACHE_NAME = 'mortgage-manager-preview-suburban-001';
 const APP_SHELL = [
   './',
   './index.html',
@@ -7,6 +7,12 @@ const APP_SHELL = [
   './public/home-editorial.svg',
   './public/mortgage-icons.svg',
   './public/app-background-hybrid.webp',
+  './public/coastal-home-hero.webp',
+  './public/coastal-background.webp',
+  './public/suburban-home-hero.webp',
+  './public/country-cottage-hero.webp',
+  './public/country-cottage-garden-hero.webp',
+  './public/country-cottage-background-day.webp',
   './public/market-rates.json',
   './public/hpi-local-property-type.json',
   './src/styles.css',
@@ -15,6 +21,9 @@ const APP_SHELL = [
   './src/home-profile.css',
   './src/next-home-planner.css',
   './src/design-tokens.css',
+  './src/theme-cottage.css',
+  './src/theme-coastal.css',
+  './src/theme-suburban.css',
   './src/setup-data.css',
   './src/mortgage-history.css',
   './src/app-runtime.css',
