@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-preview-cottage-garden-005';
+const CACHE_NAME = 'mortgage-manager-preview-suburban-001';
 const APP_SHELL = [
   './',
   './index.html',
@@ -9,6 +9,7 @@ const APP_SHELL = [
   './public/app-background-hybrid.webp',
   './public/coastal-home-hero.webp',
   './public/coastal-background.webp',
+  './public/suburban-home-hero.webp',
   './public/country-cottage-hero.webp',
   './public/country-cottage-garden-hero.webp',
   './public/country-cottage-background-day.webp',
@@ -22,6 +23,7 @@ const APP_SHELL = [
   './src/design-tokens.css',
   './src/theme-cottage.css',
   './src/theme-coastal.css',
+  './src/theme-suburban.css',
   './src/setup-data.css',
   './src/mortgage-history.css',
   './src/app-runtime.css',

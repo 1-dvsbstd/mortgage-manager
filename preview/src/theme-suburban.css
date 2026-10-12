@@ -1,0 +1,90 @@
+/* Suburban — warm brick, ivory and slate blue. */
+html[data-theme="suburban"]{
+  --bg:#f5f1e9;
+  --surface:#fffdfa;
+  --surface-soft:#ede9e2;
+  --surface-muted:#e5e2dc;
+  --surface-raised:#f9f6f0;
+  --surface-control:#fffdfa;
+  --surface-input:#fffdfa;
+  --surface-warm:#f0e1d7;
+  --text:#333b43;
+  --muted:#646e78;
+  --muted-2:#737d86;
+  --border:rgba(52,75,99,.16);
+  --border-soft:rgba(52,75,99,.09);
+  --accent:#587b9b;
+  --accent-strong:#344b63;
+  --accent-soft:#e4ebf1;
+  --warm:#b87559;
+  --debt:#929da8;
+  --equity:#587b9b;
+  --property:#b87559;
+  --upcoming:#b87559;
+  --scheme:#c5b29c;
+  --ink-active:#344b63;
+  --ink-on-active:#fffdfa;
+  --positive:#587b9b;
+  --positive-soft:rgba(88,123,155,.12);
+  --accent-wash:rgba(88,123,155,.09);
+  --focus-ring:#587b9b;
+  --focus-ring-soft:rgba(88,123,155,.32);
+  --theme-hero-ink:#344b63;
+  --theme-greeting:#526a80;
+  --theme-illustration-bg:#eee5db;
+  --theme-progress-track:#e6dfd4;
+  --theme-highlight:#eaf0f5;
+  --theme-highlight-strong:#e2e9f0;
+  --theme-hover:#eaf0f5;
+  --theme-rate-current:#f5ece6;
+  --theme-milestone:#eaf0f5;
+  --theme-action:#f0e5dc;
+  --theme-range-edge:#c9bdad;
+  --theme-range-mid:#587b9b;
+  --semantic-heading-accent:#344b63;
+  --semantic-highlight-bg:#eaf0f5;
+  --semantic-highlight-border:rgba(88,123,155,.22);
+  --semantic-highlight-border-strong:rgba(88,123,155,.35);
+  --semantic-scale-track:#e6dfd4;
+  --semantic-progress-start:#a7b9c8;
+  --semantic-progress-end:#587b9b;
+  --semantic-range-edge:#c9bdad;
+  --semantic-range-mid:#587b9b;
+  --semantic-range-border:#9cabb9;
+  --semantic-range-ring:rgba(88,123,155,.28);
+  --semantic-forecast-track:#c7d5e1;
+  --semantic-forecast-node:#587b9b;
+  --semantic-forecast-node-ring:#a7b9c8;
+  --semantic-forecast-track-muted:#e1e7ec;
+  --semantic-feature-card:#f0e5dc;
+  --semantic-timeline-card:#eaf0f5;
+  --semantic-chart-equity:#587b9b;
+  --semantic-chart-borrowing:#b87559;
+  --semantic-chart-savings:#c5b29c;
+  --semantic-lifetime-secondary:#b87559;
+  --chart-equity:#587b9b;
+  --chart-borrowing:#b87559;
+  --chart-savings:#c5b29c;
+  --scale-track:#d5cbbf;
+  --scale-marker:#929da8;
+  --scale-current:#344b63;
+  --scale-projected-bg:#e8ded5;
+  --scale-projected-stripe:#fffdfa;
+  --scale-paid:#587b9b;
+  --scale-divider:#fffdfa;
+}
+html[data-theme="suburban"] body{
+  background:radial-gradient(ellipse at 85% 0%,#e6edf3,transparent 65%),var(--bg)!important;
+}
+html[data-theme="suburban"] body::before{background:none!important;}
+html[data-theme="suburban"] .app-view-current .v15-home-visual{
+  background-image:url('../public/suburban-home-hero.webp')!important;
+  background-size:cover!important;
+  background-position:center!important;
+  background-repeat:no-repeat!important;
+}
+html[data-theme="suburban"] .app-view-current .v15-home-visual::after{background:none!important;}
+.theme-menu-swatch.suburban{background:#f5f1e9;}
+.theme-menu-swatch.suburban i:nth-child(1){background:#344b63;}
+.theme-menu-swatch.suburban i:nth-child(2){background:#587b9b;}
+.theme-menu-swatch.suburban i:nth-child(3){background:#b87559;}

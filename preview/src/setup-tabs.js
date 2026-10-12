@@ -6,6 +6,7 @@
     {id:'parchment',name:'Parchment',note:'Premium, distinctive and calm.'},
     {id:'dusk',name:'Coastal',note:'Sunlit stone, deep greens and sea views.'},
     {id:'cottage',name:'Country Cottage',note:'Warm stone, sage and garden light.'},
+    {id:'suburban',name:'Suburban',note:'Warm brick, slate blue and family comfort.'},
   ];
   const nextHomeDefaults={householdIncome:'',monthlyTakeHome:'',savings:'',cashBuffer:'',saleCosts:'',purchaseCosts:'',borrowingMultiple:4.5};
   const $=(selector,root=document)=>root.querySelector(selector);
@@ -108,7 +109,7 @@
     document.documentElement.dataset.theme=id;
     try{localStorage.setItem(THEME_KEY,id);}catch(_){}
     const meta=document.querySelector('meta[name="theme-color"]');
-    if(meta) meta.content=id==='dusk'?'#e7e1d4':id==='cottage'?'#f3eee4':'#f0ece5';
+    if(meta) meta.content=id==='suburban'?'#f5f1e9':id==='dusk'?'#e7e1d4':id==='cottage'?'#f3eee4':'#f0ece5';
   }
 
   function currentTheme(){
