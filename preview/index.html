@@ -11,25 +11,30 @@
   <title>Mortgage Manager</title>
   <script>try{const t=localStorage.getItem("mortgage-manager-theme-v1");if(t&&t!=="warm")document.documentElement.dataset.theme=t;else if(t==="warm")document.documentElement.dataset.theme="parchment";}catch(_){}</script>
   <style>html{background:#f4f1eb}</style>
+  <!-- Keep Setup usable even if a cached stylesheet is stale or unavailable. -->
+  <style id="setupDialogPosition">
+    body > .personal-backdrop{position:fixed!important;inset:0!important;z-index:2200;display:flex!important;align-items:center!important;justify-content:center!important;padding:16px;box-sizing:border-box;background:rgba(32,40,51,.34)}
+    body > .personal-backdrop > .personal-modal{box-sizing:border-box;width:min(900px,100%);max-height:calc(100vh - 32px)!important;max-height:calc(100dvh - 32px)!important;overflow:auto!important;overscroll-behavior:contain;background:#f8f4ee;border-radius:24px;padding:22px}
+  </style>
 <link rel="icon" href="public/icon.svg?v=01518" type="image/svg+xml" />
   <link rel="stylesheet" href="src/styles.css?v=text-floor-001" />
 <link rel="stylesheet" href="src/deep-dive.css?v=text-floor-001" />
   <link rel="stylesheet" href="src/chart-enhance.css?v=text-floor-001" />
 <link rel="stylesheet" href="src/home-profile.css?v=text-floor-001" />
   <link rel="stylesheet" href="src/next-home-planner.css?v=text-floor-001" />  <link rel="stylesheet" href="src/design-tokens.css?v=chart-contrast-005" />
-  <link rel="stylesheet" href="src/setup-data.css?v=text-floor-001" />
+  <link rel="stylesheet" href="src/setup-data.css?v=setup-dialog-20261012" />
   <link rel="stylesheet" href="src/mortgage-history.css?v=text-floor-001" />
   <link rel="stylesheet" href="src/app-runtime.css?v=text-floor-001" />
   <link rel="stylesheet" href="src/app-navigation.css?v=text-floor-001" />
   <link rel="stylesheet" href="src/upcoming.css?v=text-floor-001" />
-  <link rel="stylesheet" href="src/setup-tabs.css?v=country-cottage-002" />  <link id="offlineV1FinalStyle" rel="stylesheet" href="src/offline-v1-final.css?v=text-floor-001" />
+  <link rel="stylesheet" href="src/setup-tabs.css?v=setup-dialog-20261012" />  <link id="offlineV1FinalStyle" rel="stylesheet" href="src/offline-v1-final.css?v=text-floor-001" />
   <link rel="stylesheet" href="src/page-refine.css?v=cottage-garden-005" />
   <link rel="stylesheet" href="src/theme-cottage.css?v=cottage-garden-005" />
   <link rel="stylesheet" href="src/theme-coastal.css?v=coastal-001" />
   <link rel="stylesheet" href="src/theme-suburban.css?v=suburban-002" />
   <script>
     if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js?v=suburban-002').catch(() => {}));
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js?v=setup-dialog-20261012').catch(() => {}));
     }
   </script>
 </head>
