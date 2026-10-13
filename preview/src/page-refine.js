@@ -116,7 +116,7 @@
       return `<div class="deal-planner-rate ${current?'is-current-rate':''}"><span>${rate.toFixed(2)}% · ${label}</span><strong>${money(scenarioPayment)}<small>/mo</small></strong><em>${note}</em></div>`;
     }).join('');
     const note=$('.deal-planner-note');
-    if(note) note.textContent='Deal-end balance includes your regular overpayment. Payment scenarios use your current rate plus current UK market-average 2- and 5-year fixes; outer rates are simple stress tests. Historical charts below use the Bank of England 75% LTV benchmark.';
+    if(note) note.textContent='Deal-end balance includes your regular overpayment. Rates shown are planning scenarios. Without a loaded market benchmark, lower and higher rates are hypothetical stress tests. Check the source and observation date when market figures are available.';
 
     const marketMeta=$('#upcomingMarketMeta');
     if(marketMeta && grid.nextElementSibling!==marketMeta) grid.insertAdjacentElement('afterend',marketMeta);
@@ -408,7 +408,7 @@
               <div class="future-budget-chart-centre" aria-hidden="true">
                 <span>Estimated next-home budget</span>
                 <strong id="futureBudgetDonutValue">—</strong>
-                <small id="futureBudgetDonutPeriod">—</small>
+                <small id="futureBudgetDonutPeriod">—</small><small id="futureBudgetDeductions"></small>
                 <b id="futureBudgetDonutDelta">—</b>
               </div>
             </div>
@@ -468,7 +468,7 @@
       root.innerHTML=`
         <div class="future-callout-title"><i data-index="${index}"></i><span>${label}</span></div>
         <strong>${valueText}</strong>
-        <small>${share!==null?`${share}% of budget`:(note|| (index===1?'Add household income in Setup &amp; data':index===2?'Add savings in Setup &amp; data':'Add your mortgage and home figures'))}</small>`;
+        <small>${share!==null?`${share}% of budget${index===1?' · Planning at 4.5× income':''}`:(note|| (index===1?'<button type="button" data-open-planning="budget">Add household income</button>':index===2?'<button type="button" data-open-planning="budget" data-planning-field="savings">Add savings and costs</button>':'Add your mortgage and home figures'))}</small>`;
       if(index<3 && !root.dataset.chartHoverBound){
         root.dataset.chartHoverBound='true';
         root.addEventListener('mouseenter',()=>setBudgetHover(index,{syncChart:true,delay:130}));
@@ -490,8 +490,8 @@
           const valueText=item.querySelector('b')?.textContent?.trim()||'';
           const label=text.replace(valueText,'').trim();
           return {label,valueText,value:parseMoney(valueText)};
-        }).filter((item)=>item.value>0);
-        return {years,period,budget,budgetValue:parseMoney(budget),change,supports};
+        });
+        return {years,period,budget,budgetValue:parseMoney(budget),change,supports,buffer:Number(row.dataset.buffer)||0,purchaseCosts:Number(row.dataset.purchaseCosts)||0,saleCosts:Number(row.dataset.saleCosts)||0};
       });
 
       let selected=Number(wait.dataset.selectedYears);
@@ -504,6 +504,9 @@
 
       $('#futureBudgetDonutValue',wait).textContent=active.budget;
       $('#futureBudgetDonutPeriod',wait).textContent=active.period;
+      const deductions=$('#futureBudgetDeductions',wait);
+      if(deductions.parentElement!==wait)wait.appendChild(deductions);
+      deductions.textContent=(active.buffer||active.purchaseCosts||active.saleCosts)?`${moneyShort(active.buffer)} cash buffer · ${moneyShort(active.purchaseCosts)} buying costs · ${moneyShort(active.saleCosts)} selling costs deducted`:'No costs or cash buffer deducted';
       const deltaText=active.years===0?'Available today':active.change.replace(/\s+vs today$/i,' vs today');
       $('#futureBudgetDonutDelta',wait).textContent=deltaText;
 
@@ -614,7 +617,9 @@
 
       const fixedYears=(fixedMonthsRemaining/12);
       const marketYears=((planningMonths-fixedMonthsRemaining)/12);
-      let repaymentNote='Add income in Setup & Data';
+      let repaymentNote='<button type="button" data-open-planning="budget">Add income to estimate repayment</button>';
+      let hasMarketBenchmark=Number(window.MortgageMarket?.fiveYear)>0;
+      try{hasMarketBenchmark ||= Number(JSON.parse(localStorage.getItem('mortgage-manager-market-cache-v1')||'null')?.live?.fiveYear)>0;}catch(_){}
       if(totalBorrowing>0){
         if(fixedMonthsRemaining>0&&portedAmount>0){
           const fixedLabel=fixedYears%1===0?fixedYears.toFixed(0):fixedYears.toFixed(1);
@@ -623,10 +628,11 @@
             ? `${moneyShort(portedAmount)} potentially ported · ${fixedLabel}y at ${currentRate.toFixed(2)}%, then ${marketLabel}y at ${marketRate.toFixed(2)}% · ${moneyShort(extraBorrowing)} extra at ${marketRate.toFixed(2)}%`
             : `${moneyShort(portedAmount)} potentially ported · ${fixedLabel}y at ${currentRate.toFixed(2)}%, then ${marketLabel}y at ${marketRate.toFixed(2)}%`;
         }else{
-          repaymentNote=`${moneyShort(totalBorrowing)} over 30 years at today's ${marketRate.toFixed(2)}% 5-year market average · planning assumption, not a forecast`;
+          repaymentNote=`${moneyShort(totalBorrowing)} over 30 years at ${marketRate.toFixed(2)}% · planning assumption, not a forecast`;
         }
       }
 
+      if(totalBorrowing)repaymentNote+=hasMarketBenchmark?' · dated benchmark rate':' · 6% illustrative rate; no market benchmark loaded';
       renderCallout(
         $('#futureCalloutRepayment',wait),
         'Illustrative monthly repayment',
@@ -699,7 +705,7 @@
     const spectrum=$('#futurePayoffSpectrum',section);
     if(spectrum){
       if(!monthlyTakeHome){
-        spectrum.innerHTML='<div class="future-payoff-empty"><strong>Add household take-home in Setup & Data</strong><span>Then this section can compare your current plan with comfortable, typical, stretch and aggressive repayment levels.</span></div>';
+        spectrum.innerHTML='<div class="future-payoff-empty"><button type="button" data-open-planning="budget" data-planning-field="monthlyTakeHome">Add household take-home</button><span>Then this section can compare your current plan with comfortable, typical, stretch and aggressive repayment levels.</span></div>';
       }else{
         const currentPct=Math.max(0,currentTotal/monthlyTakeHome*100);
         const points=[
@@ -1005,7 +1011,7 @@
       diffEl.textContent=(difference>=0?'+':'−')+money(Math.abs(difference));
       section.classList.toggle('is-negative',difference<0);
     }else{
-      costEl.textContent='Add purchase price';
+      costEl.innerHTML='<button type="button" data-open-planning="property">Add purchase price</button>';
       costNote.textContent='Purchase details and mortgage history are managed in Setup & Data.';
       diffEl.textContent='—';
       section.classList.remove('is-negative');
@@ -1061,6 +1067,8 @@
       requestAnimationFrame(()=>{ refineUpcoming(); renderUpcomingRates(); renderFuturePayoffTargets(); renderFutureLifetimeCost(); renderFutureLongTermOutcome(); organiseFutureFlow(); });
     });
   }
+
+  document.addEventListener('mortgage-next-home-updated',()=>{renderFuturePayoffTargets();renderFutureLongTermOutcome();});
 
   document.addEventListener('mortgage-market-rates-updated',()=>{
     requestAnimationFrame(()=>{ renderUpcomingRates(); refineUpcoming(); renderRateTrend(); splitNextHomePlanner(); });

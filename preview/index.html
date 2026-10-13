@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-title" content="Mortgage" />
   <meta name="description" content="A visual mortgage manager for tracking balance, equity, payoff time and overpayment impact." />
   <title>Mortgage Manager</title>
-  <script>try{const t=localStorage.getItem("mortgage-manager-theme-v1");if(t&&t!=="warm")document.documentElement.dataset.theme=t;else if(t==="warm")document.documentElement.dataset.theme="parchment";}catch(_){}</script>
+  <script>document.documentElement.dataset.theme="cottage";try{const k="mortgage-manager-theme-v1",t=localStorage.getItem(k),chosen=["cottage","dusk","suburban"].includes(t)?t:"cottage";document.documentElement.dataset.theme=chosen;localStorage.setItem(k,chosen);}catch(_){}</script>
   <style>html{background:#f4f1eb}</style>
   <!-- Keep Setup usable even if a cached stylesheet is stale or unavailable. -->
   <style id="setupDialogPosition">
@@ -28,13 +28,13 @@
   <link rel="stylesheet" href="src/app-navigation.css?v=text-floor-001" />
   <link rel="stylesheet" href="src/upcoming.css?v=text-floor-001" />
   <link rel="stylesheet" href="src/setup-tabs.css?v=setup-dialog-20261012" />  <link id="offlineV1FinalStyle" rel="stylesheet" href="src/offline-v1-final.css?v=text-floor-001" />
-  <link rel="stylesheet" href="src/page-refine.css?v=cottage-garden-005" />
+  <link rel="stylesheet" href="src/page-refine.css?v=product-clarity-20261013" />
   <link rel="stylesheet" href="src/theme-cottage.css?v=cottage-garden-005" />
   <link rel="stylesheet" href="src/theme-coastal.css?v=coastal-001" />
   <link rel="stylesheet" href="src/theme-suburban.css?v=suburban-002" />
   <script>
     if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js?v=setup-dialog-20261012').catch(() => {}));
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js?v=product-clarity-20261013').catch(() => {}));
     }
   </script>
 </head>
@@ -141,7 +141,7 @@
   <script src="src/view-switcher.js?v=trajectory-focus-001"></script>
   <script src="src/mortgage.js?v=01518"></script>
   <script src="src/home-projection.js?v=legacy-source-clean-003"></script>
-  <script src="src/next-home-planner.js?v=legacy-source-clean-036"></script>
+  <script src="src/next-home-planner.js?v=product-clarity-20261013"></script>
   <script src="src/chart-enhance.js?v=chart-contrast-002"></script>
   <script src="src/balance-projection.js?v=finished-shell-002"></script>
   <script src="src/setup-data.js?v=desktop-colour-blend-001"></script>
@@ -149,9 +149,9 @@
   <script src="src/mortgage-history.js?v=fixed-end-sync-001"></script>
   <script src="src/app-runtime.js?v=backup-fix-003"></script>
   <script src="src/app-navigation.js?v=current-clean-003"></script>
-  <script src="src/page-refine.js?v=desktop-colour-blend-001"></script>
-  <script src="src/setup-tabs.js?v=suburban-001"></script>
-  <script src="src/layout-finalize.js?v=desktop-colour-blend-001"></script>
+  <script src="src/page-refine.js?v=product-clarity-20261013"></script>
+  <script src="src/setup-tabs.js?v=product-clarity-20261013"></script>
+  <script src="src/layout-finalize.js?v=product-clarity-20261013"></script>
   <script src="src/v15-refresh.js?v=coastal-001"></script>
   <script src="src/v15-polish.js?v=current-clean-004"></script>
   <script src="src/product-polish.js?v=theme-footer-001"></script>

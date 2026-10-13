@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-preview-setup-dialog-20261012';
+const CACHE_NAME = 'mortgage-manager-product-clarity-20261013';
 const APP_SHELL = [
   './',
   './index.html',

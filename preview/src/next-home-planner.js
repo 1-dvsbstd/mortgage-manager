@@ -106,7 +106,6 @@
           <label>Cash buffer to keep (£)<input id="nextHomeBuffer" type="number" min="0" step="1000" inputmode="decimal"></label>
           <label>Estimated selling costs (£)<input id="nextHomeSaleCosts" type="number" min="0" step="500" inputmode="decimal"></label>
           <label>Estimated purchase costs (£)<input id="nextHomePurchaseCosts" type="number" min="0" step="500" inputmode="decimal"></label>
-          <label>Borrowing multiple<input id="nextHomeMultiple" type="number" min="0" max="10" step="0.1" inputmode="decimal"><span>Planning assumption only; actual lender affordability can differ substantially.</span></label>
         </div></details>
 
         <p class="next-home-note" id="nextHomeNote">This is a simplified planning estimate, not a lending decision. It does not assess affordability rules, credit commitments, lender stress tests, stamp duty/LTT, scheme redemption rules or eligibility unless you include those costs yourself.</p>
@@ -147,11 +146,13 @@
     const buffer=Math.max(0,Number(settings.cashBuffer)||0);
     const purchaseCosts=Math.max(0,Number(settings.purchaseCosts)||0);
     const availableCash=Math.max(0,usableEquity+savings-buffer-purchaseCosts);
+    const usableSavings=Math.max(0,savings-buffer-purchaseCosts);
+    const availableEquity=Math.max(0,usableEquity-Math.max(0,buffer+purchaseCosts-savings));
     const income=Math.max(0,Number(settings.householdIncome)||0);
-    const multiple=Math.max(0,Number(settings.borrowingMultiple)||0);
+    const multiple=4.5;
     const borrowing=income*multiple;
     const budget=availableCash+borrowing;
-    return {futureHome,futureMortgage,shareValue,usableEquity,availableCash,borrowing,budget,trend,scenarioExtra,selectedOverpayment};
+    return {futureHome,futureMortgage,shareValue,usableEquity,availableEquity,usableSavings,availableCash,borrowing,budget,trend,scenarioExtra,selectedOverpayment};
   }
 
   function render(){
@@ -160,7 +161,7 @@
     const mortgage=state();
     const now=calculateAt(0);
     const income=Math.max(0,Number(settings.householdIncome)||0);
-    const multiple=Math.max(0,Number(settings.borrowingMultiple)||0);
+    const multiple=4.5;
     const savings=Math.max(0,Number(settings.savings)||0);
     const buffer=Math.max(0,Number(settings.cashBuffer)||0);
     const purchaseCosts=Math.max(0,Number(settings.purchaseCosts)||0);
@@ -195,8 +196,8 @@
         : hasBudget(row)
           ? `<span class="next-home-change">${delta>=0?'+':'−'}${money(Math.abs(delta))} vs today</span>`
           : '<span class="next-home-change">Add assumptions to compare</span>';
-      const support=`<small><b>${money(row.usableEquity)}</b> move equity</small>${income?`<small><b>${money(row.borrowing)}</b> illustrative borrowing</small>`:''}${savings?`<small><b>${money(savings)}</b> savings</small>`:''}`;
-      return `<div class="next-home-timeline-row" data-years="${row.years}"><span class="next-home-period">${label}</span><strong>${hasBudget(row)?money(row.budget):'—'}</strong>${change}<div class="next-home-support">${support}</div></div>`;
+      const support=`<small><b>${money(row.availableEquity)}</b> available move equity</small>${income?`<small><b>${money(row.borrowing)}</b> illustrative borrowing</small>`:''}${savings?`<small><b>${money(row.usableSavings)}</b> usable savings</small>`:''}`;
+      return `<div class="next-home-timeline-row" data-years="${row.years}" data-buffer="${buffer}" data-purchase-costs="${purchaseCosts}" data-sale-costs="${Math.max(0,Number(settings.saleCosts)||0)}"><span class="next-home-period">${label}</span><strong>${hasBudget(row)?money(row.budget):'—'}</strong>${change}<div class="next-home-support">${support}</div></div>`;
     }).join('');
     $('nextHomeTrendNote').textContent=`Starts from your current property estimate, then uses ${now.trend.toFixed(1)}%/yr forward growth and ${money(now.selectedOverpayment)}/month overpayment from your regular plan.`;
 
@@ -207,6 +208,7 @@
   }
 
   load();
+  document.addEventListener('mortgage-next-home-updated',()=>{load();render();});
   if(window.MortgageStore?.subscribe) MortgageStore.subscribe(()=>requestAnimationFrame(render));
   document.addEventListener('input',(event)=>{ if(event.target.matches('#projectionTrendRate')) requestAnimationFrame(render); });
   render();

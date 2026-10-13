@@ -3,7 +3,6 @@
   const VALUE_HISTORY_KEY='mortgage-manager-home-value-history-v1';
   const THEME_KEY='mortgage-manager-theme-v1';
   const themes=[
-    {id:'parchment',name:'Parchment',note:'Premium, distinctive and calm.'},
     {id:'dusk',name:'Coastal',note:'Sunlit stone, deep greens and sea views.'},
     {id:'cottage',name:'Country Cottage',note:'Warm stone, sage and garden light.'},
     {id:'suburban',name:'Suburban',note:'Warm brick, slate blue and family comfort.'},
@@ -53,7 +52,7 @@
     section.className='personal-section setup-budget-section';
     section.innerHTML=`
       <button type="button" class="setup-budget-toggle" aria-expanded="false" aria-controls="setupBudgetBody">
-        <span><strong>Next-home budget assumptions</strong><small>Income, take-home pay, savings, costs and borrowing multiple used for Future planning.</small></span>
+        <span><strong>Next-home budget assumptions</strong><small>Income, take-home pay, savings and costs used for Future planning.</small></span>
         <i aria-hidden="true"></i>
       </button>
       <div id="setupBudgetBody" class="setup-budget-body" hidden>
@@ -64,7 +63,6 @@
           <label>Cash buffer to keep (£)<input data-budget-field="cashBuffer" type="text" inputmode="decimal"></label>
           <label>Estimated selling costs (£)<input data-budget-field="saleCosts" type="text" inputmode="decimal"></label>
           <label>Estimated purchase costs (£)<input data-budget-field="purchaseCosts" type="text" inputmode="decimal"></label>
-          <label>Borrowing multiple<input data-budget-field="borrowingMultiple" type="text" inputmode="decimal"><span>Planning only; actual lender affordability can differ.</span></label>
         </div>
       </div>`;
     futurePane.appendChild(section);
@@ -105,7 +103,7 @@
   }
 
   function applyTheme(theme){
-    const id=themes.some((item)=>item.id===theme)?theme:'parchment';
+    const id=themes.some((item)=>item.id===theme)?theme:'cottage';
     document.documentElement.dataset.theme=id;
     try{localStorage.setItem(THEME_KEY,id);}catch(_){}
     const meta=document.querySelector('meta[name="theme-color"]');
@@ -113,7 +111,7 @@
   }
 
   function currentTheme(){
-    try{const saved=localStorage.getItem(THEME_KEY)||document.documentElement.dataset.theme;return themes.some(item=>item.id===saved)?saved:'parchment';}catch(_){return 'parchment';}
+    try{const saved=localStorage.getItem(THEME_KEY)||document.documentElement.dataset.theme;return themes.some(item=>item.id===saved)?saved:'cottage';}catch(_){return 'cottage';}
   }
 
   function syncThemeControl(){
@@ -230,6 +228,23 @@
       if(future&&profile&&!future.contains(profile)) future.insertBefore(profile,future.querySelector('.setup-budget-section'));
     },80);
   }
+
+
+  document.addEventListener('click',(event)=>{
+    const target=event.target.closest('[data-open-planning]');
+    if(!target)return;
+    document.getElementById('personalDataButton')?.click();
+    setTimeout(()=>{
+      organise();
+      const modal=document.querySelector('.personal-modal');if(!modal)return;
+      activate(modal,'future');
+      if(target.dataset.openPlanning==='budget'){
+        const toggle=modal.querySelector('.setup-budget-toggle');
+        if(toggle?.getAttribute('aria-expanded')==='false')toggle.click();
+        modal.querySelector('[data-budget-field="'+(target.dataset.planningField||'householdIncome')+'"]')?.focus();
+      }else modal.querySelector('#setupHomePurchasePrice')?.focus();
+    },100);
+  });
 
   const button=document.getElementById('personalDataButton');
   if(button) button.addEventListener('click',organiseAndSettle);

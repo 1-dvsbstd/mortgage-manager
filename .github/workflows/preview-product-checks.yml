@@ -1,0 +1,23 @@
+name: Preview planning checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  planning:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check fixed borrowing and net budget calculations
+        env:
+          MM_MODEL_ROOT: preview/src
+        run: node tests/preview-next-home-budget.test.js
+      - name: Check changed preview scripts
+        run: |
+          node --check preview/src/next-home-planner.js
+          node --check preview/src/setup-tabs.js
+          node --check preview/src/page-refine.js
+          node --check preview/src/layout-finalize.js
