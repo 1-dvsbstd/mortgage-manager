@@ -81,6 +81,7 @@
     const known=[current,twoYear,fiveYear].filter(Number.isFinite);
     const low=Math.max(.1,Math.min(...known)-.5);
     const high=Math.max(...known)+.5;
+    const average=market.sourceLabel==='Moneyfacts';
     const raw=[
       {rate:low,label:'Lower test'},
       {rate:current,label:'Current rate'},

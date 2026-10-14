@@ -1,11 +1,11 @@
 {
   "schema": 3,
   "sourceAsOf": "2026-08-31",
-  "publishedForApp": "2026-09-17",
+  "publishedForApp": "2026-10-14",
   "source": "Bank of England Database",
   "sourceShort": "Bank of England",
   "licence": "UK Open Government Licence",
-  "sourceNote": "Historical trend data uses Bank of England quoted household mortgage-rate benchmarks. Current payment scenarios use the latest Moneyfacts whole-market fixed-rate averages stored in this file.",
+  "sourceNote": "Bank of England monthly history is kept for trends. Payment scenarios use the dated whole-market averages in the live section; the two datasets have different coverage and dates.",
   "bands": [
     {
       "ltv": 75,
@@ -535,7 +535,8 @@
     "source": "Moneyfacts",
     "sourceAsOf": "2026-10-05",
     "twoYear": 5.98,
-    "fiveYear": 6,
-    "note": "Average UK residential fixed mortgage rates across the market. Used for current payment scenarios only; not a personalised mortgage offer."
+    "fiveYear": 6.0,
+    "sourceUrl": "https://moneyfactscompare.co.uk/news/mortgages/avg-5-year-fixed-rate-at-6pc/",
+    "note": "Published UK residential fixed-rate averages across the market, not LTV-specific offers. Snapshot dated 5 October 2026."
   }
 }
