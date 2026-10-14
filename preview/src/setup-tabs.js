@@ -209,7 +209,7 @@
     const nameInput=document.createElement('input');
     nameInput.type='text'; nameInput.id='setupDisplayName'; nameInput.maxLength=60; nameInput.autocomplete='given-name';
     try{nameInput.value=localStorage.getItem('mortgage-manager-display-name-v1')||'';}catch(_){}
-    nameLabel.appendChild(nameInput); const profileFields=document.createElement('div'); profileFields.className='personal-form'; profileFields.appendChild(nameLabel); current.appendChild(profileFields);
+    nameLabel.appendChild(nameInput); const profileFields=document.createElement('div'); profileFields.className='personal-form setup-name-fields'; profileFields.appendChild(nameLabel); current.appendChild(profileFields);
     modal.querySelector('[data-action="save"]')?.addEventListener('click',()=>{
       try{localStorage.setItem('mortgage-manager-display-name-v1',nameInput.value.trim().slice(0,60));}catch(_){}
       document.dispatchEvent(new Event('mortgage-profile-updated'));

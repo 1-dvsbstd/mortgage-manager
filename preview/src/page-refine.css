@@ -4049,3 +4049,8 @@ body .app-view-current .v15-current-stats .v15-stat [class*="icon"]{
 @media(max-width:620px){.topbar{padding:10px!important}.future-payoff-empty{padding:14px!important}}
 
 #futureBudgetDeductions{max-width:none;text-align:left;margin:16px 0 0;font-size:13px;color:var(--muted)}
+
+/* Separate personal greeting settings from the mortgage section. */
+.personal-modal .setup-pane > .setup-name-fields{margin-top:4px!important;margin-bottom:26px!important;}
+.personal-modal .setup-name-fields + .setup-pane-intro{margin-top:0!important;}
+.personal-modal .setup-pane-intro .eyebrow{margin:0 0 6px!important;}
