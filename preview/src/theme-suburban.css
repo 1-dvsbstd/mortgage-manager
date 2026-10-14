@@ -102,3 +102,6 @@ html[data-theme="suburban"] .app-view-current .v15-home-visual::after{background
 .theme-menu-swatch.suburban i:nth-child(1){background:#344b63;}
 .theme-menu-swatch.suburban i:nth-child(2){background:#587b9b;}
 .theme-menu-swatch.suburban i:nth-child(3){background:#b87559;}
+
+/* Keep the scenery still while the cards scroll above it. */
+html[data-theme] body::before{position:fixed!important;top:0!important;left:0!important;right:0!important;pointer-events:none!important;}

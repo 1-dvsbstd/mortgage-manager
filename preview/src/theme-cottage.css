@@ -427,3 +427,6 @@ html[data-theme="cottage"]{
   --semantic-chart-savings:var(--data-savings);
   --semantic-lifetime-secondary:var(--data-comparison);
 }
+
+/* Keep the scenery still while the cards scroll above it. */
+html[data-theme] body::before{position:fixed!important;top:0!important;left:0!important;right:0!important;pointer-events:none!important;}

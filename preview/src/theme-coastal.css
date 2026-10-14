@@ -35,3 +35,6 @@ html[data-theme="dusk"] .app-view-current .v15-home-visual::after{
 @media(max-width:700px){
   html[data-theme="dusk"] body::before{height:560px;}
 }
+
+/* Keep the scenery still while the cards scroll above it. */
+html[data-theme] body::before{position:fixed!important;top:0!important;left:0!important;right:0!important;pointer-events:none!important;}
