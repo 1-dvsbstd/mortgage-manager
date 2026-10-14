@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-fixed-background-icon-20261014';
+const CACHE_NAME = 'mortgage-manager-architectural-mark-20261014';
 const APP_SHELL = [
   './',
   './index.html',
