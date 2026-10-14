@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-architectural-mark-20261014';
+const CACHE_NAME = 'mortgage-manager-static-summary-20261014b';
 const APP_SHELL = [
   './',
   './index.html',
