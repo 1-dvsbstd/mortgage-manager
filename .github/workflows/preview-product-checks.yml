@@ -15,9 +15,15 @@ jobs:
         env:
           MM_MODEL_ROOT: preview/src
         run: node tests/preview-next-home-budget.test.js
+      - name: Check market average source and LTV separation
+        env:
+          MM_MODEL_ROOT: preview/src
+        run: node tests/preview-market-scenarios.test.js
       - name: Check changed preview scripts
         run: |
           node --check preview/src/next-home-planner.js
           node --check preview/src/setup-tabs.js
           node --check preview/src/page-refine.js
           node --check preview/src/layout-finalize.js
+          node --check preview/src/app-runtime.js
+          node --check preview/src/product-polish.js
