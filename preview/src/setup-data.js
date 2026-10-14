@@ -389,13 +389,30 @@
     },true);
 
     document.dispatchEvent(new CustomEvent('mortgage-setup-opened', { detail:{ firstRun:!localStorage.getItem(SETUP_KEY) } }));
-    const close = () => backdrop.remove();
+    const previousFocus=document.activeElement;
+    const close = () => {closeSetupMonthPicker();backdrop.remove();if(previousFocus?.isConnected)previousFocus.focus();};
+    backdrop.addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();close();}});
     // Setup contains editable data: require an explicit close action so a drag/text
     // selection that ends on the backdrop cannot accidentally discard the modal.
     backdrop.querySelector('.personal-close')?.addEventListener('click', close);
     backdrop.querySelector('[data-action="cancel"]')?.addEventListener('click', close);
-    backdrop.querySelector('[data-action="save"]')?.addEventListener('click', () => {
+    backdrop.querySelector('[data-action="save"]')?.addEventListener('click', (event) => {
       const patch = {};
+      for(const field of backdrop.querySelectorAll('[data-personal-field]')){
+        if(field.dataset.personalField==='fixedEnd') continue;
+        const number=Number(field.value);
+        const max=field.dataset.personalField==='ownership'?100:Infinity;
+        if(!field.value.trim()||!Number.isFinite(number)||number<0||number>max){
+          event.stopImmediatePropagation();
+          field.setAttribute('aria-invalid','true');
+          const pane=field.closest('[data-setup-pane]');
+          if(pane)backdrop.querySelector('[data-setup-tab="'+pane.dataset.setupPane+'"]')?.click();
+          field.focus();
+          toast(field.dataset.personalField==='ownership'?'Enter an ownership share from 0 to 100.':'Enter a valid number of zero or more.');
+          return;
+        }
+        field.removeAttribute('aria-invalid');
+      }
       backdrop.querySelectorAll('[data-personal-field]').forEach((field) => {
         const key = field.dataset.personalField;
         patch[key] = key === 'fixedEnd' ? field.value : Number(field.value);

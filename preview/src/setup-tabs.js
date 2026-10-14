@@ -71,6 +71,25 @@
       input.value=settings[input.dataset.budgetField]??'';
     });
 
+    const validation=document.createElement('p');
+    validation.className='setup-validation-message'; validation.setAttribute('role','alert'); validation.hidden=true;
+    section.appendChild(validation);
+    modal.querySelector('[data-action="save"]')?.addEventListener('click',(event)=>{
+      for(const input of section.querySelectorAll('[data-budget-field]')){
+        const value=input.value.trim();
+        if(value && (!Number.isFinite(Number(value)) || Number(value)<0)){
+          event.preventDefault();event.stopImmediatePropagation();
+          activate(modal,'future');
+          const button=section.querySelector('.setup-budget-toggle');
+          if(button?.getAttribute('aria-expanded')==='false')button.click();
+          input.setAttribute('aria-invalid','true');
+          validation.textContent='Enter a valid amount of zero or more, or leave the field blank.';validation.hidden=false;
+          input.focus();return;
+        }
+        input.removeAttribute('aria-invalid');
+      }
+      validation.hidden=true;
+    },true);
     const toggle=$('.setup-budget-toggle',section);
     const body=$('.setup-budget-body',section);
     toggle?.addEventListener('click',()=>{

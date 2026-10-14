@@ -133,7 +133,7 @@
     button.classList.toggle('is-online', online);
     button.setAttribute('aria-checked', String(online));
     control.querySelector('[data-connectivity-title]').textContent = online ? 'Online' : 'Offline';
-    control.querySelector('[data-connectivity-subtitle]').textContent = online ? 'Latest market benchmarks' : 'Your data stays on this device';
+    control.querySelector('[data-connectivity-subtitle]').textContent = online ? 'Dated market benchmarks' : 'Your data stays on this device';
   }
 
   function readMarketCache() {
@@ -225,9 +225,9 @@
 
   function applyCachedMarketRates() {
     const cached = readMarketCache();
-    if (cached) applyMarketRates(cached);
+    if (validMarketData(cached)) applyMarketRates(cached);
     const source = document.querySelector('.market-block .source-date');
-    if (!cached && source && !isOnlineMode()) source.textContent = 'Offline · switch online for latest rates';
+    if (!validMarketData(cached) && source && !isOnlineMode()) source.textContent = 'Offline · switch online for dated benchmarks';
   }
 
   async function refreshMarketRates(force = false) {
@@ -240,7 +240,7 @@
       applyMarketRates(data);
     } catch (_) {
       const cached = readMarketCache();
-      if (cached) {
+      if (validMarketData(cached)) {
         applyMarketRates(cached);
         if (source) source.textContent = `Online unavailable · saved ${formatSourceDate(cached.sourceAsOf)}`;
       } else if (source) source.textContent = 'Online rates unavailable';
