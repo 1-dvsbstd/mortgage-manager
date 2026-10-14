@@ -161,7 +161,7 @@
     customWrap?.classList.toggle('is-active',customMode);
     if(custom&&document.activeElement!==custom){
       if(!isPreset&&extra>0) custom.value=String(Math.round(extra*100)/100);
-      else if(!custom.dataset.userValue) custom.value=String(Math.round(regular*100)/100);
+      else custom.value=String(Math.round(extra*100)/100);
     }
 
     if(heading){
