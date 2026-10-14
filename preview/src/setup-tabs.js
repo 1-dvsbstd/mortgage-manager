@@ -185,6 +185,16 @@
     head.insertAdjacentElement('afterend',nav);
     nav.after(current,upcoming,future);
 
+    const nameLabel=document.createElement('label');
+    nameLabel.textContent='Your name (optional)';
+    const nameInput=document.createElement('input');
+    nameInput.type='text'; nameInput.id='setupDisplayName'; nameInput.maxLength=60; nameInput.autocomplete='given-name';
+    try{nameInput.value=localStorage.getItem('mortgage-manager-display-name-v1')||'';}catch(_){}
+    nameLabel.appendChild(nameInput); const profileFields=document.createElement('div'); profileFields.className='personal-form'; profileFields.appendChild(nameLabel); current.appendChild(profileFields);
+    modal.querySelector('[data-action="save"]')?.addEventListener('click',()=>{
+      try{localStorage.setItem('mortgage-manager-display-name-v1',nameInput.value.trim().slice(0,60));}catch(_){}
+      document.dispatchEvent(new Event('mortgage-profile-updated'));
+    });
     current.appendChild(form);
     const upcomingGrid=document.createElement('div'); upcomingGrid.className='personal-form setup-upcoming-grid'; upcoming.appendChild(upcomingGrid);
     ['rate','fixedEnd'].forEach((key)=>{const input=modal.querySelector(`[data-personal-field="${key}"]`);if(input?.closest('label'))upcomingGrid.appendChild(input.closest('label'));});

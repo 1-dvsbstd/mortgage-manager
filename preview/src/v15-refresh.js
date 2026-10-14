@@ -48,9 +48,10 @@
 
   function greeting() {
     const hour = new Date().getHours();
-    if (hour < 12) return 'Good morning,';
-    if (hour < 18) return 'Good afternoon,';
-    return 'Good evening,';
+    const salutation=hour<12?'Good morning':hour<18?'Good afternoon':'Good evening';
+    let name='';
+    try{name=(localStorage.getItem('mortgage-manager-display-name-v1')||'').trim().slice(0,60);}catch(_){}
+    return name?`${salutation}, ${name}`:salutation;
   }
 
   function calculations(state) {
@@ -256,6 +257,7 @@
     requestAnimationFrame(render);
     if (window.MortgageStore?.subscribe) MortgageStore.subscribe(() => requestAnimationFrame(render));
     window.addEventListener('pageshow', render);
+    document.addEventListener('mortgage-profile-updated',render);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once:true });
