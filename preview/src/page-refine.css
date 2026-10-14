@@ -4078,3 +4078,9 @@ body .personal-modal .personal-home-profile-section .setup-home-profile-fields>l
 body .personal-modal .personal-home-profile-section .setup-home-profile-fields>label>.setup-month-field{width:100%!important;max-width:none!important;margin:0!important;flex-shrink:0!important;}
 
 body .personal-modal .personal-home-profile-section .setup-home-profile-fields>label{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:8px!important;grid-template-columns:none!important;min-width:0!important;}
+
+/* Compact profile: postcode gets one complete row, other fields pair cleanly. */
+body .personal-modal .personal-home-profile-section .setup-home-profile-fields{row-gap:12px!important;column-gap:12px!important;}
+body .personal-modal .personal-home-profile-section .setup-home-profile-fields>.setup-postcode-field{grid-column:1/-1!important;}
+body .personal-modal .personal-home-profile-section .setup-home-profile-fields>label{gap:6px!important;}
+body .personal-modal .personal-home-profile-section .setup-property-privacy{margin-top:12px!important;}
