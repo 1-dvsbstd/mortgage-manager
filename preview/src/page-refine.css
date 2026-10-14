@@ -4054,3 +4054,27 @@ body .app-view-current .v15-current-stats .v15-stat:hover{
   opacity:1!important;
   cursor:default!important;
 }
+
+/* Align controls independently of the amount of helper text below each one. */
+.personal-modal .setup-home-profile-fields{align-items:start!important;row-gap:18px!important;}
+.personal-modal .setup-home-profile-fields>label{align-self:start!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;gap:8px!important;}
+.personal-modal .setup-home-profile-fields input,
+.personal-modal .setup-home-profile-fields select,
+.personal-modal .setup-home-profile-fields .setup-month-field{height:46px!important;min-height:46px!important;margin:0!important;}
+.personal-modal .setup-property-privacy{margin:16px 0 0;font-size:12px;color:var(--muted);}
+.personal-modal .setup-property-privacy summary{cursor:pointer;}
+.personal-modal .setup-property-privacy p{line-height:1.5;margin:10px 0 0!important;}
+.personal-modal .setup-value-history-list{margin-top:16px!important;padding-top:14px!important;border-top:1px solid var(--border-soft)!important;}
+.personal-modal .setup-value-history-list .setup-empty{margin:0!important;padding:0!important;line-height:1.5!important;}
+
+.personal-modal .setup-home-profile-fields>label{align-items:stretch!important;}
+.personal-modal .setup-home-profile-fields input[type="hidden"]{display:none!important;}
+.personal-modal .setup-home-profile-fields input:not([type="hidden"]),
+.personal-modal .setup-home-profile-fields select,
+.personal-modal .setup-home-profile-fields .setup-month-field{width:100%!important;align-self:stretch!important;}
+
+body .personal-modal .personal-home-profile-section .setup-home-profile-fields>label>input:not([type="hidden"]),
+body .personal-modal .personal-home-profile-section .setup-home-profile-fields>label>select,
+body .personal-modal .personal-home-profile-section .setup-home-profile-fields>label>.setup-month-field{width:100%!important;max-width:none!important;margin:0!important;flex-shrink:0!important;}
+
+body .personal-modal .personal-home-profile-section .setup-home-profile-fields>label{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:8px!important;grid-template-columns:none!important;min-width:0!important;}

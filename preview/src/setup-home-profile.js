@@ -69,18 +69,22 @@
     section.className = 'personal-section personal-home-profile-section';
     section.innerHTML = `
       <h3>Home profile</h3>
-      <p>Used for local HPI valuation and property forecasts.</p>
+      <p>Purchase details and estimates for your home projections.</p>
       <div class="projection-controls purchase-controls setup-home-profile-fields">
         ${field('setupHomePurchasePrice','Purchase price (£)','number','1000')}
         ${field('setupHomePurchaseMonth','Month bought','month')}
         <label>Property postcode<input id="setupHomePostcode" type="text" autocomplete="postal-code"><span id="setupHomePostcodeNote">Used for local house-price data</span></label>
-        <label>Property type<select id="setupHomePropertyType"><option value="">Select property type</option><option value="detached">Detached</option><option value="semi-detached">Semi-detached</option><option value="terraced">Terraced</option><option value="flat">Flat / maisonette</option></select><span>Used for local HPI and sales comparisons.</span></label>
-        <label>Bedrooms<select id="setupHomeBedrooms"><option value="">Select bedrooms</option><option value="1">1 bedroom</option><option value="2">2 bedrooms</option><option value="3">3 bedrooms</option><option value="4">4 bedrooms</option><option value="5">5 bedrooms</option><option value="6">6+ bedrooms</option></select><span>Saved for future comparable-data matching.</span></label>
+        <label>Property type<select id="setupHomePropertyType"><option value="">Select property type</option><option value="detached">Detached</option><option value="semi-detached">Semi-detached</option><option value="terraced">Terraced</option><option value="flat">Flat / maisonette</option></select></label>
+        <label>Bedrooms<select id="setupHomeBedrooms"><option value="">Select bedrooms</option><option value="1">1 bedroom</option><option value="2">2 bedrooms</option><option value="3">3 bedrooms</option><option value="4">4 bedrooms</option><option value="5">5 bedrooms</option><option value="6">6+ bedrooms</option></select></label>
         ${field('setupHomeImprovements','Value added by improvements (£)','number','1000','Optional')}
         ${field('setupHomeRecentValue','Recent valuation / estimate (£)','number','1000','Optional; overrides the modelled value today')}
       </div>`;
     mortgageForm.insertAdjacentElement('afterend', section);
 
+    const privacy=document.createElement('details');
+    privacy.className='setup-property-privacy';
+    privacy.innerHTML='<summary>How postcode lookups use your data</summary><p>In Online mode, the postcode goes to Postcodes.io and the postcode/property type to HM Land Registry for local comparisons. Mortgage figures stay on this device. Offline mode skips these lookups.</p>';
+    section.appendChild(privacy);
     const refs = {
       purchasePrice: section.querySelector('#setupHomePurchasePrice'),
       purchaseMonth: section.querySelector('#setupHomePurchaseMonth'),
