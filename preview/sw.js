@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mortgage-manager-release-validation-20261014b';
+const CACHE_NAME = 'mortgage-manager-setup-spacing-20261014';
 const APP_SHELL = [
   './',
   './index.html',
