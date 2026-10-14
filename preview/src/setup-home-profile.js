@@ -73,11 +73,11 @@
       <div class="projection-controls purchase-controls setup-home-profile-fields">
         ${field('setupHomePurchasePrice','Purchase price (£)','number','1000')}
         ${field('setupHomePurchaseMonth','Month bought','month')}
-        <label>Property postcode<input id="setupHomePostcode" type="text" autocomplete="postal-code"><span id="setupHomePostcodeNote">Used for local house-price data</span></label>
+        <label class="setup-postcode-field">Property postcode<input id="setupHomePostcode" type="text" autocomplete="postal-code"><span id="setupHomePostcodeNote">Used for local house-price data</span></label>
         <label>Property type<select id="setupHomePropertyType"><option value="">Select property type</option><option value="detached">Detached</option><option value="semi-detached">Semi-detached</option><option value="terraced">Terraced</option><option value="flat">Flat / maisonette</option></select></label>
         <label>Bedrooms<select id="setupHomeBedrooms"><option value="">Select bedrooms</option><option value="1">1 bedroom</option><option value="2">2 bedrooms</option><option value="3">3 bedrooms</option><option value="4">4 bedrooms</option><option value="5">5 bedrooms</option><option value="6">6+ bedrooms</option></select></label>
-        ${field('setupHomeImprovements','Value added by improvements (£)','number','1000','Optional')}
-        ${field('setupHomeRecentValue','Recent valuation / estimate (£)','number','1000','Optional; overrides the modelled value today')}
+        ${field('setupHomeRecentValue','Recent valuation (£, optional)','number','1000')}
+        ${field('setupHomeImprovements','Improvements value (£, optional)','number','1000')}
       </div>`;
     mortgageForm.insertAdjacentElement('afterend', section);
 
