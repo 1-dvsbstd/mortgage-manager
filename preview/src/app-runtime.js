@@ -144,18 +144,19 @@
   function validMarketData(data) {
     const historic=Array.isArray(data?.bands) && data.bands.length && Number(data.overall?.twoYear)>0 && Number(data.overall?.fiveYear)>0;
     const live=Number(data?.live?.twoYear)>0 && Number(data?.live?.fiveYear)>0;
-    return !!(historic && live);
+    const permittedSource=data?.live?.source==='Bank of England Database' || (data?.live?.source==='Moneyfacts' && /^https:\/\/moneyfactscompare\.co\.uk\/news\/mortgages\//.test(data.live.sourceUrl||''));
+    return !!(historic && live && data.schema===3 && data.source==='Bank of England Database' && permittedSource && /^\d{4}-\d{2}-\d{2}$/.test(data.live.sourceAsOf||''));
   }
 
   async function fetchMarketData() {
     let lastError = null;
     for (const url of MARKET_URLS) {
       try {
-        const response = await fetch(`${url}${url.includes('?') ? '&' : '?'}t=${Date.now()}`, { cache:'no-store' });
+        const response = await fetch(`${url}${url.includes('?') ? '&' : '?'}t=${Date.now()}`, { cache:'no-store', signal:AbortSignal.timeout(6000) });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (!validMarketData(data)) throw new Error('Invalid market data');
-        return { ...data, fetchedAt:new Date().toISOString() };
+        return { ...data, fetchedAt:new Date().toISOString(), savedFallback:response.headers.get("X-Mortgage-Cache")==="offline" };
       } catch (error) { lastError = error; }
     }
     throw lastError || new Error('Unable to load market data');
@@ -196,8 +197,9 @@
     if (!state) return;
     const ltv = state.homeValue > 0 ? state.balance / state.homeValue * 100 : 100;
     const band = ltvBandFor(data, ltv);
-    const twoRate = Number(data.live.twoYear);
-    const fiveRate = Number(data.live.fiveYear);
+    const usesLtvBands=data.live.source==='Bank of England Database';
+    const twoRate = Number(usesLtvBands ? (band?.twoYear || data.live.twoYear) : data.live.twoYear);
+    const fiveRate = Number(usesLtvBands ? (band?.fiveYear || data.live.fiveYear) : data.live.fiveYear);
     const liveSourceAsOf=data.live.sourceAsOf||null;
     window.MortgageMarket={
       twoYear:twoRate,
