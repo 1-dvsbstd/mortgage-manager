@@ -1784,17 +1784,6 @@ body .app-view-current .v15-current-stats .v15-stat[data-stat="overpay"] small{
   color:var(--positive)!important;
   font-weight:650!important;
 }
-@media(hover:hover) and (pointer:fine){
-  body .app-view-current .v15-current-stats .v15-stat,
-  body .app-view-current .v15-current-stats .v15-stat:hover{
-    transform:none!important;
-    box-shadow:0 2px 4px rgba(54,48,39,.06),0 14px 34px rgba(54,48,39,.12)!important;
-    opacity:1!important;
-  }
-  body .app-view-current .v15-current-stats .v15-stat:hover{
-    border-color:rgba(183,131,77,.22)!important;
-  }
-}
 @media(max-width:900px){
   body .app-view-current .v15-current-stats{
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
@@ -4054,3 +4043,14 @@ body .app-view-current .v15-current-stats .v15-stat [class*="icon"]{
 .personal-modal .setup-pane > .setup-name-fields{margin-top:4px!important;margin-bottom:26px!important;}
 .personal-modal .setup-name-fields + .setup-pane-intro{margin-top:0!important;}
 .personal-modal .setup-pane-intro .eyebrow{margin:0 0 6px!important;}
+
+/* Summary tiles are information, with the same appearance under the pointer. */
+body .app-view-current .v15-current-stats .v15-stat,
+body .app-view-current .v15-current-stats .v15-stat:hover{
+  transform:none!important;
+  box-shadow:none!important;
+  border-color:var(--border)!important;
+  transition:none!important;
+  opacity:1!important;
+  cursor:default!important;
+}
